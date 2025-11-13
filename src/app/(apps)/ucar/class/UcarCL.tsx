@@ -1,0 +1,205 @@
+import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+
+import {
+  BankMaster,
+  AppliedUcarGarageSlot,
+  Store,
+  UcarPaperWorkNotes,
+  UcarProcess,
+  BankBranchMaster,
+  Ucar,
+  UPASS,
+  Number98,
+  User,
+  UcarGarageSlotMaster,
+  UcarGarageLocationMaster,
+} from '@prisma/client'
+import {roleIs} from 'src/non-common/scope-lib/judgeIsAdmin'
+import {QueryBuilder} from '@app/(apps)/ucar/class/QueryBuilder'
+
+export type ucarData = Ucar & {
+  UPASS: UPASS
+  Number98: Number98
+  User: User
+  Store: Store
+  UcarProcess: (UcarProcess & {User: User})[]
+  UcarPaperWorkNotes: UcarPaperWorkNotes & {User: User}
+  AppliedUcarGarageSlot: AppliedUcarGarageSlot & {
+    UcarGarageSlotMaster: UcarGarageSlotMaster & {
+      UcarGarageLocationMaster: UcarGarageLocationMaster
+    }
+  }
+  BankMaster: BankMaster
+  BankBranchMaster: BankBranchMaster & {User: User}
+}
+
+export class UcarCL {
+  data: ucarData
+  constructor(ucar: ucarData) {
+    this.data = ucar
+  }
+
+  get notation() {
+    const UPASS = this.data.UPASS ?? {}
+    const plate = [
+      UPASS.landAffairsName,
+      UPASS.registrationClassNumber,
+      UPASS.registrationKana,
+      UPASS.registrationSerialNumber,
+    ].join('')
+
+    const nenshiki = UPASS.modelYear ? new Date().getFullYear() - Number(UPASS?.modelYear) : ' '
+
+    return {
+      sateiID: this.data.sateiID,
+      nenshiki,
+      plate,
+      storeName: this.data?.Store?.name,
+      staffName: this.data?.User?.name,
+      grade: UPASS.grade || this.data.tmpGrade || ' ',
+      customerName: UPASS.customerName,
+      modelName: UPASS.modelName,
+      modelYear: UPASS.modelYear || this.data.tmpModelYear || ' ',
+      type: UPASS.type || this.data.tmpType || ' ',
+      chassisNumber: UPASS.chassisNumber || ' ',
+      length: UPASS.length || ' ',
+      width: UPASS.width || ' ',
+      height: UPASS.height || ' ',
+
+      commonType: UPASS.commonType || this.data.tmpCommonType || ' ',
+      engineType: UPASS.engineType || ' ',
+      vehicleHistory: UPASS.vehicleHistory || ' ',
+      capacityMin: UPASS.capacityMin || ' ',
+      capacityMax: UPASS.capacityMax || ' ',
+      maxLoad: UPASS.maxLoad || ' ',
+      weight: UPASS.weight || ' ',
+      frameNumber: UPASS.frameNumber || this.data.tmpFrameNumber || ' ',
+      brandName: UPASS.brandName || this.data.tmpBrandName || ' ',
+      registrationClassNumber: UPASS.registrationClassNumber || this.data.tmpRegistrationClassNumber || ' ',
+      registrationKana: UPASS.registrationKana || this.data.tmpRegistrationKana || ' ',
+      registrationSerialNumber: UPASS.registrationSerialNumber || this.data.tmpPlate || ' ',
+    }
+  }
+
+  get builder() {
+    const email = {
+      carInfoText: [
+        `店舗名: ${this.notation.storeName ?? '-'}`,
+        `スタッフ名: ${this.notation.staffName ?? '-'}`,
+        `査定ID: ${this.notation.sateiID ?? '-'}`,
+        `車名: ${this.notation.modelName ?? '-'}`,
+        `車台番号: ${this.notation.frameNumber ?? '-'}`,
+        `お客様: ${this.notation.customerName ?? '-'}`,
+      ].join('\n'),
+    }
+    return {
+      email,
+    }
+  }
+
+  static converter = {
+    shapeNumber98: (string: string) => {
+      const left2 = string.slice(0, 2)
+      const mid = string.slice(3, 7)
+      const right1 = string.slice(7, 8)
+      const result = `${left2} ${mid} ${right1}`
+      return result
+    },
+
+    matchSateiWithKobutsu: (props: {
+      ucar: Ucar
+      kobutsuUcar: {
+        NO_SYADAIBA?: string
+        NO_SIRETOSE?: string
+      }
+    }) => {
+      const {ucar, kobutsuUcar} = props
+
+      const matchWithFrame_Plate = () => {
+        const sateiKey = [
+          //
+          ucar.Barracks?.slice(-4),
+          ucar.number?.toString().slice(-4),
+        ].join(`_`)
+        const kobutsuKey = [
+          //
+          kobutsuUcar.NO_SYADAIBA?.slice(-4),
+          kobutsuUcar.NO_SIRETOSE?.slice(-4),
+        ].join(`_`)
+        return sateiKey === kobutsuKey
+      }
+
+      const matchWithAssessment_ID_with_Frame_When_Kaitori = () => {
+        const sateiKey = ucar.Barracks
+        const kobutsuKey = kobutsuUcar.NO_SYADAIBA
+
+        const match = sateiKey === kobutsuKey
+
+        return match
+      }
+
+      return matchWithFrame_Plate() || matchWithAssessment_ID_with_Frame_When_Kaitori()
+
+      //
+    },
+  }
+
+  static col = {
+    userIdColumn: {
+      label: 'スタッフ',
+      id: 'g_userId',
+      form: {},
+      forSelect: {
+        config: {
+          where: {
+            rentaStoreId: {not: null},
+          },
+        },
+      },
+      search: {},
+    },
+  }
+
+  static colConst = () => {
+    const getUcarBasicCols = () => {
+      return [
+        {id: `Number98.number`, label: `98番号`},
+        {id: `Assessment_ID`, label: `査定ID`},
+        {id: `Model_name`, label: `車名`},
+        {id: `Barracks`, label: `車台番号`},
+        {id: `KI_HANKAKA`, label: `販売価格`},
+        {id: `CD_ZAIKOTEN_NAME`, label: `在庫店舗名`},
+      ]
+    }
+
+    return {getUcarBasicCols}
+  }
+
+  static getUserId = ({session, query}) => {
+    const schoolId = roleIs(['管理者'], session) ? Number(query?.userId ?? session?.id ?? 0) : Number(session?.id ?? 0)
+
+    return schoolId
+  }
+
+  static testSateiID ='163012408000017'
+
+  static fetcher = {
+    getUcarDataBySateiId: async (sateiID: string) => {
+      const {result: ucar} = await doStandardPrisma(`ucar`, `findUnique`, {
+        where: {sateiID},
+        include: QueryBuilder.getInclude({}).ucar.include,
+      })
+
+      return ucar as ucarData
+    },
+
+    getTenchoListBySateiId: async (sateiID: string) => {
+      const {result: tenchoList} = await doStandardPrisma(`user`, `findMany`, {
+        where: {
+          Store: {Ucar: {some: {sateiID}}},
+        },
+      })
+      return {tenchoList}
+    },
+  }
+}

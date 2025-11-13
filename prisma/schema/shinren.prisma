@@ -1,0 +1,298 @@
+model RentaStore {
+  id               Int                @id @default(autoincrement())
+  createdAt        DateTime           @default(now())
+  active           Boolean            @default(true)
+  sortOrder        Float              @default(0)
+  name             String             @unique
+  code             Int?               @unique
+  updatedAt        DateTime?          @updatedAt
+  RentaCustomer    RentaCustomer[]
+  RentaDailyReport RentaDailyReport[]
+  User             User[]
+}
+
+model RentaDeal {
+  id                         Int            @id @default(autoincrement())
+  createdAt                  DateTime       @default(now())
+  active                     Boolean        @default(true)
+  sortOrder                  Float          @default(0)
+  detalType                  String?
+  orderedAt                  DateTime?
+  contractNum                Int?           @unique
+  previousContractId         Int?
+  contractHasChanged         Boolean        @default(false)
+  maintanance                String?
+  toyota                     String?
+  carType                    String?
+  mat                        String?
+  invitationFee              Int?
+  moneyCollectionScheduledAt DateTime?
+  moneyCollectedAt           DateTime?
+  willRegisterdAt            DateTime?
+  dlOrder                    String?
+  orderPaperSubmittedAt      DateTime?
+  contractPaperSubmittedAt   DateTime?
+  registerPaperSubmittedAt   DateTime?
+  storeNote                  String?
+  error                      String?
+  orderPaperReturnedAt       DateTime?
+  contractPaperReturnedAt    DateTime?
+  registeredAt               DateTime?
+  scannedAt                  DateTime?
+  storeNote2                 String?
+  contractPrice              Int?
+  ProfitPrice                Int?
+  userId                     Int
+  tentativeRegisteredAt      DateTime?
+  rentaCustomerId            Int?
+  updatedAt                  DateTime?      @updatedAt
+  RentaCustomer              RentaCustomer? @relation(fields: [rentaCustomerId], references: [id], onDelete: Cascade)
+  User                       User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([rentaCustomerId])
+  @@index([userId])
+}
+
+model RentaDailyReport {
+  id                         Int             @id @default(autoincrement())
+  createdAt                  DateTime        @default(now())
+  active                     Boolean         @default(true)
+  sortOrder                  Float           @default(0)
+  Memo                       String?
+  date                       DateTime?
+  time                       String?
+  visitType                  String?
+  increasedNegotiationsCount Int?
+  remarks                    String?
+  userId                     Int
+  rentaStoreId               Int
+  rentaCustomerId            Int?
+  introductionAchieved       Boolean?        @default(false)
+  approachType               String?
+  updatedAt                  DateTime?       @updatedAt
+  useHoujinDb                Boolean?        @default(false)
+  AlternateInfo              AlternateInfo[]
+  ExtraInfo                  ExtraInfo[]
+  InsuranceInfo              InsuranceInfo[]
+  Outcome                    Outcome[]
+  Purpose                    Purpose[]
+  RentaCustomer              RentaCustomer?  @relation(fields: [rentaCustomerId], references: [id], onDelete: Cascade)
+  RentaStore                 RentaStore      @relation(fields: [rentaStoreId], references: [id], onDelete: Cascade)
+  User                       User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([rentaCustomerId])
+  @@index([rentaStoreId])
+  @@index([userId])
+}
+
+model RentaCustomer {
+  id                     Int                @id @default(autoincrement())
+  createdAt              DateTime           @default(now())
+  sortOrder              Float              @default(0)
+  name                   String?
+  code                   String?            @unique
+  userId                 Int
+  carCount               Int?
+  type                   String?
+  address1               String?
+  address2               String?
+  fax                    String?
+  industryCode           String?
+  industryCodeName       String?
+  kana                   String?
+  nameBottom             String?
+  nameTop                String?
+  phone                  String?
+  postalCode             String?
+  rentaStoreId           Int?
+  repKana                String?
+  repName                String?
+  repPos                 String?
+  leaseCompanyName       String?
+  result                 String?
+  maintenanceDestination String?
+  remarks                String?
+  pic                    String?
+  rentaReferenceId       Int?
+  updatedAt              DateTime?          @updatedAt
+  mergeCandidatesIds     Int[]
+  AlternateInfo          AlternateInfo[]
+  ExtraInfo              ExtraInfo[]
+  InsuranceInfo          InsuranceInfo[]
+  RefFrom                RefFrom[]
+  RefTo                  RefTo[]
+  RentaStore             RentaStore?        @relation(fields: [rentaStoreId], references: [id], onDelete: Cascade)
+  User                   User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  RentaDailyReport       RentaDailyReport[]
+  RentaDeal              RentaDeal[]
+  RentaReference         RentaReference[]
+
+  @@index([rentaStoreId])
+  @@index([userId])
+}
+
+model RentaReference {
+  id              Int           @id @default(autoincrement())
+  createdAt       DateTime      @default(now())
+  sortOrder       Float         @default(0)
+  date            DateTime?
+  remarks         String?
+  rentaCustomerId Int
+  refFromId       Int           @unique
+  refToId         Int           @unique
+  updatedAt       DateTime?     @updatedAt
+  RefFrom         RefFrom       @relation(fields: [refFromId], references: [id], onDelete: Cascade)
+  RefTo           RefTo         @relation(fields: [refToId], references: [id], onDelete: Cascade)
+  RentaCustomer   RentaCustomer @relation(fields: [rentaCustomerId], references: [id], onDelete: Cascade)
+
+  @@unique([rentaCustomerId, refFromId, refToId], name: "unique_rentaCustomerId_refFromId_refToId")
+}
+
+model RefFrom {
+  id              Int             @id @default(autoincrement())
+  createdAt       DateTime        @default(now())
+  sortOrder       Float           @default(0)
+  rentaCustomerId Int
+  updatedAt       DateTime?       @updatedAt
+  RentaCustomer   RentaCustomer   @relation(fields: [rentaCustomerId], references: [id], onDelete: Cascade)
+  RentaReference  RentaReference?
+
+  @@index([rentaCustomerId])
+}
+
+model RefTo {
+  id              Int             @id @default(autoincrement())
+  createdAt       DateTime        @default(now())
+  sortOrder       Float           @default(0)
+  rentaCustomerId Int
+  updatedAt       DateTime?       @updatedAt
+  RentaCustomer   RentaCustomer   @relation(fields: [rentaCustomerId], references: [id], onDelete: Cascade)
+  RentaReference  RentaReference?
+
+  @@index([rentaCustomerId])
+}
+
+model Purpose {
+  id                 Int               @id @default(autoincrement())
+  createdAt          DateTime          @default(now())
+  sortOrder          Float             @default(0)
+  rentaDailyReportId Int?
+  purposeMasterId    Int
+  date               DateTime?
+  userId             Int?
+  updatedAt          DateTime?         @updatedAt
+  PurposeMaster      PurposeMaster     @relation(fields: [purposeMasterId], references: [id], onDelete: Cascade)
+  RentaDailyReport   RentaDailyReport? @relation(fields: [rentaDailyReportId], references: [id], onDelete: Cascade)
+  User               User?             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([purposeMasterId])
+  @@index([rentaDailyReportId])
+  @@index([userId])
+}
+
+model PurposeMaster {
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  sortOrder   Float     @default(0)
+  name        String    @unique
+  type        String?
+  color       String
+  userId      Int?
+  aggregateAs String?
+  updatedAt   DateTime? @updatedAt
+  Purpose     Purpose[]
+  User        User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Outcome {
+  id                 Int               @id @default(autoincrement())
+  createdAt          DateTime          @default(now())
+  sortOrder          Float             @default(0)
+  rentaDailyReportId Int?
+  outcomeMasterId    Int
+  date               DateTime?
+  userId             Int?
+  updatedAt          DateTime?         @updatedAt
+  OutcomeMaster      OutcomeMaster     @relation(fields: [outcomeMasterId], references: [id], onDelete: Cascade)
+  RentaDailyReport   RentaDailyReport? @relation(fields: [rentaDailyReportId], references: [id], onDelete: Cascade)
+  User               User?             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([outcomeMasterId])
+  @@index([rentaDailyReportId])
+  @@index([userId])
+}
+
+model OutcomeMaster {
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  sortOrder   Float     @default(0)
+  name        String    @unique
+  type        String?
+  color       String
+  userId      Int?
+  aggregateAs String?
+  updatedAt   DateTime? @updatedAt
+  Outcome     Outcome[]
+  User        User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model AlternateInfo {
+  id                 Int               @id @default(autoincrement())
+  createdAt          DateTime          @default(now())
+  sortOrder          Float             @default(0)
+  carName            String?
+  dueDate            DateTime?
+  type               String?
+  rentaDailyReportId Int?
+  rentaCustomerId    Int?
+  isRead             Boolean?          @default(false)
+  isRead2            Boolean?          @default(false)
+  updatedAt          DateTime?         @updatedAt
+  RentaCustomer      RentaCustomer?    @relation(fields: [rentaCustomerId], references: [id], onDelete: Cascade)
+  RentaDailyReport   RentaDailyReport? @relation(fields: [rentaDailyReportId], references: [id], onDelete: Cascade)
+
+  @@index([rentaCustomerId])
+  @@index([rentaDailyReportId])
+}
+
+model InsuranceInfo {
+  id                 Int               @id @default(autoincrement())
+  createdAt          DateTime          @default(now())
+  sortOrder          Float             @default(0)
+  insuranceCompany   String?
+  dueDate            DateTime?
+  imageUrl           String?
+  rentaDailyReportId Int?
+  rentaCustomerId    Int?
+  isRead             Boolean?          @default(false)
+  isRead2            Boolean?          @default(false)
+  updatedAt          DateTime?         @updatedAt
+  RentaCustomer      RentaCustomer?    @relation(fields: [rentaCustomerId], references: [id], onDelete: Cascade)
+  RentaDailyReport   RentaDailyReport? @relation(fields: [rentaDailyReportId], references: [id], onDelete: Cascade)
+
+  @@index([rentaDailyReportId])
+  @@index([rentaCustomerId])
+}
+
+model ExtraInfo {
+  id                 Int               @id @default(autoincrement())
+  createdAt          DateTime          @default(now())
+  sortOrder          Float             @default(0)
+  date               DateTime?
+  remarks            String?
+  imageUrl           String?
+  rentaDailyReportId Int?
+  rentaCustomerId    Int
+  isRead             Boolean?          @default(false)
+  isRead2            Boolean?          @default(false)
+  updatedAt          DateTime?         @updatedAt
+  RentaCustomer      RentaCustomer     @relation(fields: [rentaCustomerId], references: [id], onDelete: Cascade)
+  RentaDailyReport   RentaDailyReport? @relation(fields: [rentaDailyReportId], references: [id], onDelete: Cascade)
+
+  @@index([rentaCustomerId])
+  @@index([rentaDailyReportId])
+}

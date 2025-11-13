@@ -1,0 +1,411 @@
+model JuchuShitadoriDb {
+  id        Int     @unique @default(autoincrement())
+  sortOrder Float   @default(0)
+  APPINDEX  String  @id
+  NewCar    NewCar? @relation(fields: [APPINDEX_FKEY], references: [APPINDEX])
+  UPASS     UPASS?  @relation(fields: [NO_SATEISYO], references: [sateiID])
+
+  APPINDEX_FKEY String?
+  CD_KAISYA     String?
+  KB_SINCYU     String?
+  NO_CYUMON     String?
+  NO_CYUMONED   String?
+  NO_SITARENB   String?
+  KB_SITASNSY   String?
+  CD_NORIKUSI   String?
+  KB_NOSYASYU   String?
+  CD_NOGYOTAI   String?
+  NO_NOSEIRI    String?
+  KB_RIKUSI     String?
+  KB_MITRCHUB   String?
+  NO_SATEISYO   String?
+  NO_SITERUIB   String?
+  DD_SATEI      String?
+  NO_SYARYOU    String?
+  KI_SITADKAK   String?
+  NU_JIBAIMIK   String?
+  NU_ZEIRITU    String?
+  KB_SITASYHI   String?
+  KI_SITASYHI   String?
+  KI_SITATHU1   String?
+  KI_SITATHU2   String?
+  KI_SITATHU3   String?
+  CD_SITADOSY   String?
+  DD_SYKNMANR   String?
+  SU_SYNDOTOR   String?
+  MJ_SITKATA    String?
+  MJ_FURUKATA   String?
+  MJ_FURON      String?
+  NO_SYADAIBA   String?
+  NU_SOUKOUKM   String?
+  KJ_SIYOSYA    String?
+  KJ_SYYUMAI    String?
+  KB_ZANSEKSA   String?
+  MJ_ZANSEKSA   String?
+  DD_KANSAIYO   String?
+  DD_KAIKESAI   String?
+  KI_SITAKESA   String?
+  KJ_SITAMEMO   String?
+  KB_JIDZMNOH   String?
+  KB_YOTAKU     String?
+  KI_AZRECYYO   String?
+  KI_SYRDST     String?
+  KI_AIRBAGRU   String?
+  KI_FURONR     String?
+  KI_JOHOKR     String?
+  KI_SIKNKNR    String?
+  NO_RECYCLEK   String?
+  KB_SIYZJDHT   String?
+  KJ_SAISSYYU   String?
+  KI_SIYZJDHI   String?
+  KI_STJIZESO   String?
+  MJ_SIYZSHIF   String?
+  MJ_HIKIZUMF   String?
+  DD_SITATORI   String?
+  NO_SITAJOJO   String?
+  NO_KYUSATEI   String?
+  DT_SAISINUP   String?
+  MJ_SASINTAN   String?
+  N_JUCYU       String?
+  U_JUCYU       String?
+  KJ_SYAMEI     String?
+
+  @@index([APPINDEX_FKEY])
+  @@index([NO_SATEISYO])
+}
+
+model OldCars_Base {
+  id          Int     @unique @default(autoincrement())
+  sortOrder   Float   @default(0)
+  APPINDEX    String  @id @unique
+  CD_21SYAMEI String?
+  MJ_SYAMEI   String?
+  CD_HANSTAFF String?
+  CD_HANTENPO String?
+  NO_SIRETYUM String?
+  MJ_SIRENORI String?
+  KB_SIRETOSY String?
+  CD_SIRETOGY String?
+  NO_SIRETOSE String?
+  NO_HANJTRIK String?
+  KB_HANTOSY  String?
+  CD_HANTOGY  String?
+  NO_HANTOSE  String?
+  CD_SITASTAF String?
+  DD_SIIRE    String?
+  DD_SIREBD   String?
+  SU_SYODOTOR String?
+  NO_FRAME    String?
+  KI_SIIREKA  String?
+  KI_HANKAKA  String?
+  KB_SIIRE    String?
+  KB_SIHARAI  String?
+  KB_URIAGE   String?
+  NO_CYUMON   String?
+  NO_CYUMONED String?
+  NO_SYARYOU  String?
+  NO_SYADAIBA String?
+  DT_SAISINUP String?
+  MJ_KATASIKI String?
+  NU_SOUKOUKM String?
+  CD_SIRETENP String?
+  KJ_SIRESAKI String?
+  KB_UC1JTORO String?
+  DD_URIAGE   String?
+  DD_1JTOROKU String?
+  DD_2JTOROKU String?
+  DD_SYKNMANR String?
+  DD_SITASYUK String?
+  DD_NOSYA    String?
+  MJ_SITADOTE String?
+
+  Number98   Number98?    @relation(fields: [NO_SYARYOU], references: [number])
+  Ucar       Ucar[]
+  ZAIKO_Base ZAIKO_Base[]
+
+  @@unique([NO_SIRETYUM, NO_SYARYOU, DD_SIIRE])
+  @@index([NO_SYARYOU])
+}
+
+model ZAIKO_Base {
+  id            Int     @unique @default(autoincrement())
+  sortOrder     Float   @default(0)
+  APPINDEX      String  @id @unique
+  APPINDEX_FKEY String
+  NO_SYARYOU    String?
+  KB_SIIRE      String?
+  DD_KEIRIKEI   String?
+  NO_SIRETYUM   String?
+  MJ_SIRENORI   String?
+  KB_SIRETOSY   String?
+  CD_SIRETOGY   String?
+  NO_SIRETOSE   String?
+  MJ_SIRESAKI   String?
+  CD_SITADOTE   String?
+  CD_SITASTAF   String?
+  CD_SIRETENP   String?
+  MJ_FURUSYAM   String?
+  NO_KATASIKI   String?
+  NO_FRAME      String?
+  CD_TENJTENP   String?
+  KI_HNBSIJIK   String?
+  KI_TENTOHYJ   String?
+  CD_ZAIKSYYS   String?
+  KB_SYASYHAN   String?
+  NO_SYADAIBA   String?
+  KI_SIIREKA    String?
+  KN_KEI        String?
+  MJ_ZAIKOST    String?
+  CD_ZAIKOTEN   String?
+  NO_CYUMON     String?
+  KB_URIAGE     String?
+  CD_HANSTAFF   String?
+  MJ_21SYASYS   String?
+  MJ_SIJYOKBM   String?
+  DT_SAISINUP   String?
+  DD_SIIRE      String?
+
+  OldCars_Base OldCars_Base? @relation(fields: [NO_SIRETYUM, NO_SYARYOU, DD_SIIRE], references: [NO_SIRETYUM, NO_SYARYOU, DD_SIIRE])
+
+  @@unique([NO_SIRETYUM, NO_SYARYOU, DD_KEIRIKEI])
+  @@index([NO_SYARYOU])
+  @@index([CD_ZAIKOTEN])
+  @@index([NO_SIRETYUM, NO_SYARYOU, DD_SIIRE])
+}
+
+model UPASS {
+  id                                  Int                @unique @default(autoincrement())
+  dataSource                          String
+  JuchuShitadoriDb                    JuchuShitadoriDb[]
+  sortOrder                           Float              @default(0)
+  sateiID                             String             @unique
+  dealerName                          String?
+  dealerCode                          String?
+  assessmentMode                      String?
+  assessmentMode2                     String?
+  status                              String?
+  valuationType                       String?
+  valuationNumber                     String?
+  palAssessmentNumber                 String?
+  landAffairsName                     String?
+  registrationClassNumber             String?
+  registrationKana                    String?
+  registrationSerialNumber            String?
+  registrationDate                    DateTime?
+  firstRegistrationDate               String?
+  modelYear                           String?
+  modelYearType                       String?
+  chassisNumber                       String?
+  frameNumber                         String?
+  brandName                           String?
+  modelName                           String?
+  ai21ModelCode                       String?
+  grade                               String?
+  type                                String?
+  commonType                          String?
+  engineType                          String?
+  vehicleHistory                      String?
+  capacityMin                         String?
+  capacityMax                         String?
+  maxLoad                             String?
+  weight                              String?
+  grossWeight                         String?
+  length                              String?
+  width                               String?
+  height                              String?
+  displacement                        String?
+  fuelName                            String?
+  typeDesignationNumber               String?
+  categoryNumber                      String?
+  ownerName                           String?
+  userName                            String?
+  useOwnershipSameFlag                String?
+  ai21CustomerCode                    String?
+  customerName                        String?
+  customerKanaSurname                 String?
+  customerKanaName                    String?
+  inspectionExpiryDate                DateTime?
+  odometerDisplayValue                String?
+  newCarWarranty                      String?
+  maintenanceManual                   String?
+  instructionManual                   String?
+  periodicInspectionRecord            String?
+  unexpiredLiabilityAmount            String?
+  liabilityInsuranceStartDate         DateTime?
+  liabilityInsuranceEndDate           DateTime?
+  unexpiredTaxAmount                  String?
+  recyclingCertificate                String?
+  recyclingCertificateNumber          String?
+  shredderDustFee                     String?
+  airbagFee                           String?
+  freonFee                            String?
+  infoManagementFee                   String?
+  recyclingDeposit                    String?
+  importCategory                      String?
+  bodyType                            String?
+  driveType                           String?
+  transmissionType                    String?
+  steering                            String?
+  doorType                            String?
+  coldWeatherSpec                     String?
+  exteriorColor                       String?
+  colorCode                           String?
+  colorName                           String?
+  interiorColor                       String?
+  repairHistory                       String?
+  mileageKm                           String?
+  meterReplacement                    String?
+  totalMileage                        String?
+  importVehicle                       String?
+  modelYearDetail                     String?
+  sunroofMoonroof                     String?
+  frontAc                             String?
+  rearAc                              String?
+  powerSteering                       String?
+  powerWindow                         String?
+  abs                                 String?
+  electricSlideDoor                   String?
+  seatMaterial                        String?
+  airbagFeeDetail                     String?
+  carNaviDa                           String?
+  tv                                  String?
+  rearMonitor                         String?
+  backMonitor                         String?
+  cd                                  String?
+  dvd                                 String?
+  mediaPlayer                         String?
+  rearEntertainment                   String?
+  markLevinson                        String?
+  aeroSpoiler                         String?
+  aluminumWheel                       String?
+  cruiseControl                       String?
+  skidControl                         String?
+  immobilizer                         String?
+  powerSeat                           String?
+  fullFlat                            String?
+  benchSeat                           String?
+  threeRowSeat                        String?
+  walkThrough                         String?
+  lowDown                             String?
+  headlamp                            String?
+  keylessEntry                        String?
+  remoteStarter                       String?
+  etc                                 String?
+  oneOwner                            String?
+  testDrive                           String?
+  activeStabilizer                    String?
+  collisionAvoidance                  String?
+  pedalMisstep                        String?
+  laneDeparture                       String?
+  advancedLight                       String?
+  blindSpotMonitor                    String?
+  panoramicViewMonitor                String?
+  driveRecorder                       String?
+  idling                              String?
+  outlet                              String?
+  additionalEquipment1                String?
+  additionalEquipment2                String?
+  additionalEquipment3                String?
+  additionalEquipment4                String?
+  additionalEquipment5                String?
+  evFlag                              String?
+  reFlag                              String?
+  ac                                  String?
+  navi                                String?
+  tv2                                 String?
+  leather                             String?
+  sr                                  String?
+  aluminum                            String?
+  assessmentdatetime                  DateTime?
+  tradeInPurchaseCategory             String?
+  pickupScheduledDate                 DateTime?
+  requestingName                      String?
+  requestingCode                      String?
+  assessmentname                      String?
+  assessmentcode                      String?
+  assessmentStaffName                 String?
+  assessmentStaffCode                 String?
+  salesname                           String?
+  salescode                           String?
+  salesStaffName                      String?
+  salesStaffCode                      String?
+  plannedPurchaseVehicle              String?
+  residualValueInstallmentFinalDate   DateTime?
+  residualValueInstallmentFinalAmount String?
+  urgencyStatus                       String?
+  valuationContactNotes               String?
+  valuationRequestDatetime            DateTime?
+  comprehensiveEvaluationScore        String?
+  assessmentAdjustmentPointsTotal     String?
+  newCarPriceExcludingTax             String?
+  assessmentPrice                     String?
+  adjustmentAmountTotal               String?
+  adjustmentAmount1                   String?
+  adjustmentAmount1Notes              String?
+  adjustmentAmount2                   String?
+  adjustmentAmount2Notes              String?
+  adjustmentAmount3                   String?
+  adjustmentAmount3Notes              String?
+  adjustmentAmount4                   String?
+  adjustmentAmount5                   String?
+  approvedPrice                       String?
+  assessmentResponsePrice             String?
+  inventoryAssessmentResponsePrice    String?
+  assessmentError                     String?
+  valuationNotesMemo                  String?
+  salesPriceMemo                      String?
+  salesStaffContactNotes              String?
+  valuationName                       String?
+  valuationcode                       String?
+  valuationStoreName                  String?
+  valuationEmployeeCode               String?
+  inspectionname                      String?
+  inspectioncode                      String?
+  pricingStoreName                    String?
+  pricecode                           String?
+  inspectioName                       String?
+  inspectionNameCode                  String?
+  pricingPersonName                   String?
+  pricingPersonCode                   String?
+  valuationResponsedatetime           DateTime?
+  valuationStarttime                  DateTime?
+  valuationEndtime                    DateTime?
+  valuationRequiredtime               String?
+  priceConfirmationdatetime           String?
+  inventoryAssessmentConfirmationdate String?
+  previousValuationnumber             String?
+  previousAssessmentnumber            String?
+  cpoCategory                         String?
+  Ucar                                Ucar?
+}
+
+model QR_Prosess {
+  id               Int       @unique @default(autoincrement())
+  sortOrder        Float     @default(0)
+  sateiId          String    @unique
+  Sorting_results  String?
+  datetime_0       DateTime?
+  email_0          String?
+  store_0          String?
+  runnable_0       String?
+  remarks_0        String?
+  shitadoriKubun_0 String?
+  orderNumber_0    String?
+  datetime_1       DateTime?
+  datetime_2       DateTime?
+  datetime_3       DateTime?
+  datetime_4       DateTime?
+  datetime_6       DateTime?
+  datetime_7       DateTime?
+  datetime_8       DateTime?
+  datetime_9       DateTime?
+  datetime_11      DateTime?
+  datetime_12      DateTime?
+  datetime_13      DateTime?
+  datetime_14      DateTime?
+  max_update       DateTime?
+
+  Ucar Ucar? @relation(fields: [sateiId], references: [sateiID], map: "QR_Prosess_Ucar_sateiId_fkey")
+
+  @@index([sateiId])
+}

@@ -1,0 +1,285 @@
+model Ucar {
+  id                   Int       @id @default(autoincrement())
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime? @updatedAt
+  qrIssuedAt           DateTime?
+  processLastUpdatedAt DateTime?
+  active               Boolean   @default(true)
+  sortOrder            Float     @default(0)
+  sateiDataConfirmedAt DateTime?
+
+  sateiID String @unique @default(uuid())
+
+  //Ai_Satei
+  Model_name                   String?
+  brand_name                   String?
+  Common_name_model            String?
+  Barracks                     String?
+  Model_year                   String?
+  Scheduled_arrival_date       DateTime?
+  Number_Place_name            String?
+  Number_classification_number String?
+  Number_Hiragana              String?
+  number                       String?
+  Vehicle_length               Float?
+  Vehicle_width                Float?
+  Vehicle_height               Float?
+
+  number98    String?
+  DD_SIIRE    String?
+  NO_SIRETYUM String?
+
+  // // 古物台帳DB
+  APPINDEX         String?
+  KI_HANKAKA       Int?
+  CD_ZAIKOTEN_NAME String?
+  CD_ZAIKOTEN      String?
+  DT_SAISINUP      String?
+  NO_SYARYOU       String?
+
+  garageProvedAt DateTime?
+
+  // 書類管理項目
+  arrivedAt    DateTime?
+  passedAt     DateTime?
+  customerName String?
+
+  meihenMasshoShoribi DateTime? //名変抹消はこちらに統一
+  secondMeihenbi      DateTime? //二次登録日
+
+  destination               String?
+  inkanCertificateExpiredAt DateTime?
+  inspectionExpiredAt       DateTime?
+  plate                     String?
+  processedAs               String?
+  purchaseType              String?
+  remarks                   String?
+  runnable                  Boolean?
+  storeToPickUp             String?
+
+  //銀行情報
+  accountName             String?
+  accountNumber           String?
+  annualTax               Int?
+  earlyRecievedAt         DateTime?
+  paymentNoticeRecievedAt DateTime?
+  isPayed                 Boolean?
+  petCount                Int?
+  petPrice                Int?
+  prefCount               Int?
+  prefPrice               Int?
+  registerdAt             DateTime?
+  taxCustomerName         String?
+  taxJobNote              String?
+  accountType             String?
+  DestinationStore        Store?    @relation(name: "DestinationStore", fields: [destinationStoreId], references: [id], onDelete: Cascade)
+  destinationStoreId      Int?
+
+  daihatsuReserve       String?
+  exception             String?
+  inkanAlternate        String?
+  inspectionAlternate   String?
+  paymentNoticeRecieved String?
+  remarksHq             String?
+  upperCarregisteredAt  DateTime?
+
+  User_ID String?
+
+  accountingRecievedAt Boolean?
+  paybackScheduledAt   DateTime?
+
+  // UPASSDBにデータがない場合の一時フィールド（tmp{XXXXXX}形式）
+  tmpPlate                   String? // プレート番号 (registrationSerialNumber相当)
+  tmpVehicleNo               String? // 車両No (NO_SYARYOU相当)
+  tmpColor                   String? // 色 (exteriorColor相当)
+  tmpModelYear               String? // 年式 (modelYear相当)
+  tmpBrandName               String? // ブランド名 (brandName相当)
+  tmpModelName               String? // 車種名 (modelName相当)
+  tmpGrade                   String? // グレード (grade相当)
+  tmpType                    String? // 型式 (type相当)
+  tmpCommonType              String? // 通称型式 (commonType相当)
+  tmpFrameNumber             String? // フレーム番号 (frameNumber相当)
+  tmpTransmissionType        String? // ミッション名称 (transmissionType相当)
+  tmpRegistrationClassNumber String? // 分類番号
+  tmpRegistrationKana        String? // かな
+  tmpLandAffairsName         String? // 陸事名
+
+  // リレーション
+  Number98 Number98? @relation(fields: [number98], references: [number])
+
+  QR_Prosess         QR_Prosess?
+  UcarPaperWorkNotes UcarPaperWorkNotes[]
+  UcarProcess        UcarProcess[]
+
+  AppliedUcarGarageSlot   AppliedUcarGarageSlot?
+  ucarLastProcessMasterId Int?
+
+  BankMaster   BankMaster? @relation(fields: [bankMasterId], references: [id], onDelete: Cascade)
+  bankMasterId Int?
+
+  yuchoShitenNo String?
+
+  BankBranchMaster   BankBranchMaster? @relation(fields: [bankBranchMasterId], references: [id], onDelete: Cascade)
+  bankBranchMasterId Int?
+  User               User?             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId             Int?
+
+  Store   Store? @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  storeId Int?
+
+  TmpRentalStore   Store? @relation(name: "TmpRentalStore", fields: [tmpRentalStoreId], references: [id], onDelete: Cascade)
+  tmpRentalStoreId Int?
+
+  NewCar   NewCar? @relation(fields: [newCarId], references: [id], onDelete: Cascade)
+  newCarId Int?
+
+  UPASS UPASS? @relation(fields: [sateiID], references: [sateiID], onDelete: Cascade)
+
+  OldCars_Base OldCars_Base? @relation(fields: [number98, NO_SYARYOU, DD_SIIRE], references: [NO_SIRETYUM, NO_SYARYOU, DD_SIIRE])
+
+  @@unique([number98, NO_SYARYOU, DD_SIIRE])
+  @@index([bankBranchMasterId])
+  @@index([bankMasterId])
+  @@index([userId])
+  @@index([storeId])
+  @@index([newCarId])
+  @@index([number98])
+  @@index([sateiID])
+  @@index([destinationStoreId])
+  @@index([tmpRentalStoreId])
+}
+
+model Number98 {
+  id         Int       @id @default(autoincrement())
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime? @updatedAt
+  active     Boolean   @default(true)
+  sortOrder  Float     @default(0)
+  number     String    @unique
+  sortNumber Int?
+  occupied   Boolean?  @default(false)
+
+  Ucar         Ucar[]
+  OldCars_Base OldCars_Base[]
+  // ZAIKO_Base   ZAIKO_Base[]
+}
+
+model UcarGarageLocationMaster {
+  id                   Int                    @id @default(autoincrement())
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime?              @updatedAt
+  active               Boolean                @default(true)
+  sortOrder            Float                  @default(0)
+  name                 String                 @unique
+  UcarGarageSlotMaster UcarGarageSlotMaster[]
+}
+
+model UcarGarageSlotMaster {
+  id                         Int                       @id @default(autoincrement())
+  createdAt                  DateTime                  @default(now())
+  updatedAt                  DateTime?                 @updatedAt
+  active                     Boolean                   @default(true)
+  sortOrder                  Float                     @default(0)
+  garageNumber               Int
+  ucarGarageLocationMasterId Int?
+  AppliedUcarGarageSlot      AppliedUcarGarageSlot[]
+  UcarGarageLocationMaster   UcarGarageLocationMaster? @relation(fields: [ucarGarageLocationMasterId], references: [id], onDelete: Cascade)
+
+  @@unique([garageNumber, ucarGarageLocationMasterId], name: "unique_garageNumber_ucarGarageLocationMasterId")
+  @@index([ucarGarageLocationMasterId])
+}
+
+model AppliedUcarGarageSlot {
+  id                     Int                  @id @default(autoincrement())
+  createdAt              DateTime             @default(now())
+  updatedAt              DateTime?            @updatedAt
+  active                 Boolean              @default(true)
+  sortOrder              Float                @default(0)
+  appliedAt              DateTime
+  finishedAt             DateTime?
+  ucarGarageSlotMasterId Int
+  ucarId                 Int                  @unique
+  UcarGarageSlotMaster   UcarGarageSlotMaster @relation(fields: [ucarGarageSlotMasterId], references: [id], onDelete: Cascade)
+  Ucar                   Ucar                 @relation(fields: [ucarId], references: [id], onDelete: Cascade)
+
+  @@unique([ucarId, ucarGarageSlotMasterId], name: "unique_ucarId_ucarGarageSlotMasterId")
+  @@index([ucarGarageSlotMasterId])
+}
+
+model BankMaster {
+  id               Int                @id @default(autoincrement())
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime?          @updatedAt
+  active           Boolean            @default(true)
+  sortOrder        Float              @default(0)
+  code             String             @unique
+  name             String
+  color            String?
+  BankBranchMaster BankBranchMaster[]
+  Ucar             Ucar[]
+}
+
+model BankBranchMaster {
+  id              Int        @id @default(autoincrement())
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime?  @updatedAt
+  active          Boolean    @default(true)
+  sortOrder       Float      @default(0)
+  code            String
+  name            String
+  branchNameShort String?
+  branchKana      String?
+  searchKana      String?
+  color           String?
+  bankMasterId    Int
+  BankMaster      BankMaster @relation(fields: [bankMasterId], references: [id], onDelete: Cascade)
+  Ucar            Ucar[]
+
+  @@unique([code, bankMasterId], name: "unique_code_bankMasterId")
+  @@index([bankMasterId])
+}
+
+model UcarProcess {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  processCode String
+  dataSource  String
+  date        DateTime? @default(now())
+  sortOrder   Float     @default(0)
+  time        String?
+
+  sateiID String?
+
+  remarks String?
+
+  Ucar Ucar? @relation(fields: [sateiID], references: [sateiID], onDelete: Cascade)
+
+  User   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+
+  @@unique([sateiID, date, processCode], name: "unique_sateiID_date_processCode")
+  @@index([date])
+  @@index([userId])
+  @@index([sateiID])
+}
+
+model UcarPaperWorkNotes {
+  id         Int       @id @default(autoincrement())
+  createdAt  DateTime  @default(now())
+  active     Boolean   @default(true)
+  sortOrder  Float     @default(0)
+  userId     Int
+  ucarId     Int
+  type       String?
+  content    String?
+  resolvedAt DateTime?
+
+  updatedAt DateTime? @updatedAt
+  Ucar      Ucar      @relation(fields: [ucarId], references: [id], onDelete: Cascade)
+  User      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([ucarId])
+}

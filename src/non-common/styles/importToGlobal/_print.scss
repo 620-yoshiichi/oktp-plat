@@ -1,0 +1,27 @@
+@media print {
+ .page-break {
+  page-break-before: always;
+ }
+ body * {
+  visibility: hidden;
+ }
+ .print-target {
+  margin: 10px auto;
+  padding: 10px;
+ }
+ .print-target,
+ .print-target * {
+  @apply shadow-none;
+  visibility: visible;
+  page-break-inside: avoid;
+ }
+
+ .print-target {
+  position: absolute;
+  left: 0;
+  top: 0;
+ }
+
+ .recipePrint {
+ }
+}

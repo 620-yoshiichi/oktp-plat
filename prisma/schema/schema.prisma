@@ -1,0 +1,156 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["prismaSchemaFolder"]
+}
+
+datasource db {
+  provider     = "postgresql"
+  url          = env("DATABASE_URL")
+  directUrl    = env("DIRECT_URL")
+  relationMode = "prisma"
+}
+
+model Store {
+  id        Int       @id @default(autoincrement())
+  code      Int       @unique
+  createdAt DateTime  @default(now())
+  active    Boolean   @default(true)
+  sortOrder Float     @default(0)
+  name      String    @unique
+  areaId    Int?
+  updatedAt DateTime? @updatedAt
+
+  tel     String?
+  fax     String?
+  address String?
+
+  BpSummary BpSummary[]
+  Car       Car[]
+  NewCar    NewCar[]
+  Process   Process[]
+  Area      Area?       @relation(fields: [areaId], references: [id], onDelete: Cascade)
+  Ucar      Ucar[]
+
+  User                         User[]
+  ProgressAggregationTable     ProgressAggregationTable[]
+  UserProgressAggregationTable UserProgressAggregationTable[]
+
+  DestinatedUcar Ucar[] @relation("DestinationStore")
+
+  TmpRentalUcar Ucar[] @relation("TmpRentalStore")
+
+  @@index([areaId])
+}
+
+model User {
+  id                   Int       @id @default(autoincrement())
+  code                 Int?      @unique
+  createdAt            DateTime  @default(now())
+  active               Boolean   @default(true)
+  sortOrder            Float     @default(0)
+  name                 String    @default("")
+  kana                 String?   @default("")
+  email                String?   @unique
+  password             String?
+  type                 String?
+  role                 String    @default("ユーザー")
+  tempResetCode        String?
+  tempResetCodeExpired DateTime?
+  storeId              Int?
+  schoolId             Int?
+  rentaStoreId         Int?
+  type2                String?
+  shopId               Int?
+  membershipName       String?
+  damageNameMasterId   Int?
+  color                String?
+  tell                 String?
+  app                  String?
+  updatedAt            DateTime? @updatedAt
+  apps                 String[]
+  loginCheck           DateTime?
+
+  Car                          Car[]
+  CrInspectionHistory          CrInspectionHistory[]
+  CrUser                       CrUser[]
+  NewCar                       NewCar[]
+  Notes                        Notes[]
+  OrderSwitchingHisotory       OrderSwitchingHisotory[]
+  Outcome                      Outcome[]
+  OutcomeMaster                OutcomeMaster[]
+  Process                      Process[]
+  Purpose                      Purpose[]
+  PurposeMaster                PurposeMaster[]
+  RentaCustomer                RentaCustomer[]
+  RentaDailyReport             RentaDailyReport[]
+  RentaDeal                    RentaDeal[]
+  Ucar                         Ucar[]
+  UcarPaperWorkNotes           UcarPaperWorkNotes[]
+  UcarProcess                  UcarProcess[]
+  DamageNameMaster             DamageNameMaster?              @relation(fields: [damageNameMasterId], references: [id], onDelete: Cascade)
+  RentaStore                   RentaStore?                    @relation(fields: [rentaStoreId], references: [id], onDelete: Cascade)
+  Store                        Store?                         @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  UserProcessConfirmation      UserProcessConfirmation[]
+  UserRole                     UserRole[]
+  UserProgressAggregationTable UserProgressAggregationTable[]
+  TenpoTsuikoShinseiDetail     TenpoTsuikoShinseiDetail[]
+
+  @@index([rentaStoreId])
+  @@index([damageNameMasterId])
+  @@index([storeId])
+}
+
+model GoogleAccessToken {
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime? @default(now()) @updatedAt
+  sortOrder   Float     @default(0)
+  email       String    @unique
+  tokenJSON   String?
+  expiry_date DateTime?
+}
+
+model RoleMaster {
+  id          Int        @id @default(autoincrement())
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime?  @updatedAt
+  sortOrder   Float      @default(0)
+  name        String     @unique
+  description String?
+  color       String?
+  apps        String[]
+  UserRole    UserRole[]
+}
+
+model UserRole {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  sortOrder Float     @default(0)
+
+  userId       Int
+  roleMasterId Int
+
+  RoleMaster RoleMaster @relation(fields: [roleMasterId], references: [id], onDelete: Cascade)
+  User       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roleMasterId], name: "userId_roleMasterId_unique")
+  @@index([roleMasterId])
+}
+
+model Calendar {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  sortOrder Float     @default(0)
+  date      DateTime  @unique
+  cr        Boolean   @default(false)
+  sharyobu  Boolean   @default(false)
+}
+
+model ChainMethodLock {
+  id        Int       @id @default(autoincrement())
+  isLocked  Boolean   @default(false)
+  expiresAt DateTime?
+  updatedAt DateTime  @updatedAt
+}

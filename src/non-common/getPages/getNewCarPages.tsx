@@ -1,0 +1,98 @@
+import {getAppSwitchMenus} from 'src/non-common/appSwitchMenus'
+import {pathItemType} from 'src/non-common/path-title-constsnts'
+
+import {CleansePathSource, PageGetterType} from 'src/non-common/path-title-constsnts'
+import {getScopes} from 'src/non-common/scope-lib/getScopes'
+
+export const getNewCarPages = (props: PageGetterType) => {
+  const {session, query, rootPath, pathname, roles} = props
+
+  const scopes = getScopes(session, {query, roles})
+
+  const {login, admin} = scopes
+
+  const linkToMyData = {link: {query: {g_userIdArr: session?.id}}}
+
+  const loginOnly = {exclusiveTo: login, ROOT: [rootPath]}
+  const commons = {...loginOnly, ...linkToMyData}
+
+  const isHQ = !!scopes.getNewCarProps().isHQ
+  const isCR = !!scopes.getNewCarProps().isCR
+
+  const pathSource: pathItemType[] = [
+    {
+      ...{tabId: '', label: 'CR', exclusiveTo: isHQ || isCR, ROOT: [rootPath]},
+      children: [
+        //
+        {
+          tabId: 'crOperation',
+          label: 'CR着工確認',
+          link: {
+            query: {pending: true, not_registered: true},
+          },
+        },
+        {
+          tabId: 'vehicleTransfer',
+          label: '車両移動補助',
+          link: {query: {transferType: `可能`, trasferStutus: `移動なし`}},
+        },
+        {tabId: 'tenpo-tsuiko-renraku', label: '店舗追工連絡'},
+      ],
+    },
+    {
+      tabId: '',
+      label: '店舗',
+      ...commons,
+
+      children: [
+        {
+          tabId: 'newCar',
+          label: '注残管理',
+          ...commons,
+          link: {
+            query: {
+              orderBy: 'DD_FR',
+              orderDirection: 'desc',
+            },
+          },
+        },
+
+        {tabId: 'prediction', label: '集計', ...commons},
+        // {tabId: 'loginCheck', label: 'ログインチェック', ...commons},
+      ],
+    },
+
+    {
+      ...{tabId: '', label: '本部', exclusiveTo: isHQ, ROOT: [rootPath]},
+      children: [
+        {tabId: 'torokuList', label: '登希履歴', link: {query: {pending: true, not_registered: true}}},
+        // {tabId: `paymentCheck`, label: `支払確認`, exclusiveTo: isHQ},
+        {tabId: 'calendar', label: '稼働スケジュール'},
+        {tabId: 'statistics', label: 'LT'},
+        {tabId: 'tairyuList', label: '滞留リスト'},
+      ],
+    },
+
+    {
+      tabId: ``,
+      label: `管理者`,
+      ...commons,
+      children: [
+        {tabId: 'batch', label: 'バッチ', exclusiveTo: scopes.admin},
+        {tabId: 'user', label: 'ユーザー', exclusiveTo: scopes.admin},
+        {tabId: 'store', label: '拠点', exclusiveTo: scopes.admin},
+        {tabId: 'roleMaster', label: '役割マスタ', exclusiveTo: scopes.admin},
+      ],
+    },
+    getAppSwitchMenus(scopes),
+  ]
+
+  return {
+    ...CleansePathSource({
+      rootPath,
+      pathSource,
+      pathname,
+      session,
+    }),
+  }
+}

@@ -1,0 +1,54 @@
+model DeliverSchedule {
+  id             Int              @id @default(autoincrement())
+  createdAt      DateTime         @default(now())
+  sortOrder      Float            @default(0)
+  date           DateTime?        @unique
+  carIds         Int[]
+  updatedAt      DateTime?        @updatedAt
+  LoadingVehicle LoadingVehicle[]
+}
+
+model Area {
+  id             Int              @id @default(autoincrement())
+  createdAt      DateTime         @default(now())
+  sortOrder      Float            @default(0)
+  name           String           @unique
+  color          String?
+  updatedAt      DateTime?        @updatedAt
+  LoadingVehicle LoadingVehicle[]
+  Store          Store[]
+}
+
+model LoadingVehicle {
+  id                Int              @id @default(autoincrement())
+  createdAt         DateTime         @default(now())
+  sortOrder         Float            @default(0)
+  deliverScheduleId Int?
+  areaId            Int?
+  pickedCarIds      String[]
+  slot              Int?
+  updatedAt         DateTime?        @updatedAt
+  Area              Area?            @relation(fields: [areaId], references: [id], onDelete: Cascade)
+  DeliverSchedule   DeliverSchedule? @relation(fields: [deliverScheduleId], references: [id], onDelete: Cascade)
+  Slot              Slot[]
+
+  @@index([areaId])
+  @@index([deliverScheduleId])
+}
+
+model Slot {
+  id               Int            @id @default(autoincrement())
+  createdAt        DateTime       @default(now())
+  sortOrder        Float          @default(0)
+  carId            Int?
+  newCarId         Int?
+  loadingVehicleId Int
+  updatedAt        DateTime?      @updatedAt
+  Car              Car?           @relation(fields: [carId], references: [id], onDelete: Cascade)
+  LoadingVehicle   LoadingVehicle @relation(fields: [loadingVehicleId], references: [id], onDelete: Cascade)
+  NewCar           NewCar?        @relation(fields: [newCarId], references: [id], onDelete: Cascade)
+
+  @@index([loadingVehicleId])
+  @@index([carId])
+  @@index([newCarId])
+}

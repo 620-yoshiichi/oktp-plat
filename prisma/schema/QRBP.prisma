@@ -1,0 +1,199 @@
+model Car {
+  id                        Int               @id @default(autoincrement())
+  createdAt                 DateTime          @default(now())
+  updatedAt                 DateTime?         @updatedAt
+  processLastUpdatedAt      DateTime?
+  active                    Boolean           @default(true)
+  sortOrder                 Float             @default(0)
+  bpNumber                  String
+  orderedAt                 DateTime?
+  orderCategory             Int?
+  estimate                  Int?
+  orderStatusCategory       Int?
+  customerName              String?
+  carName                   String?
+  plate                     String?
+  frame                     String?
+  katashiki                 String?
+  managementCode            String?
+  initDate                  Int?
+  currentEstimate           Int?
+  scheduledAt               DateTime?
+  insuranceType             String?
+  insuranceCompany          String?
+  agreedPrice               Int?
+  userId                    Int?
+  crUserId                  Int?
+  storeId                   Int?
+  damageNameMasterId        Int?
+  orderNumber               String?
+  crScheduledAt             DateTime?
+  representativeCarBpNumber String?
+  favoredByUserIds          Int[]
+  prePermission             Boolean?
+  preStart                  Boolean?
+  carType                   String?           @default("BP")
+  advancePayment            Int?
+  complexKey                String?           @unique
+  DamageNameMaster          DamageNameMaster? @relation(fields: [damageNameMasterId], references: [id], onDelete: Cascade)
+  Store                     Store?            @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  User                      User?             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  CrUser                    CrUser?
+  Notes                     Notes[]
+  Process                   Process[]
+  Slot                      Slot[]
+
+  @@index([userId])
+  @@index([storeId])
+  @@index([scheduledAt])
+  @@index([crScheduledAt])
+  @@index([damageNameMasterId])
+}
+
+model UserProcessConfirmation {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  sortOrder Float     @default(0)
+  userId    Int
+  date      DateTime
+  checked   Boolean   @default(false)
+  updatedAt DateTime? @updatedAt
+  User      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date], name: "unique_userId_date")
+}
+
+model Notes {
+  id               Int            @id @default(autoincrement())
+  createdAt        DateTime       @default(now())
+  active           Boolean        @default(true)
+  sortOrder        Float          @default(0)
+  content          String
+  settled          Boolean?       @default(false)
+  carId            Int?
+  noteNameMasterId Int
+  userId           Int?
+  updatedAt        DateTime?      @updatedAt
+  Car              Car?           @relation(fields: [carId], references: [id], onDelete: Cascade)
+  NoteNameMaster   NoteNameMaster @relation(fields: [noteNameMasterId], references: [id], onDelete: Cascade)
+  User             User?          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([noteNameMasterId, carId])
+  @@index([carId])
+  @@index([userId])
+}
+
+model DamageNameMaster {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  active    Boolean   @default(true)
+  sortOrder Float     @default(0)
+  name      String    @unique
+  type      String?
+  color     String?
+  carPerDay Float     @default(3)
+  updatedAt DateTime? @updatedAt
+  Car       Car[]
+  User      User[]
+}
+
+model NoteNameMaster {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  active    Boolean   @default(true)
+  sortOrder Float     @default(0)
+  name      String    @unique
+  type      String?
+  color     String?
+  updatedAt DateTime? @updatedAt
+  Notes     Notes[]
+}
+
+model BpSummary {
+  id        Int       @id @default(autoincrement())
+  code      Int?      @unique
+  createdAt DateTime  @default(now())
+  active    Boolean   @default(true)
+  sortOrder Float     @default(0)
+  date      DateTime
+  key       String
+  label     String
+  count     Int
+  storeId   Int?
+  updatedAt DateTime? @updatedAt
+  Store     Store?    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  @@unique([date, key, storeId], name: "unique_date_key_storeId")
+  @@index([date, storeId])
+  @@index([storeId])
+}
+
+model ProcessNameMaster {
+  id               Int       @id @default(autoincrement())
+  createdAt        DateTime  @default(now())
+  active           Boolean   @default(true)
+  sortOrder        Float     @default(0)
+  name             String    @unique
+  type             String?
+  color            String?
+  onEnginerProcess Boolean?  @default(false)
+  repetitionLimit  Int?
+  updatedAt        DateTime? @updatedAt
+  Process          Process[]
+
+  @@index([name])
+}
+
+model Process {
+  id                  Int                @id @default(autoincrement())
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime?          @updatedAt
+  date                DateTime?          @default(now())
+  active              Boolean            @default(true)
+  sortOrder           Float              @default(0)
+  time                Float?
+  processNameMasterId Int?
+  carId               Int?
+  userId              Int?
+  storeId             Int?
+  note                String?
+  name                String?
+  type                String?            @default("")
+  Car                 Car?               @relation(fields: [carId], references: [id], onDelete: Cascade)
+  ProcessNameMaster   ProcessNameMaster? @relation(fields: [processNameMasterId], references: [id], onDelete: Cascade)
+  Store               Store?             @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  User                User?              @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([processNameMasterId, carId])
+  @@index([date])
+  @@index([carId])
+  @@index([storeId])
+  @@index([userId])
+}
+
+model ReleaseNotes {
+  id               Int       @id @default(autoincrement())
+  createdAt        DateTime  @default(now())
+  sortOrder        Float     @default(0)
+  rootPath         String
+  title            String?
+  msg              String
+  imgUrl           String?
+  confirmedUserIds Int[]
+  updatedAt        DateTime? @updatedAt
+}
+
+model CrUser {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+  active    Boolean   @default(true)
+  sortOrder Float     @default(0)
+  carId     Int       @unique
+  userId    Int
+  Car       Car       @relation(fields: [carId], references: [id], onDelete: Cascade)
+  User      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([carId, userId], name: "unique_carId_userId")
+  @@index([userId])
+}

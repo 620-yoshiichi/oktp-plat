@@ -1,0 +1,78 @@
+'use client'
+import {Fields} from '@cm/class/Fields/Fields'
+
+import {Button} from '@cm/components/styles/common-components/Button'
+
+import {R_Stack} from '@cm/components/styles/common-components/common-components'
+
+import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
+
+import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+
+import {useCallback} from 'react'
+import {isDev} from '@cm/lib/methods/common'
+import useGlobal from '@cm/hooks/globalHooks/useGlobal'
+import {UcarCL} from '@app/(apps)/ucar/class/UcarCL'
+
+export const useDataSearchForm = () => {
+  const {addQuery, query} = useGlobal()
+
+  const columns = Fields.transposeColumns([
+    {
+      id: 'sateiID',
+      label: '査定ID',
+      type: 'text',
+      form: {
+        defaultValue: query.sateiID ?? (isDev ? UcarCL.testSateiID : ''),
+      },
+    },
+  ])
+  const {BasicForm, latestFormData, formRef} = useBasicFormProps({
+    columns,
+    values: {},
+  })
+
+  const DataSearchForm = useCallback(() => {
+    return (
+      <R_Stack>
+        <BasicForm
+          alignMode="row"
+          latestFormData={latestFormData}
+          onSubmit={async data => {
+            const {result: foundInDb} = await doStandardPrisma('ucar', 'findUnique', {
+              where: {sateiID: String(data.sateiID)},
+              include: {UPASS: {}},
+            })
+
+            if (foundInDb) {
+              addQuery({sateiID: data.sateiID})
+              return {foundInDb}
+            } else {
+              const {result: foundInUpass} = await doStandardPrisma('uPASS', 'findUnique', {
+                where: {sateiID: String(data.sateiID)},
+              })
+
+              if (foundInUpass) {
+                addQuery({sateiID: data.sateiID})
+                return {foundInUpass}
+              } else {
+                // UPASSにデータがない場合、Ucarデータは作成せず、入力フォームで入力してもらう
+                addQuery({sateiID: data.sateiID})
+                return {foundInUpass: null}
+              }
+
+              // return {rows}
+            }
+          }}
+          {...{ControlOptions: {ControlStyle: {width: 140}}}}
+        >
+          <Button>検索</Button>
+        </BasicForm>
+      </R_Stack>
+    )
+  }, [])
+  return {
+    sateiID_Input: latestFormData?.sateiID,
+    DataSearchForm,
+  }
+}

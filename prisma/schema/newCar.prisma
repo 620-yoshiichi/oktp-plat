@@ -1,0 +1,356 @@
+model NewCar {
+  id                            Int       @id @default(autoincrement())
+  createdAt                     DateTime  @default(now())
+  sortOrder                     Float     @default(0)
+  storeId                       Int
+  updatedAt                     DateTime? @updatedAt
+  APPINDEX                      String    @unique
+  CD_HANSTAFF                   String?
+  CD_NCSYAMEI                   String?
+  CD_TENPO                      String?
+  DD_CENTTYAB                   DateTime?
+  DD_CENTYOB                    DateTime?
+  DD_FR                         DateTime?
+  DD_HAISKIBO                   DateTime?
+  DD_HAISOU                     DateTime?
+  DD_HAISOYOT                   DateTime?
+  DD_HONBSYOK                   DateTime?
+  DD_JUCYU                      DateTime?
+  DD_JUCYUKE                    DateTime?
+  DD_KIBONOKI                   DateTime?
+  DD_MAKERSYU                   DateTime?
+  DD_NOSYA                      DateTime?
+  DD_SYOUNIN1                   DateTime?
+  DD_SYOUNIN2                   DateTime?
+  DD_SYOUNIN3                   DateTime?
+  DD_TENPSYOK                   DateTime?
+  DD_TOROKIBO                   DateTime?
+  DD_TOTYAKUY                   DateTime?
+  DD_TOUROKU                    DateTime?
+  DD_URIKZUMI                   DateTime?
+  KJ_KAINMEI1                   String?
+  KJ_KURUMAME                   String?
+  KJ_MEIGIME1                   String?
+  MJ_HANTENKT                   String?
+  NO_CYUMON                     String?
+  NO_FRAME                      String?
+  m0Status                      String?
+  m0_deadline_nousya            DateTime?
+  m0_remarks                    String?
+  m1Status                      String?
+  m1_deadline_money             DateTime?
+  m1_deadline_paper             DateTime?
+  m1_remarks                    String?
+  m2Status                      String?
+  m2_date                       DateTime?
+  m2_remarks                    String?
+  userId                        Int
+  m1Alert                       DateTime?
+  m2Alert                       DateTime?
+  lastApprovedDesiredTorokuDate DateTime?
+  m2_check1                     Boolean?
+  m2_check2                     Boolean?
+  m1_toroku_prediction          DateTime?
+  initial_m0_deadline_nousya    DateTime?
+  initial_m1_deadline_money     DateTime?
+  initial_m1_deadline_paper     DateTime?
+  initial_m1_toroku_prediction  DateTime?
+
+  DD_KARINOKI                     DateTime?
+  DD_SAGTYYO                      DateTime?
+  KB_OSSSIN                       String?
+  MJ_OSSTSNST                     String?
+  KI_BETSIHAK                     Int?      @default(0)
+  KI_MAEUNYUK                     Int?      @default(0)
+  KI_NYURUIKE                     Int?      @default(0)
+  KI_SHRIGK                       Int?      @default(0)
+  KI_SITANYKG                     Int?      @default(0)
+  crOperationRemarks              String?
+  haisou_tooEarly                 Boolean?
+  torokuApplicationRequired       Boolean?
+  DD_CENTSYUB                     DateTime?
+  DD_GENSYNYK                     DateTime?
+  KI_SITADORI                     Int?
+  KI_SITZAN                       Int?
+  DD_TORIKESI                     DateTime?
+  DD_MAX_UPDATE                   DateTime?
+  earliestHaisouDate              DateTime?
+  DD_LATEST_HAISOU                DateTime?
+  DD_HAISYYO                      DateTime?
+  DD_KANSEI                       DateTime?
+  DD_KRHURI                       DateTime?
+  KB_DAIHYNAI                     String?
+  TM_TOTUTMKE                     Int?
+  CUSTOM_DD_SEISANYOTEI           DateTime?
+  CUSTOM_FR_DATE                  String?
+  CUSTOM_FR_KARI_NOTATION         String?
+  CUSTOM_FR_NOTATION_TYPE         String?
+  CUSTOM_FR_PREFIX                String?
+  CUSTOM_FR_SUFFIX                String?
+  CUSTOM_KB_GYOCYOK               String?
+  CUSTOM_KB_SEIBETU               String?
+  CUSTOM_SEISANYOTEI              String?
+  CUSTOM_ZAIKO_KB_NOTATION        String?
+  CUSTOM_paymentCheck             Boolean?
+  CUSTOM_paymentCheckCustomerType String?
+  CUSTOM_NET_SHITADORI_PRICE      Int?
+  KB_ZAIKOJYO                     String?
+  isDaikoNosya                    Boolean   @default(false)
+  sateiNyukobiAlert               Boolean   @default(false)
+  shitadoriAlertCount             Int?
+
+  ossSpreadsheetUrl String?
+
+  transferType String @default("可能")
+
+  CrInspectionHistory      CrInspectionHistory[]
+  DesiredTorokuDate        DesiredTorokuDate[]
+  OrderSwitchingHisotory   OrderSwitchingHisotory? @relation(fields: [orderSwitchingHisotoryId], references: [id])
+  orderSwitchingHisotoryId Int?                    @unique
+  Store                    Store                   @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  User                     User                    @relation(fields: [userId], references: [id])
+  NewCarLeadTime           NewCarLeadTime[]
+  Slot                     Slot[]
+
+  Ucar                       Ucar[]
+  SeisanYoteiHistory         SeisanYoteiHistory[]
+  FuriateStatusOnApprovement FuriateStatusOnApprovement?
+  CarTransferHistory         CarTransferHistory[]
+
+  TenpoTsuikoShinseiHeader TenpoTsuikoShinseiHeader[]
+  TenpoTsuikoData          TenpoTsuikoData[]
+
+  JuchuShitadoriDb JuchuShitadoriDb[]
+
+  @@index([userId])
+  @@index([storeId])
+}
+
+model OrderSwitchingHisotory {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  sortOrder Float     @default(0)
+  userId    Int
+  NewCar    NewCar?
+  User      User      @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+model DesiredTorokuDate {
+  id         Int       @id @default(autoincrement())
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime? @updatedAt
+  sortOrder  Float     @default(0)
+  date       DateTime
+  remarks    String?
+  newCarId   Int
+  status     String?
+  torokuType String?
+  NewCar     NewCar    @relation(fields: [newCarId], references: [id], onDelete: Cascade)
+
+  @@index([newCarId])
+}
+
+model NewCarLeadTime {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  sortOrder Float     @default(0)
+  key       String
+  value     Float?
+  newCarId  Int
+  NewCar    NewCar    @relation(fields: [newCarId], references: [id])
+
+  @@unique([newCarId, key], name: "newCarId_key_unique")
+}
+
+model CrInspectionHistory {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  sortOrder Float     @default(0)
+  newCarId  Int
+  userId    Int
+  status    String?
+  date      DateTime?
+  NewCar    NewCar    @relation(fields: [newCarId], references: [id])
+  User      User      @relation(fields: [userId], references: [id])
+
+  @@index([newCarId])
+  @@index([userId])
+}
+
+model SeisanYoteiHistory {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  sortOrder Float     @default(0)
+
+  key      String @unique
+  NewCar   NewCar @relation(fields: [newCarId], references: [id])
+  newCarId Int
+
+  from       String
+  to         String
+  fromDate   DateTime?
+  toDate     DateTime?
+  issuedAt   DateTime
+  notifyedAt DateTime?
+
+  @@index([newCarId, key], name: "newCarId_key_unique")
+}
+
+model UserProgressAggregationTable {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  sortOrder Float     @default(0)
+
+  date    DateTime
+  timing  String
+  label   String
+  count   Int
+  storeId Int?
+  Store   Store?   @relation(fields: [storeId], references: [id])
+  userId  Int
+  User    User     @relation(fields: [userId], references: [id])
+
+  @@unique([date, userId, timing, label], name: "date_userId_timing_label_unique")
+  @@index([storeId])
+  @@index([userId])
+}
+
+model ProgressAggregationTable {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  sortOrder Float     @default(0)
+
+  date    DateTime
+  storeId Int
+  Store   Store    @relation(fields: [storeId], references: [id])
+
+  ProgressAggregationTableRecord ProgressAggregationTableRecord[]
+
+  @@unique([date, storeId], name: "date_storeId_unique")
+  @@index([storeId])
+}
+
+model ProgressAggregationTableRecord {
+  id                         Int                      @id @default(autoincrement())
+  createdAt                  DateTime                 @default(now())
+  updatedAt                  DateTime?                @updatedAt
+  sortOrder                  Float                    @default(0)
+  timing                     String
+  label                      String
+  count                      Int
+  ProgressAggregationTable   ProgressAggregationTable @relation(fields: [progressAggregationTableId], references: [id])
+  progressAggregationTableId Int
+
+  @@unique([progressAggregationTableId, timing, label], name: "progressAggregationTableId_timing_label_unique")
+}
+
+model FuriateStatusOnApprovement {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  sortOrder Float     @default(0)
+
+  newCarId Int    @unique
+  NewCar   NewCar @relation(fields: [newCarId], references: [id])
+
+  DD_FR DateTime?
+}
+
+model CarTransferHistory {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  sortOrder Float     @default(0)
+
+  location                 String?
+  transferredAt            DateTime?
+  transferConfirmedOnAi21  Boolean?
+  recoveredAt              DateTime?
+  recoveredConfirmedOnAi21 Boolean?
+  remarks                  String?
+
+  NewCar   NewCar @relation(fields: [newCarId], references: [id])
+  newCarId Int
+
+  @@index([newCarId])
+}
+
+// 振り当て済み
+// 配送希望なし
+// 登録されていないもの
+
+model TenpoTsuikoShinseiHeader {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  sortOrder Float     @default(0)
+
+  date          DateTime
+  newCarId      Int
+  approvalOrder Int      @default(1)
+  active        Boolean  @default(true)
+
+  NewCar                   NewCar                     @relation(fields: [newCarId], references: [id], onDelete: Cascade)
+  TenpoTsuikoShinseiDetail TenpoTsuikoShinseiDetail[]
+
+  @@index([newCarId])
+}
+
+model TenpoTsuikoShinseiDetail {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  sortOrder Float     @default(0)
+
+  userId                     Int
+  status                     String    @default("waiting") // waiting, pending, approved, rejected
+  comment                    String?
+  approvalOrder              Int
+  tenpoTsuikoShinseiHeaderId Int
+  processedAt                DateTime?
+
+  User                     User                     @relation(fields: [userId], references: [id])
+  TenpoTsuikoShinseiHeader TenpoTsuikoShinseiHeader @relation(fields: [tenpoTsuikoShinseiHeaderId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([tenpoTsuikoShinseiHeaderId])
+}
+
+model TenpoTsuikoData {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  sortOrder Float     @default(0)
+
+  // BigQueryから取得したデータ
+  APPINDEX      String  @unique
+  APPINDEX_FKEY String?
+  CD_TUIKO      String
+  MJ_TUIKOM     String?
+  KI_TUIKOKIN   Int?
+  CD_TENPO      String?
+  CD_HANSTAFF   String?
+  KJ_KURUMAME   String?
+  NO_CYUMON     String?
+  KJ_KAINMEI1   String?
+
+  // NewCarとの関連
+  // newCarId Int?
+  NewCar NewCar? @relation(fields: [APPINDEX_FKEY], references: [APPINDEX], onDelete: Cascade)
+
+  // 処理済みフラグ
+  processed   Boolean   @default(false)
+  processedAt DateTime?
+
+  @@index([APPINDEX_FKEY])
+  @@index([CD_TUIKO])
+  @@index([processed])
+}
