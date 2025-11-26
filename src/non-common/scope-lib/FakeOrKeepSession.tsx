@@ -3,15 +3,17 @@ import {fetchAlt} from '@cm/lib/http/fetch-client'
 import {basePath} from '@cm/lib/methods/common'
 import {getSchema} from '@cm/lib/methods/prisma-schema'
 import {getScopes} from 'src/non-common/scope-lib/getScopes'
+import {globalSelectorPrefix} from 'src/non-common/searchParamStr'
 
 export const FakeOrKeepSession = async ({query, realSession}) => {
   const tempScopes = getScopes(realSession, {query})
 
   const globalUserId = tempScopes.getGlobalUserId()
 
-  const globalKeys = Object.keys(query ?? {}).filter(key => key.includes('g_'))
+  const globalKeys = Object.keys(query ?? {}).filter(key => key.includes(globalSelectorPrefix))
 
-  const models = globalKeys.map(key => key.replace(/g_|Id/g, ''))
+  const models = globalKeys.map(key => key.replace(globalSelectorPrefix, '').replace('Id', ''))
+
   const schema = getSchema()
   let fakeUser: any = null
   const getFakeUsers: any = await Promise.all(

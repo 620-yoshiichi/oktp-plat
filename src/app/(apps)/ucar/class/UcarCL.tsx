@@ -21,6 +21,7 @@ import {QueryBuilder} from '@app/(apps)/ucar/class/QueryBuilder'
 import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
 import {Alert} from '@cm/components/styles/common-components/Alert'
 import {R_Stack} from '@cm/components/styles/common-components/common-components'
+import {globalIds} from 'src/non-common/searchParamStr'
 
 export type ucarData = Ucar & {
   OldCars_Base: OldCars_Base
@@ -237,7 +238,7 @@ export class UcarCL {
   static col = {
     userIdColumn: {
       label: 'スタッフ',
-      id: 'g_userId',
+      id: globalIds.globalUserId,
       form: {},
       forSelect: {
         config: {

@@ -1,7 +1,9 @@
 // ページングパラメータのバリデーション定数と関数
 
+import {paginationPrefix} from 'src/non-common/searchParamStr'
+
 export const PAGINATION_CONSTANTS = {
-  PREFIX: '__pg__',
+  PREFIX: paginationPrefix,
   MAX_TAKE: 500,
   MIN_PAGE: 1,
   MIN_TAKE: 1,
@@ -95,4 +97,3 @@ export function validatePaginationParams(
     },
   }
 }
-

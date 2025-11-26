@@ -126,7 +126,6 @@
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "prisma": "^6.17.1",
-    "prisma-markdown": "^4.0.0",
     "tailwindcss": "^4.1.4",
     "tw-animate-css": "^1.3.0",
     "typescript": "^5.7.3",

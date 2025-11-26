@@ -162,12 +162,6 @@ export default function CarCardPopover(props: {
           className: `onHover`,
 
           onClick: e => {
-            // if (e.ctrlKey) {
-            //   const href = HREF(`newCar/newCar?search=NEWCAR[contains:NO_CYUMON=${theCar.NO_CYUMON}`, {}, query)
-            //   window.open(href, '_blank')
-            //   return
-            // }
-
             CrScheduleSwitcherModal_HK.setGMF_OPEN({theCar, lastHistory})
           },
         }}

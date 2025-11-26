@@ -5,6 +5,7 @@ import {MyFormType} from '@cm/types/form-types'
 import {anyObject} from '@cm/types/utility-types'
 
 import {arr__findCommonValues} from '@cm/class/ArrHandler/array-utils/data-operations'
+import {globalIds} from 'src/non-common/searchParamStr'
 
 type roleArray = string[] | string
 type session = any
@@ -52,7 +53,7 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
   const login = session?.id ? true : false
   const id = session?.id
 
-  const {admin, globalUserId, getGlobalUserId} = judgeIsAdmin(session, query)
+  const {admin, getGlobalUserId} = judgeIsAdmin(session, query)
 
   const getQrbpProps = () => {
     const cr = !!arr__findCommonValues(
@@ -117,8 +118,8 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
 
   /**新レン関係 */
   const getNewCarProps = () => {
-    const userId = !admin ? session?.id : Number(query?.g_userId ?? session?.id ?? 0)
-    const storeId = !admin ? session?.storeId : Number(query?.g_storeId ?? session?.storeId ?? 0)
+    const userId = !admin ? session?.id : Number(query?.[globalIds.globalUserId] ?? session?.id ?? 0)
+    const storeId = !admin ? session?.storeId : Number(query?.[globalIds.globalStoreId] ?? session?.storeId ?? 0)
     const userType = !admin ? session?.type : (query?.type ?? session?.type)
 
     const isHQ = !!arr__findCommonValues(
@@ -153,17 +154,17 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
 
       if (isHQ) {
         newCarWhere = {}
-        if (query?.g_storeId) {
-          newCarWhere[`storeId`] = Number(query?.g_storeId)
+        if (query?.[globalIds.globalStoreId]) {
+          newCarWhere[`storeId`] = Number(query?.[globalIds.globalStoreId])
         }
 
-        if (query?.g_selectedUserId) {
-          newCarWhere[`userId`] = Number(query?.g_selectedUserId)
+        if (query?.[globalIds.globalSelectedUserId]) {
+          newCarWhere[`userId`] = Number(query?.[globalIds.globalSelectedUserId])
         }
       } else if (isStoreManager) {
         newCarWhere = {}
-        if (query?.g_selectedUserId) {
-          newCarWhere[`userId`] = Number(query?.g_selectedUserId)
+        if (query?.[globalIds.globalSelectedUserId]) {
+          newCarWhere[`userId`] = Number(query?.[globalIds.globalSelectedUserId])
         } else {
           newCarWhere = {
             OR: [
@@ -206,7 +207,7 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
     return {...result}
   }
   const getShinernScopes = () => {
-    const userId = !admin ? session?.id : Number(query?.g_userId ?? session?.id ?? 0)
+    const userId = !admin ? session?.id : Number(query?.[globalIds.globalUserId] ?? session?.id ?? 0)
     const userType = !admin ? session?.type : (query?.type ?? session?.type)
     const isHQ = userType === '本社'
     const isManager = userType === 'マネージャー'

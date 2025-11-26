@@ -160,7 +160,6 @@ export class UCAR_CODE {
       label: '古物台帳との連携ができていません。',
       color: '#fff8dc',
       checkAlert: (ucar: ucarData) => {
-        console.log(ucar.OldCars_Base) //logs
         return ucar.number98 && !ucar.OldCars_Base
       },
     },

@@ -72,8 +72,6 @@ const CalendarPage = async props => {
     type: `add`,
   })
 
-  // const {idsArrToString} = getQueryId({query, queryKey: 'g_userIdArr'})
-
   const totalMode = UserJQ.extract().string().current.length > 1 && query.tableMode === 'byDate'
 
   const commonBy = totalMode ? ['date'] : ['userId', 'date']

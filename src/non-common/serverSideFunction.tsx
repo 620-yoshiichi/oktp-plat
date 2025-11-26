@@ -44,10 +44,19 @@ export const fetchUserRole = async ({session}) => {
         },
       },
     },
-    where: {userId: typeof session?.id === `string` ? 0 : (session?.id ?? 0)},
+    where: {
+      userId: typeof session?.id === `string` ? 0 : (session?.id ?? 0),
+    },
   }
+
   let {result: roles} = await doStandardPrisma(`userRole`, `findMany`, args)
-  roles = roles?.map(v => ({...v, name: v.RoleMaster.name, color: v.RoleMaster.color}))
+  roles = roles?.map(v => {
+    return {
+      ...v,
+      name: v.RoleMaster.name,
+      color: v.RoleMaster.color,
+    }
+  })
 
   return {roles}
 }
@@ -79,6 +88,7 @@ export const initServerComopnent = async ({query}) => {
   const {session: realSession} = await sessionOnServer()
 
   const session = await FakeOrKeepSession({query, realSession: realSession})
+
   const {roles} = await fetchUserRole({session})
 
   const scopes = getScopes(session, {query, roles})

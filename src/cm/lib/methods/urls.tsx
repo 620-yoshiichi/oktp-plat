@@ -1,4 +1,5 @@
 import {ObjectMap} from 'src/cm/lib/methods/common'
+import {globalSelectorPrefix} from 'src/non-common/searchParamStr'
 
 export const addQuerySentence = (additionalQuery = {}, currentQuery = {}, keepOldQuery = true) => {
   let newQuery = {...additionalQuery}
@@ -33,7 +34,7 @@ export const makeQuery = searchParams => {
 export const makeGlobalQuery = query => {
   const globalQuery = {}
   Object.keys(query ?? {}).forEach(key => {
-    if (key.includes('g_')) {
+    if (key.includes(globalSelectorPrefix)) {
       const currentValue = query[key]
 
       globalQuery[key] = currentValue

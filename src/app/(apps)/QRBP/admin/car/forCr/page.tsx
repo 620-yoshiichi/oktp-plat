@@ -17,6 +17,7 @@ export default async function Page(props) {
   const params = await props.params
   const dataModelName = 'car'
   const {session} = await initServerComopnent({query})
+
   const gte = toUtc('2023-12-1')
 
   const storeQueryObj = await (async () => {

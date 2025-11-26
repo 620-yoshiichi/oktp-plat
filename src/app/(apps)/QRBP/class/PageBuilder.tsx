@@ -3,6 +3,7 @@
 import {Fields} from '@cm/class/Fields/Fields'
 import {roleMaster} from '@cm/class/builders/PageBuilderVariables'
 import GlobalIdSelector from '@cm/components/GlobalIdSelector/GlobalIdSelector'
+import {globalIds} from 'src/non-common/searchParamStr'
 
 export class PageBuilder {
   static roleMaster = roleMaster
@@ -19,7 +20,7 @@ export class PageBuilder {
         columns.push([
           {
             label: 'ス',
-            id: 'g_userId',
+            id: globalIds.globalUserId,
             form: {},
             forSelect: {
               config: {

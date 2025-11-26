@@ -8,12 +8,13 @@ import {breakLines} from '@cm/lib/value-handler'
 import {PencilSquareIcon} from '@heroicons/react/20/solid'
 import {roleIs} from 'src/non-common/scope-lib/judgeIsAdmin'
 import {forSelectConfig} from '@cm/types/select-types'
+import {globalIds} from 'src/non-common/searchParamStr'
 
 export class Shinren {
   static col = {
     globalUserIdColumn: {
       label: 'ス',
-      id: 'g_userId',
+      id: globalIds.globalUserId,
       forSelect: {
         config: {
           where: {
