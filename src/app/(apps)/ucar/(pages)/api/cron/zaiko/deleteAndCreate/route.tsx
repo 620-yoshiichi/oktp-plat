@@ -6,6 +6,9 @@ import {NextRequest, NextResponse} from 'next/server'
 import {isCron} from 'src/non-common/serverSideFunction'
 import {processBatchWithRetry} from '@cm/lib/server-actions/common-server-actions/processBatchWithRetry'
 import {useRawSql} from '@cm/class/SqlBuilder/useRawSql'
+import {BQ_parser} from '@app/api/google/big-query/bigQueryParser'
+import {Days} from '@cm/class/Days/Days'
+import {toUtc} from '@cm/class/Days/date-utils/calculations'
 
 // kobutsu = 古物台帳
 // 古物台帳のデータを同期するためのAPI
@@ -19,11 +22,27 @@ export const GET = async (req: NextRequest) => {
   }
 
   // const BQ_OldCars_Base = bigQuery__select ({datasetId: 'OrdersDB', tableId: 'OldCars_Base'})
-  const body = await bigQuery__select({
+  let body = await bigQuery__select({
     datasetId: 'OrdersDB',
-    tableId: 'OldCars_Base',
+    tableId: 'ZAIKO_Base',
     sqlString: sql`SELECT * FROM okayamatoyopet.OrdersDB.ZAIKO_Base
     `,
+  })
+
+  body = body.map(item => {
+    Object.keys(item).forEach(key => {
+      const toDate = BQ_parser.parseDate(item[key])
+      const toDateTarget = key.includes('DD_') && key !== 'DD_SIREBD'
+      if (toDateTarget) {
+        if (Days.validate.isDate(toDate)) {
+          item[key] = toUtc(toDate)
+        } else {
+          item[key] = null
+        }
+      }
+    })
+
+    return item
   })
 
   // // AI査定データの削除

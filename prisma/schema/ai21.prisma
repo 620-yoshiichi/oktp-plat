@@ -75,9 +75,9 @@ model JuchuShitadoriDb {
 }
 
 model OldCars_Base {
-  id          Int     @unique @default(autoincrement())
-  sortOrder   Float   @default(0)
-  APPINDEX    String  @id @unique
+  id          Int       @unique @default(autoincrement())
+  sortOrder   Float     @default(0)
+  APPINDEX    String    @id @unique
   CD_21SYAMEI String?
   MJ_SYAMEI   String?
   CD_HANSTAFF String?
@@ -92,7 +92,7 @@ model OldCars_Base {
   CD_HANTOGY  String?
   NO_HANTOSE  String?
   CD_SITASTAF String?
-  DD_SIIRE    String?
+  DD_SIIRE    DateTime?
   DD_SIREBD   String?
   SU_SYODOTOR String?
   NO_FRAME    String?
@@ -111,12 +111,12 @@ model OldCars_Base {
   CD_SIRETENP String?
   KJ_SIRESAKI String?
   KB_UC1JTORO String?
-  DD_URIAGE   String?
-  DD_1JTOROKU String?
-  DD_2JTOROKU String?
-  DD_SYKNMANR String?
-  DD_SITASYUK String?
-  DD_NOSYA    String?
+  DD_URIAGE   DateTime?
+  DD_1JTOROKU DateTime?
+  DD_2JTOROKU DateTime?
+  DD_SYKNMANR DateTime?
+  DD_SITASYUK DateTime?
+  DD_NOSYA    DateTime?
   MJ_SITADOTE String?
 
   Number98   Number98?    @relation(fields: [NO_SYARYOU], references: [number])
@@ -128,13 +128,13 @@ model OldCars_Base {
 }
 
 model ZAIKO_Base {
-  id            Int     @unique @default(autoincrement())
-  sortOrder     Float   @default(0)
-  APPINDEX      String  @id @unique
+  id            Int       @unique @default(autoincrement())
+  sortOrder     Float     @default(0)
+  APPINDEX      String    @id @unique
   APPINDEX_FKEY String
   NO_SYARYOU    String?
   KB_SIIRE      String?
-  DD_KEIRIKEI   String?
+  DD_KEIRIKEI   DateTime?
   NO_SIRETYUM   String?
   MJ_SIRENORI   String?
   KB_SIRETOSY   String?
@@ -163,7 +163,7 @@ model ZAIKO_Base {
   MJ_21SYASYS   String?
   MJ_SIJYOKBM   String?
   DT_SAISINUP   String?
-  DD_SIIRE      String?
+  DD_SIIRE      DateTime?
 
   OldCars_Base OldCars_Base? @relation(fields: [NO_SIRETYUM, NO_SYARYOU, DD_SIIRE], references: [NO_SIRETYUM, NO_SYARYOU, DD_SIIRE])
 

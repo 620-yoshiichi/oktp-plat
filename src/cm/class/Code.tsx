@@ -5,7 +5,6 @@ export type codeItemCore = {
   label: string
   color?: string
   type?: string
-  // postHandler?: postHandlerProps
 }
 
 export type postHandlerProps = {

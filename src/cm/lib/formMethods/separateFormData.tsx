@@ -1,9 +1,8 @@
 import {additionalPropsType, dataModelNameType} from '@cm/types/types'
-import {Days} from '@cm/class/Days/Days'
 
 import {anyObject} from '@cm/types/utility-types'
 
-import {StrHandler} from '@cm/class/StrHandler'
+import { getModelFieldsInfomation} from '@cm/lib/methods/prisma-schema'
 
 export type myFormDefaultUpsertPropType = {
   latestFormData: anyObject
@@ -14,53 +13,69 @@ export type myFormDefaultUpsertPropType = {
   columns
 }
 
-export const separateFormData = ({latestFormData, additionalPayload, columns}) => {
-  // Object.keys(additionalPayload ?? {}).forEach(key => {
-  //   if (latestFormData[key]) {
-  //     delete additionalPayload[key]
-  //   }
-  // })
-
+export const separateFormData = ({dataModelName, latestFormData, additionalPayload, columns}) => {
   const prismaDataObject = {...latestFormData, ...additionalPayload}
 
-  const relationIdOrigin = {...prismaDataObject}
-  const modelBasicDataOrigin = {...prismaDataObject}
-
-  Object.keys(modelBasicDataOrigin).forEach(key => {
-    const col = columns.flat().find(col => col.id === key)
-    const isNonDateObject =
-      !Array.isArray(modelBasicDataOrigin[key]) &&
-      typeof modelBasicDataOrigin[key] === 'object' &&
-      !Days.validate.isDate(modelBasicDataOrigin[key]) &&
-      modelBasicDataOrigin[key] !== null
-
-    const isRelationalId = key.includes('Id')
-
-    const startsWithCapital = StrHandler.startsWithCapital(key)
-    // && Omit.includes(key) //3月27日(木) 削除
-
-    const formHidenTrue = col?.form?.hidden === true
-
-    if (isNonDateObject || isRelationalId || startsWithCapital || formHidenTrue) {
-      /**リレーション先の削除 */
-      delete modelBasicDataOrigin[key]
+  Object.keys(prismaDataObject).forEach(key => {
+    if (key.includes('readOnly')) {
+      delete prismaDataObject[key]
     }
   })
 
-  const {id, ...modelBasicData} = modelBasicDataOrigin
+  const {primitiveFieldObj, objectFieldObj} = getModelFieldsInfomation(dataModelName)
 
-  const relationIds = {}
-  Object.keys(relationIdOrigin).forEach(key => {
-    if (key.match(/.+Id/)) {
-      const relationalTableId = prismaDataObject[key]
+  // // const basicFields=
 
-      relationIds[key] = relationalTableId
+  // const relationIdOrigin = {...prismaDataObject}
+  // const modelBasicDataOrigin = {...prismaDataObject}
+
+  // Object.keys(modelBasicDataOrigin).forEach(key => {
+  //   const col = columns.flat().find(col => col.id === key)
+  //   const isNonDateObject =
+  //     !Array.isArray(modelBasicDataOrigin[key]) &&
+  //     typeof modelBasicDataOrigin[key] === 'object' &&
+  //     !Days.validate.isDate(modelBasicDataOrigin[key]) &&
+  //     modelBasicDataOrigin[key] !== null
+
+  //   const isRelationalId = key.includes('Id')
+
+  //   const startsWithCapital = StrHandler.startsWithCapital(key)
+  //   // && Omit.includes(key) //3月27日(木) 削除
+
+  //   const formHidenTrue = col?.form?.hidden === true
+
+  //   if (isNonDateObject || isRelationalId || startsWithCapital || formHidenTrue) {
+  //     /**リレーション先の削除 */
+  //     delete modelBasicDataOrigin[key]
+  //   }
+  // })
+
+  // const relationIds = {}
+  // Object.keys(relationIdOrigin).forEach(key => {
+  //   if (key.match(/.+Id/)) {
+  //     const relationalTableId = prismaDataObject[key]
+
+  //     relationIds[key] = relationalTableId
+  //   }
+  // })
+
+  const pseudoModelBasicData = {}
+  // const pseudoRelationIds = {}
+  Object.keys(prismaDataObject).forEach(key => {
+    const col = columns.flat().find(col => col.id === key)
+
+    if (col?.form?.hidden === true) {
+      return
+    }
+
+    if (primitiveFieldObj[key]) {
+      pseudoModelBasicData[key] = prismaDataObject[key]
     }
   })
 
   return {
-    id,
-    modelBasicData,
-    relationIds,
+    id: prismaDataObject.id,
+    modelBasicData: pseudoModelBasicData as any,
+    // relationIds,
   }
 }

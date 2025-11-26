@@ -19,6 +19,7 @@ export class QueryBuilder {
       },
 
       include: {
+        OldCars_Base: {},
         TmpRentalStore: {},
         DestinationStore: {},
         UPASS: {

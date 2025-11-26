@@ -29,7 +29,8 @@ export const updateSimply = async (props: {
     delete cleansedFormData[obj.id] //親子構造のモデルは除去し、別途処理する
   })
 
-  const {id, modelBasicData, relationIds} = separateFormData({
+  const {id, modelBasicData} = separateFormData({
+    dataModelName,
     latestFormData: cleansedFormData,
     additionalPayload,
     columns,
@@ -47,7 +48,7 @@ export const updateSimply = async (props: {
   const payload = {
     ...additionalPayload, //元々最後に設置してアップデートする予定でだったが、初期値とするように設定
     ...modelBasicData,
-    ...relationIds,
+    // ...relationIds,
     // include: additionalInclude,
   }
 

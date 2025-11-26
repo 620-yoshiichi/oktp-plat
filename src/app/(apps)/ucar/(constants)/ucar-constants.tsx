@@ -4,8 +4,12 @@ import {Prisma} from '@prisma/client'
 import {defaultRegister} from '@cm/class/builders/ColBuilderVariables'
 import {isDev} from '@cm/lib/methods/common'
 
-export const sold: Prisma.UcarWhereInput = {KI_HANKAKA: {gt: 0}}
-export const unsold: Prisma.UcarWhereInput = {KI_HANKAKA: {not: {gt: 0}}}
+export const sold: Prisma.UcarWhereInput = {
+  // KI_HANKAKA: {gt: 0}
+}
+export const unsold: Prisma.UcarWhereInput = {
+  // KI_HANKAKA: {not: {gt: 0}}
+}
 
 export const UCAR_CONSTANTS = {
   columns: {

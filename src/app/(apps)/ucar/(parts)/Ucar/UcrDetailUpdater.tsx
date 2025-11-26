@@ -10,27 +10,17 @@ import PlaceHolder from '@cm/components/utils/loader/PlaceHolder'
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
 
-import React from 'react'
-import useSWR from 'swr'
+import React, {useEffect, useState} from 'react'
 
 export default function UcrDetailUpdater({sateiID, close}) {
   const useGlobalProps = useGlobal()
 
-  const key = [sateiID, 'UcrDetailUpdater'].join('_')
-
-  const {data} = useSWR(key, async () => {
-    // const {available98Numbers, next98Number} = await getAvailable98Numbers({})
-
-    const ucar = await UcarCL.fetcher.getUcarDataBySateiId(sateiID)
-
-    // const {result: next98NumberModel} = await doStandardPrisma(`number98`, `findFirst`, {where: {number: next98Number}})
-
-    return {
-      ucar,
-      // next98NumberModel,
-      // available98Numbers,
-    }
-  })
+  const [data, setdata] = useState<any>(null)
+  useEffect(() => {
+    UcarCL.fetcher.getUcarDataBySateiId(sateiID).then(ucar => {
+      setdata({ucar})
+    })
+  }, [])
 
   if (!data) return <PlaceHolder>読み込み中</PlaceHolder>
 
@@ -72,6 +62,7 @@ const Main = ({close, useGlobalProps, ucar}) => {
           additional: {},
           formData,
         })
+
         close()
       })
     }

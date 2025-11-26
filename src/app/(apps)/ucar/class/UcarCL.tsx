@@ -13,6 +13,7 @@ import {
   User,
   UcarGarageSlotMaster,
   UcarGarageLocationMaster,
+  OldCars_Base,
 } from '@prisma/client'
 import {roleIs} from 'src/non-common/scope-lib/judgeIsAdmin'
 import {QueryBuilder} from '@app/(apps)/ucar/class/QueryBuilder'
@@ -22,6 +23,7 @@ import {Alert} from '@cm/components/styles/common-components/Alert'
 import {R_Stack} from '@cm/components/styles/common-components/common-components'
 
 export type ucarData = Ucar & {
+  OldCars_Base: OldCars_Base
   UPASS: UPASS & {
     RootUpass: UPASS
   }
@@ -194,42 +196,42 @@ export class UcarCL {
       return result
     },
 
-    matchSateiWithKobutsu: (props: {
-      ucar: Ucar
-      kobutsuUcar: {
-        NO_SYADAIBA?: string
-        NO_SIRETOSE?: string
-      }
-    }) => {
-      const {ucar, kobutsuUcar} = props
+    // matchSateiWithKobutsu: (props: {
+    //   ucar: Ucar
+    //   kobutsuUcar: {
+    //     NO_SYADAIBA?: string
+    //     NO_SIRETOSE?: string
+    //   }
+    // }) => {
+    //   const {ucar, kobutsuUcar} = props
 
-      const matchWithFrame_Plate = () => {
-        const sateiKey = [
-          //
-          ucar.Barracks?.slice(-4),
-          ucar.number?.toString().slice(-4),
-        ].join(`_`)
-        const kobutsuKey = [
-          //
-          kobutsuUcar.NO_SYADAIBA?.slice(-4),
-          kobutsuUcar.NO_SIRETOSE?.slice(-4),
-        ].join(`_`)
-        return sateiKey === kobutsuKey
-      }
+    //   const matchWithFrame_Plate = () => {
+    //     const sateiKey = [
+    //       //
+    //       ucar.Barracks?.slice(-4),
+    //       ucar.number?.toString().slice(-4),
+    //     ].join(`_`)
+    //     const kobutsuKey = [
+    //       //
+    //       kobutsuUcar.NO_SYADAIBA?.slice(-4),
+    //       kobutsuUcar.NO_SIRETOSE?.slice(-4),
+    //     ].join(`_`)
+    //     return sateiKey === kobutsuKey
+    //   }
 
-      const matchWithAssessment_ID_with_Frame_When_Kaitori = () => {
-        const sateiKey = ucar.Barracks
-        const kobutsuKey = kobutsuUcar.NO_SYADAIBA
+    //   const matchWithAssessment_ID_with_Frame_When_Kaitori = () => {
+    //     const sateiKey = ucar.Barracks
+    //     const kobutsuKey = kobutsuUcar.NO_SYADAIBA
 
-        const match = sateiKey === kobutsuKey
+    //     const match = sateiKey === kobutsuKey
 
-        return match
-      }
+    //     return match
+    //   }
 
-      return matchWithFrame_Plate() || matchWithAssessment_ID_with_Frame_When_Kaitori()
+    //   return matchWithFrame_Plate() || matchWithAssessment_ID_with_Frame_When_Kaitori()
 
-      //
-    },
+    //   //
+    // },
   }
 
   static col = {

@@ -10,7 +10,7 @@ import ProcessSummary from '@app/(apps)/ucar/(pages)/paperProcess/Summay/parts/P
 import {absSize, cl} from '@cm/lib/methods/common'
 import {UcarProcessCl} from '../UcarProcessCl'
 import {getPaperManagementCols} from '@app/(apps)/ucar/class/ColBuilder/lib/ucar/ucarCols-lib/lib/getPaperManagementCols/getPaperManagementCols'
-import {DocumentChartBarIcon} from '@heroicons/react/20/solid'
+import {DocumentChartBarIcon, InformationCircleIcon} from '@heroicons/react/20/solid'
 import {T_LINK} from '@cm/components/styles/common-components/links'
 import {HREF} from '@cm/lib/methods/urls'
 import {TrActionIconClassName} from '@cm/components/DataLogic/TFs/MyTable/hooks/useMyTableLogic'
@@ -19,11 +19,14 @@ import {C_Stack} from '@cm/components/styles/common-components/common-components
 import {PencilIcon, TrashIcon} from 'lucide-react'
 
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
-import {UcarCL} from '../UcarCL'
+import {UcarCL, ucarData} from '../UcarCL'
 import {UCAR_CODE} from '../UCAR_CODE'
 import {__shared_get_shiwakeKekkeCol} from '@app/(apps)/ucar/class/ColBuilder/getter/shared_shiwakeKekkeCol'
 import {getTaxJobCols} from '@app/(apps)/ucar/class/ColBuilder/lib/ucar/ucarCols-lib/lib/getTaxJobCols'
 import {getDMMFModel} from '@cm/lib/methods/prisma-schema'
+import {Prisma} from '@prisma/client'
+import ShadPopover from '@cm/shadcn/ui/Organisms/ShadPopover'
+import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
 
 export const UCAR_TABLE_ROW_HEIGHT = 120
 
@@ -59,33 +62,25 @@ export const ucarColBuilder = (props: columnGetterType) => {
 
   // const modifiedCols =
 
-  // 基本情報
-  const CAR_COLS = new Fields(
-    upassCols
-      .filter(d => d.showIn?.ucarMainTable)
-      .map(d => {
-        const label = d.showIn?.ucarMainTable?.label
-        const format = (value, row) => {
-          const inst = new UcarCL(row)
-          value = inst.notation[d.en]
-          return <div className={`max-w-[240px]  text-xs  truncate`}>{value}</div>
-        }
-        return {
-          id: `UPASS.${d.en}`,
-          label,
-          format,
-          form: {
-            disabled: true,
-            defaultValue: props => {
-              return props?.formData?.[`UPASS`]?.[d.en]
+  const CAR_MODIFIED_COLS = new Fields(getModifiedCols())
+
+  const number98Where: Prisma.Number98WhereInput = {
+    AND: [
+      //
+      {occupied: false},
+      {
+        Ucar: {
+          none: {
+            id: {gt: 0},
+            Number98: {
+              OldCars_Base: {some: {KI_HANKAKA: '0'}},
             },
           },
-          td: {style: {...{verticalAlign: 'middle'}}},
-        }
-      })
-  )
-
-  const CAR_MODIFIED_COLS = new Fields(getModifiedCols())
+        },
+      },
+      {OldCars_Base: {every: {KI_HANKAKA: {not: '0'}}}},
+    ],
+  }
 
   const SETTING_COLS = new Fields([
     {
@@ -120,24 +115,62 @@ export const ucarColBuilder = (props: columnGetterType) => {
             number: 'string',
             name: false,
           },
+          where: number98Where,
 
           orderBy: [{number: 'asc'}],
-          nameChanger: op => ({...op, id: op.number, name: op.number ? String(op.number) : ''}),
+          nameChanger: op => {
+            return {...op, id: op.number, name: op.number ? String(op.number) : ''}
+          },
         },
       },
     },
+    {
+      id: 'NO_SIRETYUM',
+      label: '仕入時注文番号',
+      form: {},
+    },
+    {
+      id: 'DD_SIIRE',
+      label: '仕入日',
+      type: 'date',
+      form: {},
+    },
+
     {
       id: 'daihatsuReserve',
       label: 'ダイハツ予約枠',
       td: {
         hidden: true,
-        getRowColor: (value, row) => {
-          return UCAR_CODE.PROCESSED_AS.byCode(row.processedAs)?.color
-        },
       },
     },
-
     __shared_get_shiwakeKekkeCol(),
+  ])
+
+  // 基本情報
+  const CAR_COLS = new Fields([
+    ...upassCols
+      .filter(d => d.showIn?.ucarMainTable)
+      .map(d => {
+        const label = d.showIn?.ucarMainTable?.label
+        const format = (value, row) => {
+          const inst = new UcarCL(row)
+          value = inst.notation[d.en]
+          return <div className={`max-w-[240px]  text-xs  truncate`}>{value}</div>
+        }
+        return {
+          id: `UPASS.${d.en}`,
+          label,
+          format,
+          form: {
+            disabled: true,
+            defaultValue: props => {
+              return props?.formData?.[`UPASS`]?.[d.en]
+            },
+          },
+          td: {style: {...{verticalAlign: 'middle'}}},
+        }
+      }),
+
     {
       id: 'tmpRentalStoreId',
       label: 'レンタル先',
@@ -146,7 +179,6 @@ export const ucarColBuilder = (props: columnGetterType) => {
       forSelect: {config: {modelName: 'store'}},
     },
   ])
-
   const PAPER_WORK_ALERT_COLS = new Fields([
     // {
     //   id: `currentStatus`,
@@ -167,14 +199,20 @@ export const ucarColBuilder = (props: columnGetterType) => {
       id: 'actions',
       label: '',
       form: {hidden: true},
-      td: {
-        getRowColor: (value, row) => {
-          const dataNotFound = !row.UPASS
-          return dataNotFound ? '#f3f4f6' : ''
-        },
-      },
+      // td: {
+      //   getRowColor: (value, row) => {
+      //     if (!row.UPASS) {
+      //       return UCAR_CODE.Alert.byCode('UP_ASS_NOT_FOUND')?.color
+      //     } else if (!row.OldCars_Base?.APPINDEX) {
+      //       return UCAR_CODE.Alert.byCode('APPINDEX_NOT_FOUND')?.color
+      //     }
+      //   },
+      // },
       format: (value, row) => {
         const href = HREF(`/ucar/qr`, {sateiID: row.sateiID}, useGlobalProps.query)
+
+        const alertList = UCAR_CODE.Alert.array.filter(item => item.checkAlert?.(row as unknown as ucarData))
+
         return (
           <C_Stack className={`gap-4 `}>
             <T_LINK href={href} target={`_blank`} className={` text-inherit no-underline`}>
@@ -182,7 +220,11 @@ export const ucarColBuilder = (props: columnGetterType) => {
             </T_LINK>
 
             <PencilIcon
-              onClick={() => GMF_UcrDetailUpdater.setGMF_OPEN({sateiID: row.sateiID})}
+              onClick={() =>
+                GMF_UcrDetailUpdater.setGMF_OPEN({
+                  sateiID: row.sateiID,
+                })
+              }
               className={cl(TrActionIconClassName, 'h-5 w-5 text-blue-500')}
             />
             <TrashIcon
@@ -194,6 +236,27 @@ export const ucarColBuilder = (props: columnGetterType) => {
               }}
               className={cl(TrActionIconClassName, 'h-5 w-5 text-red-500')}
             />
+
+            {alertList.length > 0 && (
+              <ShadPopover
+                Trigger={
+                  <div className={`bg-yellow-300 p-1 rounded-full`}>
+                    <InformationCircleIcon className={`h-5 w-5 text-red-600 animate-pulse`} />
+                  </div>
+                }
+              >
+                <C_Stack className={`gap-4 text-xs`}>
+                  {alertList.map(item => {
+                    const color = item.color
+                    return (
+                      <IconBtn color={color} key={item.code}>
+                        {item.label}
+                      </IconBtn>
+                    )
+                  })}
+                </C_Stack>
+              </ShadPopover>
+            )}
           </C_Stack>
         )
       },

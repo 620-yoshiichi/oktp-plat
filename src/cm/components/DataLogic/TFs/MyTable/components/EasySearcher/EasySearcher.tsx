@@ -44,7 +44,7 @@ export default function EasySearcher(props: {
 
   const createNextQuery = useCallback(
     props => {
-      let newQuery = {}
+      let newQuery = {...useGlobalProps.query}
       if (availableEasySearchObj) {
         const {exclusiveGroup, keyValueList, refresh} = props.dataSource ?? {}
 
@@ -81,11 +81,20 @@ export default function EasySearcher(props: {
 
           const isSet = query[key] ?? '' === String(value)
           const newValue = isSet ? '' : String(value)
+
           newQuery[key] = newValue
         })
-        newQuery['P'] = 1
-        newQuery['S'] = undefined
       }
+
+      Object.keys(newQuery).forEach(key => {
+        const suffixList = ['_P', '_S', '_T']
+        suffixList.forEach(suffix => {
+          if (key.includes(suffix)) {
+            console.log(key) //logs
+            newQuery[key] = undefined
+          }
+        })
+      })
 
       return newQuery
     },

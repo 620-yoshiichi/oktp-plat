@@ -1,4 +1,19 @@
-import {Code} from '@cm/class/Code'
+import {Code, codeItemCore} from '@cm/class/Code'
+import {ucarData} from './UcarCL'
+
+type codeAtom = codeItemCore & {
+  [key: string]: {
+    code: string
+    label: string
+    color: string
+    checkAlert?: (ucar: ucarData) => boolean
+  }
+}
+export class UcarProcessCode extends Code<codeAtom> {
+  constructor(master: codeAtom) {
+    super(master)
+  }
+}
 
 export class UCAR_CODE {
   static DISPLAY_COLUMNS = new Code({
@@ -128,6 +143,26 @@ export class UCAR_CODE {
       label: '抹消済',
       color: '#585858',
       notifyByEmail: false,
+    },
+  })
+
+  static Alert = new Code({
+    UP_ASS_NOT_FOUND: {
+      code: '01',
+      label: 'UPASSデータとの連携ができていません。',
+      color: '#ffe5e5',
+      checkAlert: (ucar: ucarData) => {
+        return !ucar.UPASS
+      },
+    },
+    APPINDEX_NOT_FOUND: {
+      code: '02',
+      label: '古物台帳との連携ができていません。',
+      color: '#fff8dc',
+      checkAlert: (ucar: ucarData) => {
+        console.log(ucar.OldCars_Base) //logs
+        return ucar.number98 && !ucar.OldCars_Base
+      },
     },
   })
 }

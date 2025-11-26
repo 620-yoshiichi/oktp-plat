@@ -10,32 +10,24 @@ model Ucar {
 
   sateiID String @unique @default(uuid())
 
-  //Ai_Satei
-  Model_name                   String?
-  brand_name                   String?
-  Common_name_model            String?
-  Barracks                     String?
-  Model_year                   String?
-  Scheduled_arrival_date       DateTime?
-  Number_Place_name            String?
-  Number_classification_number String?
-  Number_Hiragana              String?
-  number                       String?
-  Vehicle_length               Float?
-  Vehicle_width                Float?
-  Vehicle_height               Float?
+  // //Ai_Satei
+  // Model_name                   String?
+  // brand_name                   String?
+  // Common_name_model            String?
+  // Barracks                     String?
+  // Model_year                   String?
+  // Scheduled_arrival_date       DateTime?
+  // Number_Place_name            String?
+  // Number_classification_number String?
+  // Number_Hiragana              String?
+  // number                       String?
+  // Vehicle_length               Float?
+  // Vehicle_width                Float?
+  // Vehicle_height               Float?
 
-  number98    String?
-  DD_SIIRE    String?
-  NO_SIRETYUM String?
-
-  // // 古物台帳DB
-  APPINDEX         String?
-  KI_HANKAKA       Int?
-  CD_ZAIKOTEN_NAME String?
-  CD_ZAIKOTEN      String?
-  DT_SAISINUP      String?
-  NO_SYARYOU       String?
+  number98    String?   @default("") //古物との称号
+  NO_SIRETYUM String?   @default("") //古物との称号
+  DD_SIIRE    DateTime? //古物との称号
 
   garageProvedAt DateTime?
 
@@ -85,8 +77,6 @@ model Ucar {
   paymentNoticeRecieved String?
   remarksHq             String?
   upperCarregisteredAt  DateTime?
-
-  User_ID String?
 
   accountingRecievedAt Boolean?
   paybackScheduledAt   DateTime?
@@ -149,9 +139,8 @@ model Ucar {
 
   UPASS UPASS? @relation(fields: [sateiID], references: [sateiID], onDelete: Cascade)
 
-  OldCars_Base OldCars_Base? @relation(fields: [number98, NO_SYARYOU, DD_SIIRE], references: [NO_SIRETYUM, NO_SYARYOU, DD_SIIRE])
+  OldCars_Base OldCars_Base? @relation(fields: [NO_SIRETYUM, number98, DD_SIIRE], references: [NO_SIRETYUM, NO_SYARYOU, DD_SIIRE])
 
-  @@unique([number98, NO_SYARYOU, DD_SIIRE])
   @@index([bankBranchMasterId])
   @@index([bankMasterId])
   @@index([userId])

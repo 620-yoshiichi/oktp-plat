@@ -4,6 +4,7 @@ import {additionalPropsType, MyTableType} from '@cm/types/types'
 import {anyObject} from '@cm/types/utility-types'
 import {DH__switchColType} from '@cm/class/DataHandler/type-converter'
 import {StrHandler} from '@cm/class/StrHandler'
+import {PAGINATION_CONSTANTS, validatePaginationParams} from './validation'
 
 // 型定義
 interface WhereQueryItem {

@@ -277,9 +277,9 @@ model JuchuShitadoriDb {
 }
 
 model OldCars_Base {
-  id          Int     @unique @default(autoincrement())
-  sortOrder   Float   @default(0)
-  APPINDEX    String  @id @unique
+  id          Int       @unique @default(autoincrement())
+  sortOrder   Float     @default(0)
+  APPINDEX    String    @id @unique
   CD_21SYAMEI String?
   MJ_SYAMEI   String?
   CD_HANSTAFF String?
@@ -294,7 +294,7 @@ model OldCars_Base {
   CD_HANTOGY  String?
   NO_HANTOSE  String?
   CD_SITASTAF String?
-  DD_SIIRE    String?
+  DD_SIIRE    DateTime?
   DD_SIREBD   String?
   SU_SYODOTOR String?
   NO_FRAME    String?
@@ -313,12 +313,12 @@ model OldCars_Base {
   CD_SIRETENP String?
   KJ_SIRESAKI String?
   KB_UC1JTORO String?
-  DD_URIAGE   String?
-  DD_1JTOROKU String?
-  DD_2JTOROKU String?
-  DD_SYKNMANR String?
-  DD_SITASYUK String?
-  DD_NOSYA    String?
+  DD_URIAGE   DateTime?
+  DD_1JTOROKU DateTime?
+  DD_2JTOROKU DateTime?
+  DD_SYKNMANR DateTime?
+  DD_SITASYUK DateTime?
+  DD_NOSYA    DateTime?
   MJ_SITADOTE String?
 
   Number98   Number98?    @relation(fields: [NO_SYARYOU], references: [number])
@@ -330,13 +330,13 @@ model OldCars_Base {
 }
 
 model ZAIKO_Base {
-  id            Int     @unique @default(autoincrement())
-  sortOrder     Float   @default(0)
-  APPINDEX      String  @id @unique
+  id            Int       @unique @default(autoincrement())
+  sortOrder     Float     @default(0)
+  APPINDEX      String    @id @unique
   APPINDEX_FKEY String
   NO_SYARYOU    String?
   KB_SIIRE      String?
-  DD_KEIRIKEI   String?
+  DD_KEIRIKEI   DateTime?
   NO_SIRETYUM   String?
   MJ_SIRENORI   String?
   KB_SIRETOSY   String?
@@ -365,7 +365,7 @@ model ZAIKO_Base {
   MJ_21SYASYS   String?
   MJ_SIJYOKBM   String?
   DT_SAISINUP   String?
-  DD_SIIRE      String?
+  DD_SIIRE      DateTime?
 
   OldCars_Base OldCars_Base? @relation(fields: [NO_SIRETYUM, NO_SYARYOU, DD_SIIRE], references: [NO_SIRETYUM, NO_SYARYOU, DD_SIIRE])
 
@@ -1046,6 +1046,12 @@ generator client {
   previewFeatures = ["prismaSchemaFolder"]
 }
 
+generator markdown {
+  provider = "prisma-markdown"
+  output   = "./ERD.md"
+  title    = "ER図"
+}
+
 datasource db {
   provider     = "postgresql"
   url          = env("DATABASE_URL")
@@ -1509,32 +1515,24 @@ model Ucar {
 
   sateiID String @unique @default(uuid())
 
-  //Ai_Satei
-  Model_name                   String?
-  brand_name                   String?
-  Common_name_model            String?
-  Barracks                     String?
-  Model_year                   String?
-  Scheduled_arrival_date       DateTime?
-  Number_Place_name            String?
-  Number_classification_number String?
-  Number_Hiragana              String?
-  number                       String?
-  Vehicle_length               Float?
-  Vehicle_width                Float?
-  Vehicle_height               Float?
+  // //Ai_Satei
+  // Model_name                   String?
+  // brand_name                   String?
+  // Common_name_model            String?
+  // Barracks                     String?
+  // Model_year                   String?
+  // Scheduled_arrival_date       DateTime?
+  // Number_Place_name            String?
+  // Number_classification_number String?
+  // Number_Hiragana              String?
+  // number                       String?
+  // Vehicle_length               Float?
+  // Vehicle_width                Float?
+  // Vehicle_height               Float?
 
-  number98    String?
-  DD_SIIRE    String?
-  NO_SIRETYUM String?
-
-  // // 古物台帳DB
-  APPINDEX         String?
-  KI_HANKAKA       Int?
-  CD_ZAIKOTEN_NAME String?
-  CD_ZAIKOTEN      String?
-  DT_SAISINUP      String?
-  NO_SYARYOU       String?
+  number98    String?   @default("") //古物との称号
+  NO_SIRETYUM String?   @default("") //古物との称号
+  DD_SIIRE    DateTime? //古物との称号
 
   garageProvedAt DateTime?
 
@@ -1584,8 +1582,6 @@ model Ucar {
   paymentNoticeRecieved String?
   remarksHq             String?
   upperCarregisteredAt  DateTime?
-
-  User_ID String?
 
   accountingRecievedAt Boolean?
   paybackScheduledAt   DateTime?
@@ -1648,9 +1644,8 @@ model Ucar {
 
   UPASS UPASS? @relation(fields: [sateiID], references: [sateiID], onDelete: Cascade)
 
-  OldCars_Base OldCars_Base? @relation(fields: [number98, NO_SYARYOU, DD_SIIRE], references: [NO_SIRETYUM, NO_SYARYOU, DD_SIIRE])
+  OldCars_Base OldCars_Base? @relation(fields: [NO_SIRETYUM, number98, DD_SIIRE], references: [NO_SIRETYUM, NO_SYARYOU, DD_SIIRE])
 
-  @@unique([number98, NO_SYARYOU, DD_SIIRE])
   @@index([bankBranchMasterId])
   @@index([bankMasterId])
   @@index([userId])
@@ -5453,7 +5448,7 @@ export const prismaDMMF = {
           "isId": false,
           "isReadOnly": false,
           "hasDefaultValue": false,
-          "type": "String",
+          "type": "DateTime",
           "nativeType": null,
           "isGenerated": false,
           "isUpdatedAt": false
@@ -5719,7 +5714,7 @@ export const prismaDMMF = {
           "isId": false,
           "isReadOnly": false,
           "hasDefaultValue": false,
-          "type": "String",
+          "type": "DateTime",
           "nativeType": null,
           "isGenerated": false,
           "isUpdatedAt": false
@@ -5733,7 +5728,7 @@ export const prismaDMMF = {
           "isId": false,
           "isReadOnly": false,
           "hasDefaultValue": false,
-          "type": "String",
+          "type": "DateTime",
           "nativeType": null,
           "isGenerated": false,
           "isUpdatedAt": false
@@ -5747,7 +5742,7 @@ export const prismaDMMF = {
           "isId": false,
           "isReadOnly": false,
           "hasDefaultValue": false,
-          "type": "String",
+          "type": "DateTime",
           "nativeType": null,
           "isGenerated": false,
           "isUpdatedAt": false
@@ -5761,7 +5756,7 @@ export const prismaDMMF = {
           "isId": false,
           "isReadOnly": false,
           "hasDefaultValue": false,
-          "type": "String",
+          "type": "DateTime",
           "nativeType": null,
           "isGenerated": false,
           "isUpdatedAt": false
@@ -5775,7 +5770,7 @@ export const prismaDMMF = {
           "isId": false,
           "isReadOnly": false,
           "hasDefaultValue": false,
-          "type": "String",
+          "type": "DateTime",
           "nativeType": null,
           "isGenerated": false,
           "isUpdatedAt": false
@@ -5789,7 +5784,7 @@ export const prismaDMMF = {
           "isId": false,
           "isReadOnly": false,
           "hasDefaultValue": false,
-          "type": "String",
+          "type": "DateTime",
           "nativeType": null,
           "isGenerated": false,
           "isUpdatedAt": false
@@ -5987,7 +5982,7 @@ export const prismaDMMF = {
           "isId": false,
           "isReadOnly": false,
           "hasDefaultValue": false,
-          "type": "String",
+          "type": "DateTime",
           "nativeType": null,
           "isGenerated": false,
           "isUpdatedAt": false
@@ -6393,7 +6388,7 @@ export const prismaDMMF = {
           "isId": false,
           "isReadOnly": true,
           "hasDefaultValue": false,
-          "type": "String",
+          "type": "DateTime",
           "nativeType": null,
           "isGenerated": false,
           "isUpdatedAt": false
@@ -20112,188 +20107,6 @@ export const prismaDMMF = {
           "isUpdatedAt": false
         },
         {
-          "name": "Model_name",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "String",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "brand_name",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "String",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "Common_name_model",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "String",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "Barracks",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "String",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "Model_year",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "String",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "Scheduled_arrival_date",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "DateTime",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "Number_Place_name",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "String",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "Number_classification_number",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "String",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "Number_Hiragana",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "String",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "number",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "String",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "Vehicle_length",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "Float",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "Vehicle_width",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "Float",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "Vehicle_height",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "Float",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
           "name": "number98",
           "kind": "scalar",
           "isList": false,
@@ -20301,9 +20114,25 @@ export const prismaDMMF = {
           "isUnique": false,
           "isId": false,
           "isReadOnly": true,
-          "hasDefaultValue": false,
+          "hasDefaultValue": true,
           "type": "String",
           "nativeType": null,
+          "default": "",
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "NO_SIRETYUM",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": true,
+          "hasDefaultValue": true,
+          "type": "String",
+          "nativeType": null,
+          "default": "",
           "isGenerated": false,
           "isUpdatedAt": false
         },
@@ -20316,105 +20145,7 @@ export const prismaDMMF = {
           "isId": false,
           "isReadOnly": true,
           "hasDefaultValue": false,
-          "type": "String",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "NO_SIRETYUM",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "String",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "APPINDEX",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "String",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "KI_HANKAKA",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "Int",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "CD_ZAIKOTEN_NAME",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "String",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "CD_ZAIKOTEN",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "String",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "DT_SAISINUP",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "String",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "NO_SYARYOU",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": true,
-          "hasDefaultValue": false,
-          "type": "String",
+          "type": "DateTime",
           "nativeType": null,
           "isGenerated": false,
           "isUpdatedAt": false
@@ -20969,20 +20700,6 @@ export const prismaDMMF = {
           "isReadOnly": false,
           "hasDefaultValue": false,
           "type": "DateTime",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "User_ID",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "String",
           "nativeType": null,
           "isGenerated": false,
           "isUpdatedAt": false
@@ -21719,8 +21436,8 @@ export const prismaDMMF = {
           "nativeType": null,
           "relationName": "OldCars_BaseToUcar",
           "relationFromFields": [
+            "NO_SIRETYUM",
             "number98",
-            "NO_SYARYOU",
             "DD_SIIRE"
           ],
           "relationToFields": [
@@ -21733,23 +21450,8 @@ export const prismaDMMF = {
         }
       ],
       "primaryKey": null,
-      "uniqueFields": [
-        [
-          "number98",
-          "NO_SYARYOU",
-          "DD_SIIRE"
-        ]
-      ],
-      "uniqueIndexes": [
-        {
-          "name": null,
-          "fields": [
-            "number98",
-            "NO_SYARYOU",
-            "DD_SIIRE"
-          ]
-        }
-      ],
+      "uniqueFields": [],
+      "uniqueIndexes": [],
       "isGenerated": false
     },
     {
@@ -25218,22 +24920,6 @@ export const prismaDMMF = {
       "fields": [
         {
           "name": "tmpRentalStoreId"
-        }
-      ]
-    },
-    {
-      "model": "Ucar",
-      "type": "unique",
-      "isDefinedOnField": false,
-      "fields": [
-        {
-          "name": "number98"
-        },
-        {
-          "name": "NO_SYARYOU"
-        },
-        {
-          "name": "DD_SIIRE"
         }
       ]
     },

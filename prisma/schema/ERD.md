@@ -236,7 +236,7 @@ erDiagram
   String CD_HANTOGY "nullable"
   String NO_HANTOSE "nullable"
   String CD_SITASTAF "nullable"
-  String DD_SIIRE "nullable"
+  DateTime DD_SIIRE "nullable"
   String DD_SIREBD "nullable"
   String SU_SYODOTOR "nullable"
   String NO_FRAME "nullable"
@@ -255,12 +255,12 @@ erDiagram
   String CD_SIRETENP "nullable"
   String KJ_SIRESAKI "nullable"
   String KB_UC1JTORO "nullable"
-  String DD_URIAGE "nullable"
-  String DD_1JTOROKU "nullable"
-  String DD_2JTOROKU "nullable"
-  String DD_SYKNMANR "nullable"
-  String DD_SITASYUK "nullable"
-  String DD_NOSYA "nullable"
+  DateTime DD_URIAGE "nullable"
+  DateTime DD_1JTOROKU "nullable"
+  DateTime DD_2JTOROKU "nullable"
+  DateTime DD_SYKNMANR "nullable"
+  DateTime DD_SITASYUK "nullable"
+  DateTime DD_NOSYA "nullable"
   String MJ_SITADOTE "nullable"
 }
 "ZAIKO_Base" {
@@ -270,7 +270,7 @@ erDiagram
   String APPINDEX_FKEY
   String NO_SYARYOU "nullable"
   String KB_SIIRE "nullable"
-  String DD_KEIRIKEI "nullable"
+  DateTime DD_KEIRIKEI "nullable"
   String NO_SIRETYUM FK "nullable"
   String MJ_SIRENORI "nullable"
   String KB_SIRETOSY "nullable"
@@ -299,7 +299,7 @@ erDiagram
   String MJ_21SYASYS "nullable"
   String MJ_SIJYOKBM "nullable"
   String DT_SAISINUP "nullable"
-  String DD_SIIRE "nullable"
+  DateTime DD_SIIRE "nullable"
 }
 "UpassFamilyTree" {
   Int id UK
@@ -1111,28 +1111,9 @@ erDiagram
   Float sortOrder
   DateTime sateiDataConfirmedAt "nullable"
   String sateiID FK,UK
-  String Model_name "nullable"
-  String brand_name "nullable"
-  String Common_name_model "nullable"
-  String Barracks "nullable"
-  String Model_year "nullable"
-  DateTime Scheduled_arrival_date "nullable"
-  String Number_Place_name "nullable"
-  String Number_classification_number "nullable"
-  String Number_Hiragana "nullable"
-  String number "nullable"
-  Float Vehicle_length "nullable"
-  Float Vehicle_width "nullable"
-  Float Vehicle_height "nullable"
   String number98 FK "nullable"
-  String DD_SIIRE "nullable"
-  String NO_SIRETYUM "nullable"
-  String APPINDEX "nullable"
-  Int KI_HANKAKA "nullable"
-  String CD_ZAIKOTEN_NAME "nullable"
-  String CD_ZAIKOTEN "nullable"
-  String DT_SAISINUP "nullable"
-  String NO_SYARYOU "nullable"
+  String NO_SIRETYUM FK "nullable"
+  DateTime DD_SIIRE "nullable"
   DateTime garageProvedAt "nullable"
   DateTime arrivedAt "nullable"
   DateTime passedAt "nullable"
@@ -1171,7 +1152,6 @@ erDiagram
   String paymentNoticeRecieved "nullable"
   String remarksHq "nullable"
   DateTime upperCarregisteredAt "nullable"
-  String User_ID "nullable"
   Boolean accountingRecievedAt "nullable"
   DateTime paybackScheduledAt "nullable"
   String tmpPlate "nullable"
@@ -2661,28 +2641,9 @@ Properties as follows:
 - `sortOrder`:
 - `sateiDataConfirmedAt`:
 - `sateiID`:
-- `Model_name`:
-- `brand_name`:
-- `Common_name_model`:
-- `Barracks`:
-- `Model_year`:
-- `Scheduled_arrival_date`:
-- `Number_Place_name`:
-- `Number_classification_number`:
-- `Number_Hiragana`:
-- `number`:
-- `Vehicle_length`:
-- `Vehicle_width`:
-- `Vehicle_height`:
 - `number98`:
-- `DD_SIIRE`:
 - `NO_SIRETYUM`:
-- `APPINDEX`:
-- `KI_HANKAKA`:
-- `CD_ZAIKOTEN_NAME`:
-- `CD_ZAIKOTEN`:
-- `DT_SAISINUP`:
-- `NO_SYARYOU`:
+- `DD_SIIRE`:
 - `garageProvedAt`:
 - `arrivedAt`:
 - `passedAt`:
@@ -2721,7 +2682,6 @@ Properties as follows:
 - `paymentNoticeRecieved`:
 - `remarksHq`:
 - `upperCarregisteredAt`:
-- `User_ID`:
 - `accountingRecievedAt`:
 - `paybackScheduledAt`:
 - `tmpPlate`:

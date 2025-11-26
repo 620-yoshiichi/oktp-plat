@@ -1,6 +1,5 @@
 import React from 'react'
 import {Page, Document, Text, View, StyleSheet, Font} from '@react-pdf/renderer'
-import {styles as commonStyles} from '@cm/lib/react-pdf'
 
 Font.register({
   family: 'Nasu-Regular',

@@ -1,9 +1,6 @@
 import {C_Stack, R_Stack} from '@cm/components/styles/common-components/common-components'
 
-import {cl} from '@cm/lib/methods/common'
 
-import MyPopover from '@cm/components/utils/popover/MyPopover'
-import {Paper} from '@cm/components/styles/common-components/paper'
 import useSelectedUcarNotesGMF from '@app/(apps)/ucar/(parts)/templateHooks/useSelectedUcarNotesGMF'
 import {Fragment} from 'react'
 import {CsvTable} from '@cm/components/styles/common-components/CsvTable/CsvTable'
@@ -11,7 +8,6 @@ import {formatDate} from '@cm/class/Days/date-utils/formatters'
 import EmptyPlaceholder from '@cm/components/utils/loader/EmptyPlaceHolder'
 import {ScrollText} from 'lucide-react'
 
-import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
 import Coloring from '@cm/lib/methods/Coloring'
 import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
 import ShadPopover from '@cm/shadcn/ui/Organisms/ShadPopover'

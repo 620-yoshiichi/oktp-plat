@@ -112,13 +112,14 @@
     "**/coverage/**": true,
     "**/*.dump": true,
     "**/tmp/**": true,
+    "**/ERD/**": true,
     "**/QRBP/**": true,
     "**/ai21/**": true,
     "**/common/**": true,
     "**/delivery/**": true,
-    "**/newCar/**": true,
     "**/shinren/**": true,
-    "**/template/**": true
+    "**/template/**": true,
+    "**/ucar/**": true
   },
   "typescript.tsserver.log": "off",
   "typescript.disableAutomaticTypeAcquisition": true,
@@ -129,13 +130,14 @@
   "typescript.suggest.includeAutomaticOptionalChainCompletions": false,
   "typescript.workspaceSymbols.scope": "currentProject",
   "typescript.preferences.autoImportFileExcludePatterns": [
+    "ERD",
     "QRBP",
     "ai21",
     "common",
     "delivery",
-    "newCar",
     "shinren",
-    "template"
+    "template",
+    "ucar"
   ],
   "editor.stickyScroll.enabled": false
 }

@@ -76,13 +76,14 @@ export const createCrCar = async ({session, toggleLoad, latestFormData, formData
   }
 
   const res = await toggleLoad(async () => {
-    const {modelBasicData, relationIds} = separateFormData({
-      columns,
+    const {modelBasicData} = separateFormData({
+      dataModelName: 'car',
       latestFormData,
       additionalPayload: {},
+      columns,
     })
 
-    const complexKey = `${modelBasicData.bpNumber}_${formatDate(modelBasicData.orderedAt)}`
+    const complexKey = `${modelBasicData?.bpNumber}_${formatDate(modelBasicData?.orderedAt)}`
 
     let id = latestFormData?.id
     const where = id > 0 ? {id} : {complexKey}
@@ -109,7 +110,7 @@ export const createCrCar = async ({session, toggleLoad, latestFormData, formData
 
     const payload = {
       ...modelBasicData,
-      ...relationIds,
+      // ...relationIds,
       ...CreateNewAcception,
     }
 
@@ -168,7 +169,7 @@ export const createCrCar = async ({session, toggleLoad, latestFormData, formData
       },
     })
 
-    const crUserId = relationIds[`crUserId`]
+    const crUserId = modelBasicData?.crUserId
 
     const args: Prisma.CrUserUpsertArgs = {
       where: {carId: id},
