@@ -24,12 +24,22 @@ export const sateiTableCompartionCols: sateiTableCompartionCol[] = [
   },
   {
     label: `通称型式`,
-    bqKeys: {proto: `Common_name_model`, upass: 'commonType'},
+    bqKeys: {proto: `Model`, upass: 'type'},
+    type: `string`,
+  },
+  {
+    label: `カラー`,
+    bqKeys: {proto: `Body_color`, upass: 'exteriorColor'},
     type: `string`,
   },
   {
     label: `車台番号`,
     bqKeys: {proto: `Barracks`, upass: 'chassisNumber'},
+    type: `string`,
+  },
+  {
+    label: `グレード`,
+    bqKeys: {proto: `Grade_name`, upass: 'grade'},
     type: `string`,
   },
   {

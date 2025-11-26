@@ -17,8 +17,14 @@ import {
 import {roleIs} from 'src/non-common/scope-lib/judgeIsAdmin'
 import {QueryBuilder} from '@app/(apps)/ucar/class/QueryBuilder'
 
+import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
+import {Alert} from '@cm/components/styles/common-components/Alert'
+import {R_Stack} from '@cm/components/styles/common-components/common-components'
+
 export type ucarData = Ucar & {
-  UPASS: UPASS
+  UPASS: UPASS & {
+    RootUpass: UPASS
+  }
   Number98: Number98
   User: User
   Store: Store
@@ -39,6 +45,86 @@ export class UcarCL {
     this.data = ucar
   }
 
+  static testSateiID = '163012511000005'
+
+  static getUpassFaimilyTree = async ({sateiID}) => {
+    const {result: upass} = await doStandardPrisma('uPASS', 'findUnique', {
+      where: {
+        sateiID: sateiID,
+      },
+    })
+
+    const {result: myTree} = await doStandardPrisma('upassFamilyTree', 'findUnique', {
+      where: {
+        sateiID: sateiID,
+      },
+    })
+
+    const {result: familyTree} = await doStandardPrisma('upassFamilyTree', 'findMany', {
+      where: {rootSateiID: myTree?.rootSateiID ?? ''},
+    })
+
+    const lastSateiId = upass?.dataSource === 'aisatei' ? upass.sateiID : familyTree[familyTree.length - 1]?.sateiID
+    const isLastSateiId = upass?.dataSource === 'aisatei' ? true : lastSateiId === sateiID
+
+    const CopyButton = (
+      <R_Stack>
+        最新の査定番号は、
+        <IconBtn
+          color="blue"
+          onClick={e => {
+            navigator.clipboard.writeText(lastSateiId)
+            alert('コピーしました')
+          }}
+        >
+          {lastSateiId}
+        </IconBtn>
+        です。
+      </R_Stack>
+    )
+    const AlertComponent = lastSateiId ? (
+      <>
+        {isLastSateiId ? (
+          <Alert color="green">
+            <div>最新の査定IDです</div>
+            <div>{CopyButton}</div>
+          </Alert>
+        ) : (
+          <Alert color="yellow">
+            <div>最新の査定IDではありません。</div>
+            <div>{CopyButton}</div>
+          </Alert>
+        )}
+      </>
+    ) : (
+      <Alert color="red">査定IDが見つかりません</Alert>
+    )
+    return {
+      Tree: familyTree.sort((a, b) => {
+        return new Date(b.sateiDate).getTime() - new Date(a.sateiDate).getTime()
+      }),
+      isLastSateiId,
+      lastSateiId,
+      AlertComponent,
+    }
+  }
+  static checkSateiIdIsLatest = async (sateiID: string) => {
+    const {result: upass} = await doStandardPrisma('uPASS', 'findUnique', {
+      where: {sateiID},
+      include: {
+        MyUpassTree: true,
+        RootUpass: true,
+      },
+    })
+
+    const {RootUpass, MyUpassTree} = upass
+
+    if (RootUpass) {
+      return true
+    }
+    return false
+  }
+
   get notation() {
     const UPASS = this.data.UPASS ?? {}
     const plate = [
@@ -52,14 +138,16 @@ export class UcarCL {
 
     return {
       sateiID: this.data.sateiID,
-      nenshiki,
-      plate,
       storeName: this.data?.Store?.name,
       staffName: this.data?.User?.name,
+
+      nenshiki,
+      plate,
       grade: UPASS.grade || this.data.tmpGrade || ' ',
       customerName: UPASS.customerName,
       modelName: UPASS.modelName,
-      modelYear: UPASS.modelYear || this.data.tmpModelYear || ' ',
+      modelYear: (UPASS.modelYear || this.data.tmpModelYear || ' ').replace('発売モデル', ''),
+      exteriorColor: UPASS.exteriorColor,
       type: UPASS.type || this.data.tmpType || ' ',
       chassisNumber: UPASS.chassisNumber || ' ',
       length: UPASS.length || ' ',
@@ -73,7 +161,7 @@ export class UcarCL {
       capacityMax: UPASS.capacityMax || ' ',
       maxLoad: UPASS.maxLoad || ' ',
       weight: UPASS.weight || ' ',
-      frameNumber: UPASS.frameNumber || this.data.tmpFrameNumber || ' ',
+      frameNumber: UPASS.chassisNumber || this.data.tmpFrameNumber || ' ',
       brandName: UPASS.brandName || this.data.tmpBrandName || ' ',
       registrationClassNumber: UPASS.registrationClassNumber || this.data.tmpRegistrationClassNumber || ' ',
       registrationKana: UPASS.registrationKana || this.data.tmpRegistrationKana || ' ',
@@ -181,8 +269,23 @@ export class UcarCL {
     return schoolId
   }
 
-  static testSateiID ='163012408000017'
+  static isLatestSateiID = async sateiID => {
+    const {result: upass} = await doStandardPrisma('uPASS', 'findUnique', {
+      where: {sateiID},
+      include: {
+        RootUpass: true,
+        MyUpassTree: {
+          include: {
+            UPASS: true,
+          },
+        },
+      },
+    })
 
+    const faimilyTree = upass?.MyUpassTree ?? []
+
+    return faimilyTree.length === 0
+  }
   static fetcher = {
     getUcarDataBySateiId: async (sateiID: string) => {
       const {result: ucar} = await doStandardPrisma(`ucar`, `findUnique`, {

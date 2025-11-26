@@ -16,12 +16,14 @@ export const getNewCarPages = (props: PageGetterType) => {
   const loginOnly = {exclusiveTo: login, ROOT: [rootPath]}
   const commons = {...loginOnly, ...linkToMyData}
 
-  const isHQ = !!scopes.getNewCarProps().isHQ
-  const isCR = !!scopes.getNewCarProps().isCR
+  const {isHQ, isCR, isNewCarMember, isStoreManager} = scopes.getNewCarProps()
 
   const pathSource: pathItemType[] = [
     {
-      ...{tabId: '', label: 'CR', exclusiveTo: isHQ || isCR, ROOT: [rootPath]},
+      tabId: '',
+      label: 'CR',
+      exclusiveTo: isNewCarMember && (isHQ || isCR),
+      ROOT: [rootPath],
       children: [
         //
         {
@@ -43,7 +45,6 @@ export const getNewCarPages = (props: PageGetterType) => {
       tabId: '',
       label: '店舗',
       ...commons,
-
       children: [
         {
           tabId: 'newCar',
@@ -60,10 +61,14 @@ export const getNewCarPages = (props: PageGetterType) => {
         {tabId: 'prediction', label: '集計', ...commons},
         // {tabId: 'loginCheck', label: 'ログインチェック', ...commons},
       ],
+      exclusiveTo: isNewCarMember,
     },
 
     {
-      ...{tabId: '', label: '本部', exclusiveTo: isHQ, ROOT: [rootPath]},
+      tabId: '',
+      label: '本部',
+      exclusiveTo: isNewCarMember && isHQ,
+      ROOT: [rootPath],
       children: [
         {tabId: 'torokuList', label: '登希履歴', link: {query: {pending: true, not_registered: true}}},
         // {tabId: `paymentCheck`, label: `支払確認`, exclusiveTo: isHQ},

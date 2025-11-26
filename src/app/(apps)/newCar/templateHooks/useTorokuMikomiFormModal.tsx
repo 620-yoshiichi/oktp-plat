@@ -34,7 +34,13 @@ export const useTorokuMikomiFormModal = () => {
       }
 
       return (
-        <BasicForm {...{latestFormData, onSubmit}}>
+        <BasicForm
+          {...{
+            alignMode: 'col',
+            latestFormData,
+            onSubmit,
+          }}
+        >
           <Button>変更</Button>
         </BasicForm>
       )

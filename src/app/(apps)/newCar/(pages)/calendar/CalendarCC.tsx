@@ -127,7 +127,7 @@ const HolidayConfigCheckbox = (props: {daysInMonth: Date[]; calendarRecord?: Cal
             [id]: checked,
           }
 
-          const transactionQueryList: transactionQuery[] = daysInMonth.map(d => {
+          const transactionQueryList: transactionQuery<'calendar', 'upsert'>[] = daysInMonth.map(d => {
             return {
               model: `calendar`,
               method: `upsert`,

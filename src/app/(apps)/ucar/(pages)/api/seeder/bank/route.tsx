@@ -21,7 +21,7 @@ export const POST = async (req: NextRequest) => {
     })
     .filter(row => row.bankCode !== '' && row.branchCode !== '' && row.bankName !== '' && row.branchName !== '')
 
-  const bankQuery: transactionQuery[] = []
+  const bankQuery: transactionQuery<'bankMaster' | 'bankBranchMaster', 'upsert'>[] = []
 
   data.forEach(d => {
     const {bankCode, branchCode, bankName, branchNameShort, branchName, branchKana, searchKana} = d

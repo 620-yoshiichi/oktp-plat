@@ -13,7 +13,12 @@ const AdminLogin = async props => {
   const {session} = await initServerComopnent({query})
   const {rootPath, error} = query
 
-  const redirectRoot = session?.app ? session?.app : (rootPath ?? '')
+  let redirectRoot = ''
+  if (rootPath === 'undefined' || rootPath === undefined) {
+    redirectRoot = '/'
+  } else {
+    redirectRoot = rootPath
+  }
 
   const REDIRECT_CON1_redirectBySession = session?.id && redirectRoot
   const REDIRECT_CON2_NO_LOGIN = process.env.NEXT_PUBLIC_NO_LOGIN === 'true' && redirectRoot

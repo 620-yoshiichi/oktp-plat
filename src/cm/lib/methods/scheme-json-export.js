@@ -375,7 +375,24 @@ model ZAIKO_Base {
   @@index([NO_SIRETYUM, NO_SYARYOU, DD_SIIRE])
 }
 
+model UpassFamilyTree {
+  id          Int       @unique @default(autoincrement())
+  sateiID     String    @unique
+  rootSateiID String
+  sateiDate   DateTime?
+
+  UPASS UPASS @relation(name: "MyUpassTree", fields: [sateiID], references: [sateiID])
+
+  RootUpass UPASS @relation(name: "RootUpass", fields: [rootSateiID], references: [sateiID])
+
+  @@unique([sateiID, rootSateiID])
+}
+
 model UPASS {
+  MyUpassTree UpassFamilyTree? @relation(name: "MyUpassTree")
+
+  RootUpass UpassFamilyTree[] @relation("RootUpass")
+
   id                                  Int                @unique @default(autoincrement())
   dataSource                          String
   JuchuShitadoriDb                    JuchuShitadoriDb[]
@@ -1526,8 +1543,11 @@ model Ucar {
   passedAt     DateTime?
   customerName String?
 
-  meihenMasshoShoribi DateTime? //名変抹消はこちらに統一
-  secondMeihenbi      DateTime? //二次登録日
+  meihenBi       DateTime?
+  masshoBi       DateTime?
+  secondMeihenbi DateTime? //二次登録日
+
+  // meihenMasshoShoribi DateTime? //名変抹消はこちらに統一
 
   destination               String?
   inkanCertificateExpiredAt DateTime?
@@ -1585,6 +1605,17 @@ model Ucar {
   tmpRegistrationClassNumber String? // 分類番号
   tmpRegistrationKana        String? // かな
   tmpLandAffairsName         String? // 陸事名
+
+  modified_brandName     String? //店舗査定_ブランド名称
+  modified_modelName     String? //店舗査定_車種名称
+  modified_frameNumber   String? //店舗査定_フレーム��
+  modified_chassisNumber String? //店舗査定_車台番号
+  modified_type          String? //型式
+  modified_grade         String? //グレード
+  modified_modelYear     String? //モデル年式
+  modified_length        String? //車寸（長さ）
+  modified_width         String? //車寸（幅）
+  modified_height        String? //車寸（高さ）
 
   // リレーション
   Number98 Number98? @relation(fields: [number98], references: [number])
@@ -1730,7 +1761,7 @@ model UcarProcess {
   dataSource  String
   date        DateTime? @default(now())
   sortOrder   Float     @default(0)
-  time        String?
+  // time        String?
 
   sateiID String?
 
@@ -6414,10 +6445,170 @@ export const prismaDMMF = {
       "isGenerated": false
     },
     {
+      "name": "UpassFamilyTree",
+      "dbName": null,
+      "schema": null,
+      "fields": [
+        {
+          "name": "id",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": true,
+          "isUnique": true,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": true,
+          "type": "Int",
+          "nativeType": null,
+          "default": {
+            "name": "autoincrement",
+            "args": []
+          },
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "sateiID",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": true,
+          "isUnique": true,
+          "isId": false,
+          "isReadOnly": true,
+          "hasDefaultValue": false,
+          "type": "String",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "rootSateiID",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": true,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": true,
+          "hasDefaultValue": false,
+          "type": "String",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "sateiDate",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "DateTime",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "UPASS",
+          "kind": "object",
+          "isList": false,
+          "isRequired": true,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "UPASS",
+          "nativeType": null,
+          "relationName": "MyUpassTree",
+          "relationFromFields": [
+            "sateiID"
+          ],
+          "relationToFields": [
+            "sateiID"
+          ],
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "RootUpass",
+          "kind": "object",
+          "isList": false,
+          "isRequired": true,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "UPASS",
+          "nativeType": null,
+          "relationName": "RootUpass",
+          "relationFromFields": [
+            "rootSateiID"
+          ],
+          "relationToFields": [
+            "sateiID"
+          ],
+          "isGenerated": false,
+          "isUpdatedAt": false
+        }
+      ],
+      "primaryKey": null,
+      "uniqueFields": [
+        [
+          "sateiID",
+          "rootSateiID"
+        ]
+      ],
+      "uniqueIndexes": [
+        {
+          "name": null,
+          "fields": [
+            "sateiID",
+            "rootSateiID"
+          ]
+        }
+      ],
+      "isGenerated": false
+    },
+    {
       "name": "UPASS",
       "dbName": null,
       "schema": null,
       "fields": [
+        {
+          "name": "MyUpassTree",
+          "kind": "object",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "UpassFamilyTree",
+          "nativeType": null,
+          "relationName": "MyUpassTree",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "RootUpass",
+          "kind": "object",
+          "isList": true,
+          "isRequired": true,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "UpassFamilyTree",
+          "nativeType": null,
+          "relationName": "RootUpass",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
         {
           "name": "id",
           "kind": "scalar",
@@ -20285,7 +20476,21 @@ export const prismaDMMF = {
           "isUpdatedAt": false
         },
         {
-          "name": "meihenMasshoShoribi",
+          "name": "meihenBi",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "DateTime",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "masshoBi",
           "kind": "scalar",
           "isList": false,
           "isRequired": false,
@@ -20994,6 +21199,146 @@ export const prismaDMMF = {
         },
         {
           "name": "tmpLandAffairsName",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "String",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "modified_brandName",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "String",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "modified_modelName",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "String",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "modified_frameNumber",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "String",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "modified_chassisNumber",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "String",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "modified_type",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "String",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "modified_grade",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "String",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "modified_modelYear",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "String",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "modified_length",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "String",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "modified_width",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "String",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "modified_height",
           "kind": "scalar",
           "isList": false,
           "isRequired": false,
@@ -22597,20 +22942,6 @@ export const prismaDMMF = {
           "isUpdatedAt": false
         },
         {
-          "name": "time",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "String",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
           "name": "sateiID",
           "kind": "scalar",
           "isList": false,
@@ -23484,6 +23815,39 @@ export const prismaDMMF = {
         },
         {
           "name": "DD_KEIRIKEI"
+        }
+      ]
+    },
+    {
+      "model": "UpassFamilyTree",
+      "type": "unique",
+      "isDefinedOnField": true,
+      "fields": [
+        {
+          "name": "id"
+        }
+      ]
+    },
+    {
+      "model": "UpassFamilyTree",
+      "type": "unique",
+      "isDefinedOnField": true,
+      "fields": [
+        {
+          "name": "sateiID"
+        }
+      ]
+    },
+    {
+      "model": "UpassFamilyTree",
+      "type": "unique",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "sateiID"
+        },
+        {
+          "name": "rootSateiID"
         }
       ]
     },

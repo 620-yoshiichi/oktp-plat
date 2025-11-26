@@ -13,6 +13,8 @@ type QRBPScopeType = {
   crLeader: boolean
   cr: boolean
   store: boolean
+  isStoreManager: boolean
+  isQrbpMember: boolean
 }
 
 type ShinrenScopeType = {
@@ -38,7 +40,8 @@ type oktpUserTypes = {
   isStoreManager?: unknown
   isSales?: unknown
   isTorokuTanto?: unknown
-  isTestUser?: unknown
+
+  isNewCarMember: boolean
   newCarWhere: carWhereType
 }
 
@@ -65,18 +68,27 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
       [`BP課長`],
       (roles ?? []).map(d => d.name)
     )
-    const result: QRBPScopeType = {
+    const isStoreManager = !!getNewCarProps().isStoreManager
+    const qrbpMember = {
       crLeader,
       cr,
       store,
+      isStoreManager,
+    }
+    const result: QRBPScopeType = {
+      ...qrbpMember,
+
+      isQrbpMember: Object.keys(qrbpMember).some(key => qrbpMember[key as keyof typeof qrbpMember]),
     }
 
+    result['isQrbpMember'] = Object.keys(result).some(key => result[key as keyof QRBPScopeType])
     addAdminToRoles(result, session)
 
-    return result
+    return result as QRBPScopeType
   }
 
   type UcarScopeType = {
+    isUcarMember?: boolean
     isHQ?: unknown
     isStoreManager?: unknown
     isSales?: unknown
@@ -85,12 +97,20 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
   const getUcarProps = () => {
     const {isHQ, isStoreManager, isSales, newCarWhere} = getNewCarProps()
 
-    const result: UcarScopeType = {
-      carWhere: newCarWhere ?? {},
+    const ucarMember = {
       isHQ,
       isStoreManager,
       isSales,
     }
+    const result: UcarScopeType = {
+      carWhere: newCarWhere ?? {},
+      ...ucarMember,
+
+      isUcarMember: Object.keys(ucarMember).some(key => {
+        return !!ucarMember[key]
+      }),
+    }
+
     addAdminToRoles(result, session)
     return result
   }
@@ -101,26 +121,26 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
     const storeId = !admin ? session?.storeId : Number(query?.g_storeId ?? session?.storeId ?? 0)
     const userType = !admin ? session?.type : (query?.type ?? session?.type)
 
-    const isHQ =
-      arr__findCommonValues(
-        [`需給担当者`, `本部管理者`, `新車登録担当`],
-        (roles ?? []).map(d => d.name)
-      ) || admin
-    const isCR = arr__findCommonValues(
+    const isHQ = !!arr__findCommonValues(
+      [`需給担当者`, `本部管理者`, `新車登録担当`],
+      (roles ?? []).map(d => d.name)
+    )
+
+    const isCR = !!arr__findCommonValues(
       [`CR(新点)`, `本部管理者`],
       (roles ?? []).map(d => d.name)
     )
 
-    const isTorokuTanto = arr__findCommonValues(
+    const isTorokuTanto = !!arr__findCommonValues(
       [`新車登録担当`],
       (roles ?? []).map(d => d.name)
     )
-    const isStoreManager = arr__findCommonValues(
+    const isStoreManager = !!arr__findCommonValues(
       [`店長`, `副店長`, 'サービス副店長'],
       (roles ?? []).map(d => d.name)
     )
 
-    const isSales = arr__findCommonValues(
+    const isSales = !!arr__findCommonValues(
       [`営業`],
       (roles ?? []).map(d => d.name)
     )
@@ -163,23 +183,25 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
       return newCarWhere
     })()
 
-    const isTestUser = [
-      813200, //吉谷さん
-      816373, //小滝さん
-    ].includes(session.code)
-
-    const result: oktpUserTypes = {
-      userId,
-      storeId,
-      userType,
+    const newCarMember = {
       isHQ,
       isCR,
       isTorokuTanto,
       isStoreManager,
       isSales,
-      newCarWhere,
-      isTestUser,
     }
+
+    const result: oktpUserTypes = {
+      userId,
+      storeId,
+      userType,
+      newCarWhere,
+      ...newCarMember,
+
+      isNewCarMember: Object.keys(newCarMember).some(key => newCarMember[key as keyof typeof newCarMember]),
+    }
+
+    addAdminToRoles(result, session)
 
     return {...result}
   }

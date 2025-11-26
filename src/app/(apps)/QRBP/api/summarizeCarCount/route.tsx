@@ -31,7 +31,7 @@ export const POST = async req => {
     label: any
     date: any
   }
-  const transactionQueryList: transactionQuery[] = []
+  const transactionQueryList: transactionQuery<'bpSummary', 'upsert'>[] = []
   const summaryArr: summary[] = []
   for (const key of Object.keys(CONDITIONS)) {
     const {label, id, CONDITION} = CONDITIONS[key] as EasySearchObject

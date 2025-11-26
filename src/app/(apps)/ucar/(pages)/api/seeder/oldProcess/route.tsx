@@ -66,7 +66,7 @@ export const POST = async (req: NextRequest) => {
           throw new Error(`ucarBaseUpsertRes.success is false`)
         }
 
-        const transactionQueryList: transactionQuery[] = []
+        const transactionQueryList: (transactionQuery<'ucarProcess', 'upsert'> | transactionQuery<'ucar', 'update'>)[] = []
 
         if (ucarBaseUpsertRes.result) {
           // シート発行以外のプロセスデータを作成する。

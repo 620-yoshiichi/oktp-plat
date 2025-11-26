@@ -66,7 +66,7 @@ export const batchTenpoTsuikoData = async () => {
 
     // 3. データを1件ずつupsert
     let upsertedCount = 0
-    const transactionQueryList: transactionQuery[] = []
+    const transactionQueryList: transactionQuery<'tenpoTsuikoData', 'upsert'>[] = []
 
     for (const row of bigQueryData) {
       // const newCarId = (newCarMap.get(row.JUCHU_APPINDEX) ?? 0) as number

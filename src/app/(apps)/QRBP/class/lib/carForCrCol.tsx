@@ -108,7 +108,12 @@ export const carForCr = (props: columnGetterType) => {
         id: 'bpNumber',
         label: 'BP番号',
         type: 'text',
-        form: {register: {required: '必須'}, disabled: ({record, col}) => !!record?.[col.id]},
+        form: {
+          register: {required: '必須'},
+          disabled: ({record, col}) => {
+            return record?.['bpNumber'] ? true : false
+          },
+        },
         td: {},
         sort: {},
         search: {},
@@ -271,7 +276,7 @@ export const carForCr = (props: columnGetterType) => {
         form: {hidden: true},
       },
       {id: 'carName', label: '車名', sort: {}, search: {}, form: {hidden: true}},
-      {id: 'plate', label: 'プレート', sort: {}, search: {}, form: {hidden: true}},
+      {id: 'plate', label: 'プレート', sort: {}, search: {}, type: 'text', form: {hidden: true}},
     ])
       .showSummaryInTd({wrapperWidthPx: 180})
       .aggregateOnSingleTd()

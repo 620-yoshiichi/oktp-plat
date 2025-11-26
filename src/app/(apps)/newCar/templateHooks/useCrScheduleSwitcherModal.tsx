@@ -85,7 +85,7 @@ const Form = ({theCar, lastHistory, close, session, toggleLoad}) => {
   })
 
   return (
-    <BasicForm onSubmit={onSubmit} latestFormData={latestFormData}>
+    <BasicForm alignMode="col" onSubmit={onSubmit} latestFormData={latestFormData}>
       <Button>確定</Button>
     </BasicForm>
   )

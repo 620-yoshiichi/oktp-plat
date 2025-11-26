@@ -1,6 +1,5 @@
 'use client'
 import React, {useState} from 'react'
-import dynamic from 'next/dynamic'
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 import useInitFormState from '@cm/hooks/useInitFormState'
 
@@ -27,17 +26,11 @@ import ShadModal from '@cm/shadcn/ui/Organisms/ShadModal'
 import {useParams} from 'next/navigation'
 import useRecords from '@cm/components/DataLogic/TFs/PropAdjustor/hooks/useRecords/useRecords'
 import {ClientPropsType2} from '@cm/components/DataLogic/TFs/PropAdjustor/types/propAdjustor-types'
-import {useSearchHandler} from '@cm/components/DataLogic/TFs/MyTable/components/SearchHandler/useSearchHandler/useSearchHandler'
 import EasySearcher from '@cm/components/DataLogic/TFs/MyTable/components/EasySearcher/EasySearcher'
 import TableForm from '@cm/components/DataLogic/TFs/PropAdjustor/components/TableForm'
 import {getInitModelRecordsProps} from '@cm/components/DataLogic/TFs/Server/fetchers/getInitModelRecordsProps'
-
-const StoreSelector = dynamic(() => import('@app/(apps)/QRBP/admin/car/forCr/StoreSelector'), {
-  loading: () => <></>,
-})
-const CarDetailById = dynamic(() => import('@app/(apps)/QRBP/components/QRBP/forCr/CarDetailById'), {
-  loading: () => <></>,
-})
+import StoreSelector from '@app/(apps)/QRBP/admin/car/forCr/StoreSelector'
+import CarDetailById from '@app/(apps)/QRBP/components/QRBP/forCr/CarDetailById'
 
 export default function CarForCrBase(props: {
   fetchTime
@@ -137,11 +130,7 @@ export default function CarForCrBase(props: {
     PageBuilder,
   }
 
-  const {SearchingStatusMemo} = useSearchHandler({
-    columns,
-    dataModelName: `car`,
-    useGlobalProps,
-  })
+
 
   return (
     <div className={`p-2`}>
@@ -170,7 +159,6 @@ export default function CarForCrBase(props: {
             />
           </>
         )}
-        {SearchingStatusMemo}
 
         <R_Stack className={` mx-auto flex-nowrap items-start justify-center`}>
           <div>

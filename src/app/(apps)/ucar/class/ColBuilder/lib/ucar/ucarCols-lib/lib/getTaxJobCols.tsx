@@ -9,8 +9,8 @@ export const getTaxJobCols = () => {
     ...new Fields([
       {id: 'registerdAt', label: '登録日', type: `date`, form: {}},
       {id: 'earlyRecievedAt', label: '入庫/登録', type: `date`, form: {}},
-      {id: 'earlierDate', label: '計算基準日', type: `date`, form: {hidden: true}},
-    ]).customAttributes(({col}) => ({...col, td: {hidden: true}})).plain,
+      {id: 'earlierDate', label: '計算基準日', type: `date`, form: {}},
+    ]).customAttributes(({col}) => ({...col, td: {}})).plain,
 
     ...new Fields([
       {id: `paymentNoticeRecievedAt`, label: `納付書受領`, type: `date`},
@@ -33,28 +33,27 @@ export const getTaxJobCols = () => {
         },
       },
       {id: `annualTax`, label: `年間支払額`, type: `number`},
-    ]).customAttributes(({col}) => ({...col, form: {}, td: {hidden: true}})).plain,
+    ]).customAttributes(({col}) => ({...col, form: {}, td: {}})).plain,
   ]).buildFormGroup({groupName: `入庫/登録`}).plain
 
   const cols2: colType[] = new Fields([
-    ...new Fields([bankMasterCol, bankBranchMasterCol]).customAttributes(({col}) => ({...col, form: {}, td: {hidden: true}}))
-      .plain,
+    ...new Fields([bankMasterCol, bankBranchMasterCol]).customAttributes(({col}) => ({...col, form: {}, td: {}})).plain,
     ...new Fields([
       {id: `accountType`, label: `口座種類`},
       {id: `accountNumber`, label: `口座番号`},
       {id: `accountName`, label: `名義`},
-    ]).customAttributes(({col}) => ({...col, form: {}, td: {hidden: true}})).plain,
+    ]).customAttributes(({col}) => ({...col, form: {}, td: {}})).plain,
   ]).buildFormGroup({groupName: `口座情報`}).plain
 
   const cols3: colType[] = new Fields([
     ...new Fields([
       {id: `petCount`, label: `PET月数`, type: `number`},
       {id: `petPrice`, label: `PET金額`, type: `number`},
-    ]).customAttributes(({col}) => ({...col, form: {}, td: {hidden: true}})).plain,
+    ]).customAttributes(({col}) => ({...col, form: {}, td: {}})).plain,
     ...new Fields([
       {id: `prefCount`, label: `県月数`, type: `number`},
       {id: `prefPrice`, label: `県金額`, type: `number`},
-    ]).customAttributes(({col}) => ({...col, form: {}, td: {hidden: true}})).plain,
+    ]).customAttributes(({col}) => ({...col, form: {}, td: {}})).plain,
   ]).buildFormGroup({groupName: `計算結果`}).plain
 
   const colArr = {cols1, cols2, cols3}
@@ -141,7 +140,7 @@ export const bankBranchMasterCol: colType = {
                 },
                 {id: `branchKana`, label: `支店カナ`, form: {}},
               ])
-                .customAttributes(({col}) => ({...col, form: {}, td: {hidden: true}}))
+                .customAttributes(({col}) => ({...col, form: {}, td: {}}))
                 .transposeColumns(),
               formData: {
                 name: props2.searchFormData.name,

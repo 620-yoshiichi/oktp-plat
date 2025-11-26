@@ -20,11 +20,11 @@ import MyForm from '@cm/components/DataLogic/TFs/MyForm/MyForm'
 import {updateSimply} from '@cm/lib/formMethods/updateSimply'
 import {ClientPropsType2} from '@cm/components/DataLogic/TFs/PropAdjustor/types/propAdjustor-types'
 
-const BasicTabs = dynamic(() => import('@cm/components/utils/tabs/BasicTabs'), {
+const CarProcessChildCreator = dynamic(() => import('@app/(apps)/QRBP/components/QRBP/forCr/CarProcessChildCreator'), {
   loading: () => <></>,
 })
 
-const CarProcessChildCreator = dynamic(() => import('./CarProcessChildCreator'), {
+const BasicTabs = dynamic(() => import('@cm/components/utils/tabs/BasicTabs'), {
   loading: () => <></>,
 })
 
@@ -64,6 +64,7 @@ export default function CarDetailById(dataViewrProps: ClientPropsType2) {
               models: {parent: 'car', children: 'notes'},
               columns: ColBuilder.notes({useGlobalProps}),
               myForm: {
+                alignMode: 'console',
                 create: {
                   executeUpdate: async ({latestFormData}) => {
                     const {noteNameMasterId} = latestFormData
@@ -164,13 +165,13 @@ export default function CarDetailById(dataViewrProps: ClientPropsType2) {
                 <MyForm
                   {...{
                     ...dataViewrProps,
-
                     dataModelName,
                     formData,
                     setformData,
                     columns,
                     myForm: {
                       ...myForm,
+                      alignMode: 'console',
                       showHeader: car => {
                         return (
                           <div>

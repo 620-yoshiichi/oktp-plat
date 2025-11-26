@@ -9,6 +9,10 @@ import {QueryBuilder} from '@app/(apps)/ucar/class/QueryBuilder'
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 import {atomTypes} from '@cm/hooks/useJotai'
 import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
+import {generateInadequacyPdf} from './generateInadequacyPdf'
+import {OKTP_CONSTANTS} from '@app/oktpCommon/constants'
+import {UcarCL} from '@app/(apps)/ucar/class/UcarCL'
+import {formatDate} from '@cm/class/Days/date-utils/formatters'
 
 export default function PaperWorkNoteCreator(props: atomTypes[`selectedUcarNotes`]) {
   const {UcarData, mutateRecords} = props
@@ -40,19 +44,54 @@ export default function PaperWorkNoteCreator(props: atomTypes[`selectedUcarNotes
 
               const TypeObj = UCAR_CODE.PAPER_WORK_NOTE_TYPES.byCode(ucarPaperWorkNotes.type)
 
-              if (TypeObj?.notifyByEmail) {
-                const {result: targetUsers} = await doStandardPrisma(`user`, `findMany`, {
+              // 不備が申請された場合（解決日が空欄の場合）の処理
+              if (TypeObj?.notifyByEmail && !ucarPaperWorkNotes.resolvedAt) {
+                const storeManagerWhere = OKTP_CONSTANTS.where.storeManagerWhere
+
+                const {result: SenderUser} = await doStandardPrisma(`user`, `findUnique`, {
+                  where: {id: ucarPaperWorkNotes.userId},
+                })
+
+                const {result: UcarUser} = await doStandardPrisma(`user`, `findUnique`, {
+                  where: {id: UcarData.userId},
+                })
+
+                const {result: StoreManagerUsers} = await doStandardPrisma(`user`, `findMany`, {
                   where: {
-                    OR: [{id: UcarData.userId}, {AND: [{storeId: UcarData.storeId}, {role: {in: [`店長`]}}]}],
+                    AND: [
+                      //
+                      storeManagerWhere,
+                      {storeId: UcarData.storeId},
+                    ],
                   },
                 })
 
+                // 不備区分のラベルを取得
+                const inadequacyTypeLabel = TypeObj.label || ''
+                const ucarData = await UcarCL.fetcher.getUcarDataBySateiId(UcarData.sateiID)
+                const ucarInst = new UcarCL(ucarData)
+
+                const text = [
+                  `査定番号: ${ucarInst.notation.sateiID}`,
+                  `お客様名: ${ucarInst.notation.customerName}`,
+                  `車名: ${ucarInst.notation.modelName}`,
+                  `印鑑証明期限: ${formatDate(ucarInst.data.inkanCertificateExpiredAt)}`,
+                  ``,
+                  `不備区分: ${inadequacyTypeLabel}`,
+                  `不備申請者: ${SenderUser?.name}`,
+                  `不備内容: ${content}`,
+                ].join('\n')
+
                 await knockEmailApi({
-                  subject: `QRシステム書類不備`,
-                  text: content,
-                  to: targetUsers.map(user => user.email),
+                  subject: `QRシステム書類不備通知`,
+                  text,
+                  to: [UcarUser?.email],
+                  cc: [SenderUser?.email, ...StoreManagerUsers.map(user => user.email)],
+                  attachments: [],
                 })
+
                 toast.info('メールを送信しました')
+                window.open(`/ucar/fubiHensoHyo/${ucarPaperWorkNotes.id}`, '_blank')
               }
 
               const LatestUcarPaperWorkNotes = [

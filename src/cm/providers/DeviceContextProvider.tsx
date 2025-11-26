@@ -4,7 +4,7 @@ import {GetDevice} from '@cm/hooks/useWindowSize'
 
 import Loader from '@cm/components/utils/loader/Loader'
 
-export const appbarHeight = 40
+export const appbarHeight = 0
 export const footerHeight = 40
 export const headerMargin = 0
 type DeviceContextType = {
@@ -33,17 +33,18 @@ const DeviceContextProvider = ({children}: {children: ReactNode}) => {
   }
 
   useEffect(() => {
-    const debounce = (func: () => void, delay: number) => {
-      let timeoutId: NodeJS.Timeout
-      return () => {
-        clearTimeout(timeoutId)
-        timeoutId = setTimeout(func, delay)
-      }
-    }
-    const handleResizeDebounced = debounce(handleResize, 0)
-    window.addEventListener('resize', handleResizeDebounced)
+    // const debounce = (func: () => void, delay: number) => {
+    //   let timeoutId: NodeJS.Timeout
+    //   return () => {
+    //     clearTimeout(timeoutId)
+    //     timeoutId = setTimeout(func, delay)
+    //   }
+    // }
+    // const handleResizeDebounced = debounce(handleResize, 0)
+    // window.addEventListener('resize', handleResizeDebounced)
+
     handleResize()
-    return () => window.removeEventListener('resize', handleResizeDebounced)
+    // return () => window.removeEventListener('resize', handleResizeDebounced)
   }, [])
   const width = windowSize?.width ?? 0
   const height = windowSize?.height ?? 0
@@ -57,7 +58,7 @@ const DeviceContextProvider = ({children}: {children: ReactNode}) => {
   const bodyHeight = height - appbarHeight - headerMargin
 
   if (!device || width === 0) {
-    return <Loader>Validating Device Data...</Loader>
+    return <Loader></Loader>
   }
 
   const value = {

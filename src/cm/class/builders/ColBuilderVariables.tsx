@@ -100,7 +100,7 @@ export const TableInfo = (props: {label; children?: any; value?: any; labelWidth
           maxWidth: valueWidth,
           overflow: 'hidden',
           textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap',
+          whiteSpace:  'nowrap',
         }}
       >
         <>{children ?? value}</>

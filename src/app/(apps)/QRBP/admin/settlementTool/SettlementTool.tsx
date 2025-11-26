@@ -14,13 +14,14 @@ import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 import {getColorStyles} from '@cm/lib/methods/colors'
 
-import {Fragment} from 'react'
+import {Fragment, useState, useEffect, useRef} from 'react'
 import {Alert} from '@cm/components/styles/common-components/Alert'
 import {CssString} from '@cm/components/styles/cssString'
 import {NumHandler} from '@cm/class/NumHandler'
+import useModal from '@cm/components/utils/modal/useModal'
+import {Card} from '@cm/shadcn/ui/card'
 
-const fix = 'éå¸¸'
-const SettlementTool = ({Car, CarForShanaiJikan}) => {
+const SettlementTool = ({Car, CarForShanaiJikan, allCars = [] as any[], allCarsForShanaiJikan = [] as any[]}) => {
   const columns = Fields.transposeColumns([
     {
       id: 'bpNumber',
@@ -34,9 +35,26 @@ const SettlementTool = ({Car, CarForShanaiJikan}) => {
     formData: {...query},
   })
 
+  const [selectedCarIndex, setSelectedCarIndex] = useState(0)
+  const {Modal, handleOpen, open} = useModal({defaultOpen: false})
+  const prevBpNumberRef = useRef(query.bpNumber)
+
+  // 複数の車がある場合は、検索時にモーダルを開く
+  useEffect(() => {
+    // BP番号が変更されたときだけモーダルを開く
+    if (allCars.length > 1 && query.bpNumber && prevBpNumberRef.current !== query.bpNumber) {
+      setSelectedCarIndex(0) // インデックスをリセット
+      handleOpen()
+      prevBpNumberRef.current = query.bpNumber
+    }
+  }, [allCars.length, query.bpNumber])
+
+  const selectedCar = (allCars[selectedCarIndex] || Car) as any
+  const selectedCarForShanaiJikan = (allCarsForShanaiJikan[selectedCarIndex] || CarForShanaiJikan) as any
+
   return (
-    <Padding>
-      <Paper>
+    <Padding className={`w-fit mx-auto`}>
+      <div>
         <div>
           <R_Stack className={` flex justify-start`}>
             <BasicForm
@@ -52,10 +70,87 @@ const SettlementTool = ({Car, CarForShanaiJikan}) => {
             </BasicForm>
           </R_Stack>
         </div>
-      </Paper>
-      <Paper>
-        {Car ? (
+      </div>
+
+      {/* 複数の車がある場合のモーダル */}
+      {allCars.length > 1 && (
+        <Modal
+          title="BP番号の選択"
+          description={`該当するBP番号が${allCars.length}件見つかりました。表示する車両を選択してください。`}
+        >
+          <C_Stack className="gap-2">
+            <div className={`${CssString.table.borderCerlls} table-wrapper w-full text-center`}>
+              <table>
+                <thead>
+                  <tr>
+                    <th>選択</th>
+                    <th>BP番号</th>
+                    <th>車名</th>
+                    <th>受注日</th>
+                    <th>プレート</th>
+                    <th>お客様名</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {allCars.map((car, index) => (
+                    <tr
+                      key={index}
+                      onClick={() => {
+                        setSelectedCarIndex(index)
+                        handleOpen(false)
+                      }}
+                      className={`cursor-pointer hover:bg-gray-100 ${selectedCarIndex === index ? 'bg-blue-50' : ''}`}
+                    >
+                      <td>
+                        <input
+                          type="radio"
+                          checked={selectedCarIndex === index}
+                          onChange={() => {
+                            setSelectedCarIndex(index)
+                            handleOpen(false)
+                          }}
+                        />
+                      </td>
+                      <td>{car.bpNumber}</td>
+                      <td>{car.carName}</td>
+                      <td>{formatDate(car.orderedAt)}</td>
+                      <td>{car.plate}</td>
+                      <td>{car.customerName}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <R_Stack className="justify-end">
+              <Button
+                onClick={() => {
+                  setSelectedCarIndex(selectedCarIndex)
+                  handleOpen(false)
+                }}
+              >
+                選択して閉じる
+              </Button>
+            </R_Stack>
+          </C_Stack>
+        </Modal>
+      )}
+
+      <div>
+        {selectedCar ? (
           <C_Stack>
+            {allCars.length > 1 && (
+              <Card className={`my-4 w-fit bg-yellow-50 border-yellow-500 border`}>
+                <R_Stack className="4 items-center gap-2">
+                  <span className="text-sm text-gray-600">
+                    選択中: {selectedCar.bpNumber} - {selectedCar.carName} ({formatDate(selectedCar.orderedAt)})
+                  </span>
+                  <Button color="red" size="sm" onClick={() => handleOpen()}>
+                    車両を変更
+                  </Button>
+                </R_Stack>
+              </Card>
+            )}
+
             <BasicTabs
               {...{
                 id: 'settlementTool',
@@ -66,22 +161,22 @@ const SettlementTool = ({Car, CarForShanaiJikan}) => {
                       <R_Stack className={`mx-auto  w-full justify-center text-lg`}>
                         <span>通常処理</span>
                         <Circle width={30} color={`red`}>
-                          {Car.Process.length}
+                          {selectedCar.Process?.length || 0}
                         </Circle>
                       </R_Stack>
                     ),
-                    component: <ProcessResult {...{Car}} />,
+                    component: <ProcessResult {...{Car: selectedCar}} />,
                   },
                   {
                     label: (
                       <R_Stack className={`mx-auto  w-full justify-center text-lg`}>
                         <span>社内時間</span>
                         <Circle width={30} color={`red`}>
-                          {CarForShanaiJikan.Process.length}
+                          {selectedCarForShanaiJikan?.Process?.length || 0}
                         </Circle>
                       </R_Stack>
                     ),
-                    component: <ProcessResult {...{Car: CarForShanaiJikan}} />,
+                    component: <ProcessResult {...{Car: selectedCarForShanaiJikan}} />,
                   },
                 ],
               }}
@@ -90,7 +185,7 @@ const SettlementTool = ({Car, CarForShanaiJikan}) => {
         ) : (
           <Alert>BP番号を選択してください</Alert>
         )}
-      </Paper>
+      </div>
     </Padding>
   )
 }
@@ -98,7 +193,7 @@ const SettlementTool = ({Car, CarForShanaiJikan}) => {
 export default SettlementTool
 
 const ProcessResult = ({Car}) => {
-  const {Process} = Car
+  const {Process = []} = Car || {}
   const B = Process.filter(p => {
     return p?.ProcessNameMaster?.type === '板金'
   })

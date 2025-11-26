@@ -117,7 +117,7 @@ export const POST = async (req: NextRequest) => {
     `2025/03/23`,
     `2025/03/30`,
   ]
-  const transactionQueryList: transactionQuery[] = []
+  const transactionQueryList: transactionQuery<'calendar', 'upsert'>[] = []
 
   allDaysInYear.forEach(date => {
     const formattedHolidays = honbuHolidays.map(d => formatDate(new Date(d)))

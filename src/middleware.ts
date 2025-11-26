@@ -27,7 +27,7 @@ export const rootPaths: rootPath[] = [
     rootPath: 'QRBP',
     paths: [
       {
-        matcher: getFreePathsMathcer(`QRBP`, [`/engineer`, `/process/history`]),
+        matcher: getFreePathsMathcer(`QRBP`, ['/', `/engineer`, `/process/history`]),
         ...defaultPathValidateConfig,
       },
     ],
@@ -45,7 +45,12 @@ export const rootPaths: rootPath[] = [
     rootPath: 'ucar',
     paths: [
       {
-        matcher: getFreePathsMathcer(`ucar`, [`/admin/InstantQr`]),
+        matcher: getFreePathsMathcer(`ucar`, [
+          //
+          '/',
+          '/sateiIdConverter',
+          `/admin/InstantQr`,
+        ]),
         ...defaultPathValidateConfig,
       },
     ],

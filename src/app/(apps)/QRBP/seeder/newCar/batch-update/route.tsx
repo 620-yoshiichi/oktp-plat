@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
   await sleep(chunkIdx * 500)
 
   const dataModelName = 'newCar'
-  const transactionQueryList: transactionQuery[] = []
+  const transactionQueryList: transactionQuery<'newCar', 'upsert'>[] = []
   data.forEach(item => {
     const {
       APPINDEX,
@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
       update: baiscPayload,
     }
 
-    const query: transactionQuery = {
+    const query: transactionQuery<'newCar', 'upsert'> = {
       model: 'newCar',
       method: 'upsert',
       queryObject: queryObject,

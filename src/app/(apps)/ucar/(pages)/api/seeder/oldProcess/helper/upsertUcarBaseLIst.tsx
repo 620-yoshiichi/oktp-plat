@@ -1,10 +1,10 @@
 import {toUtc} from '@cm/class/Days/date-utils/calculations'
 import {doTransaction, transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
-import {Prisma, Ucar} from '@prisma/client'
+import { Ucar} from '@prisma/client'
 import {UcarProcessCl} from '@app/(apps)/ucar/class/UcarProcessCl'
 
 export const doTransactionUcarBaseList = async ({cleansedData, users, adminUser, processes}) => {
-  const ucarBaseTransactionQueryList: transactionQuery[] = []
+  const ucarBaseTransactionQueryList: transactionQuery<'ucar', 'upsert'>[] = []
 
   cleansedData.forEach(cleansed => {
     const {
@@ -44,16 +44,14 @@ export const doTransactionUcarBaseList = async ({cleansedData, users, adminUser,
       destination: Sorting_results,
     }
 
-    const ucarUpsertArgs: Prisma.UcarUpsertArgs = {
-      where: {sateiID: sateiId},
-      create: data,
-      update: data,
-    }
-
     ucarBaseTransactionQueryList.push({
       model: `ucar`,
       method: `upsert`,
-      queryObject: ucarUpsertArgs,
+      queryObject: {
+        where: {sateiID: sateiId},
+        create: data,
+        update: data,
+      },
     })
   })
 

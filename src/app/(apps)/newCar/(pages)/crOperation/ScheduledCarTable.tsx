@@ -10,6 +10,8 @@ import {formatDate} from '@cm/class/Days/date-utils/formatters'
 import {CsvTable} from '@cm/components/styles/common-components/CsvTable/CsvTable'
 import React from 'react'
 import {obj__initializeProperty} from '@cm/class/ObjHandler/transformers'
+import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
+import {R_Stack} from '@cm/components/styles/common-components/common-components'
 
 export default function ScheduledCarTable({from, to, crHolidays, newCars, CrScheduleSwitcherModal_HK}) {
   let minusNumber = -7
@@ -41,10 +43,10 @@ export default function ScheduledCarTable({from, to, crHolidays, newCars, CrSche
     obj__initializeProperty(CarsOnDate, dateStr, [])
     CarsOnDate[dateStr].push(car)
   })
+
   const MaxRowCount = Math.max(1, ...Object.values(CarsOnDate).map((cars: any[]) => cars.length))
 
   const stylesInColumns = Object.fromEntries([
-    // [0, {style: {width: 20}}],
     ...days.map((d, idx) => {
       const {isHoliday} = d
       const style = {
@@ -57,6 +59,8 @@ export default function ScheduledCarTable({from, to, crHolidays, newCars, CrSche
   const TB = CsvTable({
     stylesInColumns,
     records: new Array(MaxRowCount).fill(0).map((_, rowIdx) => {
+      const carsOnDate = Object.values(CarsOnDate)
+
       return {
         csvTableRow: [
           {
@@ -65,10 +69,21 @@ export default function ScheduledCarTable({from, to, crHolidays, newCars, CrSche
             style: {textAlign: `center`},
           },
           ...days.map((day, dayIdx) => {
-            const theCar = CarsOnDate?.[formatDate(day.date)]?.[rowIdx]
+            const dateStr = formatDate(day.date)
+            const theCar = CarsOnDate?.[dateStr]?.[rowIdx]
+            const count = CarsOnDate?.[formatDate(day.date)]?.length || 0
+
+            const label = (
+              <R_Stack className={` justify-between min-w-[140px] gap-0.5`}>
+                <div>{dateStr}</div>
+                <IconBtn color={count > 0 ? 'blue' : 'gray'} size="sm">
+                  {count}件
+                </IconBtn>
+              </R_Stack>
+            )
 
             if (!theCar) {
-              return {cellValue: ''}
+              return {label, cellValue: ''}
             }
 
             const cellProps = checkAlert({
@@ -76,9 +91,8 @@ export default function ScheduledCarTable({from, to, crHolidays, newCars, CrSche
               newCar: theCar,
               crHolidays,
             })
-
             return {
-              label: formatDate(day.date, 'M/D(ddd)'),
+              label,
               cellValue: <CarCardPopover {...{CrScheduleSwitcherModal_HK, theCar, day, cellProps}} />,
             }
           }),
@@ -86,9 +100,5 @@ export default function ScheduledCarTable({from, to, crHolidays, newCars, CrSche
       }
     }),
   })
-  return (
-    <div>
-      <TB.WithWrapper />
-    </div>
-  )
+  return <div>{TB.WithWrapper({size: 'sm', className: `max-h-[70vh] text-center [&_td]:!p-0`})}</div>
 }

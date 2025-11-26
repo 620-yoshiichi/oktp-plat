@@ -22,7 +22,7 @@ export const createUcarByQrIssueBigQuery = async ({allUsers}) => {
  `,
   })
 
-  const transactionQueryList: transactionQuery[] = []
+  const transactionQueryList: transactionQuery<'ucar', 'upsert'>[] = []
   AiSateiUser.map(async user => {
     const {sateiId, datetime_0, email_0, store_0, remarks_0, runnable_0, shitadoriKubun_0, orderNumber_0} = user
 

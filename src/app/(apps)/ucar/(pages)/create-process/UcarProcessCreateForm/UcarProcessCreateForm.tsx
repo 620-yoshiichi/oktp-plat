@@ -8,7 +8,7 @@ import {formatDate} from '@cm/class/Days/date-utils/formatters'
 import ChildCreator from '@cm/components/DataLogic/RTs/ChildCreator/ChildCreator'
 
 import {Button} from '@cm/components/styles/common-components/Button'
-import {C_Stack, FitMargin, R_Stack} from '@cm/components/styles/common-components/common-components'
+import {FitMargin, R_Stack} from '@cm/components/styles/common-components/common-components'
 import PlaceHolder from '@cm/components/utils/loader/PlaceHolder'
 
 import {arrToLines} from '@cm/components/utils/texts/MarkdownDisplay'
@@ -18,8 +18,8 @@ import useDoStandardPrisma from '@cm/hooks/useDoStandardPrisma'
 import {ApplicationForm} from '@app/(apps)/ucar/(pages)/create-process/UcarProcessCreateForm/ApplicationForm'
 import {atomKey, useJotaiByKey} from '@cm/hooks/useJotai'
 import {UcarProcessCl} from '@app/(apps)/ucar/class/UcarProcessCl'
-import AutoGridContainer from '@cm/components/utils/AutoGridContainer'
 import ShadModal from '@cm/shadcn/ui/Organisms/ShadModal'
+import BasicTabs from '@cm/components/utils/tabs/BasicTabs'
 
 export const UcarProcessCreateForm = ({UcarData, useGlobalProps}) => {
   const {session, addQuery, router, query} = useGlobalProps
@@ -72,12 +72,73 @@ export const UcarProcessCreateForm = ({UcarData, useGlobalProps}) => {
   }
 
   return (
-    <FitMargin>
-      <AutoGridContainer className={`gap-16 p-4`} maxCols={{md: 2}}>
+    <FitMargin className={`p-4`}>
+      <BasicTabs
+        {...{
+          id: 'ucarProcessCreateForm',
+          showAll: false,
+          TabComponentArray: [
+            {
+              label: '新規登録',
+              component: (
+                <ApplicationForm
+                  {...{
+                    columns,
+                    stores,
+                    UcarData,
+                    useGlobalProps,
+                    setopenClearnUp,
+                    processCode,
+                  }}
+                />
+              ),
+            },
+            {
+              label: '過去登録情報',
+              component: (
+                <ChildCreator
+                  {...{
+                    useGlobalProps,
+                    columns: columns,
+                    ParentData: UcarData,
+                    models: {parent: 'ucar', children: 'ucarProcess'},
+
+                    myForm: {
+                      create: {
+                        validateUpdate: async () => {
+                          return {
+                            success: confirm(`工程を登録しますか？`),
+                            message: 'ok',
+                          }
+                        },
+                      },
+                    },
+                    myTable: {
+                      create: false,
+                      style: {maxWidth: '90vw'},
+                    },
+                    additional: {
+                      where: {
+                        sateiID: UcarData.sateiID,
+                        ucarId: undefined,
+                      },
+                      orderBy: [{date: 'asc'}],
+                      include: QueryBuilder.getInclude({}).ucarProcess?.include ?? {},
+                    },
+                  }}
+                />
+              ),
+            },
+          ],
+        }}
+      />
+
+      {/* <AutoGridContainer className={`gap-16 p-4`} maxCols={{md: 2}}>
         <C_Stack>
           <div className={`text-2xl p-3 rounded bg-blue-500 text-white text-center font-bold w-full`}>新規登録</div>
           <ApplicationForm
             {...{
+              columns,
               stores,
               UcarData,
               useGlobalProps,
@@ -122,7 +183,7 @@ export const UcarProcessCreateForm = ({UcarData, useGlobalProps}) => {
             />
           </div>
         </C_Stack>
-      </AutoGridContainer>
+      </AutoGridContainer> */}
     </FitMargin>
   )
 
@@ -203,11 +264,11 @@ export const checkIfProcessExists = async ({ucarProcessUpsertPayload, ucar}) => 
           `同じ工程が既に登録されていますが、続けて登録してもよろしいですか？`,
           theSameProcessArr
             .map(P => {
-              const {date, time, processCode} = P
+              const {date, processCode} = P
 
               const ProcessCodeItem = UcarProcessCl.CODE.byCode(processCode)
 
-              return '・' + [ProcessCodeItem?.label, formatDate(date), time].join('  ')
+              return '・' + [ProcessCodeItem?.label, formatDate(date)].join('  ')
             })
             .join('\n'),
         ])

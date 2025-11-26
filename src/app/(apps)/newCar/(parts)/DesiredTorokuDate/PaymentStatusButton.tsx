@@ -5,7 +5,7 @@ import {R_Stack} from '@cm/components/styles/common-components/common-components
 import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
 import MyPopover from '@cm/components/utils/popover/MyPopover'
 
-export const PaymentStatusButton = ({newCar, isHQ, isTestUser}) => {
+export const PaymentStatusButton = ({newCar, isHQ}) => {
   const {KI_BETSIHAK, CUSTOM_paymentCheck, KI_NYURUIKE, KI_SHRIGK, DD_FR, CUSTOM_paymentCheckCustomerType} = newCar
   const status = {label: ``, color: ``}
   if (CUSTOM_paymentCheck === false) {

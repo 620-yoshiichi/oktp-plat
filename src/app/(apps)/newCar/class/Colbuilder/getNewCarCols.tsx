@@ -32,7 +32,7 @@ import {formatDate} from '@cm/class/Days/date-utils/formatters'
 export const getNewCarCols = (props: columnGetterType) => {
   const {pathname, query, accessScopes} = props.useGlobalProps
 
-  const {newCarWhere, isStoreManager, isHQ, isTestUser} = accessScopes().getNewCarProps()
+  const {newCarWhere, isStoreManager, isHQ} = accessScopes().getNewCarProps()
   const {storeId} = newCarWhere
 
   const stuffSwitcherGMF = useStuffSwitcher()
@@ -322,7 +322,13 @@ export const getNewCarCols = (props: columnGetterType) => {
         format: (value, newCar) => {
           return (
             <div>
-              <CheckPointList {...{newCar, HK_USE_RECORDS, width: 180}} />
+              <CheckPointList
+                {...{
+                  newCar,
+                  HK_USE_RECORDS,
+                  width: 180,
+                }}
+              />
 
               {!newCar.JuchuShitadoriDb.length && (
                 <R_Stack className={` items-start py-1`}>
@@ -374,7 +380,7 @@ export const getNewCarCols = (props: columnGetterType) => {
         const newCar = row
         return (
           <div className={`w-[160px]`}>
-            <DesiredTorokuDateRegister {...{newCar, isHQ, isTestUser}} />
+            <DesiredTorokuDateRegister {...{newCar, isHQ}} />
           </div>
         )
       },

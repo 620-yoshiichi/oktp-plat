@@ -115,9 +115,9 @@ const UcarQrSheet = ({ucar}) => {
   if (!srcDataUrlObject.length) return <div>QRコードの生成に失敗しました</div>
 
   return (
-    <C_Stack className="ucar-qr-sheet">
+    <C_Stack className="ucar-qr-sheet w-fit mx-auto">
       {renderButtons({src, ucar, handlePrint})}
-      {renderMain({ucar, srcDataUrlObject, printRef})}
+      <div className={`h-[80vh] overflow-auto shadow-lg border`}>{renderMain({ucar, srcDataUrlObject, printRef})}</div>
     </C_Stack>
   )
 }
@@ -128,7 +128,6 @@ const renderButtons = ({src, ucar, handlePrint}) => {
   return (
     <R_Stack className="no-print mb-4">
       <Button onClick={handlePrint}>印刷</Button>
-      {/* <T_LINK href={src}>QRコードのリンク先</T_LINK> */}
     </R_Stack>
   )
 }

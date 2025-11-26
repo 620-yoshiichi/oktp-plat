@@ -15,40 +15,40 @@ type AdminLayoutProps = {
 }
 
 export const AdminLayout = React.memo(({children, adminContext, menuContext, useGlobalProps}: AdminLayoutProps) => {
-  const {PC} = useWindowSize()
+  const {PC, width} = useWindowSize()
 
   const {horizontalMenu, pathItemObject} = adminContext
-
-  const MainDisplay = React.memo(() => <div>{children}</div>)
 
   if (PC) {
     return (
       <PCLayout
-        MainDisplay={MainDisplay}
         adminContext={adminContext}
         menuContext={menuContext}
         useGlobalProps={useGlobalProps}
         horizontalMenu={horizontalMenu}
         pathItemObject={pathItemObject}
-      />
+      >
+        {children}
+      </PCLayout>
     )
   }
 
   return (
     <SPLayout
-      MainDisplay={MainDisplay}
       adminContext={adminContext}
       menuContext={menuContext}
       useGlobalProps={useGlobalProps}
       horizontalMenu={horizontalMenu}
       pathItemObject={pathItemObject}
-    />
+    >
+      {children}
+    </SPLayout>
   )
 })
 
 // PC用レイアウト
-const PCLayout = React.memo(({MainDisplay, adminContext, menuContext, useGlobalProps, horizontalMenu, pathItemObject}: any) => (
-  <div>
+const PCLayout = React.memo(({children, adminContext, menuContext, useGlobalProps, horizontalMenu, pathItemObject}: any) => (
+  <div className={` max-w-screen min-h-screen overflow-x-auto overflow-y-hidden`}>
     <Header adminContext={adminContext} />
 
     {adminContext.navBarPosition === `left` && (
@@ -59,22 +59,24 @@ const PCLayout = React.memo(({MainDisplay, adminContext, menuContext, useGlobalP
       </div>
     )}
 
-    <MainDisplay />
+    {children}
   </div>
 ))
 
 // SP用レイアウト
-const SPLayout = React.memo(({MainDisplay, adminContext, menuContext, useGlobalProps, horizontalMenu, pathItemObject}: any) => (
-  <div className="sticky top-0">
-    <div>
-      <Header adminContext={adminContext} />
+const SPLayout = React.memo(({children, adminContext, menuContext, useGlobalProps, horizontalMenu, pathItemObject}: any) => (
+  <div className={` max-w-screen min-h-screen overflow-x-auto overflow-y-hidden`}>
+    <div className="sticky top-0">
+      <div>
+        <Header adminContext={adminContext} />
 
-      <Drawer menuContext={menuContext}>
-        <NavBar useGlobalProps={useGlobalProps} horizontalMenu={horizontalMenu} navItems={pathItemObject.navItems} />
-      </Drawer>
+        <Drawer menuContext={menuContext}>
+          <NavBar useGlobalProps={useGlobalProps} horizontalMenu={horizontalMenu} navItems={pathItemObject.navItems} />
+        </Drawer>
+      </div>
+
+      {children}
     </div>
-
-    <MainDisplay />
   </div>
 ))
 

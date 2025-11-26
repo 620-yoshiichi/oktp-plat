@@ -57,7 +57,7 @@ export const POST = async (req: NextRequest) => {
   })
 
   // A8:AE
-  const transactionQueryList: transactionQuery[] = []
+  const transactionQueryList: transactionQuery<'ucar', 'upsert'>[] = []
   res.result.forEach(item => {
     const {
       accountingRecievedAt,
@@ -124,7 +124,7 @@ export const POST = async (req: NextRequest) => {
       number98Id: Number98Obj?.id,
     }
     const paylaod: any = {
-      where: {Assessment_ID: String(Assessment_ID)},
+      where: {sateiID: String(Assessment_ID)},
       create: data,
       update: data,
     }

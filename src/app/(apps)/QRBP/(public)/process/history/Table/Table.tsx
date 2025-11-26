@@ -189,7 +189,7 @@ export const ProcessCorrectionForm = ({editModalOpen, seteditModalOpen}) => {
           <div>{Car.bpNumber}</div>
           <div>{Car?.carName}</div>
         </h1>
-        <BasicForm onSubmit={onSubmit} latestFormData={latestFormData}>
+        <BasicForm alignMode="col" onSubmit={onSubmit} latestFormData={latestFormData}>
           <R_Stack className={` justify-around gap-4`}>
             {hasData && (
               <div

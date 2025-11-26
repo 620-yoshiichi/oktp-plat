@@ -6,11 +6,11 @@ import prisma from 'src/lib/prisma'
 import {NextRequest, NextResponse} from 'next/server'
 import {isCron} from 'src/non-common/serverSideFunction'
 import {processBatchWithRetry} from '@cm/lib/server-actions/common-server-actions/processBatchWithRetry'
-import {doTransactionUcarBaseList} from '@app/(apps)/ucar/(pages)/api/seeder/oldProcess/helper/upsertUcarBaseLIst'
 import {BQ_parser} from '@app/api/google/big-query/bigQueryParser'
 import {ObjectMap} from '@cm/lib/methods/common'
 import {doTransaction, transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
 import {Prisma} from '@prisma/client'
+import {UcarProcessCl} from '@app/(apps)/ucar/class/UcarProcessCl'
 
 // kobutsu = 古物台帳
 // 古物台帳のデータを同期するためのAPI
@@ -26,7 +26,10 @@ export const GET = async (req: NextRequest) => {
   const body = await bigQuery__select({
     datasetId: 'Ucar_QR',
     tableId: 'AI_satei',
-    sqlString: sql`SELECT * FROM okayamatoyopet.Ucar_QR.QR_Prosess`,
+    sqlString: sql`
+    SELECT * FROM okayamatoyopet.Ucar_QR.QR_Prosess
+
+    `,
   })
 
   const adminUser = await prisma.user.findUnique({
@@ -39,7 +42,7 @@ export const GET = async (req: NextRequest) => {
 
   await processBatchWithRetry({
     soruceList: body,
-    mainProcess: async batch => {
+    mainProcess: async (batch: ucarProcessType[]) => {
       // データをクレンジング
       const cleansedData = batch.map(d => {
         return ObjectMap(d, (key, value) => {
@@ -47,66 +50,146 @@ export const GET = async (req: NextRequest) => {
         }) as ucarProcessType
       })
 
-      // 手始めにQRシート発行データのみを作成し、その他のプロセスのリストを作成する。
-      const ucarBaseUpsertRes = await doTransactionUcarBaseList({
-        cleansedData,
-        users,
-        adminUser,
-        processes,
-      })
+      type queryType = transactionQuery<'ucar', 'upsert'> | transactionQuery<'ucarProcess', 'upsert'>
+      const transactionQueryList: queryType[] = []
+      cleansedData.forEach(d => {
+        const {
+          sateiId,
+          Sorting_results,
+          email_0,
+          store_0,
+          runnable_0,
+          remarks_0,
+          shitadoriKubun_0,
+          orderNumber_0,
+          max_update,
+          ...rest
+        } = d
 
-      if (!ucarBaseUpsertRes.success) {
-        throw new Error(`ucarBaseUpsertRes.success is false`)
-      }
+        let processLastUpdatedAt
 
-      const transactionQueryList: transactionQuery[] = []
+        ///プロセスデータの作成
+        Object.keys(rest).forEach(processKeyInBq => {
+          const processCodeItem = UcarProcessCl.CODE.getBy('bqFieldName', processKeyInBq)
 
-      if (ucarBaseUpsertRes.result) {
-        // シート発行以外のプロセスデータを作成する。
-        ucarBaseUpsertRes.result.forEach(ucar => {
-          const list = ucar.list
-          list?.forEach(d => {
-            const {theProcessMaster, date} = d ?? {}
+          if (processCodeItem?.code) {
+            const datetime = BQ_parser.parseDate(rest[processKeyInBq])
 
-            const ucarProcessCreateArgs: Prisma.UcarProcessCreateArgs = {
-              data: {
+            if (datetime) {
+              const unique_sateiID_date_processCode: Prisma.UcarProcessWhereUniqueInput['unique_sateiID_date_processCode'] = {
+                sateiID: sateiId,
+                processCode: processCodeItem.code,
+                date: datetime,
+              }
+
+              const payload: Prisma.UcarProcessUpsertArgs['create'] = {
+                ...unique_sateiID_date_processCode,
                 dataSource: `spreadsheet`,
-                Ucar: {connect: {id: ucar?.id ?? 0}},
-                User: {connect: {id: ucar?.userId ?? 0}},
-                // Store: {connect: {id: ucar?.storeId ?? 0}},
-                processCode: theProcessMaster.code,
-                date: date,
-              },
-            }
+                userId: users.find(user => user.email === email_0)?.id ?? 0,
+                processCode: processCodeItem.code,
+              }
 
-            transactionQueryList.push({
-              model: `ucarProcess`,
-              method: `create`,
-              queryObject: ucarProcessCreateArgs,
-            })
-
-            const lastUpdatedProcessMaster = list[list.length - 1]
-
-            // let LastProcessData
-            if (lastUpdatedProcessMaster?.theProcessMaster) {
               transactionQueryList.push({
-                model: `ucar`,
-                method: `update`,
+                model: `ucarProcess`,
+                method: `upsert`,
                 queryObject: {
-                  where: {id: ucar?.id},
-                  data: {
-                    ucarLastProcessMasterId: lastUpdatedProcessMaster.theProcessMaster.id,
-                  },
+                  where: {unique_sateiID_date_processCode},
+                  create: payload,
+                  update: payload,
                 },
               })
+              if (!processLastUpdatedAt || processLastUpdatedAt.getTime() < datetime.getTime()) {
+                processLastUpdatedAt = datetime
+              }
             }
-          })
+          }
         })
-      }
-
-      const upsertRes = await doTransaction({
-        transactionQueryList,
+        const payload: Prisma.UcarUpsertArgs['create'] = {
+          sateiID: sateiId,
+          userId: users.find(user => user.email === email_0)?.id ?? 0,
+          storeId: users.find(user => user.email === email_0)?.storeId ?? 0,
+          runnable: runnable_0 === `可` ? true : false,
+          remarks: remarks_0,
+          storeToPickUp: store_0,
+          destination: Sorting_results,
+          processLastUpdatedAt,
+        }
+        transactionQueryList.push({
+          model: `ucar`,
+          method: `upsert`,
+          queryObject: {
+            where: {sateiID: sateiId},
+            create: payload,
+            update: payload,
+          },
+        })
       })
+
+      const upsertRes = await doTransaction({transactionQueryList})
+      result['upsertRes'] = upsertRes
+
+      return
+
+      // // 手始めにQRシート発行データのみを作成し、その他のプロセスのリストを作成する。
+      // const ucarBaseUpsertRes = await doTransactionUcarBaseList({
+      //   cleansedData,
+      //   users,
+      //   adminUser,
+      //   processes,
+      // })
+
+      // if (!ucarBaseUpsertRes.success) {
+      //   throw new Error(`ucarBaseUpsertRes.success is false`)
+      // }
+
+      // const transactionQueryList: transactionQuery[] = []
+
+      // if (ucarBaseUpsertRes.result) {
+      //   // シート発行以外のプロセスデータを作成する。
+      //   ucarBaseUpsertRes.result.forEach(ucar => {
+      //     const list = ucar.list
+      //     list?.forEach(d => {
+      //       const {theProcessMaster, date} = d ?? {}
+
+      //       const ucarProcessCreateArgs: Prisma.UcarProcessCreateArgs = {
+      //         data: {
+      //           dataSource: `spreadsheet`,
+      //           Ucar: {connect: {id: ucar?.id ?? 0}},
+      //           User: {connect: {id: ucar?.userId ?? 0}},
+      //           // Store: {connect: {id: ucar?.storeId ?? 0}},
+      //           processCode: theProcessMaster.code,
+      //           date: date,
+      //         },
+      //       }
+
+      //       transactionQueryList.push({
+      //         model: `ucarProcess`,
+      //         method: `create`,
+      //         queryObject: ucarProcessCreateArgs,
+      //       })
+
+      //       const lastUpdatedProcessMaster = list[list.length - 1]
+
+      //       // let LastProcessData
+      //       if (lastUpdatedProcessMaster?.theProcessMaster) {
+      //         transactionQueryList.push({
+      //           model: `ucar`,
+      //           method: `update`,
+      //           queryObject: {
+      //             where: {id: ucar?.id},
+      //             data: {
+      //               ucarLastProcessMasterId: lastUpdatedProcessMaster.theProcessMaster.id,
+      //             },
+      //           },
+      //         })
+      //       }
+      //     })
+      //   })
+      // }
+
+      // const upsertRes = await doTransaction({
+      //   transactionQueryList,
+      // })
     },
   })
 

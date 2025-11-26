@@ -54,9 +54,9 @@ export default async function ActivateBpSpread(req, res) {
     拠点受取: '拠点受取',
   }
 
-  const transactionQueryList: transactionQuery[] = []
+  const transactionQueryList: transactionQuery<any, any>[] = []
 
-  const carUpdators: transactionQuery[] = []
+  const carUpdators: transactionQuery<any, any>[] = []
   data.forEach((car, idx) => {
     const {advisorName, damage, estimate, schedule, carProcesses, processCount} = car
     if (processCount === 0) {
@@ -75,7 +75,9 @@ export default async function ActivateBpSpread(req, res) {
       model: 'car',
       method: 'update',
       queryObject: {
-        where: {bpNumber},
+        where: {
+          bpNumber: String(bpNumber),
+        },
         data: {
           damageNameMasterId: damageNameMaster.find(d => {
             return d.name === damage

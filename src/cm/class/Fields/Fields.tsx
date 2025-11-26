@@ -75,7 +75,7 @@ export class Fields {
           if (col.format) {
             colValue = col.format(value, row, col)
           } else if (col.type === 'price') {
-            colValue = NumHandler.toPrice(colValue)
+            colValue = NumHandler.toPrice(row[col.id])
           } else if (col.type === 'password') {
             colValue = '********'
           } else if (col.forSelect) {
@@ -122,6 +122,7 @@ export class Fields {
                   {...{
                     label: 'データ無',
                     value: <div className="text-xs opacity-50">{undefinedLabels.map(d => d.label).join(', ')}</div>,
+
                     wrapperWidthPx,
                     labelWidthPx,
                   }}

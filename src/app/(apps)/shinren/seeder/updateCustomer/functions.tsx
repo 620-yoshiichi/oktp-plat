@@ -31,7 +31,7 @@ export const updateCustomer = async ({Customers}) => {
     console.info(`brandNewCustomers Count:`, brandNewCustomers.length)
 
     const switchingTargets: any[] = []
-    const customerQuery: transactionQuery[] = []
+    const customerQuery: transactionQuery<'rentaCustomer', 'upsert'>[] = []
     console.warn('アプリ上に登録のある顧客データを更新します。')
 
     Customers.forEach(c => {

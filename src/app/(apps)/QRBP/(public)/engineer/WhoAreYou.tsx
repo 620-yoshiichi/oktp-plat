@@ -65,7 +65,13 @@ export const WhoAreYou = ({addQuery, query}) => {
       <>
         <FitMargin>
           <div className={`mx-auto max-w-sm gap-2`}>
-            <BasicForm {...{latestFormData, alignMode: 'row', ControlOptions: {ControlStyle: {width: 130}}}} />
+            <BasicForm
+              {...{
+                latestFormData,
+                alignMode: 'row',
+                ControlOptions: {ControlStyle: {width: 130}},
+              }}
+            />
           </div>
         </FitMargin>
       </>

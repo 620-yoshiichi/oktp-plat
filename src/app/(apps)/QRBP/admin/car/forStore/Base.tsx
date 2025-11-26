@@ -1,11 +1,8 @@
 'use client'
 import React from 'react'
-import dynamic from 'next/dynamic'
 
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 import useInitFormState from '@cm/hooks/useInitFormState'
-
-const CarDetailById = dynamic(() => import('@app/(apps)/QRBP/components/QRBP/forCr/CarDetailById'), {})
 
 import {ColBuilder} from '@app/(apps)/QRBP/class/ColBuilder'
 import {PageBuilder} from '@app/(apps)/QRBP/class/PageBuilder'
@@ -24,11 +21,11 @@ import {useParams} from 'next/navigation'
 import {Paper} from '@cm/components/styles/common-components/paper'
 import useRecords from '@cm/components/DataLogic/TFs/PropAdjustor/hooks/useRecords/useRecords'
 import {ClientPropsType2} from '@cm/components/DataLogic/TFs/PropAdjustor/types/propAdjustor-types'
-import {useSearchHandler} from '@cm/components/DataLogic/TFs/MyTable/components/SearchHandler/useSearchHandler/useSearchHandler'
 import EasySearcher from '@cm/components/DataLogic/TFs/MyTable/components/EasySearcher/EasySearcher'
 import TableForm from '@cm/components/DataLogic/TFs/PropAdjustor/components/TableForm'
 import {getInitModelRecordsProps} from '@cm/components/DataLogic/TFs/Server/fetchers/getInitModelRecordsProps'
 import {MyFormType} from '@cm/types/form-types'
+import CarDetailById from '@app/(apps)/QRBP/components/QRBP/forCr/CarDetailById'
 
 export default function CarForStoreBase(props: {
   waitingListObject
@@ -112,11 +109,6 @@ export default function CarForStoreBase(props: {
     editType: {type: 'modal'},
   }
 
-  const {SearchingStatusMemo} = useSearchHandler({
-    columns,
-    dataModelName: `car`,
-    useGlobalProps,
-  })
   return (
     <Padding>
       <C_Stack className={`mx-auto w-fit`}>
@@ -133,7 +125,6 @@ export default function CarForStoreBase(props: {
             />
           </Paper>
         )}
-        {SearchingStatusMemo}
 
         <R_Stack style={{maxWidth: 1200, width: 1200, margin: 'auto'}} className={`justify-center`}>
           <TableForm {...dataViewrProps} EditForm={CarDetailById} />

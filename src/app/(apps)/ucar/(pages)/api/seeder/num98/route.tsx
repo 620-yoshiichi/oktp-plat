@@ -7,7 +7,7 @@ import {doTransaction, transactionQuery} from '@cm/lib/server-actions/common-ser
 export const POST = async (req: NextRequest) => {
   let result
 
-  const num98Array: transactionQuery[] = []
+  const num98Array: transactionQuery<'number98', 'upsert'>[] = []
   new Array(9999).fill(0).reduce((acc, curr, i) => {
     // if(98 9000)
 

@@ -10,8 +10,7 @@ export class SessionFaker {
     default: {
       modelNames: [
         //
-        {name: 'user', id_pw: {id: 'code', pw: 'password'}},
-        {name: 'user'},
+        {name: 'user', id_pw: {id: 'email', pw: 'password'}},
       ],
     },
   }
@@ -23,5 +22,3 @@ export class SessionFaker {
     return targetModels?.modelNames
   }
 }
-
-// nnu2361

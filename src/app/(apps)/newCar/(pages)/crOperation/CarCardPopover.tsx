@@ -50,10 +50,16 @@ export default function CarCardPopover(props: {
 
   // const torokuDone = DD_TOUROKU ? <StarIcon className={`w-5 text-red-500`} /> : null
 
-  const smallTextClass = `text-[11px] text-gray-500 flex flex-nowrap items-center`
-  const largeTextClass = `text-[15px] bont-bold text-black`
+  const smallTextClass = `text-[9px] text-gray-500 flex flex-nowrap items-center leading-3 justify-start`
+  const largeTextClass = `text-[11px] bont-bold text-black`
 
   const PopOverButton = () => {
+    const styling = {
+      classes: {
+        // label: `text-[11px] laeding-3`,
+        // value: `text-[11px] laeding-3`,
+      },
+    }
     return (
       <MyPopover
         {...{
@@ -70,66 +76,77 @@ export default function CarCardPopover(props: {
             {...{
               label: `ユーザー名`,
               value: User?.name,
+              styling,
             }}
           />
           <LabelValue
             {...{
               label: `店舗名`,
               value: Store?.name,
+              styling,
             }}
           />
           <LabelValue
             {...{
               label: `注文番号`,
               value: NO_CYUMON,
+              styling,
             }}
           />
           <LabelValue
             {...{
               label: `フレーム番号`,
               value: NO_FRAME,
+              styling,
             }}
           />
           <LabelValue
             {...{
               label: `車名`,
               value: KJ_KURUMAME,
+              styling,
             }}
           />
           <LabelValue
             {...{
               label: `買主`,
               value: KJ_KAINMEI1,
+              styling,
             }}
           />
           <LabelValue
             {...{
               label: `登録希望申請日`,
               value: formatDate(lastApprovedDesiredTorokuDate),
+              styling,
             }}
           />
           <LabelValue
             {...{
               label: `登録日`,
               value: formatDate(DD_TOUROKU),
+              styling,
             }}
           />
           <LabelValue
             {...{
               label: `作業着工日(当初)`,
               value: formatDate(DD_SAGTYYO),
+              styling,
             }}
           />
           <LabelValue
             {...{
               label: `配送希望日`,
               value: formatDate(DD_HAISKIBO),
+              styling,
             }}
           />
           <LabelValue
             {...{
               label: `配送予定日`,
               value: formatDate(DD_HAISOYOT),
+              styling,
             }}
           />
         </Paper>
@@ -165,8 +182,8 @@ export default function CarCardPopover(props: {
     background: cellProps?.style.background + '40',
     border: `1px solid ${cellProps?.style.background}`,
     padding: 4,
-    height: 160,
-    width: 160,
+    height: 120,
+    width: 120,
   }
 
   const MemoButton = () => {
@@ -184,6 +201,7 @@ export default function CarCardPopover(props: {
       return (
         <>
           <BasicForm
+            alignMode="col"
             latestFormData={latestFormData}
             onSubmit={async data => {
               toggleLoad(async () => {
@@ -233,6 +251,7 @@ export default function CarCardPopover(props: {
           <div {...{className: `absolute !bottom-0 !right-1`}}>
             {isDev && theCar.haisou_tooEarly && <Button color={`red`}>NG</Button>}
           </div>
+
           <div className={smallTextClass}>
             <span>車名:</span>
             <span className={largeTextClass}>{shorten(KJ_KURUMAME, 6)}</span>
@@ -264,7 +283,7 @@ export default function CarCardPopover(props: {
 
           <div className={smallTextClass}>
             <span>買主:</span>
-            <span className={largeTextClass + ' w-[100px]  truncate text-start text-sm'}>{theCar.KJ_KAINMEI1}</span>
+            <span className={largeTextClass + ' w-[80px] truncate text-start text-sm'}>{theCar.KJ_KAINMEI1}</span>
           </div>
         </C_Stack>
       </div>
@@ -278,7 +297,7 @@ export default function CarCardPopover(props: {
           <R_Stack className={`w-full justify-between gap-0.5 text-sm`}>
             <R_Stack className={` flex-nowrap gap-0.5  text-xs`}>
               <ModalButton>
-                <div className={`text-[1rem] font-bold text-black`}>{NO_CYUMON}</div>
+                <div className={`text-sm font-bold text-black`}>{NO_CYUMON}</div>
               </ModalButton>
               <PopOverButton />
               <MemoButton></MemoButton>

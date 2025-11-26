@@ -94,7 +94,7 @@ export default async function Page(props) {
 
   return (
     <>
-      <Center className={`relative  p-2 pb-[200px]`}>
+      <Center className={`relative  p-2 h[200px]`}>
         <C_Stack>
           <VehicleTransferFilter />
           <VehicleTransferTable cars={cars} />

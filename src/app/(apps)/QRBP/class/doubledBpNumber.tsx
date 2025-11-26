@@ -17,6 +17,19 @@ export class DoubledBP {
     return cars[0]
   }
 
+  /**BP番号に一致するすべての車両を取得*/
+  static getAllCarsByBpNumber = async (bpNumber, options?: {queryObject: any}) => {
+    const {queryObject} = options ?? {}
+    const {result: cars} = await doStandardPrisma('car', 'findMany', {
+      ...queryObject,
+      where: {bpNumber},
+      orderBy: {orderedAt: 'desc'},
+    })
+    const logMessage = `BP番号${bpNumber}の車両が${cars.length}件あります。`
+    console.log(logMessage)
+    return cars
+  }
+
   static params = {
     create: car => {
       const params = {bpNumber: car.bpNumber, orderedAt: formatDate(car.orderedAt)}

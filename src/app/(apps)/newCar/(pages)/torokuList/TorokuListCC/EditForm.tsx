@@ -80,6 +80,7 @@ export const EditForm = ({application}) => {
 
   return (
     <BasicForm
+      alignMode="col"
       latestFormData={latestFormData}
       onSubmit={async data => {
         toggleLoad(async () => {

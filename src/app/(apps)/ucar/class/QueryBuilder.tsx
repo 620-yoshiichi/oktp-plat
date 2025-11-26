@@ -21,7 +21,12 @@ export class QueryBuilder {
       include: {
         TmpRentalStore: {},
         DestinationStore: {},
-        UPASS: {},
+        UPASS: {
+          include: {
+            RootUpass: {},
+          },
+        },
+
         Number98: {
           select: {id: true, number: true},
         },
@@ -39,6 +44,7 @@ export class QueryBuilder {
           select: {
             id: true,
             content: true,
+            createdAt: true,
             type: true,
             resolvedAt: true,
             User: {select: {id: true, name: true}},

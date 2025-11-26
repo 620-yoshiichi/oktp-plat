@@ -5,6 +5,7 @@ import {DH__switchColType} from '@cm/class/DataHandler/type-converter'
 const MyInput = React.forwardRef((props: {controlContextValue: ControlContextType}, ref) => {
   const {latestFormData, col, ReactHookForm, formProps, Register, currentValue, liftUpNewValueOnChange, field, ControlStyle} =
     props.controlContextValue as ControlContextType
+
   useEffect(() => {
     if (currentValue) {
       ReactHookForm.setValue(col.id, currentValue)

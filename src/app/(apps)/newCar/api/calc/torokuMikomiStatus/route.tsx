@@ -112,7 +112,7 @@ const getTorokuConditions = async () => {
 
   const nestedFields = nestCreateWhereArgs(aggregationFieldsTop, aggregationFieldsTop.children)
 
-  const transactionQueryList: transactionQuery[] = []
+  const transactionQueryList: transactionQuery<'newCar', 'updateMany'>[] = []
 
   const result = await Promise.all(
     flatFields.map(async field => {

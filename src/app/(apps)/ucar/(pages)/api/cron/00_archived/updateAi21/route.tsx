@@ -67,7 +67,7 @@ export const GET = async (req: NextRequest) => {
           `,
     })
 
-    const transactionQueryList: transactionQuery[] = data.map(data => {
+    const transactionQueryList: transactionQuery<PrismaModelNames, 'create'>[] = data.map(data => {
       Object.keys(data).forEach(key => {
         const isInField = fields.some(f => f.en === key)
         delete data['combinedKey']

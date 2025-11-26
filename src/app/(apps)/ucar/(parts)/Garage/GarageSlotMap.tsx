@@ -11,7 +11,6 @@ import {C_Stack, R_Stack} from '@cm/components/styles/common-components/common-c
 import {Card} from '@cm/shadcn/ui/card'
 import {TextGray, TextGreen, TextLink, TextRed} from '@cm/components/styles/common-components/Alert'
 
-import {getMidnight} from '@cm/class/Days/date-utils/calculations'
 
 export default function GarageSlotMap({
   isValidating,
@@ -132,12 +131,6 @@ export default function GarageSlotMap({
                                 const {result: appliedSlot} = await doStandardPrisma(`appliedUcarGarageSlot`, `create`, {
                                   include: query.include,
                                   data: query.data,
-                                })
-
-                                // 作成日の登録
-                                const res = await doStandardPrisma('ucar', 'update', {
-                                  where: {id: ucar.id},
-                                  data: {meihenMasshoShoribi: getMidnight()},
                                 })
 
                                 const {UcarGarageLocationMaster, garageNumber} = appliedSlot?.UcarGarageSlotMaster ?? {}

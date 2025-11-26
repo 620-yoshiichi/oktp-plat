@@ -39,7 +39,7 @@ WHERE Assessment_ID IN (${AssessmentIds.map(d => `'${d}'`).join(`,`)})
     },
   })
 
-  const transactionQueryList: transactionQuery[] = []
+  const transactionQueryList: transactionQuery<'ucar', 'update'>[] = []
   ucars.forEach(ucar => {
     const BQ_Car = allData.find(BQ_Data => BQ_Data.Assessment_ID === ucar.Assessment_ID)
 

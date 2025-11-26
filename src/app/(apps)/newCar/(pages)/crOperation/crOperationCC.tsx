@@ -32,20 +32,35 @@ export default function CrOperationCC({crHolidays, from, to, newCars, pendingCar
   return (
     <C_Stack>
       <R_Stack className={` items-start`}>
-        <NewDateSwitcher />
-        <SerachForm />
+        <div className={`w-fit`}>
+          <NewDateSwitcher />
+        </div>
+        <div className={`w-fiit`}>
+          <SerachForm />
+        </div>
         <Marker />
       </R_Stack>
 
-      <R_Stack className={`flex-nowrap items-start  justify-start `}>
-        <Accordion {...{label: `作業着工予定リスト`, closable: false, defaultOpen: true}}>
+      <R_Stack className={`flex-nowrap items-start  justify-start  `}>
+        <Accordion
+          {...{
+            label: `作業着工予定リスト`,
+            closable: false,
+            defaultOpen: true,
+          }}
+        >
           <div>
-            <small>各日付に着工予定の車が「注文番号」で並んでいます。</small>
             <ScheduledCarTable {...{from, to, crHolidays, newCars, CrScheduleSwitcherModal_HK}} />
           </div>
         </Accordion>
         <C_Stack>
-          <Accordion {...{label: `保留リスト`, closable: false, defaultOpen: true}}>
+          <Accordion
+            {...{
+              label: `保留リスト`,
+              closable: false,
+              defaultOpen: true,
+            }}
+          >
             <div className={``}>
               <PenadingCarTableList {...{pendingCars, crHolidays, CrScheduleSwitcherModal_HK}} />
             </div>
@@ -111,21 +126,23 @@ const SerachForm = () => {
           onOpenChange: setselectedCar,
         }}
       >
-        <C_Stack>
-          {selectedCar?.map(car => {
-            const newCarCl = new NewCarClass(car)
-            const pendingDate = newCarCl.chakko.getPendingDateOrDD_SAGTYYO()
+        {selectedCar && (
+          <C_Stack>
+            {selectedCar?.map(car => {
+              const newCarCl = new NewCarClass(car)
+              const pendingDate = newCarCl.chakko.getPendingDateOrDD_SAGTYYO()
 
-            return (
-              <div key={car.id}>
-                <LabelValue {...{label: `注文番号`}}>{car.NO_CYUMON}</LabelValue>
-                <LabelValue {...{label: `車名`}}>{car.KJ_KURUMAME}</LabelValue>
-                <LabelValue {...{label: `着工予定`}}>{formatDate(pendingDate)}</LabelValue>
-                <LabelValue {...{label: `登録予定`}}>{formatDate(newCarCl.car.lastApprovedDesiredTorokuDate)}</LabelValue>
-              </div>
-            )
-          })}
-        </C_Stack>
+              return (
+                <div key={car.id} className={`  border-b  not-last:border-b  py-2 `}>
+                  <LabelValue {...{label: `注文番号`}}>{car.NO_CYUMON}</LabelValue>
+                  <LabelValue {...{label: `車名`}}>{car.KJ_KURUMAME}</LabelValue>
+                  <LabelValue {...{label: `着工予定`}}>{formatDate(pendingDate)}</LabelValue>
+                  <LabelValue {...{label: `登録予定`}}>{formatDate(newCarCl.car.lastApprovedDesiredTorokuDate)}</LabelValue>
+                </div>
+              )
+            })}
+          </C_Stack>
+        )}
       </ShadModal>
       <div className={`w-fit`}>
         <BasicForm

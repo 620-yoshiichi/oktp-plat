@@ -3,7 +3,7 @@ import {PrismaModelNames} from '@cm/types/prisma-types'
 import {transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
 
 export function createRelationalDataUpdateQueries({CstmrFrom, CstmTo}) {
-  const queriFromClient: transactionQuery[] = []
+  const queriFromClient: transactionQuery<any, any>[] = []
   addToQueriesFromClient(`alternateInfo`)
   addToQueriesFromClient(`extraInfo`)
   addToQueriesFromClient(`insuranceInfo`)

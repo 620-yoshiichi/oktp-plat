@@ -43,7 +43,8 @@ export const torokuDatefinalizeUpdate = async ({res, queryObject}) => {
   const theStatus = NEW_CAR_CONST.TOROKU_STATUS_LIST.find(d => d.value === updatedData?.status)
 
   // 新規登録の場合は、承認メールを送信
-  const createNew = queryObject.where.id === 0
+
+  const createNew = !queryObject?.where?.id
 
   //ステータス変更があり、キャンセルではない場合
   const approvedStatusUpdated = [createNew === false, theStatus?.sendMail].every(d => d)

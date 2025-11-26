@@ -22,14 +22,23 @@ const QrCreatePageCC = () => {
   })
 
   // UPASSDBの検索結果を取得
-  const {data: upassData} = useSWR(query.sateiID ? `/ucar/qr/create/upass/${query.sateiID}` : null, async () => {
+  const {data} = useSWR(query.sateiID ? `/ucar/qr/create/upass/${query.sateiID}` : null, async () => {
     if (!query.sateiID) return null
     const {doStandardPrisma} = await import('@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma')
-    const {result} = await doStandardPrisma('uPASS', 'findUnique', {
+    const {result: upassData} = await doStandardPrisma('uPASS', 'findUnique', {
       where: {sateiID: String(query.sateiID)},
     })
-    return result
+
+    const {isLastSateiId, lastSateiId, AlertComponent} = await UcarCL.getUpassFaimilyTree({sateiID: query.sateiID})
+
+    return {
+      upassData,
+      isLastSateiId,
+      AlertComponent,
+    }
   })
+
+  const {upassData, isLastSateiId, AlertComponent} = data ?? {}
 
   const {sateiID_Input, DataSearchForm} = useDataSearchForm()
 
@@ -52,28 +61,36 @@ const QrCreatePageCC = () => {
                   </C_Stack>
                 </C_Stack>
               ) : (
-                <R_Stack className="gap-6 items-start">
-                  {/* UPASSデータが存在する場合、詳細情報を表示 */}
+                <>
+                  {isLastSateiId ? (
+                    <div>
+                      <R_Stack className="gap-6 items-start">
+                        {/* UPASSデータが存在する場合、詳細情報を表示 */}
 
-                  <Card>
-                    <DataInitiationForm
-                      {...{
-                        stores,
-                        ucar,
-                        toggleLoad,
-                        session,
-                        sateiID_Input,
-                        hasUpassData: !!upassData,
-                      }}
-                    />
-                  </Card>
-                  {upassData && (
-                    <Card>
-                      <h3 className="text-lg font-semibold mb-4">UPASSデータ詳細</h3>
-                      <UpassDataDisplay upassData={upassData} />
-                    </Card>
+                        <Card>
+                          <DataInitiationForm
+                            {...{
+                              stores,
+                              ucar,
+                              toggleLoad,
+                              session,
+                              sateiID_Input,
+                              hasUpassData: !!upassData,
+                            }}
+                          />
+                        </Card>
+                        {upassData && (
+                          <Card>
+                            <h3 className="text-lg font-semibold mb-4">UPASSデータ詳細</h3>
+                            <UpassDataDisplay upassData={upassData} />
+                          </Card>
+                        )}
+                      </R_Stack>
+                    </div>
+                  ) : (
+                    AlertComponent
                   )}
-                </R_Stack>
+                </>
               )}
             </NotAvailable>
           )}

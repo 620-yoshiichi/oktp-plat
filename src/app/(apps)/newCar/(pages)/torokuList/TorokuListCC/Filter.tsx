@@ -38,6 +38,7 @@ export const Filter = ({query, addQuery}) => {
   return (
     <BasicForm
       {...{
+        alignMode: `col`,
         latestFormData,
         onSubmit: async data => {
           addQuery({

@@ -54,7 +54,7 @@ const seedGarageNameMaster = async ({
   })
 
   //①ループ車庫スロットの作成
-  const ucarGarageSlotMasterQuery: transactionQuery[] = []
+  const ucarGarageSlotMasterQuery: transactionQuery<'ucarGarageSlotMaster', 'upsert'>[] = []
   body.forEach(d => {
     const garageNumber = Number(d.garageNumber)
     if (isNaN(garageNumber)) return

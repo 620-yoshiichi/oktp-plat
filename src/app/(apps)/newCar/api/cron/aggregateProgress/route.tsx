@@ -23,7 +23,7 @@ export const GET = async (req: NextRequest) => {
     where: newCarAppUserWhere,
   })
 
-  const transactionQueryList: transactionQuery[] = []
+  const transactionQueryList: transactionQuery<'userProgressAggregationTable', 'upsert'>[] = []
 
   const aggregationFields = [
     {timing: `m0Status`, count: `m0StatusCount`, alert: `DD_FR`},
@@ -112,18 +112,6 @@ export const GET = async (req: NextRequest) => {
   const res = await doTransaction({transactionQueryList})
   console.debug(res)
 
-  // try {
-  //   const stores = await prisma.store.findMany({})
-  //   // 進捗集計テーブルを作成
-  //   const {result: ProgressAggregationTable} = await createBaseTable({stores})
-
-  //   /** 詳細（m0~m2）レコードを作成 */
-  //   await createTimingIndicatorRecords({ProgressAggregationTable})
-
-  //   result = {ProgressAggregationTable}
-  // } catch (error) {
-  //   console.error(error.stack) //////////
-  // }
   result = {}
   return NextResponse.json(result)
 }

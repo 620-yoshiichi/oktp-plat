@@ -56,6 +56,7 @@ export const BankUpsertModal = ({formData, bankMasterId}) => {
       >
         <BasicForm
           {...{
+            alignMode: 'col',
             latestFormData,
             onSubmit: async data => {
               await useGlobalProps.toggleLoad(async () => {

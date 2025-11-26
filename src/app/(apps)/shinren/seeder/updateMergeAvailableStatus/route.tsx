@@ -27,7 +27,7 @@ export const POST = async () => {
   })
 
   //mergeCandidatesIdsを更新するクエリを作成
-  const mergeAvailableUpdateQuery: transactionQuery[] = []
+  const mergeAvailableUpdateQuery: transactionQuery<'rentaCustomer', 'update'>[] = []
   const customersWithMergeIds = mergeMethods.checkIsMergeAvailavle({currentKanriCustomer, mergeRequiredAppCustomer})
 
   customersWithMergeIds.forEach(c => {

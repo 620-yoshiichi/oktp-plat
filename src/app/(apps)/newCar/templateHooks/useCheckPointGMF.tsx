@@ -92,6 +92,7 @@ export const CkecnPointForm = ({cp, newCar, setopen, UseRecordsReturn}) => {
 
       <div className={` mx-auto  w-fit`}>
         <BasicForm
+          alignMode="col"
           latestFormData={latestFormData}
           onSubmit={onSubmit}
           {...{

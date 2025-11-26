@@ -27,7 +27,7 @@ const LoadingVehicles = () => {
   if (!LoadingVehicle) return null
   const initLoadingVehicles = async () => {
     toggleLoad(async () => {
-      const makeLoadingVehilceQuery: transactionQuery[] = []
+      const makeLoadingVehilceQuery: transactionQuery<'loadingVehicle', 'create'>[] = []
       const {result: areas} = await doStandardPrisma('area', 'findMany', {})
 
       areas.forEach(area => {

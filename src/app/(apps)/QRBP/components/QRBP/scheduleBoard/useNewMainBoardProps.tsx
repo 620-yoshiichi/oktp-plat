@@ -79,10 +79,15 @@ const useNewMainBoardProps = props => {
             ...selectedCar,
             damageNameMasterId: current.damageNameMasterId,
             crScheduledAt: current.crScheduledAt,
+
+            moved: true,
           })
         } else {
           newCars[carIndex]['damageNameMasterId'] = current.damageNameMasterId
+
           newCars[carIndex]['crScheduledAt'] = current.crScheduledAt == 'unscheduled' ? null : current.crScheduledAt
+
+          newCars[carIndex]['moved'] = true
         }
 
         return newCars
@@ -93,7 +98,8 @@ const useNewMainBoardProps = props => {
   /**更新関数 */
   const updateScheduleBoard = async () => {
     await toggleLoad(async () => {
-      const transactionQueryList: transactionQuery[] = carsOnBoard.map((car: anyObject) => {
+      const targetCarList = carsOnBoard.filter(car => car.moved === true)
+      const transactionQueryList: transactionQuery<'car', 'update'>[] = targetCarList.map((car: anyObject) => {
         return {
           model: 'car',
           method: 'update',

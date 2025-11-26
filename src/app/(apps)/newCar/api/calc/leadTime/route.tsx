@@ -21,7 +21,7 @@ export const POST = async (req: NextRequest) => {
 }
 
 const updateLeadTime = async ({newCars}) => {
-  const transactionQueryList: transactionQuery[] = []
+  const transactionQueryList: transactionQuery<'newCarLeadTime', 'upsert'>[] = []
   newCars.forEach(car => {
     LEAD_TIME_CRITERIA.map(async c => {
       const leadTimeKey = c.id

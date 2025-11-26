@@ -5,8 +5,9 @@ import {R_Stack} from '@cm/components/styles/common-components/common-components
 import InlineGarageEditor from '../../InlineGarageEditor'
 import Coloring from '@cm/lib/methods/Coloring'
 import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
+import {FubiActionTrigger} from '@app/(apps)/ucar/(pages)/paperProcess/Summay/UcarAlertButtonSummay'
 
-export const getPaperManagementCols = () => {
+export const getPaperManagementCols = ({UseRecordsReturn}) => {
   const acceptProcessCols = new Fields([
     ...new Fields([
       {id: 'arrivedAt', label: '本部着', type: `date`, form: {}},
@@ -42,11 +43,18 @@ export const getPaperManagementCols = () => {
       },
 
       {
-        id: 'meihenMasshoShoribi',
-        label: '名抹処理日',
+        id: 'meihenBi',
+        label: '名変日',
         type: 'date',
         form: {},
       },
+      {
+        id: 'masshoBi',
+        label: '名抹日',
+        type: 'date',
+        form: {},
+      },
+
       {
         id: 'secondMeihenbi',
         label: '二次登録日',
@@ -128,6 +136,22 @@ export const getPaperManagementCols = () => {
               </Coloring>
               <span>{formatDate(row.inkanCertificateExpiredAt)}</span>
             </R_Stack>
+          )
+        },
+      },
+      {
+        id: 'fubi',
+        label: '不備通知',
+        type: 'date',
+        form: {hidden: true},
+        format: (value, row) => {
+          return (
+            <FubiActionTrigger
+              {...{
+                UcarData: row,
+                mutateRecords: UseRecordsReturn.mutateRecords,
+              }}
+            />
           )
         },
       },

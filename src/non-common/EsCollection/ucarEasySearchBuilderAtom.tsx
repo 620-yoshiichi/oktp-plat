@@ -15,6 +15,7 @@ import {shorten} from '@cm/lib/methods/common'
 import {sold, unsold} from '@app/(apps)/ucar/(constants)/ucar-constants'
 import {IsActiveDisplay} from '@app/(apps)/ucar/(lib)/isActiveDisplays'
 import {UcarProcessCl} from '@app/(apps)/ucar/class/UcarProcessCl'
+import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
 
 export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
   const processMasterRaw = UcarProcessCl.CODE.raw
@@ -22,14 +23,14 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
 
   const {query, easySearchExtraProps} = props
   const {enginerringProcesses, stores} = easySearchExtraProps ?? {}
-  const notFinalizedWhere = {meihenMasshoShoribi: null}
+  const notFinalizedWhere = {meihenBi: null, masshoBi: null}
 
   type EsObj = EasySearchObjectAtom<Prisma.UcarWhereInput>
 
   const paperErrorWhere: CONDITION_TYPE = {
     UcarPaperWorkNotes: {
       some: {
-        type: '不備',
+        type: UCAR_CODE.PAPER_WORK_NOTE_TYPES.raw.FUBI.code,
         resolvedAt: null,
       },
     },
@@ -97,9 +98,13 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
   const pending__unReceived: EsObj = {
     label: '未受付',
     notify: true,
-    description: '店長検収後、受付なし',
+    description: '書類送付QRチェック後、受付なし',
     CONDITION: {
-      NOT: pending__retendedOnStore.CONDITION,
+      UcarProcess: {
+        some: {
+          processCode: processMasterRaw.STORE_SHORUI_SOUHU.code,
+        },
+      },
       arrivedAt: null,
     },
   }
@@ -138,7 +143,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     notify: true,
     CONDITION: {
       processedAs: `名義変更`,
-      meihenMasshoShoribi: null,
+      meihenBi: null,
     },
   }
 
@@ -146,19 +151,19 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     label: '名変[完]',
     CONDITION: {
       processedAs: `名義変更`,
-      meihenMasshoShoribi: {not: null},
+      meihenBi: {not: null},
     },
   }
 
   const processedResult__massyo_done: EsObj = {
     label: '抹消[完]',
-    CONDITION: {processedAs: `抹消`, meihenMasshoShoribi: {not: null}},
+    CONDITION: {processedAs: `抹消`, masshoBi: {not: null}},
   }
 
   const processedResult__massyo_not_done: EsObj = {
     label: '抹消[未]',
     notify: true,
-    CONDITION: {processedAs: `抹消`, meihenMasshoShoribi: null},
+    CONDITION: {processedAs: `抹消`, masshoBi: null},
   }
 
   // const processedResult__notFinalized = {

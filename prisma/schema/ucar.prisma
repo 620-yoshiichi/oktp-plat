@@ -44,8 +44,11 @@ model Ucar {
   passedAt     DateTime?
   customerName String?
 
-  meihenMasshoShoribi DateTime? //名変抹消はこちらに統一
-  secondMeihenbi      DateTime? //二次登録日
+  meihenBi       DateTime?
+  masshoBi       DateTime?
+  secondMeihenbi DateTime? //二次登録日
+
+  // meihenMasshoShoribi DateTime? //名変抹消はこちらに統一
 
   destination               String?
   inkanCertificateExpiredAt DateTime?
@@ -103,6 +106,17 @@ model Ucar {
   tmpRegistrationClassNumber String? // 分類番号
   tmpRegistrationKana        String? // かな
   tmpLandAffairsName         String? // 陸事名
+
+  modified_brandName     String? //店舗査定_ブランド名称
+  modified_modelName     String? //店舗査定_車種名称
+  modified_frameNumber   String? //店舗査定_フレーム��
+  modified_chassisNumber String? //店舗査定_車台番号
+  modified_type          String? //型式
+  modified_grade         String? //グレード
+  modified_modelYear     String? //モデル年式
+  modified_length        String? //車寸（長さ）
+  modified_width         String? //車寸（幅）
+  modified_height        String? //車寸（高さ）
 
   // リレーション
   Number98 Number98? @relation(fields: [number98], references: [number])
@@ -248,7 +262,7 @@ model UcarProcess {
   dataSource  String
   date        DateTime? @default(now())
   sortOrder   Float     @default(0)
-  time        String?
+  // time        String?
 
   sateiID String?
 

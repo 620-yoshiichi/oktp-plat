@@ -20,15 +20,6 @@ export const getUcarProcessCols = (props: columnGetterType) => {
     .find(p => p.value === processCode)
     ?.columns.flat() ?? [{id: 'remarks', label: '備考', type: 'textarea', form: {}}]
 
-    const shiwakeCols =new Fields([
-      {
-        id: 'shiwake',
-        label: '仕掛',
-        type: 'text',
-        form: {defaultValue: '仕掛'},
-      },
-    ]).buildFormGroup({groupName: '仕掛'}).plain
-
   const customeStyle = ({col}: {col: colType}) => {
     return {
       ...col,
@@ -36,7 +27,7 @@ export const getUcarProcessCols = (props: columnGetterType) => {
     }
   }
 
-  return new Fields([
+  const result = new Fields([
     ...new Fields([
       {
         id: 'sateiID',
@@ -82,71 +73,13 @@ export const getUcarProcessCols = (props: columnGetterType) => {
         format: value => formatDate(value, 'YYYY-MM-DD(ddd) HH:mm'),
         form: {defaultValue: new Date()},
       },
-      ...QrSheetIssueColes,
+
+      ...QrSheetIssueColes, // QR発行情報（必要な時だけ）
     ])
       .showSummaryInTd({})
       .customAttributes(customeStyle)
       .buildFormGroup({groupName: '工程'}).plain,
   ]).transposeColumns()
-
-  const col1: colType[] = [
-    {
-      id: 'steiId',
-      label: '査定ID',
-      type: 'text',
-
-      form: {
-        defaultValue: sateiID,
-        disabled: true,
-      },
-    },
-    ...new Fields([
-      {
-        ...{id: 'storeId', label: '拠点'},
-        forSelect: {},
-        form: {
-          disabled: true,
-          defaultValue: storeId,
-        },
-        search: {},
-      },
-      {
-        ...{id: 'userId', label: 'ユーザー'},
-        forSelect: {},
-        form: {disabled: true, defaultValue: userId},
-        search: {},
-      },
-    ])
-      .customAttributes(customeStyle)
-      .aggregateOnSingleTd().plain,
-  ]
-
-  const col2: colType[] = [
-    {id: 'processCode', label: '工程', forSelect: {}, search: {}, form: {register: {required: '必須'}}},
-    {
-      id: 'date',
-      label: '日時',
-      type: 'datetime',
-      form: {defaultValue: new Date()},
-    },
-  ]
-
-  let data: colType[] = Fields.mod.addColIndexs([col1, col2, QrSheetIssueColes])
-
-  // /**add form props */
-
-  // add required
-  data = Fields.mod.setAttribute({
-    targets: {mode: 'exclude', ids: ['note', `runnable`, `remarks`]},
-    cols: data,
-    attributeSetter: ({col}) => {
-      const register = {...col.form?.register, required: '必須'}
-      const form = {...col.form, register}
-      return {...col, form}
-    },
-  })
-
-  const result = Fields.transposeColumns(data, {...props.transposeColumnsOptions})
 
   return result
 }

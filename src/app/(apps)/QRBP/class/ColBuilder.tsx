@@ -107,7 +107,6 @@ export class ColBuilder {
       {
         id: 'type',
         label: `工程区分`,
-
         form: {register: {required: '必須'}},
       },
 
@@ -198,9 +197,7 @@ export class ColBuilder {
       {
         id: 'type',
         label: '区分',
-        form: {
-          disabled: !scopes.admin,
-        },
+        form: {disabled: !scopes.admin},
         search: {},
         sort: {},
         forSelect: {
@@ -211,9 +208,7 @@ export class ColBuilder {
         id: 'type2',
         label: '区分2',
 
-        form: {
-          disabled: !scopes.admin,
-        },
+        form: {disabled: !scopes.admin},
         search: {},
         sort: {},
         forSelect: {
@@ -356,7 +351,13 @@ export class ColBuilder {
         {
           id: 'userId',
           label: '担当',
-          forSelect: {},
+          forSelect: {
+            config: {
+              where: {
+                UserRole: {some: {RoleMaster: {name: 'CRエンジニア'}}},
+              },
+            },
+          },
           // td: {hidden: true,},
           form: {
             defaultValue: Number(query?.userId ?? session?.id),

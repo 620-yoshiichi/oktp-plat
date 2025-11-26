@@ -128,10 +128,15 @@ const parameters = async (props: {params; query; session; scopes: ReturnType<typ
           return {
             easySearchExtraProps: {
               isHQ: scopes.getNewCarProps().isHQ,
-              isTestUser: scopes.getNewCarProps().isTestUser,
             },
 
-            myTable: {delete: false, create: false, update: false, pagination: {countPerPage: 10}, style: {maxWidth: 1300}},
+            myTable: {
+              delete: false,
+              create: false,
+              update: false,
+              pagination: {countPerPage: 10},
+              style: {maxWidth: 1300},
+            },
 
             additional: {
               where,

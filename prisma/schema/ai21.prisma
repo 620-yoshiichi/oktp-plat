@@ -173,7 +173,24 @@ model ZAIKO_Base {
   @@index([NO_SIRETYUM, NO_SYARYOU, DD_SIIRE])
 }
 
+model UpassFamilyTree {
+  id          Int       @unique @default(autoincrement())
+  sateiID     String    @unique
+  rootSateiID String
+  sateiDate   DateTime?
+
+  UPASS UPASS @relation(name: "MyUpassTree", fields: [sateiID], references: [sateiID])
+
+  RootUpass UPASS @relation(name: "RootUpass", fields: [rootSateiID], references: [sateiID])
+
+  @@unique([sateiID, rootSateiID])
+}
+
 model UPASS {
+  MyUpassTree UpassFamilyTree? @relation(name: "MyUpassTree")
+
+  RootUpass UpassFamilyTree[] @relation("RootUpass")
+
   id                                  Int                @unique @default(autoincrement())
   dataSource                          String
   JuchuShitadoriDb                    JuchuShitadoriDb[]

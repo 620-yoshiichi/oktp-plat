@@ -81,6 +81,7 @@ export const doStandardPrisma: doStandardPrismaType = async (model, method, quer
       error: error.stack,
     })
 
+    throw new Error(errorMessage)
     return {
       success: false,
       message: errorMessage,

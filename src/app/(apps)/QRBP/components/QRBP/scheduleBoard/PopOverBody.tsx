@@ -29,7 +29,7 @@ const PopOverBody = props => {
   const {open, handleClose, handleOpen, Modal} = useModal()
   const useGlobalProps: useGlobalPropType = props.useGlobalProps
   const {car, setcarOnModal, activeCars} = props
-  const {toggleLoad} = useGlobalProps
+  const {router, toggleLoad} = useGlobalProps
   const {records, setrecords, mutateRecords, deleteRecord, totalCount} = useRecords({
     serverFetchProps: {
       DetailePageId: undefined,
@@ -95,7 +95,7 @@ ${new BP_Car(car).getCarInfoForEmail()}`
     return (
       <ShadModal Trigger={<Button className={`bg-error-main`}>拠点反映</Button>}>
         <div className={`p-4`}>
-          <BasicForm latestFormData={latestFormData} onSubmit={reflectCrScheduled}>
+          <BasicForm alignMode="col" latestFormData={latestFormData} onSubmit={reflectCrScheduled}>
             <Button>確定</Button>
           </BasicForm>
         </div>
@@ -124,7 +124,13 @@ ${new BP_Car(car).getCarInfoForEmail()}`
             useGlobalProps,
             prismaData: {records: [], totalCount: 0, noData: false, loading: false},
             setformData: () => undefined,
-            myForm: undefined,
+            myForm: {
+              create: {
+                finalizeUpdate: async ({res: updateResult, formData}) => {
+                  router.refresh()
+                },
+              },
+            },
             myTable: undefined,
           }}
         />

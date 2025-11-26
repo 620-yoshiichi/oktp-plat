@@ -1,6 +1,5 @@
 'use client'
 import React, {useMemo} from 'react'
-import dynamic from 'next/dynamic'
 import {C_Stack, Padding, R_Stack} from 'src/cm/components/styles/common-components/common-components'
 
 import {Z_INDEX} from '@cm/lib/constants/constants'
@@ -12,14 +11,8 @@ import {usePropAdjustorLogic} from '@cm/components/DataLogic/TFs/PropAdjustor/ho
 import {PropAdjustorPropsType} from '@cm/components/DataLogic/TFs/PropAdjustor/types/propAdjustor-types'
 import useWindowSize from '@cm/hooks/useWindowSize'
 import {SurroundingComponent} from '@cm/components/DataLogic/TFs/PropAdjustor/components/SurroundingComponent'
-
-const DetailedPageCC = dynamic(() => import('@cm/components/DataLogic/TFs/PropAdjustor/components/DetailedPageCC'), {
-  loading: () => <PlaceHolder />,
-})
-
-const EasySearcher = dynamic(() => import('@cm/components/DataLogic/TFs/MyTable/components/EasySearcher/EasySearcher'), {
-  loading: () => <PlaceHolder />,
-})
+import EasySearcher from '@cm/components/DataLogic/TFs/MyTable/components/EasySearcher/EasySearcher'
+import DetailedPageCC from '@cm/components/DataLogic/TFs/PropAdjustor/components/DetailedPageCC'
 
 const PropAdjustor = React.memo<PropAdjustorPropsType>(props => {
   const {serverFetchProps} = props

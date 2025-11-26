@@ -51,7 +51,8 @@ const Main = ({close, useGlobalProps, ucar}) => {
   const {BasicForm, latestFormData, ReactHookForm} = useBasicFormProps({
     onFormItemBlur: ({value, name, id, e, newlatestFormData: data, ReactHookForm}) => {
       if (name === 'processedAs' && processedAs) {
-        ReactHookForm.setValue(`meihenMasshoShoribi`, null)
+        ReactHookForm.setValue(`meihenBi`, null)
+        ReactHookForm.setValue(`masshoBi`, null)
       }
     },
     columns: columns,
@@ -59,13 +60,6 @@ const Main = ({close, useGlobalProps, ucar}) => {
   })
 
   const {processedAs} = latestFormData
-
-  //名変抹消区分が変更されたら、日付を空にする。
-  // useEffect(() => {
-  //   if (processedAs) {
-  //     ReactHookForm.setValue(`meihenMasshoShoribi`, null)
-  //   }
-  // }, [processedAs])
 
   const onSubmit = async data => {
     if (confirm(`データを更新しますか？`)) {
@@ -91,7 +85,12 @@ const Main = ({close, useGlobalProps, ucar}) => {
 
       {/* 基本情報の編集 */}
       <Paper>
-        <BasicForm {...{latestFormData}} />
+        <BasicForm
+          {...{
+            alignMode: 'console',
+            latestFormData,
+          }}
+        />
         <div className={`sticky bottom-0 mx-auto w-full  bg-white text-center`}>
           <Button {...{onClick: () => onSubmit(latestFormData)}}>更新</Button>
         </div>

@@ -2,7 +2,9 @@
 
 import React from 'react'
 
-import CarProcessChildCreator from '@app/(apps)/QRBP/components/QRBP/forCr/CarProcessChildCreator'
+// const CarProcessChildCreator = dynamic(() => import('@app/(apps)/QRBP/components/QRBP/forCr/CarProcessChildCreator'), {
+//   loading: () => <></>,
+// })
 
 import {ColBuilder} from '@app/(apps)/QRBP/class/ColBuilder'
 import {PageBuilder} from '@app/(apps)/QRBP/class/PageBuilder'
@@ -15,6 +17,7 @@ import {useSearchHandler} from '@cm/components/DataLogic/TFs/MyTable/components/
 import TableForm from '@cm/components/DataLogic/TFs/PropAdjustor/components/TableForm'
 import {useParams} from 'next/navigation'
 import useInitFormState from '@cm/hooks/useInitFormState'
+import CarProcessChildCreator from '@app/(apps)/QRBP/components/QRBP/forCr/CarProcessChildCreator'
 
 export default function ProcessInputer({
   serverFetchProps,
@@ -34,7 +37,7 @@ export default function ProcessInputer({
 
   const {query} = useMyNavigation()
 
-  const {SearchingStatusMemo} = useSearchHandler({
+  const {SearchedItemListMemo} = useSearchHandler({
     columns,
     dataModelName: `car`,
     useGlobalProps,
@@ -42,7 +45,7 @@ export default function ProcessInputer({
 
   return (
     <div>
-      {SearchingStatusMemo}
+      {SearchedItemListMemo}
       <TableForm
         {...{
           totalCount: totalCount,
@@ -57,7 +60,7 @@ export default function ProcessInputer({
           setformData,
           columns,
           additional: {},
-          myForm: {},
+          myForm: {alignMode: 'console'},
           myTable: {
             ...myTable,
             customActions: () => {

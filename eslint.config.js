@@ -10,7 +10,13 @@ const simpleImportSort = require('eslint-plugin-simple-import-sort')
 
 module.exports = [
   {
-    ignores: ['.next/**/*', 'public/**/*.js', 'scripts/**/*.js', 'node_modules/**/*'],
+    ignores: [
+      '.next/**/*',
+      'public/**/*.js',
+      'scripts/**/*.js',
+      'node_modules/**/*',
+      '**/scheme-json-export.js', // 巨大な生成ファイルを除外
+    ],
   },
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
@@ -20,10 +26,8 @@ module.exports = [
       ecmaVersion: 'latest',
       sourceType: 'module',
       parser: tseslint.parser,
-      parserOptions: {
-        project: true,
-        tsconfigRootDir: __dirname,
-      },
+      // parserOptions.projectを削除してパフォーマンスを向上
+      // 型チェックが必要な場合は、特定のルールでのみ有効化を検討
       globals: {
         // nodeの環境変数
         process: 'readonly',

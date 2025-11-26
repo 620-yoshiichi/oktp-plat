@@ -84,7 +84,7 @@ async function createSeisanYoteiHistoryTable() {
     return acc
   }, {})
 
-  const transactionQueryList: transactionQuery[] = []
+  const transactionQueryList: transactionQuery<'seisanYoteiHistory', 'upsert'>[] = []
 
   await Promise.all(
     Object.keys(ToObject).map(async (APPINDEX_FKEY, idx) => {

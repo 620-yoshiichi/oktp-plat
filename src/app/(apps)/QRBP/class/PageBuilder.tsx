@@ -1,9 +1,8 @@
 'use client'
 
-const GlobalIdSelector = dynamic(() => import('@cm/components/GlobalIdSelector/GlobalIdSelector'), {})
-import dynamic from 'next/dynamic'
 import {Fields} from '@cm/class/Fields/Fields'
 import {roleMaster} from '@cm/class/builders/PageBuilderVariables'
+import GlobalIdSelector from '@cm/components/GlobalIdSelector/GlobalIdSelector'
 
 export class PageBuilder {
   static roleMaster = roleMaster
@@ -35,14 +34,7 @@ export class PageBuilder {
         ])
       }
 
-      return (
-        <GlobalIdSelector
-          {...{
-            useGlobalProps,
-            columns,
-          }}
-        />
-      )
+      return <GlobalIdSelector {...{useGlobalProps, columns}} />
     }
   }
 }

@@ -47,7 +47,7 @@ const Admin = React.memo((props: adminProps) => {
     <div>
       <MetaData pathItemObject={adminContext.pathItemObject} AppName={AppName} />
       <AdminLayout adminContext={adminContext} menuContext={menuContext} useGlobalProps={useGlobalProps}>
-        {children}
+        <div>{children}</div>
       </AdminLayout>
     </div>
   )

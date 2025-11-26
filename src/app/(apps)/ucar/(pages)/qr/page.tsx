@@ -28,9 +28,7 @@ const QrPage = async props => {
 
   return (
     <Padding>
-      <div style={{maxWidth: 1200, height: '90vh', margin: `auto`}}>
-        <UcarQrSheet ucar={ucar}></UcarQrSheet>
-      </div>
+      <UcarQrSheet ucar={ucar}></UcarQrSheet>
     </Padding>
   )
 }

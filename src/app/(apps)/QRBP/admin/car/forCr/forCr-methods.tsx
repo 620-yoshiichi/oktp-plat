@@ -211,5 +211,12 @@ export const DamageSelectModal = ({showDamageSelector, setshowDamageSelector, to
   })
 
   if (!showDamageSelector) return <div></div>
-  return <BasicForm {...{latestFormData}}></BasicForm>
+  return (
+    <BasicForm
+      {...{
+        alignMode: 'col',
+        latestFormData,
+      }}
+    ></BasicForm>
+  )
 }

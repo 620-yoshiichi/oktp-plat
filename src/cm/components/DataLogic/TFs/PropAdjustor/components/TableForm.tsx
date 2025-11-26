@@ -2,11 +2,11 @@
 import React, {useMemo} from 'react'
 import {getMyTableDefault, myFormDefault} from 'src/cm/constants/defaults'
 import BasicModal from '@cm/components/utils/modal/BasicModal'
-const MyTable = dynamic(() => import('@cm/components/DataLogic/TFs/MyTable/MyTable'), {loading: () => <Loader />})
-const MyForm = dynamic(() => import('@cm/components/DataLogic/TFs/MyForm/MyForm'), {loading: () => <Loader />})
+
 import {ClientPropsType2} from '@cm/components/DataLogic/TFs/PropAdjustor/types/propAdjustor-types'
-import dynamic from 'next/dynamic'
-import Loader from '@cm/components/utils/loader/Loader'
+import MyTable from '@cm/components/DataLogic/TFs/MyTable/MyTable'
+import MyForm from '@cm/components/DataLogic/TFs/MyForm/MyForm'
+
 // convertProps関数を分離して最適化
 const convertProps = (props: ClientPropsType2): ClientPropsType2 => {
   const myTableDefault = getMyTableDefault()
@@ -40,7 +40,7 @@ const TableForm = (props: ClientPropsType2) => {
     () => (EditForm ? <EditForm {...ClientProps2} /> : <MyForm {...ClientProps2} />),
     [EditForm, ClientProps2]
   )
-
+  formComponent
   return (
     <div>
       <MyTable ClientProps2={ClientProps2} />

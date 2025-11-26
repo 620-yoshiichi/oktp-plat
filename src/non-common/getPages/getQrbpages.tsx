@@ -6,16 +6,19 @@ export const getQrbpPages = (props: PageGetterType) => {
   const {session, rootPath, pathname, query, roles} = props
 
   const scopes = getScopes(session, {query, roles})
+  const {login} = scopes
   const QRBP = scopes.getQrbpProps()
 
   const newCar = scopes.getNewCarProps()
+
+  const qrBpMember = QRBP?.isQrbpMember
 
   const pathSource = [
     {
       tabId: 'car',
       label: '車両一覧',
       ROOT: [rootPath, 'admin', 'car'],
-      exclusiveTo: scopes.login,
+      exclusiveTo: qrBpMember,
       children: [
         {
           tabId: 'forCr',
@@ -82,7 +85,7 @@ export const getQrbpPages = (props: PageGetterType) => {
       tabId: '',
       ROOT: [rootPath],
       label: `工程入力`,
-      exclusiveTo: scopes.admin ? true : QRBP?.store || newCar.isStoreManager ? false : true,
+      exclusiveTo: !login || scopes.admin ? true : qrBpMember && (QRBP?.store || newCar.isStoreManager ? false : true),
       children: [
         {
           tabId: 'engineer',
@@ -95,14 +98,14 @@ export const getQrbpPages = (props: PageGetterType) => {
       tabId: 'history',
       ROOT: [rootPath, 'process'],
       label: '履歴',
-      exclusiveTo: scopes.admin ? true : QRBP?.store || newCar.isStoreManager ? false : true,
+      exclusiveTo: !login ? true : qrBpMember && (QRBP?.store || newCar.isStoreManager ? false : true),
     },
-    {
-      tabId: 'summary',
-      ROOT: [rootPath, 'admin'],
-      label: '滞留履歴',
-      exclusiveTo: scopes?.admin,
-    },
+    // {
+    //   tabId: 'summary',
+    //   ROOT: [rootPath, 'admin'],
+    //   label: '滞留履歴',
+    //   exclusiveTo: scopes?.admin,
+    // },
 
     {
       tabId: 'config',
@@ -119,8 +122,8 @@ export const getQrbpPages = (props: PageGetterType) => {
         {tabId: 'roleMaster', label: '役割マスタ', exclusiveTo: scopes.admin},
       ],
     },
-    getAppSwitchMenus(scopes),
-  ]
+    login ? getAppSwitchMenus(scopes) : undefined,
+  ].filter(Boolean)
   const {cleansedPathSource, navItems, breads, allPathsPattenrs} = CleansePathSource({
     rootPath,
     pathSource,

@@ -18,7 +18,7 @@ export const POST = async (req: NextRequest) => {
   const workTypeMaster = {}
   const emailMaster = {}
 
-  const transactionQuerys: transactionQuery[] = []
+  const transactionQuerys: transactionQuery<'user' | 'roleMaster' | 'userRole' | 'roleMaster', 'upsert'>[] = []
 
   async function resetAllOktpRoles() {
     //権限を一旦除去
@@ -27,16 +27,15 @@ export const POST = async (req: NextRequest) => {
     // })
 
     const res = await doTransaction({
-      transactionQueryList: allOktpRoles.map((roleString: string) => {
-        const queryObject: Prisma.RoleMasterUpsertArgs = {
-          where: {name: roleString},
-          create: {name: roleString},
-          update: {name: roleString},
-        }
+      transactionQueryList: allOktpRoles.map((roleString: string): transactionQuery<'roleMaster', 'upsert'> => {
         return {
           model: `roleMaster`,
           method: `upsert`,
-          queryObject,
+          queryObject: {
+            where: {name: roleString},
+            create: {name: roleString},
+            update: {name: roleString},
+          },
         }
       }),
     })

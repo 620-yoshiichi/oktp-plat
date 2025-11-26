@@ -11,6 +11,7 @@ export default async function Page(props) {
   const query = await props.searchParams
   const {session, scopes} = await initServerComopnent({query})
   const {rootPath} = query
+  const redirectPath = rootPath === 'undefined' ? '/' : (rootPath ?? '')
 
   if (session.id && typeof session.id === `string`) {
     return <SignOuter {...{redirectPath: '/login'}} />
@@ -19,7 +20,7 @@ export default async function Page(props) {
   return (
     <div>
       <CenterScreen>
-        {!scopes.login ? <GoogleLogin callbackUrl={`/${rootPath}`} /> : <div>メニューを選択してください</div>}
+        {!scopes.login ? <GoogleLogin callbackUrl={`/${redirectPath ?? ''}`} /> : <div>メニューを選択してください</div>}
       </CenterScreen>
     </div>
   )

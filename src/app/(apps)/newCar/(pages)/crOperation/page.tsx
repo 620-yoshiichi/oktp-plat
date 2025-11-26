@@ -29,10 +29,8 @@ export default async function Page(props) {
   const pendingCars = await getPendingCars({from, to})
 
   return (
-    <div className={`max-w-[100vw] overflow-auto`}>
-      <div className={`relative  p-4 pb-[200px]`}>
-        <CrOperationCC {...{crHolidays, from, to, newCars, pendingCars}} />
-      </div>
+    <div className={` p-2 max-w-[100vw] overflow-auto`}>
+      <CrOperationCC {...{crHolidays, from, to, newCars, pendingCars}} />
     </div>
   )
 }

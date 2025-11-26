@@ -111,11 +111,7 @@ export const GarageRegister = ({ucarId}) => {
                         await doStandardPrisma(`appliedUcarGarageSlot`, `delete`, {
                           where: {id: usedByCurrentCar.id},
                         })
-                        // 作成日の登録
-                        await doStandardPrisma('ucar', 'update', {
-                          where: {id: ucarId},
-                          data: {meihenMasshoShoribi: null},
-                        })
+
                         mutateUcarFormDataBase()
                       })
                     }}
@@ -124,7 +120,7 @@ export const GarageRegister = ({ucarId}) => {
                   </Button>
                   <Button
                     onClick={async () => {
-                      const formData = getGaragePdfFormData(ucarFormDataBase)
+                      const formData = await getGaragePdfFormData(ucarFormDataBase)
                       toast.success('PDFの発行が完了すると自動でタブが開きます。')
                       await generatePDF(formData)
                     }}

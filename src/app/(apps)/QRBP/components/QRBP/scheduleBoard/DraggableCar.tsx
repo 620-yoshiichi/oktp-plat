@@ -1,7 +1,6 @@
 import {formatDate} from '@cm/class/Days/date-utils/formatters'
 import {BP_Car} from '@app/(apps)/QRBP/class/BP_Car'
-import { shorten, superTrim} from '@cm/lib/methods/common'
-import {getColorStyles} from '@cm/lib/methods/colors'
+import {shorten, superTrim} from '@cm/lib/methods/common'
 
 import Draggable from '@cm/components/DnD/Draggable'
 
@@ -9,6 +8,7 @@ import {Center} from '@cm/components/styles/common-components/common-components'
 import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
 import {NumHandler} from '@cm/class/NumHandler'
 import Coloring from '@cm/lib/methods/Coloring'
+import {cn} from '@cm/shadcn/lib/utils'
 
 const DraggableCar = ({car, setcarOnModal, lastTouchedCarId, setlastTouchedCarId}) => {
   const id = `${car?.id}_${car.damageNameMasterId}_${formatDate(car.crScheduledAt, 'iso')}`
@@ -27,17 +27,23 @@ const DraggableCar = ({car, setcarOnModal, lastTouchedCarId, setlastTouchedCarId
   const isLastTouched = lastTouchedCarId === car.id
 
   const carProps = {
-    bgColor: isLastTouched ? 'yellow' : lastProcess?.ProcessNameMaster?.color,
-
+    bgColor: lastProcess?.ProcessNameMaster?.color,
     style: {
       opacity: isPast && isStoreAccepted ? 0.4 : 1,
-      ...(isLastTouched
-        ? {
-            border: '2px solid black',
-            color: 'red',
-            opacity: 1,
-          }
-        : undefined),
+      // ...(car.moved
+      //   ? {
+      //       border: '2px solid black',
+      //       scale: '120%',
+      //       opacity: 1,
+      //     }
+      //   : {}),
+      // ...(isLastTouched
+      //   ? {
+      //       border: '2px solid black',
+      //       color: 'red',
+      //       opacity: 1,
+      //     }
+      //   : undefined),
     },
   }
 
@@ -52,12 +58,12 @@ const DraggableCar = ({car, setcarOnModal, lastTouchedCarId, setlastTouchedCarId
       >
         <div className={`row-stack  flex-nowrap text-xs   `}>
           <Center className={`h-[35px]   w-[90px]    `}>
-            <div>
+            <div className={cn(car.moved ? 'border-4  scale-120 animate-pulse   border-red-500' : '')}>
               <IconBtn
                 color={carProps.bgColor}
                 style={{
                   ...carProps.style,
-                  color: getColorStyles(carProps.bgColor).color,
+                  // color: getColorStyles(carProps.bgColor).color,
                 }}
                 className={`relative rounded w-[90px] text-[10px]! p-0.5! leading-3`}
               >

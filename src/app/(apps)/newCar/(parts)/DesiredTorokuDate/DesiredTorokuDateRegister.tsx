@@ -9,7 +9,7 @@ import {useJotaiByKey, atomTypes} from '@cm/hooks/useJotai'
 import {twMerge} from 'tailwind-merge'
 
 export const btnClass = `rounded   py-0.5 px-0.5 text-xs `
-export const DesiredTorokuDateRegister = ({newCar, isHQ, isTestUser}) => {
+export const DesiredTorokuDateRegister = ({newCar, isHQ}) => {
   const newCarCl = new NewCarClass(newCar)
 
   const TorokuMikomiButton = () => {
@@ -91,7 +91,7 @@ export const DesiredTorokuDateRegister = ({newCar, isHQ, isTestUser}) => {
         </Wrapper>
         <Wrapper>
           <small className={` text-xs`}>入金状況</small>
-          <PaymentStatusButton {...{newCar, isHQ, isTestUser}} />
+          <PaymentStatusButton {...{newCar, isHQ}} />
         </Wrapper>
       </C_Stack>
     </div>

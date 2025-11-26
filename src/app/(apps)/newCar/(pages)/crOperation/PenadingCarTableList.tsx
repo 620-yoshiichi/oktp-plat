@@ -40,9 +40,15 @@ export default function ({pendingCars, crHolidays, CrScheduleSwitcherModal_HK}) 
       {carTypes.map(d => {
         return (
           <div key={d.label} className={`min-w-[160px]`}>
-            <div className={`font-bold`}>{d.label}</div>
-            {d.cars.length === 0 && <p>なし</p>}
-            <PenadingCarTable {...{cars: d.cars, crHolidays, CrScheduleSwitcherModal_HK}} />
+            {d.cars.length === 0 && <p>{d.label} なし</p>}
+            <PenadingCarTable
+              {...{
+                label: d.label,
+                cars: d.cars,
+                crHolidays,
+                CrScheduleSwitcherModal_HK,
+              }}
+            />
           </div>
         )
       })}
@@ -50,7 +56,7 @@ export default function ({pendingCars, crHolidays, CrScheduleSwitcherModal_HK}) 
   )
 }
 
-const PenadingCarTable = ({cars, crHolidays, CrScheduleSwitcherModal_HK}) => {
+const PenadingCarTable = ({label, cars, crHolidays, CrScheduleSwitcherModal_HK}) => {
   const table = CsvTable({
     ...{
       headerRecords: [],
@@ -66,6 +72,7 @@ const PenadingCarTable = ({cars, crHolidays, CrScheduleSwitcherModal_HK}) => {
           csvTableRow: [
             //
             {
+              label: label,
               cellValue: <CarCardPopover {...{CrScheduleSwitcherModal_HK, theCar, day: date, cellProps}} />,
             },
           ],
@@ -74,5 +81,5 @@ const PenadingCarTable = ({cars, crHolidays, CrScheduleSwitcherModal_HK}) => {
     },
   })
 
-  return table.WithWrapper({size: `sm`})
+  return table.WithWrapper({size: `sm`, className: 'max-h-[70vh] text-center [&_td]:!p-0 '})
 }

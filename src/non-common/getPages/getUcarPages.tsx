@@ -6,20 +6,21 @@ export const getUcarPages = (props: PageGetterType) => {
   const {session, rootPath, pathname, query, roles} = props
   const scopes = getScopes(session, {query, roles})
 
+  const ucarProps = scopes.getUcarProps()
+
+  const {isUcarMember, isHQ} = ucarProps
+
   const pathSource: pathItemType[] = [
-    {tabId: 'zaikoTairyu', label: '在庫滞留状況', ROOT: [rootPath], exclusiveTo: scopes.login},
-
-    {tabId: 'createQr', label: 'QR発行', ROOT: [rootPath], exclusiveTo: scopes.login},
-
     {
       tabId: 'ucar',
-      label: 'Ucar一覧',
+      label: '中古車業務',
       link: {
         query: {displayColumns: '下取書類'},
       },
-      exclusiveTo: scopes.login,
+      exclusiveTo: isUcarMember,
       ROOT: [rootPath],
       children: [
+        {tabId: 'createQr', label: 'QR発行', ROOT: [rootPath], exclusiveTo: isUcarMember},
         {
           tabId: 'ucar',
           label: '車両一覧（拠点用）',
@@ -29,23 +30,39 @@ export const getUcarPages = (props: PageGetterType) => {
         },
 
         {
-          tabId: 'ucar',
-          label: '商品化',
-          link: {query: {displayColumns: '商品化'}},
-          children: [],
+          tabId: 'sateiIdConverter',
+          label: '査定ID変換',
+          ROOT: [rootPath],
         },
-        {
-          tabId: 'ucar',
-          label: '下取書類',
-          link: {query: {displayColumns: '下取書類'}},
-          children: [],
-        },
-        {
-          tabId: 'ucar',
-          label: '自動車税',
-          link: {query: {displayColumns: '自動車税'}},
-          children: [],
-        },
+
+        // {
+        //   tabId: 'ucar',
+        //   label: '商品化',
+        //   link: {query: {displayColumns: '商品化'}},
+        //   children: [],
+        // },
+        // {
+        //   tabId: 'ucar',
+        //   label: '下取書類',
+        //   link: {query: {displayColumns: '下取書類'}},
+        //   children: [],
+        // },
+        // {
+        //   tabId: 'ucar',
+        //   label: '自動車税',
+        //   link: {query: {displayColumns: '自動車税'}},
+        //   children: [],
+        // },
+      ],
+    },
+    {
+      tabId: '',
+      label: '本部',
+      exclusiveTo: isHQ,
+      ROOT: [rootPath],
+      children: [
+        {tabId: 'kouteiKnari', label: '工程管理', ROOT: [rootPath]},
+        {tabId: 'zaikoTairyu', label: '在庫滞留状況', ROOT: [rootPath]},
       ],
     },
 
@@ -64,6 +81,7 @@ export const getUcarPages = (props: PageGetterType) => {
         {tabId: `batch`, label: 'バッチ', exclusiveTo: scopes.admin, children: []},
       ],
     },
+
     getAppSwitchMenus(scopes),
   ]
   const {cleansedPathSource, navItems, breads, allPathsPattenrs} = CleansePathSource({

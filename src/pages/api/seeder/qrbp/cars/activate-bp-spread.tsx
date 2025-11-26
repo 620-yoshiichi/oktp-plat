@@ -113,7 +113,7 @@ export default async function ActivateBpSpread(req, res) {
         const userId = StoreAdvisor?.id
         const storeId = StoreAdvisor?.Store?.id
 
-        const data: transactionQuery = {
+        const data: transactionQuery<'car', 'upsert'> = {
           model: 'car',
           method: `upsert`,
           queryObject: {where: {complexKey}, create: {...upsertData, storeId, userId}, update: {...upsertData}},

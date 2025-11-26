@@ -28,11 +28,13 @@ const withPWA = require('next-pwa')({
 const nextConfig: NextConfig = {
   reactStrictMode: false,
   experimental: {
-    serverActions: {bodySizeLimit: '10mb'},
+    serverActions: {
+      bodySizeLimit: '10mb',
+      allowedOrigins: ['*.devtunnels.ms:*', 'localhost:3000'],
+    },
   },
   images: {
     remotePatterns: [
-      {protocol: 'https', hostname: '**kickswrap.com'},
       {protocol: 'https', hostname: '**.amazonaws.com'},
       {protocol: 'https', hostname: '**drive.google.com**'},
     ],

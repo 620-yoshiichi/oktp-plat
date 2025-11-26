@@ -23,7 +23,7 @@ export const UpsertPaperDataFromSpreadSheet = async ({allUsers}) => {
   })
 
   if (rows.length > 0) {
-    const transactionQueryList: transactionQuery[] = []
+    const transactionQueryList: transactionQuery<'ucar', 'upsert'>[] = []
     rows?.forEach((row: any) => {
       const {
         number98 = undefined,
@@ -69,7 +69,7 @@ export const UpsertPaperDataFromSpreadSheet = async ({allUsers}) => {
       }
 
       const queryObject = {
-        where: {Assessment_ID: String(Assessment_ID)},
+        where: {sateiID: String(Assessment_ID)},
         create: payload,
         update: payload,
       }

@@ -26,6 +26,7 @@ export default function DesiredTorokuDateChildCreator({newCar, additionalWhere, 
       <ChildCreator
         {...{
           myForm: {
+            alignMode: 'console',
             create: {
               validateUpdate: async props => {
                 const {result: theNewCar} = await doStandardPrisma(`newCar`, `findUnique`, {

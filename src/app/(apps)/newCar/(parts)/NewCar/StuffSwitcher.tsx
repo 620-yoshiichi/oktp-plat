@@ -67,7 +67,13 @@ export default function StuffSwitcher(props: {newCar}) {
         <span>担当スタッフを変更する際は、必ず店長同士で確認を取り合ってください。</span>
         <span>変更は、このアプリ内のみで実施され,ai21上の注文データ上は、受注時のスタッフ、店舗のまま変更ありません。</span>
       </small>
-      <BasicForm {...{onSubmit, latestFormData}}>
+      <BasicForm
+        {...{
+          alignMode: 'col',
+          onSubmit,
+          latestFormData,
+        }}
+      >
         <Button>変更</Button>
       </BasicForm>
     </div>

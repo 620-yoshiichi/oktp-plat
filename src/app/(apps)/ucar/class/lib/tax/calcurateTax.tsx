@@ -5,12 +5,12 @@ import {differenceInMonths} from 'date-fns'
 
 export {}
 
-export const validateData = ({processedAs, meihenMasshoShoribi, earlyRecievedAt, annualTax}) => {
+export const validateData = ({processedAs, masshoBi, earlyRecievedAt, annualTax}) => {
   const refYear = earlyRecievedAt.getFullYear()
   const refMonth = earlyRecievedAt.getMonth() + 1
 
   const errors: any[] = []
-  if (processedAs === '抹消' && !meihenMasshoShoribi) {
+  if (processedAs === '抹消' && !masshoBi) {
     errors.push('抹消日が入力されていません。')
   }
 
@@ -66,13 +66,14 @@ export const calcurateTax = (props: {row: any}) => {
     result: undefined,
     message: ``,
   }
-  const {processedAs, meihenMasshoShoribi, earlyRecievedAt, annualTax} = row
+
+  const {processedAs, masshoBi, earlyRecievedAt, annualTax} = row
 
   const refYear = earlyRecievedAt ? new Date(earlyRecievedAt).getFullYear() : undefined
   const refMonth = earlyRecievedAt ? new Date(earlyRecievedAt).getMonth() + 1 : undefined
   const RowDataObj = {
     processedAs,
-    meihenMasshoShoribi,
+    masshoBi,
     earlyRecievedAt,
     annualTax: annualTax,
     refYear,
@@ -111,7 +112,7 @@ export const calcurateTax = (props: {row: any}) => {
 
     const {restMonthCountForPayback, paybackObj, meihen} = calculatePayback({
       annualTax: RowDataObj.annualTax,
-      meihen: RowDataObj.meihenMasshoShoribi,
+      meihen: RowDataObj.masshoBi,
       refDate,
       refMonth: RowDataObj.refMonth,
     })

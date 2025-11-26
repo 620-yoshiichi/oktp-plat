@@ -1,13 +1,8 @@
-const Childcreator = dynamic(() => import('@cm/components/DataLogic/RTs/ChildCreator/ChildCreator'), {
-  loading: () => <></>,
-})
-
 import {BP_Car} from '@app/(apps)/QRBP/class/BP_Car'
 
 import {formatDate} from '@cm/class/Days/date-utils/formatters'
 
 import {ColBuilder} from '@app/(apps)/QRBP/class/ColBuilder'
-import dynamic from 'next/dynamic'
 
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 import {C_Stack, R_Stack} from '@cm/components/styles/common-components/common-components'
@@ -18,6 +13,7 @@ import {LabelValue} from '@cm/components/styles/common-components/ParameterCard'
 import {useGlobalPropType} from '@cm/hooks/globalHooks/useGlobalOrigin'
 import {Paper} from '@cm/components/styles/common-components/paper'
 import {updateSimply} from '@cm/lib/formMethods/updateSimply'
+import ChildCreator from '@cm/components/DataLogic/RTs/ChildCreator/ChildCreator'
 
 export default function CarProcessChildCreator({formData: car, useGlobalProps}) {
   const {session, toggleLoad, accessScopes} = useGlobalProps as useGlobalPropType
@@ -67,7 +63,7 @@ export default function CarProcessChildCreator({formData: car, useGlobalProps}) 
       </Paper>
 
       <Paper>
-        <Childcreator
+        <ChildCreator
           {...{
             useGlobalProps,
             ParentData: car,
@@ -75,6 +71,7 @@ export default function CarProcessChildCreator({formData: car, useGlobalProps}) 
             columns,
 
             myForm: {
+              alignMode: 'console',
               showHeader: formData => (
                 <div className={`w-fit`}>
                   <small className={`row-stack gap-x-1`}>
@@ -138,6 +135,7 @@ export default function CarProcessChildCreator({formData: car, useGlobalProps}) 
                 },
               },
             },
+
             myTable: {
               style: {maxHeight: '45vh', maxWidth, width},
             },

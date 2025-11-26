@@ -57,7 +57,7 @@ const UserInfo = ({User, processArrayForUser, editModalOpen, seteditModalOpen}) 
           mode: 'click',
           // positionFree: false,
           // mode: 'click',
-          PopoverTrigger: Btn,
+          Trigger: Btn,
         }}
       >
         <div className={`wrap-break-word text-center max-w-[80vw] mx-auto`}>

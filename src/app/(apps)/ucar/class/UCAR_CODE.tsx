@@ -97,7 +97,7 @@ export class UCAR_CODE {
     FUBI: {
       code: '01',
       label: '不備',
-      color: '#e8422f',
+      color: 'red',
       notifyByEmail: true,
     },
   })
@@ -111,6 +111,12 @@ export class UCAR_CODE {
     KEI: {
       code: '02',
       label: '軽',
+      color: '#c5c5c5',
+      notifyByEmail: false,
+    },
+    INRYAKU: {
+      code: '03',
+      label: '印略',
       color: '#c5c5c5',
       notifyByEmail: false,
     },

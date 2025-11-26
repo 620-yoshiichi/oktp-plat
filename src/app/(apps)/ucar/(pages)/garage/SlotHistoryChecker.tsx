@@ -9,6 +9,7 @@ import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 import useDoStandardPrisma from '@cm/hooks/useDoStandardPrisma'
 import PlaceHolder from '@cm/components/utils/loader/PlaceHolder'
 import {AppliedUcarGarageSlot, Number98, Prisma, Ucar, UcarGarageLocationMaster, UcarGarageSlotMaster} from '@prisma/client'
+import {UcarCL} from '@app/(apps)/ucar/class/UcarCL'
 
 type locationInfoType = {
   locationName: string
@@ -107,7 +108,7 @@ export default function SlotHistoryChecker({setgarageHistoryModal, ucarGarageSlo
   )
 }
 
-export const getGaragePdfFormData = (
+export const getGaragePdfFormData = async (
   ucar: Ucar & {
     AppliedUcarGarageSlot: AppliedUcarGarageSlot & {
       UcarGarageSlotMaster: UcarGarageSlotMaster & {
@@ -134,15 +135,32 @@ export const getGaragePdfFormData = (
   }
   const locationInfo: locationInfoType = locations[GarageLocation?.name]
 
+  const getUcarRawData = await UcarCL.fetcher.getUcarDataBySateiId(ucar.sateiID)
+
+  const ucarInst = new UcarCL(getUcarRawData)
+  const {
+    //
+    brandName, //店舗査定_ブランド名称
+    modelName, //店舗査定_車種名称
+    frameNumber, //店舗査定_フレーム��
+    chassisNumber, //店舗査定_車台番号
+    type, //型式
+    grade, //グレード
+    modelYear, //モデル年式
+    length, //車寸（長さ）
+    width, //車寸（幅）
+    height, //車寸（高さ）
+  } = ucarInst.notation
+
   const formData = {
     location: locationInfo.locationName,
     position: String(GarageNumber),
-    textbox1: ucar?.brand_name ?? '',
-    textbox2: ucar.Common_name_model,
-    textbox3: String(ucar.Barracks ?? ''),
-    textbox4: String(ucar.Vehicle_length ?? ''),
-    textbox5: String(ucar.Vehicle_width ?? ''),
-    textbox6: String(ucar.Vehicle_height ?? ''),
+    textbox1: brandName ?? '',
+    textbox2: type,
+    textbox3: chassisNumber,
+    textbox4: String(length ?? ''),
+    textbox5: String(width ?? ''),
+    textbox6: String(height ?? ''),
     textbox7: locationInfo.address,
     textbox8: '同上',
     textbox9: '',

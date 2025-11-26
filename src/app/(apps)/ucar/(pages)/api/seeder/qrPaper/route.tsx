@@ -21,7 +21,7 @@ export const POST = async (req: NextRequest) => {
   ] = await Promise.all([getQrPaperData(), prisma.number98.findMany({})])
 
   if (rows.length > 0) {
-    const transactionQueryList: transactionQuery[] = []
+    const transactionQueryList: transactionQuery<'ucar', 'upsert'>[] = []
     rows?.forEach((row: any) => {
       const {
         number98 = undefined,

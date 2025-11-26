@@ -5,12 +5,11 @@ export const getAppSwitchMenus = (scopes: any) => {
     tabId: ``,
     label: `アプリ`,
     children: [
-      {tabId: 'newCar', label: '納期CS', exclusiveTo: scopes.admin},
-      {tabId: 'QRBP', label: 'BP', exclusiveTo: scopes.admin},
+      {tabId: 'newCar', label: '納期CS'},
+      {tabId: 'QRBP', label: 'BP'},
       isDev ? {tabId: 'ucar', label: 'QRシステム', exclusiveTo: scopes.admin} : undefined,
     ].filter(Boolean),
     ROOT: [],
-    exclusiveTo: !!(scopes.getNewCarProps().isStoreManager || scopes.admin),
   } as any
 }
 

@@ -19,7 +19,7 @@ import {Prisma} from '@prisma/client'
 export const NewCarEasySearchBuilder = async () => {
   const newCar = async (props: easySearchType) => {
     'use server'
-    const {isHQ, isTestUser} = props?.easySearchExtraProps ?? {}
+    const {isHQ} = props?.easySearchExtraProps ?? {}
 
     const {firstDayOfMonth, lastDayOfMonth} = Days.month.getMonthDatum(getMidnight(new Date()))
 

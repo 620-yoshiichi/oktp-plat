@@ -28,7 +28,7 @@ export const CheckPoint = (props: {newCar; cp: checkPoint; HK_USE_RECORDS: UseRe
   const checkPointModalGMF = useGlobalModalForm<atomTypes[`checkPointModalGMF`]>(`checkPointModalGMF`, null, {})
   const {newCar} = props
   const cp = props.cp as checkPoint
-  const atomKey = `checkPointModal-${cp.label}` as any
+
   // const [open, setopen] = useState<any>(null)
 
   const Btn = () => {
@@ -182,6 +182,7 @@ export const CkecnPointForm = ({cp, newCar, setopen, HK_USE_RECORDS}) => {
 
       <div className={` mx-auto  w-fit`}>
         <BasicForm
+          alignMode="col"
           latestFormData={latestFormData}
           onSubmit={onSubmit}
           {...{

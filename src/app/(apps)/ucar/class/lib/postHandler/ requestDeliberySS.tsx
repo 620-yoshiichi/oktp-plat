@@ -12,15 +12,14 @@ export const requestDeliberySS = async ({sateiID, type}) => {
 
   const {SS_URL, SH_NAME, parentFolderIds} = NOTICE
 
-  // const baseUrl = isDev ? 'https://oktp-plat.vercel.app' : process.env.NEXT_PUBLIC_BASEPATH
-  // `${process.env.NEXT_PUBLIC_BASEPATH}/ucar/create-process?sateiID=${sateiID}&processCode=${processCode}`
   const getProcessEnterPass = (processCode: string) =>
     `=ENCODEURL("http://localhost:3000/ucar/create-process?sateiID=${sateiID}&processCode=${processCode}")`
 
-  const {CR_HAISO_JURYO, CR_CHAKU} = UcarProcessCl.CODE.raw
+  const {CR_HAISO_JURYO, CR_CHAKU, CR_GENCHI_SHORI_YOSEI} = UcarProcessCl.CODE.raw
 
-  const HAISO_JURYO_QR_URL = getProcessEnterPass(CR_HAISO_JURYO.code)
-  const TOCHAKU_JURYO_QR_URL = getProcessEnterPass(CR_CHAKU.code)
+  const URL_CR_HAISO_JURYO = getProcessEnterPass(CR_HAISO_JURYO.code)
+  const URL_GENTI_SHORI = getProcessEnterPass(CR_GENCHI_SHORI_YOSEI.code)
+  const URL_CR_CHAKU = getProcessEnterPass(CR_CHAKU.code)
 
   const {
     notation: {plate, modelName, modelYear, nenshiki},
@@ -39,7 +38,7 @@ export const requestDeliberySS = async ({sateiID, type}) => {
       nenshiki ?? '',
     ]
 
-    const formulas = [HAISO_JURYO_QR_URL, TOCHAKU_JURYO_QR_URL]
+    const urls = [URL_CR_HAISO_JURYO, URL_GENTI_SHORI, URL_CR_CHAKU]
 
     console.time('PDFを生成処理')
     const sheetList = await GoogleSheet_GetSheetList({spreadsheetId: SS_URL})
@@ -57,7 +56,7 @@ export const requestDeliberySS = async ({sateiID, type}) => {
         requests: [
           //
           ...updateRow.map((v, i) => SheetRequests.updateCell(upDateSheetId ?? 0, 1, 10 + i, v)),
-          ...formulas.map((v, i) => SheetRequests.setFormula(upDateSheetId ?? 0, 2, 10 + i, v)),
+          ...urls.map((v, i) => SheetRequests.setFormula(upDateSheetId ?? 0, 2, 10 + i, v)),
         ],
       })
     }

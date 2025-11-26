@@ -102,9 +102,10 @@ export default function Table({cars, setshowEditor}) {
             cellValue: (
               <>
                 <div>{User.name}</div>
-                <small>({Store.name})</small>
+                <small className={`text-[9px]`}>({Store.name})</small>
               </>
             ),
+            style: {minWidth: 90},
           },
 
           {
