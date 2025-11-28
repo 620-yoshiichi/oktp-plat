@@ -15,7 +15,6 @@ export const GET = async (req: NextRequest) => {
   }
 
   result['deleteAndInsertUpassData'] = await deleteAndInsertUpassData()
-
   result['createUpassFamilyTree'] = await createUpassFamilyTree()
 
   return NextResponse.json(result)

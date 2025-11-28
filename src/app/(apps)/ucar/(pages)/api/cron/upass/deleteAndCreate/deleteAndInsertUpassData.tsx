@@ -143,6 +143,7 @@ export const deleteAndInsertUpassData = async () => {
           data: {
             ...item,
             dataSource: dataSource,
+            shitadoriRelationAssessmentNumber: item.palAssessmentNumber ? item.palAssessmentNumber : undefined,
           },
         },
       }

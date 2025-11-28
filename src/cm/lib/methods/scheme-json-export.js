@@ -205,7 +205,7 @@ model JuchuShitadoriDb {
   sortOrder Float   @default(0)
   APPINDEX  String  @id
   NewCar    NewCar? @relation(fields: [APPINDEX_FKEY], references: [APPINDEX])
-  UPASS     UPASS?  @relation(fields: [NO_SATEISYO], references: [sateiID])
+  UPASS     UPASS?  @relation(fields: [NO_SATEISYO], references: [shitadoriRelationAssessmentNumber])
 
   APPINDEX_FKEY String?
   CD_KAISYA     String?
@@ -389,15 +389,17 @@ model UpassFamilyTree {
 }
 
 model UPASS {
-  MyUpassTree UpassFamilyTree? @relation(name: "MyUpassTree")
+  MyUpassTree UpassFamilyTree?  @relation(name: "MyUpassTree")
+  RootUpass   UpassFamilyTree[] @relation("RootUpass")
 
-  RootUpass UpassFamilyTree[] @relation("RootUpass")
+  id               Int                @unique @default(autoincrement())
+  dataSource       String
+  JuchuShitadoriDb JuchuShitadoriDb[]
 
-  id                                  Int                @unique @default(autoincrement())
-  dataSource                          String
-  JuchuShitadoriDb                    JuchuShitadoriDb[]
-  sortOrder                           Float              @default(0)
-  sateiID                             String             @unique
+  shitadoriRelationAssessmentNumber String? @unique
+
+  sortOrder                           Float     @default(0)
+  sateiID                             String    @unique
   dealerName                          String?
   dealerCode                          String?
   assessmentMode                      String?
@@ -4288,7 +4290,7 @@ export const prismaDMMF = {
             "NO_SATEISYO"
           ],
           "relationToFields": [
-            "sateiID"
+            "shitadoriRelationAssessmentNumber"
           ],
           "isGenerated": false,
           "isUpdatedAt": false
@@ -6654,6 +6656,20 @@ export const prismaDMMF = {
           "relationName": "JuchuShitadoriDbToUPASS",
           "relationFromFields": [],
           "relationToFields": [],
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "shitadoriRelationAssessmentNumber",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": true,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "String",
+          "nativeType": null,
           "isGenerated": false,
           "isUpdatedAt": false
         },
@@ -23669,6 +23685,16 @@ export const prismaDMMF = {
       "fields": [
         {
           "name": "id"
+        }
+      ]
+    },
+    {
+      "model": "UPASS",
+      "type": "unique",
+      "isDefinedOnField": true,
+      "fields": [
+        {
+          "name": "shitadoriRelationAssessmentNumber"
         }
       ]
     },

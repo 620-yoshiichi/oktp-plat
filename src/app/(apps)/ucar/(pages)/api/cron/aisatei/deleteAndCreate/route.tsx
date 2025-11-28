@@ -78,7 +78,12 @@ export const GET = async (req: NextRequest) => {
   await processBatchWithRetry({
     soruceList: upassListToCreate,
     mainProcess: async batch => {
-      await prisma.uPASS.createMany({data: batch})
+      await prisma.uPASS.createMany({
+        data: batch.map(d => ({
+          ...d,
+          shitadoriRelationAssessmentNumber: d.sateiID,
+        })),
+      })
     },
   })
 

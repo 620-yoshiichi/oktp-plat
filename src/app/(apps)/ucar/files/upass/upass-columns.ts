@@ -536,7 +536,7 @@ export const upassCols: upassColumn[] = [
     category: 'EQUIPMENT',
   },
   {
-    jp: '店舗査定_サンルーフ／ムーンルーフ',
+    jp: '店舗査定_サンルーフ_ムーンルーフ',
     en: 'sunroofMoonroof',
     sampleData: 'ｵｰﾄｴｱｺﾝ',
     category: 'EQUIPMENT',
@@ -590,13 +590,13 @@ export const upassCols: upassColumn[] = [
     category: 'EQUIPMENT',
   },
   {
-    jp: '店舗査定_カーナビ/DA',
+    jp: '店舗査定_カーナビ_DA',
     en: 'carNaviDa',
     sampleData: 'あり',
     category: 'EQUIPMENT',
   },
   {
-    jp: '店舗査定_TV',
+    jp: '店舗査定_TV ',
     en: 'tv',
     sampleData: null,
     category: 'EQUIPMENT',
@@ -698,7 +698,7 @@ export const upassCols: upassColumn[] = [
     category: 'EQUIPMENT',
   },
   {
-    jp: '店舗査定_１⇔2列名ウォークスルー',
+    jp: '店舗査定_１_2列名ウォークスルー',
     en: 'walkThrough',
     sampleData: null,
     category: 'EQUIPMENT',
@@ -754,7 +754,7 @@ export const upassCols: upassColumn[] = [
     category: 'ADVANCED_EQUIPMENT',
   },
   {
-    jp: '店舗査定_衝突回避／被害軽減',
+    jp: '店舗査定_衝突回避_被害軽減',
     en: 'collisionAvoidance',
     sampleData: 'あり',
     category: 'ADVANCED_EQUIPMENT',
@@ -864,7 +864,7 @@ export const upassCols: upassColumn[] = [
     category: 'ADDITIONAL_EQUIPMENT',
   },
   {
-    jp: '店舗査定_TV',
+    jp: '店舗査定_TV _1',
     en: 'tv2',
     sampleData: 'あり',
     category: 'ADDITIONAL_EQUIPMENT',
@@ -1035,12 +1035,12 @@ export const upassCols: upassColumn[] = [
     sampleData: '4377',
   },
   {
-    jp: '調整金額合計',
+    jp: '調整金額合計_円_',
     en: 'adjustmentAmountTotal',
     sampleData: '0',
   },
   {
-    jp: '調整金額１ 金額',
+    jp: '調整金額１ 金額_円_',
     en: 'adjustmentAmount1',
     sampleData: '0',
   },
@@ -1050,7 +1050,7 @@ export const upassCols: upassColumn[] = [
     sampleData: '',
   },
   {
-    jp: '調整金額２ 金額',
+    jp: '調整金額２ 金額_円_',
     en: 'adjustmentAmount2',
     sampleData: '0',
   },
@@ -1060,7 +1060,7 @@ export const upassCols: upassColumn[] = [
     sampleData: '',
   },
   {
-    jp: '調整金額３ 金額',
+    jp: '調整金額３ 金額_円_',
     en: 'adjustmentAmount3',
     sampleData: '0',
   },
@@ -1070,37 +1070,37 @@ export const upassCols: upassColumn[] = [
     sampleData: '',
   },
   {
-    jp: '調整金額４ 金額',
+    jp: '調整金額４ 金額_円_',
     en: 'adjustmentAmount4',
     sampleData: '',
   },
   {
-    jp: '調整金額５ 金額',
+    jp: '調整金額５ 金額_円_',
     en: 'adjustmentAmount5',
     sampleData: '',
   },
   {
-    jp: '決裁価格',
+    jp: '決裁価格_円_',
     en: 'approvedPrice',
     sampleData: '4377',
   },
   {
-    jp: '店舗査定_回答価格',
+    jp: '店舗査定_回答価格_円_',
     en: 'assessmentResponsePrice',
     sampleData: '',
   },
   {
-    jp: '入庫査定_回答価格',
+    jp: '入庫査定_回答価格_円_',
     en: 'inventoryAssessmentResponsePrice',
     sampleData: '',
   },
   {
-    jp: '査定誤差',
+    jp: '査定誤差_円_',
     en: 'assessmentError',
     sampleData: '',
   },
   {
-    jp: '値付け備考・メモ',
+    jp: '値付け備考_メモ',
     en: 'valuationNotesMemo',
     sampleData: '',
   },
