@@ -11,6 +11,7 @@ import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
 
 import React, {useEffect, useState} from 'react'
+import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 
 export default function UcrDetailUpdater({sateiID, close}) {
   const useGlobalProps = useGlobal()
@@ -52,6 +53,17 @@ const Main = ({close, useGlobalProps, ucar}) => {
   const {processedAs} = latestFormData
 
   const onSubmit = async data => {
+    const number98 = data.number98
+
+    const {result: prevRecord} = await doStandardPrisma(`ucar`, `findUnique`, {where: {id: data.id}})
+    const numberChanged = prevRecord?.number98 !== number98
+
+    if (numberChanged && confirm('98番号を更新します。よろしいですか？') === false) {
+      close()
+      alert('データ更新を中止しました。')
+      return
+    }
+
     if (confirm(`データを更新しますか？`)) {
       toggleLoad(async () => {
         const res = await myFormDefaultUpsert({
@@ -62,6 +74,20 @@ const Main = ({close, useGlobalProps, ucar}) => {
           additional: {},
           formData,
         })
+
+        //98番号が変更の場合
+        if (numberChanged && res.success) {
+          const {result: last98Number} = await doStandardPrisma('number98', 'findFirst', {orderBy: {sortNumber: 'desc'}})
+          const isLast98Number = last98Number?.number === number98
+
+          if (isLast98Number) {
+            //最後の番号だったら履歴を削除
+            await doStandardPrisma('number98IssueHistory', 'deleteMany', {where: {}})
+          } else {
+            // それ以外は履歴を作成
+            await doStandardPrisma('number98IssueHistory', 'create', {data: {number98}})
+          }
+        }
 
         close()
       })

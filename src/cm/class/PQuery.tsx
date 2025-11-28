@@ -5,7 +5,7 @@ import {anyObject} from '@cm/types/utility-types'
 import {DH__switchColType} from '@cm/class/DataHandler/type-converter'
 import {StrHandler} from '@cm/class/StrHandler'
 import {PAGINATION_CONSTANTS, validatePaginationParams} from 'src/cm/class/PQuery/validation'
-import { paginationSearchParamStr} from 'src/non-common/searchParamStr'
+import {paginationSearchParamStr} from 'src/non-common/searchParamStr'
 
 // 型定義
 interface WhereQueryItem {
@@ -151,7 +151,8 @@ export class P_Query {
     tableId?: string
     countPerPage?: number
   }): PaginationProps => {
-    const defaultCount = process.env.NEXT_PUBLIC_ROOTPATH === 'aquapot' ? 10 : defaultCountPerPage
+    const defaultCount = defaultCountPerPage
+
     const finalCountPerPage = countPerPage ?? defaultCount
 
     // 新しいプレフィックス方式でキーを生成

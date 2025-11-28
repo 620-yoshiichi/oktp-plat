@@ -35,7 +35,7 @@ const getGarageMakeIcon = ({garageCreated, row, setshowGarageRegister}) => {
       <C_Stack className={`gap-0 py-0.5 leading-3 `}>
         <div>{garageCreated ? getGarageNotation({row}) : `車庫証明`}</div>
         <div>
-          <small>{formatDate(row?.AppliedUcarGarageSlot.createdAt)}</small>
+          <small>{formatDate(row?.AppliedUcarGarageSlot?.createdAt)}</small>
         </div>
       </C_Stack>
     </Coloring>

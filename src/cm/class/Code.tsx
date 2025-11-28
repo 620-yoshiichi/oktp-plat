@@ -2,7 +2,7 @@ import {Prisma} from '@prisma/client'
 
 export type codeItemCore = {
   code?: string
-  label: string
+  label: any
   color?: string
   type?: string
 }

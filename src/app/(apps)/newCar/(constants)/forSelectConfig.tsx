@@ -65,7 +65,6 @@ export const getForSelectWhere = ({storeId}) => {
   }
   const result = {
     modelName: `user`,
-
     where: userFindWhere,
   }
 

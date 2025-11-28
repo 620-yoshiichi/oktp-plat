@@ -28,9 +28,14 @@ export default function ProcessInputer({
 }) {
   const params = useParams() as any
   const myTable = {create: false, delete: false, style: {maxHeight: '90vh'}}
+  const dataModelName = `car`
 
   // const {prismaData: prismaCars} = usePrismaDataSwr({dataModelName: `car`, prismaDataExtractionQuery})
-  const {records, setrecords, mutateRecords, deleteRecord, totalCount} = useRecords({serverFetchProps, initialModelRecords})
+  const {records, setrecords, mutateRecords, deleteRecord, totalCount} = useRecords({
+    dataModelName,
+    serverFetchProps,
+    initialModelRecords,
+  })
 
   const columns = ColBuilder.carListForEngineer({useGlobalProps})
   const {formData, setformData} = useInitFormState(null, records, false, 'car')
@@ -39,13 +44,12 @@ export default function ProcessInputer({
 
   const {SearchedItemListMemo} = useSearchHandler({
     columns,
-    dataModelName: `car`,
+    dataModelName,
     useGlobalProps,
   })
 
   return (
     <div>
-      {SearchedItemListMemo}
       <TableForm
         {...{
           totalCount: totalCount,

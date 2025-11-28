@@ -6,6 +6,7 @@ import {doTransaction} from '@cm/lib/server-actions/common-server-actions/doTran
 import {useRawSql} from '@cm/class/SqlBuilder/useRawSql'
 import * as fs from 'fs'
 import * as path from 'path'
+import {bigQuery__select} from '@app/api/google/big-query/bigQueryApi'
 
 // CSV行をパースする関数（クォートや改行を適切に処理）
 const parseCSVLine = (line: string): string[] => {
@@ -92,10 +93,18 @@ export const deleteAndInsertUpassData = async () => {
     const body = rows.slice(1)
     return {header, body}
   }
-  const {header, body} = await getUpassCsv()
+  // const {header, body} = await getUpassCsv()
 
-  result.header = header
-  result.body = body
+  // result.header = header
+  // result.body = body
+
+  const body = await bigQuery__select({
+    datasetId: 'Ucar_QR',
+    tableId: 'UPASS_RAW',
+    sqlString: sql`
+    select * from okayamatoyopet.Ucar_QR.UPASS_RAW
+    `,
+  })
 
   // upassColsで定義されたヘッダーデータのみを取得し、{en: value}の形の配列に変換
   // importできないため、必要なデータをここで取得
@@ -105,8 +114,9 @@ export const deleteAndInsertUpassData = async () => {
   body.forEach(row => {
     const obj = Object.fromEntries(
       upassCols.map((col, idx) => {
-        const colIndex = header.indexOf(col.jp)
-        const value = String(row[colIndex])
+        // const colIndex = header.indexOf(col.jp)
+
+        const value = String(row[col.jp])
 
         if (col.type === 'date') {
           return [col.en, value ? toUtc(formatDate(new Date(value), 'YYYY-MM-DD HH:mm:ss')) : null]

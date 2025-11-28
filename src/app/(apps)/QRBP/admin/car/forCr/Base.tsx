@@ -46,13 +46,15 @@ export default function CarForCrBase(props: {
 
   const {toggleLoad, session, query, addQuery} = useGlobalProps
 
+  const countPerPage = BP_Car.const.defaultCountPerPage
+  const dataModelName = 'car'
   const HK_USE_RECORDS = useRecords({
+    dataModelName,
     fetchTime,
     serverFetchProps,
     initialModelRecords,
+    countPerPage,
   })
-
-  const dataModelName = 'car'
 
   const {formData, setformData} = useInitFormState(null, HK_USE_RECORDS?.records, false, 'forCrCarForm')
   const [showDamageSelector, setshowDamageSelector] = useState(false)
@@ -93,7 +95,7 @@ export default function CarForCrBase(props: {
     delete: false,
     style: {minWidth: 1300, maxHeight: '70vh'},
     customActions: () => <WaitingCarVisualizer {...{waitingListObject}} />,
-    pagination: {countPerPage: BP_Car.const.defaultCountPerPage},
+    pagination: {countPerPage},
   }
 
   const myForm: MyFormType = {
@@ -129,8 +131,6 @@ export default function CarForCrBase(props: {
     additional: undefined,
     PageBuilder,
   }
-
-
 
   return (
     <div className={`p-2`}>

@@ -34,6 +34,11 @@ export const getUcarPages = (props: PageGetterType) => {
           label: '査定ID変換',
           ROOT: [rootPath],
         },
+        {
+          tabId: 'familyTree',
+          label: 'ファミリーツリー',
+          ROOT: [rootPath],
+        },
 
         // {
         //   tabId: 'ucar',

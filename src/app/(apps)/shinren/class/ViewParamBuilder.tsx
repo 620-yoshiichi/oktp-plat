@@ -6,7 +6,7 @@ import {HREF} from '@cm/lib/methods/urls'
 
 export class ViewParamBuilder {
   static rentaDailyReport: ViewParamBuilderProps = props => {
-    const {router, query} = props.ClientProps2.useGlobalProps
+    const {router, query} = props.useGlobalProps
     return {
       myTable: {style: {width: `90vw`, maxWidth: 1200}},
       myForm: {

@@ -67,13 +67,6 @@ export default async function Page(props) {
     take,
     skip,
   })
-  const flexQueryForUser = P_Query.createFlexQuery({
-    query,
-    dataModelName: 'user',
-    page,
-    take,
-    skip,
-  })
 
   const favMode = query?.favorite === 'true' && userId
 

@@ -29,7 +29,6 @@ export const generalDoStandardPrisma = async (model: any, method: any, queryObje
 export const doStandardPrisma: doStandardPrismaType = async (model, method, queryObject, transactionPrisma) => {
   const PRISMA = transactionPrisma || prisma
   const prismaModel = PRISMA[model] as any
-
   const newQueryObject = await initQueryObject({model, method, queryObject, prismaModel})
 
   let res: requestResultType

@@ -131,6 +131,28 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     },
   }
 
+  // =========98番号==========
+  const number98__exist: EsObj = {
+    label: '付与済み',
+    CONDITION: {
+      AND: [
+        //
+        {number98: {not: null}},
+        {number98: {not: ''}},
+      ],
+    },
+  }
+  const number98__notExist: EsObj = {
+    label: '未付与',
+    CONDITION: {
+      OR: [
+        //
+        {number98: null},
+        {number98: ''},
+      ],
+    },
+  }
+
   // ===========処理結果========
 
   const processedResult__undecided: EsObj = {
@@ -268,6 +290,9 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     processedResult__massyo_not_done,
     // processedResult__massyo_done,
 
+    number98__exist,
+    number98__notExist,
+
     tax__unTouch,
     tax__onPayment,
     satei__linked,
@@ -294,6 +319,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
 
   const paperGroups = [
     {exclusiveGroup: ExGroup[`deadline`], name: `書類期限間近`},
+    {exclusiveGroup: ExGroup[`number98`], name: `98番号`},
     {exclusiveGroup: ExGroup[`processedResult`], name: `処理結果`},
     {exclusiveGroup: ExGroup[`shinko`], name: `98枠区分`},
   ]

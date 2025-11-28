@@ -31,6 +31,7 @@ const PopOverBody = props => {
   const {car, setcarOnModal, activeCars} = props
   const {router, toggleLoad} = useGlobalProps
   const {records, setrecords, mutateRecords, deleteRecord, totalCount} = useRecords({
+    dataModelName: 'car',
     serverFetchProps: {
       DetailePageId: undefined,
       dataModelName: 'car',

@@ -26,6 +26,7 @@ import TableForm from '@cm/components/DataLogic/TFs/PropAdjustor/components/Tabl
 import {getInitModelRecordsProps} from '@cm/components/DataLogic/TFs/Server/fetchers/getInitModelRecordsProps'
 import {MyFormType} from '@cm/types/form-types'
 import CarDetailById from '@app/(apps)/QRBP/components/QRBP/forCr/CarDetailById'
+import {BP_Car} from '@app/(apps)/QRBP/class/BP_Car'
 
 export default function CarForStoreBase(props: {
   waitingListObject
@@ -41,7 +42,8 @@ export default function CarForStoreBase(props: {
   // const {prismaData, easySearchPrismaDataOnServer, prismaDataExtractionQuery, easySearchWhereAnd, easySearchObject} =
   //   serverFetchihngData as serverFetchihngDataType
 
-  const HK_USE_RECORDS = useRecords({serverFetchProps, initialModelRecords})
+  const countPerPage = BP_Car.const.defaultCountPerPage
+  const HK_USE_RECORDS = useRecords({dataModelName, serverFetchProps, initialModelRecords, countPerPage})
 
   const {formData, setformData} = useInitFormState(null, HK_USE_RECORDS?.records, false, 'car')
 
@@ -76,7 +78,7 @@ export default function CarForStoreBase(props: {
     style: {minWidth: 1300, height: '70vh'},
     create: false,
     delete: false,
-    pagination: {countPerPage: 15},
+    pagination: {countPerPage},
 
     customActions: () => <WaitingCarVisualizer {...{waitingListObject}} />,
   }

@@ -4,17 +4,13 @@ import {useGlobalPropType} from '@cm/hooks/globalHooks/useGlobal'
 
 import GlobalIdSelector from '@cm/components/GlobalIdSelector/GlobalIdSelector'
 import {globalIds} from 'src/non-common/searchParamStr'
+import {getForSelectWhere} from '@app/(apps)/newCar/(constants)/forSelectConfig'
 
 export const CommonGlobalIdSelector = (props: {useGlobalProps: useGlobalPropType; width}) => {
   const {useGlobalProps} = props
   const {query, session} = useGlobalProps
   const admin = useGlobalProps.accessScopes().admin
-  const {isHQ, isStoreManager} = useGlobalProps.accessScopes().getNewCarProps()
-  const storeId = isStoreManager
-    ? session.storeId
-    : query?.[globalIds.globalStoreId]
-      ? Number(query?.[globalIds.globalStoreId])
-      : undefined
+  const {isHQ, isStoreManager, storeId} = useGlobalProps.accessScopes().getNewCarProps()
 
   return () => {
     const colSource: colType[] = []
@@ -31,12 +27,14 @@ export const CommonGlobalIdSelector = (props: {useGlobalProps: useGlobalPropType
       })
     }
 
+    const where = getForSelectWhere({storeId}).where
+
     if (isHQ || isStoreManager) {
       colSource.push({
         id: globalIds.globalSelectedUserId,
         forSelect: {
-          // where: getForSelectWhere({storeId}),
           config: {
+            where: {...where},
             modelName: 'user',
           },
         },

@@ -48,6 +48,7 @@ const parameters = async ({params, query, session, scopes}) => {
                 OR: [{app: `ucar`}],
               },
             },
+            myTable: {},
           }
         },
       },

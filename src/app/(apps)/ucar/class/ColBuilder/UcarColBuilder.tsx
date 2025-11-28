@@ -15,7 +15,7 @@ import {T_LINK} from '@cm/components/styles/common-components/links'
 import {HREF} from '@cm/lib/methods/urls'
 import {TrActionIconClassName} from '@cm/components/DataLogic/TFs/MyTable/hooks/useMyTableLogic'
 import useUcarDetailUpdatorGMF from '@app/(apps)/ucar/(parts)/templateHooks/useUcarDetailUpdatorGMF'
-import {C_Stack} from '@cm/components/styles/common-components/common-components'
+import {C_Stack, R_Stack} from '@cm/components/styles/common-components/common-components'
 import {PencilIcon, TrashIcon} from 'lucide-react'
 
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
@@ -25,8 +25,8 @@ import {__shared_get_shiwakeKekkeCol} from '@app/(apps)/ucar/class/ColBuilder/ge
 import {getTaxJobCols} from '@app/(apps)/ucar/class/ColBuilder/lib/ucar/ucarCols-lib/lib/getTaxJobCols'
 import {getDMMFModel} from '@cm/lib/methods/prisma-schema'
 import {Prisma} from '@prisma/client'
-import ShadPopover from '@cm/shadcn/ui/Organisms/ShadPopover'
 import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
+import ShadModal from '@cm/shadcn/ui/Organisms/ShadModal'
 
 export const UCAR_TABLE_ROW_HEIGHT = 120
 
@@ -68,6 +68,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
     AND: [
       //
       {occupied: false},
+
       {
         Ucar: {
           none: {
@@ -78,7 +79,11 @@ export const ucarColBuilder = (props: columnGetterType) => {
           },
         },
       },
-      {OldCars_Base: {every: {KI_HANKAKA: {not: '0'}}}},
+      {
+        OldCars_Base: {
+          every: {KI_HANKAKA: {not: '0'}},
+        },
+      },
     ],
   }
 
@@ -127,7 +132,19 @@ export const ucarColBuilder = (props: columnGetterType) => {
     {
       id: 'NO_SIRETYUM',
       label: '仕入時注文番号',
-      form: {},
+      type: 'text',
+      form: {
+        register: {
+          validate: (value, row) => {
+            value = String(value ?? '')
+            // 許容パターン: 2桁数字, 半角スペース, 5桁数字
+            const reg = /^\d{2}\s\d{5}$/
+            if (!reg.test(value)) {
+              return '「2桁数字」「半角スペース」「5桁数字」のみ規則で入力してください。'
+            }
+          },
+        },
+      },
     },
     {
       id: 'DD_SIIRE',
@@ -238,7 +255,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
             />
 
             {alertList.length > 0 && (
-              <ShadPopover
+              <ShadModal
                 Trigger={
                   <div className={`bg-yellow-300 p-1 rounded-full`}>
                     <InformationCircleIcon className={`h-5 w-5 text-red-600 animate-pulse`} />
@@ -248,14 +265,23 @@ export const ucarColBuilder = (props: columnGetterType) => {
                 <C_Stack className={`gap-4 text-xs`}>
                   {alertList.map(item => {
                     const color = item.color
+
+                    const Trigger = item.Trigger
+
                     return (
-                      <IconBtn color={color} key={item.code}>
-                        {item.label}
-                      </IconBtn>
+                      <R_Stack key={item.code}>
+                        <div className={`max-w-[320px]`}>
+                          <IconBtn color={color} key={item.code}>
+                            {item.label}
+                          </IconBtn>
+                        </div>
+
+                        {Trigger && <Trigger {...{row: row as unknown as ucarData}} />}
+                      </R_Stack>
                     )
                   })}
                 </C_Stack>
-              </ShadPopover>
+              </ShadModal>
             )}
           </C_Stack>
         )

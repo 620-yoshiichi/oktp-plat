@@ -4,11 +4,10 @@ import {formatDate} from '@cm/class/Days/date-utils/formatters'
 import {ViewParamBuilderProps} from '@cm/components/DataLogic/TFs/PropAdjustor/types/propAdjustor-types'
 import {R_Stack} from '@cm/components/styles/common-components/common-components'
 
-import {useState} from 'react'
 
 export class ViewParamBuilder {
   static desiredTorokuDate: ViewParamBuilderProps = props => {
-    const {session, roles, accessScopes} = props.ClientProps2.useGlobalProps
+    const {session, roles, accessScopes} = props.useGlobalProps
     const {admin} = accessScopes()
 
     return {
@@ -23,8 +22,6 @@ export class ViewParamBuilder {
   }
 
   static newCar: ViewParamBuilderProps = props => {
-    const [open, setopen] = useState(false)
-
     return {
       myTable: {
         csvOutput: {

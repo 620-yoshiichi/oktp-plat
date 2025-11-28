@@ -68,25 +68,25 @@ export const upassCols: upassColumn[] = [
     category: 'PLATE',
   },
   {
-    jp: '店舗査定_登録番号(分類番号)',
+    jp: '店舗査定_登録番号_分類番号_',
     en: 'registrationClassNumber',
     sampleData: '330',
     category: 'PLATE',
   },
   {
-    jp: '店舗査定_登録番号(かな)',
+    jp: '店舗査定_登録番号_かな_',
     en: 'registrationKana',
     sampleData: 'ひ',
     category: 'PLATE',
   },
   {
-    jp: '店舗査定_登録番号(一連指定番号)',
+    jp: '店舗査定_登録番号_一連指定番号_',
     en: 'registrationSerialNumber',
     sampleData: '1625',
     category: 'PLATE',
   },
   {
-    jp: '店舗査定_登録年月日／交付年月日',
+    jp: '店舗査定_登録年月日_交付年月日',
     en: 'registrationDate',
     type: 'date',
     sampleData: '2022/10/13',
@@ -101,7 +101,7 @@ export const upassCols: upassColumn[] = [
     category: 'CAR_INFO',
   },
   {
-    jp: '店舗査定_年式（落ち年数）',
+    jp: '店舗査定_年式_落ち年数_',
     en: 'modelYear',
     sampleData: '3',
     category: 'CAR_INFO',
@@ -120,7 +120,7 @@ export const upassCols: upassColumn[] = [
     category: 'CAR_INFO',
   },
   {
-    jp: '店舗査定_フレーム��',
+    jp: '店舗査定_フレームNo',
     en: 'frameNumber',
     sampleData: '4002743',
     category: 'CAR_INFO',
@@ -142,7 +142,7 @@ export const upassCols: upassColumn[] = [
   {
     jp: '店舗査定_車種名称',
     en: 'modelName',
-    sampleData: 'ｸﾗｳﾝ(ｸﾛｽｵｰﾊﾞｰ)',
+    sampleData: 'ｸﾗｳﾝ_ｸﾛｽｵｰﾊﾞｰ_',
     category: 'CAR_INFO',
   },
   {
@@ -176,7 +176,7 @@ export const upassCols: upassColumn[] = [
   {
     jp: '店舗査定_通称型式',
     en: 'commonType',
-    sampleData: 'AZSH35-AEXMB(I)',
+    sampleData: 'AZSH35-AEXMB_I_',
     category: 'GRADE',
     showIn: {
       qrCreate: {label: '通称型式'},
@@ -197,13 +197,13 @@ export const upassCols: upassColumn[] = [
 
   //定員、重量、サイズなど
   {
-    jp: '店舗査定_定員（最小）',
+    jp: '店舗査定_定員_最小_',
     en: 'capacityMin',
     sampleData: '5',
     category: 'SIZE',
   },
   {
-    jp: '店舗査定_定員（最大）',
+    jp: '店舗査定_定員_最大_',
     en: 'capacityMax',
     sampleData: '0',
     category: 'SIZE',
@@ -321,7 +321,7 @@ export const upassCols: upassColumn[] = [
     category: 'CUSTOMER',
   },
   {
-    jp: '店舗査定_走行距離計表示値（車検証）',
+    jp: '店舗査定_走行距離計表示値_車検証_',
     en: 'odometerDisplayValue',
     sampleData: null,
     category: 'CUSTOMER',
@@ -504,7 +504,7 @@ export const upassCols: upassColumn[] = [
     category: 'REPAIR',
   },
   {
-    jp: '店舗査定_走行距離（KM換算）',
+    jp: '店舗査定_走行距離_KM換算_',
     en: 'mileageKm',
     sampleData: '24500',
     category: 'REPAIR',
@@ -644,7 +644,7 @@ export const upassCols: upassColumn[] = [
     category: 'EQUIPMENT',
   },
   {
-    jp: '店舗査定_エアロ（スポイラー）',
+    jp: '店舗査定_エアロ_スポイラー_',
     en: 'aeroSpoiler',
     sampleData: null,
     category: 'EQUIPMENT',
@@ -812,25 +812,25 @@ export const upassCols: upassColumn[] = [
   {
     jp: '店舗査定_追加装備１',
     en: 'additionalEquipment1',
-    sampleData: '衝突回避装置(あり)',
+    sampleData: '衝突回避装置_あり_',
     category: 'ADDITIONAL_EQUIPMENT',
   },
   {
     jp: '店舗査定_追加装備２',
     en: 'additionalEquipment2',
-    sampleData: 'ディスプレイ（モニター）(純正)',
+    sampleData: 'ディスプレイ_モニター__純正_',
     category: 'ADDITIONAL_EQUIPMENT',
   },
   {
     jp: '店舗査定_追加装備３',
     en: 'additionalEquipment3',
-    sampleData: 'ナビ(その他)',
+    sampleData: 'ナビ_その他_',
     category: 'ADDITIONAL_EQUIPMENT',
   },
   {
     jp: '店舗査定_追加装備４',
     en: 'additionalEquipment4',
-    sampleData: 'デジタルインナーミラー(純正)',
+    sampleData: 'デジタルインナーミラー_純正_',
     category: 'ADDITIONAL_EQUIPMENT',
   },
   {
@@ -1022,7 +1022,7 @@ export const upassCols: upassColumn[] = [
     category: 'ASSESSMENT_RESULT',
   },
   {
-    jp: '店舗査定_新車価格（税抜）',
+    jp: '店舗査定_新車価格_税抜_',
     en: 'newCarPriceExcludingTax',
     sampleData: '5181',
     category: 'ASSESSMENT_RESULT',
@@ -1030,7 +1030,7 @@ export const upassCols: upassColumn[] = [
 
   // 査定価格・調整金額
   {
-    jp: '査定価格',
+    jp: '査定価格_円_',
     en: 'assessmentPrice',
     sampleData: '4377',
   },
@@ -1251,11 +1251,11 @@ export const upassCols: upassColumn[] = [
 //   "chassisNumber": "AZSH35-4002743",
 //   "frameNumber": "undefined",
 //   "brandName": "ﾄﾖﾀ",
-//   "modelName": "ｸﾗｳﾝ(ｸﾛｽｵｰﾊﾞｰ)",
+//   "modelName": "ｸﾗｳﾝ_ｸﾛｽｵｰﾊﾞｰ_",
 //   "ai21ModelCode": "A14F27",
 //   "grade": "2.5 CROSSOVER G“Advanced･Leather Package\"",
 //   "type": "6AA-AZSH35",
-//   "commonType": "AZSH35-AEXMB(I)",
+//   "commonType": "AZSH35-AEXMB_I_",
 //   "engineType": "A25A-3NM-4NM",
 //   "vehicleHistory": "自家用",
 //   "capacityMin": "5",
@@ -1357,10 +1357,10 @@ export const upassCols: upassColumn[] = [
 //   "idling": "",
 //   "outlet": "",
 //   "additionalEquipment1": "",
-//   "additionalEquipment2": "衝突回避装置(あり)",
-//   "additionalEquipment3": "ディスプレイ（モニター）(純正)",
-//   "additionalEquipment4": "ナビ(その他)",
-//   "additionalEquipment5": "デジタルインナーミラー(純正)",
+//   "additionalEquipment2": "衝突回避装置_あり_",
+//   "additionalEquipment3": "ディスプレイ_モニター__純正_",
+//   "additionalEquipment4": "ナビ_その他_",
+//   "additionalEquipment5": "デジタルインナーミラー_純正_",
 //   "evFlag": "なし",
 //   "reFlag": "なし",
 //   "ac": "AAC",

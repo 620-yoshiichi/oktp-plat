@@ -1,15 +1,20 @@
-import {Code, codeItemCore} from '@cm/class/Code'
+import {Code} from '@cm/class/Code'
 import {ucarData} from './UcarCL'
 
-type codeAtom = codeItemCore & {
+import {Number98CandidateSelectorSwitch} from '@app/(apps)/ucar/(parts)/templateHooks/useNumber98CandidateSelectorGMF'
+import {JSX} from 'react'
+
+type codeAtom = {
   [key: string]: {
     code: string
-    label: string
+    label: any
     color: string
     checkAlert?: (ucar: ucarData) => boolean
+    Trigger?: (props: {row: ucarData}) => JSX.Element
   }
 }
-export class UcarProcessCode extends Code<codeAtom> {
+
+export class UcarAlertCode extends Code<codeAtom> {
   constructor(master: codeAtom) {
     super(master)
   }
@@ -146,10 +151,10 @@ export class UCAR_CODE {
     },
   })
 
-  static Alert = new Code({
+  static Alert = new UcarAlertCode({
     UP_ASS_NOT_FOUND: {
       code: '01',
-      label: 'UPASSデータとの連携ができていません。',
+      label: 'UPASSデータとの連携ができていません。査定番号が間違っているか、当日査定である可能性があります。',
       color: '#ffe5e5',
       checkAlert: (ucar: ucarData) => {
         return !ucar.UPASS
@@ -157,11 +162,23 @@ export class UCAR_CODE {
     },
     APPINDEX_NOT_FOUND: {
       code: '02',
-      label: '古物台帳との連携ができていません。',
+      label: (
+        <div>
+          古物台帳との連携ができていません。「98番号」「仕入日」「仕入れ時注文No（ない場合は空欄）を正確に入力してください。」
+        </div>
+      ),
       color: '#fff8dc',
       checkAlert: (ucar: ucarData) => {
-        return ucar.number98 && !ucar.OldCars_Base
+        return !!(ucar.number98 && !ucar.OldCars_Base)
       },
+      Trigger: (props: {row: ucarData}) => (
+        <Number98CandidateSelectorSwitch
+          {...{
+            number98: props.row.number98,
+            sateiID: props.row.sateiID,
+          }}
+        />
+      ),
     },
   })
 }

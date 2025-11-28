@@ -167,6 +167,16 @@ model Number98 {
   // ZAIKO_Base   ZAIKO_Base[]
 }
 
+model Number98IssueHistory {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  active    Boolean   @default(true)
+  sortOrder Float     @default(0)
+
+  number98 String
+}
+
 model UcarGarageLocationMaster {
   id                   Int                    @id @default(autoincrement())
   createdAt            DateTime               @default(now())

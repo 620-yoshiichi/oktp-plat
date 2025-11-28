@@ -20,7 +20,7 @@ import {easySearchDataSwrType} from '@cm/class/builders/QueryBuilderVariables'
 import {Filter} from 'lucide-react'
 import {UseRecordsReturn} from '@cm/components/DataLogic/TFs/PropAdjustor/hooks/useRecords/useRecords'
 import useWindowSize from '@cm/hooks/useWindowSize'
-import { paginationPrefix } from 'src/non-common/searchParamStr'
+import {resetPaginationParams} from '@cm/components/DataLogic/TFs/MyTable/components/SearchHandler/SearchHandler'
 
 export default function EasySearcher(props: {
   easySearchPrismaDataOnServer: easySearchDataSwrType
@@ -45,7 +45,7 @@ export default function EasySearcher(props: {
 
   const createNextQuery = useCallback(
     props => {
-      let newQuery = {...useGlobalProps.query}
+      let newQuery = {}
       if (availableEasySearchObj) {
         const {exclusiveGroup, keyValueList, refresh} = props.dataSource ?? {}
 
@@ -88,11 +88,7 @@ export default function EasySearcher(props: {
       }
 
       // ページングパラメータを削除（新しいプレフィックス方式に対応）
-      Object.keys(newQuery).forEach(key => {
-        if (key.startsWith(paginationPrefix) && (key.endsWith('_P') || key.endsWith('_S') || key.endsWith('_T'))) {
-          newQuery[key] = undefined
-        }
-      })
+      resetPaginationParams(useGlobalProps.query, newQuery)
 
       return newQuery
     },
