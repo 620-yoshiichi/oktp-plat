@@ -46,23 +46,26 @@ export default function MikomiTableSC({query}) {
 
   const monthsQueryList = [
     ...months.map(month => {
-      const nextMonthFirstDate = Days.day.add(month, 1)
+      // getMonthsBetweenDatesが返す日付を月初日に正規化
+      const firstDayOfMonth = Days.month.getMonthDatum(month).firstDayOfMonth
+      const nextMonthFirstDate = Days.month.add(firstDayOfMonth, 1)
 
       const monthWhere = {
-        gte: month,
+        gte: firstDayOfMonth,
         lt: nextMonthFirstDate,
       }
 
       return {
-        month,
-        monthLabel: formatDate(month, 'YYYY年M月'),
+        month: firstDayOfMonth,
+        monthLabel: formatDate(firstDayOfMonth, 'YYYY年M月'),
         monthWhere,
       }
     }),
 
     {
-      monthLabel: `${formatDate(FirstDateInAfterPeriod, 'YYYY年MM月')}以降`,
-      monthWhere: {gte: FirstDateInAfterPeriod},
+      // 「以降」の場合も月初日に正規化
+      monthLabel: `${formatDate(Days.month.getMonthDatum(FirstDateInAfterPeriod).firstDayOfMonth, 'YYYY年MM月')}以降`,
+      monthWhere: {gte: Days.month.getMonthDatum(FirstDateInAfterPeriod).firstDayOfMonth},
     },
   ]
 

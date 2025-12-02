@@ -15,7 +15,7 @@ export async function get_mikomiS_additionalWhere({query}) {
   if (monthLabel.includes(`以降`)) {
     monthWhere = {gte: theMonth}
   } else {
-    monthWhere = {gte: theMonth, lt: Days.month.getNextMonthLastDate(theMonth, 1)}
+    monthWhere = {gte: theMonth, lt: Days.month.add(theMonth, 1)}
   }
 
   const storeQueryList = await getStoreQueryList()
