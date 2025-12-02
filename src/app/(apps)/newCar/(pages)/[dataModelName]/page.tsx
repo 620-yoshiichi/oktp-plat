@@ -113,7 +113,14 @@ const parameters = async (props: {params; query; session; scopes: ReturnType<typ
             if (query[`mikomiS`]) {
               const {additionalWhere} = await get_mikomiS_additionalWhere({query})
 
-              where = {AND: [where, additionalWhere]}
+              const addiotionalAND = (additionalWhere?.AND ?? []) as newCarWhereArgs[]
+              where = {
+                AND: [
+                  //
+                  where,
+                  ...addiotionalAND,
+                ],
+              }
             }
 
             //進捗表の店舗別表示

@@ -13,6 +13,7 @@ import {
 } from '@cm/class/builders/QueryBuilderVariables'
 import {getMidnight} from '@cm/class/Days/date-utils/calculations'
 import {Days} from '@cm/class/Days/Days'
+import {isDev} from '@cm/lib/methods/common'
 
 import {Prisma} from '@prisma/client'
 
@@ -392,7 +393,7 @@ export const NewCarEasySearchBuilder = async () => {
         {exclusiveGroup: Ex_Delivery, name: `配送配送`},
         {exclusiveGroup: Ex_Payment, name: `入金状況`},
         {exclusiveGroup: Ex_Tsuiko, name: `追工申請`},
-        // {exclusiveGroup: Ex_SateiNyukoYotei, name: `下取入庫予定`},
+        (isDev ? {exclusiveGroup: Ex_SateiNyukoYotei, name: `下取入庫予定`} : null) as any,
       ]
         .filter(Boolean)
         .map(d => ({...d, additionalProps: {refresh: true}}))

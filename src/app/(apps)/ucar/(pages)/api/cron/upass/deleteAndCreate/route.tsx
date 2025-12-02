@@ -3,8 +3,8 @@
 
 import {NextRequest, NextResponse} from 'next/server'
 import {isCron} from 'src/non-common/serverSideFunction'
-import {createUpassFamilyTree} from '@app/(apps)/ucar/(pages)/api/cron/upass/deleteAndCreate/createUpassFamilyTree'
 import {deleteAndInsertUpassData} from '@app/(apps)/ucar/(pages)/api/cron/upass/deleteAndCreate/deleteAndInsertUpassData'
+import {createUpassFamilyTree} from '@app/(apps)/ucar/(pages)/api/cron/upass/deleteAndCreate/createUpassFamilyTree'
 
 export const GET = async (req: NextRequest) => {
   const result: any = {}

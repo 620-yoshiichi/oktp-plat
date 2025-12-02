@@ -24,6 +24,7 @@ const CAR_TRANSFER_HISTORY_LOCATIONS = [
 
 const switchingDate = toUtc(new Date(`2025-09-01`))
 const isNewCommonWhereApplied = getMidnight().getTime() >= switchingDate.getTime()
+
 const COMMON_WHERE_CORE = isNewCommonWhereApplied
   ? {
       OR: [{DD_TOUROKU: {gte: new Date(`2025-03-01`)}}, {DD_TOUROKU: null}],

@@ -146,7 +146,16 @@ export const LinkCounter = (props: {item: storeMonthsWhereListType; dataLabel; L
 
   const {storeLabel, monthLabel} = item
 
-  const mikomiSQueryStr = [storeLabel, monthLabel, theFourSourceLabel, dataLabel, item.jpLabel, storeLabel].join(`__`)
+  const mikomiSQueryStr = [
+    //
+    storeLabel,
+    monthLabel,
+    theFourSourceLabel,
+    dataLabel,
+    item.jpLabel,
+    storeLabel,
+  ].join(`__`)
+
   const href = HREF(`/newCar/newCar`, {mikomiS: mikomiSQueryStr, showNosya: true}, query, {
     forceDelete: {
       g_storeId: undefined,

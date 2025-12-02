@@ -45,11 +45,21 @@ export default function MikomiTableSC({query}) {
   const FirstDateInAfterPeriod = lasstMonth
 
   const monthsQueryList = [
-    ...Days.month.getMonthsBetweenDates(thisMonth, to).map(month => {
-      const monthWhere = {gte: month, lt: Days.month.getNextMonthLastDate(month, 1)}
+    ...months.map(month => {
+      const nextMonthFirstDate = Days.day.add(month, 1)
 
-      return {month, monthLabel: formatDate(month, 'YYYY年M月'), monthWhere}
+      const monthWhere = {
+        gte: month,
+        lt: nextMonthFirstDate,
+      }
+
+      return {
+        month,
+        monthLabel: formatDate(month, 'YYYY年M月'),
+        monthWhere,
+      }
     }),
+
     {
       monthLabel: `${formatDate(FirstDateInAfterPeriod, 'YYYY年MM月')}以降`,
       monthWhere: {gte: FirstDateInAfterPeriod},
@@ -170,8 +180,10 @@ export default function MikomiTableSC({query}) {
                   )
                 }) as storeMonthsWhereListType
 
+                const label = `${monthLabel} ${theDataSourceObj.jpLabel}`
+
                 DataSourceArr.push({
-                  label: theDataSourceObj.jpLabel,
+                  label,
                   cellValue: (
                     <div className={`h-full `}>
                       <NextCreateCellValueComponent {...{item: theDataSourceObj, query}} />

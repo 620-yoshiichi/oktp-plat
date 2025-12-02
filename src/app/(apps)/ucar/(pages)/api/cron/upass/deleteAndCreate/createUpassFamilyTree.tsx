@@ -27,22 +27,34 @@ export const createUpassFamilyTree = async () => {
 
     let current: string | undefined = satei.sateiID
 
-    const tree: string[] = []
+    const tree: Array<{sateiID: string; assessmentdatetime: Date | null}> = []
 
     while (current) {
-      tree.push(current)
-
-      const child = await prisma.uPASS.findFirst({
-        where: {previousAssessmentnumber: current},
+      const currentSatei = await prisma.uPASS.findUnique({
+        where: {sateiID: current},
+        select: {sateiID: true, assessmentdatetime: true},
       })
 
-      current = child?.sateiID
+      if (currentSatei) {
+        tree.push({
+          sateiID: currentSatei.sateiID,
+          assessmentdatetime: currentSatei.assessmentdatetime,
+        })
+
+        const child = await prisma.uPASS.findFirst({
+          where: {previousAssessmentnumber: current},
+        })
+
+        current = child?.sateiID
+      } else {
+        break
+      }
     }
 
     await prisma.upassFamilyTree.createMany({
-      data: tree.map(sateiID => ({
+      data: tree.map(({sateiID, assessmentdatetime}) => ({
         sateiID,
-        sateiDate: satei.assessmentdatetime,
+        sateiDate: assessmentdatetime,
         rootSateiID: satei.sateiID,
       })),
     })

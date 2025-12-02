@@ -46,12 +46,10 @@ export default function page() {
           {AlertComponent}
 
           {CsvTable({
-            records: Tree.sort((a, b) => {
-              return new Date(b.sateiDate).getTime() - new Date(a.sateiDate).getTime()
-            }).map(item => {
+            records: Tree.map(item => {
               return {
                 csvTableRow: [
-                  {label: '査定ID', cellValue: item.sateiID},
+                  {label: '査定ID', cellValue: item?.sateiID},
                   {label: '査定日時', cellValue: formatDate(item.sateiDate, 'YYYY-MM-DD HH:mm:ss')},
                   {label: 'ルート査定ID', cellValue: item.rootSateiID},
                 ],

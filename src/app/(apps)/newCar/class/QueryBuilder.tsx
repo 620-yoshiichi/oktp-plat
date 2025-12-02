@@ -22,7 +22,17 @@ export class QueryBuilder {
     const newCar: Prisma.NewCarFindManyArgs = {
       include: {
         JuchuShitadoriDb: {
-          include: {UPASS: {}},
+          include: {
+            UPASS: {
+              include: {
+                RootUpass: {
+                  include: {
+                    UPASS: {},
+                  },
+                },
+              },
+            },
+          },
         },
         User: {},
         Store: {},

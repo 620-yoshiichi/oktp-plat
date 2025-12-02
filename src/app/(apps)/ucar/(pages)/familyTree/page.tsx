@@ -4,7 +4,6 @@ import {C_Stack, R_Stack} from '@cm/components/styles/common-components/common-c
 import React, {useState, useMemo} from 'react'
 import useSWR from 'swr'
 import {fetchRawSql} from '@cm/class/Fields/lib/methods'
-import ShadPopover from '@cm/shadcn/ui/Organisms/ShadPopover'
 
 type TreeNode = {
   sateiID: string

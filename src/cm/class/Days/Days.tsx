@@ -432,8 +432,8 @@ export class Days {
       }
     },
     getMonthsBetweenDates: (startDate: Date, endDate: Date): Date[] => {
-      const start = toUtc(startDate)
-      const end = toUtc(endDate)
+      const start = new Date(startDate)
+      const end = new Date(endDate)
 
       const firstDate = start
       const lastDate = end

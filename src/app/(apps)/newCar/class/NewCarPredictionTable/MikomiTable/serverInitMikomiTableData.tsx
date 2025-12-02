@@ -6,6 +6,7 @@ import prisma from 'src/lib/prisma'
 
 export const serverInitMikomiTableData = async ({monthsQueryList, thisMonth}) => {
   const storeQueryList = await getStoreQueryList()
+
   //キャッシュしてデータを取得
 
   const storeMonthsWhereList: storeMonthsWhereListType[] = getstoreMonthsWhereList({

@@ -16,6 +16,7 @@ export const getstoreMonthsWhereList = ({storeQueryList, monthsQueryList, thisMo
         }
       }
     }
+
     const where = source?.getWhere(getWhereProps)
     return where
   }

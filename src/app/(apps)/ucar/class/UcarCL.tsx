@@ -14,6 +14,7 @@ import {
   UcarGarageSlotMaster,
   UcarGarageLocationMaster,
   OldCars_Base,
+  UpassFamilyTree,
 } from '@prisma/client'
 import {roleIs} from 'src/non-common/scope-lib/judgeIsAdmin'
 import {QueryBuilder} from '@app/(apps)/ucar/class/QueryBuilder'
@@ -23,11 +24,12 @@ import {Alert} from '@cm/components/styles/common-components/Alert'
 import {R_Stack} from '@cm/components/styles/common-components/common-components'
 import {globalIds} from 'src/non-common/searchParamStr'
 
+export type UpassStandardType = UPASS & {
+  RootUpass: (UpassFamilyTree & {UPASS: UPASS})[]
+}
 export type ucarData = Ucar & {
   OldCars_Base: OldCars_Base
-  UPASS: UPASS & {
-    RootUpass: UPASS
-  }
+  UPASS: UpassStandardType
   Number98: Number98
   User: User
   Store: Store
@@ -64,7 +66,10 @@ export class UcarCL {
     })
 
     const {result: familyTree} = await doStandardPrisma('upassFamilyTree', 'findMany', {
-      where: {rootSateiID: myTree?.rootSateiID ?? ''},
+      where: {
+        rootSateiID: myTree?.rootSateiID ?? '',
+      },
+      orderBy: {sateiDate: 'asc'},
     })
 
     const lastSateiId = upass?.dataSource === 'aisatei' ? upass.sateiID : familyTree[familyTree.length - 1]?.sateiID
@@ -104,7 +109,7 @@ export class UcarCL {
     )
     return {
       Tree: familyTree.sort((a, b) => {
-        return new Date(b.sateiDate).getTime() - new Date(a.sateiDate).getTime()
+        return new Date(a.sateiDate).getTime() - new Date(b.sateiDate).getTime()
       }),
       isLastSateiId,
       lastSateiId,
@@ -128,8 +133,30 @@ export class UcarCL {
     return false
   }
 
+  static getLatestUPASS(currentUPASS: UpassStandardType) {
+    // dataSource === 'aisatei' の場合は現在のUPASSをそのまま使用
+    if (!currentUPASS) {
+      return null
+    }
+    if (currentUPASS?.dataSource === 'aisatei') {
+      return currentUPASS
+    }
+
+    const familyTrees = currentUPASS?.RootUpass.map(d => d.UPASS).sort((a, b) => {
+      if (a.assessmentdatetime && b.assessmentdatetime) {
+        return -(new Date(b.assessmentdatetime).getTime() - new Date(a.assessmentdatetime).getTime())
+      } else {
+        return 0
+      }
+    })
+
+    const lastUpass = familyTrees[familyTrees.length - 1]
+
+    return lastUpass
+  }
+
   get notation() {
-    const UPASS = this.data.UPASS ?? {}
+    const UPASS = UcarCL.getLatestUPASS(this.data.UPASS) ?? ({} as UPASS)
     const plate = [
       UPASS.landAffairsName,
       UPASS.registrationClassNumber,

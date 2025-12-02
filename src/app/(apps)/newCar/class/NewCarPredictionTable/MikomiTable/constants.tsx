@@ -148,7 +148,9 @@ export const fiveMikomiFieldList: FourDataSourceListType[] = [
           {
             jpLabel: `登録済`,
             label: `completed`,
-            getWhere: ({thisMonth, monthWhere}) => ({DD_TOUROKU: monthWhere}),
+            getWhere: ({thisMonth, monthWhere}) => {
+              return {DD_TOUROKU: monthWhere}
+            },
           },
           {
             jpLabel: `申請中`,

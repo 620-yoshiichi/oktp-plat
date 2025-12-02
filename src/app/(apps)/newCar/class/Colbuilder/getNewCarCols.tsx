@@ -28,6 +28,10 @@ import {TenpoTsuikoShinseiStatusButton} from '@app/(apps)/newCar/(pages)/tenpo-t
 import useTempoTsuikoGMF from '@app/(apps)/newCar/templateHooks/useTempoTsuikoGMF'
 import {cn} from '@cm/shadcn/lib/utils'
 import {formatDate} from '@cm/class/Days/date-utils/formatters'
+import {UcarCL} from '@app/(apps)/ucar/class/UcarCL'
+import ShadModal from '@cm/shadcn/ui/Organisms/ShadModal'
+import {CsvTable} from '@cm/components/styles/common-components/CsvTable/CsvTable'
+import {NumHandler} from '@cm/class/NumHandler'
 
 export const getNewCarCols = (props: columnGetterType) => {
   const {pathname, query, accessScopes} = props.useGlobalProps
@@ -115,19 +119,49 @@ export const getNewCarCols = (props: columnGetterType) => {
         label: '査定連携',
         form: {hidden: true},
         format: (value, row) => {
+          const UpassHistory = row.JuchuShitadoriDb.map(d => {
+            return UcarCL.getLatestUPASS(d.UPASS)
+          })
+
           if (isDev) {
             return (
-              <TruckIcon
-                {...{
-                  onClick: () => {
-                    // GMF.setGMF_OPEN({
-                    //   newCar: row,
-                    //   sateiNoList: row.Ucar.map(d => d.Assessment_ID),
-                    // })
-                  },
-                  className: `h-5`,
-                }}
-              />
+              <ShadModal Trigger={<TruckIcon {...{className: `h-5`}} />}>
+                {CsvTable({
+                  records: UpassHistory.map(item => {
+                    return {
+                      csvTableRow: [
+                        //
+                        {
+                          label: '査定番号',
+                          cellValue: item?.sateiID,
+                        },
+                        {
+                          label: '査定日',
+                          cellValue: formatDate(item?.assessmentdatetime),
+                        },
+
+                        {
+                          label: '査定額',
+                          cellValue: NumHandler.toPrice(item?.assessmentPrice),
+                        },
+
+                        {
+                          label: '入庫予定日',
+                          cellValue: formatDate(item?.pickupScheduledDate),
+                        },
+                        {
+                          label: '車名',
+                          cellValue: item?.modelName,
+                        },
+                        {
+                          label: 'お客様名',
+                          cellValue: item?.customerName,
+                        },
+                      ],
+                    }
+                  }),
+                }).WithWrapper({})}
+              </ShadModal>
             )
           }
 
