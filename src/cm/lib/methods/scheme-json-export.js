@@ -1520,8 +1520,6 @@ model Ucar {
   // 書類管理項目
   arrivedAt DateTime?
 
-  customerName String?
-
   meihenBi       DateTime?
   masshoBi       DateTime?
   secondMeihenbi DateTime? //二次登録日
@@ -1539,9 +1537,18 @@ model Ucar {
   storeToPickUp             String?
 
   //銀行情報
-  accountName             String?
-  accountNumber           String?
-  annualTax               Int?
+  henkinJouhoUmu  String?
+  customerName    String?
+  registerDate    DateTime?
+  annualTax       Int?
+  bankName        String?
+  branchName      String?
+  branchNameKana  String?
+  storeNumber     String?
+  accountType     String?
+  accountNumber   String?
+  accountNameKana String?
+
   earlyRecievedAt         DateTime?
   paymentNoticeRecievedAt DateTime?
   isPayed                 Boolean?
@@ -1552,9 +1559,9 @@ model Ucar {
   registerdAt             DateTime?
   taxCustomerName         String?
   taxJobNote              String?
-  accountType             String?
-  DestinationStore        Store?    @relation(name: "DestinationStore", fields: [destinationStoreId], references: [id], onDelete: Cascade)
-  destinationStoreId      Int?
+
+  DestinationStore   Store? @relation(name: "DestinationStore", fields: [destinationStoreId], references: [id], onDelete: Cascade)
+  destinationStoreId Int?
 
   daihatsuReserve       String?
   exception             String?
@@ -1714,7 +1721,7 @@ model BankMaster {
   active           Boolean            @default(true)
   sortOrder        Float              @default(0)
   code             String             @unique
-  name             String
+  name             String             @unique
   color            String?
   BankBranchMaster BankBranchMaster[]
   Ucar             Ucar[]
@@ -20181,20 +20188,6 @@ export const prismaDMMF = {
           "isUpdatedAt": false
         },
         {
-          "name": "customerName",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "String",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
           "name": "meihenBi",
           "kind": "scalar",
           "isList": false,
@@ -20363,7 +20356,119 @@ export const prismaDMMF = {
           "isUpdatedAt": false
         },
         {
-          "name": "accountName",
+          "name": "henkinJouhoUmu",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "String",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "customerName",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "String",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "registerDate",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "DateTime",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "annualTax",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "Int",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "bankName",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "String",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "branchName",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "String",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "branchNameKana",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "String",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "storeNumber",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "String",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "accountType",
           "kind": "scalar",
           "isList": false,
           "isRequired": false,
@@ -20391,7 +20496,7 @@ export const prismaDMMF = {
           "isUpdatedAt": false
         },
         {
-          "name": "annualTax",
+          "name": "accountNameKana",
           "kind": "scalar",
           "isList": false,
           "isRequired": false,
@@ -20399,7 +20504,7 @@ export const prismaDMMF = {
           "isId": false,
           "isReadOnly": false,
           "hasDefaultValue": false,
-          "type": "Int",
+          "type": "String",
           "nativeType": null,
           "isGenerated": false,
           "isUpdatedAt": false
@@ -20532,20 +20637,6 @@ export const prismaDMMF = {
         },
         {
           "name": "taxJobNote",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "String",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "accountType",
           "kind": "scalar",
           "isList": false,
           "isRequired": false,
@@ -22316,7 +22407,7 @@ export const prismaDMMF = {
           "kind": "scalar",
           "isList": false,
           "isRequired": true,
-          "isUnique": false,
+          "isUnique": true,
           "isId": false,
           "isReadOnly": false,
           "hasDefaultValue": false,
@@ -25171,6 +25262,16 @@ export const prismaDMMF = {
       "fields": [
         {
           "name": "code"
+        }
+      ]
+    },
+    {
+      "model": "BankMaster",
+      "type": "unique",
+      "isDefinedOnField": true,
+      "fields": [
+        {
+          "name": "name"
         }
       ]
     },

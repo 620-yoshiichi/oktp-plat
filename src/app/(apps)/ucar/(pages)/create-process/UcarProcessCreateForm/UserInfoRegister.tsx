@@ -36,7 +36,7 @@ export default function useUserInfoRegister({UcarData}) {
       form: {descriptionNoteAfter: `ゆうちょは「通帳番号」を記入`, register},
     },
     {
-      ...{id: `accountName`, label: `名義（カナ）`},
+      ...{id: `accountNameKana`, label: `名義（カナ）`},
       form: {register},
     },
   ]
@@ -60,7 +60,7 @@ export default function useUserInfoRegister({UcarData}) {
     ...new Fields([
       {id: `accountType`, label: `口座種類`, form: {register}},
       {id: `accountNumber`, label: `口座番号`, form: {descriptionNoteAfter: `ゆうちょは「通帳番号」を記入`, register}},
-      {id: `accountName`, label: `名義（カナ）`, form: {register}},
+      {id: `accountNameKana`, label: `名義（カナ）`, form: {register}},
     ]).buildFormGroup({groupName: `口座情報②`}).plain,
   ]).transposeColumns()
 

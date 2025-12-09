@@ -41,7 +41,7 @@ export const getTaxJobCols = () => {
     ...new Fields([
       {id: `accountType`, label: `口座種類`},
       {id: `accountNumber`, label: `口座番号`},
-      {id: `accountName`, label: `名義`},
+      {id: `accountNameKana`, label: `名義（カナ）`},
     ]).customAttributes(({col}) => ({...col, form: {}, td: {}})).plain,
   ]).buildFormGroup({groupName: `口座情報`}).plain
 

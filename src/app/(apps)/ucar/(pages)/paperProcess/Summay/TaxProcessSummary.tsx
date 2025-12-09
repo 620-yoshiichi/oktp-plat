@@ -20,7 +20,7 @@ export default function TaxProcessSummary({car}) {
     annualTax,
     accountType,
     accountNumber,
-    accountName,
+    accountNameKana,
     taxCalcuration,
     taxJobNote,
     petCount,
@@ -32,7 +32,7 @@ export default function TaxProcessSummary({car}) {
   } = car
 
   const bankAccount1 = [BankMaster?.name, BankBranchMaster?.name].filter(Boolean).join(` / `)
-  const bankAccount2 = [accountNumber, accountName].filter(Boolean).join(` / `)
+  const bankAccount2 = [accountNumber, accountNameKana].filter(Boolean).join(` / `)
 
   return (
     <SummaryWrapper>

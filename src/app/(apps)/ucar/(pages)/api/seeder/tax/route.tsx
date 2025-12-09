@@ -78,7 +78,7 @@ export const POST = async (req: NextRequest) => {
       storeCode,
       accountType,
       accountNumber,
-      accountName,
+      accountNameKana,
       proccessedAs,
       processedDate,
       petCount,
@@ -111,7 +111,7 @@ export const POST = async (req: NextRequest) => {
 
       accountType,
       accountNumber: String(accountNumber),
-      accountName,
+      accountNameKana,
       petCount: petCount ? Number(petCount) : null,
       petPrice: petPrice ? Number(petPrice) : null,
       prefCount: prefCount ? Number(prefCount) : null,

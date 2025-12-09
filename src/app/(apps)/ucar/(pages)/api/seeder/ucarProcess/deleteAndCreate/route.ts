@@ -71,7 +71,7 @@ export const GET = async (req: NextRequest) => {
           const userId = user?.id
 
           if (!userId) {
-            console.log(`userId is not found: ${email_0}`) //logs
+            console.log(`userId is not found: ${email_0}`)
             return
           }
 
@@ -143,31 +143,8 @@ export const GET = async (req: NextRequest) => {
             where: {sateiID: sateiId},
             data: {processLastUpdatedAt: processLastUpdatedAt},
           })
-
-          // const payload: Prisma.UcarUpsertArgs['create'] = {
-          //   qrIssuedAt: ucarCreatedAt,
-          //   sateiID: sateiId,
-          //   userId: userId,
-          //   storeId: user?.storeId,
-          //   runnable: runnable_0 === `可` ? true : false,
-          //   remarks: remarks_0,
-          //   storeToPickUp: store_0,
-          //   destination: Sorting_results,
-          //   processLastUpdatedAt,
-          // }
-          // transactionQueryList.push({
-          //   model: `ucar`,
-          //   method: `upsert`,
-          //   queryObject: {
-          //     where: {sateiID: sateiId},
-          //     create: payload,
-          //     update: payload,
-          //   },
-          // })
         }
       }
-
-      return
     },
   })
 
