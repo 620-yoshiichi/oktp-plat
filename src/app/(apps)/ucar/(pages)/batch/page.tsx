@@ -17,7 +17,7 @@ import useSWR from 'swr'
 const getActions = (offset: number, limit: number) => [
   {
     label: `古物 Rawデータ取り込み`,
-    description: ``,
+    description: ` /api/cron/oldCars/deleteAndCreate`,
     effectOn: 'batch',
     purpose: ``,
     tableName: 'oldCars_Base',
@@ -28,7 +28,7 @@ const getActions = (offset: number, limit: number) => [
   },
   {
     label: `在庫 Rawデータ取り込み`,
-    description: ``,
+    description: ` /api/cron/zaiko/deleteAndCreate`,
     effectOn: 'batch',
     purpose: ``,
     tableName: 'zAIKO_Base',
@@ -39,10 +39,10 @@ const getActions = (offset: number, limit: number) => [
   },
   {
     label: `AI査定 Rawデータ取り込み`,
-    description: ``,
+    description: ` /api/cron/aisatei/deleteAndCreate`,
     effectOn: 'batch',
     purpose: ``,
-    // tableName: 'aiSatei',
+
     onClick: async () => {
       const res = await fetchAlt(`${basePath}/ucar/api/cron/aisatei/deleteAndCreate`, {}, {method: `GET`})
 
@@ -51,7 +51,7 @@ const getActions = (offset: number, limit: number) => [
   },
   {
     label: `U-PASS Rawデータ取り込み`,
-    description: ``,
+    description: ` /api/cron/upass/deleteAndCreate`,
     effectOn: 'batch',
     purpose: ``,
     tableName: 'uPASS',
@@ -63,7 +63,7 @@ const getActions = (offset: number, limit: number) => [
   },
   {
     label: `受注下取りDB Rawデータ取り込み`,
-    description: ``,
+    description: `/api/cron/juchuShitadoriDb/deleteAndCreate`,
     effectOn: 'batch',
     purpose: ``,
     tableName: 'juchuShitadoriDb',
@@ -73,74 +73,79 @@ const getActions = (offset: number, limit: number) => [
       console.debug(res)
     },
   },
-  {
-    label: `スプレッドシートQRプロセス取り込み`,
-    description: ``,
-    effectOn: 'batch',
-    purpose: ``,
-    tableName: 'ucarProcess',
-    onClick: async () => {
-      const res = await fetchAlt(`${basePath}/ucar/api/cron/spreadUcarProcess/deleteAndCreate`, {}, {method: `GET`})
-
-      console.debug(res)
-    },
-  },
 
   // クリック実行処理
 
   {
-    label: `旧QR工程チェックデータ反映`,
-    description: `/ucar/api/seeder/oldProcess`,
+    label: `1. UcarProcess 初期シーディング`,
+    description: `/api/seeder/ucarProcess/deleteAndCreate`,
     effectOn: 'click',
-    purpose: `①QR工程チェックの全データから、発行履歴を作る。\n②その他のプロセスデータを作る。\n**limit / offset 注意**`,
+    purpose: `BigQuery Ucar_QR.AI_satei テーブルからデータを取り込む。`,
+    tableName: 'ucarProcess',
     onClick: async () => {
-      const res = await fetchAlt(`${basePath}/ucar/api/seeder/oldProcess`, {offset, limit})
+      const res = await fetchAlt(`${basePath}/ucar/api/seeder/ucarProcess/deleteAndCreate`, {}, {method: `GET`})
+
       console.debug(res)
     },
   },
 
   {
-    label: `銀行データ作成`,
-    description: `/api/seeder/bank`,
-    effectOn: 'click',
-    purpose: `bankMaster.csvから銀行データを作成する。`,
-    onClick: async () => {
-      const res = await fetchAlt(`${basePath}/ucar/api/seeder/bank`, {})
-      console.debug(res)
-    },
-  },
-  {
-    label: `98データ作成`,
-    description: `/api/seeder/num98`,
-    effectOn: 'click',
-    purpose: `ai21の98番号一覧データを作成する`,
-    onClick: async () => {
-      const res = await fetchAlt(`${basePath}/ucar/api/seeder/num98`, {})
-      console.debug(res)
-    },
-  },
-  {
-    label: `QR書類データ作成`,
+    label: `2. UcarPaperデータ作成`,
     description: `/api/seeder/qrPaper`,
     effectOn: 'click',
     purpose: `QR PAPER(「新システム反映用」シート)よりデータを作成し、ucarテーブルに反映する。`,
+    tableName: 'ucar',
     onClick: async () => {
       const res = await fetchAlt(`${basePath}/ucar/api/seeder/qrPaper`, {})
       console.debug(res)
     },
   },
   {
-    label: `車庫データ作成`,
+    label: `3. 銀行データ作成`,
+    description: `/api/seeder/bank`,
+    effectOn: 'click',
+    purpose: `bankMaster.csvから銀行データを作成する。`,
+    tableName: 'bankMaster',
+    onClick: async () => {
+      const res = await fetchAlt(`${basePath}/ucar/api/seeder/bank`, {})
+      console.debug(res)
+    },
+  },
+  {
+    label: `4. 98データ作成`,
+    description: `/api/seeder/num98`,
+    effectOn: 'click',
+    purpose: `ai21の98番号一覧データを作成する`,
+    tableName: 'number98',
+    onClick: async () => {
+      const res = await fetchAlt(`${basePath}/ucar/api/seeder/num98`, {})
+      console.debug(res)
+    },
+  },
+
+  {
+    label: `5. 車庫データ作成`,
     description: `/api/seeder/garage`,
     effectOn: 'click',
     purpose: `QR PAPER「車庫空き状況」シートよりデータを作成し、反映する`,
+    tableName: 'UcarGarageSlotMaster',
     onClick: async () => {
       const res = await fetchAlt(`${basePath}/ucar/api/seeder/garage`, {})
       console.debug(res)
     },
   },
   {
-    label: `自動車税データ作成`,
+    label: `6. 店長書類送信データ作成`,
+    description: `/api/seeder/tenchoShoruiSakusei`,
+    effectOn: 'click',
+    purpose: ``,
+    onClick: async () => {
+      const res = await fetchAlt(`${basePath}/ucar/api/seeder/tenchoShoruiSakusei`, {})
+      console.debug(res)
+    },
+  },
+  {
+    label: `7. 自動車税データ作成`,
     description: `/api/seeder/tax`,
     effectOn: 'click',
     purpose: ``,

@@ -1,22 +1,18 @@
 //classを切り替える
 
-import {toUtc} from '@cm/class/Days/date-utils/calculations'
-
-import {getstoreMonthsWhereList} from '@app/(apps)/newCar/class/NewCarPredictionTable/MikomiTable/lib'
+import {
+  getstoreMonthsWhereList,
+  parseMonthLabelToDate,
+  createMonthWhere,
+} from '@app/(apps)/newCar/class/NewCarPredictionTable/MikomiTable/lib'
 import {getStoreQueryList, storeMonthsWhereListType} from '@app/(apps)/newCar/class/NewCarPredictionTable/MikomiTable/constants'
-import {Days} from '@cm/class/Days/Days'
 
 export async function get_mikomiS_additionalWhere({query}) {
   const [storeLabel, monthLabel, theFourSourceLabel, dataLabel] = query[`mikomiS`].split(`__`)
 
-  let monthWhere = {}
-  const [year, month] = monthLabel.replace(/月|以降/g, '').split(`年`)
-  const theMonth = toUtc(new Date(Number(year), Number(month) - 1, 1))
-  if (monthLabel.includes(`以降`)) {
-    monthWhere = {gte: theMonth}
-  } else {
-    monthWhere = {gte: theMonth, lt: Days.month.add(theMonth, 1)}
-  }
+  const isAfterPeriod = monthLabel.includes(`以降`)
+  const firstDayOfMonth = parseMonthLabelToDate(monthLabel)
+  const monthWhere = createMonthWhere(firstDayOfMonth, isAfterPeriod)
 
   const storeQueryList = await getStoreQueryList()
   const storeMonthsWhereList: storeMonthsWhereListType[] = getstoreMonthsWhereList({

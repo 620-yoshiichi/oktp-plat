@@ -51,84 +51,103 @@ export const POST = async (req: NextRequest) => {
   }
 
   const activeMembers = member_data.filter(item => {
-    const isInForcedUsers = forcedUsers.find(d => String(d.code) === String(item.code))
-
-    return (item.mail && item.retired_date === '') || isInForcedUsers
+    // const isInForcedUsers = forcedUsers.find(d => String(d.code) === String(item.code))
+    // return (item.mail && item.retired_date === '') || isInForcedUsers
+    return true
   })
   const userWithRoleStringsList: {
     code: string
     userRoles: oktpRoleString[]
-  }[] = activeMembers.map(item => {
-    const activeState = item.retired_date === '' ? true : false
-    const storeCode = parseInt(item.department.code.substr(0, 2) || 0)
-    const store = stores.find(store => String(store.code) === String(storeCode))
-    const storeId = store?.id
+  }[] = await Promise.all(
+    activeMembers.map(async item => {
+      const activeState = item.retired_date === '' ? true : false
+      const storeCode = parseInt(item.department.code.substr(0, 2) || 0)
+      const store = stores.find(store => String(store.code) === String(storeCode))
+      const storeId = store?.id
 
-    const workTypes = item.custom_fields.find(d => d.name === `職務`)?.values
-    workTypes?.forEach(wt => {
-      obj__initializeProperty(workTypeMaster, wt, true)
-    })
-    obj__initializeProperty(emailMaster, item.mail, 0)
-    emailMaster[item.mail]++
-
-    if ((workTypes ?? []).length > 1) {
-      const errorKey = `workTypeCountError`
-      errorKey[`workTypeCountError`].push({
-        name: item.name,
-        code: item.code,
-        workTypes,
+      const workTypes = item.custom_fields.find(d => d.name === `職務`)?.values
+      workTypes?.forEach(wt => {
+        obj__initializeProperty(workTypeMaster, wt, true)
       })
-    }
+      obj__initializeProperty(emailMaster, item.mail, 0)
+      emailMaster[item.mail]++
 
-    const firstWorkType = workTypes?.[0]
-
-    const apps = Object.keys(workTypeConfigs[firstWorkType]?.apps ?? {})
-    const userData = {
-      code: Number(item.code),
-      name: item.name,
-      email: item?.mail ?? '',
-      password: item.code,
-      sortOrder: storeCode,
-      active: activeState,
-      storeId,
-      apps: apps.length > 0 ? apps : undefined,
-    }
-
-    const findFromForcedUsers = forcedUsers.find(d => String(d.code) === String(item.code))
-    if (findFromForcedUsers) {
-      const {userRoles, apps, storeCode} = findFromForcedUsers ?? {}
-      userData.apps = apps
-      userData.storeId = stores.find(store => store.code === storeCode)?.id
-
-      const userUpsertQuery: Prisma.UserUpsertArgs = {
-        where: {code: userData.code},
-        create: {...userData},
-        update: {...userData},
+      if ((workTypes ?? []).length > 1) {
+        const errorKey = `workTypeCountError`
+        errorKey[`workTypeCountError`].push({
+          name: item.name,
+          code: item.code,
+          workTypes,
+        })
       }
 
-      transactionQuerys.push({model: `user`, method: `upsert`, queryObject: userUpsertQuery})
+      const firstWorkType = workTypes?.[0]
 
-      return {code: item.code, userRoles}
-    } else if (apps.length > 0) {
-      const userRoles = Object.keys(workTypeConfigs[firstWorkType].apps).reduce((acc, APP_NAME) => {
-        const roles: oktpRoleString[] = workTypeConfigs[firstWorkType].apps[APP_NAME]?.roles
-        return [...acc, ...(roles ?? [])]
-      }, [])
-
-      //顔ナビデータからの自動作成
-      const userUpsertQuery: Prisma.UserUpsertArgs = {
-        where: {code: userData.code},
-        create: {...userData},
-        update: {...userData},
+      const apps = Object.keys(workTypeConfigs[firstWorkType]?.apps ?? {})
+      const userData = {
+        code: Number(item.code),
+        name: item.name,
+        email: item?.mail ? item?.mail : null,
+        password: item.code,
+        sortOrder: storeCode,
+        active: activeState,
+        storeId,
+        apps: apps.length > 0 ? apps : undefined,
       }
 
-      transactionQuerys.push({model: `user`, method: `upsert`, queryObject: userUpsertQuery})
+      const findFromForcedUsers = forcedUsers.find(d => String(d.code) === String(item.code))
+      if (findFromForcedUsers) {
+        const {userRoles, apps, storeCode} = findFromForcedUsers ?? {}
+        userData.apps = apps
+        userData.storeId = stores.find(store => store.code === storeCode)?.id
 
-      return {code: item.code, userRoles}
-    } else {
-      return {code: item.code, userRoles: []}
-    }
-  })
+        const userUpsertQuery: Prisma.UserUpsertArgs = {
+          where: {
+            code: userData.code,
+          },
+          create: {...userData},
+          update: {...userData},
+        }
+
+        await prisma.user.upsert({
+          where: {code: userData.code},
+          create: {...userData},
+          update: {...userData},
+        })
+
+        return {code: item.code, userRoles}
+      } else {
+        const apps = Object.keys(workTypeConfigs[firstWorkType]?.apps ?? {})
+        const userRoles = apps.reduce((acc, APP_NAME) => {
+          const roles: oktpRoleString[] = workTypeConfigs[firstWorkType].apps[APP_NAME]?.roles
+          return [...acc, ...(roles ?? [])]
+        }, [] as oktpRoleString[])
+
+        //顔ナビデータからの自動作成
+        const userUpsertQuery: Prisma.UserUpsertArgs = {
+          where: {
+            code: userData.code,
+          },
+          create: {...userData},
+          update: {...userData},
+        }
+
+        try {
+          await prisma.user.upsert({
+            where: {
+              code: userData.code,
+            },
+            create: {...userData},
+            update: {...userData},
+          })
+        } catch (error) {
+          console.error('error', {userData}) //////////
+        }
+
+        return {code: item.code, userRoles}
+      }
+    })
+  )
 
   const res = await doTransaction({transactionQueryList: transactionQuerys})
   const upsertedUserList = res.result

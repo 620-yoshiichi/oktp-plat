@@ -24,22 +24,26 @@ export class QueryBuilder {
         DestinationStore: {},
         UPASS: {
           include: {
-            RootUpass: {},
+            MyUpassTree: {
+              include: {
+                RootUpass: {},
+              },
+            },
           },
         },
 
-        Number98: {
-          select: {id: true, number: true},
-        },
+        Number98: {select: {id: true, number: true}},
         UcarProcess: {
           select: {
             id: true,
             date: true,
             processCode: true,
-            User: {select: {name: true}},
+            // User: {select: {name: true}},
           },
         },
-        User: {select: {name: true}},
+        User: {
+          select: {name: true},
+        },
         Store: {select: {name: true}},
         UcarPaperWorkNotes: {
           select: {
@@ -90,7 +94,9 @@ export class QueryBuilder {
         UcarGarageSlotMaster: {
           include: {
             AppliedUcarGarageSlot: {
-              include: {Ucar: {}},
+              include: {
+                Ucar: {},
+              },
             },
           },
         },

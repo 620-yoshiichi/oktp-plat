@@ -31,9 +31,7 @@ const parameters = async ({params, query, session, scopes}) => {
         setParams: async () => {
           return {
             dataModelName: `ucar`,
-            additional: {
-              orderBy: [{date: `desc`}],
-            },
+            additional: {orderBy: [{date: `desc`}]},
           }
         },
       },
@@ -64,10 +62,7 @@ const parameters = async ({params, query, session, scopes}) => {
           })
 
           const easySearchExtraProps = {stores}
-          const {available98Numbers, Last98NumberCar, used98Numbers, next98Number, next98NumberModel} =
-            await getAvailable98Numbers({take: 30})
-
-          const extras = {available98Numbers, Last98NumberCar, used98Numbers, next98NumberModel}
+          const getAvailable98NumbersReturn = await getAvailable98Numbers({take: 10})
 
           return {
             editType: {type: `modal`},
@@ -75,16 +70,15 @@ const parameters = async ({params, query, session, scopes}) => {
               select: ucarQuery.select as any,
               omit: ucarQuery.omit as any,
               orderBy: [
-                {
-                  qrIssuedAt: {sort: `desc`, nulls: `last`},
-                },
+                //
+                {qrIssuedAt: 'desc'},
               ],
               where: {...carWhere},
             },
 
             easySearchExtraProps,
-            PageBuilderExtraProps: extras,
-            ColBuilderExtraProps: extras,
+            PageBuilderExtraProps: {getAvailable98NumbersReturn},
+            ColBuilderExtraProps: {getAvailable98NumbersReturn},
           }
         },
       },
@@ -92,7 +86,11 @@ const parameters = async ({params, query, session, scopes}) => {
         modelNames: [`ucarGarageLocationMaster`],
         setParams: async () => {
           return {
-            myTable: {create: false, delete: false, update: true},
+            myTable: {
+              create: false,
+              delete: false,
+              update: true,
+            },
           }
         },
       },

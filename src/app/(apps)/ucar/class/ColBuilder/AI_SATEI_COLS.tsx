@@ -88,6 +88,22 @@ export const sateiTableCompartionCols: sateiTableCompartionCol[] = [
     type: `date`,
     bqKeys: {proto: 'Scheduled_arrival_date', upass: 'pickupScheduledDate'},
   },
+
+  {
+    label: '査定日',
+    type: `date`,
+    bqKeys: {proto: 'Latest_assessment_date', upass: 'assessmentdatetime'},
+  },
+  {
+    label: '査定額',
+    type: `string`,
+    bqKeys: {proto: 'Latest_assessment_price', upass: 'assessmentPrice'},
+  },
+  {
+    label: '入庫予定日',
+    type: `date`,
+    bqKeys: {proto: 'Scheduled_arrival_date', upass: 'pickupScheduledDate'},
+  },
 ]
 
 export const sateiColOrigin: colType[] = [

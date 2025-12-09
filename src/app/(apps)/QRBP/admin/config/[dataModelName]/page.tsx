@@ -43,7 +43,11 @@ const parameters = async ({params, query, session, scopes}) => {
           return {
             myTable: {pagination: {countPerPage: 50}},
             additional: {
-              orderBy: [{Store: {code: 'asc'}}],
+              orderBy: [
+                //
+                {Store: {code: 'asc'}},
+                {code: 'asc'},
+              ],
               where: {
                 OR: [
                   //

@@ -103,10 +103,10 @@ const seedGarageNameMaster = async ({
           ucarGarageSlotMasterId,
         }
 
-        const unique_ucarId_ucarGarageSlotMasterId = {ucarId, ucarGarageSlotMasterId: ucarGarageSlotMaster.id}
+        const unique_sateiID_ucarGarageSlotMasterId = {ucarId, ucarGarageSlotMasterId: ucarGarageSlotMaster.id}
 
         const payload: Prisma.AppliedUcarGarageSlotUpsertArgs = {
-          where: {unique_ucarId_ucarGarageSlotMasterId},
+          where: {unique_sateiID_ucarGarageSlotMasterId},
           create: data,
           update: data,
         }

@@ -8,6 +8,7 @@ import prisma from 'src/lib/prisma'
 import {initServerComopnent} from 'src/non-common/serverSideFunction'
 import {UcarCL, ucarData} from '@app/(apps)/ucar/class/UcarCL'
 import {QueryBuilder} from '@app/(apps)/ucar/class/QueryBuilder'
+import {Days} from '@cm/class/Days/Days'
 
 export default async function DynamicMasterPage(props) {
   const query = await props.searchParams
@@ -16,10 +17,13 @@ export default async function DynamicMasterPage(props) {
   const include = QueryBuilder.getInclude({})
 
   const ucar = await prisma.ucar.findMany({
+    where: {daihatsuReserve: null},
     include: {
       UcarProcess: {
         include: {},
-        orderBy: {date: {sort: 'desc', nulls: 'last'}},
+        orderBy: {
+          date: {sort: 'desc', nulls: 'last'},
+        },
       },
       UPASS: {
         include: {
@@ -29,14 +33,18 @@ export default async function DynamicMasterPage(props) {
         },
       },
     },
-    orderBy: {processLastUpdatedAt: {sort: 'desc', nulls: 'last'}},
-    take: 50,
+    orderBy: [
+      //
+      {processLastUpdatedAt: {sort: 'desc', nulls: 'last'}},
+      {qrIssuedAt: 'desc'},
+    ],
+    take: 100,
   })
 
   const allProcess = UcarProcessCl.CODE.array?.filter(process => process.list?.includes('main')) ?? []
 
   return (
-    <div>
+    <div className={` p-2 mx-auto w-fit`}>
       {CsvTable({
         records: ucar.map(car => {
           const ucarInst = new UcarCL(car as unknown as ucarData)
@@ -53,6 +61,7 @@ export default async function DynamicMasterPage(props) {
                 cellValue: ucarInst.notation.sateiID,
                 style: {minWidth: 80},
               },
+
               {
                 label: '車名 ',
                 cellValue: (
@@ -106,11 +115,17 @@ export default async function DynamicMasterPage(props) {
                 // process?.date && nextProcess?.date && Days.day.difference(nextProcess.date, process.date)
 
                 const color = codeItem?.color ?? 'bg-sub-light'
+
+                const isCurrentProcess = lastProcessCodeItem?.code === codeItem?.code
+
+                const isToday = process?.date && Days.validate.isSameDate(process?.date, new Date())
+
                 return {
                   label: <div>{codeItem?.label}</div>,
                   cellValue: process ? (
                     <div className={`relative`}>
-                      <div>{formatDate(process.date, 'YY/MM/DD')}</div>
+                      <div>{formatDate(process.date, 'YY/MM/DD(ddd) HH:mm')}</div>
+
                       {/* <small>{formatDate(process.date, 'HH:mm')}</small> */}
 
                       {!!daysUntilNextProcess && daysUntilNextProcess > 0 && (
@@ -120,11 +135,29 @@ export default async function DynamicMasterPage(props) {
                   ) : (
                     ''
                   ),
+                  style: {
+                    ...(!process
+                      ? {
+                          backgroundColor: '#00000070',
+                        }
+                      : {}),
+
+                    ...(isCurrentProcess
+                      ? {
+                          backgroundColor: isToday ? '#d2f7d6' : '#ffff00',
+                          animation: 'pulse 3s infinite',
+                        }
+                      : {}),
+                  },
                   thStyle: {
                     ...getColorStyles(color),
                     minWidth: 90,
+                    animation: undefined,
                   },
-                  className: 'text-center align-middle',
+                  className: cn(
+                    //
+                    'text-center align-middle'
+                  ),
                 }
               }),
             ],

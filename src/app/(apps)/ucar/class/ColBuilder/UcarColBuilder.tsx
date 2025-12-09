@@ -33,7 +33,7 @@ export const UCAR_TABLE_ROW_HEIGHT = 120
 export const ucarColBuilder = (props: columnGetterType) => {
   const {useGlobalProps} = props
   const GMF_UcrDetailUpdater = useUcarDetailUpdatorGMF()
-  const {UseRecordsReturn, available98Numbers, next98NumberModel} = props.ColBuilderExtraProps ?? {}
+  const {UseRecordsReturn, getAvailable98NumbersReturn, currentNumber98} = props.ColBuilderExtraProps ?? {}
 
   // const mutateRecords = UseRecordsReturn?.mutateRecords
 
@@ -64,29 +64,6 @@ export const ucarColBuilder = (props: columnGetterType) => {
 
   const CAR_MODIFIED_COLS = new Fields(getModifiedCols())
 
-  const number98Where: Prisma.Number98WhereInput = {
-    AND: [
-      //
-      {occupied: false},
-
-      {
-        Ucar: {
-          none: {
-            id: {gt: 0},
-            Number98: {
-              OldCars_Base: {some: {KI_HANKAKA: '0'}},
-            },
-          },
-        },
-      },
-      {
-        OldCars_Base: {
-          every: {KI_HANKAKA: {not: '0'}},
-        },
-      },
-    ],
-  }
-
   const SETTING_COLS = new Fields([
     {
       id: 'userId',
@@ -114,19 +91,22 @@ export const ucarColBuilder = (props: columnGetterType) => {
       format: (value, row) => row.number98,
       form: {},
       forSelect: {
-        config: {
-          modelName: 'number98',
-          select: {
-            number: 'string',
-            name: false,
-          },
-          where: number98Where,
-
-          orderBy: [{number: 'asc'}],
-          nameChanger: op => {
-            return {...op, id: op.number, name: op.number ? String(op.number) : ''}
-          },
-        },
+        optionsOrOptionFetcher: [
+          currentNumber98
+            ? {
+                id: currentNumber98,
+                value: currentNumber98,
+                label: currentNumber98,
+              }
+            : undefined,
+          ...getAvailable98NumbersReturn?.available98Numbers.map(d => {
+            return {
+              id: d.number,
+              value: d.number,
+              label: d.number,
+            }
+          }),
+        ].filter(d => Boolean),
       },
     },
     {
@@ -210,8 +190,21 @@ export const ucarColBuilder = (props: columnGetterType) => {
     // },
   ])
 
+  const searchCols = [
+    {
+      id: 'sateiID',
+      label: '査定ID',
+      form: {hidden: true},
+      td: {hidden: true},
+      type: 'text',
+      search: {},
+    },
+  ]
+
   const base: colType[] = [
+    ...searchCols,
     //
+
     {
       id: 'actions',
       label: '',
@@ -240,6 +233,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
               onClick={() =>
                 GMF_UcrDetailUpdater.setGMF_OPEN({
                   sateiID: row.sateiID,
+                  getAvailable98NumbersReturn,
                 })
               }
               className={cl(TrActionIconClassName, 'h-5 w-5 text-blue-500')}

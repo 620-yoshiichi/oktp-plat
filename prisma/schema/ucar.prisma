@@ -2,38 +2,23 @@ model Ucar {
   id                   Int       @id @default(autoincrement())
   createdAt            DateTime  @default(now())
   updatedAt            DateTime? @updatedAt
-  qrIssuedAt           DateTime?
+  qrIssuedAt           DateTime
   processLastUpdatedAt DateTime?
   active               Boolean   @default(true)
   sortOrder            Float     @default(0)
   sateiDataConfirmedAt DateTime?
 
-  sateiID String @unique @default(uuid())
+  dataSource String? @default("")
 
-  // //Ai_Satei
-  // Model_name                   String?
-  // brand_name                   String?
-  // Common_name_model            String?
-  // Barracks                     String?
-  // Model_year                   String?
-  // Scheduled_arrival_date       DateTime?
-  // Number_Place_name            String?
-  // Number_classification_number String?
-  // Number_Hiragana              String?
-  // number                       String?
-  // Vehicle_length               Float?
-  // Vehicle_width                Float?
-  // Vehicle_height               Float?
+  sateiID String @unique
 
   number98    String?   @default("") //古物との称号
   NO_SIRETYUM String?   @default("") //古物との称号
   DD_SIIRE    DateTime? //古物との称号
 
-  garageProvedAt DateTime?
-
   // 書類管理項目
-  arrivedAt    DateTime?
-  passedAt     DateTime?
+  arrivedAt DateTime?
+
   customerName String?
 
   meihenBi       DateTime?
@@ -125,8 +110,9 @@ model Ucar {
 
   BankBranchMaster   BankBranchMaster? @relation(fields: [bankBranchMasterId], references: [id], onDelete: Cascade)
   bankBranchMasterId Int?
-  User               User?             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId             Int?
+
+  User   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
 
   Store   Store? @relation(fields: [storeId], references: [id], onDelete: Cascade)
   storeId Int?
@@ -174,7 +160,7 @@ model Number98IssueHistory {
   active    Boolean   @default(true)
   sortOrder Float     @default(0)
 
-  number98 String
+  number String
 }
 
 model UcarGarageLocationMaster {
@@ -211,11 +197,12 @@ model AppliedUcarGarageSlot {
   appliedAt              DateTime
   finishedAt             DateTime?
   ucarGarageSlotMasterId Int
-  ucarId                 Int                  @unique
+  sateiID                String               @unique
   UcarGarageSlotMaster   UcarGarageSlotMaster @relation(fields: [ucarGarageSlotMasterId], references: [id], onDelete: Cascade)
-  Ucar                   Ucar                 @relation(fields: [ucarId], references: [id], onDelete: Cascade)
 
-  @@unique([ucarId, ucarGarageSlotMasterId], name: "unique_ucarId_ucarGarageSlotMasterId")
+  Ucar Ucar @relation(fields: [sateiID], references: [sateiID], onDelete: Cascade)
+
+  @@unique([sateiID, ucarGarageSlotMasterId], name: "unique_sateiID_ucarGarageSlotMasterId")
   @@index([ucarGarageSlotMasterId])
 }
 
@@ -263,11 +250,11 @@ model UcarProcess {
   sortOrder   Float     @default(0)
   // time        String?
 
-  sateiID String?
+  sateiID String
 
   remarks String?
 
-  Ucar Ucar? @relation(fields: [sateiID], references: [sateiID], onDelete: Cascade)
+  Ucar Ucar @relation(fields: [sateiID], references: [sateiID], onDelete: Cascade)
 
   User   User @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId Int

@@ -25,7 +25,11 @@ import {R_Stack} from '@cm/components/styles/common-components/common-components
 import {globalIds} from 'src/non-common/searchParamStr'
 
 export type UpassStandardType = UPASS & {
-  RootUpass: (UpassFamilyTree & {UPASS: UPASS})[]
+  MyUpassTree: UpassFamilyTree & {
+    RootUpass: UpassFamilyTree & {
+      UPASS: UPASS
+    }
+  }
 }
 export type ucarData = Ucar & {
   OldCars_Base: OldCars_Base
@@ -138,25 +142,17 @@ export class UcarCL {
     if (!currentUPASS) {
       return null
     }
+
     if (currentUPASS?.dataSource === 'aisatei') {
       return currentUPASS
     }
 
-    const familyTrees = currentUPASS?.RootUpass.map(d => d.UPASS).sort((a, b) => {
-      if (a.assessmentdatetime && b.assessmentdatetime) {
-        return -(new Date(b.assessmentdatetime).getTime() - new Date(a.assessmentdatetime).getTime())
-      } else {
-        return 0
-      }
-    })
-
-    const lastUpass = familyTrees[familyTrees.length - 1]
-
-    return lastUpass
+    return currentUPASS?.MyUpassTree?.RootUpass
   }
 
   get notation() {
-    const UPASS = UcarCL.getLatestUPASS(this.data.UPASS) ?? ({} as UPASS)
+    const UPASS = (UcarCL.getLatestUPASS(this.data.UPASS) ?? {}) as UPASS
+
     const plate = [
       UPASS.landAffairsName,
       UPASS.registrationClassNumber,
@@ -196,6 +192,10 @@ export class UcarCL {
       registrationClassNumber: UPASS.registrationClassNumber || this.data.tmpRegistrationClassNumber || ' ',
       registrationKana: UPASS.registrationKana || this.data.tmpRegistrationKana || ' ',
       registrationSerialNumber: UPASS.registrationSerialNumber || this.data.tmpPlate || ' ',
+
+      assessmentdatetime: UPASS.assessmentdatetime,
+      assessmentprice: UPASS.assessmentPrice,
+      pickupScheduledDate: UPASS.pickupScheduledDate,
     }
   }
 

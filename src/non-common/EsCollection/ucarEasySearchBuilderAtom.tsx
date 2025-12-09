@@ -36,12 +36,19 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     },
   }
 
+  const stuffQrChecked = {processCode: processMasterRaw.STORE_NYUKO.code}
+  const tenchoQrChecked = {processCode: processMasterRaw.STORE_TENCHO_KENSHU.code}
+
   // ===========滞留========
   const pending__retendedOnStuff: EsObj = {
     label: 'スタッフ',
     notify: true,
     CONDITION: {
-      AND: [{UcarProcess: {none: {processCode: processMasterRaw.STORE_NYUKO.code}}}],
+      AND: [
+        //
+        {UcarProcess: {none: tenchoQrChecked}}, //店長が未チェック、
+        {UcarProcess: {none: stuffQrChecked}}, //かつスタッフが未チェック
+      ],
     },
   }
 
@@ -51,45 +58,8 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     CONDITION: {
       AND: [
         //
-        {UcarProcess: {some: {processCode: processMasterRaw.STORE_NYUKO.code}}},
-        {UcarProcess: {none: {processCode: processMasterRaw.STORE_TENCHO_KENSHU.code}}},
-      ],
-    },
-  }
-
-  // ===========配送滞留========
-  const pending__undelivered: EsObj = {
-    label: '配送滞留',
-    notify: true,
-    description: '店長検収から10日以上、「CR到着」がない車両',
-    CONDITION: {
-      AND: [
-        {...unsold},
-        {destination: {not: null}},
-        {destination: {not: ''}},
-        {
-          UcarProcess: {
-            some: {
-              date: {lte: addDays(new Date(), -9)},
-              processCode: processMasterRaw.STORE_TENCHO_KENSHU.code,
-            },
-          },
-        },
-
-        {
-          UcarProcess: {
-            none: {
-              OR: [
-                {processCode: processMasterRaw.CR_CHAKU.code},
-                {processCode: processMasterRaw.CR_KENSHU.code},
-                {processCode: processMasterRaw.CR_MARUKURI.code},
-                {processCode: processMasterRaw.CR_KENSA.code},
-                {processCode: processMasterRaw.CR_SHASHIN.code},
-                {processCode: processMasterRaw.CR_GAZOO.code},
-              ],
-            },
-          },
-        },
+        {UcarProcess: {some: stuffQrChecked}}, //スタッフがチェック済み
+        {UcarProcess: {none: tenchoQrChecked}}, //かつ店長が未チェック
       ],
     },
   }
@@ -109,11 +79,6 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     },
   }
 
-  // const pending__NonpaperErrorHq: EsObj = {
-  //   label: '書類未完',
-  //   notify: true,
-  //   CONDITION: {passedAt: null},
-  // }
   const pending__paperErrorHq: EsObj = {
     label: '不備あり',
     notify: true,
@@ -134,23 +99,11 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
   // =========98番号==========
   const number98__exist: EsObj = {
     label: '付与済み',
-    CONDITION: {
-      AND: [
-        //
-        {number98: {not: null}},
-        {number98: {not: ''}},
-      ],
-    },
+    CONDITION: {number98: {not: ''}},
   }
   const number98__notExist: EsObj = {
     label: '未付与',
-    CONDITION: {
-      OR: [
-        //
-        {number98: null},
-        {number98: ''},
-      ],
-    },
+    CONDITION: {number98: ''},
   }
 
   // ===========処理結果========
@@ -278,7 +231,6 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
   const atoms = {
     pending__retendedOnStuff,
     pending__retendedOnStore,
-    pending__undelivered,
     pending__unReceived,
     // pending__NonpaperErrorHq,
     pending__paperErrorHq,

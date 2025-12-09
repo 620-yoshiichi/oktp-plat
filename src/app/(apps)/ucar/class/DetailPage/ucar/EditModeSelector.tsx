@@ -7,9 +7,10 @@ import {getQueryIds} from '@cm/lib/methods/urls'
 
 import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
 import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
+import useGlobal, {useGlobalPropType} from '@cm/hooks/globalHooks/useGlobal'
 
-const EditModeSelector = (props: DetailPagePropType) => {
-  const {router, pathname, addQuery, query} = props.useGlobalProps
+const EditModeSelector = () => {
+  const {addQuery, query} = useGlobal()
   const displayColumns = UCAR_CODE.DISPLAY_COLUMNS.array.map(d => {
     return {...d, value: d.label}
   })

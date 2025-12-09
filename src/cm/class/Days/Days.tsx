@@ -597,7 +597,7 @@ export class Days {
 
   static validate = {
     isDate: (value: any): boolean => {
-      return value && dayjs(value).isValid()
+      return value && dayjs(value).isValid() && new Date(value).toISOString().length === 24
     },
 
     isSameDate: (dt1: Date, dt2: Date): boolean => {

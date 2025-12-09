@@ -66,7 +66,7 @@ export const getUcarPages = (props: PageGetterType) => {
       exclusiveTo: isHQ,
       ROOT: [rootPath],
       children: [
-        {tabId: 'kouteiKnari', label: '工程管理', ROOT: [rootPath]},
+        {tabId: 'kouteiKanri', label: '工程管理', ROOT: [rootPath]},
         {tabId: 'zaikoTairyu', label: '在庫滞留状況', ROOT: [rootPath]},
       ],
     },

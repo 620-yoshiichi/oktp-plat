@@ -50,7 +50,7 @@ export const getPaperManagementCols = ({UseRecordsReturn}) => {
       },
       {
         id: 'masshoBi',
-        label: '名抹日',
+        label: '抹消日',
         type: 'date',
         form: {},
       },

@@ -1,6 +1,5 @@
 'use client'
 import {Days} from '@cm/class/Days/Days'
-import {formatDate} from '@cm/class/Days/date-utils/formatters'
 
 import {C_Stack, R_Stack} from '@cm/components/styles/common-components/common-components'
 
@@ -27,6 +26,7 @@ import useSWR from 'swr'
 import {serverInitMikomiTableData} from '@app/(apps)/newCar/class/NewCarPredictionTable/MikomiTable/serverInitMikomiTableData'
 import {toUtc} from '@cm/class/Days/date-utils/calculations'
 import {arr__splitIntoGroups} from '@cm/class/ArrHandler/array-utils/basic-operations'
+import {createMonthQueryItem} from '@app/(apps)/newCar/class/NewCarPredictionTable/MikomiTable/lib'
 
 export default function MikomiTableSC({query}) {
   console.time('MikomiTableSC')
@@ -45,28 +45,8 @@ export default function MikomiTableSC({query}) {
   const FirstDateInAfterPeriod = lasstMonth
 
   const monthsQueryList = [
-    ...months.map(month => {
-      // getMonthsBetweenDatesが返す日付を月初日に正規化
-      const firstDayOfMonth = Days.month.getMonthDatum(month).firstDayOfMonth
-      const nextMonthFirstDate = Days.month.add(firstDayOfMonth, 1)
-
-      const monthWhere = {
-        gte: firstDayOfMonth,
-        lt: nextMonthFirstDate,
-      }
-
-      return {
-        month: firstDayOfMonth,
-        monthLabel: formatDate(firstDayOfMonth, 'YYYY年M月'),
-        monthWhere,
-      }
-    }),
-
-    {
-      // 「以降」の場合も月初日に正規化
-      monthLabel: `${formatDate(Days.month.getMonthDatum(FirstDateInAfterPeriod).firstDayOfMonth, 'YYYY年MM月')}以降`,
-      monthWhere: {gte: Days.month.getMonthDatum(FirstDateInAfterPeriod).firstDayOfMonth},
-    },
+    ...months.map(month => createMonthQueryItem(month, false)),
+    createMonthQueryItem(FirstDateInAfterPeriod, true),
   ]
 
   const key = JSON.stringify({monthsQueryList})

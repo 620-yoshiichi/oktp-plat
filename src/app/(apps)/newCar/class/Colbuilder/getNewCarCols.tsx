@@ -127,35 +127,30 @@ export const getNewCarCols = (props: columnGetterType) => {
             return (
               <ShadModal Trigger={<TruckIcon {...{className: `h-5`}} />}>
                 {CsvTable({
-                  records: UpassHistory.map(item => {
+                  records: UpassHistory.filter(item => {
+                    return item?.sateiID
+                  }).map(item => {
                     return {
                       csvTableRow: [
                         //
-                        {
-                          label: '査定番号',
-                          cellValue: item?.sateiID,
-                        },
-                        {
-                          label: '査定日',
-                          cellValue: formatDate(item?.assessmentdatetime),
-                        },
-
+                        {label: '査定番号', cellValue: item?.sateiID},
+                        {label: '査定日', cellValue: formatDate(item.assessmentdatetime)},
                         {
                           label: '査定額',
-                          cellValue: NumHandler.toPrice(item?.assessmentPrice),
+                          cellValue: NumHandler.toPrice(item.assessmentPrice),
                         },
 
                         {
                           label: '入庫予定日',
-                          cellValue: formatDate(item?.pickupScheduledDate),
+                          cellValue: formatDate(item.pickupScheduledDate),
                         },
                         {
                           label: '車名',
-                          cellValue: item?.modelName,
+                          cellValue: item.modelName,
                         },
                         {
                           label: 'お客様名',
-                          cellValue: item?.customerName,
+                          cellValue: item.customerName,
                         },
                       ],
                     }

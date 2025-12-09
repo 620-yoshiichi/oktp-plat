@@ -19,19 +19,34 @@ export class PageBuilder {
         <div>
           <R_Stack className={` items-start`}>
             <Accordion {...{label: `車庫場所`, closable: false}}>
-              <MyForm {...{...props}} />
+              <MyForm
+                {...{
+                  ...props,
+                  myForm: {
+                    ...props.myForm,
+                    alignMode: 'row',
+                  },
+                }}
+              />
             </Accordion>
             <Accordion {...{label: `車庫`, closable: false}}>
               <ChildCreator
                 {...{
                   ParentData: props.formData ?? {},
-                  myTable: {delete: false, create: false, style: {maxHeight: `70vh`}},
+                  myTable: {
+                    delete: false,
+                    create: false,
+                    style: {maxHeight: undefined},
+                  },
                   models: {parent: `ucarGarageLocationMaster`, children: `ucarGarageSlotMaster`},
                   additional: {
+                    orderBy: [{garageNumber: 'asc'}],
                     include: {
                       UcarGarageLocationMaster: {},
                       AppliedUcarGarageSlot: {
-                        include: {Ucar: {}},
+                        include: {
+                          Ucar: {},
+                        },
                       },
                     },
                   },

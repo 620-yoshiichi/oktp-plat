@@ -12,8 +12,9 @@ import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
 
 import React, {useEffect, useState} from 'react'
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+import useSWR from 'swr'
 
-export default function UcrDetailUpdater({sateiID, close}) {
+export default function UcrDetailUpdater({sateiID, close, getAvailable98NumbersReturn}) {
   const useGlobalProps = useGlobal()
 
   const [data, setdata] = useState<any>(null)
@@ -27,17 +28,23 @@ export default function UcrDetailUpdater({sateiID, close}) {
 
   return (
     <div>
-      <Main {...{close, useGlobalProps, ucar: data.ucar}} />
+      <Main {...{close, useGlobalProps, ucar: data.ucar, getAvailable98NumbersReturn}} />
     </div>
   )
 }
 
-const Main = ({close, useGlobalProps, ucar}) => {
+const Main = ({close, useGlobalProps, ucar, getAvailable98NumbersReturn}) => {
   const {query, router, toggleLoad} = useGlobalProps
 
   const formData = ucar
 
-  const columns = ColBuilder.ucar({useGlobalProps})
+  const columns = ColBuilder.ucar({
+    useGlobalProps,
+    ColBuilderExtraProps: {
+      currentNumber98: ucar.number98,
+      getAvailable98NumbersReturn,
+    },
+  })
 
   const {BasicForm, latestFormData, ReactHookForm} = useBasicFormProps({
     onFormItemBlur: ({value, name, id, e, newlatestFormData: data, ReactHookForm}) => {
@@ -85,7 +92,7 @@ const Main = ({close, useGlobalProps, ucar}) => {
             await doStandardPrisma('number98IssueHistory', 'deleteMany', {where: {}})
           } else {
             // それ以外は履歴を作成
-            await doStandardPrisma('number98IssueHistory', 'create', {data: {number98}})
+            await doStandardPrisma('number98IssueHistory', 'create', {data: {number: number98}})
           }
         }
 
@@ -108,7 +115,7 @@ const Main = ({close, useGlobalProps, ucar}) => {
             latestFormData,
           }}
         />
-        <div className={`sticky bottom-0 mx-auto w-full  bg-white text-center`}>
+        <div className={`sticky bottom-0 mx-auto w-full text-center`}>
           <Button {...{onClick: () => onSubmit(latestFormData)}}>更新</Button>
         </div>
       </Paper>

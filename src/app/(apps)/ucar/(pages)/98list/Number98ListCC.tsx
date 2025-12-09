@@ -1,165 +1,155 @@
 'use client'
 import React, {useState} from 'react'
-import {R_Stack} from '@cm/components/styles/common-components/common-components'
-import {LabelValue} from '@cm/components/styles/common-components/ParameterCard'
-import {CssString} from '@cm/components/styles/cssString'
-import {cl, superTrim} from '@cm/lib/methods/common'
+import {C_Stack, R_Stack} from '@cm/components/styles/common-components/common-components'
 import {Number98} from '@prisma/client'
 
-import {NestHandler} from '@cm/class/NestHandler'
 import {CsvTable} from '@cm/components/styles/common-components/CsvTable/CsvTable'
 import Number98HistoryChecker from '@app/(apps)/ucar/(pages)/98list/Number98HistoryChecker'
-import {Paper} from '@cm/components/styles/common-components/paper'
-import ShadModal from '@cm/shadcn/ui/Organisms/ShadModal'
 
-export default function Number98ListCC({next98, used98Numbers, available98Numbers}) {
-  const [selectedNumber98, setSelectedNumber98] = useState<Number98 | null>(null)
+import ShadModal from '@cm/shadcn/ui/Organisms/ShadModal'
+import {number98Item} from '@app/(apps)/ucar/(lib)/num98/getAvailable98Numbers'
+import {formatDate} from '@cm/class/Days/date-utils/formatters'
+import {NumHandler} from '@cm/class/NumHandler'
+import Input from '@cm/shadcn/ui/Organisms/form/Input'
+import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
+import {Fields} from '@cm/class/Fields/Fields'
+import {Button} from '@cm/components/styles/common-components/Button'
+import useGlobal from '@cm/hooks/globalHooks/useGlobal'
+import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+import {number98Select} from '@app/(apps)/ucar/(lib)/num98/num98Constants'
+
+const SearchForm = () => {
+  const [number98List, setnumber98List] = useState<number98Item[]>([])
+  const {addQuery, query} = useGlobal()
+  const {BasicForm, latestFormData} = useBasicFormProps({
+    columns: new Fields([
+      //
+      {id: `number98`, label: `98番号`, form: {defaultValue: query.number98}, type: 'text'},
+    ]).transposeColumns(),
+  })
 
   return (
-    <div className={`p-4`}>
-      <ShadModal open={!!selectedNumber98} onOpenChange={setSelectedNumber98}>
-        {selectedNumber98 && <Number98HistoryChecker {...{number98: selectedNumber98}} />}
-      </ShadModal>
-      <LabelValue {...{label: `next 98`, value: next98}} />
-      <R_Stack className={`  items-start justify-center gap-10`}>
-        <Paper>
-          <strong>使用中</strong>
-          {CsvTable({
-            records: [
-              ...used98Numbers
-                .sort((a, b) => {
-                  return b.Ucar.length - a.Ucar.length
-                })
-                .map(d => {
-                  return {
-                    csvTableRow: [
-                      {
-                        label: '98番号',
-                        cellValue: (
-                          <button onClick={() => setSelectedNumber98(d)}>
-                            <R_Stack className={` w-[150px] justify-between`}>
-                              <span>{d.number}</span>
-                              <small>({d.Ucar.length})</small>
-                            </R_Stack>
-                          </button>
-                        ),
-                      },
-                    ],
-                  }
-                }),
-            ],
-          }).WithWrapper({className: `max-h-[70vh]`})}
-        </Paper>
+    <ShadModal {...{Trigger: <Button>98番号検索</Button>}}>
+      <BasicForm
+        {...{
+          latestFormData,
+          onSubmit: async data => {
+            if (!data.number98) {
+              setnumber98List([])
+              return
+            }
 
-        <Paper>
-          <strong>利用可能</strong>
-          {CsvTable({
-            records: [
-              ...available98Numbers
-                .sort((a, b) => {
-                  return b.Ucar.length - a.Ucar.length
-                })
-                .map(d => {
-                  return {
-                    csvTableRow: [
-                      {
-                        label: '98番号',
-                        cellValue: (
-                          <button onClick={() => setSelectedNumber98(d)}>
-                            <R_Stack className={` w-[150px] justify-between`}>
-                              <span>{d.number}</span>
-                              <small>({d.Ucar.length})</small>
-                            </R_Stack>
-                          </button>
-                        ),
-                      },
-                    ],
-                  }
-                }),
-            ],
-          }).WithWrapper({className: `max-h-[70vh]`})}
-        </Paper>
-      </R_Stack>
+            const {result} = await doStandardPrisma(`number98`, `findMany`, {
+              select: number98Select,
+              where: {
+                number: {contains: data.number98},
+              },
+            })
+            if (result) {
+              setnumber98List(result)
+            }
+          },
+        }}
+      >
+        <Button>検索</Button>
+      </BasicForm>
+
+      {number98List.length > 0 && <Num98Table {...{number98List}} />}
+    </ShadModal>
+  )
+}
+
+export default function Number98ListCC({
+  nextNumber98,
+  available98Numbers,
+  nonAvailable98Numbers,
+}: {
+  nextNumber98: string
+  available98Numbers: number98Item[]
+  nonAvailable98Numbers: number98Item[]
+}) {
+  return (
+    <div className={`p-4 mx-auto w-fit`}>
+      <div>
+        <C_Stack className={`mx-auto w-fit items-center`}>
+          <R_Stack className={` justify-between w-[500px]`}>
+            <strong> 次の番号:{nextNumber98}</strong>
+            <SearchForm />
+          </R_Stack>
+
+          <div></div>
+          <div>
+            <R_Stack className={`gap-10`}>
+              <div>
+                利用可能な番号(最大50件):
+                <Num98Table {...{number98List: available98Numbers}} />
+              </div>
+              <div>
+                利用不可な番号(最大50件):
+                <Num98Table {...{number98List: nonAvailable98Numbers}} />
+              </div>
+            </R_Stack>
+          </div>
+
+          <div></div>
+        </C_Stack>
+      </div>
     </div>
   )
 }
 
-const Table = (props: {label; cols; ucars; next98; available98Numbers?: any}) => {
-  const {label, cols, ucars, next98, available98Numbers = null} = props
-  if (available98Numbers) {
-    return (
-      <div>
-        <R_Stack>
-          <strong>{label}</strong>
-          <strong>{ucars.length}台</strong>
-        </R_Stack>
-        <div className={`table-wrapper max-h-[80vh] w-fit`}>
-          <table className={cl(CssString.table.borderCerlls)}>
-            <thead>
-              <tr>
-                <th>使用中</th>
-              </tr>
-            </thead>
-            <tbody>
-              {available98Numbers.map((d, i) => {
-                return (
-                  <tr key={i}>
-                    <td>{d.number}</td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    )
-  }
-  return (
-    <div>
-      <R_Stack>
-        <strong>{label}</strong>
-        <strong>{ucars.length}台</strong>
-      </R_Stack>
-      <div className={`table-wrapper max-h-[80vh] w-fit`}>
-        <table className={cl(CssString.table.borderCerlls)}>
-          <thead>
-            <tr>
-              <th>使用中</th>
-              {cols.map((col, i) => {
-                return <th key={i}>{col.label}</th>
-              })}
-            </tr>
-          </thead>
-          <tbody>
-            {ucars.map((ucar, i) => {
-              const isNext = Number(superTrim(ucar.Number98.number)) === Number(superTrim(next98))
-              const gteNext = Number(superTrim(ucar.Number98.number)) > Number(superTrim(next98))
-              let rowColor = ``
-              if (ucar.KI_HANKAKA) {
-                rowColor = `bg-gray-200`
-              } else if (isNext) {
-                rowColor = `bg-primary-main`
-              } else if (gteNext) {
-                rowColor = `bg-yellow-100`
-              }
+const Num98Table = ({number98List}: {number98List: number98Item[]}) => {
+  return CsvTable({
+    records: number98List.map(item => {
+      const ucarCount = item.Ucar.length
+      const kobutsuCount = item.OldCars_Base.length
 
-              return (
-                <tr key={i} className={rowColor}>
-                  <td>{ucar.KI_HANKAKA ? '販売済' : ''}</td>
-                  {cols.map((col, j) => {
-                    const displayValue = NestHandler.GetNestedValue(col.id, ucar)
-                    return (
-                      <td className={`!max-w-[100px] truncate`} key={j}>
-                        {displayValue}
-                      </td>
-                    )
-                  })}
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  )
+      const hasSomeNonPricedOldCars = item.OldCars_Base.some(oldCarsBase => Number(oldCarsBase.KI_HANKAKA) === 0)
+
+      return {
+        className: hasSomeNonPricedOldCars ? `[&_td]:!bg-red-100` : ``,
+        csvTableRow: [
+          //
+          {label: 'number', cellValue: item.number},
+          {
+            label: 'Ucar',
+            cellValue: (
+              <ShadModal Trigger={<div className={ucarCount > 0 ? `t-link` : ``}>{ucarCount}</div>}>
+                {CsvTable({
+                  records: item.Ucar.map(ucar => {
+                    return {
+                      csvTableRow: [{label: 'sateiID', cellValue: ucar.sateiID}],
+                    }
+                  }),
+                }).WithWrapper({className: `max-h-[70vh] min-w-[500px]`})}
+              </ShadModal>
+            ),
+          },
+          {
+            label: 'OldCars_Base',
+            cellValue: (
+              <ShadModal Trigger={<div className={kobutsuCount > 0 ? `t-link` : ``}>{kobutsuCount}</div>}>
+                <div>
+                  {CsvTable({
+                    records: item.OldCars_Base.map((oldCarsBase, i) => {
+                      const kobutsuPrice = oldCarsBase.KI_HANKAKA ? Number(oldCarsBase.KI_HANKAKA) : 0
+
+                      return {
+                        csvTableRow: [
+                          {label: 'NO_SIRETYUM', cellValue: oldCarsBase.NO_SIRETYUM ?? ''},
+                          {label: 'NO_SYARYOU', cellValue: oldCarsBase.NO_SYARYOU ?? ''},
+                          {label: 'DD_SIIRE', cellValue: formatDate(oldCarsBase.DD_SIIRE ?? '', 'YYYY/MM/DD')},
+                          {label: '売上金額', cellValue: NumHandler.WithUnit(kobutsuPrice, '円') ?? ''},
+                        ],
+                      }
+                    }),
+                  }).WithWrapper({className: `max-h-[70vh] min-w-[500px]`})}
+                </div>
+              </ShadModal>
+            ),
+          },
+        ],
+      }
+    }),
+  }).WithWrapper({className: ``})
 }

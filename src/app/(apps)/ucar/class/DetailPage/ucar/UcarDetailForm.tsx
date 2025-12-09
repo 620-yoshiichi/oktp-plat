@@ -48,7 +48,7 @@ const UcarDetail = (props: DetailPagePropType) => {
   return (
     <div className={`mx-auto w-fit`}>
       <C_Stack style={{width: 'fit-content', maxWidth: pageWidth}}>
-        <UcarTop {...props} />
+        <UcarTop />
 
         <div>
           {TabComponentArray.map((d, i) => {

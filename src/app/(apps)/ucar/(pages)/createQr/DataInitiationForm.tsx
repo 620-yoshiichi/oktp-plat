@@ -15,6 +15,7 @@ import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 import {HREF} from '@cm/lib/methods/urls'
 import {useRouter} from 'next/navigation'
 import {TextRed} from '@cm/components/styles/common-components/Alert'
+import {toUtc} from '@cm/class/Days/date-utils/calculations'
 
 export const DataInitiationForm = ({stores, ucar, toggleLoad, session, sateiID_Input, hasUpassData}) => {
   const {addQuery, query} = useGlobal()
@@ -37,7 +38,7 @@ export const DataInitiationForm = ({stores, ucar, toggleLoad, session, sateiID_I
       sateiID: sateiID_Input,
       userId: session?.id,
       storeId: session?.storeId,
-      qrIssuedAt: new Date(),
+      qrIssuedAt: toUtc(new Date()),
       ...data,
     }
 

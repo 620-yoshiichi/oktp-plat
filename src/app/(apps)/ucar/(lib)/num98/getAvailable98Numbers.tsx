@@ -1,118 +1,83 @@
-import {calcNextNumber98} from '@app/(apps)/ucar/(lib)/num98/calcNextNumber98'
+'use server'
 
 import {superTrim} from '@cm/lib/methods/common'
 import prisma from 'src/lib/prisma'
-import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
-import {Prisma} from '@prisma/client'
 
-const num98Select = {
-  id: true,
-  number: true,
-}
+import {availableNumberWhere, number98Select} from '@app/(apps)/ucar/(lib)/num98/num98Constants'
 
-export const getAvailable98Numbers = async (props: any) => {
-  const {take = 30} = props
+export type getAvailable98NumbersReturn = Awaited<ReturnType<typeof getAvailable98Numbers>>
+export type number98Item = Awaited<ReturnType<typeof getAvailable98Numbers>>['available98Numbers'][number]
 
-  const Last98NumberCar = await prisma.ucar.findFirst({
-    select: {id: true, Number98: {select: num98Select}},
-    where: {},
-    orderBy: [{Number98: {number: `desc`}}, {id: `desc`}],
-    take: 1,
-  })
-
-  const {result: occupied98Numbers} = await doStandardPrisma(`number98`, `findMany`, {
-    select: {...num98Select, Ucar: {select: {id: true}}},
-    where: {occupied: true},
-  } as Prisma.Number98FindManyArgs)
-
-  const {result: used98Numbers} = await doStandardPrisma(`number98`, `findMany`, {
-    select: {...num98Select, Ucar: {select: {id: true}}},
-    where: {
-      occupied: false,
-      OldCars_Base: {
-        some: {
-          OR: [{KI_HANKAKA: {equals: '0'}}, {KI_HANKAKA: null}],
-        },
-      },
-    },
-  } as Prisma.Number98FindManyArgs)
-
-  const {result: unused98Numbers} = await doStandardPrisma(`number98`, `findMany`, {
-    select: {...num98Select, Ucar: {select: {id: true}}},
-    where: {
-      occupied: false,
-      OR: [
-        //
-        {OldCars_Base: {none: {id: {gt: 0}}}}, //古物に紐づいていない
-        {OldCars_Base: {every: {KI_HANKAKA: {not: '0'}}}}, //全て売れている
-      ],
-    },
-  } as Prisma.Number98FindManyArgs)
-
-  const lastUcarWithNumber98 = await prisma.ucar.findFirst({
-    where: {
-      number98: {not: ''},
-    },
+export const getAvailable98Numbers = async (props: {take?: number}) => {
+  const {take = 10} = props
+  const lastnNmber98History = await prisma.number98IssueHistory.findFirst({
     orderBy: [{createdAt: `desc`}],
     take: 1,
   })
 
-  // console.log({
-  //   occupied98Numbers: occupied98Numbers.length,
-  //   used98Numbers: used98Numbers.length,
-  //   unused98Numbers: unused98Numbers.length,
-  //   total: occupied98Numbers.length + used98Numbers.length + unused98Numbers.length,
-  //   lastUcarWithNumber98: lastUcarWithNumber98?.sateiID,
-  // })
+  let nextNumber98
+  if (lastnNmber98History?.number) {
+    const nextNumber98Result = await prisma.number98.findFirst({
+      where: {number: {gt: lastnNmber98History.number}},
+      orderBy: [{sortNumber: `asc`}],
+      take: 1,
+    })
 
-  // const lastUsedNumber98=
+    nextNumber98 = nextNumber98Result?.number
+  } else {
+    const firstNumber98Result = await prisma.number98.findFirst({
+      orderBy: [{sortNumber: `asc`}],
+      take: 1,
+    })
 
-  let available98Numbers: any[] = []
-  const ucarGetArgs = {}
-  const usedWhere = {number: {in: used98Numbers.map(d => d.number)}}
-  const unusedWhere = {NOT: usedWhere}
-
-  const proceeding98Numbers = await prisma.number98.findMany({
-    select: {...num98Select, Ucar: ucarGetArgs},
-    take,
-    orderBy: [{number: `asc`}],
-    where: {...unusedWhere, sortNumber: {gt: Number(superTrim(Last98NumberCar?.Number98?.number))}},
-  } as Prisma.Number98FindManyArgs)
-
-  available98Numbers = proceeding98Numbers
-
-  if (available98Numbers.length < take) {
-    const preCeeding98Numbers = await prisma.number98.findMany({
-      select: {...num98Select, Ucar: ucarGetArgs},
-      take,
-      orderBy: [{number: `asc`}],
-      where: {
-        ...unusedWhere,
-        sortNumber: {lte: Number(superTrim(Last98NumberCar?.Number98?.number))},
-      },
-    } as Prisma.Number98FindManyArgs)
-
-    available98Numbers = [...available98Numbers, ...preCeeding98Numbers]
+    nextNumber98 = firstNumber98Result?.number
   }
 
-  const isAvaiblae = available98Numbers.find(d => {
-    return d.number === Last98NumberCar?.Number98?.number
+  const available98ProceedingNumbers = await prisma.number98.findMany({
+    select: number98Select,
+    where: {
+      AND: [
+        // 利用中の98番号を除外
+        {...availableNumberWhere},
+        {sortNumber: {gt: Number(superTrim(nextNumber98))}},
+      ],
+    },
+
+    orderBy: [{sortNumber: `asc`}],
+    take,
   })
 
-  const next98Number = isAvaiblae ? await calcNextNumber98(Last98NumberCar?.Number98?.number) : available98Numbers[0]?.number
-
-  const next98NumberModel = await prisma.number98.findFirst({
-    select: {id: true, number: true},
-    where: {number: next98Number},
-  })
-
-  isAvaiblae ? await calcNextNumber98(Last98NumberCar?.Number98?.number) : available98Numbers[0]?.number
+  let available98Numbers = [...available98ProceedingNumbers]
+  if (available98Numbers.length === 0) {
+    const availablePreviousNumbers = await prisma.number98.findMany({
+      select: number98Select,
+      where: {
+        AND: [
+          // 利用中の98番号を除外
+          {...availableNumberWhere},
+          {sortNumber: {lte: Number(superTrim(nextNumber98))}},
+        ],
+      },
+      take,
+      orderBy: [{sortNumber: `asc`}],
+    })
+    available98Numbers = [...availablePreviousNumbers, ...available98Numbers]
+  }
 
   return {
+    nextNumber98,
     available98Numbers,
-    Last98NumberCar,
-    used98Numbers,
-    next98Number,
-    next98NumberModel,
   }
+}
+
+export const getNonAvailable98Numbers = async (props: {take?: number}) => {
+  const {take = 10} = props
+  const nonAvailable98Numbers = await prisma.number98.findMany({
+    select: number98Select,
+    where: {
+      NOT: availableNumberWhere,
+    },
+    take,
+  })
+  return {nonAvailable98Numbers}
 }

@@ -38,9 +38,9 @@ export const BankUpsertModal = ({formData, bankMasterId}) => {
       <ShadModal
         {...{
           Trigger: isNew ? (
-            <>
+            <div>
               <CircledIcon {...{icon: <PlusIcon />}}></CircledIcon>
-            </>
+            </div>
           ) : (
             <C_Stack className={`flex-row gap-1`}>
               <Button color={`blue`} className={` rounded p-0 px-0.5 text-sm`}>

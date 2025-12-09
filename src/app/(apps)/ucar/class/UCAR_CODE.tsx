@@ -79,38 +79,52 @@ export class UCAR_CODE {
       code: '01',
       label: '下取り',
       color: 'red',
+      qrPaperSpreadSheetNotationList: ['下'],
     },
     KAITORI_IPPAN: {
       code: '02',
       label: '買取（一般）',
       color: 'green',
+      qrPaperSpreadSheetNotationList: ['買', '買(一般)', '買（一般）'],
     },
     KAITORI_GYOSHA: {
       code: '03',
       label: '買取（業者）',
       color: 'green',
+      qrPaperSpreadSheetNotationList: ['買(業者)', '買（業者）'],
     },
     LEASE_UP: {
       code: '04',
       label: 'リースアップ',
       color: 'blue',
+      qrPaperSpreadSheetNotationList: ['リースアップ'],
     },
     SHAYOUSHA: {
       code: '05',
       label: '社用車',
       color: 'gray',
+      qrPaperSpreadSheetNotationList: ['社用車'],
+    },
+    KANSUSEI_CHE: {
+      code: '06',
+      label: 'キャンセル車',
+      color: 'red',
+      qrPaperSpreadSheetNotationList: ['キャンセル車'],
     },
   })
+
   static PROCESSED_AS = new Code({
     MEIGIHENKO: {
       code: '01',
       label: '名義変更',
       color: 'blue',
+      qrPaperSpreadSheetNotationList: ['名義変更'],
     },
     MASSESHO: {
       code: '02',
       label: '抹消',
       color: 'gray',
+      qrPaperSpreadSheetNotationList: ['抹消'],
     },
   })
   static PAPER_WORK_NOTE_TYPES = new Code({
@@ -127,27 +141,53 @@ export class UCAR_CODE {
       label: 'トヨペット',
       color: '#46a73b',
       notifyByEmail: false,
+
+      qrPaperSpreadSheetNotationList: ['p', 'p', 'ｐ', 'P', 'Ｐ'],
     },
     KEI: {
       code: '02',
       label: '軽',
       color: '#c5c5c5',
       notifyByEmail: false,
+      qrPaperSpreadSheetNotationList: ['k', 'ｋ', 'K', 'Ｋ'],
     },
     INRYAKU: {
       code: '03',
       label: '印略',
       color: '#c5c5c5',
       notifyByEmail: false,
+      qrPaperSpreadSheetNotationList: ['i印略', '印略', '院略'],
+    },
+    MASESHO: {
+      code: '04',
+      label: '抹消済',
+      color: '#585858',
+      notifyByEmail: false,
+      qrPaperSpreadSheetNotationList: ['抹消済'],
+    },
+    MICHAKU: {
+      code: '05',
+      label: '未着',
+      color: '#c5c5c5',
+      notifyByEmail: false,
+      qrPaperSpreadSheetNotationList: ['未着'],
     },
   })
 
   static INSPECTION_ALTERNATE = new Code({
-    MASSHOZUMI: {
+    KENSA_GIRE: {
       code: '01',
+      label: '検査切れ',
+      color: '#ff9800',
+      notifyByEmail: false,
+      qrPaperSpreadSheetNotationList: ['検査切れ', '車検切れ', '車検日'],
+    },
+    MASSHOZUMI: {
+      code: '02',
       label: '抹消済',
       color: '#585858',
       notifyByEmail: false,
+      qrPaperSpreadSheetNotationList: ['抹消済', '抹消済み', '末梢済'],
     },
   })
 

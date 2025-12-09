@@ -25,9 +25,9 @@ export class QueryBuilder {
           include: {
             UPASS: {
               include: {
-                RootUpass: {
+                MyUpassTree: {
                   include: {
-                    UPASS: {},
+                    RootUpass: {},
                   },
                 },
               },

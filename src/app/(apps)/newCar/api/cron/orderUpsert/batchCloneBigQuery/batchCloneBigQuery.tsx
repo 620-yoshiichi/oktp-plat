@@ -12,7 +12,7 @@ import {addDays} from 'date-fns'
 
 import {doTransaction} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
 
-export const maxUpdateGte = addDays(getMidnight(), -5)
+export const maxUpdateGte = addDays(getMidnight(), -30)
 
 // 改善されたメモリ監視関数
 const logMemoryUsage = (label: string) => {

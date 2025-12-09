@@ -39,7 +39,6 @@ export const POST = async (req: NextRequest) => {
     `paymentNoticeRecieved`,
     `isPayed`,
   ]
-  // await prisma.ucar.deleteMany({where: {}})
 
   // const offset = 0
   const doPostUrl = `https://script.google.com/macros/s/AKfycbxFygaYt9Q-6THWa-PqKXbGOHNmBbN98rOi0I4JfWSren46JmhcxCdL-rWRSFfcPzdq/exec`

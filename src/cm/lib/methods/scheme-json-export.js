@@ -1503,38 +1503,23 @@ model Ucar {
   id                   Int       @id @default(autoincrement())
   createdAt            DateTime  @default(now())
   updatedAt            DateTime? @updatedAt
-  qrIssuedAt           DateTime?
+  qrIssuedAt           DateTime
   processLastUpdatedAt DateTime?
   active               Boolean   @default(true)
   sortOrder            Float     @default(0)
   sateiDataConfirmedAt DateTime?
 
-  sateiID String @unique @default(uuid())
+  dataSource String? @default("")
 
-  // //Ai_Satei
-  // Model_name                   String?
-  // brand_name                   String?
-  // Common_name_model            String?
-  // Barracks                     String?
-  // Model_year                   String?
-  // Scheduled_arrival_date       DateTime?
-  // Number_Place_name            String?
-  // Number_classification_number String?
-  // Number_Hiragana              String?
-  // number                       String?
-  // Vehicle_length               Float?
-  // Vehicle_width                Float?
-  // Vehicle_height               Float?
+  sateiID String @unique
 
   number98    String?   @default("") //古物との称号
   NO_SIRETYUM String?   @default("") //古物との称号
   DD_SIIRE    DateTime? //古物との称号
 
-  garageProvedAt DateTime?
-
   // 書類管理項目
-  arrivedAt    DateTime?
-  passedAt     DateTime?
+  arrivedAt DateTime?
+
   customerName String?
 
   meihenBi       DateTime?
@@ -1626,8 +1611,9 @@ model Ucar {
 
   BankBranchMaster   BankBranchMaster? @relation(fields: [bankBranchMasterId], references: [id], onDelete: Cascade)
   bankBranchMasterId Int?
-  User               User?             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId             Int?
+
+  User   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
 
   Store   Store? @relation(fields: [storeId], references: [id], onDelete: Cascade)
   storeId Int?
@@ -1675,7 +1661,7 @@ model Number98IssueHistory {
   active    Boolean   @default(true)
   sortOrder Float     @default(0)
 
-  number98 String
+  number String
 }
 
 model UcarGarageLocationMaster {
@@ -1712,11 +1698,12 @@ model AppliedUcarGarageSlot {
   appliedAt              DateTime
   finishedAt             DateTime?
   ucarGarageSlotMasterId Int
-  ucarId                 Int                  @unique
+  sateiID                String               @unique
   UcarGarageSlotMaster   UcarGarageSlotMaster @relation(fields: [ucarGarageSlotMasterId], references: [id], onDelete: Cascade)
-  Ucar                   Ucar                 @relation(fields: [ucarId], references: [id], onDelete: Cascade)
 
-  @@unique([ucarId, ucarGarageSlotMasterId], name: "unique_ucarId_ucarGarageSlotMasterId")
+  Ucar Ucar @relation(fields: [sateiID], references: [sateiID], onDelete: Cascade)
+
+  @@unique([sateiID, ucarGarageSlotMasterId], name: "unique_sateiID_ucarGarageSlotMasterId")
   @@index([ucarGarageSlotMasterId])
 }
 
@@ -1764,11 +1751,11 @@ model UcarProcess {
   sortOrder   Float     @default(0)
   // time        String?
 
-  sateiID String?
+  sateiID String
 
   remarks String?
 
-  Ucar Ucar? @relation(fields: [sateiID], references: [sateiID], onDelete: Cascade)
+  Ucar Ucar @relation(fields: [sateiID], references: [sateiID], onDelete: Cascade)
 
   User   User @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId Int
@@ -20038,7 +20025,7 @@ export const prismaDMMF = {
           "name": "qrIssuedAt",
           "kind": "scalar",
           "isList": false,
-          "isRequired": false,
+          "isRequired": true,
           "isUnique": false,
           "isId": false,
           "isReadOnly": false,
@@ -20107,6 +20094,21 @@ export const prismaDMMF = {
           "isUpdatedAt": false
         },
         {
+          "name": "dataSource",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": true,
+          "type": "String",
+          "nativeType": null,
+          "default": "",
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
           "name": "sateiID",
           "kind": "scalar",
           "isList": false,
@@ -20114,15 +20116,9 @@ export const prismaDMMF = {
           "isUnique": true,
           "isId": false,
           "isReadOnly": true,
-          "hasDefaultValue": true,
+          "hasDefaultValue": false,
           "type": "String",
           "nativeType": null,
-          "default": {
-            "name": "uuid",
-            "args": [
-              4
-            ]
-          },
           "isGenerated": false,
           "isUpdatedAt": false
         },
@@ -20171,35 +20167,7 @@ export const prismaDMMF = {
           "isUpdatedAt": false
         },
         {
-          "name": "garageProvedAt",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "DateTime",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
           "name": "arrivedAt",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "DateTime",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "passedAt",
           "kind": "scalar",
           "isList": false,
           "isRequired": false,
@@ -21281,7 +21249,7 @@ export const prismaDMMF = {
           "name": "User",
           "kind": "object",
           "isList": false,
-          "isRequired": false,
+          "isRequired": true,
           "isUnique": false,
           "isId": false,
           "isReadOnly": false,
@@ -21303,7 +21271,7 @@ export const prismaDMMF = {
           "name": "userId",
           "kind": "scalar",
           "isList": false,
-          "isRequired": false,
+          "isRequired": true,
           "isUnique": false,
           "isId": false,
           "isReadOnly": true,
@@ -21728,7 +21696,7 @@ export const prismaDMMF = {
           "isUpdatedAt": false
         },
         {
-          "name": "number98",
+          "name": "number",
           "kind": "scalar",
           "isList": false,
           "isRequired": true,
@@ -22168,7 +22136,7 @@ export const prismaDMMF = {
           "isUpdatedAt": false
         },
         {
-          "name": "ucarId",
+          "name": "sateiID",
           "kind": "scalar",
           "isList": false,
           "isRequired": true,
@@ -22176,7 +22144,7 @@ export const prismaDMMF = {
           "isId": false,
           "isReadOnly": true,
           "hasDefaultValue": false,
-          "type": "Int",
+          "type": "String",
           "nativeType": null,
           "isGenerated": false,
           "isUpdatedAt": false
@@ -22216,10 +22184,10 @@ export const prismaDMMF = {
           "nativeType": null,
           "relationName": "AppliedUcarGarageSlotToUcar",
           "relationFromFields": [
-            "ucarId"
+            "sateiID"
           ],
           "relationToFields": [
-            "id"
+            "sateiID"
           ],
           "relationOnDelete": "Cascade",
           "isGenerated": false,
@@ -22229,15 +22197,15 @@ export const prismaDMMF = {
       "primaryKey": null,
       "uniqueFields": [
         [
-          "ucarId",
+          "sateiID",
           "ucarGarageSlotMasterId"
         ]
       ],
       "uniqueIndexes": [
         {
-          "name": "unique_ucarId_ucarGarageSlotMasterId",
+          "name": "unique_sateiID_ucarGarageSlotMasterId",
           "fields": [
-            "ucarId",
+            "sateiID",
             "ucarGarageSlotMasterId"
           ]
         }
@@ -22772,7 +22740,7 @@ export const prismaDMMF = {
           "name": "sateiID",
           "kind": "scalar",
           "isList": false,
-          "isRequired": false,
+          "isRequired": true,
           "isUnique": false,
           "isId": false,
           "isReadOnly": true,
@@ -22800,7 +22768,7 @@ export const prismaDMMF = {
           "name": "Ucar",
           "kind": "object",
           "isList": false,
-          "isRequired": false,
+          "isRequired": true,
           "isUnique": false,
           "isId": false,
           "isReadOnly": false,
@@ -25158,7 +25126,7 @@ export const prismaDMMF = {
       "isDefinedOnField": true,
       "fields": [
         {
-          "name": "ucarId"
+          "name": "sateiID"
         }
       ]
     },
@@ -25176,10 +25144,10 @@ export const prismaDMMF = {
       "model": "AppliedUcarGarageSlot",
       "type": "unique",
       "isDefinedOnField": false,
-      "name": "unique_ucarId_ucarGarageSlotMasterId",
+      "name": "unique_sateiID_ucarGarageSlotMasterId",
       "fields": [
         {
-          "name": "ucarId"
+          "name": "sateiID"
         },
         {
           "name": "ucarGarageSlotMasterId"
