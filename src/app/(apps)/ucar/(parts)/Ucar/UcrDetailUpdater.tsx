@@ -12,7 +12,6 @@ import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
 
 import React, {useEffect, useState} from 'react'
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
-import useSWR from 'swr'
 
 export default function UcrDetailUpdater({sateiID, close, getAvailable98NumbersReturn}) {
   const useGlobalProps = useGlobal()

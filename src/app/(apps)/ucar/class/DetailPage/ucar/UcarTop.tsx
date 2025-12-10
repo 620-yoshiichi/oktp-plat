@@ -3,7 +3,6 @@
 import EditModeSelector from '@app/(apps)/ucar/class/DetailPage/ucar/EditModeSelector'
 
 import {C_Stack, R_Stack} from '@cm/components/styles/common-components/common-components'
-import {DetailPagePropType} from '@cm/types/types'
 import {DocumentDuplicateIcon} from '@heroicons/react/20/solid'
 import {toast} from 'react-toastify'
 

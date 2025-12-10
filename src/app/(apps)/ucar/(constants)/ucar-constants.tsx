@@ -3,6 +3,7 @@ import {Fields} from '@cm/class/Fields/Fields'
 import {Prisma} from '@prisma/client'
 import {defaultRegister} from '@cm/class/builders/ColBuilderVariables'
 import {isDev} from '@cm/lib/methods/common'
+import {toUtc} from '@cm/class/Days/date-utils/calculations'
 
 export const sold: Prisma.UcarWhereInput = {
   // KI_HANKAKA: {gt: 0}
@@ -12,6 +13,7 @@ export const unsold: Prisma.UcarWhereInput = {
 }
 
 export const UCAR_CONSTANTS = {
+  easySearchFilterThresholdDate: toUtc(new Date(`2025-01-01`)),
   columns: {
     getQrSheetIssueInfoCol: ({stores}) =>
       new Fields([

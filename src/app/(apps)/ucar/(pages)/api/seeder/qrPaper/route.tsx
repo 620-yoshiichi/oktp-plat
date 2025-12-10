@@ -1,10 +1,7 @@
 import {NextRequest, NextResponse} from 'next/server'
-import {v4 as uuidv4} from 'uuid'
-import {transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
 
 import {toUtc} from '@cm/class/Days/date-utils/calculations'
 import {Days} from '@cm/class/Days/Days'
-import {Prisma, User} from '@prisma/client'
 import prisma from 'src/lib/prisma'
 import {UcarCL} from '@app/(apps)/ucar/class/UcarCL'
 import {GoogleSheet_Read} from '@app/api/google/actions/sheetAPI'
@@ -94,9 +91,7 @@ export const POST = async (req: NextRequest) => {
           ? UCAR_CODE.INSPECTION_ALTERNATE.raw[inspectionAlternateCodeKey]?.code
           : undefined
 
-        const daihatsuReserve = isNaN(Number(sateiID)) ? String(sateiID) : null
-
-        const number98Number = number98 ? UcarCL.converter.shapeNumber98(number98) : ''
+        const number98Number = number98 ? UcarCL.converter.shapeNumber98(String(number98.replace(/ /g, ''))) : ''
 
         const payload = {
           number98: number98Number,

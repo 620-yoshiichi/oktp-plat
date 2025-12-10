@@ -1,13 +1,12 @@
 'use client'
 
-import {DetailPagePropType} from '@cm/types/types'
 import {R_Stack} from '@cm/components/styles/common-components/common-components'
 
 import {getQueryIds} from '@cm/lib/methods/urls'
 
 import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
 import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
-import useGlobal, {useGlobalPropType} from '@cm/hooks/globalHooks/useGlobal'
+import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 
 const EditModeSelector = () => {
   const {addQuery, query} = useGlobal()

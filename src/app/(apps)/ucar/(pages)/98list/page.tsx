@@ -1,6 +1,5 @@
 import {
   getAvailable98Numbers,
-  getAvailable98NumbersReturn,
   getNonAvailable98Numbers,
 } from '@app/(apps)/ucar/(lib)/num98/getAvailable98Numbers'
 import Number98ListCC from '@app/(apps)/ucar/(pages)/98list/Number98ListCC'

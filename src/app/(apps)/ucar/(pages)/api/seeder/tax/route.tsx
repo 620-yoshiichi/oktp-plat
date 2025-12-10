@@ -8,11 +8,17 @@ import {GoogleSheet_Read} from '@app/api/google/actions/sheetAPI'
 import {formatDate, toIsoDateIfExist} from '@cm/class/Days/date-utils/formatters'
 
 export const POST = async (req: NextRequest) => {
+  const spread_res = await GoogleSheet_Read({
+    spreadsheetId: `https://docs.google.com/spreadsheets/d/13p8oNLrGTmh9TceaKLmXrlwISXvmuqveAaWpvRAAp4c/edit?gid=1524061969#gid=1524061969`,
+    range: 'DB!A8:AG',
+  })
+  const data = spread_res.values ?? []
+
   const header = [
     `accountingRecievedAt`,
     `paybackScheduledAt`,
     'number98',
-    'Assessment_ID',
+    'sateiID',
     'store',
     'stuff',
     'customerName',
@@ -40,16 +46,11 @@ export const POST = async (req: NextRequest) => {
     `isPayed`,
   ]
 
-  // const offset = 0
-  const doPostUrl = `https://script.google.com/macros/s/AKfycbxFygaYt9Q-6THWa-PqKXbGOHNmBbN98rOi0I4JfWSren46JmhcxCdL-rWRSFfcPzdq/exec`
-  const res = await fetchAlt(doPostUrl, {action: `getTaxData`})
-
-  const tax_csv_res = await GoogleSheet_Read({
-    spreadsheetId: `https://docs.google.com/spreadsheets/d/13p8oNLrGTmh9TceaKLmXrlwISXvmuqveAaWpvRAAp4c/edit?pli=1&gid=450796568#gid=450796568`,
-    range: `DB!A8:AG`,
+  const body = data
+  const rows = body.map(d => {
+    const obj = Object.fromEntries(header.map((key, idx) => [key, d[idx]]))
+    return obj
   })
-
-  const tax_csv = tax_csv_res?.values ?? []
 
   const number98List = await prisma.number98.findMany({
     select: {id: true, number: true},
@@ -57,12 +58,12 @@ export const POST = async (req: NextRequest) => {
 
   // A8:AE
   const transactionQueryList: transactionQuery<'ucar', 'upsert'>[] = []
-  res.result.forEach(item => {
+  rows.forEach(item => {
     const {
       accountingRecievedAt,
       paybackScheduledAt,
       number98,
-      Assessment_ID,
+      sateiID,
       store,
       stuff,
       customerName,
@@ -89,7 +90,10 @@ export const POST = async (req: NextRequest) => {
       paymentNoticeRecieved,
       isPayed,
     } = item
-    if (!Assessment_ID) return
+
+    console.log(item) //logs
+    return
+    if (!sateiID) return
 
     const upperCarregisteredAt = registeredAt ? formatDate(new Date(registeredAt), `iso`) : null
 
@@ -101,7 +105,7 @@ export const POST = async (req: NextRequest) => {
       accountingRecievedAt: [`true`, `TRUE`, true].includes(accountingRecievedAt) ? true : false,
 
       paybackScheduledAt: toIsoDateIfExist(paybackScheduledAt),
-      Assessment_ID: String(Assessment_ID),
+      sateiID: String(sateiID),
 
       upperCarregisteredAt: toIsoDateIfExist(upperCarregisteredAt),
 
@@ -123,7 +127,7 @@ export const POST = async (req: NextRequest) => {
       number98Id: Number98Obj?.id,
     }
     const paylaod: any = {
-      where: {sateiID: String(Assessment_ID)},
+      where: {sateiID: String(sateiID)},
       create: data,
       update: data,
     }

@@ -4,7 +4,7 @@ import UcarProcessHistory from '@app/(apps)/ucar/(parts)/UcarProcessHistory'
 import {SummaryWrapper} from '@app/(apps)/ucar/(pages)/paperProcess/Summay/parts/SummaryWrapper'
 import {UcarProcessCl} from '@app/(apps)/ucar/class/UcarProcessCl'
 
-export default function ProcessSummary({className, ucar, mainProcessMasters, subProcessMasters, query}) {
+export default function ProcessSummary({className, ucar, query}) {
   return (
     <SummaryWrapper>
       <C_Stack className={`gap-1 justify-between h-full  `}>

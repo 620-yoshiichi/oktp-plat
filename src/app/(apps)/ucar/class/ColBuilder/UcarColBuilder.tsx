@@ -24,7 +24,6 @@ import {UCAR_CODE} from '../UCAR_CODE'
 import {__shared_get_shiwakeKekkeCol} from '@app/(apps)/ucar/class/ColBuilder/getter/shared_shiwakeKekkeCol'
 import {getTaxJobCols} from '@app/(apps)/ucar/class/ColBuilder/lib/ucar/ucarCols-lib/lib/getTaxJobCols'
 import {getDMMFModel} from '@cm/lib/methods/prisma-schema'
-import {Prisma} from '@prisma/client'
 import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
 import ShadModal from '@cm/shadcn/ui/Organisms/ShadModal'
 
@@ -135,7 +134,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
 
     {
       id: 'daihatsuReserve',
-      label: 'ダイハツ予約枠',
+      label: '予約枠',
       td: {
         hidden: true,
       },
@@ -150,10 +149,15 @@ export const ucarColBuilder = (props: columnGetterType) => {
       .map(d => {
         const label = d.showIn?.ucarMainTable?.label
         const format = (value, row) => {
+          if (row.daihatsuReserve && d.en === 'sateiID') {
+            return <div className={`max-w-[240px]  text-xs  truncate`}>{row.daihatsuReserve} (予約枠)</div>
+          }
+
           const inst = new UcarCL(row)
           value = inst.notation[d.en]
           return <div className={`max-w-[240px]  text-xs  truncate`}>{value}</div>
         }
+
         return {
           id: `UPASS.${d.en}`,
           label,
@@ -168,13 +172,13 @@ export const ucarColBuilder = (props: columnGetterType) => {
         }
       }),
 
-    {
-      id: 'tmpRentalStoreId',
-      label: 'レンタル先',
-      form: {},
-      format: (value, row) => row.TmpRentalStore?.name,
-      forSelect: {config: {modelName: 'store'}},
-    },
+    // {
+    //   id: 'tmpRentalStoreId',
+    //   label: 'レンタル先',
+    //   form: {},
+    //   format: (value, row) => row.TmpRentalStore?.name,
+    //   forSelect: {config: {modelName: 'store'}},
+    // },
   ])
   const PAPER_WORK_ALERT_COLS = new Fields([
     // {
@@ -209,15 +213,20 @@ export const ucarColBuilder = (props: columnGetterType) => {
       id: 'actions',
       label: '',
       form: {hidden: true},
-      // td: {
-      //   getRowColor: (value, row) => {
-      //     if (!row.UPASS) {
-      //       return UCAR_CODE.Alert.byCode('UP_ASS_NOT_FOUND')?.color
-      //     } else if (!row.OldCars_Base?.APPINDEX) {
-      //       return UCAR_CODE.Alert.byCode('APPINDEX_NOT_FOUND')?.color
-      //     }
-      //   },
-      // },
+      td: {
+        getRowColor: (value, row) => {
+          if (row.daihatsuReserve) {
+            return '#46a73b20'
+          } else {
+            return undefined
+          }
+          // if (!row.UPASS) {
+          //   return UCAR_CODE.Alert.byCode('UP_ASS_NOT_FOUND')?.color
+          // } else if (!row.OldCars_Base?.APPINDEX) {
+          //   return UCAR_CODE.Alert.byCode('APPINDEX_NOT_FOUND')?.color
+          // }
+        },
+      },
       format: (value, row) => {
         const href = HREF(`/ucar/qr`, {sateiID: row.sateiID}, useGlobalProps.query)
 

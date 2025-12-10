@@ -11,6 +11,8 @@ import ChildCreator from '@cm/components/DataLogic/RTs/ChildCreator/ChildCreator
 import MyForm from '@cm/components/DataLogic/TFs/MyForm/MyForm'
 
 import {CommonGlobalIdSelector} from '@app/oktpCommon/CommonGlobalIdSelector'
+import {UCAR_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-constants'
+import {formatDate} from '@cm/class/Days/date-utils/formatters'
 
 export class PageBuilder {
   static ucarGarageLocationMaster = {
@@ -63,6 +65,13 @@ export class PageBuilder {
     },
   }
   static ucar = {
+    top: () => (
+      <div>
+        フィルターは：
+        <span className={`font-bold text-red-500`}>{formatDate(UCAR_CONSTANTS.easySearchFilterThresholdDate)}</span>
+        以降にQRシートが発行された車両に適用されます。
+      </div>
+    ),
     form: UcarDetail,
   }
 

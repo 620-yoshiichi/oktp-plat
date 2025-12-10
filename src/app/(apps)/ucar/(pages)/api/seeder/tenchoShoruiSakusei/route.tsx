@@ -1,11 +1,10 @@
-import {NextRequest, NextResponse} from 'next/server'
+import {NextRequest} from 'next/server'
 
 import {doTransaction} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
 import prisma from 'src/lib/prisma'
 import {transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
 import {Prisma} from '@prisma/client'
 
-import createUcarDataByAssessmentId from '@app/(apps)/ucar/(pages)/api/seeder/createUcarDataByAssessmentId'
 import {GoogleSheet_Read} from '@app/api/google/actions/sheetAPI'
 import {UcarProcessCl} from '@app/(apps)/ucar/class/UcarProcessCl'
 import {toUtc} from '@cm/class/Days/date-utils/calculations'
@@ -177,6 +176,7 @@ const upsertBankData = async (rows: any[]) => {
   })
 
   const {result: upsertedBranches} = await doTransaction({transactionQueryList: branchQuery})
+
   console.log({
     upsertedBanks: upsertedBanks.length,
     upsertedBranches: upsertedBranches.length,

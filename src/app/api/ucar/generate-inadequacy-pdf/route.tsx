@@ -52,9 +52,8 @@ export async function POST(request: NextRequest) {
     const regularFontBytes = fs.readFileSync(regularFontPath)
     const boldFontBytes = fs.readFileSync(boldFontPath)
 
-    // カスタムフォントを埋め込む（subsetオプションでサブセット化）
-    const japaneseFont = await pdfDoc.embedFont(regularFontBytes, {subset: true})
-    const japaneseBoldFont = await pdfDoc.embedFont(boldFontBytes, {subset: true})
+    const japaneseFont = await pdfDoc.embedFont(regularFontBytes)
+    const japaneseBoldFont = await pdfDoc.embedFont(boldFontBytes)
 
     // タイトル
     page.drawText('不備返送票', {

@@ -8,7 +8,6 @@ import {isCron} from 'src/non-common/serverSideFunction'
 import {processBatchWithRetry} from '@cm/lib/server-actions/common-server-actions/processBatchWithRetry'
 import {BQ_parser} from '@app/api/google/big-query/bigQueryParser'
 import {ObjectMap} from '@cm/lib/methods/common'
-import {doTransaction, transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
 import {Prisma} from '@prisma/client'
 import {UcarProcessCl} from '@app/(apps)/ucar/class/UcarProcessCl'
 

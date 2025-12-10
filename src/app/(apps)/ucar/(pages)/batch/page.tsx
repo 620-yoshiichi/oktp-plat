@@ -145,7 +145,17 @@ const getActions = (offset: number, limit: number) => [
     },
   },
   {
-    label: `7. 自動車税データ作成`,
+    label: `7. 仕分け結果`,
+    description: `/api/seeder/shiwake`,
+    effectOn: 'click',
+    purpose: ``,
+    onClick: async () => {
+      const res = await fetchAlt(`${basePath}/ucar/api/seeder/shiwake`, {})
+      console.debug(res)
+    },
+  },
+  {
+    label: `8. 自動車税データ作成`,
     description: `/api/seeder/tax`,
     effectOn: 'click',
     purpose: ``,

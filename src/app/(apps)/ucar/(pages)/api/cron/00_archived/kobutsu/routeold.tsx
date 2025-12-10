@@ -44,7 +44,7 @@
 //   })
 
 //   // 98番号のリストを作成
-//   const NO_SYARYOU = updateTargetInKobutsu.map(obj => UcarCL.converter.shapeNumber98(obj.NO_SYARYOU))
+
 
 //   const targetCarsInDb = await prisma.ucar.findMany({
 //     select: {

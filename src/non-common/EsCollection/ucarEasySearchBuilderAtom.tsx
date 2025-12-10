@@ -16,6 +16,8 @@ import {sold, unsold} from '@app/(apps)/ucar/(constants)/ucar-constants'
 import {IsActiveDisplay} from '@app/(apps)/ucar/(lib)/isActiveDisplays'
 import {UcarProcessCl} from '@app/(apps)/ucar/class/UcarProcessCl'
 import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
+import {toUtc} from '@cm/class/Days/date-utils/calculations'
+import {UCAR_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-constants'
 
 export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
   const processMasterRaw = UcarProcessCl.CODE.raw
@@ -36,8 +38,17 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     },
   }
 
-  const stuffQrChecked = {processCode: processMasterRaw.STORE_NYUKO.code}
-  const tenchoQrChecked = {processCode: processMasterRaw.STORE_TENCHO_KENSHU.code}
+  const commonWhere: Prisma.UcarWhereInput = {
+    qrIssuedAt: {gte: UCAR_CONSTANTS.easySearchFilterThresholdDate},
+    daihatsuReserve: null,
+  }
+
+  const stuffQrChecked = {
+    processCode: processMasterRaw.STORE_NYUKO.code,
+  }
+  const tenchoQrChecked = {
+    processCode: processMasterRaw.STORE_TENCHO_KENSHU.code,
+  }
 
   // ===========滞留========
   const pending__retendedOnStuff: EsObj = {
@@ -91,54 +102,137 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     notify: true,
     description: '30日以内に印鑑証明書が切れる車両',
     CONDITION: {
-      ...notFinalizedWhere,
-      inkanCertificateExpiredAt: {lte: addDays(new Date(), 30)},
+      AND: [
+        //
+        notFinalizedWhere,
+        {inkanCertificateExpiredAt: {lte: addDays(new Date(), 30)}},
+      ],
     },
   }
 
   // =========98番号==========
   const number98__exist: EsObj = {
-    label: '付与済み',
-    CONDITION: {number98: {not: ''}},
+    label: '98完',
+    CONDITION: {
+      AND: [
+        //
+        {number98: {not: ''}},
+        {OldCars_Base: {DD_SIIRE: {not: null}}},
+        commonWhere,
+      ],
+    },
+  }
+  const number98__pending: EsObj = {
+    label: '98途中',
+    CONDITION: {
+      AND: [
+        //
+        {number98: {not: ''}},
+        {NOT: {OldCars_Base: {DD_SIIRE: {not: null}}}},
+        commonWhere,
+      ],
+    },
   }
   const number98__notExist: EsObj = {
-    label: '未付与',
-    CONDITION: {number98: ''},
+    label: '98未付与',
+    CONDITION: {
+      AND: [
+        //
+        {number98: ''},
+        commonWhere,
+      ],
+    },
   }
 
   // ===========処理結果========
 
-  const processedResult__undecided: EsObj = {
+  const destination__undecided: EsObj = {
     label: '行先未定',
     notify: true,
-    CONDITION: {processedAs: null},
+    CONDITION: {
+      AND: [
+        //z
+        {processedAs: null},
+        commonWhere,
+      ],
+    },
   }
-  const processedResult__meihen_not_done: EsObj = {
+
+  const destination__meihen_not_done: EsObj = {
     label: '名変[未]',
     notify: true,
     CONDITION: {
-      processedAs: `名義変更`,
-      meihenBi: null,
+      AND: [
+        //
+        {processedAs: UCAR_CODE.PROCESSED_AS.raw.MEIGIHENKO.code},
+        {meihenBi: null},
+
+        commonWhere,
+      ],
     },
   }
 
-  const processedResult__meihen_done: EsObj = {
+  const shiwake__undecided: EsObj = {
+    label: '仕分け未定',
+    notify: true,
+    CONDITION: {
+      AND: [
+        //
+        {destination: null},
+        commonWhere,
+      ],
+    },
+  }
+
+  const shiwake__decided: EsObj = {
+    label: '仕分け決定',
+    CONDITION: {
+      AND: [
+        //
+        {destination: {not: null}},
+        commonWhere,
+      ],
+    },
+  }
+
+  const destination__meihen_done: EsObj = {
     label: '名変[完]',
     CONDITION: {
-      processedAs: `名義変更`,
-      meihenBi: {not: null},
+      AND: [
+        //
+        {processedAs: UCAR_CODE.PROCESSED_AS.raw.MEIGIHENKO.code},
+        {meihenBi: {not: null}},
+
+        commonWhere,
+      ],
     },
   }
 
-  const processedResult__massyo_done: EsObj = {
+  const destination__massho_done: EsObj = {
     label: '抹消[完]',
-    CONDITION: {processedAs: `抹消`, masshoBi: {not: null}},
+    CONDITION: {
+      AND: [
+        //
+        {processedAs: UCAR_CODE.PROCESSED_AS.raw.MASSESHO.code},
+        {masshoBi: {not: null}},
+
+        commonWhere,
+      ],
+    },
   }
 
-  const processedResult__massyo_not_done: EsObj = {
+  const destination__massho_not_done: EsObj = {
     label: '抹消[未]',
     notify: true,
-    CONDITION: {processedAs: `抹消`, masshoBi: null},
+    CONDITION: {
+      AND: [
+        //
+        {processedAs: UCAR_CODE.PROCESSED_AS.raw.MASSESHO.code},
+        {masshoBi: null},
+
+        commonWhere,
+      ],
+    },
   }
 
   // const processedResult__notFinalized = {
@@ -158,10 +252,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
   // }
 
   // =========新古車========
-  const shinko__nonreserve = {
-    label: `一般`,
-    CONDITION: {daihatsuReserve: null},
-  }
+
   const shinko__reserve = {
     label: `新古車`,
     CONDITION: {daihatsuReserve: {not: null}},
@@ -236,20 +327,24 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     pending__paperErrorHq,
 
     deadline__inkan,
-    processedResult__undecided,
-    processedResult__meihen_not_done,
-    // processedResult__meihen_done,
-    processedResult__massyo_not_done,
-    // processedResult__massyo_done,
+    destination__undecided,
+    destination__meihen_not_done,
+    // destination__meihen_done,
+    destination__massho_not_done,
+    // destination__massho_done,
 
     number98__exist,
+    number98__pending,
     number98__notExist,
+
+    shiwake__undecided,
+    shiwake__decided,
 
     tax__unTouch,
     tax__onPayment,
     satei__linked,
     satei__nonlinked,
-    shinko__nonreserve,
+
     shinko__reserve,
   }
 
@@ -271,8 +366,11 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
 
   const paperGroups = [
     {exclusiveGroup: ExGroup[`deadline`], name: `書類期限間近`},
+    {exclusiveGroup: ExGroup[`shiwake`], name: `仕分け結果`},
     {exclusiveGroup: ExGroup[`number98`], name: `98番号`},
-    {exclusiveGroup: ExGroup[`processedResult`], name: `処理結果`},
+
+    {exclusiveGroup: ExGroup[`destination`], name: `処理結果`},
+
     {exclusiveGroup: ExGroup[`shinko`], name: `98枠区分`},
   ]
 

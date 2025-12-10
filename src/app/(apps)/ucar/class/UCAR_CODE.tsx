@@ -49,7 +49,7 @@ export class UCAR_CODE {
     },
     KOURI: {
       code: '02',
-      label: '小売',
+      label: '小売り',
       color: '#00802f',
     },
     SCRAP: {
@@ -78,19 +78,19 @@ export class UCAR_CODE {
     SHITADORI: {
       code: '01',
       label: '下取り',
-      color: 'red',
+      color: 'green',
       qrPaperSpreadSheetNotationList: ['下'],
     },
     KAITORI_IPPAN: {
       code: '02',
       label: '買取（一般）',
-      color: 'green',
-      qrPaperSpreadSheetNotationList: ['買', '買(一般)', '買（一般）'],
+      color: 'red',
+      qrPaperSpreadSheetNotationList: ['買', '買(一般)', '買（一般）', '買（業者）', '買(一般）'],
     },
     KAITORI_GYOSHA: {
       code: '03',
       label: '買取（業者）',
-      color: 'green',
+      color: 'red',
       qrPaperSpreadSheetNotationList: ['買(業者)', '買（業者）'],
     },
     LEASE_UP: {
@@ -197,7 +197,7 @@ export class UCAR_CODE {
       label: 'UPASSデータとの連携ができていません。査定番号が間違っているか、当日査定である可能性があります。',
       color: '#ffe5e5',
       checkAlert: (ucar: ucarData) => {
-        return !ucar.UPASS
+        return !ucar.daihatsuReserve && !ucar.UPASS
       },
     },
     APPINDEX_NOT_FOUND: {

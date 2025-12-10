@@ -38,7 +38,7 @@ export class QueryBuilder {
             id: true,
             date: true,
             processCode: true,
-            // User: {select: {name: true}},
+            User: {select: {name: true}},
           },
         },
         User: {

@@ -1,16 +1,13 @@
 'use client'
 import React, {useState} from 'react'
 import {C_Stack, R_Stack} from '@cm/components/styles/common-components/common-components'
-import {Number98} from '@prisma/client'
 
 import {CsvTable} from '@cm/components/styles/common-components/CsvTable/CsvTable'
-import Number98HistoryChecker from '@app/(apps)/ucar/(pages)/98list/Number98HistoryChecker'
 
 import ShadModal from '@cm/shadcn/ui/Organisms/ShadModal'
 import {number98Item} from '@app/(apps)/ucar/(lib)/num98/getAvailable98Numbers'
 import {formatDate} from '@cm/class/Days/date-utils/formatters'
 import {NumHandler} from '@cm/class/NumHandler'
-import Input from '@cm/shadcn/ui/Organisms/form/Input'
 import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
 import {Fields} from '@cm/class/Fields/Fields'
 import {Button} from '@cm/components/styles/common-components/Button'

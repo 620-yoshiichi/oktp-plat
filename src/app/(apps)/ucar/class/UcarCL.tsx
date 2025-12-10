@@ -218,10 +218,8 @@ export class UcarCL {
   static converter = {
     shapeNumber98: (string: string) => {
       const left2 = string.slice(0, 2)
-      const mid = string.slice(3, 7)
-      const right1 = string.slice(7, 8)
-      const result = `${left2} ${mid} ${right1}`
-      return result
+      const mid5 = string.slice(2, 7)
+      return `${left2} ${mid5}`
     },
 
     // matchSateiWithKobutsu: (props: {

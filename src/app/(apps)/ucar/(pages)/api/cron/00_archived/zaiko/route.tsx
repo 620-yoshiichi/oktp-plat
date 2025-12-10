@@ -22,8 +22,6 @@ export const GET = async (req: NextRequest) => {
   //   WHERE DT_SAISINUP >= '${yesterday}'`,
   // })
 
-  // const NO_SYARYOU = updateTargetInKobutsu.map(obj => UcarCL.converter.shapeNumber98(obj.NO_SYARYOU))
-
   // const stores = await prisma.store.findMany({})
 
   // const targetCarsInDb = await prisma.ucar.findMany({
