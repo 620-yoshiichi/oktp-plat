@@ -1536,29 +1536,52 @@ model Ucar {
   runnable                  Boolean?
   storeToPickUp             String?
 
+  // accountingRecievedAt: false,
+  //   paybackScheduledAt: undefined,
+  //   upperCarregisteredAt: '2025-11-27T00:00:00+00:00',
+  //   customerName: '三浦　真由美',
+  //   annualTax: 39500,
+  //   earlyRecievedAt: '2025-10-31T15:00:00+00:00',
+  //   accountType: '普通',
+  //   accountNumber: '1773642',
+  //   accountName: 'ミウラマユミ',
+  //   petCount: null,
+  //   petPrice: null,
+  //   prefCount: null,
+  //   prefPrice: null,
+  //   exception: undefined,
+  //   paymentNoticeRecieved: '2025/12/09 6:39:02',
+  //   isPayed: false,
+  //   bankMasterId: 245,
+  //   bankBranchMasterId: 1659
   //銀行情報
-  henkinJouhoUmu  String?
-  customerName    String?
-  registerDate    DateTime?
-  annualTax       Int?
-  bankName        String?
-  branchName      String?
-  branchNameKana  String?
-  storeNumber     String?
-  accountType     String?
-  accountNumber   String?
-  accountNameKana String?
+  souhsinJikoku        DateTime?
+  henkinRequired       Boolean?
+  accountingRecievedAt Boolean?
+  paybackScheduledAt   DateTime?
+  upperCarregisteredAt DateTime?
+  registerDate         DateTime?
+  customerName         String?
 
+  registerdAt             DateTime?
+  annualTax               Int?
   earlyRecievedAt         DateTime?
+  bankName                String?
+  branchName              String?
+  branchNameKana          String?
+  storeNumber             String?
+  accountType             String?
+  accountNumber           String?
+  accountNameKana         String?
   paymentNoticeRecievedAt DateTime?
   isPayed                 Boolean?
   petCount                Int?
   petPrice                Int?
   prefCount               Int?
   prefPrice               Int?
-  registerdAt             DateTime?
-  taxCustomerName         String?
-  taxJobNote              String?
+
+  taxCustomerName String?
+  taxJobNote      String?
 
   DestinationStore   Store? @relation(name: "DestinationStore", fields: [destinationStoreId], references: [id], onDelete: Cascade)
   destinationStoreId Int?
@@ -1569,10 +1592,6 @@ model Ucar {
   inspectionAlternate   String?
   paymentNoticeRecieved String?
   remarksHq             String?
-  upperCarregisteredAt  DateTime?
-
-  accountingRecievedAt Boolean?
-  paybackScheduledAt   DateTime?
 
   // UPASSDBにデータがない場合の一時フィールド（tmp{XXXXXX}形式）
   tmpPlate                   String? // プレート番号 (registrationSerialNumber相当)
@@ -20356,7 +20375,7 @@ export const prismaDMMF = {
           "isUpdatedAt": false
         },
         {
-          "name": "henkinJouhoUmu",
+          "name": "souhsinJikoku",
           "kind": "scalar",
           "isList": false,
           "isRequired": false,
@@ -20364,7 +20383,77 @@ export const prismaDMMF = {
           "isId": false,
           "isReadOnly": false,
           "hasDefaultValue": false,
-          "type": "String",
+          "type": "DateTime",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "henkinRequired",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "Boolean",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "accountingRecievedAt",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "Boolean",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "paybackScheduledAt",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "DateTime",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "upperCarregisteredAt",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "DateTime",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "registerDate",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "DateTime",
           "nativeType": null,
           "isGenerated": false,
           "isUpdatedAt": false
@@ -20384,7 +20473,7 @@ export const prismaDMMF = {
           "isUpdatedAt": false
         },
         {
-          "name": "registerDate",
+          "name": "registerdAt",
           "kind": "scalar",
           "isList": false,
           "isRequired": false,
@@ -20407,6 +20496,20 @@ export const prismaDMMF = {
           "isReadOnly": false,
           "hasDefaultValue": false,
           "type": "Int",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "earlyRecievedAt",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "DateTime",
           "nativeType": null,
           "isGenerated": false,
           "isUpdatedAt": false
@@ -20510,20 +20613,6 @@ export const prismaDMMF = {
           "isUpdatedAt": false
         },
         {
-          "name": "earlyRecievedAt",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "DateTime",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
           "name": "paymentNoticeRecievedAt",
           "kind": "scalar",
           "isList": false,
@@ -20603,20 +20692,6 @@ export const prismaDMMF = {
           "isReadOnly": false,
           "hasDefaultValue": false,
           "type": "Int",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "registerdAt",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "DateTime",
           "nativeType": null,
           "isGenerated": false,
           "isUpdatedAt": false
@@ -20765,48 +20840,6 @@ export const prismaDMMF = {
           "isReadOnly": false,
           "hasDefaultValue": false,
           "type": "String",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "upperCarregisteredAt",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "DateTime",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "accountingRecievedAt",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "Boolean",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "paybackScheduledAt",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "DateTime",
           "nativeType": null,
           "isGenerated": false,
           "isUpdatedAt": false

@@ -164,6 +164,9 @@ const getActions = (offset: number, limit: number) => [
       console.debug(res)
     },
   },
+  {
+    label: `9. 98番号自動紐付け`,
+  },
 ]
 
 export default function Page() {

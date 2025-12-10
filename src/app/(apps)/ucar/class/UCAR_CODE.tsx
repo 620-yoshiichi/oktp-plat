@@ -191,6 +191,34 @@ export class UCAR_CODE {
     },
   })
 
+  static TAX_EXCEPTION = new Code({
+    RETURN_NO_MONEY: {
+      code: '01',
+      label: '返金なし（薄）',
+      color: '#F4CCCC',
+    },
+    RETURN_NO_MONEY_TOYOPET: {
+      code: '02',
+      label: '返金なし（トヨペット）',
+      color: '#DAE3F3',
+    },
+    PREF_ONLY_REFUND: {
+      code: '03',
+      label: '県税からの返金のみ',
+      color: '#D9EAD3',
+    },
+    BUYBACK_SAME_USER: {
+      code: '04',
+      label: '買戻し（同一人再使用）',
+      color: '#EAD1DC',
+    },
+    NO_TAXATION: {
+      code: '05',
+      label: '課税なし',
+      color: '#FFF2CC',
+    },
+  })
+
   static Alert = new UcarAlertCode({
     UP_ASS_NOT_FOUND: {
       code: '01',

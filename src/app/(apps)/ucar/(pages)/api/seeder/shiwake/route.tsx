@@ -4,6 +4,7 @@ import prisma from 'src/lib/prisma'
 
 import {GoogleSheet_Read} from '@app/api/google/actions/sheetAPI'
 import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
+import {handlePrismaError} from '@cm/lib/prisma-helper'
 
 export const POST = async (req: NextRequest) => {
   const result: any = {}
@@ -37,12 +38,19 @@ export const POST = async (req: NextRequest) => {
 
       const shiwakeCode = UCAR_CODE.SHIWAKE.byLabel(shiwakeResult)?.code
 
-      await prisma.ucar.update({
-        where: {sateiID},
-        data: {
-          destination: shiwakeCode,
-        },
-      })
+      try {
+        await prisma.ucar.update({
+          where: {sateiID},
+          data: {destination: shiwakeCode},
+        })
+      } catch (error) {
+        const errorMessage = handlePrismaError(error)
+        console.error(errorMessage, sateiID)
+        await prisma.ucar.update({
+          where: {sateiID},
+          data: {destination: shiwakeCode},
+        })
+      }
     })
   )
 

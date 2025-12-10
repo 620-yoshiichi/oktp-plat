@@ -73,7 +73,7 @@ export const POST = async (req: NextRequest) => {
       })
 
       //お客様情報更新
-      const henkinJouhoUmu = row['返金情報入力']
+      const henkinRequired = row['返金情報入力']
       const customerName = row['お客様名']
       const registerDate = row['登録日（購入する車）']
       const annualTax = row['年間支払税額']
@@ -90,7 +90,7 @@ export const POST = async (req: NextRequest) => {
           sateiID,
         },
         data: {
-          henkinJouhoUmu,
+          henkinRequired: !henkinRequired ? true : false,
           customerName,
           registerDate: registerDate ? toUtc(new Date(registerDate)) : null,
           annualTax: Number(annualTax),

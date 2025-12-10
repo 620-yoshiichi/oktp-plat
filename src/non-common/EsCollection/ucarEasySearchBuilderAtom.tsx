@@ -276,8 +276,41 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
 
   // ===========税========
 
-  const tax__unTouch = {label: `未処理`, notify: true, CONDITION: {}}
-  const tax__onPayment = {label: `経理入金待`, notify: true, CONDITION: {}}
+  const tax__unScheduled = {
+    label: `経理依頼中`,
+    notify: true,
+    CONDITION: {
+      AND: [
+        //
+        {henkinRequired: {not: false}},
+        {paybackScheduledAt: null},
+      ],
+    },
+  }
+  const tax__scheduled_pending = {
+    label: `経理依頼中`,
+    notify: true,
+    CONDITION: {
+      AND: [
+        //
+        {henkinRequired: {not: false}},
+        {paybackScheduledAt: {not: null}},
+        {accountingRecievedAt: null},
+      ],
+    },
+  }
+  const tax__scheduled_done = {
+    label: `経理入金待`,
+    notify: true,
+    CONDITION: {
+      AND: [
+        //
+        {henkinRequired: {not: false}},
+        {paybackScheduledAt: {not: null}},
+        {accountingRecievedAt: {not: null}},
+      ],
+    },
+  }
 
   // ===========売上店舗別========
   const Ex_SoldStore = {
@@ -340,8 +373,10 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     shiwake__undecided,
     shiwake__decided,
 
-    tax__unTouch,
-    tax__onPayment,
+    tax__unScheduled,
+    tax__scheduled_pending,
+    tax__scheduled_done,
+
     satei__linked,
     satei__nonlinked,
 
