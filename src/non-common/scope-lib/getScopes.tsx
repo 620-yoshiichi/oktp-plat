@@ -106,7 +106,6 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
     const result: UcarScopeType = {
       carWhere: newCarWhere ?? {},
       ...ucarMember,
-
       isUcarMember: Object.keys(ucarMember).some(key => {
         return !!ucarMember[key]
       }),
@@ -152,7 +151,7 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
         userId: undefined,
       }
 
-      if (isHQ) {
+      if (isHQ || admin) {
         newCarWhere = {}
         if (query?.[globalIds.globalStoreId]) {
           newCarWhere[`storeId`] = Number(query?.[globalIds.globalStoreId])

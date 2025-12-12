@@ -10,11 +10,16 @@ import {BQ_parser} from '@app/api/google/big-query/bigQueryParser'
 import {ObjectMap} from '@cm/lib/methods/common'
 import {Prisma} from '@prisma/client'
 import {UcarProcessCl} from '@app/(apps)/ucar/class/UcarProcessCl'
+import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
+import {UCAR_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-constants'
 
 // kobutsu = 古物台帳
 // 古物台帳のデータを同期するためのAPI
 
 export const GET = async (req: NextRequest) => {
+  const shiireGroupUser = await prisma.user.findFirst({
+    where: {code: UCAR_CONSTANTS.shiireGroupUserId},
+  })
   const result: any = {}
   if ((await isCron({req})) === false) {
     const res = {success: false, message: `Unauthorized`, result: null}
@@ -22,11 +27,7 @@ export const GET = async (req: NextRequest) => {
     return NextResponse.json(res, status)
   }
 
-  const [users] = await Promise.all([prisma.user.findMany()])
-
-  await prisma.ucarProcess.deleteMany({
-    where: {dataSource: `BigQuery`},
-  })
+  const users = await prisma.user.findMany({where: {email: {not: null}}})
 
   const body = await bigQuery__select({
     datasetId: 'Ucar_QR',
@@ -38,7 +39,7 @@ export const GET = async (req: NextRequest) => {
   })
 
   await processBatchWithRetry({
-    options: {batchSize: 1000, retries: 1},
+    options: {batchSize: 2000, retries: 1},
     soruceList: body,
     mainProcess: async (batch: ucarProcessType[]) => {
       // データをクレンジング
@@ -64,29 +65,44 @@ export const GET = async (req: NextRequest) => {
             ...rest
           } = d
 
+          // 発行時刻がなければ、最短の発行事項を表示
+          let earliestDatetime: any = null
+          if (!rest['datetime_0']) {
+            earliestDatetime = Object.values(rest)
+              .map(d => BQ_parser.parseDate(d))
+              .filter(Boolean)
+              .sort((a: any, b: any) => {
+                return new Date(a).getTime() - new Date(b).getTime()
+              })[0]
+            if (!earliestDatetime) {
+              console.log(`earliestDatetime is not found: ${sateiId}`)
+            }
+          }
+
           let processLastUpdatedAt = null
 
           const user = users.find(user => user.email === email_0)
-          const userId = user?.id
+
+          const userId = user?.id ?? shiireGroupUser?.id
 
           if (!userId) {
-            console.log(`userId is not found: ${email_0}`)
+            console.log(`userId is not found: ${sateiId}`)
             return
           }
 
-          const ucarCreatedAt = BQ_parser.parseDate(d['datetime_0'])
+          const ucarCreatedAt = BQ_parser.parseDate(rest['datetime_0']) ?? earliestDatetime
 
           const restKeys = Object.keys(rest)
 
           await Promise.all(
             restKeys.map(async processKeyInBq => {
               if (processKeyInBq === `datetime_0`) {
+                //Ucarデータ作成
+
                 await prisma.ucar.upsert({
-                  where: {
-                    sateiID: sateiId,
-                  },
+                  where: {sateiID: sateiId},
                   create: {
-                    dataSource: `BigQuery`,
+                    dataSource: UCAR_CODE.UCAR_DATA_SOURCE.raw.BIG_QUERY_QR_PROCESS.code,
                     sateiID: sateiId,
                     userId,
                     storeId: user?.storeId,
@@ -98,6 +114,7 @@ export const GET = async (req: NextRequest) => {
                     storeId: user?.storeId,
                     qrIssuedAt: ucarCreatedAt,
                     createdAt: ucarCreatedAt,
+                    dataSource: UCAR_CODE.UCAR_DATA_SOURCE.raw.BIG_QUERY_QR_PROCESS.code,
                   },
                 })
               }
@@ -120,11 +137,12 @@ export const GET = async (req: NextRequest) => {
 
                 const payload: Prisma.UcarProcessUpsertArgs['create'] = {
                   ...unique_sateiID_date_processCode,
-                  dataSource: `spreadsheet`,
+                  dataSource: UCAR_CODE.UCAR_DATA_SOURCE.raw.BIG_QUERY_QR_PROCESS.code,
                   userId: userId,
                   processCode: processCodeItem.code,
                 }
 
+                //プロセスデータ作成
                 await prisma.ucarProcess.upsert({
                   where: {unique_sateiID_date_processCode},
                   create: payload,
@@ -138,7 +156,8 @@ export const GET = async (req: NextRequest) => {
             })
           )
 
-          const ucarUpdateRes = await prisma.ucar.update({
+          //Ucarデータ更新
+          await prisma.ucar.update({
             where: {sateiID: sateiId},
             data: {processLastUpdatedAt: processLastUpdatedAt},
           })
@@ -147,5 +166,5 @@ export const GET = async (req: NextRequest) => {
     },
   })
 
-  return NextResponse.json(result)
+  return NextResponse.json({})
 }

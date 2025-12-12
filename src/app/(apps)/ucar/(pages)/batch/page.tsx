@@ -13,6 +13,7 @@ import {basePath, cl} from '@cm/lib/methods/common'
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 import React from 'react'
 import useSWR from 'swr'
+import {UCAR_CODE} from '../../class/UCAR_CODE'
 
 const getActions = (offset: number, limit: number) => [
   {
@@ -21,6 +22,7 @@ const getActions = (offset: number, limit: number) => [
     effectOn: 'batch',
     purpose: ``,
     tableName: 'oldCars_Base',
+
     onClick: async () => {
       const res = await fetchAlt(`${basePath}/ucar/api/cron/oldCars/deleteAndCreate`, {}, {method: `GET`})
       console.debug(res)
@@ -55,6 +57,7 @@ const getActions = (offset: number, limit: number) => [
     effectOn: 'batch',
     purpose: ``,
     tableName: 'uPASS',
+
     onClick: async () => {
       const res = await fetchAlt(`${basePath}/ucar/api/cron/upass/deleteAndCreate`, {}, {method: `GET`})
 
@@ -75,44 +78,8 @@ const getActions = (offset: number, limit: number) => [
   },
 
   // クリック実行処理
-
   {
-    label: `1. UcarProcess 初期シーディング`,
-    description: `/api/seeder/ucarProcess/deleteAndCreate`,
-    effectOn: 'click',
-    purpose: `BigQuery Ucar_QR.AI_satei テーブルからデータを取り込む。`,
-    tableName: 'ucarProcess',
-    onClick: async () => {
-      const res = await fetchAlt(`${basePath}/ucar/api/seeder/ucarProcess/deleteAndCreate`, {}, {method: `GET`})
-
-      console.debug(res)
-    },
-  },
-
-  {
-    label: `2. UcarPaperデータ作成`,
-    description: `/api/seeder/qrPaper`,
-    effectOn: 'click',
-    purpose: `QR PAPER(「新システム反映用」シート)よりデータを作成し、ucarテーブルに反映する。`,
-    tableName: 'ucar',
-    onClick: async () => {
-      const res = await fetchAlt(`${basePath}/ucar/api/seeder/qrPaper`, {})
-      console.debug(res)
-    },
-  },
-  {
-    label: `3. 銀行データ作成`,
-    description: `/api/seeder/bank`,
-    effectOn: 'click',
-    purpose: `bankMaster.csvから銀行データを作成する。`,
-    tableName: 'bankMaster',
-    onClick: async () => {
-      const res = await fetchAlt(`${basePath}/ucar/api/seeder/bank`, {})
-      console.debug(res)
-    },
-  },
-  {
-    label: `4. 98データ作成`,
+    label: `98データ作成`,
     description: `/api/seeder/num98`,
     effectOn: 'click',
     purpose: `ai21の98番号一覧データを作成する`,
@@ -124,7 +91,96 @@ const getActions = (offset: number, limit: number) => [
   },
 
   {
-    label: `5. 車庫データ作成`,
+    label: `UcarProcess 初期シーディング`,
+    description: `/api/seeder/ucarProcess/deleteAndCreate`,
+    effectOn: 'click',
+    purpose: `BigQuery Ucar_QR.AI_satei テーブルからデータを取り込む。`,
+    tableName: 'ucar',
+    prismaArgs: {
+      where: {
+        dataSource: UCAR_CODE.UCAR_DATA_SOURCE.raw.BIG_QUERY_QR_PROCESS.code,
+      },
+    },
+    onClick: async () => {
+      const res = await fetchAlt(`${basePath}/ucar/api/seeder/ucarProcess/deleteAndCreate`, {}, {method: `GET`})
+
+      console.debug(res)
+    },
+  },
+
+  {
+    label: `UcarPaperデータ作成`,
+    description: `/api/seeder/qrPaper`,
+    effectOn: 'click',
+    purpose: `QR PAPER(「新システム反映用」シート)よりデータを作成し、ucarテーブルに反映する。`,
+    tableName: 'ucar',
+    prismaArgs: {
+      where: {
+        OR: [
+          //
+
+          {dataSource: UCAR_CODE.UCAR_DATA_SOURCE.raw.QRPAPER_CREATE.code},
+          {dataSource: UCAR_CODE.UCAR_DATA_SOURCE.raw.QRPAPER_DAIHATSU.code},
+        ],
+      },
+    },
+    onClick: async () => {
+      const res = await fetchAlt(`${basePath}/ucar/api/seeder/qrPaper`, {})
+      console.debug(res)
+    },
+  },
+
+  {
+    label: `店長書類送信データ作成`,
+    description: `/api/seeder/tenchoShoruiSakusei`,
+    effectOn: 'click',
+    purpose: ``,
+    tableName: 'ucar',
+    prismaArgs: {
+      where: {
+        dataSource: UCAR_CODE.UCAR_DATA_SOURCE.raw.TENCHO_SHORUI_KENSHU_HISTORY.code,
+      },
+    },
+    onClick: async () => {
+      const res = await fetchAlt(`${basePath}/ucar/api/seeder/tenchoShoruiSakusei`, {})
+      console.debug(res)
+    },
+  },
+  {
+    label: `仕分け結果`,
+    description: `/api/seeder/shiwake`,
+    effectOn: 'click',
+    purpose: ``,
+    tableName: 'ucar',
+    prismaArgs: {
+      where: {
+        dataSource: UCAR_CODE.UCAR_DATA_SOURCE.raw.SHIWAKE.code,
+      },
+    },
+    onClick: async () => {
+      const res = await fetchAlt(`${basePath}/ucar/api/seeder/shiwake`, {})
+      console.debug(res)
+    },
+  },
+  {
+    label: `自動車税データ作成`,
+    description: `/api/seeder/tax`,
+    effectOn: 'click',
+    purpose: ``,
+    tableName: 'ucar',
+    prismaArgs: {
+      where: {
+        dataSource: UCAR_CODE.UCAR_DATA_SOURCE.raw.TAX.code,
+      },
+    },
+    onClick: async () => {
+      const res = await fetchAlt(`${basePath}/ucar/api/seeder/tax`, {})
+      console.debug(res)
+    },
+  },
+
+  {
+    label: `車庫データ作成`,
     description: `/api/seeder/garage`,
     effectOn: 'click',
     purpose: `QR PAPER「車庫空き状況」シートよりデータを作成し、反映する`,
@@ -134,38 +190,33 @@ const getActions = (offset: number, limit: number) => [
       console.debug(res)
     },
   },
+
   {
-    label: `6. 店長書類送信データ作成`,
-    description: `/api/seeder/tenchoShoruiSakusei`,
+    label: `古物データ自動紐付け`,
+    description: `/api/seeder/linkOldCars`,
     effectOn: 'click',
-    purpose: ``,
+    purpose: `98番号が入力されているUcarのうち、OldCars_Baseが紐づいていない車両に対して、該当の98番号のうちもっとも新しい仕入日のOldCars_Baseに対してリレーションを貼る`,
+    tableName: 'ucar',
+    prismaArgs: {
+      where: {
+        OldCars_Base: {NO_SYARYOU: {not: null}},
+      },
+    },
     onClick: async () => {
-      const res = await fetchAlt(`${basePath}/ucar/api/seeder/tenchoShoruiSakusei`, {})
+      const res = await fetchAlt(`${basePath}/ucar/api/seeder/linkOldCars`, {})
       console.debug(res)
     },
   },
   {
-    label: `7. 仕分け結果`,
-    description: `/api/seeder/shiwake`,
+    label: `銀行データ作成`,
+    description: `/api/seeder/bank`,
     effectOn: 'click',
-    purpose: ``,
+    purpose: `bankMaster.csvから銀行データを作成する。`,
+    tableName: 'bankMaster',
     onClick: async () => {
-      const res = await fetchAlt(`${basePath}/ucar/api/seeder/shiwake`, {})
+      const res = await fetchAlt(`${basePath}/ucar/api/seeder/bank`, {})
       console.debug(res)
     },
-  },
-  {
-    label: `8. 自動車税データ作成`,
-    description: `/api/seeder/tax`,
-    effectOn: 'click',
-    purpose: ``,
-    onClick: async () => {
-      const res = await fetchAlt(`${basePath}/ucar/api/seeder/tax`, {})
-      console.debug(res)
-    },
-  },
-  {
-    label: `9. 98番号自動紐付け`,
   },
 ]
 
@@ -186,10 +237,12 @@ export default function Page() {
     const countList = await Promise.all(
       actions.map(async action => {
         if (action.tableName) {
-          const res = await doStandardPrisma(action.tableName as PrismaModelNames, 'count', {})
+          const res = await doStandardPrisma(action.tableName as PrismaModelNames, 'count', {
+            ...action.prismaArgs,
+          })
 
           return {
-            name: action.tableName,
+            name: action.label,
             count: res.result,
           }
         }
@@ -222,10 +275,10 @@ export default function Page() {
             {actions.map((action, idx) => {
               return (
                 <tr key={idx} className={`  `}>
-                  <td>
+                  <td className={`min-w-[320px]`}>
                     <R_Stack className={` justify-between`}>
                       {action.label}
-                      {action.tableName && <span className={`text-sm text-blue-500 font-bold`}>{count?.[action.tableName]}</span>}
+                      {action.tableName && <span className={`text-sm text-blue-500 font-bold`}>{count?.[action.label]}</span>}
                     </R_Stack>
                   </td>
                   <td>

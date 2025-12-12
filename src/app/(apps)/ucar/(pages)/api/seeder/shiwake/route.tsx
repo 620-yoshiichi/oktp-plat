@@ -1,13 +1,19 @@
 import {NextRequest, NextResponse} from 'next/server'
 
-import prisma from 'src/lib/prisma'
-
 import {GoogleSheet_Read} from '@app/api/google/actions/sheetAPI'
 import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
 import {handlePrismaError} from '@cm/lib/prisma-helper'
+import prisma from 'src/lib/prisma'
+import {processBatchWithRetry} from '@cm/lib/server-actions/common-server-actions/processBatchWithRetry'
+import {UCAR_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-constants'
 
 export const POST = async (req: NextRequest) => {
   const result: any = {}
+  const shiireGroupUser = await prisma.user.findFirst({
+    where: {
+      code: UCAR_CONSTANTS.shiireGroupUserId,
+    },
+  })
 
   const spread_res = await GoogleSheet_Read({
     spreadsheetId: `https://docs.google.com/spreadsheets/d/1byO2cbzi2H7-8YFztSzYngZNaSg_mtvPFktbebFpvZg/edit?gid=129381266#gid=129381266`,
@@ -25,34 +31,59 @@ export const POST = async (req: NextRequest) => {
     return obj
   })
 
-  await Promise.all(
-    rows.map(async row => {
-      // タイムスタンプ	査定ID	仕分け結果
-      const timestamp = row['タイムスタンプ']
-      const sateiID = row['査定ID']
-      const shiwakeResult = row['仕分け結果']
+  await processBatchWithRetry({
+    soruceList: rows,
+    options: {
+      batchSize: 2000,
+      retries: 1,
+    },
+    mainProcess: async batch => {
+      await Promise.all(
+        batch.map(async (row, i) => {
+          // タイムスタンプ	査定ID	仕分け結果
+          const timestamp = row['タイムスタンプ']
+          const sateiID = String(row['査定ID'] ?? '')
+          const shiwakeResult = row['仕分け結果']
 
-      if (!sateiID || !shiwakeResult) {
-        return
-      }
+          if (!sateiID || !shiwakeResult) {
+            return NextResponse.json({
+              success: false,
+              message: '査定IDまたは仕分け結果がありません。',
+            })
+          }
 
-      const shiwakeCode = UCAR_CODE.SHIWAKE.byLabel(shiwakeResult)?.code
+          const shiwakeCode = UCAR_CODE.SHIWAKE.byLabel(shiwakeResult)?.code
 
-      try {
-        await prisma.ucar.update({
-          where: {sateiID},
-          data: {destination: shiwakeCode},
+          try {
+            await prisma.ucar.update({
+              where: {sateiID},
+              data: {destination: shiwakeCode},
+            })
+          } catch (error) {
+            const data = {
+              sateiID,
+              destination: shiwakeCode,
+              createdAt: new Date(timestamp),
+              qrIssuedAt: new Date(timestamp),
+              dataSource: UCAR_CODE.UCAR_DATA_SOURCE.raw.SHIWAKE.code,
+              userId: shiireGroupUser?.id as unknown as number,
+            }
+
+            try {
+              await prisma.ucar.upsert({
+                where: {sateiID},
+                create: data,
+                update: data,
+              })
+            } catch (error) {
+              const errorMessage = handlePrismaError(error)
+              console.error(errorMessage, sateiID)
+            }
+          }
         })
-      } catch (error) {
-        const errorMessage = handlePrismaError(error)
-        console.error(errorMessage, sateiID)
-        await prisma.ucar.update({
-          where: {sateiID},
-          data: {destination: shiwakeCode},
-        })
-      }
-    })
-  )
+      )
+    },
+  })
 
   return NextResponse.json({
     success: true,

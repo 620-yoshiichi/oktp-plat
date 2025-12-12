@@ -1,4 +1,4 @@
-import {NextRequest} from 'next/server'
+import {NextRequest, NextResponse} from 'next/server'
 
 import {doTransaction} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
 import prisma from 'src/lib/prisma'
@@ -8,6 +8,9 @@ import {Prisma} from '@prisma/client'
 import {GoogleSheet_Read} from '@app/api/google/actions/sheetAPI'
 import {UcarProcessCl} from '@app/(apps)/ucar/class/UcarProcessCl'
 import {toUtc} from '@cm/class/Days/date-utils/calculations'
+import {handlePrismaError} from '@cm/lib/prisma-helper'
+import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
+import {UCAR_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-constants'
 
 export const POST = async (req: NextRequest) => {
   const result: any = {}
@@ -33,6 +36,11 @@ export const POST = async (req: NextRequest) => {
   await upsertBankData(rows)
 
   const users = await prisma.user.findMany({})
+  const shiireGroupUser = await prisma.user.findFirst({
+    where: {
+      code: UCAR_CONSTANTS.shiireGroupUserId,
+    },
+  })
 
   await Promise.all(
     rows.map(async row => {
@@ -43,34 +51,13 @@ export const POST = async (req: NextRequest) => {
 
       let userId = users.find(user => user.email === email)?.id
       if (email === 'yuka_okazaki@okayama-toyopet.jp') {
-        userId = users.find(user => user.code === 99999931)?.id
+        userId = shiireGroupUser?.id
       }
 
       if (!userId) {
         console.log(`userId is not found: ${email}`)
         return
       }
-
-      //書類提出プロセス
-      const payload: Prisma.UcarProcessUncheckedCreateInput = {
-        processCode: STORE_SHORUI_SOUHU_Code,
-        dataSource: `tenchoShoruiSokusei`,
-        date: new Date(timestamp),
-        sateiID,
-        userId,
-      }
-
-      await prisma.ucarProcess.upsert({
-        where: {
-          unique_sateiID_date_processCode: {
-            sateiID,
-            date: new Date(timestamp),
-            processCode: STORE_SHORUI_SOUHU_Code,
-          },
-        },
-        create: payload,
-        update: payload,
-      })
 
       //お客様情報更新
       const henkinRequired = row['返金情報入力']
@@ -85,26 +72,86 @@ export const POST = async (req: NextRequest) => {
       const accountNumber = row['口座番号']
       const accountNameKana = row['名義（カタカナ）']
 
-      await prisma.ucar.update({
-        where: {
+      try {
+        await prisma.ucar.update({
+          where: {sateiID},
+          data: {
+            henkinRequired: !henkinRequired ? true : false,
+            customerName,
+            registerDate: registerDate ? toUtc(new Date(registerDate)) : null,
+            annualTax: Number(annualTax),
+            bankName,
+            branchName,
+            branchNameKana,
+            storeNumber,
+            accountType,
+            accountNumber,
+            accountNameKana,
+          },
+        })
+      } catch (error) {
+        //書類提出プロセス
+
+        const data = {
           sateiID,
-        },
-        data: {
-          henkinRequired: !henkinRequired ? true : false,
-          customerName,
-          registerDate: registerDate ? toUtc(new Date(registerDate)) : null,
-          annualTax: Number(annualTax),
-          bankName,
-          branchName,
-          branchNameKana,
-          storeNumber,
-          accountType,
-          accountNumber,
-          accountNameKana,
-        },
-      })
+          userId,
+          createdAt: new Date(timestamp),
+          qrIssuedAt: new Date(timestamp),
+          dataSource: UCAR_CODE.UCAR_DATA_SOURCE.raw.TENCHO_SHORUI_KENSHU_HISTORY.code,
+        }
+        try {
+          await prisma.ucar.upsert({
+            where: {sateiID},
+            create: data,
+            update: data,
+          })
+        } catch (error) {
+          const errorMessage = handlePrismaError(error)
+          console.error(errorMessage, sateiID, 'erro')
+        }
+      }
+
+      //書類提出プロセス
+      const payload: Prisma.UcarProcessUncheckedCreateInput = {
+        processCode: STORE_SHORUI_SOUHU_Code,
+        dataSource: UCAR_CODE.UCAR_DATA_SOURCE.raw.TENCHO_SHORUI_KENSHU_HISTORY.code,
+        date: new Date(timestamp),
+        sateiID,
+        userId,
+      }
+
+      try {
+        await prisma.ucarProcess.upsert({
+          where: {
+            unique_sateiID_date_processCode: {
+              sateiID,
+              date: new Date(timestamp),
+              processCode: STORE_SHORUI_SOUHU_Code,
+            },
+          },
+          create: payload,
+          update: payload,
+        })
+      } catch (error) {
+        const data = {
+          ...payload,
+          createdAt: new Date(timestamp),
+          qrIssuedAt: new Date(timestamp),
+          dataSource: UCAR_CODE.UCAR_DATA_SOURCE.raw.TENCHO_SHORUI_KENSHU_HISTORY.code,
+        }
+        await prisma.ucar.upsert({
+          where: {sateiID},
+          create: data,
+          update: data,
+        })
+      }
     })
   )
+
+  return NextResponse.json({
+    success: true,
+    message: '書類店長チェックを更新しました。',
+  })
 }
 
 const upsertBankData = async (rows: any[]) => {

@@ -35,8 +35,8 @@ export default async function DynamicMasterPage(props) {
     },
     orderBy: [
       //
-      {processLastUpdatedAt: {sort: 'desc', nulls: 'last'}},
       {qrIssuedAt: 'desc'},
+      {processLastUpdatedAt: {sort: 'desc', nulls: 'last'}},
     ],
     take: 100,
   })

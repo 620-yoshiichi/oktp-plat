@@ -67,9 +67,9 @@ export class PageBuilder {
   static ucar = {
     top: () => (
       <div>
-        フィルターは：
-        <span className={`font-bold text-red-500`}>{formatDate(UCAR_CONSTANTS.easySearchFilterThresholdDate)}</span>
-        以降にQRシートが発行された車両に適用されます。
+        フィルターは：「本部着」が
+        <span className={`font-bold text-red-500`}>{formatDate(UCAR_CONSTANTS.commonQuery.THRESHOLD_DATE)}</span>
+        以降のものにのみ適用されます。
       </div>
     ),
     form: UcarDetail,

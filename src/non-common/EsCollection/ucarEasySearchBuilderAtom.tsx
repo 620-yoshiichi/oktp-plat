@@ -1,7 +1,6 @@
 import {
   EasySearchObjectAtom,
   easySearchType,
-  Ex_exclusive0,
   makeEasySearchGroups,
   makeEasySearchGroupsProp,
   makeExGroup,
@@ -16,7 +15,6 @@ import {sold, unsold} from '@app/(apps)/ucar/(constants)/ucar-constants'
 import {IsActiveDisplay} from '@app/(apps)/ucar/(lib)/isActiveDisplays'
 import {UcarProcessCl} from '@app/(apps)/ucar/class/UcarProcessCl'
 import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
-import {toUtc} from '@cm/class/Days/date-utils/calculations'
 import {UCAR_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-constants'
 
 export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
@@ -39,8 +37,11 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
   }
 
   const commonWhere: Prisma.UcarWhereInput = {
-    qrIssuedAt: {gte: UCAR_CONSTANTS.easySearchFilterThresholdDate},
-    daihatsuReserve: null,
+    AND: [
+      //
+      {daihatsuReserve: null},
+      UCAR_CONSTANTS.commonQuery.THRESHOLD_ARRIVED_AT, //受付日の制限,
+    ],
   }
 
   const stuffQrChecked = {
@@ -54,6 +55,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
   const pending__retendedOnStuff: EsObj = {
     label: 'スタッフ',
     notify: true,
+    description: 'スタッフと店長の両方が未チェックの状態',
     CONDITION: {
       AND: [
         //
@@ -66,6 +68,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
   const pending__retendedOnStore: EsObj = {
     label: '店長',
     notify: true,
+    description: 'スタッフはチェック済みだが、店長が未チェックの状態',
     CONDITION: {
       AND: [
         //
@@ -113,6 +116,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
   // =========98番号==========
   const number98__exist: EsObj = {
     label: '98完',
+    description: '98番号が付与され、仕入処理が完了している',
     CONDITION: {
       AND: [
         //
@@ -124,6 +128,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
   }
   const number98__pending: EsObj = {
     label: '98途中',
+    description: '98番号は付与されているが、仕入処理が未完了',
     CONDITION: {
       AND: [
         //
@@ -135,6 +140,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
   }
   const number98__notExist: EsObj = {
     label: '98未付与',
+    description: '98番号がまだ付与されていない',
     CONDITION: {
       AND: [
         //
@@ -149,6 +155,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
   const destination__undecided: EsObj = {
     label: '行先未定',
     notify: true,
+    description: '処理方法が未決定の状態',
     CONDITION: {
       AND: [
         //z
@@ -161,6 +168,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
   const destination__meihen_not_done: EsObj = {
     label: '名変[未]',
     notify: true,
+    description: '名義変更が決定しているが、まだ完了していない',
     CONDITION: {
       AND: [
         //
@@ -175,6 +183,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
   const shiwake__undecided: EsObj = {
     label: '仕分け未定',
     notify: true,
+    description: '仕分け先が未決定の状態',
     CONDITION: {
       AND: [
         //
@@ -186,6 +195,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
 
   const shiwake__decided: EsObj = {
     label: '仕分け決定',
+    description: '仕分け先が決定している',
     CONDITION: {
       AND: [
         //
@@ -197,6 +207,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
 
   const destination__meihen_done: EsObj = {
     label: '名変[完]',
+    description: '名義変更が完了している',
     CONDITION: {
       AND: [
         //
@@ -210,6 +221,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
 
   const destination__massho_done: EsObj = {
     label: '抹消[完]',
+    description: '抹消が完了している',
     CONDITION: {
       AND: [
         //
@@ -224,6 +236,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
   const destination__massho_not_done: EsObj = {
     label: '抹消[未]',
     notify: true,
+    description: '抹消が決定しているが、まだ完了していない',
     CONDITION: {
       AND: [
         //
@@ -255,6 +268,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
 
   const shinko__reserve = {
     label: `新古車`,
+    description: '予約枠の車両',
     CONDITION: {daihatsuReserve: {not: null}},
   }
 
@@ -268,7 +282,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
   }
   const satei__nonlinked = {
     label: '査定未連携',
-    description: '当日査定での仮付番など、査定データみ連携のもの',
+    description: '査定データが連携されていないもの',
     CONDITION: {
       Model_name: null,
     },
@@ -276,39 +290,67 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
 
   // ===========税========
 
+  const hasException = {
+    AND: [{exception: {not: null}}, {exception: {not: ''}}],
+  }
+  const taxTargetCommonCondition: Prisma.UcarWhereInput = {
+    AND: [
+      //
+      commonWhere,
+      {henkinRequired: {not: false}},
+      {
+        OR: [
+          //
+          {earlyYear: {gte: 2025}},
+          {earlyYear: null},
+        ],
+      },
+      {NOT: hasException},
+    ],
+  }
+
   const tax__unScheduled = {
-    label: `経理依頼中`,
+    label: `入金未定`,
     notify: true,
+    description: '返金予定日が未設定の状態',
     CONDITION: {
       AND: [
         //
-        {henkinRequired: {not: false}},
+        taxTargetCommonCondition,
         {paybackScheduledAt: null},
       ],
     },
   }
   const tax__scheduled_pending = {
-    label: `経理依頼中`,
+    label: `入金待ち`,
     notify: true,
+    description: '返金予定日は設定されているが、入金が未確認',
     CONDITION: {
       AND: [
         //
-        {henkinRequired: {not: false}},
+        taxTargetCommonCondition,
         {paybackScheduledAt: {not: null}},
         {accountingRecievedAt: null},
       ],
     },
   }
   const tax__scheduled_done = {
-    label: `経理入金待`,
-    notify: true,
+    label: `入金済み`,
+    description: '返金の入金が確認済み',
     CONDITION: {
       AND: [
         //
-        {henkinRequired: {not: false}},
-        {paybackScheduledAt: {not: null}},
+        taxTargetCommonCondition,
+
         {accountingRecievedAt: {not: null}},
       ],
+    },
+  }
+  const tax__has_exception = {
+    label: `例外`,
+    description: '例外処理が設定されているもの',
+    CONDITION: {
+      AND: [hasException],
     },
   }
 
@@ -331,7 +373,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
 
     sold: {
       label: '売上済み',
-      description: '',
+      description: '売上が確定している車両',
       CONDITION: {...sold},
     },
   }
@@ -343,7 +385,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
         const key = `${process.name}IsLast`
         const value = {
           label: `${process.name}`,
-
+          description: `最終工程が${process.name}のもの`,
           CONDITION: {ucarLastProcessMasterId: process.id},
         }
 
@@ -376,6 +418,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     tax__unScheduled,
     tax__scheduled_pending,
     tax__scheduled_done,
+    tax__has_exception,
 
     satei__linked,
     satei__nonlinked,
@@ -387,29 +430,18 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
 
   const dataArr: makeEasySearchGroupsProp[] = []
 
-  const forEigyou = [
-    //
-    {
-      exclusiveGroup: Ex_exclusive0,
-      name: `全て`,
-      additionalProps: {refresh: true},
-    },
-
-    // {exclusiveGroup: ExGroup[`satei`], name: `査定連携`},
-    {exclusiveGroup: ExGroup[`pending`], name: `書類受入状況`},
-  ]
+  const forEigyou = [{exclusiveGroup: ExGroup[`pending`], name: `書類受入状況`}]
 
   const paperGroups = [
     {exclusiveGroup: ExGroup[`deadline`], name: `書類期限間近`},
-    {exclusiveGroup: ExGroup[`shiwake`], name: `仕分け結果`},
-    {exclusiveGroup: ExGroup[`number98`], name: `98番号`},
-
-    {exclusiveGroup: ExGroup[`destination`], name: `処理結果`},
-
-    {exclusiveGroup: ExGroup[`shinko`], name: `98枠区分`},
+    {exclusiveGroup: ExGroup[`destination`], name: `名変抹消`},
+    {exclusiveGroup: ExGroup[`number98`], name: `98番号付与状況`, additionalProps: {defaultOpen: false}},
+    {exclusiveGroup: ExGroup[`shiwake`], name: `仕分結果`, additionalProps: {defaultOpen: false}},
+    {exclusiveGroup: ExGroup[`shinko`], name: `新古車予約枠`, additionalProps: {defaultOpen: false}},
   ]
 
   const taxGroups = [{exclusiveGroup: ExGroup[`tax`], name: `自動車税`}]
+
   toRowGroup(0, dataArr, [
     //
     ...forEigyou,

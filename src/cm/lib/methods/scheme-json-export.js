@@ -1557,7 +1557,7 @@ model Ucar {
   //銀行情報
   souhsinJikoku        DateTime?
   henkinRequired       Boolean?
-  accountingRecievedAt Boolean?
+  accountingRecievedAt DateTime?
   paybackScheduledAt   DateTime?
   upperCarregisteredAt DateTime?
   registerDate         DateTime?
@@ -1565,7 +1565,9 @@ model Ucar {
 
   registerdAt             DateTime?
   annualTax               Int?
-  earlyRecievedAt         DateTime?
+  // earlyRecievedAt         DateTime?
+  earlyYear               Int?
+  earlyMonth              Int?
   bankName                String?
   branchName              String?
   branchNameKana          String?
@@ -1587,7 +1589,7 @@ model Ucar {
   destinationStoreId Int?
 
   daihatsuReserve       String?
-  exception             String?
+  exception             String? @default("")
   inkanAlternate        String?
   inspectionAlternate   String?
   paymentNoticeRecieved String?
@@ -20411,7 +20413,7 @@ export const prismaDMMF = {
           "isId": false,
           "isReadOnly": false,
           "hasDefaultValue": false,
-          "type": "Boolean",
+          "type": "DateTime",
           "nativeType": null,
           "isGenerated": false,
           "isUpdatedAt": false
@@ -20501,7 +20503,7 @@ export const prismaDMMF = {
           "isUpdatedAt": false
         },
         {
-          "name": "earlyRecievedAt",
+          "name": "earlyYear",
           "kind": "scalar",
           "isList": false,
           "isRequired": false,
@@ -20509,7 +20511,21 @@ export const prismaDMMF = {
           "isId": false,
           "isReadOnly": false,
           "hasDefaultValue": false,
-          "type": "DateTime",
+          "type": "Int",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "earlyMonth",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "Int",
           "nativeType": null,
           "isGenerated": false,
           "isUpdatedAt": false
@@ -20782,9 +20798,10 @@ export const prismaDMMF = {
           "isUnique": false,
           "isId": false,
           "isReadOnly": false,
-          "hasDefaultValue": false,
+          "hasDefaultValue": true,
           "type": "String",
           "nativeType": null,
+          "default": "",
           "isGenerated": false,
           "isUpdatedAt": false
         },

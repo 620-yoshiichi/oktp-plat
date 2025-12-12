@@ -56,7 +56,7 @@ model Ucar {
   //銀行情報
   souhsinJikoku        DateTime?
   henkinRequired       Boolean?
-  accountingRecievedAt Boolean?
+  accountingRecievedAt DateTime?
   paybackScheduledAt   DateTime?
   upperCarregisteredAt DateTime?
   registerDate         DateTime?
@@ -64,7 +64,9 @@ model Ucar {
 
   registerdAt             DateTime?
   annualTax               Int?
-  earlyRecievedAt         DateTime?
+  // earlyRecievedAt         DateTime?
+  earlyYear               Int?
+  earlyMonth              Int?
   bankName                String?
   branchName              String?
   branchNameKana          String?
@@ -86,7 +88,7 @@ model Ucar {
   destinationStoreId Int?
 
   daihatsuReserve       String?
-  exception             String?
+  exception             String? @default("")
   inkanAlternate        String?
   inspectionAlternate   String?
   paymentNoticeRecieved String?
@@ -221,7 +223,7 @@ model AppliedUcarGarageSlot {
   active                 Boolean              @default(true)
   sortOrder              Float                @default(0)
   appliedAt              DateTime
-  finishedAt             DateTime?
+  // finishedAt             DateTime?
   ucarGarageSlotMasterId Int
   sateiID                String               @unique
   UcarGarageSlotMaster   UcarGarageSlotMaster @relation(fields: [ucarGarageSlotMasterId], references: [id], onDelete: Cascade)

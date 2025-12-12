@@ -21,10 +21,7 @@ export const POST = async (req: NextRequest) => {
   const transactionQuerys: transactionQuery<'user' | 'roleMaster' | 'userRole' | 'roleMaster', 'upsert'>[] = []
 
   async function resetAllOktpRoles() {
-    //権限を一旦除去
-    // const deleted = await doStandardPrisma(`userRole`, `deleteMany`, {
-    //   where: {RoleMaster: {name: {in: allOktpRoles}}},
-    // })
+
 
     const res = await doTransaction({
       transactionQueryList: allOktpRoles.map((roleString: string): transactionQuery<'roleMaster', 'upsert'> => {

@@ -21,24 +21,38 @@ export class UcarAlertCode extends Code<codeAtom> {
 }
 
 export class UCAR_CODE {
+  static UCAR_DATA_SOURCE = new Code({
+    BIG_QUERY_QR_PROCESS: {code: '01', label: 'BigQuery QR処理'},
+    QRPAPER_UPDATE: {code: '02', label: 'QRPAPERから更新'},
+    QRPAPER_DAIHATSU: {code: '03', label: 'QRPAPER_新古予約枠'},
+    QRPAPER_CREATE: {code: '04', label: 'QRPAPER_から新規作成'},
+    TENCHO_SHORUI_KENSHU_HISTORY: {
+      code: '05',
+      label: '店長書類研修履歴かｓら新規作成',
+    },
+    SHIWAKE: {code: '06', label: '仕分け結果から新規作成'},
+    TAX: {code: '07', label: '税金から新規作成'},
+    GARAGE: {code: '08', label: '車庫証明申請から新規作成'},
+  })
+
   static DISPLAY_COLUMNS = new Code({
-    SHITADORI: {
-      code: '01',
-      label: '下取書類',
-      color: 'yellow',
-      userType: [`業務G`],
-    },
-    SHOHINKA: {
-      code: '01',
-      label: '商品化',
-      color: `red`,
-      userType: [`仕入G`],
-    },
     JIDOSHA_TEKIYOU: {
       code: '01',
       label: '自動車税',
       color: 'blue',
       userType: [`業務G`],
+    },
+    SHITADORI: {
+      code: '02',
+      label: '下取書類',
+      color: 'yellow',
+      userType: [`業務G`],
+    },
+    SHOHINKA: {
+      code: '03',
+      label: '商品化',
+      color: `red`,
+      userType: [`仕入G`],
     },
   })
   static SHIWAKE = new Code({
@@ -194,12 +208,12 @@ export class UCAR_CODE {
   static TAX_EXCEPTION = new Code({
     RETURN_NO_MONEY: {
       code: '01',
-      label: '返金なし（薄）',
+      label: '返金なし（軽）',
       color: '#F4CCCC',
     },
     RETURN_NO_MONEY_TOYOPET: {
       code: '02',
-      label: '返金なし（トヨペット）',
+      label: '返金なし（トヨペットが税金負担）',
       color: '#DAE3F3',
     },
     PREF_ONLY_REFUND: {

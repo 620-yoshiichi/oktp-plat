@@ -1,5 +1,4 @@
 import {Fields} from '@cm/class/Fields/Fields'
-import {addColIndexs} from '@cm/class/Fields/lib/addColIndex'
 import {colType} from '@cm/types/col-types'
 
 import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
@@ -131,7 +130,7 @@ export const taxCustomerInfoCols = new Fields([
   ...new Fields([
     //
     {id: `taxCustomerName`, label: `お客様`, form: {...defaultRegister}},
-    {id: `registerdAt`, label: `登録日`, type: `date`, form: {}},
+    {id: `upperCarregisteredAt`, label: `購入車登録日`, type: `date`, form: {}},
   ]).buildFormGroup({groupName: `基本情報`}).plain,
 
   ...new Fields([

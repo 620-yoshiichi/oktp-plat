@@ -14,18 +14,23 @@ export const getUcarPages = (props: PageGetterType) => {
     {
       tabId: 'ucar',
       label: '中古車業務',
-      link: {
-        query: {displayColumns: '下取書類'},
-      },
+
       exclusiveTo: isUcarMember,
       ROOT: [rootPath],
       children: [
         {tabId: 'createQr', label: 'QR発行', ROOT: [rootPath], exclusiveTo: isUcarMember},
         {
           tabId: 'ucar',
-          label: '車両一覧（拠点用）',
+          label: '車両一覧',
           link: {
             query: {displayColumns: '下取書類,商品化'},
+          },
+        },
+        {
+          tabId: 'ucar',
+          label: '車両一覧（自動車税業務）',
+          link: {
+            query: {displayColumns: '下取書類,自動車税'},
           },
         },
 
@@ -40,24 +45,7 @@ export const getUcarPages = (props: PageGetterType) => {
           ROOT: [rootPath],
         },
 
-        // {
-        //   tabId: 'ucar',
-        //   label: '商品化',
-        //   link: {query: {displayColumns: '商品化'}},
-        //   children: [],
-        // },
-        // {
-        //   tabId: 'ucar',
-        //   label: '下取書類',
-        //   link: {query: {displayColumns: '下取書類'}},
-        //   children: [],
-        // },
-        // {
-        //   tabId: 'ucar',
-        //   label: '自動車税',
-        //   link: {query: {displayColumns: '自動車税'}},
-        //   children: [],
-        // },
+
       ],
     },
     {

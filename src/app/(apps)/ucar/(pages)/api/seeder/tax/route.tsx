@@ -1,14 +1,14 @@
 import {NextRequest, NextResponse} from 'next/server'
 
-import {fetchAlt} from '@cm/lib/http/fetch-client'
-
 import {doTransaction, transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
 import prisma from 'src/lib/prisma'
 import {GoogleSheet_Read} from '@app/api/google/actions/sheetAPI'
-import {formatDate, toIsoDateIfExist} from '@cm/class/Days/date-utils/formatters'
+import {toIsoDateIfExist} from '@cm/class/Days/date-utils/formatters'
 import {toUtc} from '@cm/class/Days/date-utils/calculations'
 import {handlePrismaError} from '@cm/lib/prisma-helper'
 import {Days} from '@cm/class/Days/Days'
+import {processBatchWithRetry} from '@cm/lib/server-actions/common-server-actions/processBatchWithRetry'
+import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
 
 export const POST = async (req: NextRequest) => {
   const spread_res = await GoogleSheet_Read({
@@ -69,113 +69,122 @@ export const POST = async (req: NextRequest) => {
   const bankMasters = await prisma.bankMaster.findMany({})
   const bankBranchMasters = await prisma.bankBranchMaster.findMany({})
 
-  await Promise.all(
-    rows.map(async (item: any) => {
-      const {
-        accountingRecievedAt,
-        paybackScheduledAt,
-        number98,
-        sateiID,
-        store,
-        stuff,
-        taxCustomerName,
-        plate,
-        upperCarregisteredAt,
-        shiireDate,
-        annualTax,
-        earlyYear,
-        earlyMonth,
-        bankName,
-        branchName,
-        bankKana,
-        storeCode,
-        accountType,
-        accountNumber,
-        accountNameKana,
-        proccessedAs,
-        processedDate,
-        petCount,
-        petPrice,
-        prefCount,
-        prefPrice,
-        exception,
-        souhsinJikoku,
-        henkinRequired,
-        paymentNoticeRecieved,
-        isPayed,
-        forNewApp,
-      } = item
+  await processBatchWithRetry({
+    soruceList: rows,
+    options: {
+      batchSize: 2000,
+      retries: 1,
+    },
+    mainProcess: async batch => {
+      await Promise.all(
+        batch.map(async (item, i) => {
+          const {
+            accountingRecievedAt,
+            paybackScheduledAt,
+            number98,
+            sateiID,
+            store,
+            stuff,
+            taxCustomerName,
+            plate,
+            upperCarregisteredAt,
+            shiireDate,
+            annualTax,
+            earlyYear,
+            earlyMonth,
+            bankName,
+            branchName,
+            bankKana,
+            storeCode,
+            accountType,
+            accountNumber,
+            accountNameKana,
+            proccessedAs,
+            processedDate,
+            petCount,
+            petPrice,
+            prefCount,
+            prefPrice,
+            exception,
+            souhsinJikoku,
+            henkinRequired,
+            paymentNoticeRecieved,
+            isPayed,
+            forNewApp,
+          } = item
 
-      if (!sateiID) {
-        console.log(`sateiID is not found: ${sateiID}`)
-        return
-      }
+          if (!sateiID) {
+            console.log(`sateiID is not found: ${sateiID}`)
+            return
+          }
 
-      const earlyRecievedAt = earlyYear && earlyMonth ? toUtc(new Date(earlyYear, earlyMonth - 1, 1)) : null
+          // bankMasterId を取得
+          const bankMasterId = bankMasters.find(b => String(b.name) === String(bankName))?.id
 
-      // bankMasterId を取得
-      const bankMasterId = bankMasters.find(b => String(b.name) === String(bankName))?.id
+          // bankBranchMasterId を取得
+          const bankBranchMasterId = bankBranchMasters.find(
+            b => String(b.name) === String(branchName) && b.bankMasterId === bankMasterId
+          )?.id
 
-      // bankBranchMasterId を取得
-      const bankBranchMasterId = bankBranchMasters.find(
-        b => String(b.name) === String(branchName) && b.bankMasterId === bankMasterId
-      )?.id
+          const exceptionIsDate = Days.validate.isDate(new Date(exception))
 
-      const exceptionIsDate = Days.validate.isDate(new Date(exception))
+          const exceptionStr = exceptionIsDate ? '' : exception
 
-      const exceptionStr = exceptionIsDate ? '' : exception
-      const souhsinJikokuDate = exceptionIsDate ? toUtc(new Date(exception)) : souhsinJikoku
+          const exceptionCode = UCAR_CODE.TAX_EXCEPTION.array.find(code => code.label === exceptionStr)
 
-      const updateData = {
-        souhsinJikoku: souhsinJikokuDate ? toIsoDateIfExist(new Date(souhsinJikokuDate)) : undefined,
-        henkinRequired: !henkinRequired ? true : false,
+          const souhsinJikokuDate = exceptionIsDate ? toUtc(new Date(exception)) : souhsinJikoku
 
-        accountingRecievedAt: [`true`, `TRUE`, true].includes(accountingRecievedAt) ? true : false,
-        paybackScheduledAt: paybackScheduledAt ? toIsoDateIfExist(new Date(paybackScheduledAt)) : undefined,
+          const updateData = {
+            souhsinJikoku: souhsinJikokuDate ? toIsoDateIfExist(new Date(souhsinJikokuDate)) : undefined,
+            henkinRequired: !henkinRequired ? true : false,
 
-        customerName: taxCustomerName || undefined,
-        upperCarregisteredAt: upperCarregisteredAt ? toIsoDateIfExist(new Date(upperCarregisteredAt)) : undefined,
-        annualTax: annualTax ? Number(annualTax) : undefined,
-        earlyRecievedAt: earlyRecievedAt ? toIsoDateIfExist(new Date(earlyRecievedAt)) : undefined,
-        accountType: accountType || undefined,
-        accountNumber: accountNumber ? String(accountNumber) : undefined,
-        accountNameKana: accountNameKana || undefined,
+            accountingRecievedAt: [`true`, `TRUE`, true].includes(accountingRecievedAt)
+              ? toIsoDateIfExist(new Date())
+              : undefined,
+            paybackScheduledAt: paybackScheduledAt ? toIsoDateIfExist(new Date(paybackScheduledAt)) : undefined,
 
-        exception: exceptionStr,
-        paymentNoticeRecieved: paymentNoticeRecieved || undefined,
+            customerName: taxCustomerName || undefined,
+            upperCarregisteredAt: upperCarregisteredAt ? toIsoDateIfExist(new Date(upperCarregisteredAt)) : undefined,
+            annualTax: annualTax ? Number(annualTax) : undefined,
+            earlyYear: earlyYear ? Number(earlyYear) : undefined,
+            earlyMonth: earlyMonth ? Number(earlyMonth) : undefined,
+            accountType: accountType || undefined,
+            accountNumber: accountNumber ? String(accountNumber) : undefined,
+            accountNameKana: accountNameKana || undefined,
 
-        //銀行
-        bankMasterId: bankMasterId || undefined,
-        bankBranchMasterId: bankBranchMasterId || undefined,
+            exception: exceptionCode?.code,
+            paymentNoticeRecieved: paymentNoticeRecieved || undefined,
 
-        //納付書受領、
-        paymentNoticeRecievedAt: paymentNoticeRecieved ? toIsoDateIfExist(new Date(paymentNoticeRecieved)) : undefined,
-        isPayed: isPayed ? true : false,
+            //銀行
+            bankMasterId: bankMasterId || undefined,
+            bankBranchMasterId: bankBranchMasterId || undefined,
 
-        //金額
-        petCount: petCount ? Number(petCount) : null,
-        petPrice: petPrice ? Number(petPrice) : null,
-        prefCount: prefCount ? Number(prefCount) : null,
-        prefPrice: prefPrice ? Number(prefPrice) : null,
+            //納付書受領、
+            paymentNoticeRecievedAt: paymentNoticeRecieved ? toIsoDateIfExist(new Date(paymentNoticeRecieved)) : undefined,
+            isPayed: isPayed ? true : false,
 
-        taxCustomerName: taxCustomerName || undefined,
-      }
+            //金額
+            petCount: petCount ? Number(petCount) : null,
+            petPrice: petPrice ? Number(petPrice) : null,
+            prefCount: prefCount ? Number(prefCount) : null,
+            prefPrice: prefPrice ? Number(prefPrice) : null,
 
-      try {
-        await prisma.ucar.update({
-          where: {sateiID: String(sateiID)},
-          data: updateData,
+            taxCustomerName: taxCustomerName || undefined,
+          }
+
+          try {
+            await prisma.ucar.update({
+              where: {sateiID: String(sateiID)},
+              data: {...updateData},
+            })
+          } catch (error) {
+            const errorMessage = handlePrismaError(error)
+            console.error(errorMessage, sateiID)
+          }
         })
-      } catch (error) {
-        const errorMessage = handlePrismaError(error)
-        if (errorMessage === 'データの形式が正しくありません') {
-          console.log(updateData, sateiID) //logs
-        } else {
-          console.error(errorMessage, sateiID)
-        }
-      }
-    })
-  )
+      )
+    },
+  })
 
   return NextResponse.json({})
 }

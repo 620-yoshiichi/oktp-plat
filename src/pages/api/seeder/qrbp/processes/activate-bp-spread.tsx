@@ -17,16 +17,8 @@ export default async function ActivateBpSpread(req, res) {
 
   const damageNameMaster = await prisma.damageNameMaster.findMany({})
 
-  if (req.body.deleteProcess) {
-    const deleteCount = await prisma.process.deleteMany()
-    console.log(`${deleteCount}件削除`)
-  }
   const adminUserId = users.find(user => user.name.includes('吉市'))?.id
   async function getBpCars() {
-    if (req.body.deleteProcess) {
-      await prisma.process.deleteMany()
-    }
-
     const doPostKey = process.env.BP_GAS_API_KEY ?? ''
 
     // let data = sampleData

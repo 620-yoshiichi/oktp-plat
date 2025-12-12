@@ -1,124 +1,121 @@
-import {NextRequest, NextResponse} from 'next/server'
-
-import {doTransaction} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
-import prisma from 'src/lib/prisma'
-import {transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
-import {Prisma} from '@prisma/client'
-
-import createUcarDataByAssessmentId from '@app/(apps)/ucar/(pages)/api/seeder/createUcarDataByAssessmentId'
 import {GoogleSheet_Read} from '@app/api/google/actions/sheetAPI'
+import {NextRequest, NextResponse} from 'next/server'
+import prisma from 'src/lib/prisma'
+import {toUtc} from '@cm/class/Days/date-utils/calculations'
+import {handlePrismaError} from '@cm/lib/prisma-helper'
+import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
+import {UCAR_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-constants'
 
 export const POST = async (req: NextRequest) => {
-  const result: any = {}
-
-  result[`kurasikiGarageMaster`] = await seedGarageNameMaster({
-    UcarGarageLocationMasterName: `倉敷`,
-    ss_range: `車庫空き状況_倉敷!A:H`,
-  })
-  result[`okayamaGarageMaster`] = await seedGarageNameMaster({
-    UcarGarageLocationMasterName: `岡山`,
-    ss_range: `車庫空き状況_岡山!A:H`,
+  // 1. スプレッドシートからデータ取得
+  const spread_res = await GoogleSheet_Read({
+    spreadsheetId: `https://docs.google.com/spreadsheets/d/1W9UO04kueStte4-AQ1MExbjhwGl_RMEO7aMsM2LMJLo/edit?pli=1&gid=423178238#gid=423178238`,
+    range: '車庫証明利用申請フォーム!A3:AK',
   })
 
-  return NextResponse.json({success: true, result, message: `データを取得しました`})
-}
+  const header = [
+    'timestamp',
+    'garageId',
+    'sateiId',
+    'carName',
+    'model',
+    'vin',
+    'length',
+    'width',
+    'height',
+    'isCompanyCar',
+    'garageUsageLocationEn',
+  ]
+  const data = spread_res.values ?? []
+  const rows = data.map(d => Object.fromEntries(header.map((key, idx) => [key, d[idx]])))
 
-const seedGarageNameMaster = async ({
-  ss_range,
-  UcarGarageLocationMasterName = `倉敷`,
-  // seedingTsvFilePath = ``,
-}) => {
-  const shako_csv_res = await GoogleSheet_Read({
-    spreadsheetId: `1W9UO04kueStte4-AQ1MExbjhwGl_RMEO7aMsM2LMJLo`,
-    range: ss_range,
+  // 2. マスターデータ取得
+  const garageLocationMasters = await prisma.ucarGarageLocationMaster.findMany()
+  const garageSlotMasters = await prisma.ucarGarageSlotMaster.findMany()
+
+  // デフォルトユーザー取得
+  const shiireGroupUser = await prisma.user.findFirst({
+    where: {code: UCAR_CONSTANTS.shiireGroupUserId},
   })
+  if (!shiireGroupUser) {
+    return NextResponse.json({success: false, message: 'デフォルトユーザーが見つかりません'})
+  }
 
-  const shako_csv = shako_csv_res?.values ?? []
+  // 3. garageUsageLocationEn → DB name マッピング
+  const locationNameMap: Record<string, string> = {
+    岡山南: '岡山',
+    倉敷: '倉敷',
+  }
 
-  //査定番号がない場合は、査定番号のみでデータを作成
-  await createUcarDataByAssessmentId({sateiIdList: shako_csv.map(row => row?.[`査定ID`]).filter(Boolean)})
+  // 4. AppliedUcarGarageSlot を upsert
+  let ucarCreatedCount = 0
+  const results = await Promise.all(
+    rows.map(async row => {
+      const {timestamp, garageId, sateiId, garageUsageLocationEn} = row
 
-  //locationの作成
-  const newGarageLocationMaster = await prisma.ucarGarageLocationMaster.upsert({
-    where: {name: UcarGarageLocationMasterName},
-    create: {name: UcarGarageLocationMasterName},
-    update: {name: UcarGarageLocationMasterName},
-  })
+      if (!sateiId || !garageId || !timestamp) return null
 
-  //データの読み取り
-  const ucarGarageLocationMasterId = newGarageLocationMaster.id
+      // location マッピング
+      const locationName = locationNameMap[garageUsageLocationEn] || garageUsageLocationEn
+      const locationMaster = garageLocationMasters.find(l => l.name === locationName)
+      if (!locationMaster) return null
 
-  const headers = [`garageNumber`, `使用中の数`, `販売数`, `使用中`, `査定ID`, `車名`, `型式`, `車体番号`]
-  const body = shako_csv.slice(1).map(d => {
-    return Object.fromEntries(d.map((value, idx) => [headers[idx], value]))
-  })
+      // garageSlotMaster 検索
+      const slotMaster = garageSlotMasters.find(
+        s => s.garageNumber === Number(garageId) && s.ucarGarageLocationMasterId === locationMaster.id
+      )
+      if (!slotMaster) return null
 
-  //①ループ車庫スロットの作成
-  const ucarGarageSlotMasterQuery: transactionQuery<'ucarGarageSlotMaster', 'upsert'>[] = []
-  body.forEach(d => {
-    const garageNumber = Number(d.garageNumber)
-    if (isNaN(garageNumber)) return
+      try {
+        // 該当のUcarが存在するかチェック
+        const existingUcar = await prisma.ucar.findUnique({
+          where: {sateiID: String(sateiId)},
+        })
 
-    const data = {ucarGarageLocationMasterId, garageNumber}
-
-    if (!garageNumber || !ucarGarageLocationMasterId) {
-      console.error(`garageNumber: ${garageNumber}, ucarGarageLocationMasterId: ${ucarGarageLocationMasterId}`)
-      return
-    }
-    const payload: Prisma.UcarGarageSlotMasterUpsertArgs = {
-      where: {
-        unique_garageNumber_ucarGarageLocationMasterId: {
-          garageNumber,
-          ucarGarageLocationMasterId,
-        },
-      },
-      create: {...data},
-      update: {...data},
-    }
-
-    ucarGarageSlotMasterQuery.push({
-      model: 'ucarGarageSlotMaster',
-      method: 'upsert',
-      queryObject: payload,
-    })
-  })
-  const {result: upsertedGarageMaster} = await doTransaction({transactionQueryList: ucarGarageSlotMasterQuery})
-
-  const whereIn = body.map(d => String(d.査定ID))
-
-  const relatedUcars = await prisma.ucar.findMany({
-    where: {sateiID: {in: whereIn}},
-  })
-
-  const upsertedAppliedUcarGarageSlot = await Promise.all(
-    body.map(async row => {
-      const ucarGarageSlotMaster = upsertedGarageMaster.find(garage => String(garage?.garageNumber) === String(row?.garageNumber))
-      const theUcar = relatedUcars.find(ucar => ucar?.sateiID?.toString() === row?.[`査定ID`]?.toString())
-      if (ucarGarageSlotMaster && theUcar) {
-        const ucarId = theUcar.id
-        const ucarGarageSlotMasterId = ucarGarageSlotMaster.id
-        const data = {
-          appliedAt: new Date().toISOString(),
-          ucarId,
-          ucarGarageSlotMasterId,
+        // 存在しなければ作成
+        if (!existingUcar) {
+          const appliedAt = toUtc(new Date(timestamp))
+          await prisma.ucar.create({
+            data: {
+              sateiID: String(sateiId),
+              qrIssuedAt: appliedAt,
+              createdAt: appliedAt,
+              userId: shiireGroupUser.id,
+              dataSource: UCAR_CODE.UCAR_DATA_SOURCE.raw.GARAGE.code,
+            },
+          })
+          ucarCreatedCount++
         }
 
-        const unique_sateiID_ucarGarageSlotMasterId = {ucarId, ucarGarageSlotMasterId: ucarGarageSlotMaster.id}
-
-        const payload: Prisma.AppliedUcarGarageSlotUpsertArgs = {
-          where: {unique_sateiID_ucarGarageSlotMasterId},
-          create: data,
-          update: data,
-        }
-        try {
-          return await prisma.appliedUcarGarageSlot.upsert(payload)
-        } catch (error) {
-          // console.error(error.stack) //////////
-        }
+        return await prisma.appliedUcarGarageSlot.upsert({
+          where: {
+            unique_sateiID_ucarGarageSlotMasterId: {
+              sateiID: String(sateiId),
+              ucarGarageSlotMasterId: slotMaster.id,
+            },
+          },
+          create: {
+            sateiID: String(sateiId),
+            appliedAt: toUtc(new Date(timestamp)),
+            ucarGarageSlotMasterId: slotMaster.id,
+          },
+          update: {
+            appliedAt: toUtc(new Date(timestamp)),
+            ucarGarageSlotMasterId: slotMaster.id,
+          },
+        })
+      } catch (error) {
+        const errorMessage = handlePrismaError(error)
+        console.error(`Failed to upsert: sateiId=${sateiId}`, errorMessage)
+        return null
       }
-      return
     })
   )
 
-  return {upsertedGarageMaster, upsertedAppliedUcarGarageSlot}
+  const successCount = results.filter(Boolean).length
+  return NextResponse.json({
+    success: true,
+    result: {total: rows.length, garageSlotCreated: successCount, ucarCreated: ucarCreatedCount},
+    message: `${successCount}件の車庫履歴を登録しました（Ucar新規作成: ${ucarCreatedCount}件）`,
+  })
 }

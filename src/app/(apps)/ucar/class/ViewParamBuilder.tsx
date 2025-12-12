@@ -23,7 +23,7 @@ export class ViewParamBuilder {
           )
         },
         header: false,
-        style: {margin: `auto`, maxWidth: `95vw`, maxHeight: `80vh`},
+        style: {margin: `auto`, maxWidth: `95vw`, maxHeight: `70vh`},
       },
     }
   }

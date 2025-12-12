@@ -172,6 +172,13 @@ export const ucarColBuilder = (props: columnGetterType) => {
         }
       }),
 
+    {
+      id: 'createdAt',
+      label: '作成日',
+      type: 'date',
+      form: {hidden: true},
+      td: {style: {...{verticalAlign: 'middle'}}},
+    },
     // {
     //   id: 'tmpRentalStoreId',
     //   label: 'レンタル先',
@@ -201,6 +208,14 @@ export const ucarColBuilder = (props: columnGetterType) => {
       form: {hidden: true},
       td: {hidden: true},
       type: 'text',
+      search: {},
+    },
+    {
+      id: 'userId',
+      label: 'ユーザー',
+      form: {hidden: true},
+      forSelect: {},
+      td: {hidden: true},
       search: {},
     },
   ]
@@ -308,6 +323,15 @@ export const ucarColBuilder = (props: columnGetterType) => {
   //   query,
   // })
 
+  if (IsActiveDisplay(query, `自動車税`)) {
+    const taxCols = getTaxJobCols()
+
+    base.push(...taxCols.cols1)
+    base.push(...taxCols.cols2)
+    base.push(...taxCols.cols3)
+    base.push(...taxCols.cols4)
+  }
+
   if (IsActiveDisplay(query, `下取書類`)) {
     const cols_paperManagement = getPaperManagementCols({
       UseRecordsReturn,
@@ -332,14 +356,6 @@ export const ucarColBuilder = (props: columnGetterType) => {
       },
     ])
     base.push(...PROCESS_MASTER_COLS.plain)
-  }
-
-  if (IsActiveDisplay(query, `自動車税`)) {
-    const taxCols = getTaxJobCols()
-
-    base.push(...taxCols.cols1)
-    base.push(...taxCols.cols2)
-    base.push(...taxCols.cols3)
   }
 
   return new Fields(base).transposeColumns()

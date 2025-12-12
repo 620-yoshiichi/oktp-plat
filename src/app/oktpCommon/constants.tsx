@@ -92,8 +92,8 @@ export const forcedUsers: {
   {code: 820362, storeCode: 97, apps: [`newCar`], userRoles: ['営業']}, //水畑さん
   {code: 818473, storeCode: 98, apps: [`newCar`], userRoles: ['新車登録担当']}, //中川さん
   {code: 814443, storeCode: 98, apps: [`newCar`], userRoles: ['店長']}, //板谷さん
-  {code: 809997, storeCode: 20, apps: [`newCar`], userRoles: ['CR(新点)']}, //延谷さん
-  {code: 811967, storeCode: 20, apps: [`newCar`], userRoles: ['CR(新点)']}, //藤森さん
+  {code: 809997, storeCode: 30, apps: [`newCar`], userRoles: ['CR(新点)']}, //延谷さん
+  {code: 811967, storeCode: 30, apps: [`newCar`], userRoles: ['CR(新点)']}, //藤森さん
   {code: 813803, storeCode: 30, apps: [`newCar`], userRoles: ['CR(新点)']}, //神馬
   {code: 812823, storeCode: 30, apps: [`newCar`], userRoles: ['CR(新点)']}, //渡辺 広三さん
   {code: 99999930, storeCode: 30, apps: [`newCar`], userRoles: ['CR(新点)']}, //CRエンジニア

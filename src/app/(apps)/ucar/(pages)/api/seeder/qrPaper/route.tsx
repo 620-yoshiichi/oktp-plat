@@ -9,12 +9,14 @@ import {GoogleSheet_Read} from '@app/api/google/actions/sheetAPI'
 import {formatDate} from '@cm/class/Days/date-utils/formatters'
 import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
 import {handlePrismaError} from '@cm/lib/prisma-helper'
+import {processBatchWithRetry} from '@cm/lib/server-actions/common-server-actions/processBatchWithRetry'
+import {UCAR_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-constants'
 
 export const POST = async (req: NextRequest) => {
   const errors = {}
   const shiireGroupUser = await prisma.user.findFirst({
     where: {
-      code: 99999931,
+      code: UCAR_CONSTANTS.shiireGroupUserId,
     },
   })
   const result: any = {}
@@ -26,10 +28,14 @@ export const POST = async (req: NextRequest) => {
     number98List,
   ] = await Promise.all([getQrPaperData(), prisma.number98.findMany({})])
 
-  const userList = await prisma.user.findMany({})
+  await processBatchWithRetry({
+    soruceList: rows,
+    options: {
+      batchSize: 1000,
+      retries: 1,
+    },
 
-  if (rows.length > 0) {
-    await Promise.all(
+    mainProcess: async batch => {
       rows.map(async row => {
         const sateiID = row.sateiID ? String(row.sateiID) : undefined
         const {
@@ -125,17 +131,20 @@ export const POST = async (req: NextRequest) => {
               where: {sateiID: sateiID},
               create: {
                 ...payload,
+                createdAt: qrIssuedAt,
                 qrIssuedAt,
                 sateiID: sateiID,
                 userId: shiireGroupUser?.id as number,
                 daihatsuReserve,
-                dataSource: 'QR_PAPER',
+                dataSource: UCAR_CODE.UCAR_DATA_SOURCE.raw.QRPAPER_DAIHATSU.code,
               },
               update: {
                 ...payload,
+                createdAt: qrIssuedAt,
                 qrIssuedAt,
                 daihatsuReserve,
                 userId: shiireGroupUser?.id as number,
+                dataSource: UCAR_CODE.UCAR_DATA_SOURCE.raw.QRPAPER_DAIHATSU.code,
               },
             })
           } catch (error) {
@@ -146,29 +155,57 @@ export const POST = async (req: NextRequest) => {
           try {
             const res = await prisma.ucar.update({
               where: {sateiID},
-              data: payload,
+              data: {
+                ...payload,
+                dataSource: UCAR_CODE.UCAR_DATA_SOURCE.raw.BIG_QUERY_QR_PROCESS.code,
+              },
             })
           } catch (error) {
-            const errorMessage = handlePrismaError(error)
-            console.log('ucarError', {errorMessage, sateiID})
-
-            errors[sateiID] = error
+            const data = {
+              ...payload,
+              createdAt: qrIssuedAt,
+              qrIssuedAt,
+              sateiID: sateiID,
+              userId: shiireGroupUser?.id as number,
+              dataSource: UCAR_CODE.UCAR_DATA_SOURCE.raw.QRPAPER_CREATE.code,
+            }
+            try {
+              await prisma.ucar.upsert({
+                where: {sateiID},
+                create: data,
+                update: data,
+              })
+            } catch (error) {
+              const errorMessage = handlePrismaError(error)
+              console.log('createError', {errorMessage, sateiID})
+            }
           }
         }
       })
-    )
+    },
+  })
 
-    console.timeEnd(req.nextUrl.pathname)
-    return NextResponse.json({
-      errors: Object.keys(errors).sort(),
-    })
-  } else {
-    console.timeEnd(req.nextUrl.pathname)
-    return NextResponse.json({
-      success: false,
-      message: `データがありません`,
-    })
-  }
+  return NextResponse.json({
+    success: true,
+    message: 'Ucarデータを作成しました。',
+  })
+
+  // if (rows.length > 0) {
+  //   await Promise.all(
+
+  //   )
+
+  //   console.timeEnd(req.nextUrl.pathname)
+  //   return NextResponse.json({
+  //     errors: Object.keys(errors).sort(),
+  //   })
+  // } else {
+  //   console.timeEnd(req.nextUrl.pathname)
+  //   return NextResponse.json({
+  //     success: false,
+  //     message: `データがありません`,
+  //   })
+  // }
 }
 
 const getQrPaperData = async () => {
