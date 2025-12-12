@@ -6,7 +6,7 @@ import {NextRequest, NextResponse} from 'next/server'
 import prisma from 'src/lib/prisma'
 import {allOktpRoles, forcedUsers, oktpRoleString, workTypeConfigs} from '@app/oktpCommon/constants'
 
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 
 export const POST = async (req: NextRequest) => {
@@ -21,8 +21,6 @@ export const POST = async (req: NextRequest) => {
   const transactionQuerys: transactionQuery<'user' | 'roleMaster' | 'userRole' | 'roleMaster', 'upsert'>[] = []
 
   async function resetAllOktpRoles() {
-
-
     const res = await doTransaction({
       transactionQueryList: allOktpRoles.map((roleString: string): transactionQuery<'roleMaster', 'upsert'> => {
         return {

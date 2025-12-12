@@ -2,7 +2,7 @@ import {arr__arrToCsv} from '@cm/class/ArrHandler/array-utils/basic-operations'
 import {formatDate} from '@cm/class/Days/date-utils/formatters'
 import {Button} from '@cm/components/styles/common-components/Button'
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
-import {NewCar, Store, User} from '@prisma/client'
+import {NewCar, Store, User} from '@prisma/generated/prisma/client'
 import React from 'react'
 
 export default function TakaoSanDataLoader() {

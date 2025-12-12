@@ -15,7 +15,7 @@ import {getMidnight} from '@cm/class/Days/date-utils/calculations'
 import {Days} from '@cm/class/Days/Days'
 import {isDev} from '@cm/lib/methods/common'
 
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 
 export const NewCarEasySearchBuilder = async () => {
   const newCar = async (props: easySearchType) => {

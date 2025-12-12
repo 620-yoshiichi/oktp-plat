@@ -4,7 +4,7 @@ import {getMidnight} from '@cm/class/Days/date-utils/calculations'
 
 import {Center, C_Stack} from '@cm/components/styles/common-components/common-components'
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 
 import React from 'react'
 

@@ -6,7 +6,7 @@ import {formatDate} from '@cm/class/Days/date-utils/formatters'
 
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 
-import {CrInspectionHistory, DesiredTorokuDate, NewCar} from '@prisma/client'
+import {CrInspectionHistory, DesiredTorokuDate, NewCar} from '@prisma/generated/prisma/client'
 import {differenceInDays} from 'date-fns'
 
 export class NewCarClass {

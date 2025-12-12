@@ -13,7 +13,7 @@ export const getUcarPaperWorkNotesCols = (props: columnGetterType) => {
       label: '申請区分',
 
       forSelect: {
-        codeMaster: UCAR_CODE.PAPER_WORK_NOTE_TYPES,
+        optionsOrOptionFetcher: UCAR_CODE.PAPER_WORK_NOTE_TYPES.array,
       },
       form: {
         defaultValue: UCAR_CODE.PAPER_WORK_NOTE_TYPES.raw.FUBI.code,

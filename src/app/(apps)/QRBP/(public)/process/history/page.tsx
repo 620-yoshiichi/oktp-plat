@@ -5,7 +5,7 @@ import {obj__initializeProperty} from '@cm/class/ObjHandler/transformers'
 
 import NewDateSwitcher from '@cm/components/utils/dates/DateSwitcher/NewDateSwitcher'
 import Table from '@app/(apps)/QRBP/(public)/process/history/Table/Table'
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 import {getWhereQuery} from '@cm/lib/methods/redirect-method'
 import Redirector from '@cm/components/utils/Redirector'
 export default async function Page(props) {

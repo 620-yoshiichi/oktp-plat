@@ -1,4 +1,4 @@
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 import {includeProps} from '@cm/class/builders/QueryBuilderVariables'
 
 export class QueryBuilder {
@@ -26,15 +26,3 @@ export class QueryBuilder {
     }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-

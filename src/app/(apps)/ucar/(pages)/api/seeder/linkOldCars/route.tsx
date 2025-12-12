@@ -1,6 +1,7 @@
 import {NextRequest, NextResponse} from 'next/server'
 import prisma from 'src/lib/prisma'
 import {processBatchWithRetry} from '@cm/lib/server-actions/common-server-actions/processBatchWithRetry'
+import {handlePrismaError} from '@cm/lib/prisma-helper'
 
 /**
  * Ucar と OldCars_Base の紐付けバッチ処理
@@ -45,6 +46,10 @@ export const POST = async (req: NextRequest) => {
   result.processed = ucarsWithNumber98.length
 
   await processBatchWithRetry({
+    options: {
+      batchSize: 2000,
+      retries: 1,
+    },
     soruceList: ucarsWithNumber98,
     mainProcess: async batch => {
       await Promise.all(
@@ -74,15 +79,21 @@ export const POST = async (req: NextRequest) => {
             })
 
             // Ucarを更新してOldCars_Baseとのリレーションを設定
-            await prisma.ucar.update({
-              where: {
-                sateiID: ucar.sateiID,
-              },
-              data: {
-                NO_SIRETYUM: latestOldCar?.NO_SIRETYUM ?? '',
-                DD_SIIRE: latestOldCar?.DD_SIIRE ?? '',
-              },
-            })
+            try {
+              await prisma.ucar.update({
+                where: {
+                  sateiID: ucar.sateiID,
+                },
+                data: {
+                  number98: latestOldCar?.NO_SYARYOU ?? '',
+                  NO_SIRETYUM: latestOldCar?.NO_SIRETYUM ?? '',
+                  DD_SIIRE: latestOldCar?.DD_SIIRE ?? null,
+                },
+              })
+            } catch (error) {
+              const errorMessage = handlePrismaError(error)
+              console.error(`Failed to update ucar: sateiID=${ucar.sateiID}`, errorMessage)
+            }
 
             result.linked++
           } catch (error) {

@@ -1,6 +1,6 @@
 import {Fields} from '@cm/class/Fields/Fields'
 
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 import {defaultRegister} from '@cm/class/builders/ColBuilderVariables'
 import {isDev} from '@cm/lib/methods/common'
 import {toUtc} from '@cm/class/Days/date-utils/calculations'

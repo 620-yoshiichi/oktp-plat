@@ -5,7 +5,7 @@
 // import {sql} from '@cm/class/SqlBuilder/SqlBuilder'
 // import prisma from 'src/lib/prisma'
 // import {doTransaction, transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
-// import {Prisma} from '@prisma/client'
+// import {Prisma} from '@prisma/generated/prisma/client'
 // import {subDays} from 'date-fns'
 // import {NextRequest, NextResponse} from 'next/server'
 // import {isCron} from 'src/non-common/serverSideFunction'
@@ -44,7 +44,6 @@
 //   })
 
 //   // 98番号のリストを作成
-
 
 //   const targetCarsInDb = await prisma.ucar.findMany({
 //     select: {

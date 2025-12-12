@@ -1,4 +1,4 @@
-import {PrismaClient} from '@prisma/client'
+import {PrismaClient} from '@prisma/generated/prisma/client'
 
 // prismaMethodType を関数型のメソッド名のみを含むように修正
 export type prismaMethodType =

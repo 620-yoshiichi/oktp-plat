@@ -3,7 +3,7 @@ import {requestResultType} from '@cm/types/types'
 import {handlePrismaError} from '@cm/lib/prisma-helper'
 
 import {prismaMethodType, PrismaModelNames} from '@cm/types/prisma-types'
-import {PrismaClient} from '@prisma/client'
+import {PrismaClient} from '@prisma/generated/prisma/client'
 
 import {
   doDefaultPrismaMethod,

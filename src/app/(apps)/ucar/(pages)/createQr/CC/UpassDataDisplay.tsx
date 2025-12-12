@@ -1,6 +1,6 @@
 'use client'
 
-import {UPASS} from '@prisma/client'
+import {UPASS} from '@prisma/generated/prisma/client'
 import {upassCols} from '@app/(apps)/ucar/files/upass/upass-columns'
 
 import {R_Stack} from '@cm/components/styles/common-components/common-components'
@@ -17,15 +17,9 @@ export const UpassDataDisplay = ({upassData}: {upassData: UPASS}) => {
           const value = upassData?.[field.en as keyof UPASS] ?? 'データがありません'
           return (
             <R_Stack key={field.en} className={`border-b gap-4 `}>
-              <div className="font-semibold text-gray-800 text-xl">
-                {field.showIn?.qrCreate?.label}
-              </div>
+              <div className="font-semibold text-gray-800 text-xl">{field.showIn?.qrCreate?.label}</div>
               <div className="text-gray-700">
-                {value && value !== 'データがありません' ? (
-                  String(value)
-                ) : (
-                  <span className="text-gray-300">―</span>
-                )}
+                {value && value !== 'データがありません' ? String(value) : <span className="text-gray-300">―</span>}
               </div>
             </R_Stack>
           )
@@ -34,11 +28,3 @@ export const UpassDataDisplay = ({upassData}: {upassData: UPASS}) => {
     </div>
   )
 }
-
-
-
-
-
-
-
-

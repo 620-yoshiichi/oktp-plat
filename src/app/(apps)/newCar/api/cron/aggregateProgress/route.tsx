@@ -1,7 +1,7 @@
 import {sql} from '@cm/class/SqlBuilder/SqlBuilder'
 import {useRawSql} from '@cm/class/SqlBuilder/useRawSql'
 import {doTransaction, transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 
 import prisma from 'src/lib/prisma'
 import {NextRequest, NextResponse} from 'next/server'

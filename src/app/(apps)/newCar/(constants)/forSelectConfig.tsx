@@ -3,7 +3,7 @@ import {NEW_CAR_CONST} from '@app/(apps)/newCar/(constants)/newCar-constants'
 import {oktpRoles} from '@app/oktpCommon/constants'
 import {forSelectConfig} from '@cm/types/select-types'
 
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 
 export const targetStoreWhere = {
   name: {notIn: [`ダイハツパーク倉敷東`, `CR岡山`, 'CHU BASE津山', 'CHU BASE岡山', '中古車グループ', 'CHU BASE倉敷', '本部']},

@@ -35,24 +35,6 @@ model Ucar {
   runnable                  Boolean?
   storeToPickUp             String?
 
-  // accountingRecievedAt: false,
-  //   paybackScheduledAt: undefined,
-  //   upperCarregisteredAt: '2025-11-27T00:00:00+00:00',
-  //   customerName: '三浦　真由美',
-  //   annualTax: 39500,
-  //   earlyRecievedAt: '2025-10-31T15:00:00+00:00',
-  //   accountType: '普通',
-  //   accountNumber: '1773642',
-  //   accountName: 'ミウラマユミ',
-  //   petCount: null,
-  //   petPrice: null,
-  //   prefCount: null,
-  //   prefPrice: null,
-  //   exception: undefined,
-  //   paymentNoticeRecieved: '2025/12/09 6:39:02',
-  //   isPayed: false,
-  //   bankMasterId: 245,
-  //   bankBranchMasterId: 1659
   //銀行情報
   souhsinJikoku        DateTime?
   henkinRequired       Boolean?
@@ -198,6 +180,7 @@ model UcarGarageLocationMaster {
   active               Boolean                @default(true)
   sortOrder            Float                  @default(0)
   name                 String                 @unique
+  color                String?
   UcarGarageSlotMaster UcarGarageSlotMaster[]
 }
 
@@ -208,6 +191,7 @@ model UcarGarageSlotMaster {
   active                     Boolean                   @default(true)
   sortOrder                  Float                     @default(0)
   garageNumber               Int
+  color                      String?
   ucarGarageLocationMasterId Int?
   AppliedUcarGarageSlot      AppliedUcarGarageSlot[]
   UcarGarageLocationMaster   UcarGarageLocationMaster? @relation(fields: [ucarGarageLocationMasterId], references: [id], onDelete: Cascade)
@@ -223,7 +207,7 @@ model AppliedUcarGarageSlot {
   active                 Boolean              @default(true)
   sortOrder              Float                @default(0)
   appliedAt              DateTime
-  // finishedAt             DateTime?
+  finishedAt             DateTime?
   ucarGarageSlotMasterId Int
   sateiID                String               @unique
   UcarGarageSlotMaster   UcarGarageSlotMaster @relation(fields: [ucarGarageSlotMasterId], references: [id], onDelete: Cascade)
@@ -248,23 +232,24 @@ model BankMaster {
 }
 
 model BankBranchMaster {
-  id              Int        @id @default(autoincrement())
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime?  @updatedAt
-  active          Boolean    @default(true)
-  sortOrder       Float      @default(0)
+  id              Int       @id @default(autoincrement())
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime? @updatedAt
+  active          Boolean   @default(true)
+  sortOrder       Float     @default(0)
   code            String
   name            String
   branchNameShort String?
   branchKana      String?
   searchKana      String?
   color           String?
-  bankMasterId    Int
-  BankMaster      BankMaster @relation(fields: [bankMasterId], references: [id], onDelete: Cascade)
-  Ucar            Ucar[]
+  bankCode        String
 
-  @@unique([code, bankMasterId], name: "unique_code_bankMasterId")
-  @@index([bankMasterId])
+  BankMaster BankMaster @relation(fields: [bankCode], references: [code], onDelete: Cascade)
+  Ucar       Ucar[]
+
+  @@unique([code, bankCode], name: "unique_code_bankCode")
+  @@index([bankCode])
 }
 
 model UcarProcess {

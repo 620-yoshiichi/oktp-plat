@@ -2,7 +2,7 @@
 // import {sql} from '@cm/class/SqlBuilder/SqlBuilder'
 // import {ObjectMap} from '@cm/lib/methods/common'
 // import {BQ_parser} from '@app/api/google/big-query/bigQueryParser'
-// import {Prisma} from '@prisma/client'
+// import {Prisma} from '@prisma/generated/prisma/client'
 // import {doTransaction, transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
 // import {doTransactionUcarBaseList} from '@app/(apps)/ucar/(pages)/api/seeder/oldProcess/helper/upsertUcarBaseLIst'
 

@@ -3,7 +3,7 @@
 import prisma from 'src/lib/prisma'
 import {requestResultType} from '@cm/types/types'
 import {UcarProcessCl} from '@app/(apps)/ucar/class/UcarProcessCl'
-import {Prisma, PrismaClient} from '@prisma/client'
+import {Prisma, PrismaClient} from '@prisma/generated/prisma/client'
 
 export const createProcessByName = async ({
   tx = prisma,

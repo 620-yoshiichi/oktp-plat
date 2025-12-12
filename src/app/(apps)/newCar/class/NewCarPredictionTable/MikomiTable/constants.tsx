@@ -1,6 +1,6 @@
 import {targetStoreWhere} from '@app/(apps)/newCar/(constants)/forSelectConfig'
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 
 export type newCarWhereArgs = Prisma.NewCarWhereInput
 export type storeMonthsWhereListType = {

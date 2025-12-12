@@ -312,7 +312,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
 
     ...PAPER_WORK_ALERT_COLS.plain,
 
-    ...CAR_MODIFIED_COLS.buildFormGroup({groupName: `修正情報`}).plain,
+    // ...CAR_MODIFIED_COLS.buildFormGroup({groupName: `修正情報`}).plain,
   ]
 
   // const {cols_tdShowOnly, cols_processViewer, cols_taxJob} = useUcarCols({

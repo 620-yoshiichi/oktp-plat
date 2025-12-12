@@ -3,7 +3,7 @@ import {anyObject} from '@cm/types/utility-types'
 import useDoStandardPrisma from '@cm/hooks/useDoStandardPrisma'
 
 import useRecharts from '@cm/hooks/useRecharts'
-import {ProcessNameMaster} from '@prisma/client'
+import {ProcessNameMaster} from '@prisma/generated/prisma/client'
 import React from 'react'
 import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts'
 

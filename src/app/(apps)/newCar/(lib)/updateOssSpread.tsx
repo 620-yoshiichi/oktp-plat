@@ -8,7 +8,7 @@ import {formatDate} from '@cm/class/Days/date-utils/formatters'
 
 import {isDev} from '@cm/lib/methods/common'
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
-import {NewCar, Store, User} from '@prisma/client'
+import {NewCar, Store, User} from '@prisma/generated/prisma/client'
 
 export async function createOssShinseiSpread({
   NewCar,

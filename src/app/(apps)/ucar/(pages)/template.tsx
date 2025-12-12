@@ -6,7 +6,7 @@ import useSelectedUcarNotesGMF from '@app/(apps)/ucar/(parts)/templateHooks/useS
 import useUcarDetailUpdatorGMF from '@app/(apps)/ucar/(parts)/templateHooks/useUcarDetailUpdatorGMF'
 import {AppSwitcher} from '@app/AppSwitcher'
 import {R_Stack} from '@cm/components/styles/common-components/common-components'
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 import useDoStandardPrisma from '@cm/hooks/useDoStandardPrisma'
 import {CsvTable} from '@cm/components/styles/common-components/CsvTable/CsvTable'
 

@@ -1,6 +1,6 @@
 // import {getMidnight} from '@cm/class/Days/date-utils/calculations'
 // import {doTransaction, transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
-// import {Prisma} from '@prisma/client'
+// import {Prisma} from '@prisma/generated/prisma/client'
 
 // export const createBaseTable = async ({stores}) => {
 //   const transactionQueryList: transactionQuery[] = []

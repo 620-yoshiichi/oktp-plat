@@ -13,6 +13,8 @@ import {CsvTable} from '@cm/components/styles/common-components/CsvTable/CsvTabl
 import {BankUpsertModal} from '@app/(apps)/ucar/(parts)/Bank/BankUpsertModal'
 import {getUcarProcessCols} from '@app/(apps)/ucar/class/ColBuilder/getter/getUcarProcessCols'
 import {getUcarPaperWorkNotesCols} from '@app/(apps)/ucar/class/ColBuilder/getter/getUcarPaperWorkNotesCols'
+import {isGarageSlotAvailable} from '@app/(apps)/ucar/(lib)/garage/garageUtils'
+import {formatDate} from '@cm/class/Days/date-utils/formatters'
 
 export class ColBuilder {
   static ucar = ucarColBuilder
@@ -27,20 +29,32 @@ export class ColBuilder {
   static ucarGarageSlotMaster = (props: columnGetterType) => {
     return new Fields([
       {
-        ...{id: `ucarGarageLocationMasterId`, label: `地域`},
+        id: `ucarGarageLocationMasterId`,
+        label: `地域`,
         td: {hidden: true},
         forSelect: {},
-        form: {register: {required: `必須`}},
+        form: {register: {required: `必須`}, disabled: true},
       },
       {
-        ...{id: `garageNumber`, label: `車庫番号`},
-        form: {register: {required: `必須`}},
+        id: `garageNumber`,
+        label: `車庫番号`,
+        form: {register: {required: `必須`}, disabled: true},
       },
       {
-        ...{id: `appliedCar`, label: `適用車両(査定ID) `},
+        id: `finishedAt`,
+        label: `空き日`,
+        form: {},
         format: (value, row) => {
+          return formatDate(row.finishedAt)
+        },
+      },
+      {
+        id: `appliedCar`,
+        label: `適用車両(査定ID) `,
+        format: (value, row) => {
+          // 使用中（空きではない）スロットの中で最新の適用車両を取得
           const LastAppliedCar = row.AppliedUcarGarageSlot.sort((a, b) => (a.appliedAt > b.appliedAt ? -1 : 1)).find(
-            row => !row.finishedAt
+            slot => !isGarageSlotAvailable(slot)
           )?.Ucar
           if (LastAppliedCar) {
             return LastAppliedCar?.Assessment_ID
@@ -51,28 +65,34 @@ export class ColBuilder {
         ...{id: `history`, label: `使用中 / 総登録`},
         td: {
           getRowColor: (value, row) => {
-            return row.AppliedUcarGarageSlot.filter(row => !row.finishedAt).length > 0 ? '#909090' : ''
+            // 使用中（空きではない）スロットが1つ以上あればグレー表示
+            return row.AppliedUcarGarageSlot.filter(slot => !isGarageSlotAvailable(slot)).length > 0 ? '#bbbbbb' : ''
           },
         },
 
         format: (value, row) => {
-          const count = row.AppliedUcarGarageSlot.filter(row => !row.finishedAt).length
+          // 使用中（空きではない）スロットの数
+          const count = row.AppliedUcarGarageSlot.filter(slot => !isGarageSlotAvailable(slot)).length
+
           const totalCount = row.AppliedUcarGarageSlot.length
           return (
-            <R_Stack className={`flex-nowrap`}>
-              <div color={count > 0 ? 'red' : ''}>
-                <strong className={count > 0 ? 'bg-error-main inline-block  rounded px-2 text-center text-white' : ''}>
-                  {count}
-                </strong>{' '}
-                / <small>{totalCount}</small>
-              </div>
+            <R_Stack className={`flex-nowrap gap-0.5`}>
+              <span>{count}</span>
+              <span>/</span>
+              <span>{totalCount}</span>
             </R_Stack>
           )
         },
       },
     ])
       .customAttributes(({col}) => {
-        return {...col, td: {style: {...absSize({width: 100}), ...col?.td?.style}}}
+        return {
+          ...col,
+          td: {
+            ...col?.td,
+            style: {...absSize({width: 100}), ...col?.td?.style},
+          },
+        }
       })
 
       .transposeColumns()
@@ -95,7 +115,7 @@ export class ColBuilder {
         format: (value, row, col) => {
           return (
             <R_Stack className={` items-center`}>
-              <BankUpsertModal {...{bankMasterId: row.id, formData: {}}} />
+              <BankUpsertModal {...{bankCode: row.code, formData: {}}} />
               <div>
                 {CsvTable({
                   records: row.BankBranchMaster?.map(d => {
@@ -113,7 +133,7 @@ export class ColBuilder {
                         },
                         {
                           label: '',
-                          cellValue: <BankUpsertModal {...{bankMasterId: row.id, formData: d}} />,
+                          cellValue: <BankUpsertModal {...{bankCode: row.code, formData: d}} />,
                         },
                       ],
                     }

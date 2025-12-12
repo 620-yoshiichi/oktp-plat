@@ -1,6 +1,6 @@
 // import {toUtc} from '@cm/class/Days/date-utils/calculations'
 // import {doTransaction, transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
-// import { Ucar} from '@prisma/client'
+// import { Ucar} from '@prisma/generated/prisma/client'
 // import {UcarProcessCl} from '@app/(apps)/ucar/class/UcarProcessCl'
 
 // export const doTransactionUcarBaseList = async ({cleansedData, users, adminUser, processes}) => {

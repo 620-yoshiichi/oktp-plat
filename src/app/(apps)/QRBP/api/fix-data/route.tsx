@@ -1,6 +1,6 @@
 import {NextResponse} from 'next/server'
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 
 export const POST = async () => {
   const args: Prisma.CarDeleteManyArgs = {

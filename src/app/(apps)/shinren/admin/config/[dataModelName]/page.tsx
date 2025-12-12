@@ -5,7 +5,7 @@ import {getUserIdWhere, QueryBuilder} from '@app/(apps)/shinren/class/QueryBuild
 import {ViewParamBuilder} from '@app/(apps)/shinren/class/ViewParamBuilder'
 import {getMasterPageCommonConfig} from '@cm/components/DataLogic/helpers/getMasterPageCommonConfig'
 import {setCustomParams} from '@cm/components/DataLogic/helpers/SetCustomParams'
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 import {getMidnight, toJst} from '@cm/class/Days/date-utils/calculations'
 import {getWhereQuery} from '@cm/lib/methods/redirect-method'
 import {Days} from '@cm/class/Days/Days'

@@ -1,6 +1,6 @@
 import {getMidnight, toUtc} from '@cm/class/Days/date-utils/calculations'
 
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 
 const ALERT_COLORS = [
   {value: `過去着工分未登録`, color: `#e85555`},

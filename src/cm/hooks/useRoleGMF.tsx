@@ -4,7 +4,7 @@ import PlaceHolder from '@cm/components/utils/loader/PlaceHolder'
 import {useGlobalModalForm} from '@cm/components/utils/modal/useGlobalModalForm'
 import {atomKey} from '@cm/hooks/useJotai'
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
-import {RoleMaster, User} from '@prisma/client'
+import {RoleMaster, User} from '@prisma/generated/prisma/client'
 import React from 'react'
 import useSWR from 'swr'
 

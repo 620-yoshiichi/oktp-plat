@@ -16,7 +16,7 @@ import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doS
 import {toastByResult} from '@cm/lib/ui/notifications'
 import {cl} from '@cm/lib/methods/common'
 
-import {CarTransferHistory, NewCar} from '@prisma/client'
+import {CarTransferHistory, NewCar} from '@prisma/generated/prisma/client'
 import {differenceInDays} from 'date-fns'
 import React, {useState} from 'react'
 import ShadModal from '@cm/shadcn/ui/Organisms/ShadModal'

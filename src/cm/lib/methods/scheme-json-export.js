@@ -1043,16 +1043,15 @@ model TenpoTsuikoData {
   @@index([processed])
 }
 
-generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["prismaSchemaFolder"]
-}
-
 datasource db {
   provider     = "postgresql"
-  url          = env("DATABASE_URL")
-  directUrl    = env("DIRECT_URL")
   relationMode = "prisma"
+  url = "postgres://mutsuo:timeSpacer817@localhost:5432/ucar"
+}
+
+generator client {
+  provider = "prisma-client"
+  output   = "./generated/prisma"
 }
 
 model Store {
@@ -1536,24 +1535,6 @@ model Ucar {
   runnable                  Boolean?
   storeToPickUp             String?
 
-  // accountingRecievedAt: false,
-  //   paybackScheduledAt: undefined,
-  //   upperCarregisteredAt: '2025-11-27T00:00:00+00:00',
-  //   customerName: '三浦　真由美',
-  //   annualTax: 39500,
-  //   earlyRecievedAt: '2025-10-31T15:00:00+00:00',
-  //   accountType: '普通',
-  //   accountNumber: '1773642',
-  //   accountName: 'ミウラマユミ',
-  //   petCount: null,
-  //   petPrice: null,
-  //   prefCount: null,
-  //   prefPrice: null,
-  //   exception: undefined,
-  //   paymentNoticeRecieved: '2025/12/09 6:39:02',
-  //   isPayed: false,
-  //   bankMasterId: 245,
-  //   bankBranchMasterId: 1659
   //銀行情報
   souhsinJikoku        DateTime?
   henkinRequired       Boolean?
@@ -1699,6 +1680,7 @@ model UcarGarageLocationMaster {
   active               Boolean                @default(true)
   sortOrder            Float                  @default(0)
   name                 String                 @unique
+  color                String?
   UcarGarageSlotMaster UcarGarageSlotMaster[]
 }
 
@@ -1709,6 +1691,7 @@ model UcarGarageSlotMaster {
   active                     Boolean                   @default(true)
   sortOrder                  Float                     @default(0)
   garageNumber               Int
+  color                      String?
   ucarGarageLocationMasterId Int?
   AppliedUcarGarageSlot      AppliedUcarGarageSlot[]
   UcarGarageLocationMaster   UcarGarageLocationMaster? @relation(fields: [ucarGarageLocationMasterId], references: [id], onDelete: Cascade)
@@ -1749,23 +1732,24 @@ model BankMaster {
 }
 
 model BankBranchMaster {
-  id              Int        @id @default(autoincrement())
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime?  @updatedAt
-  active          Boolean    @default(true)
-  sortOrder       Float      @default(0)
+  id              Int       @id @default(autoincrement())
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime? @updatedAt
+  active          Boolean   @default(true)
+  sortOrder       Float     @default(0)
   code            String
   name            String
   branchNameShort String?
   branchKana      String?
   searchKana      String?
   color           String?
-  bankMasterId    Int
-  BankMaster      BankMaster @relation(fields: [bankMasterId], references: [id], onDelete: Cascade)
-  Ucar            Ucar[]
+  bankCode        String
 
-  @@unique([code, bankMasterId], name: "unique_code_bankMasterId")
-  @@index([bankMasterId])
+  BankMaster BankMaster @relation(fields: [bankCode], references: [code], onDelete: Cascade)
+  Ucar       Ucar[]
+
+  @@unique([code, bankCode], name: "unique_code_bankCode")
+  @@index([bankCode])
 }
 
 model UcarProcess {
@@ -21956,6 +21940,20 @@ export const prismaDMMF = {
           "isUpdatedAt": false
         },
         {
+          "name": "color",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "String",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
           "name": "UcarGarageSlotMaster",
           "kind": "object",
           "isList": true,
@@ -22073,6 +22071,20 @@ export const prismaDMMF = {
           "isReadOnly": false,
           "hasDefaultValue": false,
           "type": "Int",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "color",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "String",
           "nativeType": null,
           "isGenerated": false,
           "isUpdatedAt": false
@@ -22690,7 +22702,7 @@ export const prismaDMMF = {
           "isUpdatedAt": false
         },
         {
-          "name": "bankMasterId",
+          "name": "bankCode",
           "kind": "scalar",
           "isList": false,
           "isRequired": true,
@@ -22698,7 +22710,7 @@ export const prismaDMMF = {
           "isId": false,
           "isReadOnly": true,
           "hasDefaultValue": false,
-          "type": "Int",
+          "type": "String",
           "nativeType": null,
           "isGenerated": false,
           "isUpdatedAt": false
@@ -22716,10 +22728,10 @@ export const prismaDMMF = {
           "nativeType": null,
           "relationName": "BankBranchMasterToBankMaster",
           "relationFromFields": [
-            "bankMasterId"
+            "bankCode"
           ],
           "relationToFields": [
-            "id"
+            "code"
           ],
           "relationOnDelete": "Cascade",
           "isGenerated": false,
@@ -22747,15 +22759,15 @@ export const prismaDMMF = {
       "uniqueFields": [
         [
           "code",
-          "bankMasterId"
+          "bankCode"
         ]
       ],
       "uniqueIndexes": [
         {
-          "name": "unique_code_bankMasterId",
+          "name": "unique_code_bankCode",
           "fields": [
             "code",
-            "bankMasterId"
+            "bankCode"
           ]
         }
       ],
@@ -25341,7 +25353,7 @@ export const prismaDMMF = {
       "isDefinedOnField": false,
       "fields": [
         {
-          "name": "bankMasterId"
+          "name": "bankCode"
         }
       ]
     },
@@ -25349,13 +25361,13 @@ export const prismaDMMF = {
       "model": "BankBranchMaster",
       "type": "unique",
       "isDefinedOnField": false,
-      "name": "unique_code_bankMasterId",
+      "name": "unique_code_bankCode",
       "fields": [
         {
           "name": "code"
         },
         {
-          "name": "bankMasterId"
+          "name": "bankCode"
         }
       ]
     },

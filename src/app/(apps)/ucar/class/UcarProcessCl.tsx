@@ -3,7 +3,7 @@ import {formatDate} from '@cm/class/Days/date-utils/formatters'
 import {knockEmailApi} from '@cm/lib/methods/knockEmailApi'
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 import {Code, codeItemCore} from '@cm/class/Code'
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 import {requestDeliberySS} from '@app/(apps)/ucar/class/lib/postHandler/ requestDeliberySS'
 import {UcarCL} from '@app/(apps)/ucar/class/UcarCL'
 export type shortcutNameStr =

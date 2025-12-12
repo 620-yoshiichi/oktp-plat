@@ -2,7 +2,7 @@ import {getQueryIds} from '@cm/lib/methods/urls'
 
 import {includeProps, roopMakeRelationalInclude} from '@cm/class/builders/QueryBuilderVariables'
 
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 
 export class QueryBuilder {
   static getInclude = (includeProps: includeProps) => {

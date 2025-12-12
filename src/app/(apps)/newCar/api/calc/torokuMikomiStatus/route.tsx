@@ -2,7 +2,7 @@ import {newCarWhereArgs} from '@app/(apps)/newCar/class/NewCarPredictionTable/Mi
 import {doTransaction} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
 import {transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
 
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 import {NextResponse} from 'next/server'
 
 export const POST = async () => {

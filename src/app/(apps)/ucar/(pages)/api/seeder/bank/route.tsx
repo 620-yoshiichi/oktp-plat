@@ -24,7 +24,9 @@ export const POST = async (req: NextRequest) => {
   const bankQuery: transactionQuery<'bankMaster' | 'bankBranchMaster', 'upsert'>[] = []
 
   data.forEach(d => {
-    const {bankCode, branchCode, bankName, branchNameShort, branchName, branchKana, searchKana} = d
+    const {bankCode: rawBankCode, branchCode: rawBranchCode, bankName, branchNameShort, branchName, branchKana, searchKana} = d
+    // 銀行コードは4桁、支店コードは3桁にパディング
+    const bankCode = String(rawBankCode).padStart(4, '0')
 
     const data = {
       code: bankCode,
@@ -44,31 +46,31 @@ export const POST = async (req: NextRequest) => {
   const {result: upsertedBanks} = await doTransaction({transactionQueryList: bankQuery})
 
   data.forEach(d => {
-    const {bankCode, branchCode, bankName, branchNameShort, branchName, branchKana, searchKana} = d
+    const {bankCode: rawBankCode, branchCode: rawBranchCode, bankName, branchNameShort, branchName, branchKana, searchKana} = d
+    // 銀行コードは4桁、支店コードは3桁にパディング
+    const bankCode = String(rawBankCode).padStart(4, '0')
+    const branchCode = String(rawBranchCode).padStart(3, '0')
 
-    const bankMasterId = upsertedBanks?.find(b => String(b.code) === String(bankCode))?.id
-    if (bankMasterId) {
-      const data = {
-        code: branchCode,
-        name: branchName,
-        branchNameShort,
-        branchKana,
-        searchKana,
-        bankMasterId,
-      }
-
-      bankQuery.push({
-        model: `bankBranchMaster`,
-        method: 'upsert',
-        queryObject: {
-          where: {
-            unique_code_bankMasterId: {code: branchCode, bankMasterId},
-          },
-          create: data,
-          update: data,
-        },
-      })
+    const data = {
+      code: branchCode,
+      name: branchName,
+      branchNameShort,
+      branchKana,
+      searchKana,
+      bankCode,
     }
+
+    bankQuery.push({
+      model: `bankBranchMaster`,
+      method: 'upsert',
+      queryObject: {
+        where: {
+          unique_code_bankCode: {code: branchCode, bankCode},
+        },
+        create: data,
+        update: data,
+      },
+    })
   })
   const {result: upsertedBranch} = await doTransaction({transactionQueryList: bankQuery})
 

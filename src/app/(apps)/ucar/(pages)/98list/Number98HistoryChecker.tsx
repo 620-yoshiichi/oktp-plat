@@ -3,7 +3,7 @@
 import {CsvTable} from '@cm/components/styles/common-components/CsvTable/CsvTable'
 import PlaceHolder from '@cm/components/utils/loader/PlaceHolder'
 import useDoStandardPrisma from '@cm/hooks/useDoStandardPrisma'
-import {Number98} from '@prisma/client'
+import {Number98} from '@prisma/generated/prisma/client'
 import React from 'react'
 
 export default function Number98HistoryChecker(props: {number98: Number98}) {

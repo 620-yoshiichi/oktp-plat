@@ -236,16 +236,6 @@ export const getDMMFModel = (modelName: string) => {
   return prismaDMMF.models.find(m => m.name === StrHandler.capitalizeFirstLetter(modelName)) as PrismaDMMFModel | undefined
 }
 
-/**
- * すべてのモデル名を取得
- */
-export const getAllModelNames = (): string[] => {
-  if (prismaDMMF && prismaDMMF.models) {
-    return prismaDMMF.models.map(m => m.name)
-  }
-  return Object.keys(getSchema())
-}
-
 export const getModelFieldsInfomation = (modelName: string) => {
   const modelStructure = getDMMFModel(modelName)
 

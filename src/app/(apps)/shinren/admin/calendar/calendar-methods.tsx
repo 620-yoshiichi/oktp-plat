@@ -3,7 +3,7 @@ import {formatDate} from '@cm/class/Days/date-utils/formatters'
 import {obj__initializeProperty} from '@cm/class/ObjHandler/transformers'
 import {optionType} from '@cm/class/Fields/col-operator-types'
 import prisma from 'src/lib/prisma'
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 import {addDays} from 'date-fns'
 
 const commonSelect = {

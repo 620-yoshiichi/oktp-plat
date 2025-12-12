@@ -8,8 +8,16 @@ import {ColoredText} from '@cm/components/styles/common-components/colors'
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 import useDoStandardPrisma from '@cm/hooks/useDoStandardPrisma'
 import PlaceHolder from '@cm/components/utils/loader/PlaceHolder'
-import {AppliedUcarGarageSlot, Number98, Prisma, Ucar, UcarGarageLocationMaster, UcarGarageSlotMaster} from '@prisma/client'
+import {
+  AppliedUcarGarageSlot,
+  Number98,
+  Prisma,
+  Ucar,
+  UcarGarageLocationMaster,
+  UcarGarageSlotMaster,
+} from '@prisma/generated/prisma/client'
 import {UcarCL} from '@app/(apps)/ucar/class/UcarCL'
+import {getGarageSlotStatusLabel} from '@app/(apps)/ucar/(lib)/garage/garageUtils'
 
 type locationInfoType = {
   locationName: string
@@ -25,6 +33,7 @@ export default function SlotHistoryChecker({setgarageHistoryModal, ucarGarageSlo
       Ucar: {
         include: {
           Number98: {},
+          OldCars_Base: {select: {KI_HANKAKA: true}},
           AppliedUcarGarageSlot: {
             include: {
               UcarGarageSlotMaster: {
@@ -38,14 +47,18 @@ export default function SlotHistoryChecker({setgarageHistoryModal, ucarGarageSlo
       },
     },
   }
-  const {data: AppliedUcarGarageSlot, isLoading} = useDoStandardPrisma(`appliedUcarGarageSlot`, `findMany`, args)
+  const {
+    data: AppliedUcarGarageSlot,
+    isLoading,
+    mutate: mutateAppliedUcarGarageSlot,
+  } = useDoStandardPrisma(`appliedUcarGarageSlot`, `findMany`, args)
 
   if (!AppliedUcarGarageSlot || isLoading) {
     return <PlaceHolder />
   }
 
   return (
-    <table className={` t-paper table-wrapper rounded text-center ${CssString.table.borderCerlls}`}>
+    <table className={` t-paper [&_td]:p-1 rounded text-center ${CssString.table.borderCerlls}`}>
       <thead>
         <tr>
           <th>査定ID</th>
@@ -61,7 +74,8 @@ export default function SlotHistoryChecker({setgarageHistoryModal, ucarGarageSlo
         {AppliedUcarGarageSlot?.map((slot, i) => {
           const ucar = slot?.Ucar
 
-          const formData = getGaragePdfFormData(ucar)
+          // 空き状況のステータスを取得
+          const status = getGarageSlotStatusLabel(slot)
 
           return (
             <tr key={i}>
@@ -74,17 +88,19 @@ export default function SlotHistoryChecker({setgarageHistoryModal, ucarGarageSlo
               <td>
                 <button
                   onClick={async () => {
-                    toggleLoad(async () => {
+                    if (confirm('この車庫登録を強制的に「空き」にしますか？')) {
+                      // 強制空きフラグの切り替え（finishedAtのトグル）
                       await doStandardPrisma(`appliedUcarGarageSlot`, `update`, {
                         where: {id: slot.id},
                         data: {finishedAt: slot.finishedAt ? null : new Date().toISOString()},
                       })
-                      setgarageHistoryModal(null)
-                    })
+
+                      mutateAppliedUcarGarageSlot()
+                    }
                   }}
                 >
-                  <ColoredText className={`text-center`} bgColor={slot.finishedAt ? `green` : `red`}>
-                    {slot.finishedAt ? `利用終了` : `使用中`}
+                  <ColoredText className={`text-center`} bgColor={status.color}>
+                    {status.label}
                   </ColoredText>
                 </button>
               </td>
@@ -93,6 +109,7 @@ export default function SlotHistoryChecker({setgarageHistoryModal, ucarGarageSlo
                   className={`t-link`}
                   onClick={async () => {
                     toggleLoad(async () => {
+                      const formData = await getGaragePdfFormData(ucar)
                       await generatePDF(formData)
                     })
                   }}
@@ -178,7 +195,7 @@ export const getGaragePdfFormData = async (
     textbox21: '897',
     textbox22: '1004',
   }
-  console.debug(formData)
+
   return formData
 }
 export const generatePDF = async formData => {

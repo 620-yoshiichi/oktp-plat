@@ -1,7 +1,7 @@
 'use server'
 import {NEW_CAR_CONST} from '@app/(apps)/newCar/(constants)/newCar-constants'
 import prisma from 'src/lib/prisma'
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 import {Days} from '@cm/class/Days/Days'
 import {formatDate} from '@cm/class/Days/date-utils/formatters'
 

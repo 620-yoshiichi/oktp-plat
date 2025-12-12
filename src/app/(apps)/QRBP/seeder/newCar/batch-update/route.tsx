@@ -3,7 +3,7 @@ import {formatDate} from '@cm/class/Days/date-utils/formatters'
 import {sleep} from '@cm/lib/methods/common'
 import prisma from 'src/lib/prisma'
 
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 import chalk from 'chalk'
 import {NextRequest, NextResponse} from 'next/server'
 import {doTransaction, transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'

@@ -1,4 +1,4 @@
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 
 const Fr: any = {label: '振当', fieldKey: 'DD_FR'}
 

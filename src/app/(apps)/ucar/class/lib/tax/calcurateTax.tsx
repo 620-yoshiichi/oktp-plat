@@ -1,14 +1,11 @@
+import {ucarData} from '@app/(apps)/ucar/class/UcarCL'
 import {formatDate} from '@cm/class/Days/date-utils/formatters'
 import {requestResultType} from '@cm/types/types'
-import {Prisma} from '@prisma/client'
 import {differenceInMonths} from 'date-fns'
 
 export {}
 
-export const validateData = ({processedAs, masshoBi, earlyRecievedAt, annualTax}) => {
-  const refYear = earlyRecievedAt.getFullYear()
-  const refMonth = earlyRecievedAt.getMonth() + 1
-
+export const validateData = ({processedAs, masshoBi, annualTax, refYear, refMonth}) => {
   const errors: any[] = []
   if (processedAs === '抹消' && !masshoBi) {
     errors.push('抹消日が入力されていません。')
@@ -59,7 +56,7 @@ export const calculatePayback = ({annualTax, meihen, refDate, refMonth}) => {
 }
 
 export const calcurateTax = (props: {row: any}) => {
-  const row = props.row as unknown as Prisma.UcarUncheckedCreateInput
+  const row = props.row as ucarData
 
   let res: requestResultType = {
     success: false,
@@ -67,19 +64,16 @@ export const calcurateTax = (props: {row: any}) => {
     message: ``,
   }
 
-  const {processedAs, masshoBi, earlyRecievedAt, annualTax} = row
+  const {processedAs, masshoBi, annualTax} = row
 
-  const refYear = earlyRecievedAt ? new Date(earlyRecievedAt).getFullYear() : undefined
-  const refMonth = earlyRecievedAt ? new Date(earlyRecievedAt).getMonth() + 1 : undefined
+  const refYear = row.earlyYear ? row.earlyYear : undefined
+  const refMonth = row.earlyMonth ? row.earlyMonth : undefined
   const RowDataObj = {
     processedAs,
     masshoBi,
-    earlyRecievedAt,
     annualTax: annualTax,
     refYear,
     refMonth,
-    // refYear: parseInt(row.refYear, 10),
-    // refMonth: parseInt(row.refMonth, 10),
   }
 
   const errors = validateData(RowDataObj)

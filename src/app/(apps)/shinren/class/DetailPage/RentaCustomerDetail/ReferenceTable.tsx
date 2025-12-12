@@ -10,7 +10,7 @@ import {toastByResult} from '@cm/lib/ui/notifications'
 import {Shinren} from '@app/(apps)/shinren/class/Shinren'
 import {formatDate} from '@cm/class/Days/date-utils/formatters'
 import ChildCreator from '@cm/components/DataLogic/RTs/ChildCreator/ChildCreator'
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 import useDoStandardPrisma from '@cm/hooks/useDoStandardPrisma'
 import {toast} from 'react-toastify'
 

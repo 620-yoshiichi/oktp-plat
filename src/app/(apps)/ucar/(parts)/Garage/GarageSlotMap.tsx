@@ -3,14 +3,14 @@ import React from 'react'
 import useDoStandardPrisma from '@cm/hooks/useDoStandardPrisma'
 
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 
 import PlaceHolder from '@cm/components/utils/loader/PlaceHolder'
 import AutoGridContainer from '@cm/components/utils/AutoGridContainer'
 import {C_Stack, R_Stack} from '@cm/components/styles/common-components/common-components'
 import {Card} from '@cm/shadcn/ui/card'
 import {TextGray, TextGreen, TextLink, TextRed} from '@cm/components/styles/common-components/Alert'
-
+import {isGarageSlotAvailable} from '@app/(apps)/ucar/(lib)/garage/garageUtils'
 
 export default function GarageSlotMap({
   isValidating,
@@ -27,6 +27,13 @@ export default function GarageSlotMap({
     where: {
       ucarGarageSlotMasterId: {
         in: UcarGarageSlotMaster.map(slot => slot.id),
+      },
+    },
+    include: {
+      Ucar: {
+        include: {
+          OldCars_Base: {select: {KI_HANKAKA: true}},
+        },
       },
     },
   })
@@ -53,7 +60,8 @@ export default function GarageSlotMap({
               const slothistory = AppliedUcarGarageSlot.filter(data => {
                 return data.ucarGarageSlotMasterId === slot.id
               })
-              const occupiedSlotList = slothistory.filter(slot => !slot.finishedAt)
+              // 空きではない（使用中）スロットをフィルタリング
+              const occupiedSlotList = slothistory.filter(slot => !isGarageSlotAvailable(slot))
 
               const occupiedSlotCount = occupiedSlotList.length
               const totalSLotCount = slothistory.length

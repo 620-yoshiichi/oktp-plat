@@ -1,4 +1,4 @@
-import {RoleMaster} from '@prisma/client'
+import {RoleMaster} from '@prisma/generated/prisma/client'
 import {fetchUserRole} from 'src/non-common/serverSideFunction'
 import useSWR from 'swr'
 

@@ -12,7 +12,7 @@ import {btnClass, DesiredTorokuDateRegister} from '@app/(apps)/newCar/(parts)/De
 import {isDev, shorten} from '@cm/lib/methods/common'
 import {getForSelectWhere} from '@app/(apps)/newCar/(constants)/forSelectConfig'
 
-import {NewCar, User, Store} from '@prisma/client'
+import {NewCar, User, Store} from '@prisma/generated/prisma/client'
 import {Button} from '@cm/components/styles/common-components/Button'
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 

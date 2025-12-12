@@ -11,7 +11,7 @@ import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doS
 import {toastByResult} from '@cm/lib/ui/notifications'
 import React from 'react'
 
-export const BankUpsertModal = ({formData, bankMasterId}) => {
+export const BankUpsertModal = ({formData, bankCode}) => {
   const useGlobalProps = useGlobal()
   const {BasicForm, latestFormData} = useBasicFormProps({
     columns: ColBuilder.bankBranchMaster({useGlobalProps}),
@@ -63,7 +63,7 @@ export const BankUpsertModal = ({formData, bankMasterId}) => {
                 const payload = {
                   code: data.code,
                   name: data.name,
-                  bankMasterId,
+                  bankCode,
                 }
                 const res = await doStandardPrisma(`bankBranchMaster`, `upsert`, {
                   where: {id: data.id ?? 0},

@@ -22,7 +22,7 @@ import useLocalLoading from '@cm/hooks/globalHooks/useLocalLoading'
 import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 
-import {NewCar} from '@prisma/client'
+import {NewCar} from '@prisma/generated/prisma/client'
 import React, {useState} from 'react'
 
 export default function CrOperationCC({crHolidays, from, to, newCars, pendingCars}) {

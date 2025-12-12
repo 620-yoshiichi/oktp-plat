@@ -1,6 +1,6 @@
 // import {BQ} from '@app/api/google/big-query/BigQuery'
 // import {sql} from '@cm/class/SqlBuilder/SqlBuilder'
-// import {Prisma} from '@prisma/client'
+// import {Prisma} from '@prisma/generated/prisma/client'
 // import {doTransaction, transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
 // import {BQ_parser} from '@app/api/google/big-query/bigQueryParser'
 

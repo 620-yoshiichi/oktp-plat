@@ -1,6 +1,6 @@
 import {includeProps, roopMakeRelationalInclude} from '@cm/class/builders/QueryBuilderVariables'
 
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 
 export class QueryBuilder {
   static getInclude = (includeProps: includeProps) => {
@@ -95,7 +95,11 @@ export class QueryBuilder {
           include: {
             AppliedUcarGarageSlot: {
               include: {
-                Ucar: {},
+                Ucar: {
+                  include: {
+                    OldCars_Base: {select: {KI_HANKAKA: true}},
+                  },
+                },
               },
             },
           },

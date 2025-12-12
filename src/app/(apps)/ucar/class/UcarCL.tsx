@@ -15,7 +15,7 @@ import {
   UcarGarageLocationMaster,
   OldCars_Base,
   UpassFamilyTree,
-} from '@prisma/client'
+} from '@prisma/generated/prisma/client'
 import {roleIs} from 'src/non-common/scope-lib/judgeIsAdmin'
 import {QueryBuilder} from '@app/(apps)/ucar/class/QueryBuilder'
 

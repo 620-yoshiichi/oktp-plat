@@ -1,5 +1,5 @@
 import {userRoleType} from '@cm/hooks/useUserRole'
-import {User} from '@prisma/client'
+import {User} from '@prisma/generated/prisma/client'
 
 import {getScopes} from 'src/non-common/scope-lib/getScopes'
 

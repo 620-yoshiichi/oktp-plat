@@ -9,7 +9,7 @@ export const POST = async (req: NextRequest) => {
 // import {doTransaction, transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
 // import {doTransactionUcarBaseList} from '@app/(apps)/ucar/(pages)/api/seeder/oldProcess/helper/upsertUcarBaseLIst'
 // import {ObjectMap} from '@cm/lib/methods/common'
-// import {Prisma} from '@prisma/client'
+// import {Prisma} from '@prisma/generated/prisma/client'
 // import {sql} from '@cm/class/SqlBuilder/SqlBuilder'
 // import {BQ} from '@app/api/google/big-query/BigQuery'
 // import {processBatchWithRetry} from '@cm/lib/server-actions/common-server-actions/processBatchWithRetry'

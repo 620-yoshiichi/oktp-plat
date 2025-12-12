@@ -2,7 +2,7 @@
 
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 import {knockEmailApi} from '@cm/lib/methods/knockEmailApi'
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 import {isDev} from '@cm/lib/methods/common'
 import {getMidnight} from '@cm/class/Days/date-utils/calculations'
 

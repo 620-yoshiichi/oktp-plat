@@ -18,7 +18,7 @@ import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 import {toastByResult} from '@cm/lib/ui/notifications'
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 import React from 'react'
 
 export function StuffSwitcher(props: {newCar; close}) {

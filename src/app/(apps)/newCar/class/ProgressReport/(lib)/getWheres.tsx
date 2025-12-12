@@ -1,6 +1,6 @@
-import { isImcompleted} from '@app/(apps)/newCar/(constants)/checkpoints/checkpoints'
+import {isImcompleted} from '@app/(apps)/newCar/(constants)/checkpoints/checkpoints'
 
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 import {addMonths} from 'date-fns'
 import {NEW_CAR_CONST} from '@app/(apps)/newCar/(constants)/newCar-constants'
 

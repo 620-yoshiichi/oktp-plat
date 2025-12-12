@@ -15,7 +15,7 @@
 // import {atomTypes} from '@cm/hooks/useJotai'
 
 // import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
-// import {Prisma, Ucar} from '@prisma/client'
+// import {Prisma, Ucar} from '@prisma/generated/prisma/client'
 
 // export default function useSateiConnection() {
 //   const GMF = useGlobalModalForm<atomTypes[`sateiConnectionGMF`]>(`sateiConnectionGMF`, null, {

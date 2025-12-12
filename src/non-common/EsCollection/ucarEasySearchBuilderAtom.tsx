@@ -7,7 +7,7 @@ import {
   toRowGroup,
 } from '@cm/class/builders/QueryBuilderVariables'
 
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 import {addDays} from 'date-fns'
 
 import {shorten} from '@cm/lib/methods/common'
@@ -205,7 +205,22 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     },
   }
 
-  const destination__meihen_done: EsObj = {
+  const destination__massho_not_done: EsObj = {
+    label: '抹消[未]',
+    notify: true,
+    description: '抹消が決定しているが、まだ完了していない',
+    CONDITION: {
+      AND: [
+        //
+        {processedAs: UCAR_CODE.PROCESSED_AS.raw.MASSESHO.code},
+        {masshoBi: null},
+
+        commonWhere,
+      ],
+    },
+  }
+
+  const destinationCompleted__meihen_done: EsObj = {
     label: '名変[完]',
     description: '名義変更が完了している',
     CONDITION: {
@@ -219,7 +234,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     },
   }
 
-  const destination__massho_done: EsObj = {
+  const destinationCompleted__massho_done: EsObj = {
     label: '抹消[完]',
     description: '抹消が完了している',
     CONDITION: {
@@ -233,17 +248,14 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     },
   }
 
-  const destination__massho_not_done: EsObj = {
-    label: '抹消[未]',
-    notify: true,
-    description: '抹消が決定しているが、まだ完了していない',
+  const destinationCompleted__shakoShomeiDone: EsObj = {
+    label: '車庫証明[完]',
+    description: '車庫証明が完了している',
     CONDITION: {
       AND: [
-        //
-        {processedAs: UCAR_CODE.PROCESSED_AS.raw.MASSESHO.code},
-        {masshoBi: null},
-
-        commonWhere,
+        {
+          AppliedUcarGarageSlot: {isNot: null},
+        },
       ],
     },
   }
@@ -398,15 +410,14 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     pending__retendedOnStuff,
     pending__retendedOnStore,
     pending__unReceived,
-    // pending__NonpaperErrorHq,
+
     pending__paperErrorHq,
 
     deadline__inkan,
     destination__undecided,
     destination__meihen_not_done,
-    // destination__meihen_done,
+
     destination__massho_not_done,
-    // destination__massho_done,
 
     number98__exist,
     number98__pending,
@@ -414,6 +425,10 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
 
     shiwake__undecided,
     shiwake__decided,
+
+    destinationCompleted__meihen_done,
+    destinationCompleted__massho_done,
+    destinationCompleted__shakoShomeiDone,
 
     tax__unScheduled,
     tax__scheduled_pending,
@@ -433,14 +448,44 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
   const forEigyou = [{exclusiveGroup: ExGroup[`pending`], name: `書類受入状況`}]
 
   const paperGroups = [
-    {exclusiveGroup: ExGroup[`deadline`], name: `書類期限間近`},
-    {exclusiveGroup: ExGroup[`destination`], name: `名変抹消`},
-    {exclusiveGroup: ExGroup[`number98`], name: `98番号付与状況`, additionalProps: {defaultOpen: false}},
-    {exclusiveGroup: ExGroup[`shiwake`], name: `仕分結果`, additionalProps: {defaultOpen: false}},
-    {exclusiveGroup: ExGroup[`shinko`], name: `新古車予約枠`, additionalProps: {defaultOpen: false}},
+    {
+      exclusiveGroup: ExGroup[`deadline`],
+      name: `書類期限間近`,
+    },
+    {
+      exclusiveGroup: ExGroup[`destination`],
+      name: `名変抹消未処理`,
+    },
+    {
+      exclusiveGroup: ExGroup[`number98`],
+      name: `98番号付与状況`,
+      additionalProps: {defaultOpen: false},
+    },
+    {
+      exclusiveGroup: ExGroup[`shiwake`],
+      name: `仕分結果`,
+      additionalProps: {defaultOpen: false},
+    },
+
+    {
+      exclusiveGroup: ExGroup[`destinationCompleted`],
+      name: `名変抹消完了`,
+      additionalProps: {defaultOpen: false},
+    },
+
+    {
+      exclusiveGroup: ExGroup[`shinko`],
+      name: `新古車予約枠`,
+      additionalProps: {defaultOpen: false},
+    },
   ]
 
-  const taxGroups = [{exclusiveGroup: ExGroup[`tax`], name: `自動車税`}]
+  const taxGroups = [
+    {
+      exclusiveGroup: ExGroup[`tax`],
+      name: `自動車税`,
+    },
+  ]
 
   toRowGroup(0, dataArr, [
     //

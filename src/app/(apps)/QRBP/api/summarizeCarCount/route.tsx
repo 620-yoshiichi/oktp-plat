@@ -3,7 +3,7 @@ import {getMidnight} from '@cm/class/Days/date-utils/calculations'
 
 import {EasySearchObject} from '@cm/class/builders/QueryBuilderVariables'
 import prisma from 'src/lib/prisma'
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 
 import {addDays} from 'date-fns'
 import {NextResponse} from 'next/server'

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
+    "target": "ES2023",
     "lib": [
       "dom",
       "dom.iterable",
@@ -26,6 +26,9 @@
     ],
     "baseUrl": ".",
     "paths": {
+      "@prisma/*": [
+        "prisma/schema/*"
+      ],
       "@app/*": [
         "src/app/*"
       ],

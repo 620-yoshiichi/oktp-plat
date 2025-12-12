@@ -6,7 +6,7 @@ import {FakeOrKeepSession} from 'src/non-common/scope-lib/FakeOrKeepSession'
 import {getScopes} from 'src/non-common/scope-lib/getScopes'
 import {judgeIsAdmin} from 'src/non-common/scope-lib/judgeIsAdmin'
 import {UserCl} from '@cm/class/UserCl'
-import {User} from '@prisma/client'
+import {User} from '@prisma/generated/prisma/client'
 import {useCallback, useEffect, useMemo, useState} from 'react'
 import {Session} from 'next-auth'
 
@@ -51,14 +51,6 @@ export default function useCustomSession(props?: {session?: Session | null}) {
   const {roles, roleIsLoading} = useUserRole({session: userData})
 
   const sessionLoading = fakeSessionLoading || status === 'loading' || roleIsLoading
-
-  if (fakeSessionLoading) {
-    console.log('fakeSessionLoading')
-  } else if (status === 'loading') {
-    console.log('status === loading')
-  } else if (roleIsLoading) {
-    console.log('roleIsLoading')
-  }
 
   const accessScopes = useCallback(() => getScopes(userData, {query, roles}), [userData, query, roles])
 

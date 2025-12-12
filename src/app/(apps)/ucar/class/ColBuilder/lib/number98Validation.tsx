@@ -1,6 +1,6 @@
 import {unsold} from '@app/(apps)/ucar/(constants)/ucar-constants'
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 
 export const number98Validation = async (value, formValues) => {
   const {result: currentCarData} = await doStandardPrisma(`ucar`, `findUnique`, {where: {id: formValues.id}})

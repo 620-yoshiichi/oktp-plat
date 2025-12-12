@@ -3,7 +3,7 @@ import {NextRequest, NextResponse} from 'next/server'
 import {doTransaction} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
 import prisma from 'src/lib/prisma'
 import {transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 
 import {GoogleSheet_Read} from '@app/api/google/actions/sheetAPI'
 import {UcarProcessCl} from '@app/(apps)/ucar/class/UcarProcessCl'
@@ -158,25 +158,39 @@ const upsertBankData = async (rows: any[]) => {
   // BankMaster / BankBranchMaster を upsert
   const bankQuery: transactionQuery<'bankMaster' | 'bankBranchMaster', 'upsert'>[] = []
 
-  // ユニークな銀行名のリストを取得
-  const uniqueBankNames = [...new Set(rows.map(row => row['銀行名']).filter(Boolean))]
+  // bankNameを「銀行コード_銀行名称」として分割し、ユニークな銀行データを取得
+  const uniqueBankData = [
+    ...new Map(
+      rows
+        .map(row => {
+          const bankName = row['銀行名']
+          if (!bankName) return null
+          // 「0173_百十四銀行」のような形式を分割
+          const [rawBankCode, ...nameParts] = bankName.split('_')
+          const bankCode = String(rawBankCode).padStart(4, '0') // 銀行コードは4桁
+          const bankNameOnly = nameParts.join('_') || rawBankCode // 「_」がない場合はそのまま使用
+          return {bankCode, bankNameOnly}
+        })
+        .filter(Boolean)
+        .map(d => [d!.bankCode, d])
+    ).values(),
+  ] as {bankCode: string; bankNameOnly: string}[]
 
-  // BankMaster を upsert
-  uniqueBankNames.forEach(bankName => {
+  // BankMaster を upsert（codeでユニーク）
+  uniqueBankData.forEach(({bankCode, bankNameOnly}) => {
     bankQuery.push({
       model: 'bankMaster',
       method: 'upsert',
       queryObject: {
         where: {
-          name: bankName,
+          code: bankCode,
         },
         create: {
-          code: bankName,
-          name: bankName,
+          code: bankCode,
+          name: bankNameOnly,
         },
         update: {
-          code: bankName,
-          name: bankName,
+          name: bankNameOnly,
         },
       },
     })
@@ -184,42 +198,44 @@ const upsertBankData = async (rows: any[]) => {
 
   const {result: upsertedBanks} = await doTransaction({transactionQueryList: bankQuery})
 
-  // BankBranchMaster を upsert
+  // BankBranchMaster を upsert（bankCodeベースのリレーション）
   const branchQuery: transactionQuery<'bankMaster' | 'bankBranchMaster', 'upsert'>[] = []
 
   rows.forEach(row => {
-    const {銀行名: bankName, 支店名: branchName} = row
+    const bankName = row['銀行名']
+    const branchName = row['支店名']
     const branchNameKana = row['支店名（カナ）']
+    const rawBranchCode = row['店番号'] // 店番号を支店コードとして使用
 
-    if (!bankName || !branchName) {
+    if (!bankName || !branchName || !rawBranchCode) {
       return
     }
 
-    const bankMasterId = upsertedBanks?.find(b => {
-      return String(b.code) === String(bankName) || String(b.name) === String(bankName)
-    })?.id
+    // bankNameから銀行コードを取得（4桁にパディング）
+    const [rawBankCode] = bankName.split('_')
+    const bankCode = String(rawBankCode).padStart(4, '0')
+    // 支店コードは3桁にパディング
+    const branchCode = String(rawBranchCode).padStart(3, '0')
 
-    if (bankMasterId) {
-      branchQuery.push({
-        model: 'bankBranchMaster',
-        method: 'upsert',
-        queryObject: {
-          where: {
-            unique_code_bankMasterId: {code: branchName, bankMasterId},
-          },
-          create: {
-            code: branchName,
-            name: branchName,
-            branchKana: branchNameKana || undefined,
-            bankMasterId,
-          },
-          update: {
-            name: branchName,
-            branchKana: branchNameKana || undefined,
-          },
+    branchQuery.push({
+      model: 'bankBranchMaster',
+      method: 'upsert',
+      queryObject: {
+        where: {
+          unique_code_bankCode: {code: branchCode, bankCode},
         },
-      })
-    }
+        create: {
+          code: branchCode,
+          name: branchName,
+          branchKana: branchNameKana || undefined,
+          bankCode,
+        },
+        update: {
+          name: branchName,
+          branchKana: branchNameKana || undefined,
+        },
+      },
+    })
   })
 
   const {result: upsertedBranches} = await doTransaction({transactionQueryList: branchQuery})

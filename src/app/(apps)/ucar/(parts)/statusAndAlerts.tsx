@@ -1,7 +1,7 @@
 // 'use client'
 
 // import {optionType} from '@cm/class/Fields/col-operator-types'
-// import {UcarPaperWorkNotes} from '@prisma/client'
+// import {UcarPaperWorkNotes} from '@prisma/generated/prisma/client'
 
 // import {differenceInDays} from 'date-fns'
 

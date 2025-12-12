@@ -51,6 +51,7 @@ export const getTaxJobCols = () => {
       id: 'henkinRequired',
       label: '返金必要有無 ',
       type: `boolean`,
+      form: {},
       format: (value, row) => {
         return row.henkinRequired ? '○' : '×'
       },
@@ -58,7 +59,10 @@ export const getTaxJobCols = () => {
     {
       id: `exception`,
       label: `例外処理`,
-      forSelect: {codeMaster: UCAR_CODE.TAX_EXCEPTION},
+      form: {},
+      forSelect: {
+        optionsOrOptionFetcher: UCAR_CODE.TAX_EXCEPTION.array,
+      },
       format: (value, row) => {
         const codeItem = UCAR_CODE.TAX_EXCEPTION.byCode(row.exception)
         return (
@@ -68,15 +72,18 @@ export const getTaxJobCols = () => {
         )
       },
     },
-    {id: `paymentNoticeRecievedAt`, label: `納付書受領`, type: `date`},
-    {id: `isPayed`, label: `納付済み`, type: `boolean`},
-    {id: `paybackScheduledAt`, label: `入金予定日`, type: `date`},
+    {id: `paymentNoticeRecievedAt`, label: `納付書受領`, form: {}, type: `date`},
+    {id: `isPayed`, label: `納付済み`, form: {}, type: `boolean`},
+    {id: `paybackScheduledAt`, label: `入金予定日`, form: {}, type: `date`},
     {
       id: `accountingRecievedAt`,
       label: `入金確認日`,
+      form: {},
       type: `date`,
     },
-  ]).showSummaryInTd({wrapperWidthPx: 200}).plain
+  ])
+    .showSummaryInTd({wrapperWidthPx: 200})
+    .buildFormGroup({groupName: `自動車税その他`}).plain
 
   const colArr = {cols1, cols2, cols3, cols4}
 

@@ -50,16 +50,22 @@ export const bankBranchMasterCol: colType = {
     config: {
       modelName: `bankBranchMaster`,
       messageWhenNoHit: `先に銀行を選択してください`,
-      select: {name: `text`, branchKana: `text`},
+      select: {
+        name: `text`,
+        branchKana: `text`,
+      },
       where: ({latestFormData}) => {
+        // BankMasterとのリレーションでidを使って検索
         const result = {
-          bankMasterId: latestFormData.bankMasterId ?? 0,
+          BankMaster: {
+            id: latestFormData.bankMasterId ?? 0,
+          },
         }
 
         return result
       },
       nameChanger: op => {
-        const name = op?.name ? `${op?.name} (${op.branchKana ?? `カナなし`})` : ''
+        const name = op?.name ? `${op?.name}` : ''
         return {...op, name}
       },
     },
@@ -72,10 +78,15 @@ export const bankBranchMasterCol: colType = {
             return {
               columns: new Fields([
                 {
-                  id: `bankMasterId`,
-                  label: `銀行`,
-                  forSelect: {},
-                  form: {defaultValue: props2.latestFormData.bankMasterId},
+                  id: `bankCode`,
+                  label: `銀行コード`,
+                  forSelect: {
+                    config: {
+                      modelName: `bankMaster`,
+                      select: {name: `text`, code: `text`},
+                    },
+                  },
+                  form: {},
                 },
                 {id: `code`, label: `支店コード`},
                 {
@@ -83,7 +94,7 @@ export const bankBranchMasterCol: colType = {
                   label: `支店名`,
                   form: {defaultValue: props2.searchFormData.name},
                 },
-                {id: `branchKana`, label: `支店カナ`, form: {}},
+                // {id: `branchKana`, label: `支店カナ`, form: {}},
               ])
                 .customAttributes(({col}) => ({...col, form: {}, td: {}}))
                 .transposeColumns(),

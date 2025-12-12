@@ -9,7 +9,7 @@ import {toUtc} from '@cm/class/Days/date-utils/calculations'
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 import {processBatchWithRetry} from '@cm/lib/server-actions/common-server-actions/processBatchWithRetry'
 
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 import {addDays, addMonths} from 'date-fns'
 
 export const batchAlignCars = async () => {

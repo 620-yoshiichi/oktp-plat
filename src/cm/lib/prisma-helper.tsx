@@ -136,7 +136,14 @@ const formatForeignKeyError = (fieldName?: string): string => {
  * @param message - エラーメッセージ
  * @returns フォーマットされたエラーメッセージ
  */
-const parseValidationError = (message: string): string => {
+const parseValidationError = (
+  message: string,
+  args?: {
+    model: PrismaModelNames
+    method: prismaMethodType
+    queryObject: any
+  }
+): string => {
   // 型エラーのパターン
   const typeErrorRegex = /Argument `(.+)`: Invalid value provided\. Expected (.+), provided (.+)\./
   const typeErrorMatch = typeErrorRegex.exec(message)
@@ -155,6 +162,7 @@ const parseValidationError = (message: string): string => {
     return `${displayName}は必ず入力してください`
   }
 
+  console.error({args})
   return 'データの形式が正しくありません'
 }
 
@@ -163,7 +171,14 @@ const parseValidationError = (message: string): string => {
  * @param error - Prismaエラーオブジェクト
  * @returns ユーザーフレンドリーなエラーメッセージ
  */
-export const handlePrismaError = (error: PrismaError): string => {
+export const handlePrismaError = (
+  error: PrismaError,
+  args?: {
+    model: PrismaModelNames
+    method: prismaMethodType
+    queryObject: any
+  }
+): string => {
   const {code, meta, message} = error
 
   // エラーコードが存在する場合の処理
@@ -221,7 +236,7 @@ export const handlePrismaError = (error: PrismaError): string => {
   }
 
   // エラーコードがない場合のバリデーションエラー処理
-  return parseValidationError(message)
+  return parseValidationError(message, args)
 }
 
 /**

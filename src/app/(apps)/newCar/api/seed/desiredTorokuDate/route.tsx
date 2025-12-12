@@ -3,7 +3,7 @@ export {}
 // import {doTransaction} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
 // import prisma from 'src/lib/prisma'
 // import {transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
-// import {Prisma} from '@prisma/client'
+// import {Prisma} from '@prisma/generated/prisma/client'
 
 // import {NextRequest, NextResponse} from 'next/server'
 

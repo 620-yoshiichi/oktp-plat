@@ -8,7 +8,7 @@ import 'dayjs/locale/ja'
 import {colTypeStr} from '@cm/types/types'
 
 import {getColorStyles} from '@cm/lib/methods/colors'
-import {Calendar} from '@prisma/client'
+import {Calendar} from '@prisma/generated/prisma/client'
 import {formatDate} from '@cm/class/Days/date-utils/formatters'
 import {DateInput} from '@cm/class/Days/date-utils/date-utils-type'
 import {toJst, toUtc} from '@cm/class/Days/date-utils/calculations'

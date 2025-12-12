@@ -1,6 +1,6 @@
 import {prismaMethodType, PrismaModelNames} from '@cm/types/prisma-types'
 import useSWR from 'swr'
-import {PrismaClient} from '@prisma/client'
+import {PrismaClient} from '@prisma/generated/prisma/client'
 import {generalDoStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 
 type useDoStandardPrismaType = <T extends PrismaModelNames, M extends prismaMethodType>(

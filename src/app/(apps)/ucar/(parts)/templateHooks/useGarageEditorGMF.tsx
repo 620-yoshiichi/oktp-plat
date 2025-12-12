@@ -55,6 +55,11 @@ export const GarageRegister = ({ucarId}) => {
       Number98: {},
       AppliedUcarGarageSlot: {
         include: {
+          Ucar: {
+            include: {
+              OldCars_Base: {select: {KI_HANKAKA: true}},
+            },
+          },
           UcarGarageSlotMaster: {
             include: {
               UcarGarageLocationMaster: {},

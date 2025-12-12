@@ -5,7 +5,7 @@ import {formatDate} from '@cm/class/Days/date-utils/formatters'
 import {doTransaction} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
 
 import {transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 import {addMonths, addYears} from 'date-fns'
 
 import {NextRequest, NextResponse} from 'next/server'

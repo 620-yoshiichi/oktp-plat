@@ -4,7 +4,7 @@ import {toUtc} from '@cm/class/Days/date-utils/calculations'
 
 import {Padding} from '@cm/components/styles/common-components/common-components'
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@prisma/generated/prisma/client'
 import {addDays} from 'date-fns'
 import React from 'react'
 
