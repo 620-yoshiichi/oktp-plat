@@ -27,15 +27,6 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
 
   type EsObj = EasySearchObjectAtom<Prisma.UcarWhereInput>
 
-  const paperErrorWhere: CONDITION_TYPE = {
-    UcarPaperWorkNotes: {
-      some: {
-        type: UCAR_CODE.PAPER_WORK_NOTE_TYPES.raw.FUBI.code,
-        resolvedAt: null,
-      },
-    },
-  }
-
   const commonWhere: Prisma.UcarWhereInput = {
     AND: [
       //
@@ -59,6 +50,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     CONDITION: {
       AND: [
         //
+        commonWhere,
         {UcarProcess: {none: tenchoQrChecked}}, //店長が未チェック、
         {UcarProcess: {none: stuffQrChecked}}, //かつスタッフが未チェック
       ],
@@ -72,41 +64,57 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     CONDITION: {
       AND: [
         //
+        commonWhere,
         {UcarProcess: {some: stuffQrChecked}}, //スタッフがチェック済み
         {UcarProcess: {none: tenchoQrChecked}}, //かつ店長が未チェック
       ],
     },
   }
 
+  // 書類管理状況
   // ===========受付・不備========
-  const pending__unReceived: EsObj = {
+  const paperStatus__unReceived: EsObj = {
     label: '未受付',
     notify: true,
     description: '書類送付QRチェック後、受付なし',
     CONDITION: {
-      UcarProcess: {
-        some: {
-          processCode: processMasterRaw.STORE_SHORUI_SOUHU.code,
-        },
-      },
-      arrivedAt: null,
+      AND: [
+        //
+        commonWhere,
+        {UcarProcess: {some: {processCode: processMasterRaw.STORE_SHORUI_SOUHU.code}}},
+        {arrivedAt: null},
+      ],
     },
   }
 
-  const pending__paperErrorHq: EsObj = {
+  const paperStatus__paperErrorHq: EsObj = {
     label: '不備あり',
     notify: true,
     description: '未解消の不備があるものです。',
-    CONDITION: {...paperErrorWhere},
+    CONDITION: {
+      AND: [
+        //
+        commonWhere,
+        {
+          UcarPaperWorkNotes: {
+            some: {
+              type: UCAR_CODE.PAPER_WORK_NOTE_TYPES.raw.FUBI.code,
+              resolvedAt: null,
+            },
+          },
+        },
+      ],
+    },
   }
 
-  const deadline__inkan: EsObj = {
+  const paperStatus__inkanDeadline: EsObj = {
     label: '印鑑(1M)',
     notify: true,
     description: '30日以内に印鑑証明書が切れる車両',
     CONDITION: {
       AND: [
         //
+        commonWhere,
         notFinalizedWhere,
         {inkanCertificateExpiredAt: {lte: addDays(new Date(), 30)}},
       ],
@@ -120,9 +128,9 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     CONDITION: {
       AND: [
         //
+        commonWhere,
         {number98: {not: ''}},
         {OldCars_Base: {DD_SIIRE: {not: null}}},
-        commonWhere,
       ],
     },
   }
@@ -132,9 +140,9 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     CONDITION: {
       AND: [
         //
+        commonWhere,
         {number98: {not: ''}},
         {NOT: {OldCars_Base: {DD_SIIRE: {not: null}}}},
-        commonWhere,
       ],
     },
   }
@@ -144,8 +152,8 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     CONDITION: {
       AND: [
         //
-        {number98: ''},
         commonWhere,
+        {number98: ''},
       ],
     },
   }
@@ -158,9 +166,9 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     description: '処理方法が未決定の状態',
     CONDITION: {
       AND: [
-        //z
-        {processedAs: null},
+        //
         commonWhere,
+        {processedAs: null},
       ],
     },
   }
@@ -172,10 +180,9 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     CONDITION: {
       AND: [
         //
+        commonWhere,
         {processedAs: UCAR_CODE.PROCESSED_AS.raw.MEIGIHENKO.code},
         {meihenBi: null},
-
-        commonWhere,
       ],
     },
   }
@@ -187,8 +194,8 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     CONDITION: {
       AND: [
         //
-        {destination: null},
         commonWhere,
+        {destination: null},
       ],
     },
   }
@@ -199,8 +206,8 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     CONDITION: {
       AND: [
         //
-        {destination: {not: null}},
         commonWhere,
+        {destination: {not: null}},
       ],
     },
   }
@@ -212,10 +219,9 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     CONDITION: {
       AND: [
         //
+        commonWhere,
         {processedAs: UCAR_CODE.PROCESSED_AS.raw.MASSESHO.code},
         {masshoBi: null},
-
-        commonWhere,
       ],
     },
   }
@@ -226,10 +232,9 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     CONDITION: {
       AND: [
         //
+        commonWhere,
         {processedAs: UCAR_CODE.PROCESSED_AS.raw.MEIGIHENKO.code},
         {meihenBi: {not: null}},
-
-        commonWhere,
       ],
     },
   }
@@ -240,10 +245,9 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     CONDITION: {
       AND: [
         //
+        commonWhere,
         {processedAs: UCAR_CODE.PROCESSED_AS.raw.MASSESHO.code},
         {masshoBi: {not: null}},
-
-        commonWhere,
       ],
     },
   }
@@ -253,9 +257,9 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     description: '車庫証明が完了している',
     CONDITION: {
       AND: [
-        {
-          AppliedUcarGarageSlot: {isNot: null},
-        },
+        //
+        commonWhere,
+        {AppliedUcarGarageSlot: {isNot: null}},
       ],
     },
   }
@@ -281,7 +285,13 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
   const shinko__reserve = {
     label: `新古車`,
     description: '予約枠の車両',
-    CONDITION: {daihatsuReserve: {not: null}},
+    CONDITION: {
+      AND: [
+        //
+        commonWhere,
+        {daihatsuReserve: {not: null}},
+      ],
+    },
   }
 
   // =========査定状況========
@@ -289,14 +299,22 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     label: '査定連携',
     description: '当日査定での仮付番など、査定データみ連携のもの',
     CONDITION: {
-      Model_name: {not: null},
+      AND: [
+        //
+        commonWhere,
+        {Model_name: {not: null}},
+      ],
     },
   }
   const satei__nonlinked = {
     label: '査定未連携',
     description: '査定データが連携されていないもの',
     CONDITION: {
-      Model_name: null,
+      AND: [
+        //
+        commonWhere,
+        {Model_name: null},
+      ],
     },
   }
 
@@ -308,15 +326,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
   const taxTargetCommonCondition: Prisma.UcarWhereInput = {
     AND: [
       //
-      commonWhere,
       {henkinRequired: {not: false}},
-      {
-        OR: [
-          //
-          {earlyYear: {gte: 2025}},
-          {earlyYear: null},
-        ],
-      },
       {NOT: hasException},
     ],
   }
@@ -328,6 +338,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     CONDITION: {
       AND: [
         //
+        commonWhere,
         taxTargetCommonCondition,
         {paybackScheduledAt: null},
       ],
@@ -340,20 +351,22 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     CONDITION: {
       AND: [
         //
+        commonWhere,
         taxTargetCommonCondition,
         {paybackScheduledAt: {not: null}},
         {accountingRecievedAt: null},
       ],
     },
   }
+
   const tax__scheduled_done = {
     label: `入金済み`,
     description: '返金の入金が確認済み',
     CONDITION: {
       AND: [
         //
+        commonWhere,
         taxTargetCommonCondition,
-
         {accountingRecievedAt: {not: null}},
       ],
     },
@@ -362,7 +375,11 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     label: `例外`,
     description: '例外処理が設定されているもの',
     CONDITION: {
-      AND: [hasException],
+      AND: [
+        //
+        commonWhere,
+        hasException,
+      ],
     },
   }
 
@@ -409,11 +426,11 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
   const atoms = {
     pending__retendedOnStuff,
     pending__retendedOnStore,
-    pending__unReceived,
 
-    pending__paperErrorHq,
+    paperStatus__unReceived,
+    paperStatus__paperErrorHq,
+    paperStatus__inkanDeadline,
 
-    deadline__inkan,
     destination__undecided,
     destination__meihen_not_done,
 
@@ -445,13 +462,18 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
 
   const dataArr: makeEasySearchGroupsProp[] = []
 
-  const forEigyou = [{exclusiveGroup: ExGroup[`pending`], name: `書類受入状況`}]
+  const forEigyou = [
+    {exclusiveGroup: ExGroup[`pending`], name: `店舗ステータス`},
+    {exclusiveGroup: ExGroup[`paperStatus`], name: `書類受付ステータス`},
+  ]
 
   const paperGroups = [
     {
-      exclusiveGroup: ExGroup[`deadline`],
-      name: `書類期限間近`,
+      exclusiveGroup: ExGroup[`shinko`],
+      name: `新古車予約枠`,
+      additionalProps: {defaultOpen: false},
     },
+
     {
       exclusiveGroup: ExGroup[`destination`],
       name: `名変抹消未処理`,
@@ -470,12 +492,6 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     {
       exclusiveGroup: ExGroup[`destinationCompleted`],
       name: `名変抹消完了`,
-      additionalProps: {defaultOpen: false},
-    },
-
-    {
-      exclusiveGroup: ExGroup[`shinko`],
-      name: `新古車予約枠`,
       additionalProps: {defaultOpen: false},
     },
   ]

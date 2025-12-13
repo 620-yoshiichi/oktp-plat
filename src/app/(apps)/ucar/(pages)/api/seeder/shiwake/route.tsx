@@ -52,6 +52,8 @@ export const POST = async (req: NextRequest) => {
             })
           }
 
+          const theDate = new Date(timestamp)
+
           const shiwakeCode = UCAR_CODE.SHIWAKE.byLabel(shiwakeResult)?.code
 
           try {
@@ -63,8 +65,8 @@ export const POST = async (req: NextRequest) => {
             const data = {
               sateiID,
               destination: shiwakeCode,
-              createdAt: new Date(timestamp),
-              qrIssuedAt: new Date(timestamp),
+              createdAt: theDate,
+              qrIssuedAt: theDate,
               dataSource: UCAR_CODE.UCAR_DATA_SOURCE.raw.SHIWAKE.code,
               userId: shiireGroupUser?.id as unknown as number,
             }

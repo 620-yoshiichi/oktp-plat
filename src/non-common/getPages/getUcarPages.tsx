@@ -26,13 +26,6 @@ export const getUcarPages = (props: PageGetterType) => {
             query: {displayColumns: '下取書類,商品化'},
           },
         },
-        {
-          tabId: 'ucar',
-          label: '車両一覧（自動車税業務）',
-          link: {
-            query: {displayColumns: '下取書類,自動車税'},
-          },
-        },
 
         {
           tabId: 'sateiIdConverter',
@@ -44,8 +37,23 @@ export const getUcarPages = (props: PageGetterType) => {
           label: 'ファミリーツリー',
           ROOT: [rootPath],
         },
-
-
+      ],
+    },
+    {
+      tabId: '',
+      label: '中古車G',
+      exclusiveTo: isHQ,
+      ROOT: [rootPath],
+      children: [
+        {
+          tabId: 'ucar',
+          label: '自動車税業務',
+          link: {
+            query: {displayColumns: '自動車税'},
+          },
+        },
+        {tabId: 'tax-keiri', label: '自動車税 - 依頼中', ROOT: [rootPath]},
+        {tabId: 'tax-keiri', label: '自動車税 - 経理', ROOT: [rootPath]},
       ],
     },
     {

@@ -36,7 +36,7 @@ export const POST = async (req: NextRequest) => {
     },
 
     mainProcess: async batch => {
-      rows.map(async row => {
+      batch.map(async row => {
         const sateiID = row.sateiID ? String(row.sateiID) : undefined
         const {
           number98,
@@ -157,7 +157,7 @@ export const POST = async (req: NextRequest) => {
               where: {sateiID},
               data: {
                 ...payload,
-                dataSource: UCAR_CODE.UCAR_DATA_SOURCE.raw.BIG_QUERY_QR_PROCESS.code,
+                dataSource: UCAR_CODE.UCAR_DATA_SOURCE.raw.QRPAPER_UPDATE.code,
               },
             })
           } catch (error) {

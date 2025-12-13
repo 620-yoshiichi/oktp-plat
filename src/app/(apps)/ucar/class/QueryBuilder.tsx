@@ -71,8 +71,8 @@ export class QueryBuilder {
             },
           },
         },
-        BankMaster: {select: {id: true, name: true}},
-        BankBranchMaster: {select: {id: true, name: true}},
+        BankMaster: {select: {id: true, name: true, code: true}},
+        BankBranchMaster: {select: {id: true, name: true, code: true, branchKana: true}},
       },
     }
 

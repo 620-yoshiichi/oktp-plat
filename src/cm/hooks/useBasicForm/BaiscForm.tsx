@@ -73,6 +73,7 @@ const BasicForm = (props: BasicFormType) => {
 
   const onSubmit = async e => {
     e.preventDefault()
+
     if (confirmMessageBeforeSubmit) {
       if (confirm(confirmMessageBeforeSubmit) === false) {
         return
@@ -85,7 +86,6 @@ const BasicForm = (props: BasicFormType) => {
       const value = ReactHookForm.getValues(col.id)
       // undefined, null, '' はダメ、0はOK
 
-      console.log(col.id, value) //logs
       return value === undefined || value === null || value === ''
     })
 
@@ -252,7 +252,7 @@ const BasicForm = (props: BasicFormType) => {
     return (
       <form {...{ref: formRef, id: formId, onSubmit}}>
         <C_Stack className={` items-start `}>
-          <AutoGridContainer maxCols={{lg: 2}} className={` gap-8 mx-auto w-fit`}>
+          <AutoGridContainer maxCols={{lg: 2}} className={` gap-6 gap-y-4! mx-auto w-fit mb-18`}>
             {transposedRowsForForm.map((columns, i) => {
               const SectionLabel = columns.find(col => col.form?.colIndex)?.form?.colIndex
 
@@ -264,7 +264,7 @@ const BasicForm = (props: BasicFormType) => {
                       const use2ColSpan = getUse2ColSpan(col)
                       const uniqueKey = `${i}-${formItemIndex}`
                       const colSpan = use2ColSpan ? `lg:col-span-2 ` : ` lg:col-span-1`
-
+                      const height = 36
                       return (
                         <div key={uniqueKey} className={cn(colSpan, 'mb-6')}>
                           <ControlGroup
@@ -277,13 +277,14 @@ const BasicForm = (props: BasicFormType) => {
                                 LabelStyle: {
                                   padding: '4px 8px',
                                   marginRight: '6px',
-
+                                  height: height,
                                   backgroundColor: 'rgb(240, 240, 240)',
-                                  width: 200,
+                                  width: 130,
                                   fontSize: '16px',
                                 },
                                 ControlStyle: {
                                   borderRadius: '0px',
+                                  height: height,
                                 },
                               },
                             }}
@@ -297,6 +298,7 @@ const BasicForm = (props: BasicFormType) => {
             })}
           </AutoGridContainer>
         </C_Stack>
+
         <div className={`flex justify-center`}>
           <ChildComponent />
         </div>

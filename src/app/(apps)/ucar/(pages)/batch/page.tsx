@@ -43,7 +43,13 @@ const getActions = (offset: number, limit: number) => [
     label: `AI査定 Rawデータ取り込み`,
     description: ` /api/cron/aisatei/deleteAndCreate`,
     effectOn: 'batch',
-    purpose: ``,
+
+    tableName: 'uPASS',
+    prismaArgs: {
+      where: {
+        dataSource: 'aisatei',
+      },
+    },
 
     onClick: async () => {
       const res = await fetchAlt(`${basePath}/ucar/api/cron/aisatei/deleteAndCreate`, {}, {method: `GET`})
@@ -57,6 +63,11 @@ const getActions = (offset: number, limit: number) => [
     effectOn: 'batch',
     purpose: ``,
     tableName: 'uPASS',
+    prismaArgs: {
+      where: {
+        dataSource: 'upass',
+      },
+    },
 
     onClick: async () => {
       const res = await fetchAlt(`${basePath}/ucar/api/cron/upass/deleteAndCreate`, {}, {method: `GET`})
@@ -184,7 +195,7 @@ const getActions = (offset: number, limit: number) => [
     description: `/api/seeder/garage`,
     effectOn: 'click',
     purpose: `QR PAPER「車庫空き状況」シートよりデータを作成し、反映する`,
-    tableName: 'UcarGarageSlotMaster',
+    tableName: 'AppliedUcarGarageSlot',
     onClick: async () => {
       const res = await fetchAlt(`${basePath}/ucar/api/seeder/garage`, {})
       console.debug(res)
@@ -207,17 +218,6 @@ const getActions = (offset: number, limit: number) => [
       console.debug(res)
     },
   },
-  {
-    label: `銀行データ作成`,
-    description: `/api/seeder/bank`,
-    effectOn: 'click',
-    purpose: `bankMaster.csvから銀行データを作成する。`,
-    tableName: 'bankMaster',
-    onClick: async () => {
-      const res = await fetchAlt(`${basePath}/ucar/api/seeder/bank`, {})
-      console.debug(res)
-    },
-  },
 ]
 
 export default function Page() {
@@ -237,9 +237,8 @@ export default function Page() {
     const countList = await Promise.all(
       actions.map(async action => {
         if (action.tableName) {
-          const res = await doStandardPrisma(action.tableName as PrismaModelNames, 'count', {
-            ...action.prismaArgs,
-          })
+          const args = action.prismaArgs as any
+          const res = await doStandardPrisma(action.tableName as PrismaModelNames, 'count', args as never)
 
           return {
             name: action.label,

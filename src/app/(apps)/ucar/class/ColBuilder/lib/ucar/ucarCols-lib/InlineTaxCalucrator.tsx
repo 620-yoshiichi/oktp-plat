@@ -14,6 +14,7 @@ export default function InlineTaxCalucrator({row, children}) {
             if (res.result) {
               const result = res.result as payBackObjType
               const {Total, Pref, TOYOPET} = result
+
               const res2 = await doStandardPrisma(`ucar`, `update`, {
                 where: {
                   id: row.id,

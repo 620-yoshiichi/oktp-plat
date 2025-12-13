@@ -17,7 +17,7 @@ export type prismaMethodType =
   | 'transaction'
   | 'count'
 
-export type PrismaClientOrigin = keyof import('.prisma/client').PrismaClient
+export type PrismaClientOrigin = keyof import('@prisma/generated/prisma/client').PrismaClient
 
 export type excluded = Exclude<
   PrismaClientOrigin,

@@ -11,6 +11,7 @@ import ChildCreator from '@cm/components/DataLogic/RTs/ChildCreator/ChildCreator
 import {CommonGlobalIdSelector} from '@app/oktpCommon/CommonGlobalIdSelector'
 import {UCAR_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-constants'
 import {formatDate} from '@cm/class/Days/date-utils/formatters'
+import {TextRed} from '@cm/components/styles/common-components/Alert'
 
 export class PageBuilder {
   static ucarGarageLocationMaster = {
@@ -69,9 +70,10 @@ export class PageBuilder {
   static ucar = {
     top: () => (
       <div>
-        フィルターは：「本部着」が
-        <span className={`font-bold text-red-500`}>{formatDate(UCAR_CONSTANTS.commonQuery.THRESHOLD_DATE)}</span>
-        以降のものにのみ適用されます。
+        本システムでは
+        <TextRed>{formatDate(UCAR_CONSTANTS.commonQuery.THRESHOLD_DATE)}</TextRed>
+        以降に作成<TextRed>（QRシート発行 または 中古車Gでの受付）</TextRed>
+        がされたもののみが表示されます。
       </div>
     ),
     form: UcarDetail,

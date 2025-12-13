@@ -3,7 +3,7 @@ import {NextRequest, NextResponse} from 'next/server'
 import {doTransaction, transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
 import prisma from 'src/lib/prisma'
 import {GoogleSheet_Read} from '@app/api/google/actions/sheetAPI'
-import {toIsoDateIfExist} from '@cm/class/Days/date-utils/formatters'
+import {formatDate, toIsoDateIfExist} from '@cm/class/Days/date-utils/formatters'
 import {toUtc} from '@cm/class/Days/date-utils/calculations'
 import {handlePrismaError} from '@cm/lib/prisma-helper'
 import {Days} from '@cm/class/Days/Days'
@@ -142,16 +142,16 @@ export const POST = async (req: NextRequest) => {
           const souhsinJikokuDate = exceptionIsDate ? toUtc(new Date(exception)) : souhsinJikoku
 
           const updateData = {
-            souhsinJikoku: souhsinJikokuDate ? toIsoDateIfExist(new Date(souhsinJikokuDate)) : undefined,
+            souhsinJikoku: souhsinJikokuDate ? toIsoDate(souhsinJikokuDate) : undefined,
             henkinRequired: !henkinRequired ? true : false,
 
             accountingRecievedAt: [`true`, `TRUE`, true].includes(accountingRecievedAt)
-              ? toIsoDateIfExist(new Date())
+              ? toIsoDate(accountingRecievedAt)
               : undefined,
-            paybackScheduledAt: paybackScheduledAt ? toIsoDateIfExist(new Date(paybackScheduledAt)) : undefined,
+            paybackScheduledAt: paybackScheduledAt ? toIsoDate(paybackScheduledAt) : undefined,
 
             customerName: taxCustomerName || undefined,
-            upperCarregisteredAt: upperCarregisteredAt ? toIsoDateIfExist(new Date(upperCarregisteredAt)) : undefined,
+            upperCarregisteredAt: upperCarregisteredAt ? toIsoDate(upperCarregisteredAt) : undefined,
             annualTax: annualTax ? Number(annualTax) : undefined,
             earlyYear: earlyYear ? Number(earlyYear) : undefined,
             earlyMonth: earlyMonth ? Number(earlyMonth) : undefined,
@@ -167,7 +167,7 @@ export const POST = async (req: NextRequest) => {
             bankBranchMasterId: bankBranchMasterId || undefined,
 
             //納付書受領、
-            paymentNoticeRecievedAt: paymentNoticeRecieved ? toIsoDateIfExist(new Date(paymentNoticeRecieved)) : undefined,
+            paymentNoticeRecievedAt: paymentNoticeRecieved ? toIsoDate(paymentNoticeRecieved) : undefined,
             isPayed: isPayed ? true : false,
 
             //金額
@@ -284,5 +284,13 @@ const upsertBankData = async (rows: any[]) => {
   return {
     upsertedBanks,
     upsertedBranches,
+  }
+}
+const toIsoDate = (date: string) => {
+  const dateStr = formatDate(date)
+  if (Days.validate.isDate(new Date(dateStr))) {
+    const toStr = toUtc(dateStr).toISOString()
+
+    return toStr
   }
 }

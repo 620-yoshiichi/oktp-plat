@@ -82,7 +82,7 @@ model OldCars_Base {
   MJ_SYAMEI   String?
   CD_HANSTAFF String?
   CD_HANTENPO String?
-  NO_SIRETYUM String?
+  NO_SIRETYUM String?   @default("")
   MJ_SIRENORI String?
   KB_SIRETOSY String?
   CD_SIRETOGY String?
@@ -103,7 +103,7 @@ model OldCars_Base {
   KB_URIAGE   String?
   NO_CYUMON   String?
   NO_CYUMONED String?
-  NO_SYARYOU  String?
+  NO_SYARYOU  String?   @default("")
   NO_SYADAIBA String?
   DT_SAISINUP String?
   MJ_KATASIKI String?

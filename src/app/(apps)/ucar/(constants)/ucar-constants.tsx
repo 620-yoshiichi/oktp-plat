@@ -21,8 +21,7 @@ export const UCAR_CONSTANTS = {
     THRESHOLD_ARRIVED_AT: {
       AND: [
         //
-        {arrivedAt: {not: null}},
-        {arrivedAt: {gte: THRESHOLD_DATE}},
+        // {createdAt: {gte: THRESHOLD_DATE}},
       ],
     },
   },

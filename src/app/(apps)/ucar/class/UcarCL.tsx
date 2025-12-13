@@ -15,6 +15,7 @@ import {
   UcarGarageLocationMaster,
   OldCars_Base,
   UpassFamilyTree,
+  Prisma,
 } from '@prisma/generated/prisma/client'
 import {roleIs} from 'src/non-common/scope-lib/judgeIsAdmin'
 import {QueryBuilder} from '@app/(apps)/ucar/class/QueryBuilder'
@@ -315,6 +316,18 @@ export class UcarCL {
     return faimilyTree.length === 0
   }
   static fetcher = {
+    getUcarDataList: async (props: {where: Prisma.UcarWhereInput; take?: number; skip?: number}) => {
+      const {where, take, skip} = props
+      const {result: ucar} = await doStandardPrisma(`ucar`, `findMany`, {
+        include: QueryBuilder.getInclude({}).ucar.include,
+        where,
+        take,
+        skip,
+      })
+
+      return ucar as ucarData[]
+    },
+
     getUcarDataBySateiId: async (sateiID: string) => {
       const {result: ucar} = await doStandardPrisma(`ucar`, `findUnique`, {
         where: {sateiID},

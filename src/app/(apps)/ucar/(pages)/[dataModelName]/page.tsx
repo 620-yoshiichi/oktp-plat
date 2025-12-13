@@ -10,6 +10,7 @@ import {ucarWhere} from '@app/(apps)/ucar/(constants)/ucarWhere'
 import {getAvailable98Numbers} from '@app/(apps)/ucar/(lib)/num98/getAvailable98Numbers'
 import {getMasterPageCommonConfig} from '@cm/components/DataLogic/helpers/getMasterPageCommonConfig'
 import {setCustomParams} from '@cm/components/DataLogic/helpers/SetCustomParams'
+import {UCAR_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-constants'
 
 export default async function DynamicMasterPage(props) {
   return getMasterPageCommonConfig({
@@ -71,9 +72,15 @@ const parameters = async ({params, query, session, scopes}) => {
               omit: ucarQuery.omit as any,
               orderBy: [
                 //
-                {qrIssuedAt: 'desc'},
+                {createdAt: 'asc'},
               ],
-              where: {...carWhere},
+              where: {
+                AND: [
+                  //
+                  carWhere,
+                  {createdAt: {gte: UCAR_CONSTANTS.commonQuery.THRESHOLD_DATE}},
+                ],
+              },
             },
 
             easySearchExtraProps,

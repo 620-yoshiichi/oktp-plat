@@ -13,7 +13,7 @@ import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
 import React, {useEffect, useState} from 'react'
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 
-export default function UcrDetailUpdater({sateiID, close, getAvailable98NumbersReturn}) {
+export default function UcrDetailUpdater({sateiID, close, getAvailable98NumbersReturn, useRecordsReturn}) {
   const useGlobalProps = useGlobal()
 
   const [data, setdata] = useState<any>(null)
@@ -27,12 +27,12 @@ export default function UcrDetailUpdater({sateiID, close, getAvailable98NumbersR
 
   return (
     <div>
-      <Main {...{close, useGlobalProps, ucar: data.ucar, getAvailable98NumbersReturn}} />
+      <Main {...{close, useGlobalProps, ucar: data.ucar, getAvailable98NumbersReturn, useRecordsReturn}} />
     </div>
   )
 }
 
-const Main = ({close, useGlobalProps, ucar, getAvailable98NumbersReturn}) => {
+const Main = ({close, useGlobalProps, ucar, getAvailable98NumbersReturn, useRecordsReturn}) => {
   const {query, router, toggleLoad} = useGlobalProps
 
   const formData = ucar
@@ -50,6 +50,11 @@ const Main = ({close, useGlobalProps, ucar, getAvailable98NumbersReturn}) => {
       if (name === 'processedAs' && processedAs) {
         ReactHookForm.setValue(`meihenBi`, null)
         ReactHookForm.setValue(`masshoBi`, null)
+      }
+
+      if (name === 'bankMasterId') {
+        ReactHookForm.setValue(`bankBranchMasterId`, null)
+        ReactHookForm.setValue(`yuchoShitenNo`, null)
       }
     },
     columns: columns,
@@ -71,32 +76,31 @@ const Main = ({close, useGlobalProps, ucar, getAvailable98NumbersReturn}) => {
     }
 
     if (confirm(`データを更新しますか？`)) {
-      toggleLoad(async () => {
-        const res = await myFormDefaultUpsert({
-          latestFormData: data,
-          dataModelName: `ucar`,
-          columns,
-          extraFormState: {},
-          additional: {},
-          formData,
-        })
-
-        //98番号が変更の場合
-        if (numberChanged && res.success) {
-          const {result: last98Number} = await doStandardPrisma('number98', 'findFirst', {orderBy: {sortNumber: 'desc'}})
-          const isLast98Number = last98Number?.number === number98
-
-          if (isLast98Number) {
-            //最後の番号だったら履歴を削除
-            await doStandardPrisma('number98IssueHistory', 'deleteMany', {where: {}})
-          } else {
-            // それ以外は履歴を作成
-            await doStandardPrisma('number98IssueHistory', 'create', {data: {number: number98}})
-          }
-        }
-
-        close()
+      const res = await myFormDefaultUpsert({
+        latestFormData: data,
+        dataModelName: `ucar`,
+        columns,
+        extraFormState: {},
+        additional: {},
+        formData,
       })
+
+      //98番号が変更の場合
+      if (numberChanged && res.success) {
+        const {result: last98Number} = await doStandardPrisma('number98', 'findFirst', {orderBy: {sortNumber: 'desc'}})
+        const isLast98Number = last98Number?.number === number98
+
+        if (isLast98Number) {
+          //最後の番号だったら履歴を削除
+          await doStandardPrisma('number98IssueHistory', 'deleteMany', {where: {}})
+        } else {
+          // それ以外は履歴を作成
+          await doStandardPrisma('number98IssueHistory', 'create', {data: {number: number98}})
+        }
+      }
+
+      close()
+      useRecordsReturn.updateData()
     }
   }
 
@@ -107,17 +111,21 @@ const Main = ({close, useGlobalProps, ucar, getAvailable98NumbersReturn}) => {
       </Paper> */}
 
       {/* 基本情報の編集 */}
-      <Paper>
+      <div className={`w-[1140px]`}>
         <BasicForm
           {...{
-            alignMode: 'console',
+            alignMode: 'rowBlock',
             latestFormData,
+            onSubmit,
           }}
-        />
-        <div className={`sticky bottom-0 mx-auto w-full text-center`}>
-          <Button {...{onClick: () => onSubmit(latestFormData)}}>更新</Button>
-        </div>
-      </Paper>
+        >
+          <div className={`sticky bottom-0 mx-auto w-full text-center `}>
+            <Button color="blue" className={`w-[120px] p-2 text-xl`}>
+              更新
+            </Button>
+          </div>
+        </BasicForm>
+      </div>
     </C_Stack>
   )
 }

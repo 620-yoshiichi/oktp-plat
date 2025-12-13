@@ -7,7 +7,7 @@ import {NextRequest, NextResponse} from 'next/server'
 import {isCron} from 'src/non-common/serverSideFunction'
 import {processBatchWithRetry} from '@cm/lib/server-actions/common-server-actions/processBatchWithRetry'
 import {BQ_parser} from '@app/api/google/big-query/bigQueryParser'
-import {ObjectMap} from '@cm/lib/methods/common'
+import {isDev, ObjectMap} from '@cm/lib/methods/common'
 import {Prisma} from '@prisma/generated/prisma/client'
 import {UcarProcessCl} from '@app/(apps)/ucar/class/UcarProcessCl'
 import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
@@ -29,13 +29,20 @@ export const GET = async (req: NextRequest) => {
 
   const users = await prisma.user.findMany({where: {email: {not: null}}})
 
+  let sqlString = sql`
+  SELECT * FROM okayamatoyopet.Ucar_QR.QR_Prosess
+  where email_0 not like '%ichiya%'  AND email_0 not like '%mutsuo%'
+  `
+
+  if (!isDev) {
+    //本番環境だとバッチが遅いので、新しいデータのみ
+    sqlString += sql` ORDER BY max_update DESC LIMIT 3000`
+  }
+
   const body = await bigQuery__select({
     datasetId: 'Ucar_QR',
     tableId: 'AI_satei',
-    sqlString: sql`
-    SELECT * FROM okayamatoyopet.Ucar_QR.QR_Prosess
-    where email_0 not like '%ichiya%'  AND email_0 not like '%mutsuo%'
-    `,
+    sqlString,
   })
 
   await processBatchWithRetry({

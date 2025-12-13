@@ -1,7 +1,6 @@
-import {StrHandler} from '@cm/class/StrHandler'
 import {fetchAlt} from '@cm/lib/http/fetch-client'
 import {basePath} from '@cm/lib/methods/common'
-import {getSchema} from '@cm/lib/methods/prisma-schema'
+import {modelExists} from '@cm/lib/methods/prisma-schema'
 import {getScopes} from 'src/non-common/scope-lib/getScopes'
 import {globalSelectorPrefix} from 'src/non-common/searchParamStr'
 
@@ -14,11 +13,10 @@ export const FakeOrKeepSession = async ({query, realSession}) => {
 
   const models = globalKeys.map(key => key.replace(globalSelectorPrefix, '').replace('Id', ''))
 
-  const schema = getSchema()
   let fakeUser: any = null
   const getFakeUsers: any = await Promise.all(
     models.map(async model => {
-      const isValidModel = schema[StrHandler.capitalizeFirstLetter(model)]
+      const isValidModel = modelExists(model)
       if (!isValidModel) return undefined
 
       const payload = {

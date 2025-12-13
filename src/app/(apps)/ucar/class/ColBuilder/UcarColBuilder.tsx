@@ -66,24 +66,13 @@ export const ucarColBuilder = (props: columnGetterType) => {
   const SETTING_COLS = new Fields([
     {
       id: 'userId',
-      label: '担当ス',
+      label: '担当者',
       format: (value, row) => row?.User && `${row?.User?.name} (${row?.Store?.name ?? '店舗未設定'})`,
       forSelect: {},
     },
 
     //
-    {
-      id: 'destinationStoreId',
-      label: '配布店舗',
-      format: (value, row) => row.DestinationStore?.name,
-      form: {},
-      forSelect: {
-        config: {
-          modelName: 'store',
-          orderBy: [{code: 'asc'}],
-        },
-      },
-    },
+
     {
       id: 'number98',
       label: '98番号',
@@ -119,7 +108,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
             // 許容パターン: 2桁数字, 半角スペース, 5桁数字
             const reg = /^\d{2}\s\d{5}$/
             if (!reg.test(value)) {
-              return '「2桁数字」「半角スペース」「5桁数字」のみ規則で入力してください。'
+              return '「2桁数字」「半角スペース」「5桁数字」で入力してください。'
             }
           },
         },
@@ -131,7 +120,9 @@ export const ucarColBuilder = (props: columnGetterType) => {
       type: 'date',
       form: {},
     },
+  ])
 
+  const SHIIRE_G_SETTING_COLS = new Fields([
     {
       id: 'daihatsuReserve',
       label: '予約枠',
@@ -140,6 +131,18 @@ export const ucarColBuilder = (props: columnGetterType) => {
       },
     },
     __shared_get_shiwakeKekkeCol(),
+    {
+      id: 'destinationStoreId',
+      label: '配布店舗',
+      format: (value, row) => row.DestinationStore?.name,
+      form: {},
+      forSelect: {
+        config: {
+          modelName: 'store',
+          orderBy: [{code: 'asc'}],
+        },
+      },
+    },
   ])
 
   // 基本情報
@@ -258,6 +261,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
                 GMF_UcrDetailUpdater.setGMF_OPEN({
                   sateiID: row.sateiID,
                   getAvailable98NumbersReturn,
+                  useRecordsReturn: UseRecordsReturn,
                 })
               }
               className={cl(TrActionIconClassName, 'h-5 w-5 text-blue-500')}
@@ -306,9 +310,12 @@ export const ucarColBuilder = (props: columnGetterType) => {
       },
     },
 
-    ...SETTING_COLS.showSummaryInTd({wrapperWidthPx: 200}).buildFormGroup({groupName: `基本情報`}).plain,
+    ...CAR_COLS.showSummaryInTd({wrapperWidthPx: 240}).buildFormGroup({groupName: `車両情報`}).plain,
 
-    ...CAR_COLS.showSummaryInTd({wrapperWidthPx: 280}).buildFormGroup({groupName: `車両情報`}).plain,
+    ...new Fields([
+      ...SETTING_COLS.buildFormGroup({groupName: `基本情報`}).plain,
+      ...SHIIRE_G_SETTING_COLS.buildFormGroup({groupName: `仕入G設定情報`}).plain,
+    ]).showSummaryInTd({wrapperWidthPx: 200}).plain,
 
     ...PAPER_WORK_ALERT_COLS.plain,
 

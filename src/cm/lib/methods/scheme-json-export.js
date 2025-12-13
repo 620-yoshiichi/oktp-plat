@@ -284,7 +284,7 @@ model OldCars_Base {
   MJ_SYAMEI   String?
   CD_HANSTAFF String?
   CD_HANTENPO String?
-  NO_SIRETYUM String?
+  NO_SIRETYUM String?   @default("")
   MJ_SIRENORI String?
   KB_SIRETOSY String?
   CD_SIRETOGY String?
@@ -305,7 +305,7 @@ model OldCars_Base {
   KB_URIAGE   String?
   NO_CYUMON   String?
   NO_CYUMONED String?
-  NO_SYARYOU  String?
+  NO_SYARYOU  String?   @default("")
   NO_SYADAIBA String?
   DT_SAISINUP String?
   MJ_KATASIKI String?
@@ -1542,16 +1542,13 @@ model Ucar {
   paybackScheduledAt   DateTime?
   upperCarregisteredAt DateTime?
   registerDate         DateTime?
-  customerName         String?
 
-  registerdAt             DateTime?
-  annualTax               Int?
+  registerdAt DateTime?
+  annualTax   Int?
   // earlyRecievedAt         DateTime?
-  earlyYear               Int?
-  earlyMonth              Int?
-  bankName                String?
-  branchName              String?
-  branchNameKana          String?
+  earlyYear   Int?
+  earlyMonth  Int?
+
   storeNumber             String?
   accountType             String?
   accountNumber           String?
@@ -5312,9 +5309,10 @@ export const prismaDMMF = {
           "isUnique": false,
           "isId": false,
           "isReadOnly": false,
-          "hasDefaultValue": false,
+          "hasDefaultValue": true,
           "type": "String",
           "nativeType": null,
+          "default": "",
           "isGenerated": false,
           "isUpdatedAt": false
         },
@@ -5606,9 +5604,10 @@ export const prismaDMMF = {
           "isUnique": false,
           "isId": false,
           "isReadOnly": true,
-          "hasDefaultValue": false,
+          "hasDefaultValue": true,
           "type": "String",
           "nativeType": null,
+          "default": "",
           "isGenerated": false,
           "isUpdatedAt": false
         },
@@ -20445,20 +20444,6 @@ export const prismaDMMF = {
           "isUpdatedAt": false
         },
         {
-          "name": "customerName",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "String",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
           "name": "registerdAt",
           "kind": "scalar",
           "isList": false,
@@ -20510,48 +20495,6 @@ export const prismaDMMF = {
           "isReadOnly": false,
           "hasDefaultValue": false,
           "type": "Int",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "bankName",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "String",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "branchName",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "String",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "branchNameKana",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "String",
           "nativeType": null,
           "isGenerated": false,
           "isUpdatedAt": false

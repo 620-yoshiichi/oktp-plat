@@ -1,4 +1,4 @@
-import {getRelationalModels, getSchema} from 'src/cm/lib/methods/prisma-schema'
+import {getRelationFields} from 'src/cm/lib/methods/prisma-schema'
 
 import {PrismaModelNames} from '@cm/types/prisma-types'
 import {anyObject} from '@cm/types/utility-types'
@@ -17,18 +17,14 @@ export type includeProps = {
 }
 
 export const roopMakeRelationalInclude = ({parentName, parentObj}) => {
-  const schemaAsObj = getSchema()
+  const {hasManyFields, hasOneFields} = getRelationFields(parentName)
 
-  const {singleAttributeObj, hasManyAttributeObj, hasOneAttributeObj} = getRelationalModels({
-    schemaAsObj,
-    parentName,
-  })
-
-  const relationalObj = {...hasManyAttributeObj, ...hasOneAttributeObj}
+  const relationalObj = {...hasManyFields, ...hasOneFields}
   const hasInclude = parentObj.include
   if (hasInclude) {
     Object.keys(parentObj.include).forEach(key => {
-      if (relationalObj[key]?.relationalType === 'hasMany') {
+      // hasManyFieldsに存在するかで判定
+      if (hasManyFields[key]) {
         if (parentObj.include[key].orderBy === undefined) {
           parentObj.include[key] = {...parentObj.include[key], ...SORT_ARGS}
 

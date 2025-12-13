@@ -42,16 +42,13 @@ model Ucar {
   paybackScheduledAt   DateTime?
   upperCarregisteredAt DateTime?
   registerDate         DateTime?
-  customerName         String?
 
-  registerdAt             DateTime?
-  annualTax               Int?
+  registerdAt DateTime?
+  annualTax   Int?
   // earlyRecievedAt         DateTime?
-  earlyYear               Int?
-  earlyMonth              Int?
-  bankName                String?
-  branchName              String?
-  branchNameKana          String?
+  earlyYear   Int?
+  earlyMonth  Int?
+
   storeNumber             String?
   accountType             String?
   accountNumber           String?

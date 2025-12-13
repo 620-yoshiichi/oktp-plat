@@ -103,6 +103,7 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
       isStoreManager,
       isSales,
     }
+
     const result: UcarScopeType = {
       carWhere: newCarWhere ?? {},
       ...ucarMember,
@@ -151,7 +152,7 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
         userId: undefined,
       }
 
-      if (isHQ || admin) {
+      if (isHQ) {
         newCarWhere = {}
         if (query?.[globalIds.globalStoreId]) {
           newCarWhere[`storeId`] = Number(query?.[globalIds.globalStoreId])

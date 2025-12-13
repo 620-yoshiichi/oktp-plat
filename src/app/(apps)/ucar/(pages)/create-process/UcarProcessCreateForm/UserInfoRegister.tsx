@@ -12,6 +12,14 @@ export const bankMasterCol: colType = {
   forSelect: {
     config: {
       modelName: `bankMaster`,
+      select: {
+        name: 'text',
+        code: 'text',
+      },
+      nameChanger: op => {
+        const name = `${op?.name}[${op?.code ?? ''}]`
+        return {...op, name}
+      },
     },
     allowCreateOptions: {
       creator() {
@@ -29,7 +37,7 @@ export const bankMasterCol: colType = {
       },
     },
   },
-  form: {...defaultRegister},
+  form: {},
 }
 
 export const yuchoShitenNoCol: colType = {
@@ -44,7 +52,7 @@ export const bankBranchMasterCol: colType = {
   id: `bankBranchMasterId`,
   label: `支店名`,
   form: {
-    descriptionNoteAfter: `ゆうちょの場合は入力しないでください。`,
+    descriptionNoteAfter: `ゆうちょの場合は入力しない。`,
   },
   forSelect: {
     config: {
@@ -52,6 +60,7 @@ export const bankBranchMasterCol: colType = {
       messageWhenNoHit: `先に銀行を選択してください`,
       select: {
         name: `text`,
+        code: `text`,
         branchKana: `text`,
       },
       where: ({latestFormData}) => {
@@ -65,7 +74,7 @@ export const bankBranchMasterCol: colType = {
         return result
       },
       nameChanger: op => {
-        const name = op?.name ? `${op?.name}` : ''
+        const name = op?.name ? `${op?.name}[${op?.code ?? ''}]` : ''
         return {...op, name}
       },
     },

@@ -104,9 +104,6 @@ export type UcarMinAggregateOutputType = {
   annualTax: number | null
   earlyYear: number | null
   earlyMonth: number | null
-  bankName: string | null
-  branchName: string | null
-  branchNameKana: string | null
   storeNumber: string | null
   accountType: string | null
   accountNumber: string | null
@@ -198,9 +195,6 @@ export type UcarMaxAggregateOutputType = {
   annualTax: number | null
   earlyYear: number | null
   earlyMonth: number | null
-  bankName: string | null
-  branchName: string | null
-  branchNameKana: string | null
   storeNumber: string | null
   accountType: string | null
   accountNumber: string | null
@@ -292,9 +286,6 @@ export type UcarCountAggregateOutputType = {
   annualTax: number
   earlyYear: number
   earlyMonth: number
-  bankName: number
-  branchName: number
-  branchNameKana: number
   storeNumber: number
   accountType: number
   accountNumber: number
@@ -428,9 +419,6 @@ export type UcarMinAggregateInputType = {
   annualTax?: true
   earlyYear?: true
   earlyMonth?: true
-  bankName?: true
-  branchName?: true
-  branchNameKana?: true
   storeNumber?: true
   accountType?: true
   accountNumber?: true
@@ -522,9 +510,6 @@ export type UcarMaxAggregateInputType = {
   annualTax?: true
   earlyYear?: true
   earlyMonth?: true
-  bankName?: true
-  branchName?: true
-  branchNameKana?: true
   storeNumber?: true
   accountType?: true
   accountNumber?: true
@@ -616,9 +601,6 @@ export type UcarCountAggregateInputType = {
   annualTax?: true
   earlyYear?: true
   earlyMonth?: true
-  bankName?: true
-  branchName?: true
-  branchNameKana?: true
   storeNumber?: true
   accountType?: true
   accountNumber?: true
@@ -797,9 +779,6 @@ export type UcarGroupByOutputType = {
   annualTax: number | null
   earlyYear: number | null
   earlyMonth: number | null
-  bankName: string | null
-  branchName: string | null
-  branchNameKana: string | null
   storeNumber: string | null
   accountType: string | null
   accountNumber: string | null
@@ -914,9 +893,6 @@ export type UcarWhereInput = {
   annualTax?: Prisma.IntNullableFilter<"Ucar"> | number | null
   earlyYear?: Prisma.IntNullableFilter<"Ucar"> | number | null
   earlyMonth?: Prisma.IntNullableFilter<"Ucar"> | number | null
-  bankName?: Prisma.StringNullableFilter<"Ucar"> | string | null
-  branchName?: Prisma.StringNullableFilter<"Ucar"> | string | null
-  branchNameKana?: Prisma.StringNullableFilter<"Ucar"> | string | null
   storeNumber?: Prisma.StringNullableFilter<"Ucar"> | string | null
   accountType?: Prisma.StringNullableFilter<"Ucar"> | string | null
   accountNumber?: Prisma.StringNullableFilter<"Ucar"> | string | null
@@ -1022,9 +998,6 @@ export type UcarOrderByWithRelationInput = {
   annualTax?: Prisma.SortOrderInput | Prisma.SortOrder
   earlyYear?: Prisma.SortOrderInput | Prisma.SortOrder
   earlyMonth?: Prisma.SortOrderInput | Prisma.SortOrder
-  bankName?: Prisma.SortOrderInput | Prisma.SortOrder
-  branchName?: Prisma.SortOrderInput | Prisma.SortOrder
-  branchNameKana?: Prisma.SortOrderInput | Prisma.SortOrder
   storeNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   accountType?: Prisma.SortOrderInput | Prisma.SortOrder
   accountNumber?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -1133,9 +1106,6 @@ export type UcarWhereUniqueInput = Prisma.AtLeast<{
   annualTax?: Prisma.IntNullableFilter<"Ucar"> | number | null
   earlyYear?: Prisma.IntNullableFilter<"Ucar"> | number | null
   earlyMonth?: Prisma.IntNullableFilter<"Ucar"> | number | null
-  bankName?: Prisma.StringNullableFilter<"Ucar"> | string | null
-  branchName?: Prisma.StringNullableFilter<"Ucar"> | string | null
-  branchNameKana?: Prisma.StringNullableFilter<"Ucar"> | string | null
   storeNumber?: Prisma.StringNullableFilter<"Ucar"> | string | null
   accountType?: Prisma.StringNullableFilter<"Ucar"> | string | null
   accountNumber?: Prisma.StringNullableFilter<"Ucar"> | string | null
@@ -1241,9 +1211,6 @@ export type UcarOrderByWithAggregationInput = {
   annualTax?: Prisma.SortOrderInput | Prisma.SortOrder
   earlyYear?: Prisma.SortOrderInput | Prisma.SortOrder
   earlyMonth?: Prisma.SortOrderInput | Prisma.SortOrder
-  bankName?: Prisma.SortOrderInput | Prisma.SortOrder
-  branchName?: Prisma.SortOrderInput | Prisma.SortOrder
-  branchNameKana?: Prisma.SortOrderInput | Prisma.SortOrder
   storeNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   accountType?: Prisma.SortOrderInput | Prisma.SortOrder
   accountNumber?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -1343,9 +1310,6 @@ export type UcarScalarWhereWithAggregatesInput = {
   annualTax?: Prisma.IntNullableWithAggregatesFilter<"Ucar"> | number | null
   earlyYear?: Prisma.IntNullableWithAggregatesFilter<"Ucar"> | number | null
   earlyMonth?: Prisma.IntNullableWithAggregatesFilter<"Ucar"> | number | null
-  bankName?: Prisma.StringNullableWithAggregatesFilter<"Ucar"> | string | null
-  branchName?: Prisma.StringNullableWithAggregatesFilter<"Ucar"> | string | null
-  branchNameKana?: Prisma.StringNullableWithAggregatesFilter<"Ucar"> | string | null
   storeNumber?: Prisma.StringNullableWithAggregatesFilter<"Ucar"> | string | null
   accountType?: Prisma.StringNullableWithAggregatesFilter<"Ucar"> | string | null
   accountNumber?: Prisma.StringNullableWithAggregatesFilter<"Ucar"> | string | null
@@ -1432,9 +1396,6 @@ export type UcarCreateInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -1533,9 +1494,6 @@ export type UcarUncheckedCreateInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -1626,9 +1584,6 @@ export type UcarUpdateInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1727,9 +1682,6 @@ export type UcarUncheckedUpdateInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1825,9 +1777,6 @@ export type UcarCreateManyInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -1914,9 +1863,6 @@ export type UcarUpdateManyMutationInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2001,9 +1947,6 @@ export type UcarUncheckedUpdateManyInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2110,9 +2053,6 @@ export type UcarCountOrderByAggregateInput = {
   annualTax?: Prisma.SortOrder
   earlyYear?: Prisma.SortOrder
   earlyMonth?: Prisma.SortOrder
-  bankName?: Prisma.SortOrder
-  branchName?: Prisma.SortOrder
-  branchNameKana?: Prisma.SortOrder
   storeNumber?: Prisma.SortOrder
   accountType?: Prisma.SortOrder
   accountNumber?: Prisma.SortOrder
@@ -2224,9 +2164,6 @@ export type UcarMaxOrderByAggregateInput = {
   annualTax?: Prisma.SortOrder
   earlyYear?: Prisma.SortOrder
   earlyMonth?: Prisma.SortOrder
-  bankName?: Prisma.SortOrder
-  branchName?: Prisma.SortOrder
-  branchNameKana?: Prisma.SortOrder
   storeNumber?: Prisma.SortOrder
   accountType?: Prisma.SortOrder
   accountNumber?: Prisma.SortOrder
@@ -2318,9 +2255,6 @@ export type UcarMinOrderByAggregateInput = {
   annualTax?: Prisma.SortOrder
   earlyYear?: Prisma.SortOrder
   earlyMonth?: Prisma.SortOrder
-  bankName?: Prisma.SortOrder
-  branchName?: Prisma.SortOrder
-  branchNameKana?: Prisma.SortOrder
   storeNumber?: Prisma.SortOrder
   accountType?: Prisma.SortOrder
   accountNumber?: Prisma.SortOrder
@@ -2900,9 +2834,6 @@ export type UcarCreateWithoutOldCars_BaseInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -2997,9 +2928,6 @@ export type UcarUncheckedCreateWithoutOldCars_BaseInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -3124,9 +3052,6 @@ export type UcarScalarWhereInput = {
   annualTax?: Prisma.IntNullableFilter<"Ucar"> | number | null
   earlyYear?: Prisma.IntNullableFilter<"Ucar"> | number | null
   earlyMonth?: Prisma.IntNullableFilter<"Ucar"> | number | null
-  bankName?: Prisma.StringNullableFilter<"Ucar"> | string | null
-  branchName?: Prisma.StringNullableFilter<"Ucar"> | string | null
-  branchNameKana?: Prisma.StringNullableFilter<"Ucar"> | string | null
   storeNumber?: Prisma.StringNullableFilter<"Ucar"> | string | null
   accountType?: Prisma.StringNullableFilter<"Ucar"> | string | null
   accountNumber?: Prisma.StringNullableFilter<"Ucar"> | string | null
@@ -3213,9 +3138,6 @@ export type UcarCreateWithoutUPASSInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -3312,9 +3234,6 @@ export type UcarUncheckedCreateWithoutUPASSInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -3421,9 +3340,6 @@ export type UcarUpdateWithoutUPASSInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3520,9 +3436,6 @@ export type UcarUncheckedUpdateWithoutUPASSInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3613,9 +3526,6 @@ export type UcarCreateWithoutQR_ProsessInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -3713,9 +3623,6 @@ export type UcarUncheckedCreateWithoutQR_ProsessInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -3821,9 +3728,6 @@ export type UcarUpdateWithoutQR_ProsessInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3921,9 +3825,6 @@ export type UcarUncheckedUpdateWithoutQR_ProsessInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4013,9 +3914,6 @@ export type UcarCreateWithoutNewCarInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -4113,9 +4011,6 @@ export type UcarUncheckedCreateWithoutNewCarInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -4231,9 +4126,6 @@ export type UcarCreateWithoutStoreInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -4331,9 +4223,6 @@ export type UcarUncheckedCreateWithoutStoreInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -4433,9 +4322,6 @@ export type UcarCreateWithoutDestinationStoreInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -4533,9 +4419,6 @@ export type UcarUncheckedCreateWithoutDestinationStoreInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -4635,9 +4518,6 @@ export type UcarCreateWithoutTmpRentalStoreInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -4735,9 +4615,6 @@ export type UcarUncheckedCreateWithoutTmpRentalStoreInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -4885,9 +4762,6 @@ export type UcarCreateWithoutUserInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -4985,9 +4859,6 @@ export type UcarUncheckedCreateWithoutUserInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -5103,9 +4974,6 @@ export type UcarCreateWithoutNumber98Input = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -5202,9 +5070,6 @@ export type UcarUncheckedCreateWithoutNumber98Input = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -5321,9 +5186,6 @@ export type UcarCreateWithoutAppliedUcarGarageSlotInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -5421,9 +5283,6 @@ export type UcarUncheckedCreateWithoutAppliedUcarGarageSlotInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -5529,9 +5388,6 @@ export type UcarUpdateWithoutAppliedUcarGarageSlotInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5629,9 +5485,6 @@ export type UcarUncheckedUpdateWithoutAppliedUcarGarageSlotInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5721,9 +5574,6 @@ export type UcarCreateWithoutBankMasterInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -5821,9 +5671,6 @@ export type UcarUncheckedCreateWithoutBankMasterInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -5939,9 +5786,6 @@ export type UcarCreateWithoutBankBranchMasterInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -6039,9 +5883,6 @@ export type UcarUncheckedCreateWithoutBankBranchMasterInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -6157,9 +5998,6 @@ export type UcarCreateWithoutUcarProcessInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -6257,9 +6095,6 @@ export type UcarUncheckedCreateWithoutUcarProcessInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -6365,9 +6200,6 @@ export type UcarUpdateWithoutUcarProcessInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6465,9 +6297,6 @@ export type UcarUncheckedUpdateWithoutUcarProcessInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6557,9 +6386,6 @@ export type UcarCreateWithoutUcarPaperWorkNotesInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -6657,9 +6483,6 @@ export type UcarUncheckedCreateWithoutUcarPaperWorkNotesInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -6765,9 +6588,6 @@ export type UcarUpdateWithoutUcarPaperWorkNotesInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6865,9 +6685,6 @@ export type UcarUncheckedUpdateWithoutUcarPaperWorkNotesInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6959,9 +6776,6 @@ export type UcarCreateManyOldCars_BaseInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -7048,9 +6862,6 @@ export type UcarUpdateWithoutOldCars_BaseInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7145,9 +6956,6 @@ export type UcarUncheckedUpdateWithoutOldCars_BaseInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7240,9 +7048,6 @@ export type UcarUncheckedUpdateManyWithoutOldCars_BaseInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7334,9 +7139,6 @@ export type UcarCreateManyNewCarInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -7422,9 +7224,6 @@ export type UcarUpdateWithoutNewCarInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7522,9 +7321,6 @@ export type UcarUncheckedUpdateWithoutNewCarInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7619,9 +7415,6 @@ export type UcarUncheckedUpdateManyWithoutNewCarInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7712,9 +7505,6 @@ export type UcarCreateManyStoreInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -7805,9 +7595,6 @@ export type UcarCreateManyDestinationStoreInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -7898,9 +7685,6 @@ export type UcarCreateManyTmpRentalStoreInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -7986,9 +7770,6 @@ export type UcarUpdateWithoutStoreInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8086,9 +7867,6 @@ export type UcarUncheckedUpdateWithoutStoreInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8183,9 +7961,6 @@ export type UcarUncheckedUpdateManyWithoutStoreInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8271,9 +8046,6 @@ export type UcarUpdateWithoutDestinationStoreInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8371,9 +8143,6 @@ export type UcarUncheckedUpdateWithoutDestinationStoreInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8468,9 +8237,6 @@ export type UcarUncheckedUpdateManyWithoutDestinationStoreInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8556,9 +8322,6 @@ export type UcarUpdateWithoutTmpRentalStoreInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8656,9 +8419,6 @@ export type UcarUncheckedUpdateWithoutTmpRentalStoreInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8753,9 +8513,6 @@ export type UcarUncheckedUpdateManyWithoutTmpRentalStoreInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8846,9 +8603,6 @@ export type UcarCreateManyUserInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -8934,9 +8688,6 @@ export type UcarUpdateWithoutUserInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9034,9 +8785,6 @@ export type UcarUncheckedUpdateWithoutUserInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9131,9 +8879,6 @@ export type UcarUncheckedUpdateManyWithoutUserInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9223,9 +8968,6 @@ export type UcarCreateManyNumber98Input = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -9312,9 +9054,6 @@ export type UcarUpdateWithoutNumber98Input = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9411,9 +9150,6 @@ export type UcarUncheckedUpdateWithoutNumber98Input = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9508,9 +9244,6 @@ export type UcarUncheckedUpdateManyWithoutNumber98Input = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9602,9 +9335,6 @@ export type UcarCreateManyBankMasterInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -9690,9 +9420,6 @@ export type UcarUpdateWithoutBankMasterInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9790,9 +9517,6 @@ export type UcarUncheckedUpdateWithoutBankMasterInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9887,9 +9611,6 @@ export type UcarUncheckedUpdateManyWithoutBankMasterInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9980,9 +9701,6 @@ export type UcarCreateManyBankBranchMasterInput = {
   annualTax?: number | null
   earlyYear?: number | null
   earlyMonth?: number | null
-  bankName?: string | null
-  branchName?: string | null
-  branchNameKana?: string | null
   storeNumber?: string | null
   accountType?: string | null
   accountNumber?: string | null
@@ -10068,9 +9786,6 @@ export type UcarUpdateWithoutBankBranchMasterInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -10168,9 +9883,6 @@ export type UcarUncheckedUpdateWithoutBankBranchMasterInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -10265,9 +9977,6 @@ export type UcarUncheckedUpdateManyWithoutBankBranchMasterInput = {
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  branchNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -10398,9 +10107,6 @@ export type UcarSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   annualTax?: boolean
   earlyYear?: boolean
   earlyMonth?: boolean
-  bankName?: boolean
-  branchName?: boolean
-  branchNameKana?: boolean
   storeNumber?: boolean
   accountType?: boolean
   accountNumber?: boolean
@@ -10507,9 +10213,6 @@ export type UcarSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   annualTax?: boolean
   earlyYear?: boolean
   earlyMonth?: boolean
-  bankName?: boolean
-  branchName?: boolean
-  branchNameKana?: boolean
   storeNumber?: boolean
   accountType?: boolean
   accountNumber?: boolean
@@ -10611,9 +10314,6 @@ export type UcarSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   annualTax?: boolean
   earlyYear?: boolean
   earlyMonth?: boolean
-  bankName?: boolean
-  branchName?: boolean
-  branchNameKana?: boolean
   storeNumber?: boolean
   accountType?: boolean
   accountNumber?: boolean
@@ -10715,9 +10415,6 @@ export type UcarSelectScalar = {
   annualTax?: boolean
   earlyYear?: boolean
   earlyMonth?: boolean
-  bankName?: boolean
-  branchName?: boolean
-  branchNameKana?: boolean
   storeNumber?: boolean
   accountType?: boolean
   accountNumber?: boolean
@@ -10771,7 +10468,7 @@ export type UcarSelectScalar = {
   newCarId?: boolean
 }
 
-export type UcarOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "qrIssuedAt" | "processLastUpdatedAt" | "active" | "sortOrder" | "sateiDataConfirmedAt" | "dataSource" | "sateiID" | "number98" | "NO_SIRETYUM" | "DD_SIIRE" | "arrivedAt" | "meihenBi" | "masshoBi" | "secondMeihenbi" | "destination" | "inkanCertificateExpiredAt" | "inspectionExpiredAt" | "plate" | "processedAs" | "purchaseType" | "remarks" | "runnable" | "storeToPickUp" | "souhsinJikoku" | "henkinRequired" | "accountingRecievedAt" | "paybackScheduledAt" | "upperCarregisteredAt" | "registerDate" | "customerName" | "registerdAt" | "annualTax" | "earlyYear" | "earlyMonth" | "bankName" | "branchName" | "branchNameKana" | "storeNumber" | "accountType" | "accountNumber" | "accountNameKana" | "paymentNoticeRecievedAt" | "isPayed" | "petCount" | "petPrice" | "prefCount" | "prefPrice" | "taxCustomerName" | "taxJobNote" | "destinationStoreId" | "daihatsuReserve" | "exception" | "inkanAlternate" | "inspectionAlternate" | "paymentNoticeRecieved" | "remarksHq" | "tmpPlate" | "tmpVehicleNo" | "tmpColor" | "tmpModelYear" | "tmpBrandName" | "tmpModelName" | "tmpGrade" | "tmpType" | "tmpCommonType" | "tmpFrameNumber" | "tmpTransmissionType" | "tmpRegistrationClassNumber" | "tmpRegistrationKana" | "tmpLandAffairsName" | "modified_brandName" | "modified_modelName" | "modified_frameNumber" | "modified_chassisNumber" | "modified_type" | "modified_grade" | "modified_modelYear" | "modified_length" | "modified_width" | "modified_height" | "ucarLastProcessMasterId" | "bankMasterId" | "yuchoShitenNo" | "bankBranchMasterId" | "userId" | "storeId" | "tmpRentalStoreId" | "newCarId", ExtArgs["result"]["ucar"]>
+export type UcarOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "qrIssuedAt" | "processLastUpdatedAt" | "active" | "sortOrder" | "sateiDataConfirmedAt" | "dataSource" | "sateiID" | "number98" | "NO_SIRETYUM" | "DD_SIIRE" | "arrivedAt" | "meihenBi" | "masshoBi" | "secondMeihenbi" | "destination" | "inkanCertificateExpiredAt" | "inspectionExpiredAt" | "plate" | "processedAs" | "purchaseType" | "remarks" | "runnable" | "storeToPickUp" | "souhsinJikoku" | "henkinRequired" | "accountingRecievedAt" | "paybackScheduledAt" | "upperCarregisteredAt" | "registerDate" | "customerName" | "registerdAt" | "annualTax" | "earlyYear" | "earlyMonth" | "storeNumber" | "accountType" | "accountNumber" | "accountNameKana" | "paymentNoticeRecievedAt" | "isPayed" | "petCount" | "petPrice" | "prefCount" | "prefPrice" | "taxCustomerName" | "taxJobNote" | "destinationStoreId" | "daihatsuReserve" | "exception" | "inkanAlternate" | "inspectionAlternate" | "paymentNoticeRecieved" | "remarksHq" | "tmpPlate" | "tmpVehicleNo" | "tmpColor" | "tmpModelYear" | "tmpBrandName" | "tmpModelName" | "tmpGrade" | "tmpType" | "tmpCommonType" | "tmpFrameNumber" | "tmpTransmissionType" | "tmpRegistrationClassNumber" | "tmpRegistrationKana" | "tmpLandAffairsName" | "modified_brandName" | "modified_modelName" | "modified_frameNumber" | "modified_chassisNumber" | "modified_type" | "modified_grade" | "modified_modelYear" | "modified_length" | "modified_width" | "modified_height" | "ucarLastProcessMasterId" | "bankMasterId" | "yuchoShitenNo" | "bankBranchMasterId" | "userId" | "storeId" | "tmpRentalStoreId" | "newCarId", ExtArgs["result"]["ucar"]>
 export type UcarInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   DestinationStore?: boolean | Prisma.Ucar$DestinationStoreArgs<ExtArgs>
   Number98?: boolean | Prisma.Ucar$Number98Args<ExtArgs>
@@ -10870,9 +10567,6 @@ export type $UcarPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     annualTax: number | null
     earlyYear: number | null
     earlyMonth: number | null
-    bankName: string | null
-    branchName: string | null
-    branchNameKana: string | null
     storeNumber: string | null
     accountType: string | null
     accountNumber: string | null
@@ -11398,9 +11092,6 @@ export interface UcarFieldRefs {
   readonly annualTax: Prisma.FieldRef<"Ucar", 'Int'>
   readonly earlyYear: Prisma.FieldRef<"Ucar", 'Int'>
   readonly earlyMonth: Prisma.FieldRef<"Ucar", 'Int'>
-  readonly bankName: Prisma.FieldRef<"Ucar", 'String'>
-  readonly branchName: Prisma.FieldRef<"Ucar", 'String'>
-  readonly branchNameKana: Prisma.FieldRef<"Ucar", 'String'>
   readonly storeNumber: Prisma.FieldRef<"Ucar", 'String'>
   readonly accountType: Prisma.FieldRef<"Ucar", 'String'>
   readonly accountNumber: Prisma.FieldRef<"Ucar", 'String'>
