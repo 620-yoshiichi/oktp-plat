@@ -315,7 +315,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
     ...new Fields([
       ...SETTING_COLS.buildFormGroup({groupName: `基本情報`}).plain,
       ...SHIIRE_G_SETTING_COLS.buildFormGroup({groupName: `仕入G設定情報`}).plain,
-    ]).showSummaryInTd({wrapperWidthPx: 200}).plain,
+    ]).showSummaryInTd({wrapperWidthPx: 200, editable: true}).plain,
 
     ...PAPER_WORK_ALERT_COLS.plain,
 

@@ -99,7 +99,6 @@ export type UcarMinAggregateOutputType = {
   paybackScheduledAt: Date | null
   upperCarregisteredAt: Date | null
   registerDate: Date | null
-  customerName: string | null
   registerdAt: Date | null
   annualTax: number | null
   earlyYear: number | null
@@ -190,7 +189,6 @@ export type UcarMaxAggregateOutputType = {
   paybackScheduledAt: Date | null
   upperCarregisteredAt: Date | null
   registerDate: Date | null
-  customerName: string | null
   registerdAt: Date | null
   annualTax: number | null
   earlyYear: number | null
@@ -281,7 +279,6 @@ export type UcarCountAggregateOutputType = {
   paybackScheduledAt: number
   upperCarregisteredAt: number
   registerDate: number
-  customerName: number
   registerdAt: number
   annualTax: number
   earlyYear: number
@@ -414,7 +411,6 @@ export type UcarMinAggregateInputType = {
   paybackScheduledAt?: true
   upperCarregisteredAt?: true
   registerDate?: true
-  customerName?: true
   registerdAt?: true
   annualTax?: true
   earlyYear?: true
@@ -505,7 +501,6 @@ export type UcarMaxAggregateInputType = {
   paybackScheduledAt?: true
   upperCarregisteredAt?: true
   registerDate?: true
-  customerName?: true
   registerdAt?: true
   annualTax?: true
   earlyYear?: true
@@ -596,7 +591,6 @@ export type UcarCountAggregateInputType = {
   paybackScheduledAt?: true
   upperCarregisteredAt?: true
   registerDate?: true
-  customerName?: true
   registerdAt?: true
   annualTax?: true
   earlyYear?: true
@@ -774,7 +768,6 @@ export type UcarGroupByOutputType = {
   paybackScheduledAt: Date | null
   upperCarregisteredAt: Date | null
   registerDate: Date | null
-  customerName: string | null
   registerdAt: Date | null
   annualTax: number | null
   earlyYear: number | null
@@ -888,7 +881,6 @@ export type UcarWhereInput = {
   paybackScheduledAt?: Prisma.DateTimeNullableFilter<"Ucar"> | Date | string | null
   upperCarregisteredAt?: Prisma.DateTimeNullableFilter<"Ucar"> | Date | string | null
   registerDate?: Prisma.DateTimeNullableFilter<"Ucar"> | Date | string | null
-  customerName?: Prisma.StringNullableFilter<"Ucar"> | string | null
   registerdAt?: Prisma.DateTimeNullableFilter<"Ucar"> | Date | string | null
   annualTax?: Prisma.IntNullableFilter<"Ucar"> | number | null
   earlyYear?: Prisma.IntNullableFilter<"Ucar"> | number | null
@@ -993,7 +985,6 @@ export type UcarOrderByWithRelationInput = {
   paybackScheduledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   upperCarregisteredAt?: Prisma.SortOrderInput | Prisma.SortOrder
   registerDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  customerName?: Prisma.SortOrderInput | Prisma.SortOrder
   registerdAt?: Prisma.SortOrderInput | Prisma.SortOrder
   annualTax?: Prisma.SortOrderInput | Prisma.SortOrder
   earlyYear?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -1101,7 +1092,6 @@ export type UcarWhereUniqueInput = Prisma.AtLeast<{
   paybackScheduledAt?: Prisma.DateTimeNullableFilter<"Ucar"> | Date | string | null
   upperCarregisteredAt?: Prisma.DateTimeNullableFilter<"Ucar"> | Date | string | null
   registerDate?: Prisma.DateTimeNullableFilter<"Ucar"> | Date | string | null
-  customerName?: Prisma.StringNullableFilter<"Ucar"> | string | null
   registerdAt?: Prisma.DateTimeNullableFilter<"Ucar"> | Date | string | null
   annualTax?: Prisma.IntNullableFilter<"Ucar"> | number | null
   earlyYear?: Prisma.IntNullableFilter<"Ucar"> | number | null
@@ -1206,7 +1196,6 @@ export type UcarOrderByWithAggregationInput = {
   paybackScheduledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   upperCarregisteredAt?: Prisma.SortOrderInput | Prisma.SortOrder
   registerDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  customerName?: Prisma.SortOrderInput | Prisma.SortOrder
   registerdAt?: Prisma.SortOrderInput | Prisma.SortOrder
   annualTax?: Prisma.SortOrderInput | Prisma.SortOrder
   earlyYear?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -1305,7 +1294,6 @@ export type UcarScalarWhereWithAggregatesInput = {
   paybackScheduledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Ucar"> | Date | string | null
   upperCarregisteredAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Ucar"> | Date | string | null
   registerDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Ucar"> | Date | string | null
-  customerName?: Prisma.StringNullableWithAggregatesFilter<"Ucar"> | string | null
   registerdAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Ucar"> | Date | string | null
   annualTax?: Prisma.IntNullableWithAggregatesFilter<"Ucar"> | number | null
   earlyYear?: Prisma.IntNullableWithAggregatesFilter<"Ucar"> | number | null
@@ -1391,7 +1379,6 @@ export type UcarCreateInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -1489,7 +1476,6 @@ export type UcarUncheckedCreateInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -1579,7 +1565,6 @@ export type UcarUpdateInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1677,7 +1662,6 @@ export type UcarUncheckedUpdateInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1772,7 +1756,6 @@ export type UcarCreateManyInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -1858,7 +1841,6 @@ export type UcarUpdateManyMutationInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1942,7 +1924,6 @@ export type UcarUncheckedUpdateManyInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2048,7 +2029,6 @@ export type UcarCountOrderByAggregateInput = {
   paybackScheduledAt?: Prisma.SortOrder
   upperCarregisteredAt?: Prisma.SortOrder
   registerDate?: Prisma.SortOrder
-  customerName?: Prisma.SortOrder
   registerdAt?: Prisma.SortOrder
   annualTax?: Prisma.SortOrder
   earlyYear?: Prisma.SortOrder
@@ -2159,7 +2139,6 @@ export type UcarMaxOrderByAggregateInput = {
   paybackScheduledAt?: Prisma.SortOrder
   upperCarregisteredAt?: Prisma.SortOrder
   registerDate?: Prisma.SortOrder
-  customerName?: Prisma.SortOrder
   registerdAt?: Prisma.SortOrder
   annualTax?: Prisma.SortOrder
   earlyYear?: Prisma.SortOrder
@@ -2250,7 +2229,6 @@ export type UcarMinOrderByAggregateInput = {
   paybackScheduledAt?: Prisma.SortOrder
   upperCarregisteredAt?: Prisma.SortOrder
   registerDate?: Prisma.SortOrder
-  customerName?: Prisma.SortOrder
   registerdAt?: Prisma.SortOrder
   annualTax?: Prisma.SortOrder
   earlyYear?: Prisma.SortOrder
@@ -2829,7 +2807,6 @@ export type UcarCreateWithoutOldCars_BaseInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -2923,7 +2900,6 @@ export type UcarUncheckedCreateWithoutOldCars_BaseInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -3047,7 +3023,6 @@ export type UcarScalarWhereInput = {
   paybackScheduledAt?: Prisma.DateTimeNullableFilter<"Ucar"> | Date | string | null
   upperCarregisteredAt?: Prisma.DateTimeNullableFilter<"Ucar"> | Date | string | null
   registerDate?: Prisma.DateTimeNullableFilter<"Ucar"> | Date | string | null
-  customerName?: Prisma.StringNullableFilter<"Ucar"> | string | null
   registerdAt?: Prisma.DateTimeNullableFilter<"Ucar"> | Date | string | null
   annualTax?: Prisma.IntNullableFilter<"Ucar"> | number | null
   earlyYear?: Prisma.IntNullableFilter<"Ucar"> | number | null
@@ -3133,7 +3108,6 @@ export type UcarCreateWithoutUPASSInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -3229,7 +3203,6 @@ export type UcarUncheckedCreateWithoutUPASSInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -3335,7 +3308,6 @@ export type UcarUpdateWithoutUPASSInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -3431,7 +3403,6 @@ export type UcarUncheckedUpdateWithoutUPASSInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -3521,7 +3492,6 @@ export type UcarCreateWithoutQR_ProsessInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -3618,7 +3588,6 @@ export type UcarUncheckedCreateWithoutQR_ProsessInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -3723,7 +3692,6 @@ export type UcarUpdateWithoutQR_ProsessInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -3820,7 +3788,6 @@ export type UcarUncheckedUpdateWithoutQR_ProsessInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -3909,7 +3876,6 @@ export type UcarCreateWithoutNewCarInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -4006,7 +3972,6 @@ export type UcarUncheckedCreateWithoutNewCarInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -4121,7 +4086,6 @@ export type UcarCreateWithoutStoreInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -4218,7 +4182,6 @@ export type UcarUncheckedCreateWithoutStoreInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -4317,7 +4280,6 @@ export type UcarCreateWithoutDestinationStoreInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -4414,7 +4376,6 @@ export type UcarUncheckedCreateWithoutDestinationStoreInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -4513,7 +4474,6 @@ export type UcarCreateWithoutTmpRentalStoreInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -4610,7 +4570,6 @@ export type UcarUncheckedCreateWithoutTmpRentalStoreInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -4757,7 +4716,6 @@ export type UcarCreateWithoutUserInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -4854,7 +4812,6 @@ export type UcarUncheckedCreateWithoutUserInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -4969,7 +4926,6 @@ export type UcarCreateWithoutNumber98Input = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -5065,7 +5021,6 @@ export type UcarUncheckedCreateWithoutNumber98Input = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -5181,7 +5136,6 @@ export type UcarCreateWithoutAppliedUcarGarageSlotInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -5278,7 +5232,6 @@ export type UcarUncheckedCreateWithoutAppliedUcarGarageSlotInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -5383,7 +5336,6 @@ export type UcarUpdateWithoutAppliedUcarGarageSlotInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -5480,7 +5432,6 @@ export type UcarUncheckedUpdateWithoutAppliedUcarGarageSlotInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -5569,7 +5520,6 @@ export type UcarCreateWithoutBankMasterInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -5666,7 +5616,6 @@ export type UcarUncheckedCreateWithoutBankMasterInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -5781,7 +5730,6 @@ export type UcarCreateWithoutBankBranchMasterInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -5878,7 +5826,6 @@ export type UcarUncheckedCreateWithoutBankBranchMasterInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -5993,7 +5940,6 @@ export type UcarCreateWithoutUcarProcessInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -6090,7 +6036,6 @@ export type UcarUncheckedCreateWithoutUcarProcessInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -6195,7 +6140,6 @@ export type UcarUpdateWithoutUcarProcessInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -6292,7 +6236,6 @@ export type UcarUncheckedUpdateWithoutUcarProcessInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -6381,7 +6324,6 @@ export type UcarCreateWithoutUcarPaperWorkNotesInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -6478,7 +6420,6 @@ export type UcarUncheckedCreateWithoutUcarPaperWorkNotesInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -6583,7 +6524,6 @@ export type UcarUpdateWithoutUcarPaperWorkNotesInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -6680,7 +6620,6 @@ export type UcarUncheckedUpdateWithoutUcarPaperWorkNotesInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -6771,7 +6710,6 @@ export type UcarCreateManyOldCars_BaseInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -6857,7 +6795,6 @@ export type UcarUpdateWithoutOldCars_BaseInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -6951,7 +6888,6 @@ export type UcarUncheckedUpdateWithoutOldCars_BaseInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -7043,7 +6979,6 @@ export type UcarUncheckedUpdateManyWithoutOldCars_BaseInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -7134,7 +7069,6 @@ export type UcarCreateManyNewCarInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -7219,7 +7153,6 @@ export type UcarUpdateWithoutNewCarInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -7316,7 +7249,6 @@ export type UcarUncheckedUpdateWithoutNewCarInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -7410,7 +7342,6 @@ export type UcarUncheckedUpdateManyWithoutNewCarInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -7500,7 +7431,6 @@ export type UcarCreateManyStoreInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -7590,7 +7520,6 @@ export type UcarCreateManyDestinationStoreInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -7680,7 +7609,6 @@ export type UcarCreateManyTmpRentalStoreInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -7765,7 +7693,6 @@ export type UcarUpdateWithoutStoreInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -7862,7 +7789,6 @@ export type UcarUncheckedUpdateWithoutStoreInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -7956,7 +7882,6 @@ export type UcarUncheckedUpdateManyWithoutStoreInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -8041,7 +7966,6 @@ export type UcarUpdateWithoutDestinationStoreInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -8138,7 +8062,6 @@ export type UcarUncheckedUpdateWithoutDestinationStoreInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -8232,7 +8155,6 @@ export type UcarUncheckedUpdateManyWithoutDestinationStoreInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -8317,7 +8239,6 @@ export type UcarUpdateWithoutTmpRentalStoreInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -8414,7 +8335,6 @@ export type UcarUncheckedUpdateWithoutTmpRentalStoreInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -8508,7 +8428,6 @@ export type UcarUncheckedUpdateManyWithoutTmpRentalStoreInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -8598,7 +8517,6 @@ export type UcarCreateManyUserInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -8683,7 +8601,6 @@ export type UcarUpdateWithoutUserInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -8780,7 +8697,6 @@ export type UcarUncheckedUpdateWithoutUserInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -8874,7 +8790,6 @@ export type UcarUncheckedUpdateManyWithoutUserInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -8963,7 +8878,6 @@ export type UcarCreateManyNumber98Input = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -9049,7 +8963,6 @@ export type UcarUpdateWithoutNumber98Input = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -9145,7 +9058,6 @@ export type UcarUncheckedUpdateWithoutNumber98Input = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -9239,7 +9151,6 @@ export type UcarUncheckedUpdateManyWithoutNumber98Input = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -9330,7 +9241,6 @@ export type UcarCreateManyBankMasterInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -9415,7 +9325,6 @@ export type UcarUpdateWithoutBankMasterInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -9512,7 +9421,6 @@ export type UcarUncheckedUpdateWithoutBankMasterInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -9606,7 +9514,6 @@ export type UcarUncheckedUpdateManyWithoutBankMasterInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -9696,7 +9603,6 @@ export type UcarCreateManyBankBranchMasterInput = {
   paybackScheduledAt?: Date | string | null
   upperCarregisteredAt?: Date | string | null
   registerDate?: Date | string | null
-  customerName?: string | null
   registerdAt?: Date | string | null
   annualTax?: number | null
   earlyYear?: number | null
@@ -9781,7 +9687,6 @@ export type UcarUpdateWithoutBankBranchMasterInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -9878,7 +9783,6 @@ export type UcarUncheckedUpdateWithoutBankBranchMasterInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -9972,7 +9876,6 @@ export type UcarUncheckedUpdateManyWithoutBankBranchMasterInput = {
   paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -10102,7 +10005,6 @@ export type UcarSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   paybackScheduledAt?: boolean
   upperCarregisteredAt?: boolean
   registerDate?: boolean
-  customerName?: boolean
   registerdAt?: boolean
   annualTax?: boolean
   earlyYear?: boolean
@@ -10208,7 +10110,6 @@ export type UcarSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   paybackScheduledAt?: boolean
   upperCarregisteredAt?: boolean
   registerDate?: boolean
-  customerName?: boolean
   registerdAt?: boolean
   annualTax?: boolean
   earlyYear?: boolean
@@ -10309,7 +10210,6 @@ export type UcarSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   paybackScheduledAt?: boolean
   upperCarregisteredAt?: boolean
   registerDate?: boolean
-  customerName?: boolean
   registerdAt?: boolean
   annualTax?: boolean
   earlyYear?: boolean
@@ -10410,7 +10310,6 @@ export type UcarSelectScalar = {
   paybackScheduledAt?: boolean
   upperCarregisteredAt?: boolean
   registerDate?: boolean
-  customerName?: boolean
   registerdAt?: boolean
   annualTax?: boolean
   earlyYear?: boolean
@@ -10468,7 +10367,7 @@ export type UcarSelectScalar = {
   newCarId?: boolean
 }
 
-export type UcarOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "qrIssuedAt" | "processLastUpdatedAt" | "active" | "sortOrder" | "sateiDataConfirmedAt" | "dataSource" | "sateiID" | "number98" | "NO_SIRETYUM" | "DD_SIIRE" | "arrivedAt" | "meihenBi" | "masshoBi" | "secondMeihenbi" | "destination" | "inkanCertificateExpiredAt" | "inspectionExpiredAt" | "plate" | "processedAs" | "purchaseType" | "remarks" | "runnable" | "storeToPickUp" | "souhsinJikoku" | "henkinRequired" | "accountingRecievedAt" | "paybackScheduledAt" | "upperCarregisteredAt" | "registerDate" | "customerName" | "registerdAt" | "annualTax" | "earlyYear" | "earlyMonth" | "storeNumber" | "accountType" | "accountNumber" | "accountNameKana" | "paymentNoticeRecievedAt" | "isPayed" | "petCount" | "petPrice" | "prefCount" | "prefPrice" | "taxCustomerName" | "taxJobNote" | "destinationStoreId" | "daihatsuReserve" | "exception" | "inkanAlternate" | "inspectionAlternate" | "paymentNoticeRecieved" | "remarksHq" | "tmpPlate" | "tmpVehicleNo" | "tmpColor" | "tmpModelYear" | "tmpBrandName" | "tmpModelName" | "tmpGrade" | "tmpType" | "tmpCommonType" | "tmpFrameNumber" | "tmpTransmissionType" | "tmpRegistrationClassNumber" | "tmpRegistrationKana" | "tmpLandAffairsName" | "modified_brandName" | "modified_modelName" | "modified_frameNumber" | "modified_chassisNumber" | "modified_type" | "modified_grade" | "modified_modelYear" | "modified_length" | "modified_width" | "modified_height" | "ucarLastProcessMasterId" | "bankMasterId" | "yuchoShitenNo" | "bankBranchMasterId" | "userId" | "storeId" | "tmpRentalStoreId" | "newCarId", ExtArgs["result"]["ucar"]>
+export type UcarOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "qrIssuedAt" | "processLastUpdatedAt" | "active" | "sortOrder" | "sateiDataConfirmedAt" | "dataSource" | "sateiID" | "number98" | "NO_SIRETYUM" | "DD_SIIRE" | "arrivedAt" | "meihenBi" | "masshoBi" | "secondMeihenbi" | "destination" | "inkanCertificateExpiredAt" | "inspectionExpiredAt" | "plate" | "processedAs" | "purchaseType" | "remarks" | "runnable" | "storeToPickUp" | "souhsinJikoku" | "henkinRequired" | "accountingRecievedAt" | "paybackScheduledAt" | "upperCarregisteredAt" | "registerDate" | "registerdAt" | "annualTax" | "earlyYear" | "earlyMonth" | "storeNumber" | "accountType" | "accountNumber" | "accountNameKana" | "paymentNoticeRecievedAt" | "isPayed" | "petCount" | "petPrice" | "prefCount" | "prefPrice" | "taxCustomerName" | "taxJobNote" | "destinationStoreId" | "daihatsuReserve" | "exception" | "inkanAlternate" | "inspectionAlternate" | "paymentNoticeRecieved" | "remarksHq" | "tmpPlate" | "tmpVehicleNo" | "tmpColor" | "tmpModelYear" | "tmpBrandName" | "tmpModelName" | "tmpGrade" | "tmpType" | "tmpCommonType" | "tmpFrameNumber" | "tmpTransmissionType" | "tmpRegistrationClassNumber" | "tmpRegistrationKana" | "tmpLandAffairsName" | "modified_brandName" | "modified_modelName" | "modified_frameNumber" | "modified_chassisNumber" | "modified_type" | "modified_grade" | "modified_modelYear" | "modified_length" | "modified_width" | "modified_height" | "ucarLastProcessMasterId" | "bankMasterId" | "yuchoShitenNo" | "bankBranchMasterId" | "userId" | "storeId" | "tmpRentalStoreId" | "newCarId", ExtArgs["result"]["ucar"]>
 export type UcarInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   DestinationStore?: boolean | Prisma.Ucar$DestinationStoreArgs<ExtArgs>
   Number98?: boolean | Prisma.Ucar$Number98Args<ExtArgs>
@@ -10562,7 +10461,6 @@ export type $UcarPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     paybackScheduledAt: Date | null
     upperCarregisteredAt: Date | null
     registerDate: Date | null
-    customerName: string | null
     registerdAt: Date | null
     annualTax: number | null
     earlyYear: number | null
@@ -11087,7 +10985,6 @@ export interface UcarFieldRefs {
   readonly paybackScheduledAt: Prisma.FieldRef<"Ucar", 'DateTime'>
   readonly upperCarregisteredAt: Prisma.FieldRef<"Ucar", 'DateTime'>
   readonly registerDate: Prisma.FieldRef<"Ucar", 'DateTime'>
-  readonly customerName: Prisma.FieldRef<"Ucar", 'String'>
   readonly registerdAt: Prisma.FieldRef<"Ucar", 'DateTime'>
   readonly annualTax: Prisma.FieldRef<"Ucar", 'Int'>
   readonly earlyYear: Prisma.FieldRef<"Ucar", 'Int'>

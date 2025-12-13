@@ -1481,7 +1481,6 @@ export const UcarScalarFieldEnum = {
   paybackScheduledAt: 'paybackScheduledAt',
   upperCarregisteredAt: 'upperCarregisteredAt',
   registerDate: 'registerDate',
-  customerName: 'customerName',
   registerdAt: 'registerdAt',
   annualTax: 'annualTax',
   earlyYear: 'earlyYear',

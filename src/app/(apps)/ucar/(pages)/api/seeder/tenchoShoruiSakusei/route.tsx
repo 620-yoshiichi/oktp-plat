@@ -1,6 +1,5 @@
 import {NextRequest, NextResponse} from 'next/server'
 
-import {doTransaction} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
 import prisma from 'src/lib/prisma'
 import {transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
 import {Prisma} from '@prisma/generated/prisma/client'
@@ -11,7 +10,6 @@ import {toUtc} from '@cm/class/Days/date-utils/calculations'
 import {handlePrismaError} from '@cm/lib/prisma-helper'
 import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
 import {UCAR_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-constants'
-import {processBatchSimple} from '@cm/hooks/useFileUpload/csv-utils'
 import {processBatchWithRetry} from '@cm/lib/server-actions/common-server-actions/processBatchWithRetry'
 
 export const POST = async (req: NextRequest) => {
@@ -98,7 +96,7 @@ export const POST = async (req: NextRequest) => {
               where: {sateiID},
               data: {
                 henkinRequired: !henkinRequired ? true : false,
-                customerName,
+                taxCustomerName: customerName,
                 registerDate: registerDate ? toUtc(new Date(registerDate)) : null,
                 annualTax: Number(annualTax),
                 storeNumber,

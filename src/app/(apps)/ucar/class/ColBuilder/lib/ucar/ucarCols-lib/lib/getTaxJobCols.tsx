@@ -1,4 +1,3 @@
-import {defaultRegister} from '@cm/class/builders/ColBuilderVariables'
 
 import {Fields} from '@cm/class/Fields/Fields'
 
@@ -16,7 +15,7 @@ import {Button} from '@cm/components/styles/common-components/Button'
 export const getTaxJobCols = () => {
   const cols1: colType[] = new Fields([
     {id: `taxCustomerName`, label: `お客様`, form: {}},
-    {id: `annualTax`, label: `年間支払額`, type: `number`},
+    {id: `annualTax`, label: `年間支払額`, type: `number`, form: {}},
 
     //form
     {id: `upperCarregisteredAt`, label: `購入車登録日`, type: `date`, form: {}},
@@ -34,7 +33,7 @@ export const getTaxJobCols = () => {
       },
     },
   ])
-    .showSummaryInTd({wrapperWidthPx: 160})
+    .showSummaryInTd({wrapperWidthPx: 160, editable: true})
     .buildFormGroup({groupName: `返金お客様情報`}).plain
 
   const cols2: colType[] = new Fields([
@@ -45,18 +44,18 @@ export const getTaxJobCols = () => {
     {id: `accountNumber`, label: `口座番号`, form: {descriptionNoteAfter: `ゆうちょは「通帳番号」を記入`}},
     {id: `accountNameKana`, label: `名義（カナ）`, form: {}},
   ])
-    .showSummaryInTd({wrapperWidthPx: 200})
+    .showSummaryInTd({wrapperWidthPx: 200, editable: true})
     .buildFormGroup({groupName: `口座情報`}).plain
 
   const cols3: colType[] = new Fields([
     ...new Fields([
-      {id: `earlyYear`, label: `基準日(早方)`, type: `number`},
-      {id: `earlyMonth`, label: `基準日(早方)`, type: `number`},
-      {id: `petCount`, label: `PET月数`, type: `number`},
-      {id: `petPrice`, label: `PET金額`, type: `number`},
-      {id: `prefCount`, label: `県月数`, type: `number`},
-      {id: `prefPrice`, label: `県金額`, type: `number`},
-    ]).showSummaryInTd({wrapperWidthPx: 120}).plain,
+      {id: `earlyYear`, label: `基準日(早方)`, type: `number`, form: {}},
+      {id: `earlyMonth`, label: `基準日(早方)`, type: `number`, form: {}},
+      {id: `petCount`, label: `PET月数`, type: `number`, form: {}},
+      {id: `petPrice`, label: `PET金額`, type: `number`, form: {}},
+      {id: `prefCount`, label: `県月数`, type: `number`, form: {}},
+      {id: `prefPrice`, label: `県金額`, type: `number`, form: {}},
+    ]).showSummaryInTd({wrapperWidthPx: 200, editable: true}).plain,
   ]).buildFormGroup({groupName: `税金額`}).plain
 
   const cols4: colType[] = new Fields([
@@ -95,7 +94,7 @@ export const getTaxJobCols = () => {
       type: `date`,
     },
   ])
-    .showSummaryInTd({wrapperWidthPx: 200})
+    .showSummaryInTd({wrapperWidthPx: 200, editable: true})
     .buildFormGroup({groupName: `自動車税その他`}).plain
 
   const colArr = {cols1, cols2, cols3, cols4}

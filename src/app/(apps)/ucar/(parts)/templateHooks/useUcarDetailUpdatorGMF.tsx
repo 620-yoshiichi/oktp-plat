@@ -4,7 +4,6 @@ import React from 'react'
 import UcrDetailUpdater from '@app/(apps)/ucar/(parts)/Ucar/UcrDetailUpdater'
 import {getAvailable98NumbersReturn} from '@app/(apps)/ucar/(lib)/num98/getAvailable98Numbers'
 
-import {UseRecordsReturn} from '@cm/components/DataLogic/TFs/PropAdjustor/hooks/useRecords/useRecords'
 
 export default function useUcarDetailUpdatorGMF() {
   return useGlobalModalForm<{
