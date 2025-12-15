@@ -47,6 +47,13 @@ export const getUcarPages = (props: PageGetterType) => {
       children: [
         {
           tabId: 'ucar',
+          label: '書類管理',
+          link: {
+            query: {displayColumns: '下取書類,商品化'},
+          },
+        },
+        {
+          tabId: 'ucar',
           label: '自動車税業務',
           link: {
             query: {displayColumns: '自動車税'},

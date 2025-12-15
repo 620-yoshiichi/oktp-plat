@@ -42,7 +42,7 @@ export class ColBuilder {
       },
       {
         id: `finishedAt`,
-        label: `空き日`,
+        label: `強制空白`,
         form: {},
         format: (value, row) => {
           return formatDate(row.finishedAt)
@@ -53,11 +53,13 @@ export class ColBuilder {
         label: `適用車両(査定ID) `,
         format: (value, row) => {
           // 使用中（空きではない）スロットの中で最新の適用車両を取得
-          const LastAppliedCar = row.AppliedUcarGarageSlot.sort((a, b) => (a.appliedAt > b.appliedAt ? -1 : 1)).find(
-            slot => !isGarageSlotAvailable(slot)
-          )?.Ucar
+          const LastAppliedCar = row.AppliedUcarGarageSlot.sort((a, b) => (a.appliedAt > b.appliedAt ? -1 : 1)).find(slot => {
+            return !isGarageSlotAvailable(slot)
+          })?.Ucar
           if (LastAppliedCar) {
-            return LastAppliedCar?.Assessment_ID
+            return LastAppliedCar?.sateiID
+          } else {
+            return '適用なし'
           }
         },
       },

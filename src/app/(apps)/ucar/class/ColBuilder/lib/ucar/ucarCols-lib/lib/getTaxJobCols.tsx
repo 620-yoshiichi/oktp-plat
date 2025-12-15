@@ -1,4 +1,3 @@
-
 import {Fields} from '@cm/class/Fields/Fields'
 
 import {colType} from '@cm/types/col-types'
@@ -33,7 +32,7 @@ export const getTaxJobCols = () => {
       },
     },
   ])
-    .showSummaryInTd({wrapperWidthPx: 160, editable: true})
+    .showSummaryInTd({wrapperWidthPx: 170, editable: true})
     .buildFormGroup({groupName: `返金お客様情報`}).plain
 
   const cols2: colType[] = new Fields([

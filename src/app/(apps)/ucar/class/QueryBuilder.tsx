@@ -97,7 +97,9 @@ export class QueryBuilder {
               include: {
                 Ucar: {
                   include: {
-                    OldCars_Base: {select: {KI_HANKAKA: true}},
+                    OldCars_Base: {
+                      select: {KI_HANKAKA: true},
+                    },
                   },
                 },
               },

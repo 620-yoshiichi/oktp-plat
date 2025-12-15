@@ -103,7 +103,7 @@ const InlineEditableValue = React.memo(
 
         // 保存成功後、最後に保存した値を更新
         lastSavedValueRef.current = payload[col.id]
-        UseRecordsReturn.mutateRecords({record: latestFormData})
+        UseRecordsReturn.updateData()
         return true
       },
       [record, col, dataModelName, UseRecordsReturn, validateBeforeUpdate, upsertController, columns]
@@ -111,8 +111,29 @@ const InlineEditableValue = React.memo(
 
     // Select/DatePickerの場合は選択時に即座に保存して閉じる
     const handleFormItemBlur = useCallback(
-      async (props: {newlatestFormData: any}) => {
+      async (props: {newlatestFormData: any; e?: React.FocusEvent}) => {
         if (shouldAutoOpen) {
+          // フォーカス移動先がモーダル内の場合は保存をスキップ
+          // （検索欄クリック時などでモーダルが閉じないようにする）
+          const relatedTarget = props.e?.relatedTarget as HTMLElement | null
+          if (relatedTarget) {
+            const isInsideModal =
+              relatedTarget.closest('[role="dialog"]') ||
+              relatedTarget.closest('[data-radix-popper-content-wrapper]') ||
+              relatedTarget.closest('[data-vaul-drawer]') ||
+              relatedTarget.closest('.ModalContent')
+            // #region agent log
+            console.log('[InlineEdit] handleFormItemBlur:', {
+              relatedTargetTag: relatedTarget.tagName,
+              relatedTargetClass: relatedTarget.className,
+              isInsideModal: !!isInsideModal,
+            })
+            // #endregion
+            if (isInsideModal) {
+              return // モーダル内へのフォーカス移動は保存しない
+            }
+          }
+
           // Select/DatePickerは選択で即保存・終了
           const success = await updateData(props.newlatestFormData)
           if (success !== false) {
@@ -159,9 +180,35 @@ const InlineEditableValue = React.memo(
       if (!isEditMode) return
 
       const handleClickOutside = (event: MouseEvent) => {
-        if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
-          saveAndExit()
+        const target = event.target as HTMLElement
+
+        // #region agent log
+        console.log('[InlineEdit] Click detected:', {
+          tagName: target.tagName,
+          className: target.className,
+          closestDialog: !!target.closest('[role="dialog"]'),
+          closestRadix: !!target.closest('[data-radix-popper-content-wrapper]'),
+          closestModal: !!target.closest('.ModalContent'),
+          closestDrawer: !!target.closest('[data-vaul-drawer]'),
+          inWrapper: wrapperRef.current?.contains(target),
+        })
+        // #endregion
+
+        // wrapperRef内のクリックは無視
+        if (wrapperRef.current?.contains(target)) return
+
+        // Radixのポップオーバー/ダイアログ/ドロワー内のクリックは無視
+        // （Portal経由でbody直下にレンダリングされるため）
+        if (
+          target.closest('[data-radix-popper-content-wrapper]') ||
+          target.closest('[role="dialog"]') ||
+          target.closest('[data-vaul-drawer]') ||
+          target.closest('.ModalContent')
+        ) {
+          return
         }
+
+        saveAndExit()
       }
 
       document.addEventListener('mousedown', handleClickOutside)
@@ -176,14 +223,15 @@ const InlineEditableValue = React.memo(
           className={cn(
             'cursor-pointer rounded px-1 py-0.5 transition-colors',
             'hover:bg-blue-50    bg-yellow-50',
-            'group relative'
+            'group relative',
+            'flex items-center  flex-nowrap'
           )}
         >
           <span>{displayValue}</span>
           <PencilIcon
             className={cn(
-              'absolute right-0 top-1/2 -translate-y-1/2',
-              'h-3 w-3 text-blue-400 opacity-0 transition-opacity',
+              // ' right-0 top-1/2 -translate-y-1/2',
+              'h-4 w-4 text-blue-400 opacity-0 transition-opacity',
               'group-hover:opacity-100'
             )}
           />
@@ -197,6 +245,30 @@ const InlineEditableValue = React.memo(
         ref={wrapperRef}
         className="rounded bg-white "
         onKeyDown={async (e: React.KeyboardEvent<HTMLDivElement>) => {
+          const target = e.target as HTMLElement
+
+          // #region agent log
+          console.log('[InlineEdit] KeyDown:', {
+            key: e.key,
+            targetTag: target.tagName,
+            targetClass: target.className,
+            isInsideModal:
+              !!target.closest('[role="dialog"]') || !!target.closest('.ModalContent') || !!target.closest('[data-vaul-drawer]'),
+          })
+          // #endregion
+
+          // モーダル内（Portal）からのキーイベントは無視
+          // 検索欄でのEnterなどがフォーム送信にならないようにする
+          const isInsideModal =
+            target.closest('[role="dialog"]') ||
+            target.closest('[data-radix-popper-content-wrapper]') ||
+            target.closest('[data-vaul-drawer]') ||
+            target.closest('.ModalContent')
+
+          if (isInsideModal) {
+            return // モーダル内からのキーイベントは処理しない
+          }
+
           if (e.key === 'Enter') {
             e.preventDefault()
             await saveAndExit()

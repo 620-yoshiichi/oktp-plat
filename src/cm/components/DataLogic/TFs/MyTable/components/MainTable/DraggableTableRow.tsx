@@ -39,7 +39,7 @@ export const DraggableTableRow = React.memo(
     Components: {EditButton; DeleteButton; DragButton; RowActionButtonList}
   }) => {
     const {dataModelName, UseRecordsReturn, formData, editType} = ClientProps2
-    const {SP} = useWindowSize()
+
     const {from} = getPaginationProps({totalCount: ClientProps2.totalCount})
 
     const rowColor = useMemo(() => {
@@ -134,7 +134,6 @@ export const DraggableTableRow = React.memo(
                     className={`align-top tableCell`}
                     style={tdStyle}
                   >
-                    {/* <div className={`flex  ${_getR_StackClass(col)}`}> */}
                     <TdContent
                       {...{
                         showHeader: ClientProps2.myTable?.showHeader,

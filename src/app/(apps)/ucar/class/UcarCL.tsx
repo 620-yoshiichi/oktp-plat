@@ -222,43 +222,6 @@ export class UcarCL {
       const mid5 = string.slice(2, 7)
       return `${left2} ${mid5}`
     },
-
-    // matchSateiWithKobutsu: (props: {
-    //   ucar: Ucar
-    //   kobutsuUcar: {
-    //     NO_SYADAIBA?: string
-    //     NO_SIRETOSE?: string
-    //   }
-    // }) => {
-    //   const {ucar, kobutsuUcar} = props
-
-    //   const matchWithFrame_Plate = () => {
-    //     const sateiKey = [
-    //       //
-    //       ucar.Barracks?.slice(-4),
-    //       ucar.number?.toString().slice(-4),
-    //     ].join(`_`)
-    //     const kobutsuKey = [
-    //       //
-    //       kobutsuUcar.NO_SYADAIBA?.slice(-4),
-    //       kobutsuUcar.NO_SIRETOSE?.slice(-4),
-    //     ].join(`_`)
-    //     return sateiKey === kobutsuKey
-    //   }
-
-    //   const matchWithAssessment_ID_with_Frame_When_Kaitori = () => {
-    //     const sateiKey = ucar.Barracks
-    //     const kobutsuKey = kobutsuUcar.NO_SYADAIBA
-
-    //     const match = sateiKey === kobutsuKey
-
-    //     return match
-    //   }
-
-    //   return matchWithFrame_Plate() || matchWithAssessment_ID_with_Frame_When_Kaitori()
-
-    //   //
-    // },
   }
 
   static col = {

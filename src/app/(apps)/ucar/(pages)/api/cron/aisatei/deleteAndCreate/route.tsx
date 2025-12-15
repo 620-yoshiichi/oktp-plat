@@ -29,7 +29,7 @@ export const GET = async (req: NextRequest) => {
     datasetId: 'Ucar_QR',
     tableId: 'AI_satei',
     sqlString: sql`SELECT ${selectString} FROM okayamatoyopet.Ucar_QR.AI_satei
-    -- ORDER BY Assessment_ID DESC LIMIT 1
+
     `,
   })
 

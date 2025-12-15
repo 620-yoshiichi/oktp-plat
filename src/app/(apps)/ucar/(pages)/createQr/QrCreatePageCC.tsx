@@ -102,26 +102,3 @@ const QrCreatePageCC = () => {
 }
 
 export default QrCreatePageCC
-
-// const LatestSateiData = () => {
-//   const {data} = useSWR(`/`, async () => {
-//     const SateiBQ = await fetchBigQuery({
-//       datasetId: 'Ucar_QR',
-//       tableId: 'AI_satei',
-//       method: `GET`,
-//       args: {
-//         sqlString: sql`
-//       SELECT *
-//       FROM okayamatoyopet.Ucar_QR.AI_satei
-//       ORDER BY Latest_assessment_date DESC
-//       LIMIT 1
-//       `,
-//       },
-//     })
-//     return SateiBQ
-//   })
-
-//   const LatestSateiData = data?.[0]?.Assessment_ID
-
-//   return <Button>{LatestSateiData}</Button>
-// }

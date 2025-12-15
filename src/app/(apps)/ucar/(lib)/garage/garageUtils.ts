@@ -25,6 +25,7 @@ export const isGarageSlotAvailable = (slot: GarageSlotForAvailabilityCheck): boo
 
   // 2. 販売済み判定（KI_HANKAKAが"0"やnull以外なら販売済み）
   const KI_HANKAKA = slot?.Ucar?.OldCars_Base?.KI_HANKAKA
+
   if (KI_HANKAKA && KI_HANKAKA !== '0') return true
 
   // 3. 使用中

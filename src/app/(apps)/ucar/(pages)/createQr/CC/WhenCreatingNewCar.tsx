@@ -23,9 +23,7 @@ export const AiSateiDataDisplay = (props: {ucar: ucarData; cols?: any[]; wrapper
   const {width} = useWindowSize()
   const {
     ucar,
-    // cols = [
-    //   // 'Assessment_ID', `brand_name`, `Grade_name`, `Mission_name`, 'Model_name', 'Barracks', `Model_year`
-    // ],
+
     wrapperWidth = Math.min(width ?? 0 / 2, 1000),
   } = props
 

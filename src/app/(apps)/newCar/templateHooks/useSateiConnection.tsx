@@ -99,7 +99,7 @@
 //                     {CsvTable({
 //                       records: new Array(sateiNoList.length + 1).fill(0).map((_, i) => {
 //                         const ucar = Ucar?.find(ucar => {
-//                           return ucar.Assessment_ID === sateiNoList[i]
+//                           return ucar.sateiID === sateiNoList[i]
 //                         }) as Ucar
 
 //                         return {
@@ -188,7 +188,7 @@
 //                             args: {
 //                               sqlString: sql`
 //                             SELECT
-//                               Assessment_ID,
+//                               sateiID,
 //                               Model_name,
 //                               brand_name,
 //                               Common_name_model,
@@ -199,7 +199,7 @@
 //                               Model_year,
 //                               ${BQ_parser.castStrToDate(`Scheduled_arrival_date`)} AS Scheduled_arrival_date
 //                             FROM okayamatoyopet.Ucar_QR.AI_satei
-//                             where  Assessment_ID IN (${sateiNoList.map(d => `'${d}'`).join(`,`)})
+//                             where  sateiID IN (${sateiNoList.map(d => `'${d}'`).join(`,`)})
 //                         `,
 //                             },
 //                           })
@@ -207,7 +207,7 @@
 //                           await Promise.all(
 //                             rows.map(async row => {
 //                               const payload = {
-//                                 Assessment_ID: row.Assessment_ID,
+//                                 sateiID: row.sateiID,
 //                                 Model_name: row.Model_name,
 //                                 brand_name: row.brand_name,
 //                                 Common_name_model: row.Common_name_model,
@@ -222,7 +222,7 @@
 //                                 storeId: newCar.Store.id,
 //                               }
 //                               const args: Prisma.UcarUpsertArgs = {
-//                                 where: {sateiID: row.Assessment_ID},
+//                                 where: {sateiID: row.sateiID},
 //                                 create: payload,
 //                                 update: payload,
 //                               }
