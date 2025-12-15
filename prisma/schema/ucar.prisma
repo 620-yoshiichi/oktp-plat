@@ -170,15 +170,22 @@ model Number98IssueHistory {
   number String
 }
 
-model UcarGarageLocationMaster {
-  id                   Int                    @id @default(autoincrement())
-  createdAt            DateTime               @default(now())
-  updatedAt            DateTime?              @updatedAt
-  active               Boolean                @default(true)
-  sortOrder            Float                  @default(0)
-  name                 String                 @unique
-  color                String?
-  UcarGarageSlotMaster UcarGarageSlotMaster[]
+model AppliedUcarGarageSlot {
+  id                     Int                  @id @default(autoincrement())
+  createdAt              DateTime             @default(now())
+  updatedAt              DateTime?            @updatedAt
+  active                 Boolean              @default(true)
+  sortOrder              Float                @default(0)
+  appliedAt              DateTime
+  finishedAt             DateTime?
+  ucarGarageSlotMasterId Int
+  sateiID                String               @unique
+  UcarGarageSlotMaster   UcarGarageSlotMaster @relation(fields: [ucarGarageSlotMasterId], references: [id], onDelete: Cascade)
+
+  Ucar Ucar @relation(fields: [sateiID], references: [sateiID], onDelete: Cascade)
+
+  @@unique([sateiID, ucarGarageSlotMasterId], name: "unique_sateiID_ucarGarageSlotMasterId")
+  @@index([ucarGarageSlotMasterId])
 }
 
 model UcarGarageSlotMaster {
@@ -197,22 +204,15 @@ model UcarGarageSlotMaster {
   @@index([ucarGarageLocationMasterId])
 }
 
-model AppliedUcarGarageSlot {
-  id                     Int                  @id @default(autoincrement())
-  createdAt              DateTime             @default(now())
-  updatedAt              DateTime?            @updatedAt
-  active                 Boolean              @default(true)
-  sortOrder              Float                @default(0)
-  appliedAt              DateTime
-  finishedAt             DateTime?
-  ucarGarageSlotMasterId Int
-  sateiID                String               @unique
-  UcarGarageSlotMaster   UcarGarageSlotMaster @relation(fields: [ucarGarageSlotMasterId], references: [id], onDelete: Cascade)
-
-  Ucar Ucar @relation(fields: [sateiID], references: [sateiID], onDelete: Cascade)
-
-  @@unique([sateiID, ucarGarageSlotMasterId], name: "unique_sateiID_ucarGarageSlotMasterId")
-  @@index([ucarGarageSlotMasterId])
+model UcarGarageLocationMaster {
+  id                   Int                    @id @default(autoincrement())
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime?              @updatedAt
+  active               Boolean                @default(true)
+  sortOrder            Float                  @default(0)
+  name                 String                 @unique
+  color                String?
+  UcarGarageSlotMaster UcarGarageSlotMaster[]
 }
 
 model BankMaster {

@@ -94,8 +94,8 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
     isStoreManager?: unknown
     isSales?: unknown
     carWhere: carWhereType
-    userId?: number
-    storeId?: number
+    userId?: any
+    storeId?: any
   }
   const getUcarProps = () => {
     const {isHQ, isStoreManager, isSales, newCarWhere, userId, storeId} = getNewCarProps()

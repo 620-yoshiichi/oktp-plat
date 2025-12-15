@@ -104,7 +104,12 @@ const InlineEditableValue = React.memo(
 
         // 保存成功後、最後に保存した値を更新
         lastSavedValueRef.current = payload[col.id]
-        UseRecordsReturn.updateData()
+        UseRecordsReturn.mutateRecords({
+          record: {
+            ...record,
+            [col.id]: payload[col.id],
+          },
+        })
         return true
       },
       [record, col, dataModelName, UseRecordsReturn, validateBeforeUpdate, upsertController, columns]
@@ -123,13 +128,6 @@ const InlineEditableValue = React.memo(
               relatedTarget.closest('[data-radix-popper-content-wrapper]') ||
               relatedTarget.closest('[data-vaul-drawer]') ||
               relatedTarget.closest('.ModalContent')
-            // #region agent log
-            console.log('[InlineEdit] handleFormItemBlur:', {
-              relatedTargetTag: relatedTarget.tagName,
-              relatedTargetClass: relatedTarget.className,
-              isInsideModal: !!isInsideModal,
-            })
-            // #endregion
             if (isInsideModal) {
               return // モーダル内へのフォーカス移動は保存しない
             }
@@ -183,18 +181,6 @@ const InlineEditableValue = React.memo(
       const handleClickOutside = (event: MouseEvent) => {
         const target = event.target as HTMLElement
 
-        // #region agent log
-        console.log('[InlineEdit] Click detected:', {
-          tagName: target.tagName,
-          className: target.className,
-          closestDialog: !!target.closest('[role="dialog"]'),
-          closestRadix: !!target.closest('[data-radix-popper-content-wrapper]'),
-          closestModal: !!target.closest('.ModalContent'),
-          closestDrawer: !!target.closest('[data-vaul-drawer]'),
-          inWrapper: wrapperRef.current?.contains(target),
-        })
-        // #endregion
-
         // wrapperRef内のクリックは無視
         if (wrapperRef.current?.contains(target)) return
 
@@ -247,16 +233,6 @@ const InlineEditableValue = React.memo(
         className="rounded bg-white "
         onKeyDown={async (e: React.KeyboardEvent<HTMLDivElement>) => {
           const target = e.target as HTMLElement
-
-          // #region agent log
-          console.log('[InlineEdit] KeyDown:', {
-            key: e.key,
-            targetTag: target.tagName,
-            targetClass: target.className,
-            isInsideModal:
-              !!target.closest('[role="dialog"]') || !!target.closest('.ModalContent') || !!target.closest('[data-vaul-drawer]'),
-          })
-          // #endregion
 
           // モーダル内（Portal）からのキーイベントは無視
           // 検索欄でのEnterなどがフォーム送信にならないようにする

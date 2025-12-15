@@ -32,7 +32,7 @@ export const getTaxJobCols = () => {
       },
     },
   ])
-    .showSummaryInTd({wrapperWidthPx: 170, editable: true})
+    .showSummaryInTd({wrapperWidthPx: 180, editable: true})
     .buildFormGroup({groupName: `返金お客様情報`}).plain
 
   const cols2: colType[] = new Fields([
@@ -48,8 +48,8 @@ export const getTaxJobCols = () => {
 
   const cols3: colType[] = new Fields([
     ...new Fields([
-      {id: `earlyYear`, label: `基準日(早方)`, type: `number`, form: {}},
-      {id: `earlyMonth`, label: `基準日(早方)`, type: `number`, form: {}},
+      {id: `earlyYear`, label: `基準年(早方)`, type: `number`, form: {}},
+      {id: `earlyMonth`, label: `基準月(早方)`, type: `number`, form: {}},
       {id: `petCount`, label: `PET月数`, type: `number`, form: {}},
       {id: `petPrice`, label: `PET金額`, type: `number`, form: {}},
       {id: `prefCount`, label: `県月数`, type: `number`, form: {}},

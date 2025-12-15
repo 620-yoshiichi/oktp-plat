@@ -126,14 +126,13 @@ export const ucarColBuilder = (props: columnGetterType) => {
     {
       id: 'daihatsuReserve',
       label: '予約枠',
-      td: {
-        hidden: true,
-      },
+      td: {hidden: true},
     },
     __shared_get_shiwakeKekkeCol(),
     {
       id: 'destinationStoreId',
       label: '配布店舗',
+      td: {editable: {}},
       format: (value, row) => row.DestinationStore?.name,
       form: {},
       forSelect: {

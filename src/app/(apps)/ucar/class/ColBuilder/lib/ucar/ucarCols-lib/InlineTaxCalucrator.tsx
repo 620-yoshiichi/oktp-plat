@@ -1,43 +1,4 @@
 import React from 'react'
-
-import {calcurateTax, payBackObjType} from '@app/(apps)/ucar/class/lib/tax/calcurateTax'
-
-export default function InlineTaxCalucrator({row, children}) {
-  const {toggleLoad} = useGlobal()
-  return (
-    <div
-      onClick={async () => {
-        if (confirm(`税金計算を行いますか？`)) {
-          toggleLoad(async () => {
-            const res = calcurateTax({row})
-
-            if (res.result) {
-              const result = res.result as payBackObjType
-              const {Total, Pref, TOYOPET} = result
-
-              const res2 = await doStandardPrisma(`ucar`, `update`, {
-                where: {
-                  id: row.id,
-                },
-                data: {
-                  petCount: TOYOPET.month,
-                  petPrice: TOYOPET.price,
-                  prefCount: Pref.month,
-                  prefPrice: Pref.price,
-                },
-              })
-
-              toastByResult(res2)
-            }
-          })
-        }
-      }}
-    >
-      {children}
-    </div>
-  )
-}
-
 import {Calculator, Calendar, CreditCard, Settings, Smile, User} from 'lucide-react'
 
 import {
@@ -53,6 +14,48 @@ import {
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 import {toastByResult} from '@cm/lib/ui/notifications'
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
+import {toast} from 'react-toastify'
+import {calcurateTax, payBackObjType} from '@app/(apps)/ucar/class/lib/tax/calcurateTax'
+
+export default function InlineTaxCalucrator({row, children}) {
+  const {toggleLoad} = useGlobal()
+  return (
+    <div
+      onClick={async () => {
+        if (confirm(`税金計算を行いますか？`)) {
+          try {
+            const res = calcurateTax({row})
+            if (res.result) {
+              const result = res.result as payBackObjType
+              const {Total, Pref, TOYOPET} = result
+
+              toggleLoad(async () => {
+                const res2 = await doStandardPrisma(`ucar`, `update`, {
+                  where: {
+                    id: row.id,
+                  },
+                  data: {
+                    petCount: TOYOPET.month,
+                    petPrice: TOYOPET.price,
+                    prefCount: Pref.month,
+                    prefPrice: Pref.price,
+                  },
+                })
+
+                toastByResult(res2)
+              })
+            }
+          } catch (error) {
+            console.warn(error) //////////
+            toast.error(error.message)
+          }
+        }
+      }}
+    >
+      {children}
+    </div>
+  )
+}
 
 export function CommandDemo() {
   return (

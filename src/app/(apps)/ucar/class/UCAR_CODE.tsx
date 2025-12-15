@@ -153,7 +153,7 @@ export class UCAR_CODE {
     TOYOPET: {
       code: '01',
       label: 'トヨペット',
-      color: '#46a73b',
+      color: 'green',
       notifyByEmail: false,
 
       qrPaperSpreadSheetNotationList: ['p', 'p', 'ｐ', 'P', 'Ｐ'],
@@ -161,28 +161,28 @@ export class UCAR_CODE {
     KEI: {
       code: '02',
       label: '軽',
-      color: '#c5c5c5',
+      color: 'red',
       notifyByEmail: false,
       qrPaperSpreadSheetNotationList: ['k', 'ｋ', 'K', 'Ｋ'],
     },
     INRYAKU: {
       code: '03',
       label: '印略',
-      color: '#c5c5c5',
+      color: 'gray',
       notifyByEmail: false,
       qrPaperSpreadSheetNotationList: ['i印略', '印略', '院略'],
     },
     MASESHO: {
       code: '04',
       label: '抹消済',
-      color: '#585858',
+      color: 'gray',
       notifyByEmail: false,
       qrPaperSpreadSheetNotationList: ['抹消済'],
     },
     MICHAKU: {
       code: '05',
       label: '未着',
-      color: '#c5c5c5',
+      color: 'gray',
       notifyByEmail: false,
       qrPaperSpreadSheetNotationList: ['未着'],
     },

@@ -21,21 +21,21 @@ export const bankMasterCol: colType = {
         return {...op, name}
       },
     },
-    allowCreateOptions: {
-      creator() {
-        return {
-          getCreatFormProps: props2 => {
-            return {
-              columns: new Fields([
-                {id: `code`, label: `銀行コード`, form: {...defaultRegister}},
-                {id: `name`, label: `銀行名`, form: {...defaultRegister}},
-              ]).transposeColumns(),
-              formData: {name: props2.searchFormData.name},
-            }
-          },
-        }
-      },
-    },
+    // allowCreateOptions: {
+    //   creator() {
+    //     return {
+    //       getCreatFormProps: props2 => {
+    //         return {
+    //           columns: new Fields([
+    //             {id: `code`, label: `銀行コード`, form: {...defaultRegister}},
+    //             {id: `name`, label: `銀行名`, form: {...defaultRegister}},
+    //           ]).transposeColumns(),
+    //           formData: {name: props2.searchFormData.name},
+    //         }
+    //       },
+    //     }
+    //   },
+    // },
   },
   form: {},
 }
@@ -80,41 +80,41 @@ export const bankBranchMasterCol: colType = {
     },
 
     dependenceColIds: [`bankMasterId`],
-    allowCreateOptions: {
-      creator: () => {
-        return {
-          getCreatFormProps: props2 => {
-            return {
-              columns: new Fields([
-                {
-                  id: `bankCode`,
-                  label: `銀行コード`,
-                  forSelect: {
-                    config: {
-                      modelName: `bankMaster`,
-                      select: {name: `text`, code: `text`},
-                    },
-                  },
-                  form: {},
-                },
-                {id: `code`, label: `支店コード`},
-                {
-                  id: `name`,
-                  label: `支店名`,
-                  form: {defaultValue: props2.searchFormData.name},
-                },
-                // {id: `branchKana`, label: `支店カナ`, form: {}},
-              ])
-                .customAttributes(({col}) => ({...col, form: {}, td: {}}))
-                .transposeColumns(),
-              formData: {
-                name: props2.searchFormData.name,
-              },
-            }
-          },
-        }
-      },
-    },
+    // allowCreateOptions: {
+    //   creator: () => {
+    //     return {
+    //       getCreatFormProps: props2 => {
+    //         return {
+    //           columns: new Fields([
+    //             {
+    //               id: `bankCode`,
+    //               label: `銀行コード`,
+    //               forSelect: {
+    //                 config: {
+    //                   modelName: `bankMaster`,
+    //                   select: {name: `text`, code: `text`},
+    //                 },
+    //               },
+    //               form: {},
+    //             },
+    //             {id: `code`, label: `支店コード`},
+    //             {
+    //               id: `name`,
+    //               label: `支店名`,
+    //               form: {defaultValue: props2.searchFormData.name},
+    //             },
+    //             // {id: `branchKana`, label: `支店カナ`, form: {}},
+    //           ])
+    //             .customAttributes(({col}) => ({...col, form: {}, td: {}}))
+    //             .transposeColumns(),
+    //           formData: {
+    //             name: props2.searchFormData.name,
+    //           },
+    //         }
+    //       },
+    //     }
+    //   },
+    // },
   },
 }
 

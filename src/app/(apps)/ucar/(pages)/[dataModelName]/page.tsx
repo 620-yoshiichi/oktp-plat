@@ -82,7 +82,6 @@ const parameters = async ({params, query, session, scopes}) => {
                 ],
               },
             },
-
             easySearchExtraProps,
             PageBuilderExtraProps: {getAvailable98NumbersReturn},
             ColBuilderExtraProps: {getAvailable98NumbersReturn},

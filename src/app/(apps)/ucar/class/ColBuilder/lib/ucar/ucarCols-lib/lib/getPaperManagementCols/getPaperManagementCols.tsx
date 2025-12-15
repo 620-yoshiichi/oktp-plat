@@ -69,7 +69,7 @@ export const getPaperManagementCols = ({UseRecordsReturn}) => {
       },
     ]).buildFormGroup({groupName: `抹消・名義変更`}).plain,
   ])
-    .showSummaryInTd({wrapperWidthPx: 200})
+    .showSummaryInTd({wrapperWidthPx: 200, editable: true})
     .buildFormGroup({groupName: `書類基本情報`})
 
   const processeFinishedCols = new Fields([
@@ -79,66 +79,67 @@ export const getPaperManagementCols = ({UseRecordsReturn}) => {
         id: 'inkanAlternate',
         label: '印鑑別記',
         forSelect: {
-          optionsOrOptionFetcher: UCAR_CODE.INKAN_ALTERNATES.array,
+          codeMaster: UCAR_CODE.INKAN_ALTERNATES,
         },
-        td: {hidden: true},
+        // td: {hidden: true},
       },
       {
         id: 'inkanCertificateExpiredAt',
         label: '印鑑証明期限',
         type: 'date',
-        td: {hidden: true},
+        // td: {hidden: true},
       },
       {
         id: 'inspectionAlternate',
         label: '車検別記',
         forSelect: {
-          optionsOrOptionFetcher: UCAR_CODE.INSPECTION_ALTERNATE.array,
+          codeMaster: UCAR_CODE.INSPECTION_ALTERNATE,
         },
-        td: {hidden: true},
+        // td: {hidden: true},
       },
       {
         id: 'inspectionExpiredAt',
         label: '車検日',
         type: 'date',
-        td: {hidden: true},
+        // td: {hidden: true},
       },
 
       //表示用
 
-      {
-        id: '車検証',
-        form: {hidden: true},
-        label: '車検証',
-        format: (value, row) => {
-          const inspectionAlternateOption = UCAR_CODE.INSPECTION_ALTERNATE.byCode(row.inspectionAlternate)
+      // {
+      //   id: '車検証',
+      //   form: {hidden: true},
+      //   label: '車検証',
+      //   format: (value, row) => {
+      //     const inspectionAlternateOption = UCAR_CODE.INSPECTION_ALTERNATE.byCode(row.inspectionAlternate)
 
-          return (
-            <R_Stack className={`text-xs w-full gap-0.5`}>
-              <Coloring mode="text" className={`text-xs`} color={inspectionAlternateOption?.color}>
-                {inspectionAlternateOption?.label}
-              </Coloring>
-              <span>{formatDate(row.inspectionExpiredAt)}</span>
-            </R_Stack>
-          )
-        },
-      },
-      {
-        id: '印鑑証明',
-        form: {hidden: true},
-        label: '印鑑証明',
-        format: (value, row) => {
-          const inkanAlternateOption = UCAR_CODE.INKAN_ALTERNATES.byCode(row.inkanAlternate)
-          return (
-            <R_Stack className={`text-xs w-full gap-0.5`}>
-              <Coloring mode="text" className={`text-xs`} color={inkanAlternateOption?.color}>
-                {inkanAlternateOption?.label}
-              </Coloring>
-              <span>{formatDate(row.inkanCertificateExpiredAt)}</span>
-            </R_Stack>
-          )
-        },
-      },
+      //     return (
+      //       <R_Stack className={`text-xs w-full gap-0.5`}>
+      //         <Coloring mode="text" className={`text-xs`} color={inspectionAlternateOption?.color}>
+      //           {inspectionAlternateOption?.label}
+      //         </Coloring>
+      //         <span>{formatDate(row.inspectionExpiredAt)}</span>
+      //       </R_Stack>
+      //     )
+      //   },
+      // },
+
+      // {
+      //   id: '印鑑証明',
+      //   form: {hidden: true},
+      //   label: '印鑑証明',
+      //   format: (value, row) => {
+      //     const inkanAlternateOption = UCAR_CODE.INKAN_ALTERNATES.byCode(row.inkanAlternate)
+      //     return (
+      //       <R_Stack className={`text-xs w-full gap-0.5`}>
+      //         <Coloring mode="text" className={`text-xs`} color={inkanAlternateOption?.color}>
+      //           {inkanAlternateOption?.label}
+      //         </Coloring>
+      //         <span>{formatDate(row.inkanCertificateExpiredAt)}</span>
+      //       </R_Stack>
+      //     )
+      //   },
+      // },
       {
         id: 'fubi',
         label: '不備通知',
@@ -165,7 +166,10 @@ export const getPaperManagementCols = ({UseRecordsReturn}) => {
         },
       },
     ]).buildFormGroup({groupName: `印鑑証明/車検`}).plain,
-  ]).showSummaryInTd({wrapperWidthPx: 200})
+  ]).showSummaryInTd({
+    wrapperWidthPx: 200,
+    editable: true,
+  })
 
   const colArr = {acceptProcessCols, processeFinishedCols}
 

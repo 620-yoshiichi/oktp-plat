@@ -70,7 +70,7 @@ export const knockEmailApi = async (props: {
     })
 
     if (process.env.IS_STAGING) {
-      console.log(`------------EMAIL IS NOT SENT BECAUSE OF STAGING ENV------------`) //logs
+      console.log(`------------EMAIL IS NOT SENT BECAUSE OF STAGING ENV------------`)
     }
 
     return {success: true, message: '開発環境メール', result}
