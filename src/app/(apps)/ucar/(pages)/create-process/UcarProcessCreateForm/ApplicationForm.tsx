@@ -207,7 +207,7 @@ const ProcessRegistrationForm = ({
   )
 }
 
-export const ApplicationForm = ({columns, stores, UcarData, useGlobalProps, setopenClearnUp, processCode}) => {
+export const ProcessApplicationForm = ({columns, stores, UcarData, useGlobalProps, setopenClearnUp, processCode}) => {
   const {session, toggleLoad, addQuery, router} = useGlobalProps
   const {id: userId, storeId} = session ?? {}
   const ucarId = UcarData.id
@@ -260,20 +260,25 @@ export const ApplicationForm = ({columns, stores, UcarData, useGlobalProps, seto
         {/* ステップ2: プロセス登録 */}
 
         {/* ステップ1: 前提条件の入力 */}
-        <Card>
-          {isPaperSendProcess && (
-            <FitMargin>
-              <CustomerInfoForm UcarData={UcarData} onComplete={() => setCustomerInfoRegistered(true)} />
-            </FitMargin>
-          )}
+        {needsCustomerInfo ||
+          (needsDestination && (
+            <Card>
+              {isPaperSendProcess && (
+                <FitMargin>
+                  <CustomerInfoForm UcarData={UcarData} onComplete={() => setCustomerInfoRegistered(true)} />
+                </FitMargin>
+              )}
 
-          {isCrChakuProcess && (
-            <FitMargin>
-              <DestinationForm UcarData={UcarData} stores={stores} onComplete={() => setDestinationRegistered(true)} />
-            </FitMargin>
-          )}
-        </Card>
-        {/* {(needsCustomerInfo || needsDestination) && (
+              {isCrChakuProcess && (
+                <FitMargin>
+                  <DestinationForm UcarData={UcarData} stores={stores} onComplete={() => setDestinationRegistered(true)} />
+                </FitMargin>
+              )}
+            </Card>
+          ))}
+
+        {!prerequisitesMet && <PrerequisitesWarning needsCustomerInfo={needsCustomerInfo} needsDestination={needsDestination} />}
+        {(needsCustomerInfo || needsDestination) && (
           <Card>
             {needsCustomerInfo && (
               <FitMargin>
@@ -287,9 +292,7 @@ export const ApplicationForm = ({columns, stores, UcarData, useGlobalProps, seto
               </FitMargin>
             )}
           </Card>
-        )} */}
-
-        {!prerequisitesMet && <PrerequisitesWarning needsCustomerInfo={needsCustomerInfo} needsDestination={needsDestination} />}
+        )}
         <Card>
           <SameProcessAlert {...{registerdProcess, processCode}}>
             <C_Stack className={`items-center`}>

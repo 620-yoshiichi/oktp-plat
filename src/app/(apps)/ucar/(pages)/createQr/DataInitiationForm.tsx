@@ -18,7 +18,9 @@ import {TextRed} from '@cm/components/styles/common-components/Alert'
 import {toUtc} from '@cm/class/Days/date-utils/calculations'
 
 export const DataInitiationForm = ({stores, ucar, toggleLoad, session, sateiID_Input, hasUpassData}) => {
-  const {addQuery, query} = useGlobal()
+  const {addQuery, query, accessScopes} = useGlobal()
+  const scopes = accessScopes()
+  const {isHQ, isStoreManager, isSales, carWhere, userId, storeId} = scopes.getUcarProps()
   const router = useRouter()
 
   // 基本フィールド（店舗、自力走行可否、備考）
@@ -36,15 +38,17 @@ export const DataInitiationForm = ({stores, ucar, toggleLoad, session, sateiID_I
   const onSubmit = async data => {
     const payload = {
       sateiID: sateiID_Input,
-      userId: session?.id,
-      storeId: session?.storeId,
+      userId: userId,
+      storeId: storeId,
       qrIssuedAt: toUtc(new Date()),
       ...data,
     }
 
     await toggleLoad(async () => {
       const res = await doStandardPrisma('ucar', 'upsert', {
-        where: {sateiID: String(sateiID_Input)},
+        where: {
+          sateiID: String(sateiID_Input),
+        },
         create: payload,
         update: payload,
       })

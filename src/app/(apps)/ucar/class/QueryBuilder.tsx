@@ -77,7 +77,9 @@ export class QueryBuilder {
     }
 
     const ucarProcess: Prisma.UcarProcessFindManyArgs = {
-      include: {User: {}},
+      include: {
+        User: {},
+      },
     }
     const bankMaster: Prisma.BankMasterFindManyArgs = {
       include: {

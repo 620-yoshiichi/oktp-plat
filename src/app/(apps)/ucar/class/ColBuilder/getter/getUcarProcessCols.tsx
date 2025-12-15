@@ -18,7 +18,7 @@ export const getUcarProcessCols = (props: columnGetterType) => {
 
   const QrSheetIssueColes = getUcarProcessQrSheetIssueColes({stores})
     .find(p => p.value === processCode)
-    ?.columns.flat() ?? [{id: 'remarks', label: '備考', type: 'textarea', form: {}}]
+    ?.columns.flat() ?? [{id: 'remarks', label: '備考', type: 'textarea', form: {}, td: {style: {maxWidth: 140}}}]
 
   const customeStyle = ({col}: {col: colType}) => {
     return {
@@ -34,51 +34,47 @@ export const getUcarProcessCols = (props: columnGetterType) => {
         label: '査定ID',
         type: 'text',
         form: {defaultValue: sateiID, disabled: true},
+        td: {style: {minWidth: 140}},
       },
-      {
-        ...{id: 'storeId', label: '拠点'},
-        forSelect: {},
-        form: {
-          disabled: true,
-          defaultValue: storeId,
-        },
-      },
+
       {
         ...{id: 'userId', label: 'ユーザー'},
         forSelect: {},
         form: {disabled: true, defaultValue: userId},
       },
-    ])
-      .showSummaryInTd({})
-      .customAttributes(customeStyle)
-      .buildFormGroup({groupName: '基本情報'}).plain,
-    ...new Fields([
       {
         id: 'processCode',
         label: '工程',
+
         forSelect: {
-          optionsOrOptionFetcher: UcarProcessCl.CODE.array.map(p => ({id: p.code, name: p.label, color: p.color})),
+          codeMaster: UcarProcessCl.CODE,
+          // optionsOrOptionFetcher: UcarProcessCl.CODE.array.map(p => ({id: p.code, name: p.label, color: p.color})),
         },
-        format: value => UcarProcessCl.CODE.byCode(value)?.label,
+        // format: value => UcarProcessCl.CODE.byCode(value)?.label,
 
         form: {
           disabled: true,
           register: {required: '必須'},
         },
       },
+    ])
+      // .showSummaryInTd({})
+      .customAttributes(customeStyle).plain,
+    ...new Fields([
       {
         id: 'date',
         label: '日時',
         type: 'datetime',
-        format: value => formatDate(value, 'YYYY-MM-DD(ddd) HH:mm'),
+        format: (value, row) => {
+          return formatDate(row.date, 'YYYY-MM-DD(ddd)')
+        },
+        td: {style: {minWidth: 140}},
         form: {defaultValue: new Date()},
       },
-
       ...QrSheetIssueColes, // QR発行情報（必要な時だけ）
     ])
-      .showSummaryInTd({})
-      .customAttributes(customeStyle)
-      .buildFormGroup({groupName: '工程'}).plain,
+      // .showSummaryInTd({wrapperWidthPx: 180})
+      .customAttributes(customeStyle).plain,
   ]).transposeColumns()
 
   return result

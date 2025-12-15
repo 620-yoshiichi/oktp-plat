@@ -15,7 +15,7 @@ import {arrToLines} from '@cm/components/utils/texts/MarkdownDisplay'
 
 import useDoStandardPrisma from '@cm/hooks/useDoStandardPrisma'
 
-import {ApplicationForm} from '@app/(apps)/ucar/(pages)/create-process/UcarProcessCreateForm/ApplicationForm'
+import {ProcessApplicationForm} from '@app/(apps)/ucar/(pages)/create-process/UcarProcessCreateForm/ApplicationForm'
 import {atomKey, useJotaiByKey} from '@cm/hooks/useJotai'
 import {UcarProcessCl} from '@app/(apps)/ucar/class/UcarProcessCl'
 import ShadModal from '@cm/shadcn/ui/Organisms/ShadModal'
@@ -81,7 +81,7 @@ export const UcarProcessCreateForm = ({UcarData, useGlobalProps}) => {
             {
               label: '新規登録',
               component: (
-                <ApplicationForm
+                <ProcessApplicationForm
                   {...{
                     columns,
                     stores,

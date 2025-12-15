@@ -72,7 +72,7 @@ const parameters = async ({params, query, session, scopes}) => {
               omit: ucarQuery.omit as any,
               orderBy: [
                 //
-                {createdAt: 'asc'},
+                {createdAt: 'desc'},
               ],
               where: {
                 AND: [

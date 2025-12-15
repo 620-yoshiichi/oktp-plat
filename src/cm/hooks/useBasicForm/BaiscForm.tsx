@@ -264,7 +264,7 @@ const BasicForm = (props: BasicFormType) => {
                       const use2ColSpan = getUse2ColSpan(col)
                       const uniqueKey = `${i}-${formItemIndex}`
                       const colSpan = use2ColSpan ? `lg:col-span-2 ` : ` lg:col-span-1`
-                      const height = 36
+                      const minHeight = 36
                       return (
                         <div key={uniqueKey} className={cn(colSpan, 'mb-6')}>
                           <ControlGroup
@@ -277,14 +277,14 @@ const BasicForm = (props: BasicFormType) => {
                                 LabelStyle: {
                                   padding: '4px 8px',
                                   marginRight: '6px',
-                                  height: height,
+                                  minHeight,
                                   backgroundColor: 'rgb(240, 240, 240)',
                                   width: 130,
                                   fontSize: '16px',
                                 },
                                 ControlStyle: {
                                   borderRadius: '0px',
-                                  height: height,
+                                  minHeight,
                                 },
                               },
                             }}
