@@ -11,6 +11,7 @@ import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
 import {CssString} from '@cm/components/styles/cssString'
 import {cn} from '@cm/shadcn/lib/utils'
 import {UseRecordsReturn} from '@cm/components/DataLogic/TFs/PropAdjustor/hooks/useRecords/useRecords'
+import {onFormItemBlurType} from '@cm/types/types'
 
 export type InlineEditableValueProps = {
   col: colType
@@ -153,7 +154,7 @@ const InlineEditableValue = React.memo(
       columns: columns,
       formData: record,
       values: record,
-      onFormItemBlur: handleFormItemBlur,
+      onFormItemBlur: handleFormItemBlur as unknown as onFormItemBlurType,
     })
 
     // 編集モード開始
