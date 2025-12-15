@@ -393,14 +393,9 @@ export type UcarGarageSlotMasterUncheckedUpdateManyInput = {
   ucarGarageLocationMasterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
-export type UcarGarageSlotMasterListRelationFilter = {
-  every?: Prisma.UcarGarageSlotMasterWhereInput
-  some?: Prisma.UcarGarageSlotMasterWhereInput
-  none?: Prisma.UcarGarageSlotMasterWhereInput
-}
-
-export type UcarGarageSlotMasterOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
+export type UcarGarageSlotMasterScalarRelationFilter = {
+  is?: Prisma.UcarGarageSlotMasterWhereInput
+  isNot?: Prisma.UcarGarageSlotMasterWhereInput
 }
 
 export type UcarGarageSlotMasterUnique_garageNumber_ucarGarageLocationMasterIdCompoundUniqueInput = {
@@ -455,9 +450,28 @@ export type UcarGarageSlotMasterSumOrderByAggregateInput = {
   ucarGarageLocationMasterId?: Prisma.SortOrder
 }
 
-export type UcarGarageSlotMasterScalarRelationFilter = {
-  is?: Prisma.UcarGarageSlotMasterWhereInput
-  isNot?: Prisma.UcarGarageSlotMasterWhereInput
+export type UcarGarageSlotMasterListRelationFilter = {
+  every?: Prisma.UcarGarageSlotMasterWhereInput
+  some?: Prisma.UcarGarageSlotMasterWhereInput
+  none?: Prisma.UcarGarageSlotMasterWhereInput
+}
+
+export type UcarGarageSlotMasterOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
+}
+
+export type UcarGarageSlotMasterCreateNestedOneWithoutAppliedUcarGarageSlotInput = {
+  create?: Prisma.XOR<Prisma.UcarGarageSlotMasterCreateWithoutAppliedUcarGarageSlotInput, Prisma.UcarGarageSlotMasterUncheckedCreateWithoutAppliedUcarGarageSlotInput>
+  connectOrCreate?: Prisma.UcarGarageSlotMasterCreateOrConnectWithoutAppliedUcarGarageSlotInput
+  connect?: Prisma.UcarGarageSlotMasterWhereUniqueInput
+}
+
+export type UcarGarageSlotMasterUpdateOneRequiredWithoutAppliedUcarGarageSlotNestedInput = {
+  create?: Prisma.XOR<Prisma.UcarGarageSlotMasterCreateWithoutAppliedUcarGarageSlotInput, Prisma.UcarGarageSlotMasterUncheckedCreateWithoutAppliedUcarGarageSlotInput>
+  connectOrCreate?: Prisma.UcarGarageSlotMasterCreateOrConnectWithoutAppliedUcarGarageSlotInput
+  upsert?: Prisma.UcarGarageSlotMasterUpsertWithoutAppliedUcarGarageSlotInput
+  connect?: Prisma.UcarGarageSlotMasterWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UcarGarageSlotMasterUpdateToOneWithWhereWithoutAppliedUcarGarageSlotInput, Prisma.UcarGarageSlotMasterUpdateWithoutAppliedUcarGarageSlotInput>, Prisma.UcarGarageSlotMasterUncheckedUpdateWithoutAppliedUcarGarageSlotInput>
 }
 
 export type UcarGarageSlotMasterCreateNestedManyWithoutUcarGarageLocationMasterInput = {
@@ -502,18 +516,62 @@ export type UcarGarageSlotMasterUncheckedUpdateManyWithoutUcarGarageLocationMast
   deleteMany?: Prisma.UcarGarageSlotMasterScalarWhereInput | Prisma.UcarGarageSlotMasterScalarWhereInput[]
 }
 
-export type UcarGarageSlotMasterCreateNestedOneWithoutAppliedUcarGarageSlotInput = {
-  create?: Prisma.XOR<Prisma.UcarGarageSlotMasterCreateWithoutAppliedUcarGarageSlotInput, Prisma.UcarGarageSlotMasterUncheckedCreateWithoutAppliedUcarGarageSlotInput>
-  connectOrCreate?: Prisma.UcarGarageSlotMasterCreateOrConnectWithoutAppliedUcarGarageSlotInput
-  connect?: Prisma.UcarGarageSlotMasterWhereUniqueInput
+export type UcarGarageSlotMasterCreateWithoutAppliedUcarGarageSlotInput = {
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  active?: boolean
+  sortOrder?: number
+  garageNumber: number
+  color?: string | null
+  UcarGarageLocationMaster?: Prisma.UcarGarageLocationMasterCreateNestedOneWithoutUcarGarageSlotMasterInput
 }
 
-export type UcarGarageSlotMasterUpdateOneRequiredWithoutAppliedUcarGarageSlotNestedInput = {
-  create?: Prisma.XOR<Prisma.UcarGarageSlotMasterCreateWithoutAppliedUcarGarageSlotInput, Prisma.UcarGarageSlotMasterUncheckedCreateWithoutAppliedUcarGarageSlotInput>
-  connectOrCreate?: Prisma.UcarGarageSlotMasterCreateOrConnectWithoutAppliedUcarGarageSlotInput
-  upsert?: Prisma.UcarGarageSlotMasterUpsertWithoutAppliedUcarGarageSlotInput
-  connect?: Prisma.UcarGarageSlotMasterWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UcarGarageSlotMasterUpdateToOneWithWhereWithoutAppliedUcarGarageSlotInput, Prisma.UcarGarageSlotMasterUpdateWithoutAppliedUcarGarageSlotInput>, Prisma.UcarGarageSlotMasterUncheckedUpdateWithoutAppliedUcarGarageSlotInput>
+export type UcarGarageSlotMasterUncheckedCreateWithoutAppliedUcarGarageSlotInput = {
+  id?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  active?: boolean
+  sortOrder?: number
+  garageNumber: number
+  color?: string | null
+  ucarGarageLocationMasterId?: number | null
+}
+
+export type UcarGarageSlotMasterCreateOrConnectWithoutAppliedUcarGarageSlotInput = {
+  where: Prisma.UcarGarageSlotMasterWhereUniqueInput
+  create: Prisma.XOR<Prisma.UcarGarageSlotMasterCreateWithoutAppliedUcarGarageSlotInput, Prisma.UcarGarageSlotMasterUncheckedCreateWithoutAppliedUcarGarageSlotInput>
+}
+
+export type UcarGarageSlotMasterUpsertWithoutAppliedUcarGarageSlotInput = {
+  update: Prisma.XOR<Prisma.UcarGarageSlotMasterUpdateWithoutAppliedUcarGarageSlotInput, Prisma.UcarGarageSlotMasterUncheckedUpdateWithoutAppliedUcarGarageSlotInput>
+  create: Prisma.XOR<Prisma.UcarGarageSlotMasterCreateWithoutAppliedUcarGarageSlotInput, Prisma.UcarGarageSlotMasterUncheckedCreateWithoutAppliedUcarGarageSlotInput>
+  where?: Prisma.UcarGarageSlotMasterWhereInput
+}
+
+export type UcarGarageSlotMasterUpdateToOneWithWhereWithoutAppliedUcarGarageSlotInput = {
+  where?: Prisma.UcarGarageSlotMasterWhereInput
+  data: Prisma.XOR<Prisma.UcarGarageSlotMasterUpdateWithoutAppliedUcarGarageSlotInput, Prisma.UcarGarageSlotMasterUncheckedUpdateWithoutAppliedUcarGarageSlotInput>
+}
+
+export type UcarGarageSlotMasterUpdateWithoutAppliedUcarGarageSlotInput = {
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.FloatFieldUpdateOperationsInput | number
+  garageNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  UcarGarageLocationMaster?: Prisma.UcarGarageLocationMasterUpdateOneWithoutUcarGarageSlotMasterNestedInput
+}
+
+export type UcarGarageSlotMasterUncheckedUpdateWithoutAppliedUcarGarageSlotInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.FloatFieldUpdateOperationsInput | number
+  garageNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ucarGarageLocationMasterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type UcarGarageSlotMasterCreateWithoutUcarGarageLocationMasterInput = {
@@ -575,64 +633,6 @@ export type UcarGarageSlotMasterScalarWhereInput = {
   garageNumber?: Prisma.IntFilter<"UcarGarageSlotMaster"> | number
   color?: Prisma.StringNullableFilter<"UcarGarageSlotMaster"> | string | null
   ucarGarageLocationMasterId?: Prisma.IntNullableFilter<"UcarGarageSlotMaster"> | number | null
-}
-
-export type UcarGarageSlotMasterCreateWithoutAppliedUcarGarageSlotInput = {
-  createdAt?: Date | string
-  updatedAt?: Date | string | null
-  active?: boolean
-  sortOrder?: number
-  garageNumber: number
-  color?: string | null
-  UcarGarageLocationMaster?: Prisma.UcarGarageLocationMasterCreateNestedOneWithoutUcarGarageSlotMasterInput
-}
-
-export type UcarGarageSlotMasterUncheckedCreateWithoutAppliedUcarGarageSlotInput = {
-  id?: number
-  createdAt?: Date | string
-  updatedAt?: Date | string | null
-  active?: boolean
-  sortOrder?: number
-  garageNumber: number
-  color?: string | null
-  ucarGarageLocationMasterId?: number | null
-}
-
-export type UcarGarageSlotMasterCreateOrConnectWithoutAppliedUcarGarageSlotInput = {
-  where: Prisma.UcarGarageSlotMasterWhereUniqueInput
-  create: Prisma.XOR<Prisma.UcarGarageSlotMasterCreateWithoutAppliedUcarGarageSlotInput, Prisma.UcarGarageSlotMasterUncheckedCreateWithoutAppliedUcarGarageSlotInput>
-}
-
-export type UcarGarageSlotMasterUpsertWithoutAppliedUcarGarageSlotInput = {
-  update: Prisma.XOR<Prisma.UcarGarageSlotMasterUpdateWithoutAppliedUcarGarageSlotInput, Prisma.UcarGarageSlotMasterUncheckedUpdateWithoutAppliedUcarGarageSlotInput>
-  create: Prisma.XOR<Prisma.UcarGarageSlotMasterCreateWithoutAppliedUcarGarageSlotInput, Prisma.UcarGarageSlotMasterUncheckedCreateWithoutAppliedUcarGarageSlotInput>
-  where?: Prisma.UcarGarageSlotMasterWhereInput
-}
-
-export type UcarGarageSlotMasterUpdateToOneWithWhereWithoutAppliedUcarGarageSlotInput = {
-  where?: Prisma.UcarGarageSlotMasterWhereInput
-  data: Prisma.XOR<Prisma.UcarGarageSlotMasterUpdateWithoutAppliedUcarGarageSlotInput, Prisma.UcarGarageSlotMasterUncheckedUpdateWithoutAppliedUcarGarageSlotInput>
-}
-
-export type UcarGarageSlotMasterUpdateWithoutAppliedUcarGarageSlotInput = {
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  sortOrder?: Prisma.FloatFieldUpdateOperationsInput | number
-  garageNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  UcarGarageLocationMaster?: Prisma.UcarGarageLocationMasterUpdateOneWithoutUcarGarageSlotMasterNestedInput
-}
-
-export type UcarGarageSlotMasterUncheckedUpdateWithoutAppliedUcarGarageSlotInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  sortOrder?: Prisma.FloatFieldUpdateOperationsInput | number
-  garageNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  ucarGarageLocationMasterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type UcarGarageSlotMasterCreateManyUcarGarageLocationMasterInput = {

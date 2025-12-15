@@ -109,9 +109,9 @@ export const ModelName = {
   Ucar: 'Ucar',
   Number98: 'Number98',
   Number98IssueHistory: 'Number98IssueHistory',
-  UcarGarageLocationMaster: 'UcarGarageLocationMaster',
-  UcarGarageSlotMaster: 'UcarGarageSlotMaster',
   AppliedUcarGarageSlot: 'AppliedUcarGarageSlot',
+  UcarGarageSlotMaster: 'UcarGarageSlotMaster',
+  UcarGarageLocationMaster: 'UcarGarageLocationMaster',
   BankMaster: 'BankMaster',
   BankBranchMaster: 'BankBranchMaster',
   UcarProcess: 'UcarProcess',
@@ -1567,17 +1567,19 @@ export const Number98IssueHistoryScalarFieldEnum = {
 export type Number98IssueHistoryScalarFieldEnum = (typeof Number98IssueHistoryScalarFieldEnum)[keyof typeof Number98IssueHistoryScalarFieldEnum]
 
 
-export const UcarGarageLocationMasterScalarFieldEnum = {
+export const AppliedUcarGarageSlotScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   active: 'active',
   sortOrder: 'sortOrder',
-  name: 'name',
-  color: 'color'
+  appliedAt: 'appliedAt',
+  finishedAt: 'finishedAt',
+  ucarGarageSlotMasterId: 'ucarGarageSlotMasterId',
+  sateiID: 'sateiID'
 } as const
 
-export type UcarGarageLocationMasterScalarFieldEnum = (typeof UcarGarageLocationMasterScalarFieldEnum)[keyof typeof UcarGarageLocationMasterScalarFieldEnum]
+export type AppliedUcarGarageSlotScalarFieldEnum = (typeof AppliedUcarGarageSlotScalarFieldEnum)[keyof typeof AppliedUcarGarageSlotScalarFieldEnum]
 
 
 export const UcarGarageSlotMasterScalarFieldEnum = {
@@ -1594,19 +1596,17 @@ export const UcarGarageSlotMasterScalarFieldEnum = {
 export type UcarGarageSlotMasterScalarFieldEnum = (typeof UcarGarageSlotMasterScalarFieldEnum)[keyof typeof UcarGarageSlotMasterScalarFieldEnum]
 
 
-export const AppliedUcarGarageSlotScalarFieldEnum = {
+export const UcarGarageLocationMasterScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   active: 'active',
   sortOrder: 'sortOrder',
-  appliedAt: 'appliedAt',
-  finishedAt: 'finishedAt',
-  ucarGarageSlotMasterId: 'ucarGarageSlotMasterId',
-  sateiID: 'sateiID'
+  name: 'name',
+  color: 'color'
 } as const
 
-export type AppliedUcarGarageSlotScalarFieldEnum = (typeof AppliedUcarGarageSlotScalarFieldEnum)[keyof typeof AppliedUcarGarageSlotScalarFieldEnum]
+export type UcarGarageLocationMasterScalarFieldEnum = (typeof UcarGarageLocationMasterScalarFieldEnum)[keyof typeof UcarGarageLocationMasterScalarFieldEnum]
 
 
 export const BankMasterScalarFieldEnum = {

@@ -330,20 +330,20 @@ export type Number98 = Prisma.Number98Model
  */
 export type Number98IssueHistory = Prisma.Number98IssueHistoryModel
 /**
- * Model UcarGarageLocationMaster
+ * Model AppliedUcarGarageSlot
  * 
  */
-export type UcarGarageLocationMaster = Prisma.UcarGarageLocationMasterModel
+export type AppliedUcarGarageSlot = Prisma.AppliedUcarGarageSlotModel
 /**
  * Model UcarGarageSlotMaster
  * 
  */
 export type UcarGarageSlotMaster = Prisma.UcarGarageSlotMasterModel
 /**
- * Model AppliedUcarGarageSlot
+ * Model UcarGarageLocationMaster
  * 
  */
-export type AppliedUcarGarageSlot = Prisma.AppliedUcarGarageSlotModel
+export type UcarGarageLocationMaster = Prisma.UcarGarageLocationMasterModel
 /**
  * Model BankMaster
  * 

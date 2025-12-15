@@ -363,6 +363,11 @@ export type UcarGarageLocationMasterUncheckedUpdateManyInput = {
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
+export type UcarGarageLocationMasterNullableScalarRelationFilter = {
+  is?: Prisma.UcarGarageLocationMasterWhereInput | null
+  isNot?: Prisma.UcarGarageLocationMasterWhereInput | null
+}
+
 export type UcarGarageLocationMasterCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -401,11 +406,6 @@ export type UcarGarageLocationMasterMinOrderByAggregateInput = {
 export type UcarGarageLocationMasterSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
-}
-
-export type UcarGarageLocationMasterNullableScalarRelationFilter = {
-  is?: Prisma.UcarGarageLocationMasterWhereInput | null
-  isNot?: Prisma.UcarGarageLocationMasterWhereInput | null
 }
 
 export type UcarGarageLocationMasterCreateNestedOneWithoutUcarGarageSlotMasterInput = {

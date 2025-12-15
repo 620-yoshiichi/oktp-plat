@@ -442,9 +442,9 @@ export const ModelName = {
   Ucar: 'Ucar',
   Number98: 'Number98',
   Number98IssueHistory: 'Number98IssueHistory',
-  UcarGarageLocationMaster: 'UcarGarageLocationMaster',
-  UcarGarageSlotMaster: 'UcarGarageSlotMaster',
   AppliedUcarGarageSlot: 'AppliedUcarGarageSlot',
+  UcarGarageSlotMaster: 'UcarGarageSlotMaster',
+  UcarGarageLocationMaster: 'UcarGarageLocationMaster',
   BankMaster: 'BankMaster',
   BankBranchMaster: 'BankBranchMaster',
   UcarProcess: 'UcarProcess',
@@ -464,7 +464,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "car" | "userProcessConfirmation" | "notes" | "damageNameMaster" | "noteNameMaster" | "bpSummary" | "processNameMaster" | "process" | "releaseNotes" | "crUser" | "juchuShitadoriDb" | "oldCars_Base" | "zAIKO_Base" | "upassFamilyTree" | "uPASS" | "qR_Prosess" | "deliverSchedule" | "area" | "loadingVehicle" | "slot" | "newCar" | "orderSwitchingHisotory" | "desiredTorokuDate" | "newCarLeadTime" | "crInspectionHistory" | "seisanYoteiHistory" | "userProgressAggregationTable" | "progressAggregationTable" | "progressAggregationTableRecord" | "furiateStatusOnApprovement" | "carTransferHistory" | "tenpoTsuikoShinseiHeader" | "tenpoTsuikoShinseiDetail" | "tenpoTsuikoData" | "store" | "user" | "googleAccessToken" | "roleMaster" | "userRole" | "calendar" | "chainMethodLock" | "rentaStore" | "rentaDeal" | "rentaDailyReport" | "rentaCustomer" | "rentaReference" | "refFrom" | "refTo" | "purpose" | "purposeMaster" | "outcome" | "outcomeMaster" | "alternateInfo" | "insuranceInfo" | "extraInfo" | "ucar" | "number98" | "number98IssueHistory" | "ucarGarageLocationMaster" | "ucarGarageSlotMaster" | "appliedUcarGarageSlot" | "bankMaster" | "bankBranchMaster" | "ucarProcess" | "ucarPaperWorkNotes"
+    modelProps: "car" | "userProcessConfirmation" | "notes" | "damageNameMaster" | "noteNameMaster" | "bpSummary" | "processNameMaster" | "process" | "releaseNotes" | "crUser" | "juchuShitadoriDb" | "oldCars_Base" | "zAIKO_Base" | "upassFamilyTree" | "uPASS" | "qR_Prosess" | "deliverSchedule" | "area" | "loadingVehicle" | "slot" | "newCar" | "orderSwitchingHisotory" | "desiredTorokuDate" | "newCarLeadTime" | "crInspectionHistory" | "seisanYoteiHistory" | "userProgressAggregationTable" | "progressAggregationTable" | "progressAggregationTableRecord" | "furiateStatusOnApprovement" | "carTransferHistory" | "tenpoTsuikoShinseiHeader" | "tenpoTsuikoShinseiDetail" | "tenpoTsuikoData" | "store" | "user" | "googleAccessToken" | "roleMaster" | "userRole" | "calendar" | "chainMethodLock" | "rentaStore" | "rentaDeal" | "rentaDailyReport" | "rentaCustomer" | "rentaReference" | "refFrom" | "refTo" | "purpose" | "purposeMaster" | "outcome" | "outcomeMaster" | "alternateInfo" | "insuranceInfo" | "extraInfo" | "ucar" | "number98" | "number98IssueHistory" | "appliedUcarGarageSlot" | "ucarGarageSlotMaster" | "ucarGarageLocationMaster" | "bankMaster" | "bankBranchMaster" | "ucarProcess" | "ucarPaperWorkNotes"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -4760,77 +4760,77 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    UcarGarageLocationMaster: {
-      payload: Prisma.$UcarGarageLocationMasterPayload<ExtArgs>
-      fields: Prisma.UcarGarageLocationMasterFieldRefs
+    AppliedUcarGarageSlot: {
+      payload: Prisma.$AppliedUcarGarageSlotPayload<ExtArgs>
+      fields: Prisma.AppliedUcarGarageSlotFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.UcarGarageLocationMasterFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarGarageLocationMasterPayload> | null
+          args: Prisma.AppliedUcarGarageSlotFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppliedUcarGarageSlotPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.UcarGarageLocationMasterFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarGarageLocationMasterPayload>
+          args: Prisma.AppliedUcarGarageSlotFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppliedUcarGarageSlotPayload>
         }
         findFirst: {
-          args: Prisma.UcarGarageLocationMasterFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarGarageLocationMasterPayload> | null
+          args: Prisma.AppliedUcarGarageSlotFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppliedUcarGarageSlotPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.UcarGarageLocationMasterFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarGarageLocationMasterPayload>
+          args: Prisma.AppliedUcarGarageSlotFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppliedUcarGarageSlotPayload>
         }
         findMany: {
-          args: Prisma.UcarGarageLocationMasterFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarGarageLocationMasterPayload>[]
+          args: Prisma.AppliedUcarGarageSlotFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppliedUcarGarageSlotPayload>[]
         }
         create: {
-          args: Prisma.UcarGarageLocationMasterCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarGarageLocationMasterPayload>
+          args: Prisma.AppliedUcarGarageSlotCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppliedUcarGarageSlotPayload>
         }
         createMany: {
-          args: Prisma.UcarGarageLocationMasterCreateManyArgs<ExtArgs>
+          args: Prisma.AppliedUcarGarageSlotCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.UcarGarageLocationMasterCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarGarageLocationMasterPayload>[]
+          args: Prisma.AppliedUcarGarageSlotCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppliedUcarGarageSlotPayload>[]
         }
         delete: {
-          args: Prisma.UcarGarageLocationMasterDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarGarageLocationMasterPayload>
+          args: Prisma.AppliedUcarGarageSlotDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppliedUcarGarageSlotPayload>
         }
         update: {
-          args: Prisma.UcarGarageLocationMasterUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarGarageLocationMasterPayload>
+          args: Prisma.AppliedUcarGarageSlotUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppliedUcarGarageSlotPayload>
         }
         deleteMany: {
-          args: Prisma.UcarGarageLocationMasterDeleteManyArgs<ExtArgs>
+          args: Prisma.AppliedUcarGarageSlotDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.UcarGarageLocationMasterUpdateManyArgs<ExtArgs>
+          args: Prisma.AppliedUcarGarageSlotUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.UcarGarageLocationMasterUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarGarageLocationMasterPayload>[]
+          args: Prisma.AppliedUcarGarageSlotUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppliedUcarGarageSlotPayload>[]
         }
         upsert: {
-          args: Prisma.UcarGarageLocationMasterUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarGarageLocationMasterPayload>
+          args: Prisma.AppliedUcarGarageSlotUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppliedUcarGarageSlotPayload>
         }
         aggregate: {
-          args: Prisma.UcarGarageLocationMasterAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateUcarGarageLocationMaster>
+          args: Prisma.AppliedUcarGarageSlotAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAppliedUcarGarageSlot>
         }
         groupBy: {
-          args: Prisma.UcarGarageLocationMasterGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.UcarGarageLocationMasterGroupByOutputType>[]
+          args: Prisma.AppliedUcarGarageSlotGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AppliedUcarGarageSlotGroupByOutputType>[]
         }
         count: {
-          args: Prisma.UcarGarageLocationMasterCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.UcarGarageLocationMasterCountAggregateOutputType> | number
+          args: Prisma.AppliedUcarGarageSlotCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AppliedUcarGarageSlotCountAggregateOutputType> | number
         }
       }
     }
@@ -4908,77 +4908,77 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    AppliedUcarGarageSlot: {
-      payload: Prisma.$AppliedUcarGarageSlotPayload<ExtArgs>
-      fields: Prisma.AppliedUcarGarageSlotFieldRefs
+    UcarGarageLocationMaster: {
+      payload: Prisma.$UcarGarageLocationMasterPayload<ExtArgs>
+      fields: Prisma.UcarGarageLocationMasterFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.AppliedUcarGarageSlotFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppliedUcarGarageSlotPayload> | null
+          args: Prisma.UcarGarageLocationMasterFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarGarageLocationMasterPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.AppliedUcarGarageSlotFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppliedUcarGarageSlotPayload>
+          args: Prisma.UcarGarageLocationMasterFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarGarageLocationMasterPayload>
         }
         findFirst: {
-          args: Prisma.AppliedUcarGarageSlotFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppliedUcarGarageSlotPayload> | null
+          args: Prisma.UcarGarageLocationMasterFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarGarageLocationMasterPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.AppliedUcarGarageSlotFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppliedUcarGarageSlotPayload>
+          args: Prisma.UcarGarageLocationMasterFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarGarageLocationMasterPayload>
         }
         findMany: {
-          args: Prisma.AppliedUcarGarageSlotFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppliedUcarGarageSlotPayload>[]
+          args: Prisma.UcarGarageLocationMasterFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarGarageLocationMasterPayload>[]
         }
         create: {
-          args: Prisma.AppliedUcarGarageSlotCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppliedUcarGarageSlotPayload>
+          args: Prisma.UcarGarageLocationMasterCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarGarageLocationMasterPayload>
         }
         createMany: {
-          args: Prisma.AppliedUcarGarageSlotCreateManyArgs<ExtArgs>
+          args: Prisma.UcarGarageLocationMasterCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.AppliedUcarGarageSlotCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppliedUcarGarageSlotPayload>[]
+          args: Prisma.UcarGarageLocationMasterCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarGarageLocationMasterPayload>[]
         }
         delete: {
-          args: Prisma.AppliedUcarGarageSlotDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppliedUcarGarageSlotPayload>
+          args: Prisma.UcarGarageLocationMasterDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarGarageLocationMasterPayload>
         }
         update: {
-          args: Prisma.AppliedUcarGarageSlotUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppliedUcarGarageSlotPayload>
+          args: Prisma.UcarGarageLocationMasterUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarGarageLocationMasterPayload>
         }
         deleteMany: {
-          args: Prisma.AppliedUcarGarageSlotDeleteManyArgs<ExtArgs>
+          args: Prisma.UcarGarageLocationMasterDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.AppliedUcarGarageSlotUpdateManyArgs<ExtArgs>
+          args: Prisma.UcarGarageLocationMasterUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.AppliedUcarGarageSlotUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppliedUcarGarageSlotPayload>[]
+          args: Prisma.UcarGarageLocationMasterUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarGarageLocationMasterPayload>[]
         }
         upsert: {
-          args: Prisma.AppliedUcarGarageSlotUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppliedUcarGarageSlotPayload>
+          args: Prisma.UcarGarageLocationMasterUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarGarageLocationMasterPayload>
         }
         aggregate: {
-          args: Prisma.AppliedUcarGarageSlotAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateAppliedUcarGarageSlot>
+          args: Prisma.UcarGarageLocationMasterAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUcarGarageLocationMaster>
         }
         groupBy: {
-          args: Prisma.AppliedUcarGarageSlotGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AppliedUcarGarageSlotGroupByOutputType>[]
+          args: Prisma.UcarGarageLocationMasterGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UcarGarageLocationMasterGroupByOutputType>[]
         }
         count: {
-          args: Prisma.AppliedUcarGarageSlotCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AppliedUcarGarageSlotCountAggregateOutputType> | number
+          args: Prisma.UcarGarageLocationMasterCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UcarGarageLocationMasterCountAggregateOutputType> | number
         }
       }
     }
@@ -6750,17 +6750,19 @@ export const Number98IssueHistoryScalarFieldEnum = {
 export type Number98IssueHistoryScalarFieldEnum = (typeof Number98IssueHistoryScalarFieldEnum)[keyof typeof Number98IssueHistoryScalarFieldEnum]
 
 
-export const UcarGarageLocationMasterScalarFieldEnum = {
+export const AppliedUcarGarageSlotScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   active: 'active',
   sortOrder: 'sortOrder',
-  name: 'name',
-  color: 'color'
+  appliedAt: 'appliedAt',
+  finishedAt: 'finishedAt',
+  ucarGarageSlotMasterId: 'ucarGarageSlotMasterId',
+  sateiID: 'sateiID'
 } as const
 
-export type UcarGarageLocationMasterScalarFieldEnum = (typeof UcarGarageLocationMasterScalarFieldEnum)[keyof typeof UcarGarageLocationMasterScalarFieldEnum]
+export type AppliedUcarGarageSlotScalarFieldEnum = (typeof AppliedUcarGarageSlotScalarFieldEnum)[keyof typeof AppliedUcarGarageSlotScalarFieldEnum]
 
 
 export const UcarGarageSlotMasterScalarFieldEnum = {
@@ -6777,19 +6779,17 @@ export const UcarGarageSlotMasterScalarFieldEnum = {
 export type UcarGarageSlotMasterScalarFieldEnum = (typeof UcarGarageSlotMasterScalarFieldEnum)[keyof typeof UcarGarageSlotMasterScalarFieldEnum]
 
 
-export const AppliedUcarGarageSlotScalarFieldEnum = {
+export const UcarGarageLocationMasterScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   active: 'active',
   sortOrder: 'sortOrder',
-  appliedAt: 'appliedAt',
-  finishedAt: 'finishedAt',
-  ucarGarageSlotMasterId: 'ucarGarageSlotMasterId',
-  sateiID: 'sateiID'
+  name: 'name',
+  color: 'color'
 } as const
 
-export type AppliedUcarGarageSlotScalarFieldEnum = (typeof AppliedUcarGarageSlotScalarFieldEnum)[keyof typeof AppliedUcarGarageSlotScalarFieldEnum]
+export type UcarGarageLocationMasterScalarFieldEnum = (typeof UcarGarageLocationMasterScalarFieldEnum)[keyof typeof UcarGarageLocationMasterScalarFieldEnum]
 
 
 export const BankMasterScalarFieldEnum = {
@@ -7101,9 +7101,9 @@ export type GlobalOmitConfig = {
   ucar?: Prisma.UcarOmit
   number98?: Prisma.Number98Omit
   number98IssueHistory?: Prisma.Number98IssueHistoryOmit
-  ucarGarageLocationMaster?: Prisma.UcarGarageLocationMasterOmit
-  ucarGarageSlotMaster?: Prisma.UcarGarageSlotMasterOmit
   appliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotOmit
+  ucarGarageSlotMaster?: Prisma.UcarGarageSlotMasterOmit
+  ucarGarageLocationMaster?: Prisma.UcarGarageLocationMasterOmit
   bankMaster?: Prisma.BankMasterOmit
   bankBranchMaster?: Prisma.BankBranchMasterOmit
   ucarProcess?: Prisma.UcarProcessOmit

@@ -408,16 +408,6 @@ export type AppliedUcarGarageSlotNullableScalarRelationFilter = {
   isNot?: Prisma.AppliedUcarGarageSlotWhereInput | null
 }
 
-export type AppliedUcarGarageSlotListRelationFilter = {
-  every?: Prisma.AppliedUcarGarageSlotWhereInput
-  some?: Prisma.AppliedUcarGarageSlotWhereInput
-  none?: Prisma.AppliedUcarGarageSlotWhereInput
-}
-
-export type AppliedUcarGarageSlotOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
-}
-
 export type AppliedUcarGarageSlotUnique_sateiID_ucarGarageSlotMasterIdCompoundUniqueInput = {
   sateiID: string
   ucarGarageSlotMasterId: number
@@ -469,6 +459,16 @@ export type AppliedUcarGarageSlotSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   ucarGarageSlotMasterId?: Prisma.SortOrder
+}
+
+export type AppliedUcarGarageSlotListRelationFilter = {
+  every?: Prisma.AppliedUcarGarageSlotWhereInput
+  some?: Prisma.AppliedUcarGarageSlotWhereInput
+  none?: Prisma.AppliedUcarGarageSlotWhereInput
+}
+
+export type AppliedUcarGarageSlotOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type AppliedUcarGarageSlotCreateNestedOneWithoutUcarInput = {
