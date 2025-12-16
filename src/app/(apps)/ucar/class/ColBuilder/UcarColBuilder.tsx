@@ -1,13 +1,13 @@
 'use client'
 import {columnGetterType} from '@cm/types/types'
-import {colType} from '@cm/types/col-types'
+import {colFormProps, colType} from '@cm/types/col-types'
 import {Fields} from '@cm/class/Fields/Fields'
 
 import {IsActiveDisplay} from '@app/(apps)/ucar/(lib)/isActiveDisplays'
 import {upassCols} from '@app/(apps)/ucar/files/upass/upass-columns'
 
 import ProcessSummary from '@app/(apps)/ucar/(pages)/paperProcess/Summay/parts/ProcessSummary'
-import {absSize, cl} from '@cm/lib/methods/common'
+import {absSize, cl, isDev} from '@cm/lib/methods/common'
 import {UcarProcessCl} from '../UcarProcessCl'
 import {getPaperManagementCols} from '@app/(apps)/ucar/class/ColBuilder/lib/ucar/ucarCols-lib/lib/getPaperManagementCols/getPaperManagementCols'
 import {DocumentChartBarIcon, InformationCircleIcon} from '@heroicons/react/20/solid'
@@ -26,6 +26,8 @@ import {getTaxJobCols} from '@app/(apps)/ucar/class/ColBuilder/lib/ucar/ucarCols
 import {getDMMFModel} from '@cm/lib/methods/prisma-schema'
 import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
 import ShadModal from '@cm/shadcn/ui/Organisms/ShadModal'
+import {defaultRegister} from '@cm/class/builders/ColBuilderVariables'
+import {register} from 'module'
 
 export const UCAR_TABLE_ROW_HEIGHT = 120
 
@@ -68,6 +70,10 @@ export const ucarColBuilder = (props: columnGetterType) => {
       id: 'userId',
       label: '担当者',
       format: (value, row) => row?.User && `${row?.User?.name} (${row?.Store?.name ?? '店舗未設定'})`,
+      form: {
+        ...defaultRegister,
+        defaultValue: session?.id,
+      },
       forSelect: {},
     },
 
@@ -78,6 +84,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
       label: '98番号',
       format: (value, row) => row.number98,
       form: {},
+
       forSelect: {
         optionsOrOptionFetcher: [
           currentNumber98
@@ -104,6 +111,9 @@ export const ucarColBuilder = (props: columnGetterType) => {
       form: {
         register: {
           validate: (value, row) => {
+            if (!value) {
+              return undefined
+            }
             value = String(value ?? '')
             // 許容パターン: 2桁数字, 半角スペース, 5桁数字
             const reg = /^\d{2}\s\d{5}$/
@@ -145,33 +155,31 @@ export const ucarColBuilder = (props: columnGetterType) => {
   ])
 
   // 基本情報
-  const CAR_COLS = new Fields([
+  const CAR_COLS: colType[] = [
     ...upassCols
       .filter(d => d.showIn?.ucarMainTable)
       .map(d => {
         const label = d.showIn?.ucarMainTable?.label
-        const format = (value, row) => {
-          if (row.daihatsuReserve && d.en === 'sateiID') {
-            return <div className={`max-w-[240px]  text-xs  truncate`}>{row.daihatsuReserve} (予約枠)</div>
-          }
 
+        const format = (value, row) => {
           const inst = new UcarCL(row)
           value = inst.notation[d.en]
           return <div className={`max-w-[240px]  text-xs  truncate`}>{value}</div>
         }
 
-        return {
-          id: `UPASS.${d.en}`,
+        const col = {
+          id: `readOnly_UPASS.${d.en}`,
           label,
           format,
           form: {
-            disabled: true,
+            hidden: true,
             defaultValue: props => {
               return props?.formData?.[`UPASS`]?.[d.en]
             },
           },
-          td: {style: {...{verticalAlign: 'middle'}}},
         }
+
+        return col
       }),
 
     {
@@ -188,7 +196,8 @@ export const ucarColBuilder = (props: columnGetterType) => {
     //   format: (value, row) => row.TmpRentalStore?.name,
     //   forSelect: {config: {modelName: 'store'}},
     // },
-  ])
+  ]
+
   const PAPER_WORK_ALERT_COLS = new Fields([
     // {
     //   id: `currentStatus`,
@@ -265,15 +274,17 @@ export const ucarColBuilder = (props: columnGetterType) => {
               }
               className={cl(TrActionIconClassName, 'h-5 w-5 text-blue-500')}
             />
-            <TrashIcon
-              onClick={async () => {
-                if (confirm('削除しますか？')) {
-                  await doStandardPrisma('ucar', 'delete', {where: {id: row.id}})
-                  useGlobalProps.router.refresh()
-                }
-              }}
-              className={cl(TrActionIconClassName, 'h-5 w-5 text-red-500')}
-            />
+            {isDev && (
+              <TrashIcon
+                onClick={async () => {
+                  if (confirm('削除しますか？')) {
+                    await doStandardPrisma('ucar', 'delete', {where: {id: row.id}})
+                    useGlobalProps.router.refresh()
+                  }
+                }}
+                className={cl(TrActionIconClassName, 'h-5 w-5 text-red-500')}
+              />
+            )}
 
             {alertList.length > 0 && (
               <ShadModal
@@ -309,7 +320,29 @@ export const ucarColBuilder = (props: columnGetterType) => {
       },
     },
 
-    ...CAR_COLS.showSummaryInTd({wrapperWidthPx: 240}).buildFormGroup({groupName: `車両情報`}).plain,
+    ...new Fields([
+      {
+        id: 'sateiID',
+        label: '査定番号',
+        type: 'text',
+        form: {
+          disabled: (props: {record: ucarData}): boolean => {
+            const inst = new UcarCL(props?.record)
+            return inst.notation.sateiID ? true : false
+          },
+          register: {required: '必須'},
+        },
+        format: (value, row) => {
+          if (row.daihatsuReserve) {
+            return <div className={`max-w-[240px]  text-xs  truncate`}>{row.daihatsuReserve} (予約枠)</div>
+          }
+          return row.sateiID
+        },
+      },
+      ...new Fields(CAR_COLS).plain,
+    ])
+      .showSummaryInTd({wrapperWidthPx: 240})
+      .buildFormGroup({groupName: `車両情報`}).plain,
 
     ...new Fields([
       ...SETTING_COLS.buildFormGroup({groupName: `基本情報`}).plain,

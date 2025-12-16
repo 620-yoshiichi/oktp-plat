@@ -251,7 +251,7 @@ export class UCAR_CODE {
       ),
       color: '#fff8dc',
       checkAlert: (ucar: ucarData) => {
-        return !!(ucar.number98 && !ucar.OldCars_Base)
+        return !!(ucar?.number98 && !ucar.OldCars_Base)
       },
       Trigger: (props: {row: ucarData}) => (
         <Number98CandidateSelectorSwitch

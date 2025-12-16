@@ -24,6 +24,8 @@ export default async function DynamicMasterPage(props) {
 }
 
 const parameters = async ({params, query, session, scopes}) => {
+  // const {} = scopes.getUcarProps()
+  const {isHQ, isStoreManager, isSales, carWhere, isChukoshaGroup} = scopes.getUcarProps()
   const customParams = await setCustomParams({
     dataModelName: params.dataModelName,
     variants: [
@@ -41,10 +43,10 @@ const parameters = async ({params, query, session, scopes}) => {
         setParams: async () => {
           return {
             additional: {
-              payload: {app: `ucar`},
+              payload: {apps: ['ucar']},
               orderBy: [{role: 'asc'}],
               where: {
-                OR: [{app: `ucar`}],
+                OR: [{apps: {has: `ucar`}}],
               },
             },
             myTable: {},

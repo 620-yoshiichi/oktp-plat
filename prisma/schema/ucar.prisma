@@ -2,7 +2,7 @@ model Ucar {
   id                   Int       @id @default(autoincrement())
   createdAt            DateTime  @default(now())
   updatedAt            DateTime? @updatedAt
-  qrIssuedAt           DateTime
+  qrIssuedAt           DateTime  @default(now())
   processLastUpdatedAt DateTime?
   active               Boolean   @default(true)
   sortOrder            Float     @default(0)

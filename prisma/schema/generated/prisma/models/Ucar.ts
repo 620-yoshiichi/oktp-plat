@@ -1354,7 +1354,7 @@ export type UcarScalarWhereWithAggregatesInput = {
 export type UcarCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -1447,7 +1447,7 @@ export type UcarUncheckedCreateInput = {
   id?: number
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -1727,7 +1727,7 @@ export type UcarCreateManyInput = {
   id?: number
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -2782,7 +2782,7 @@ export type UcarUpdateOneRequiredWithoutUcarPaperWorkNotesNestedInput = {
 export type UcarCreateWithoutOldCars_BaseInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -2874,7 +2874,7 @@ export type UcarUncheckedCreateWithoutOldCars_BaseInput = {
   id?: number
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -3083,7 +3083,7 @@ export type UcarScalarWhereInput = {
 export type UcarCreateWithoutUPASSInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -3175,7 +3175,7 @@ export type UcarUncheckedCreateWithoutUPASSInput = {
   id?: number
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -3467,7 +3467,7 @@ export type UcarUncheckedUpdateWithoutUPASSInput = {
 export type UcarCreateWithoutQR_ProsessInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -3559,7 +3559,7 @@ export type UcarUncheckedCreateWithoutQR_ProsessInput = {
   id?: number
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -3851,7 +3851,7 @@ export type UcarUncheckedUpdateWithoutQR_ProsessInput = {
 export type UcarCreateWithoutNewCarInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -3943,7 +3943,7 @@ export type UcarUncheckedCreateWithoutNewCarInput = {
   id?: number
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -4061,7 +4061,7 @@ export type UcarUpdateManyWithWhereWithoutNewCarInput = {
 export type UcarCreateWithoutStoreInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -4153,7 +4153,7 @@ export type UcarUncheckedCreateWithoutStoreInput = {
   id?: number
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -4255,7 +4255,7 @@ export type UcarCreateManyStoreInputEnvelope = {
 export type UcarCreateWithoutDestinationStoreInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -4347,7 +4347,7 @@ export type UcarUncheckedCreateWithoutDestinationStoreInput = {
   id?: number
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -4449,7 +4449,7 @@ export type UcarCreateManyDestinationStoreInputEnvelope = {
 export type UcarCreateWithoutTmpRentalStoreInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -4541,7 +4541,7 @@ export type UcarUncheckedCreateWithoutTmpRentalStoreInput = {
   id?: number
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -4691,7 +4691,7 @@ export type UcarUpdateManyWithWhereWithoutTmpRentalStoreInput = {
 export type UcarCreateWithoutUserInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -4783,7 +4783,7 @@ export type UcarUncheckedCreateWithoutUserInput = {
   id?: number
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -4901,7 +4901,7 @@ export type UcarUpdateManyWithWhereWithoutUserInput = {
 export type UcarCreateWithoutNumber98Input = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -4993,7 +4993,7 @@ export type UcarUncheckedCreateWithoutNumber98Input = {
   id?: number
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -5111,7 +5111,7 @@ export type UcarUpdateManyWithWhereWithoutNumber98Input = {
 export type UcarCreateWithoutAppliedUcarGarageSlotInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -5203,7 +5203,7 @@ export type UcarUncheckedCreateWithoutAppliedUcarGarageSlotInput = {
   id?: number
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -5495,7 +5495,7 @@ export type UcarUncheckedUpdateWithoutAppliedUcarGarageSlotInput = {
 export type UcarCreateWithoutBankMasterInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -5587,7 +5587,7 @@ export type UcarUncheckedCreateWithoutBankMasterInput = {
   id?: number
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -5705,7 +5705,7 @@ export type UcarUpdateManyWithWhereWithoutBankMasterInput = {
 export type UcarCreateWithoutBankBranchMasterInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -5797,7 +5797,7 @@ export type UcarUncheckedCreateWithoutBankBranchMasterInput = {
   id?: number
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -5915,7 +5915,7 @@ export type UcarUpdateManyWithWhereWithoutBankBranchMasterInput = {
 export type UcarCreateWithoutUcarProcessInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -6007,7 +6007,7 @@ export type UcarUncheckedCreateWithoutUcarProcessInput = {
   id?: number
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -6299,7 +6299,7 @@ export type UcarUncheckedUpdateWithoutUcarProcessInput = {
 export type UcarCreateWithoutUcarPaperWorkNotesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -6391,7 +6391,7 @@ export type UcarUncheckedCreateWithoutUcarPaperWorkNotesInput = {
   id?: number
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -6684,7 +6684,7 @@ export type UcarCreateManyOldCars_BaseInput = {
   id?: number
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -7040,7 +7040,7 @@ export type UcarCreateManyNewCarInput = {
   id?: number
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -7402,7 +7402,7 @@ export type UcarCreateManyStoreInput = {
   id?: number
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -7491,7 +7491,7 @@ export type UcarCreateManyDestinationStoreInput = {
   id?: number
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -7580,7 +7580,7 @@ export type UcarCreateManyTmpRentalStoreInput = {
   id?: number
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -8488,7 +8488,7 @@ export type UcarCreateManyUserInput = {
   id?: number
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -8850,7 +8850,7 @@ export type UcarCreateManyNumber98Input = {
   id?: number
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -9212,7 +9212,7 @@ export type UcarCreateManyBankMasterInput = {
   id?: number
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number
@@ -9574,7 +9574,7 @@ export type UcarCreateManyBankBranchMasterInput = {
   id?: number
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  qrIssuedAt: Date | string
+  qrIssuedAt?: Date | string
   processLastUpdatedAt?: Date | string | null
   active?: boolean
   sortOrder?: number

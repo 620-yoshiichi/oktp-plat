@@ -1,7 +1,5 @@
 'use client'
 
-import UcarDetail from '@app/(apps)/ucar/class/DetailPage/ucar/UcarDetailForm'
-
 import {C_Stack} from '@cm/components/styles/common-components/common-components'
 import {DetailPagePropType} from '@cm/types/types'
 
@@ -12,8 +10,10 @@ import {CommonGlobalIdSelector} from '@app/oktpCommon/CommonGlobalIdSelector'
 import {UCAR_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-constants'
 import {formatDate} from '@cm/class/Days/date-utils/formatters'
 import {TextRed} from '@cm/components/styles/common-components/Alert'
+import {roleMaster} from '@cm/class/builders/PageBuilderVariables'
 
 export class PageBuilder {
+  static roleMaster = roleMaster
   static ucarGarageLocationMaster = {
     form: (props: DetailPagePropType) => {
       return (
@@ -76,7 +76,6 @@ export class PageBuilder {
         がされたもののみが表示されます。
       </div>
     ),
-    form: UcarDetail,
   }
 
   static getGlobalIdSelector = CommonGlobalIdSelector

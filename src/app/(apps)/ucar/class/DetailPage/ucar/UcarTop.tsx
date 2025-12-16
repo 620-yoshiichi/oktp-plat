@@ -8,8 +8,18 @@ import {toast} from 'react-toastify'
 
 import {Alert} from '@cm/components/styles/common-components/Alert'
 import {getAvailable98NumbersReturn} from '@app/(apps)/ucar/(lib)/num98/getAvailable98Numbers'
+import Link from 'next/link'
+import {T_LINK} from '@cm/components/styles/common-components/links'
+import {Button} from '@cm/components/styles/common-components/Button'
+import useUcarDetailUpdatorGMF from '@app/(apps)/ucar/(parts)/templateHooks/useUcarDetailUpdatorGMF'
 
-export const UcarTop = ({getAvailable98NumbersReturn}: {getAvailable98NumbersReturn: getAvailable98NumbersReturn}) => {
+export const UcarTop = ({
+  useRecordsReturn,
+  getAvailable98NumbersReturn,
+}: {
+  getAvailable98NumbersReturn: getAvailable98NumbersReturn
+}) => {
+  const useUcarDetailUpdatorGMFReturn = useUcarDetailUpdatorGMF()
   const nextNumber98 = getAvailable98NumbersReturn?.nextNumber98
 
   const Next98 = () => {
@@ -36,8 +46,26 @@ export const UcarTop = ({getAvailable98NumbersReturn}: {getAvailable98NumbersRet
     <C_Stack>
       <section>
         <R_Stack>
+          <Button
+            size="sm"
+            onClick={() =>
+              useUcarDetailUpdatorGMFReturn.setGMF_OPEN({
+                sateiID: '',
+                getAvailable98NumbersReturn: getAvailable98NumbersReturn,
+                useRecordsReturn,
+              })
+            }
+          >
+            新規作成
+          </Button>
           <Next98 />
           <EditModeSelector />
+          <T_LINK
+            target="_blank"
+            href={'https://docs.google.com/spreadsheets/d/1nzwUOAGbEx2Ye9X2SyLKzM8hehcbE1uBfsVwOubveQs/edit?gid=0#gid=0'}
+          >
+            不要査定ID登録
+          </T_LINK>
         </R_Stack>
       </section>
     </C_Stack>

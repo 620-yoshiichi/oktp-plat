@@ -50,7 +50,7 @@ export const upassCols: upassColumn[] = [
     category: 'ID',
     showIn: {
       qrCreate: {label: '査定番号'},
-      ucarMainTable: {label: '査定番号'},
+      // ucarMainTable: {label: '査定番号'},
     },
   },
   {

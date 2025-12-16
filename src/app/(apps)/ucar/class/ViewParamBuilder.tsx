@@ -5,13 +5,13 @@ import {UcarTop} from '@app/(apps)/ucar/class/DetailPage/ucar/UcarTop'
 
 export class ViewParamBuilder {
   static ucar: ViewParamBuilderProps = props => {
-    const {isHQ, isStoreManager, isSales, carWhere} = props.useGlobalProps.accessScopes().getUcarProps()
-    console.log({isHQ, isStoreManager, isSales, carWhere}) //logs
+    const {isHQ, isStoreManager, isSales, carWhere, isChukoshaGroup} = props.useGlobalProps.accessScopes().getUcarProps()
+
     return {
       // myForm: {create: {finalizeUpdate: () => router.refresh()}},
 
       myTable: {
-        create: isHQ ? true : false,
+        create: false,
         update: false,
         delete: false,
         pagination: {countPerPage: 10},
@@ -20,6 +20,7 @@ export class ViewParamBuilder {
             <UcarTop
               {...{
                 getAvailable98NumbersReturn: props?.ClientProps?.PageBuilderExtraProps?.getAvailable98NumbersReturn,
+                useRecordsReturn: props?.ClientProps?.UseRecordsReturn,
               }}
             />
           )

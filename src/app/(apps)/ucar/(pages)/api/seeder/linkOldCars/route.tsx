@@ -59,7 +59,7 @@ export const POST = async (req: NextRequest) => {
             // 該当の98番号を持つOldCars_Baseの中で、もっとも新しい仕入日のものを取得
             const latestOldCar = await prisma.oldCars_Base.findFirst({
               where: {
-                NO_SYARYOU: ucar.number98,
+                NO_SYARYOU: ucar?.number98 ?? '',
                 DD_SIIRE: {
                   not: null,
                 },

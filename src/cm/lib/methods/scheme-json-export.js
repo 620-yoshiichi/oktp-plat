@@ -1502,7 +1502,7 @@ model Ucar {
   id                   Int       @id @default(autoincrement())
   createdAt            DateTime  @default(now())
   updatedAt            DateTime? @updatedAt
-  qrIssuedAt           DateTime
+  qrIssuedAt           DateTime  @default(now())
   processLastUpdatedAt DateTime?
   active               Boolean   @default(true)
   sortOrder            Float     @default(0)
@@ -1670,15 +1670,22 @@ model Number98IssueHistory {
   number String
 }
 
-model UcarGarageLocationMaster {
-  id                   Int                    @id @default(autoincrement())
-  createdAt            DateTime               @default(now())
-  updatedAt            DateTime?              @updatedAt
-  active               Boolean                @default(true)
-  sortOrder            Float                  @default(0)
-  name                 String                 @unique
-  color                String?
-  UcarGarageSlotMaster UcarGarageSlotMaster[]
+model AppliedUcarGarageSlot {
+  id                     Int                  @id @default(autoincrement())
+  createdAt              DateTime             @default(now())
+  updatedAt              DateTime?            @updatedAt
+  active                 Boolean              @default(true)
+  sortOrder              Float                @default(0)
+  appliedAt              DateTime
+  finishedAt             DateTime?
+  ucarGarageSlotMasterId Int
+  sateiID                String               @unique
+  UcarGarageSlotMaster   UcarGarageSlotMaster @relation(fields: [ucarGarageSlotMasterId], references: [id], onDelete: Cascade)
+
+  Ucar Ucar @relation(fields: [sateiID], references: [sateiID], onDelete: Cascade)
+
+  @@unique([sateiID, ucarGarageSlotMasterId], name: "unique_sateiID_ucarGarageSlotMasterId")
+  @@index([ucarGarageSlotMasterId])
 }
 
 model UcarGarageSlotMaster {
@@ -1697,22 +1704,15 @@ model UcarGarageSlotMaster {
   @@index([ucarGarageLocationMasterId])
 }
 
-model AppliedUcarGarageSlot {
-  id                     Int                  @id @default(autoincrement())
-  createdAt              DateTime             @default(now())
-  updatedAt              DateTime?            @updatedAt
-  active                 Boolean              @default(true)
-  sortOrder              Float                @default(0)
-  appliedAt              DateTime
-  finishedAt             DateTime?
-  ucarGarageSlotMasterId Int
-  sateiID                String               @unique
-  UcarGarageSlotMaster   UcarGarageSlotMaster @relation(fields: [ucarGarageSlotMasterId], references: [id], onDelete: Cascade)
-
-  Ucar Ucar @relation(fields: [sateiID], references: [sateiID], onDelete: Cascade)
-
-  @@unique([sateiID, ucarGarageSlotMasterId], name: "unique_sateiID_ucarGarageSlotMasterId")
-  @@index([ucarGarageSlotMasterId])
+model UcarGarageLocationMaster {
+  id                   Int                    @id @default(autoincrement())
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime?              @updatedAt
+  active               Boolean                @default(true)
+  sortOrder            Float                  @default(0)
+  name                 String                 @unique
+  color                String?
+  UcarGarageSlotMaster UcarGarageSlotMaster[]
 }
 
 model BankMaster {
@@ -20040,9 +20040,13 @@ export const prismaDMMF = {
           "isUnique": false,
           "isId": false,
           "isReadOnly": false,
-          "hasDefaultValue": false,
+          "hasDefaultValue": true,
           "type": "DateTime",
           "nativeType": null,
+          "default": {
+            "name": "now",
+            "args": []
+          },
           "isGenerated": false,
           "isUpdatedAt": false
         },
@@ -21784,327 +21788,6 @@ export const prismaDMMF = {
       "isGenerated": false
     },
     {
-      "name": "UcarGarageLocationMaster",
-      "dbName": null,
-      "schema": null,
-      "fields": [
-        {
-          "name": "id",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": true,
-          "isUnique": false,
-          "isId": true,
-          "isReadOnly": false,
-          "hasDefaultValue": true,
-          "type": "Int",
-          "nativeType": null,
-          "default": {
-            "name": "autoincrement",
-            "args": []
-          },
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "createdAt",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": true,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": true,
-          "type": "DateTime",
-          "nativeType": null,
-          "default": {
-            "name": "now",
-            "args": []
-          },
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "updatedAt",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "DateTime",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": true
-        },
-        {
-          "name": "active",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": true,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": true,
-          "type": "Boolean",
-          "nativeType": null,
-          "default": true,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "sortOrder",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": true,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": true,
-          "type": "Float",
-          "nativeType": null,
-          "default": 0,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "name",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": true,
-          "isUnique": true,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "String",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "color",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "String",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "UcarGarageSlotMaster",
-          "kind": "object",
-          "isList": true,
-          "isRequired": true,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "UcarGarageSlotMaster",
-          "nativeType": null,
-          "relationName": "UcarGarageLocationMasterToUcarGarageSlotMaster",
-          "relationFromFields": [],
-          "relationToFields": [],
-          "isGenerated": false,
-          "isUpdatedAt": false
-        }
-      ],
-      "primaryKey": null,
-      "uniqueFields": [],
-      "uniqueIndexes": [],
-      "isGenerated": false
-    },
-    {
-      "name": "UcarGarageSlotMaster",
-      "dbName": null,
-      "schema": null,
-      "fields": [
-        {
-          "name": "id",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": true,
-          "isUnique": false,
-          "isId": true,
-          "isReadOnly": false,
-          "hasDefaultValue": true,
-          "type": "Int",
-          "nativeType": null,
-          "default": {
-            "name": "autoincrement",
-            "args": []
-          },
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "createdAt",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": true,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": true,
-          "type": "DateTime",
-          "nativeType": null,
-          "default": {
-            "name": "now",
-            "args": []
-          },
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "updatedAt",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "DateTime",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": true
-        },
-        {
-          "name": "active",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": true,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": true,
-          "type": "Boolean",
-          "nativeType": null,
-          "default": true,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "sortOrder",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": true,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": true,
-          "type": "Float",
-          "nativeType": null,
-          "default": 0,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "garageNumber",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": true,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "Int",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "color",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "String",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "ucarGarageLocationMasterId",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": true,
-          "hasDefaultValue": false,
-          "type": "Int",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "AppliedUcarGarageSlot",
-          "kind": "object",
-          "isList": true,
-          "isRequired": true,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "AppliedUcarGarageSlot",
-          "nativeType": null,
-          "relationName": "AppliedUcarGarageSlotToUcarGarageSlotMaster",
-          "relationFromFields": [],
-          "relationToFields": [],
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "UcarGarageLocationMaster",
-          "kind": "object",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "UcarGarageLocationMaster",
-          "nativeType": null,
-          "relationName": "UcarGarageLocationMasterToUcarGarageSlotMaster",
-          "relationFromFields": [
-            "ucarGarageLocationMasterId"
-          ],
-          "relationToFields": [
-            "id"
-          ],
-          "relationOnDelete": "Cascade",
-          "isGenerated": false,
-          "isUpdatedAt": false
-        }
-      ],
-      "primaryKey": null,
-      "uniqueFields": [
-        [
-          "garageNumber",
-          "ucarGarageLocationMasterId"
-        ]
-      ],
-      "uniqueIndexes": [
-        {
-          "name": "unique_garageNumber_ucarGarageLocationMasterId",
-          "fields": [
-            "garageNumber",
-            "ucarGarageLocationMasterId"
-          ]
-        }
-      ],
-      "isGenerated": false
-    },
-    {
       "name": "AppliedUcarGarageSlot",
       "dbName": null,
       "schema": null,
@@ -22306,6 +21989,327 @@ export const prismaDMMF = {
           ]
         }
       ],
+      "isGenerated": false
+    },
+    {
+      "name": "UcarGarageSlotMaster",
+      "dbName": null,
+      "schema": null,
+      "fields": [
+        {
+          "name": "id",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": true,
+          "isUnique": false,
+          "isId": true,
+          "isReadOnly": false,
+          "hasDefaultValue": true,
+          "type": "Int",
+          "nativeType": null,
+          "default": {
+            "name": "autoincrement",
+            "args": []
+          },
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "createdAt",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": true,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": true,
+          "type": "DateTime",
+          "nativeType": null,
+          "default": {
+            "name": "now",
+            "args": []
+          },
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "updatedAt",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "DateTime",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": true
+        },
+        {
+          "name": "active",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": true,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": true,
+          "type": "Boolean",
+          "nativeType": null,
+          "default": true,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "sortOrder",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": true,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": true,
+          "type": "Float",
+          "nativeType": null,
+          "default": 0,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "garageNumber",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": true,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "Int",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "color",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "String",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "ucarGarageLocationMasterId",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": true,
+          "hasDefaultValue": false,
+          "type": "Int",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "AppliedUcarGarageSlot",
+          "kind": "object",
+          "isList": true,
+          "isRequired": true,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "AppliedUcarGarageSlot",
+          "nativeType": null,
+          "relationName": "AppliedUcarGarageSlotToUcarGarageSlotMaster",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "UcarGarageLocationMaster",
+          "kind": "object",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "UcarGarageLocationMaster",
+          "nativeType": null,
+          "relationName": "UcarGarageLocationMasterToUcarGarageSlotMaster",
+          "relationFromFields": [
+            "ucarGarageLocationMasterId"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "relationOnDelete": "Cascade",
+          "isGenerated": false,
+          "isUpdatedAt": false
+        }
+      ],
+      "primaryKey": null,
+      "uniqueFields": [
+        [
+          "garageNumber",
+          "ucarGarageLocationMasterId"
+        ]
+      ],
+      "uniqueIndexes": [
+        {
+          "name": "unique_garageNumber_ucarGarageLocationMasterId",
+          "fields": [
+            "garageNumber",
+            "ucarGarageLocationMasterId"
+          ]
+        }
+      ],
+      "isGenerated": false
+    },
+    {
+      "name": "UcarGarageLocationMaster",
+      "dbName": null,
+      "schema": null,
+      "fields": [
+        {
+          "name": "id",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": true,
+          "isUnique": false,
+          "isId": true,
+          "isReadOnly": false,
+          "hasDefaultValue": true,
+          "type": "Int",
+          "nativeType": null,
+          "default": {
+            "name": "autoincrement",
+            "args": []
+          },
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "createdAt",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": true,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": true,
+          "type": "DateTime",
+          "nativeType": null,
+          "default": {
+            "name": "now",
+            "args": []
+          },
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "updatedAt",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "DateTime",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": true
+        },
+        {
+          "name": "active",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": true,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": true,
+          "type": "Boolean",
+          "nativeType": null,
+          "default": true,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "sortOrder",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": true,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": true,
+          "type": "Float",
+          "nativeType": null,
+          "default": 0,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "name",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": true,
+          "isUnique": true,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "String",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "color",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "String",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "UcarGarageSlotMaster",
+          "kind": "object",
+          "isList": true,
+          "isRequired": true,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "UcarGarageSlotMaster",
+          "nativeType": null,
+          "relationName": "UcarGarageLocationMasterToUcarGarageSlotMaster",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isGenerated": false,
+          "isUpdatedAt": false
+        }
+      ],
+      "primaryKey": null,
+      "uniqueFields": [],
+      "uniqueIndexes": [],
       "isGenerated": false
     },
     {
@@ -25153,60 +25157,6 @@ export const prismaDMMF = {
       ]
     },
     {
-      "model": "UcarGarageLocationMaster",
-      "type": "id",
-      "isDefinedOnField": true,
-      "fields": [
-        {
-          "name": "id"
-        }
-      ]
-    },
-    {
-      "model": "UcarGarageLocationMaster",
-      "type": "unique",
-      "isDefinedOnField": true,
-      "fields": [
-        {
-          "name": "name"
-        }
-      ]
-    },
-    {
-      "model": "UcarGarageSlotMaster",
-      "type": "id",
-      "isDefinedOnField": true,
-      "fields": [
-        {
-          "name": "id"
-        }
-      ]
-    },
-    {
-      "model": "UcarGarageSlotMaster",
-      "type": "normal",
-      "isDefinedOnField": false,
-      "fields": [
-        {
-          "name": "ucarGarageLocationMasterId"
-        }
-      ]
-    },
-    {
-      "model": "UcarGarageSlotMaster",
-      "type": "unique",
-      "isDefinedOnField": false,
-      "name": "unique_garageNumber_ucarGarageLocationMasterId",
-      "fields": [
-        {
-          "name": "garageNumber"
-        },
-        {
-          "name": "ucarGarageLocationMasterId"
-        }
-      ]
-    },
-    {
       "model": "AppliedUcarGarageSlot",
       "type": "id",
       "isDefinedOnField": true,
@@ -25247,6 +25197,60 @@ export const prismaDMMF = {
         },
         {
           "name": "ucarGarageSlotMasterId"
+        }
+      ]
+    },
+    {
+      "model": "UcarGarageSlotMaster",
+      "type": "id",
+      "isDefinedOnField": true,
+      "fields": [
+        {
+          "name": "id"
+        }
+      ]
+    },
+    {
+      "model": "UcarGarageSlotMaster",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "ucarGarageLocationMasterId"
+        }
+      ]
+    },
+    {
+      "model": "UcarGarageSlotMaster",
+      "type": "unique",
+      "isDefinedOnField": false,
+      "name": "unique_garageNumber_ucarGarageLocationMasterId",
+      "fields": [
+        {
+          "name": "garageNumber"
+        },
+        {
+          "name": "ucarGarageLocationMasterId"
+        }
+      ]
+    },
+    {
+      "model": "UcarGarageLocationMaster",
+      "type": "id",
+      "isDefinedOnField": true,
+      "fields": [
+        {
+          "name": "id"
+        }
+      ]
+    },
+    {
+      "model": "UcarGarageLocationMaster",
+      "type": "unique",
+      "isDefinedOnField": true,
+      "fields": [
+        {
+          "name": "name"
         }
       ]
     },

@@ -41,9 +41,7 @@ export const POST = async (req: NextRequest) => {
 
   const {roleMaster} = await resetAllOktpRoles()
 
-  const erros = {
-    workTypeCountError: [],
-  }
+  const erros = {workTypeCountError: []}
 
   const activeMembers = member_data.filter(item => {
     // const isInForcedUsers = forcedUsers.find(d => String(d.code) === String(item.code))
@@ -56,11 +54,12 @@ export const POST = async (req: NextRequest) => {
   }[] = await Promise.all(
     activeMembers.map(async item => {
       const activeState = item.retired_date === '' ? true : false
-      const storeCode = parseInt(item.department.code.substr(0, 2) || 0)
-      const store = stores.find(store => String(store.code) === String(storeCode))
+      const kaonaviStoreCode = parseInt(item.department.code.substr(0, 2) || 0)
+      const store = stores.find(store => String(store.code) === String(kaonaviStoreCode))
       const storeId = store?.id
 
       const workTypes = item.custom_fields.find(d => d.name === `職務`)?.values
+
       workTypes?.forEach(wt => {
         obj__initializeProperty(workTypeMaster, wt, true)
       })
@@ -79,12 +78,13 @@ export const POST = async (req: NextRequest) => {
       const firstWorkType = workTypes?.[0]
 
       const apps = Object.keys(workTypeConfigs[firstWorkType]?.apps ?? {})
+
       const userData = {
         code: Number(item.code),
         name: item.name,
         email: item?.mail ? item?.mail : null,
         password: item.code,
-        sortOrder: storeCode,
+        // sortOrder: storeCode,
         active: activeState,
         storeId,
         apps: apps.length > 0 ? apps : undefined,
@@ -92,17 +92,12 @@ export const POST = async (req: NextRequest) => {
 
       const findFromForcedUsers = forcedUsers.find(d => String(d.code) === String(item.code))
       if (findFromForcedUsers) {
-        const {userRoles, apps, storeCode} = findFromForcedUsers ?? {}
-        userData.apps = apps
-        userData.storeId = stores.find(store => store.code === storeCode)?.id
+        const {userRoles, apps} = findFromForcedUsers ?? {}
 
-        const userUpsertQuery: Prisma.UserUpsertArgs = {
-          where: {
-            code: userData.code,
-          },
-          create: {...userData},
-          update: {...userData},
-        }
+        const arrangedStoreCode = findFromForcedUsers?.storeCode ?? kaonaviStoreCode
+
+        userData.apps = apps
+        userData.storeId = stores.find(store => store.code === arrangedStoreCode)?.id
 
         await prisma.user.upsert({
           where: {code: userData.code},

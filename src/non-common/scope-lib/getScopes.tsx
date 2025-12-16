@@ -33,14 +33,14 @@ type carWhereType = {
 }
 
 type oktpUserTypes = {
-  userId?: unknown
-  storeId?: unknown
-  userType?: unknown
-  isHQ?: unknown
-  isCR?: unknown
-  isStoreManager?: unknown
-  isSales?: unknown
-  isTorokuTanto?: unknown
+  userId?: number
+  storeId?: number
+  userType?: any
+  isHQ?: boolean
+  isCR?: boolean
+  isStoreManager?: boolean
+  isSales?: boolean
+  isTorokuTanto?: boolean
 
   isNewCarMember: boolean
   newCarWhere: carWhereType
@@ -55,72 +55,17 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
 
   const {admin, getGlobalUserId} = judgeIsAdmin(session, query)
 
-  const getQrbpProps = () => {
-    const cr = !!arr__findCommonValues(
-      [`CRアドバイザ`],
-      (roles ?? []).map(d => d.name)
-    )
-
-    const store = !!arr__findCommonValues(
-      [`拠点アドバイザ`],
-      (roles ?? []).map(d => d.name)
-    )
-    const crLeader = !!arr__findCommonValues(
-      [`BP課長`],
-      (roles ?? []).map(d => d.name)
-    )
-    const isStoreManager = !!getNewCarProps().isStoreManager
-    const qrbpMember = {
-      crLeader,
-      cr,
-      store,
-      isStoreManager,
-    }
-    const result: QRBPScopeType = {
-      ...qrbpMember,
-
-      isQrbpMember: Object.keys(qrbpMember).some(key => qrbpMember[key as keyof typeof qrbpMember]),
-    }
-
-    result['isQrbpMember'] = Object.keys(result).some(key => result[key as keyof QRBPScopeType])
-    addAdminToRoles(result, session)
-
-    return result as QRBPScopeType
-  }
-
   type UcarScopeType = {
     isUcarMember?: boolean
-    isHQ?: unknown
-    isStoreManager?: unknown
-    isSales?: unknown
+    isHQ?: boolean
+    isStoreManager?: boolean
+    isSales?: boolean
+    isChukoshaGroup?: boolean
     carWhere: carWhereType
     userId?: any
     storeId?: any
   }
-  const getUcarProps = () => {
-    const {isHQ, isStoreManager, isSales, newCarWhere, userId, storeId} = getNewCarProps()
 
-    const ucarMember = {
-      isHQ,
-      isStoreManager,
-      isSales,
-    }
-
-    const result: UcarScopeType = {
-      carWhere: newCarWhere ?? {},
-      ...ucarMember,
-      userId,
-      storeId,
-      isUcarMember: Object.keys(ucarMember).some(key => {
-        return !!ucarMember[key]
-      }),
-    }
-
-    addAdminToRoles(result, session)
-    return result
-  }
-
-  /**新レン関係 */
   const getNewCarProps = () => {
     const userId = !admin ? session?.id : Number(query?.[globalIds.globalUserId] ?? session?.id ?? 0)
     const storeId = !admin ? session?.storeId : Number(query?.[globalIds.globalStoreId] ?? session?.storeId ?? 0)
@@ -206,9 +151,69 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
       isNewCarMember: Object.keys(newCarMember).some(key => newCarMember[key as keyof typeof newCarMember]),
     }
 
+    // addAdminToRoles(result, session)
+    return {...result}
+  }
+  const getUcarProps = () => {
+    const {isHQ, isStoreManager, isSales, newCarWhere, userId, storeId} = getNewCarProps()
+
+    const isChukoshaGroup = !!arr__findCommonValues(
+      ['中古車G'],
+      (roles ?? []).map(d => d.name)
+    )
+
+    const ucarMember = {
+      isChukoshaGroup,
+      isHQ,
+      isStoreManager,
+      isSales,
+    }
+
+    const result: UcarScopeType = {
+      carWhere: newCarWhere ?? {},
+      ...ucarMember,
+      userId,
+      storeId,
+      isUcarMember: Object.keys(ucarMember).some(key => {
+        return !!ucarMember[key]
+      }),
+    }
+
+    // addAdminToRoles(result, session)
+    return result
+  }
+
+  const getQrbpProps = () => {
+    const cr = !!arr__findCommonValues(
+      [`CRアドバイザ`],
+      (roles ?? []).map(d => d.name)
+    )
+
+    const store = !!arr__findCommonValues(
+      [`拠点アドバイザ`],
+      (roles ?? []).map(d => d.name)
+    )
+    const crLeader = !!arr__findCommonValues(
+      [`BP課長`],
+      (roles ?? []).map(d => d.name)
+    )
+    const isStoreManager = !!getNewCarProps().isStoreManager
+    const qrbpMember = {
+      crLeader,
+      cr,
+      store,
+      isStoreManager,
+    }
+    const result: QRBPScopeType = {
+      ...qrbpMember,
+
+      isQrbpMember: Object.keys(qrbpMember).some(key => qrbpMember[key as keyof typeof qrbpMember]),
+    }
+
+    result['isQrbpMember'] = Object.keys(result).some(key => result[key as keyof QRBPScopeType])
     addAdminToRoles(result, session)
 
-    return {...result}
+    return result as QRBPScopeType
   }
   const getShinernScopes = () => {
     const userId = !admin ? session?.id : Number(query?.[globalIds.globalUserId] ?? session?.id ?? 0)
@@ -242,7 +247,7 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
     getUcarProps,
     getNewCarProps,
   }
-  addAdminToRoles
+
   return result
 }
 

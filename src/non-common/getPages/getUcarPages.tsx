@@ -4,16 +4,17 @@ import {getScopes} from 'src/non-common/scope-lib/getScopes'
 
 export const getUcarPages = (props: PageGetterType) => {
   const {session, rootPath, pathname, query, roles} = props
+
   const scopes = getScopes(session, {query, roles})
 
   const ucarProps = scopes.getUcarProps()
 
-  const {isUcarMember, isHQ} = ucarProps
+  const {isUcarMember, isHQ, isChukoshaGroup} = ucarProps
 
   const pathSource: pathItemType[] = [
     {
       tabId: 'ucar',
-      label: '中古車業務',
+      label: 'Ucar業務',
 
       exclusiveTo: isUcarMember,
       ROOT: [rootPath],
@@ -32,17 +33,12 @@ export const getUcarPages = (props: PageGetterType) => {
           label: '査定ID変換',
           ROOT: [rootPath],
         },
-        {
-          tabId: 'familyTree',
-          label: 'ファミリーツリー',
-          ROOT: [rootPath],
-        },
       ],
     },
     {
       tabId: '',
       label: '中古車G',
-      exclusiveTo: isHQ,
+      exclusiveTo: isHQ || isChukoshaGroup,
       ROOT: [rootPath],
       children: [
         {
@@ -61,6 +57,12 @@ export const getUcarPages = (props: PageGetterType) => {
         },
         {tabId: 'tax-keiri', label: '自動車税 - 依頼中', ROOT: [rootPath]},
         {tabId: 'tax-keiri', label: '自動車税 - 経理', ROOT: [rootPath]},
+
+        {
+          tabId: 'familyTree',
+          label: 'ファミリーツリー',
+          ROOT: [rootPath],
+        },
       ],
     },
     {
@@ -75,18 +77,19 @@ export const getUcarPages = (props: PageGetterType) => {
     },
 
     {
-      tabId: 'config',
+      tabId: '',
       label: '設定',
       exclusiveTo: scopes.admin,
       ROOT: [rootPath],
       children: [
-        {tabId: 'store', label: '拠点', link: {}, exclusiveTo: scopes.admin},
-        {tabId: 'user', label: 'ユーザー', link: {}, exclusiveTo: scopes.admin},
-        {tabId: 'ucarProcess', label: '作業記録', link: {}, exclusiveTo: scopes.admin},
-        {tabId: 'bankMaster', label: '銀行', link: {}, exclusiveTo: scopes.admin},
+        {tabId: 'store', label: '拠点', link: {}},
+        {tabId: 'user', label: 'ユーザー', link: {}},
+        {tabId: 'ucarProcess', label: '作業記録', link: {}},
+        {tabId: 'bankMaster', label: '銀行', link: {}},
         {tabId: `98list`, label: `98番号と売上`},
-        {tabId: `ucarGarageLocationMaster`, label: '車庫一覧', exclusiveTo: scopes.admin, children: []},
-        {tabId: `batch`, label: 'バッチ', exclusiveTo: scopes.admin, children: []},
+        {tabId: `ucarGarageLocationMaster`, label: '車庫一覧', children: []},
+        {tabId: `roleMaster`, label: '権限設定', children: []},
+        {tabId: `batch`, label: 'バッチ', children: []},
       ],
     },
 

@@ -111,7 +111,13 @@ export class QueryBuilder {
       },
     }
 
+    const user = {
+      include: {Store: {}},
+    }
+
     const include = {
+      user,
+
       ucar,
       ucarPaperWorkNotes,
       ucarProcess,

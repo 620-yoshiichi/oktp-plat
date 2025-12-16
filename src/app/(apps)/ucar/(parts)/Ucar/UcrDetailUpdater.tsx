@@ -39,14 +39,14 @@ const Main = ({close, useGlobalProps, ucar, getAvailable98NumbersReturn, useReco
   const columns = ColBuilder.ucar({
     useGlobalProps,
     ColBuilderExtraProps: {
-      currentNumber98: ucar.number98,
+      currentNumber98: ucar?.number98 ?? '',
       getAvailable98NumbersReturn,
     },
   })
 
   const {BasicForm, latestFormData, ReactHookForm} = useBasicFormProps({
     onFormItemBlur: ({value, name, id, e, newlatestFormData: data, ReactHookForm}) => {
-      if (name === 'processedAs' && processedAs) {
+      if (name === 'processedAs' && data.processedAs) {
         ReactHookForm.setValue(`meihenBi`, null)
         ReactHookForm.setValue(`masshoBi`, null)
       }
@@ -60,12 +60,18 @@ const Main = ({close, useGlobalProps, ucar, getAvailable98NumbersReturn, useReco
     formData,
   })
 
-  const {processedAs} = latestFormData
-
   const onSubmit = async data => {
-    const number98 = data.number98
+    Object.keys(data).forEach(key => {
+      if (key.includes('readOnly')) {
+        delete data[key]
+      }
+    })
 
-    const {result: prevRecord} = await doStandardPrisma(`ucar`, `findUnique`, {where: {id: data.id}})
+    const number98 = data?.number98
+
+    const {result: prevRecord} = await doStandardPrisma(`ucar`, `findUnique`, {
+      where: {sateiID: data?.sateiID ?? ''},
+    })
     const numberChanged = prevRecord?.number98 !== number98
 
     if (numberChanged && confirm('98番号を更新します。よろしいですか？') === false) {
@@ -75,13 +81,10 @@ const Main = ({close, useGlobalProps, ucar, getAvailable98NumbersReturn, useReco
     }
 
     if (confirm(`データを更新しますか？`)) {
-      const res = await myFormDefaultUpsert({
-        latestFormData: data,
-        dataModelName: `ucar`,
-        columns,
-        extraFormState: {},
-        additional: {},
-        formData,
+      const res = await doStandardPrisma('ucar', 'upsert', {
+        where: {sateiID: data?.sateiID ?? ''},
+        create: data,
+        update: data,
       })
 
       //98番号が変更の場合
@@ -94,7 +97,7 @@ const Main = ({close, useGlobalProps, ucar, getAvailable98NumbersReturn, useReco
           await doStandardPrisma('number98IssueHistory', 'deleteMany', {where: {}})
         } else {
           // それ以外は履歴を作成
-          await doStandardPrisma('number98IssueHistory', 'create', {data: {number: number98}})
+          await doStandardPrisma('number98IssueHistory', 'create', {data: {number: number98 ?? ''}})
         }
       }
 

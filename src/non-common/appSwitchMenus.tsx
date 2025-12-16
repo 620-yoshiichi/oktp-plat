@@ -7,7 +7,7 @@ export const getAppSwitchMenus = (scopes: any) => {
     children: [
       {tabId: 'newCar', label: '納期CS'},
       {tabId: 'QRBP', label: 'BP'},
-      isDev ? {tabId: 'ucar', label: 'QRシステム', exclusiveTo: scopes.admin} : undefined,
+      {tabId: 'ucar', label: 'QRシステム', exclusiveTo: scopes.admin},
     ].filter(Boolean),
     ROOT: [],
   } as any
