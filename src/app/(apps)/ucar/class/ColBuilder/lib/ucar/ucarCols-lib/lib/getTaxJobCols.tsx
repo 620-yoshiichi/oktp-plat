@@ -11,7 +11,7 @@ import Coloring from '@cm/lib/methods/Coloring'
 import InlineTaxCalucrator from '@app/(apps)/ucar/class/ColBuilder/lib/ucar/ucarCols-lib/InlineTaxCalucrator'
 import {Button} from '@cm/components/styles/common-components/Button'
 
-export const getTaxJobCols = () => {
+export const getTaxJobCols = ({isChukoshaGroup}: {isChukoshaGroup?: boolean}) => {
   const cols1: colType[] = new Fields([
     {id: `taxCustomerName`, label: `お客様`, form: {}},
     {id: `annualTax`, label: `年間支払額`, type: `number`, form: {}},
@@ -32,7 +32,7 @@ export const getTaxJobCols = () => {
       },
     },
   ])
-    .showSummaryInTd({wrapperWidthPx: 180, editable: true})
+    .showSummaryInTd({wrapperWidthPx: 180, editable: isChukoshaGroup})
     .buildFormGroup({groupName: `返金お客様情報`}).plain
 
   const cols2: colType[] = new Fields([
@@ -43,7 +43,7 @@ export const getTaxJobCols = () => {
     {id: `accountNumber`, label: `口座番号`, form: {descriptionNoteAfter: `ゆうちょは「通帳番号」を記入`}},
     {id: `accountNameKana`, label: `名義（カナ）`, form: {}},
   ])
-    .showSummaryInTd({wrapperWidthPx: 200, editable: true})
+    .showSummaryInTd({wrapperWidthPx: 200, editable: isChukoshaGroup})
     .buildFormGroup({groupName: `口座情報`}).plain
 
   const cols3: colType[] = new Fields([
@@ -54,7 +54,7 @@ export const getTaxJobCols = () => {
       {id: `petPrice`, label: `PET金額`, type: `number`, form: {}},
       {id: `prefCount`, label: `県月数`, type: `number`, form: {}},
       {id: `prefPrice`, label: `県金額`, type: `number`, form: {}},
-    ]).showSummaryInTd({wrapperWidthPx: 200, editable: true}).plain,
+    ]).showSummaryInTd({wrapperWidthPx: 200, editable: isChukoshaGroup}).plain,
   ]).buildFormGroup({groupName: `税金額`}).plain
 
   const cols4: colType[] = new Fields([
@@ -93,7 +93,7 @@ export const getTaxJobCols = () => {
       type: `date`,
     },
   ])
-    .showSummaryInTd({wrapperWidthPx: 200, editable: true})
+    .showSummaryInTd({wrapperWidthPx: 200, editable: isChukoshaGroup})
     .buildFormGroup({groupName: `自動車税その他`}).plain
 
   const colArr = {cols1, cols2, cols3, cols4}

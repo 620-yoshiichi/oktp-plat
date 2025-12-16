@@ -8,6 +8,7 @@ import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 import {basePath, cl} from '@cm/lib/methods/common'
 import React from 'react'
 import {fetchAlt} from '@cm/lib/http/fetch-client'
+import {toast} from 'react-toastify'
 
 export default function Page() {
   const {toggleLoad} = useGlobal()
@@ -131,8 +132,13 @@ export default function Page() {
                       className={`t-link w-[100px] text-2xl`}
                       onClick={async () => {
                         const res = await toggleLoad(async () => await action?.onClick?.main())
-
                         console.info(res)
+                        if (res instanceof Error || res?.error || res?.success === false) {
+                          const errorMessage = res?.message || res?.error?.message || res?.error || '不明なエラーが発生しました'
+                          toast.error(`${action.label}の実行中にエラーが発生しました: ${errorMessage}`)
+                        } else if (res?.success === true) {
+                          toast.success(`${action.label}が完了しました`)
+                        }
                       }}
                     >
                       実行

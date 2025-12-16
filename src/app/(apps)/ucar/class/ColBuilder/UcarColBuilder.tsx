@@ -1,6 +1,6 @@
 'use client'
 import {columnGetterType} from '@cm/types/types'
-import { colType} from '@cm/types/col-types'
+import {colType} from '@cm/types/col-types'
 import {Fields} from '@cm/class/Fields/Fields'
 
 import {IsActiveDisplay} from '@app/(apps)/ucar/(lib)/isActiveDisplays'
@@ -32,6 +32,7 @@ export const UCAR_TABLE_ROW_HEIGHT = 120
 
 export const ucarColBuilder = (props: columnGetterType) => {
   const {useGlobalProps} = props
+  const {isChukoshaGroup} = useGlobalProps.accessScopes().getUcarProps()
   const GMF_UcrDetailUpdater = useUcarDetailUpdatorGMF()
   const {UseRecordsReturn, getAvailable98NumbersReturn, currentNumber98} = props.ColBuilderExtraProps ?? {}
 
@@ -140,7 +141,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
     {
       id: 'destinationStoreId',
       label: '配布店舗',
-      td: {editable: {}},
+
       format: (value, row) => {
         return row.DestinationStore?.name
       },
@@ -347,7 +348,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
     ...new Fields([
       ...SETTING_COLS.buildFormGroup({groupName: `基本情報`}).plain,
       ...SHIIRE_G_SETTING_COLS.buildFormGroup({groupName: `仕入G設定情報`}).plain,
-    ]).showSummaryInTd({wrapperWidthPx: 200, editable: true}).plain,
+    ]).showSummaryInTd({wrapperWidthPx: 200, editable: isChukoshaGroup}).plain,
 
     ...PAPER_WORK_ALERT_COLS.plain,
 
@@ -363,7 +364,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
   // })
 
   if (IsActiveDisplay(query, `自動車税`)) {
-    const taxCols = getTaxJobCols()
+    const taxCols = getTaxJobCols({isChukoshaGroup})
 
     base.push(...taxCols.cols1)
     base.push(...taxCols.cols2)
@@ -374,6 +375,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
   if (IsActiveDisplay(query, `下取書類`)) {
     const cols_paperManagement = getPaperManagementCols({
       UseRecordsReturn,
+      isChukoshaGroup,
     })
     base.push(...cols_paperManagement.acceptProcessCols.plain)
     base.push(...cols_paperManagement.processeFinishedCols.plain)

@@ -10,6 +10,7 @@ import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
 import {fetchAlt} from '@cm/lib/http/fetch-client'
 
 import {basePath, cl} from '@cm/lib/methods/common'
+import {toast} from 'react-toastify'
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 import React from 'react'
 import useSWR from 'swr'
@@ -26,6 +27,7 @@ const getActions = (offset: number, limit: number) => [
     onClick: async () => {
       const res = await fetchAlt(`${basePath}/ucar/api/cron/oldCars/deleteAndCreate`, {}, {method: `GET`})
       console.debug(res)
+      return res
     },
   },
   {
@@ -37,6 +39,7 @@ const getActions = (offset: number, limit: number) => [
     onClick: async () => {
       const res = await fetchAlt(`${basePath}/ucar/api/cron/zaiko/deleteAndCreate`, {}, {method: `GET`})
       console.debug(res)
+      return res
     },
   },
   {
@@ -53,8 +56,8 @@ const getActions = (offset: number, limit: number) => [
 
     onClick: async () => {
       const res = await fetchAlt(`${basePath}/ucar/api/cron/aisatei/deleteAndCreate`, {}, {method: `GET`})
-
       console.debug(res)
+      return res
     },
   },
   {
@@ -71,8 +74,8 @@ const getActions = (offset: number, limit: number) => [
 
     onClick: async () => {
       const res = await fetchAlt(`${basePath}/ucar/api/cron/upass/deleteAndCreate`, {}, {method: `GET`})
-
       console.debug(res)
+      return res
     },
   },
   {
@@ -83,8 +86,8 @@ const getActions = (offset: number, limit: number) => [
     tableName: 'juchuShitadoriDb',
     onClick: async () => {
       const res = await fetchAlt(`${basePath}/ucar/api/cron/juchuShitadoriDb/deleteAndCreate`, {}, {method: `GET`})
-
       console.debug(res)
+      return res
     },
   },
 
@@ -98,6 +101,7 @@ const getActions = (offset: number, limit: number) => [
     onClick: async () => {
       const res = await fetchAlt(`${basePath}/ucar/api/seeder/num98`, {})
       console.debug(res)
+      return res
     },
   },
 
@@ -114,8 +118,8 @@ const getActions = (offset: number, limit: number) => [
     },
     onClick: async () => {
       const res = await fetchAlt(`${basePath}/ucar/api/seeder/ucarProcess/deleteAndCreate`, {}, {method: `GET`})
-
       console.debug(res)
+      return res
     },
   },
 
@@ -138,6 +142,7 @@ const getActions = (offset: number, limit: number) => [
     onClick: async () => {
       const res = await fetchAlt(`${basePath}/ucar/api/seeder/qrPaper`, {})
       console.debug(res)
+      return res
     },
   },
 
@@ -155,6 +160,7 @@ const getActions = (offset: number, limit: number) => [
     onClick: async () => {
       const res = await fetchAlt(`${basePath}/ucar/api/seeder/tenchoShoruiSakusei`, {})
       console.debug(res)
+      return res
     },
   },
   {
@@ -171,6 +177,7 @@ const getActions = (offset: number, limit: number) => [
     onClick: async () => {
       const res = await fetchAlt(`${basePath}/ucar/api/seeder/shiwake`, {})
       console.debug(res)
+      return res
     },
   },
   {
@@ -187,6 +194,7 @@ const getActions = (offset: number, limit: number) => [
     onClick: async () => {
       const res = await fetchAlt(`${basePath}/ucar/api/seeder/tax`, {})
       console.debug(res)
+      return res
     },
   },
 
@@ -199,6 +207,7 @@ const getActions = (offset: number, limit: number) => [
     onClick: async () => {
       const res = await fetchAlt(`${basePath}/ucar/api/seeder/garage`, {})
       console.debug(res)
+      return res
     },
   },
 
@@ -216,6 +225,7 @@ const getActions = (offset: number, limit: number) => [
     onClick: async () => {
       const res = await fetchAlt(`${basePath}/ucar/api/seeder/linkOldCars`, {})
       console.debug(res)
+      return res
     },
   },
 ]
@@ -291,7 +301,13 @@ export default function Page() {
                     <button
                       className={`t-link w-[100px] text-2xl`}
                       onClick={async () => {
-                        toggleLoad(async () => await action?.onClick?.())
+                        const res = await toggleLoad(async () => await action?.onClick?.())
+                        if (res instanceof Error || res?.error || res?.success === false) {
+                          const errorMessage = res?.message || res?.error?.message || res?.error || '不明なエラーが発生しました'
+                          toast.error(`${action.label}の実行中にエラーが発生しました: ${errorMessage}`)
+                        } else if (res?.success === true) {
+                          toast.success(`${action.label}が完了しました`)
+                        }
                       }}
                     >
                       実行

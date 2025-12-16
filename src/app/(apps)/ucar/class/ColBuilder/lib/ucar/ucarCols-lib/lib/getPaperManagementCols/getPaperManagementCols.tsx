@@ -6,7 +6,13 @@ import Coloring from '@cm/lib/methods/Coloring'
 import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
 import {FubiActionTrigger} from '@app/(apps)/ucar/(pages)/paperProcess/Summay/UcarAlertButtonSummay'
 
-export const getPaperManagementCols = ({UseRecordsReturn}) => {
+export const getPaperManagementCols = ({
+  UseRecordsReturn,
+  isChukoshaGroup,
+}: {
+  UseRecordsReturn: any
+  isChukoshaGroup?: boolean
+}) => {
   const acceptProcessCols = new Fields([
     ...new Fields([
       {id: 'arrivedAt', label: '本部着', type: `date`, form: {}},
@@ -68,7 +74,7 @@ export const getPaperManagementCols = ({UseRecordsReturn}) => {
       },
     ]).buildFormGroup({groupName: `抹消・名義変更`}).plain,
   ])
-    .showSummaryInTd({wrapperWidthPx: 200, editable: true})
+    .showSummaryInTd({wrapperWidthPx: 200, editable: isChukoshaGroup})
     .buildFormGroup({groupName: `書類基本情報`})
 
   const processeFinishedCols = new Fields([
@@ -167,7 +173,7 @@ export const getPaperManagementCols = ({UseRecordsReturn}) => {
     ]).buildFormGroup({groupName: `印鑑証明/車検`}).plain,
   ]).showSummaryInTd({
     wrapperWidthPx: 200,
-    editable: true,
+    editable: isChukoshaGroup,
   })
 
   const colArr = {acceptProcessCols, processeFinishedCols}
