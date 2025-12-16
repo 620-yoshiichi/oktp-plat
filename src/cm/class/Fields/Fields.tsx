@@ -102,7 +102,9 @@ export class Fields {
             const pseudoId = props.convertColId?.[col.id] ?? col.id
             let colValue: React.ReactNode = ''
 
-            if (col.format) {
+            if (col.type === 'boolean') {
+              colValue = <input type="checkbox" checked={!!row[col.id]} onChange={e => undefined} />
+            } else if (col.format) {
               colValue = col.format(value, row, col)
             } else if (col.type === 'price') {
               colValue = NumHandler.toPrice(row[col.id])

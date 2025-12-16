@@ -15,9 +15,42 @@ app.prepare().then(() => {
   // HTTPサーバーを作成
   const httpServer = createServer(async (req, res) => {
     try {
+      // Rangeヘッダーの検証と修正
+      // Next.jsの内部で「not-found」がRangeヘッダーとして誤って解釈されるのを防ぐ
+      if (req.headers.range) {
+        const rangeHeader = req.headers.range
+        // Rangeヘッダーが「not-found」などの不正な値の場合、削除
+        if (typeof rangeHeader === 'string' && (rangeHeader === 'not-found' || !rangeHeader.match(/^bytes=\d+-\d*$/))) {
+          delete req.headers.range
+        }
+      }
+
       const parsedUrl = parse(req.url, true)
+
+      // not-foundページへのリクエストの場合、Rangeヘッダーを確実に削除
+      if (parsedUrl.pathname && parsedUrl.pathname.includes('not-found')) {
+        delete req.headers.range
+      }
+
       await handle(req, res, parsedUrl)
     } catch (err) {
+      // 「Unable to parse range」エラーの場合、特別な処理
+      if (err.message && err.message.includes('Unable to parse range')) {
+        console.error('Range parsing error detected:', {
+          url: req.url,
+          rangeHeader: req.headers.range,
+          error: err.message,
+        })
+        // Rangeヘッダーを削除して再試行
+        delete req.headers.range
+        try {
+          const parsedUrl = parse(req.url, true)
+          await handle(req, res, parsedUrl)
+          return
+        } catch (retryErr) {
+          console.error('Retry failed:', retryErr)
+        }
+      }
       console.error('Error occurred handling', req.url, err)
       res.statusCode = 500
       res.end('internal server error')

@@ -63,9 +63,9 @@ export const getTaxJobCols = () => {
       label: '返金必要有無 ',
       type: `boolean`,
       form: {},
-      format: (value, row) => {
-        return row.henkinRequired ? '○' : '×'
-      },
+      // format: (value, row) => {
+      //   return row.henkinRequired ? '○' : '×'
+      // },
     },
     {
       id: `exception`,

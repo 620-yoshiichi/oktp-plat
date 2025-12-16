@@ -72,7 +72,8 @@ export async function middleware(req: NextRequest) {
   if (isTargetPath) {
     const match = isTargetPath.paths.length > 0 && isTargetPath.paths.find(d => new RegExp(d.matcher).test(pathname))
     if (match && !match.isValid(session)) {
-      return NextResponse.redirect(match.redirect(origin, isTargetPath.rootPath))
+      const redirectUrl = match.redirect(origin, isTargetPath.rootPath)
+      return NextResponse.redirect(redirectUrl)
     }
   }
 
