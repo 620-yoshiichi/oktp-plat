@@ -1,6 +1,5 @@
 import {Fields} from '@cm/class/Fields/Fields'
 
-import {formatDate} from '@cm/class/Days/date-utils/formatters'
 import {R_Stack} from '@cm/components/styles/common-components/common-components'
 import InlineGarageEditor from '../../InlineGarageEditor'
 import Coloring from '@cm/lib/methods/Coloring'
@@ -15,31 +14,31 @@ export const getPaperManagementCols = ({UseRecordsReturn}) => {
       {
         id: 'purchaseType',
         label: '下/買区分',
-        forSelect: {optionsOrOptionFetcher: UCAR_CODE.PURCHASE_TYPES.array},
-
-        format: (value, row) => {
-          const purchaseTypeOption = UCAR_CODE.PURCHASE_TYPES.byCode(row['purchaseType'])
-          const processedAsOption = UCAR_CODE.PROCESSED_AS.byCode(row['processedAs'])
-          return (
-            <R_Stack className={`text-xs gap-0.5 flex-nowrap  justify-between `}>
-              <Coloring mode="text" className={`text-xs p-0.5`} color={purchaseTypeOption?.color}>
-                {purchaseTypeOption?.label}
-              </Coloring>
-              <Coloring mode="text" className={`text-xs p-0.5`} color={processedAsOption?.color}>
-                {processedAsOption?.label}
-              </Coloring>
-            </R_Stack>
-          )
+        forSelect: {
+          codeMaster: UCAR_CODE.PURCHASE_TYPES,
         },
+
+        // format: (value, row) => {
+        //   const purchaseTypeOption = UCAR_CODE.PURCHASE_TYPES.byCode(row['purchaseType'])
+        //   const processedAsOption = UCAR_CODE.PROCESSED_AS.byCode(row['processedAs'])
+        //   return (
+        //     <R_Stack className={`text-xs gap-0.5 flex-nowrap  justify-between `}>
+        //       <Coloring mode="text" className={`text-xs p-0.5`} color={purchaseTypeOption?.color}>
+        //         {purchaseTypeOption?.label}
+        //       </Coloring>
+        //       <Coloring mode="text" className={`text-xs p-0.5`} color={processedAsOption?.color}>
+        //         {processedAsOption?.label}
+        //       </Coloring>
+        //     </R_Stack>
+        //   )
+        // },
       },
       {
         id: 'processedAs',
         label: '名抹区分',
         forSelect: {
-          optionsOrOptionFetcher: UCAR_CODE.PROCESSED_AS.array,
+          codeMaster: UCAR_CODE.PROCESSED_AS,
         },
-
-        td: {hidden: true},
       },
 
       {

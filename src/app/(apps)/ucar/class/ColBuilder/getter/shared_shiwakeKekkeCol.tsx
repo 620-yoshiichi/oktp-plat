@@ -8,15 +8,15 @@ export const __shared_get_shiwakeKekkeCol = (): colType => ({
   label: '仕分結果',
   form: {},
   td: {editable: {}},
-  format: (value, row) => {
-    const codeItem = UCAR_CODE.SHIWAKE.byCode(row.destination)
-    return (
-      <Coloring mode="text" color={codeItem?.color}>
-        {codeItem?.label}
-      </Coloring>
-    )
-  },
+  // format: (value, row) => {
+  //   const codeItem = UCAR_CODE.SHIWAKE.byCode(row.destination)
+  //   return (
+  //     <Coloring mode="text" color={codeItem?.color}>
+  //       {codeItem?.label}
+  //     </Coloring>
+  //   )
+  // },
   forSelect: {
-    optionsOrOptionFetcher: UCAR_CODE.SHIWAKE.array,
+    codeMaster: UCAR_CODE.SHIWAKE,
   },
 })

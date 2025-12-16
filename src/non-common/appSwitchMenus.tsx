@@ -1,4 +1,3 @@
-import {isDev} from '@cm/lib/methods/common'
 
 export const getAppSwitchMenus = (scopes: any) => {
   return {

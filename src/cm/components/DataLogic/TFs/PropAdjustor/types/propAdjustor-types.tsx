@@ -38,7 +38,6 @@ export type ClientPropsType = {
   }
 
 export interface ClientPropsType2 extends ClientPropsType {
-  UseRecordsReturn?: UseRecordsReturn
   useGlobalProps: useGlobalPropType
   columns: any
   formData: any

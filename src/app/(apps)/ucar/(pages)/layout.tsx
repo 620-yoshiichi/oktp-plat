@@ -3,7 +3,7 @@ import {Metadata} from 'next'
 import {ModelBuilder} from '@app/(apps)/ucar/class/ModelBuilder'
 import Admin from '@cm/components/layout/Admin/Admin'
 
-const AppName = 'Ucar QR'
+const AppName = 'QR SYSTEM'
 export const metadata: Metadata = {title: AppName}
 export default function QRBP_Layout({children}) {
   return (

@@ -36,6 +36,7 @@ type oktpUserTypes = {
   userId?: number
   storeId?: number
   userType?: any
+  isChukoshaGroup?: boolean
   isHQ?: boolean
   isCR?: boolean
   isStoreManager?: boolean
@@ -56,20 +57,25 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
   const {admin, getGlobalUserId} = judgeIsAdmin(session, query)
 
   type UcarScopeType = {
+    carWhere: carWhereType
+    userId?: any
+    storeId?: any
     isUcarMember?: boolean
     isHQ?: boolean
     isStoreManager?: boolean
     isSales?: boolean
     isChukoshaGroup?: boolean
-    carWhere: carWhereType
-    userId?: any
-    storeId?: any
   }
 
   const getNewCarProps = () => {
     const userId = !admin ? session?.id : Number(query?.[globalIds.globalUserId] ?? session?.id ?? 0)
     const storeId = !admin ? session?.storeId : Number(query?.[globalIds.globalStoreId] ?? session?.storeId ?? 0)
     const userType = !admin ? session?.type : (query?.type ?? session?.type)
+
+    const isChukoshaGroup = !!arr__findCommonValues(
+      ['中古車G'],
+      (roles ?? []).map(d => d.name)
+    )
 
     const isHQ = !!arr__findCommonValues(
       [`需給担当者`, `本部管理者`, `新車登録担当`],
@@ -101,7 +107,7 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
         userId: undefined,
       }
 
-      if (isHQ) {
+      if (isHQ || isChukoshaGroup) {
         newCarWhere = {}
         if (query?.[globalIds.globalStoreId]) {
           newCarWhere[`storeId`] = Number(query?.[globalIds.globalStoreId])
@@ -138,6 +144,7 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
       isCR,
       isTorokuTanto,
       isStoreManager,
+      isChukoshaGroup,
       isSales,
     }
 
@@ -155,12 +162,7 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
     return {...result}
   }
   const getUcarProps = () => {
-    const {isHQ, isStoreManager, isSales, newCarWhere, userId, storeId} = getNewCarProps()
-
-    const isChukoshaGroup = !!arr__findCommonValues(
-      ['中古車G'],
-      (roles ?? []).map(d => d.name)
-    )
+    const {isHQ, isStoreManager, isSales, newCarWhere, userId, storeId, isChukoshaGroup} = getNewCarProps()
 
     const ucarMember = {
       isChukoshaGroup,

@@ -8,15 +8,16 @@ import {toast} from 'react-toastify'
 
 import {Alert} from '@cm/components/styles/common-components/Alert'
 import {getAvailable98NumbersReturn} from '@app/(apps)/ucar/(lib)/num98/getAvailable98Numbers'
-import Link from 'next/link'
 import {T_LINK} from '@cm/components/styles/common-components/links'
 import {Button} from '@cm/components/styles/common-components/Button'
 import useUcarDetailUpdatorGMF from '@app/(apps)/ucar/(parts)/templateHooks/useUcarDetailUpdatorGMF'
+import {UseRecordsReturn} from '@cm/components/DataLogic/TFs/PropAdjustor/hooks/useRecords/useRecords'
 
 export const UcarTop = ({
   useRecordsReturn,
   getAvailable98NumbersReturn,
 }: {
+  useRecordsReturn?: UseRecordsReturn
   getAvailable98NumbersReturn: getAvailable98NumbersReturn
 }) => {
   const useUcarDetailUpdatorGMFReturn = useUcarDetailUpdatorGMF()

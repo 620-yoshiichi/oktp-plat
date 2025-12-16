@@ -59,9 +59,7 @@ export class UcarCL {
 
   static getUpassFaimilyTree = async ({sateiID}) => {
     const {result: upass} = await doStandardPrisma('uPASS', 'findUnique', {
-      where: {
-        sateiID: sateiID,
-      },
+      where: {sateiID: sateiID},
     })
 
     const {result: myTree} = await doStandardPrisma('upassFamilyTree', 'findUnique', {

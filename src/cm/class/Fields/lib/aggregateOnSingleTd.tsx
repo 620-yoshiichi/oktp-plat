@@ -14,7 +14,6 @@ import {CssString} from 'src/cm/components/styles/cssString'
 import {twMerge} from 'tailwind-merge'
 import {getColMinWidth} from '@cm/class/Fields/lib/transposeColumns'
 import {cn} from '@shadcn/lib/utils'
-import {UseRecordsReturn} from '@cm/components/DataLogic/TFs/PropAdjustor/hooks/useRecords/useRecords'
 const {table, border} = CssString
 const defaultStyle = {
   width: '100%',

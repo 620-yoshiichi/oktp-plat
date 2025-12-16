@@ -1,6 +1,6 @@
 'use client'
 import {columnGetterType} from '@cm/types/types'
-import {colFormProps, colType} from '@cm/types/col-types'
+import { colType} from '@cm/types/col-types'
 import {Fields} from '@cm/class/Fields/Fields'
 
 import {IsActiveDisplay} from '@app/(apps)/ucar/(lib)/isActiveDisplays'
@@ -27,7 +27,6 @@ import {getDMMFModel} from '@cm/lib/methods/prisma-schema'
 import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
 import ShadModal from '@cm/shadcn/ui/Organisms/ShadModal'
 import {defaultRegister} from '@cm/class/builders/ColBuilderVariables'
-import {register} from 'module'
 
 export const UCAR_TABLE_ROW_HEIGHT = 120
 
@@ -84,7 +83,6 @@ export const ucarColBuilder = (props: columnGetterType) => {
       label: '98番号',
       format: (value, row) => row.number98,
       form: {},
-
       forSelect: {
         optionsOrOptionFetcher: [
           currentNumber98
@@ -143,7 +141,9 @@ export const ucarColBuilder = (props: columnGetterType) => {
       id: 'destinationStoreId',
       label: '配布店舗',
       td: {editable: {}},
-      format: (value, row) => row.DestinationStore?.name,
+      format: (value, row) => {
+        return row.DestinationStore?.name
+      },
       form: {},
       forSelect: {
         config: {
