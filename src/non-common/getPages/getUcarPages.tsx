@@ -16,10 +16,10 @@ export const getUcarPages = (props: PageGetterType) => {
       tabId: 'ucar',
       label: 'Ucar業務',
 
-      exclusiveTo: isUcarMember,
+      // exclusiveTo: isUcarMember,
       ROOT: [rootPath],
       children: [
-        {tabId: 'createQr', label: 'QR発行', ROOT: [rootPath], exclusiveTo: isUcarMember},
+        {tabId: 'createQr', label: 'QR発行', ROOT: [rootPath]},
         {
           tabId: 'ucar',
           label: '車両一覧',
@@ -38,7 +38,7 @@ export const getUcarPages = (props: PageGetterType) => {
     {
       tabId: '',
       label: '中古車G',
-      exclusiveTo: isHQ || isChukoshaGroup,
+
       ROOT: [rootPath],
       children: [
         {
@@ -64,11 +64,12 @@ export const getUcarPages = (props: PageGetterType) => {
           ROOT: [rootPath],
         },
       ],
+      // exclusiveTo: isHQ || isChukoshaGroup,
     },
     {
       tabId: '',
       label: '本部',
-      exclusiveTo: isHQ,
+      // exclusiveTo: isHQ,
       ROOT: [rootPath],
       children: [
         {tabId: 'kouteiKanri', label: '工程管理', ROOT: [rootPath]},
@@ -79,7 +80,7 @@ export const getUcarPages = (props: PageGetterType) => {
     {
       tabId: '',
       label: '設定',
-      exclusiveTo: scopes.admin,
+      // exclusiveTo: scopes.admin,
       ROOT: [rootPath],
       children: [
         {tabId: 'store', label: '拠点', link: {}},

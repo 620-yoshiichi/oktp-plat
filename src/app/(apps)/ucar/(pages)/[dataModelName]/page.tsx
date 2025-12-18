@@ -80,7 +80,7 @@ const parameters = async ({params, query, session, scopes}) => {
                 AND: [
                   //
                   carWhere,
-                  {createdAt: {gte: UCAR_CONSTANTS.commonQuery.THRESHOLD_DATE}},
+                  // {createdAt: {gte: UCAR_CONSTANTS.commonQuery.THRESHOLD_DATE}},
                 ],
               },
             },

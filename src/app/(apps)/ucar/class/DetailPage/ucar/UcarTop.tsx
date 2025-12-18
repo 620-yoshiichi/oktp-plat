@@ -63,7 +63,9 @@ export const UcarTop = ({
           <EditModeSelector />
           <T_LINK
             target="_blank"
-            href={'https://docs.google.com/spreadsheets/d/1nzwUOAGbEx2Ye9X2SyLKzM8hehcbE1uBfsVwOubveQs/edit?gid=0#gid=0'}
+            href={
+              'https://docs.google.com/spreadsheets/d/1a_4Rh4lbqimejsClcm2keXiqzWUe5qFAiX5LfUlW6lI/edit?gid=363856092#gid=363856092'
+            }
           >
             不要査定ID登録
           </T_LINK>

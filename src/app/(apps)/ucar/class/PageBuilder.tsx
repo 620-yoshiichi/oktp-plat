@@ -70,10 +70,10 @@ export class PageBuilder {
   static ucar = {
     top: () => (
       <div>
-        本システムでは
+        {/* 本システムでは
         <TextRed>{formatDate(UCAR_CONSTANTS.commonQuery.THRESHOLD_DATE)}</TextRed>
         以降に作成<TextRed>（QRシート発行 または 中古車Gでの受付）</TextRed>
-        がされたもののみが表示されます。
+        がされたもののみが表示されます。 */}
       </div>
     ),
   }
