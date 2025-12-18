@@ -14,16 +14,14 @@ import {isDev} from '@cm/lib/methods/common'
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 import {UcarCL} from '@app/(apps)/ucar/class/UcarCL'
 
-export const useDataSearchForm = () => {
-  const {addQuery, query} = useGlobal()
-
+export const useDataSearchForm = ({sateiID, setsateiID}: {sateiID: string; setsateiID: (sateiID: string) => void}) => {
   const columns = Fields.transposeColumns([
     {
       id: 'sateiID',
       label: '査定ID',
       type: 'text',
       form: {
-        defaultValue: query.sateiID ?? (isDev ? UcarCL.testSateiID : ''),
+        defaultValue: sateiID ?? (isDev ? UcarCL.testSateiID : ''),
       },
     },
   ])
@@ -45,7 +43,8 @@ export const useDataSearchForm = () => {
             })
 
             if (foundInDb) {
-              addQuery({sateiID: data.sateiID})
+              setsateiID(data.sateiID)
+
               return {foundInDb}
             } else {
               const {result: foundInUpass} = await doStandardPrisma('uPASS', 'findUnique', {
@@ -53,18 +52,18 @@ export const useDataSearchForm = () => {
               })
 
               if (foundInUpass) {
-                addQuery({sateiID: data.sateiID})
+                setsateiID(data.sateiID)
                 return {foundInUpass}
               } else {
                 // UPASSにデータがない場合、Ucarデータは作成せず、入力フォームで入力してもらう
-                addQuery({sateiID: data.sateiID})
+                setsateiID(data.sateiID)
                 return {foundInUpass: null}
               }
 
               // return {rows}
             }
           }}
-          {...{ControlOptions: {ControlStyle: {width: 140}}}}
+          {...{ControlOptions: {ControlStyle: {width: 200}}}}
         >
           <Button>検索</Button>
         </BasicForm>

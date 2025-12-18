@@ -22,8 +22,9 @@ export const sateiTableCompartionCols: sateiTableCompartionCol[] = [
     bqKeys: {proto: `brand_name`, upass: 'brandName'},
     type: `string`,
   },
+  {label: '通称型式', bqKeys: {proto: 'Common_name_model', upass: 'commonType'}, type: 'string'},
   {
-    label: `通称型式`,
+    label: `型式`,
     bqKeys: {proto: `Model`, upass: 'type'},
     type: `string`,
   },
@@ -35,6 +36,11 @@ export const sateiTableCompartionCols: sateiTableCompartionCol[] = [
   {
     label: `車台番号`,
     bqKeys: {proto: `Barracks`, upass: 'chassisNumber'},
+    type: `string`,
+  },
+  {
+    label: `Mission_name`,
+    bqKeys: {proto: `Mission_name`, upass: 'transmissionType'},
     type: `string`,
   },
   {

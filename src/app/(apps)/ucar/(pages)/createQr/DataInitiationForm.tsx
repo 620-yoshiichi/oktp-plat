@@ -28,7 +28,6 @@ export const DataInitiationForm = ({stores, ucar, toggleLoad, session, sateiID_I
 
   // UPASSDBにデータがない場合の追加フィールド
   const tmpColumns = hasUpassData ? [] : UCAR_CONSTANTS.columns.getTmpCarInfoCol()
-
   const allColumns = new Fields([...baseColumns, ...tmpColumns]).transposeColumns()
 
   const {BasicForm, latestFormData} = useBasicFormProps({
@@ -44,6 +43,7 @@ export const DataInitiationForm = ({stores, ucar, toggleLoad, session, sateiID_I
       ...data,
     }
 
+    return
     await toggleLoad(async () => {
       const res = await doStandardPrisma('ucar', 'upsert', {
         where: {
