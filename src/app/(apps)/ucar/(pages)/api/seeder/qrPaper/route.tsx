@@ -114,7 +114,7 @@ export const POST = async (req: NextRequest) => {
           inspectionAlternate: inspectionAlternateCode,
 
           //その他
-          customerName,
+          taxCustomerName: customerName || undefined,
           masshoBi: masshoBi ? toIsoDate(masshoBi) : undefined,
           meihenBi: meihenBi ? toIsoDate(meihenBi) : undefined,
           remarksHq,
@@ -177,7 +177,7 @@ export const POST = async (req: NextRequest) => {
               })
             } catch (error) {
               const errorMessage = handlePrismaError(error)
-              console.log('createError', {errorMessage, sateiID})
+              console.log('createError', {errorMessage, sateiID, error})
             }
           }
         }

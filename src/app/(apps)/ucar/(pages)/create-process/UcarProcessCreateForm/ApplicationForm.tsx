@@ -258,8 +258,7 @@ export const ProcessApplicationForm = ({columns, stores, UcarData, useGlobalProp
     <div>
       <C_Stack className={`mx-auto w-fit gap-10`}>
         {/* ステップ2: プロセス登録 */}
-
-        {/* ステップ1: 前提条件の入力 */}
+        {/* ステップ1: 前提条件の入力
         {needsCustomerInfo ||
           (needsDestination && (
             <Card>
@@ -275,8 +274,7 @@ export const ProcessApplicationForm = ({columns, stores, UcarData, useGlobalProp
                 </FitMargin>
               )}
             </Card>
-          ))}
-
+          ))} */}
         {!prerequisitesMet && <PrerequisitesWarning needsCustomerInfo={needsCustomerInfo} needsDestination={needsDestination} />}
         {(needsCustomerInfo || needsDestination) && (
           <Card>

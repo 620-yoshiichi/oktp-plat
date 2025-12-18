@@ -46,7 +46,7 @@ export const GET = async (req: NextRequest) => {
   })
 
   await processBatchWithRetry({
-    options: {batchSize: 2000, retries: 1},
+    options: {batchSize: 1000, retries: 1},
     soruceList: body,
     mainProcess: async (batch: ucarProcessType[]) => {
       // データをクレンジング

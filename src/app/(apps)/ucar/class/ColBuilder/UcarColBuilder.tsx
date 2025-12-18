@@ -10,12 +10,12 @@ import ProcessSummary from '@app/(apps)/ucar/(pages)/paperProcess/Summay/parts/P
 import {absSize, cl, isDev} from '@cm/lib/methods/common'
 import {UcarProcessCl} from '../UcarProcessCl'
 import {getPaperManagementCols} from '@app/(apps)/ucar/class/ColBuilder/lib/ucar/ucarCols-lib/lib/getPaperManagementCols/getPaperManagementCols'
-import {DocumentChartBarIcon, InformationCircleIcon} from '@heroicons/react/20/solid'
+import {DocumentChartBarIcon, DocumentIcon, InformationCircleIcon} from '@heroicons/react/20/solid'
 import {T_LINK} from '@cm/components/styles/common-components/links'
 import {HREF} from '@cm/lib/methods/urls'
 import {TrActionIconClassName} from '@cm/components/DataLogic/TFs/MyTable/hooks/useMyTableLogic'
 import useUcarDetailUpdatorGMF from '@app/(apps)/ucar/(parts)/templateHooks/useUcarDetailUpdatorGMF'
-import {C_Stack, R_Stack} from '@cm/components/styles/common-components/common-components'
+import {Absolute, C_Stack, R_Stack} from '@cm/components/styles/common-components/common-components'
 import {PencilIcon, TrashIcon} from 'lucide-react'
 
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
@@ -72,6 +72,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
       format: (value, row) => row?.User && `${row?.User?.name} (${row?.Store?.name ?? '店舗未設定'})`,
       form: {
         ...defaultRegister,
+        disabled: true,
         defaultValue: session?.id,
       },
       forSelect: {},
@@ -261,8 +262,9 @@ export const ucarColBuilder = (props: columnGetterType) => {
 
         return (
           <C_Stack className={`gap-4 `}>
-            <T_LINK href={href} target={`_blank`} className={` text-inherit no-underline`}>
-              <DocumentChartBarIcon className={cl(TrActionIconClassName, 'h-5 w-5 text-blue-500')} />
+            <T_LINK href={href} target={`_blank`} className={` text-inherit no-underline relative`}>
+              <DocumentIcon className={cl(TrActionIconClassName, 'h-6 w-6 text-yellow-500')} />
+              <Absolute className={`text-[10px] w-[20px] left-[14px]! font-bold text-black`}>QR</Absolute>
             </T_LINK>
 
             <PencilIcon

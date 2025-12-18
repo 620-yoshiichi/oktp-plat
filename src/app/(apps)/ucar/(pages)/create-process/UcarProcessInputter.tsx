@@ -38,32 +38,34 @@ const UcarProcessInputter = (props: {UcarData: ucarData}) => {
         <C_Stack>
           <strong>工程を選択してください</strong>
           <AutoGridContainer className={` gap-4`}>
-            {UcarProcessCl.CODE.array.map(item => {
-              const hasRegistered = UcarData?.UcarProcess?.find(p => p.processCode === item.code)
-              const date = hasRegistered && hasRegistered?.date ? hasRegistered?.date : undefined
-              return (
-                <button
-                  className={hasRegistered ? '' : 'cursor-pointer'}
-                  key={item.code}
-                  onClick={() => {
-                    if (hasRegistered) {
-                      const message = ` [${item.label}]は[${formatDate(date, 'YYYY-MM-DD(ddd) HH:mm')}] に登録されています。`
-                      alert(message)
+            {UcarProcessCl.CODE.array
+              .filter(item => item.list.includes('main'))
+              .map(item => {
+                const hasRegistered = UcarData?.UcarProcess?.find(p => p.processCode === item.code)
+                const date = hasRegistered && hasRegistered?.date ? hasRegistered?.date : undefined
+                return (
+                  <button
+                    className={hasRegistered ? '' : 'cursor-pointer'}
+                    key={item.code}
+                    onClick={() => {
+                      if (hasRegistered) {
+                        const message = ` [${item.label}]は[${formatDate(date, 'YYYY-MM-DD(ddd) HH:mm')}] に登録されています。`
+                        alert(message)
 
-                      return
-                    }
-                    addQuery({processCode: item.code})
-                  }}
-                >
-                  <IconBtn active={!hasRegistered} className={`w-[120px] p-2`} color={item.color}>
-                    <C_Stack className={`gap-0.5 leading-3`}>
-                      {item.label}
-                      <span className={`text-[10px]`}>{formatDate(date, 'YYYY-MM-DD(ddd)') ?? '(未登録)'}</span>
-                    </C_Stack>
-                  </IconBtn>
-                </button>
-              )
-            })}
+                        return
+                      }
+                      addQuery({processCode: item.code})
+                    }}
+                  >
+                    <IconBtn active={!!hasRegistered} className={`w-[120px] p-2`} color={item.color}>
+                      <C_Stack className={`gap-0.5 leading-3`}>
+                        {item.label}
+                        <span className={`text-[10px]`}>{formatDate(date, 'YYYY-MM-DD(ddd)') ?? '(未登録)'}</span>
+                      </C_Stack>
+                    </IconBtn>
+                  </button>
+                )
+              })}
           </AutoGridContainer>
         </C_Stack>
       </FitMargin>
