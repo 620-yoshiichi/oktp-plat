@@ -29,25 +29,92 @@ export const POST = async (req: NextRequest) => {
   const data = spread_res.values ?? []
   const rows = data.map(d => Object.fromEntries(header.map((key, idx) => [key, d[idx]])))
 
-  // 2. マスターデータ取得
-  const garageLocationMasters = await prisma.ucarGarageLocationMaster.findMany()
-  const garageSlotMasters = await prisma.ucarGarageSlotMaster.findMany()
-
   // デフォルトユーザー取得
   const shiireGroupUser = await prisma.user.findFirst({
     where: {code: UCAR_CONSTANTS.shiireGroupUserId},
   })
+
   if (!shiireGroupUser) {
     return NextResponse.json({success: false, message: 'デフォルトユーザーが見つかりません'})
   }
 
-  // 3. garageUsageLocationEn → DB name マッピング
+  // 2. garageUsageLocationEn → DB name マッピング
   const locationNameMap: Record<string, string> = {
     岡山南: '岡山',
     倉敷: '倉敷',
   }
 
-  // 4. AppliedUcarGarageSlot を upsert
+  // 3. 必要な車庫とSlotのリストを作成
+  const requiredGarageSlots = new Set<string>()
+  rows.forEach(row => {
+    const {garageId, garageUsageLocationEn} = row
+    if (!garageId || !garageUsageLocationEn) return
+
+    const locationName = locationNameMap[garageUsageLocationEn] || garageUsageLocationEn
+    const garageNumber = Number(garageId)
+    if (isNaN(garageNumber)) return
+
+    // locationNameとgarageNumberの組み合わせをキーとして保存
+    requiredGarageSlots.add(`${locationName}:${garageNumber}`)
+  })
+
+  // 4. 必要なLocationMasterとSlotMasterを確認・作成
+  const garageLocationMasters = await prisma.ucarGarageLocationMaster.findMany()
+  const garageSlotMasters = await prisma.ucarGarageSlotMaster.findMany()
+
+  const locationMasterMap = new Map<string, number>()
+  const slotMasterMap = new Map<string, number>()
+
+  // LocationMasterの確認・作成
+  for (const slotKey of requiredGarageSlots) {
+    const [locationName] = slotKey.split(':')
+
+    if (!locationMasterMap.has(locationName)) {
+      let locationMaster = garageLocationMasters.find(l => l.name === locationName)
+
+      if (!locationMaster) {
+        // LocationMasterが存在しない場合は作成
+        locationMaster = await prisma.ucarGarageLocationMaster.create({
+          data: {
+            name: locationName,
+            active: true,
+            sortOrder: 0,
+          },
+        })
+      }
+
+      locationMasterMap.set(locationName, locationMaster.id)
+    }
+  }
+
+  // SlotMasterの確認・作成
+  for (const slotKey of requiredGarageSlots) {
+    const [locationName, garageNumberStr] = slotKey.split(':')
+    const garageNumber = Number(garageNumberStr)
+    const locationMasterId = locationMasterMap.get(locationName)!
+
+    if (!slotMasterMap.has(slotKey)) {
+      let slotMaster = garageSlotMasters.find(
+        s => s.garageNumber === garageNumber && s.ucarGarageLocationMasterId === locationMasterId
+      )
+
+      if (!slotMaster) {
+        // SlotMasterが存在しない場合は作成
+        slotMaster = await prisma.ucarGarageSlotMaster.create({
+          data: {
+            garageNumber,
+            ucarGarageLocationMasterId: locationMasterId,
+            active: true,
+            sortOrder: 0,
+          },
+        })
+      }
+
+      slotMasterMap.set(slotKey, slotMaster.id)
+    }
+  }
+
+  // 5. AppliedUcarGarageSlot を upsert
   let ucarCreatedCount = 0
   const results = await Promise.all(
     rows.map(async row => {
@@ -57,14 +124,13 @@ export const POST = async (req: NextRequest) => {
 
       // location マッピング
       const locationName = locationNameMap[garageUsageLocationEn] || garageUsageLocationEn
-      const locationMaster = garageLocationMasters.find(l => l.name === locationName)
-      if (!locationMaster) return null
+      const garageNumber = Number(garageId)
+      if (isNaN(garageNumber)) return null
 
-      // garageSlotMaster 検索
-      const slotMaster = garageSlotMasters.find(
-        s => s.garageNumber === Number(garageId) && s.ucarGarageLocationMasterId === locationMaster.id
-      )
-      if (!slotMaster) return null
+      // 作成済みのSlotMasterを取得
+      const slotKey = `${locationName}:${garageNumber}`
+      const slotMasterId = slotMasterMap.get(slotKey)
+      if (!slotMasterId) return null
 
       try {
         // 該当のUcarが存在するかチェック
@@ -91,17 +157,17 @@ export const POST = async (req: NextRequest) => {
           where: {
             unique_sateiID_ucarGarageSlotMasterId: {
               sateiID: String(sateiId),
-              ucarGarageSlotMasterId: slotMaster.id,
+              ucarGarageSlotMasterId: slotMasterId,
             },
           },
           create: {
             sateiID: String(sateiId),
             appliedAt: toUtc(new Date(timestamp)),
-            ucarGarageSlotMasterId: slotMaster.id,
+            ucarGarageSlotMasterId: slotMasterId,
           },
           update: {
             appliedAt: toUtc(new Date(timestamp)),
-            ucarGarageSlotMasterId: slotMaster.id,
+            ucarGarageSlotMasterId: slotMasterId,
           },
         })
       } catch (error) {
@@ -113,9 +179,11 @@ export const POST = async (req: NextRequest) => {
   )
 
   const successCount = results.filter(Boolean).length
-  return NextResponse.json({
+  const result = {
     success: true,
     result: {total: rows.length, garageSlotCreated: successCount, ucarCreated: ucarCreatedCount},
     message: `${successCount}件の車庫履歴を登録しました（Ucar新規作成: ${ucarCreatedCount}件）`,
-  })
+  }
+
+  return NextResponse.json(result)
 }
