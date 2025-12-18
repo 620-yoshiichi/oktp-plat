@@ -11,7 +11,6 @@ import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doS
 
 import {useCallback} from 'react'
 import {isDev} from '@cm/lib/methods/common'
-import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 import {UcarCL} from '@app/(apps)/ucar/class/UcarCL'
 
 export const useDataSearchForm = ({sateiID, setsateiID}: {sateiID: string; setsateiID: (sateiID: string) => void}) => {

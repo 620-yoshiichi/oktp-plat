@@ -10,7 +10,6 @@ import {ucarWhere} from '@app/(apps)/ucar/(constants)/ucarWhere'
 import {getAvailable98Numbers} from '@app/(apps)/ucar/(lib)/num98/getAvailable98Numbers'
 import {getMasterPageCommonConfig} from '@cm/components/DataLogic/helpers/getMasterPageCommonConfig'
 import {setCustomParams} from '@cm/components/DataLogic/helpers/SetCustomParams'
-import {UCAR_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-constants'
 
 export default async function DynamicMasterPage(props) {
   return getMasterPageCommonConfig({

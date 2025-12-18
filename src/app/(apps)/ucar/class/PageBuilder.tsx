@@ -7,9 +7,6 @@ import {ColBuilder} from '@app/(apps)/ucar/class/ColBuilder/ColBuilder'
 import ChildCreator from '@cm/components/DataLogic/RTs/ChildCreator/ChildCreator'
 
 import {CommonGlobalIdSelector} from '@app/oktpCommon/CommonGlobalIdSelector'
-import {UCAR_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-constants'
-import {formatDate} from '@cm/class/Days/date-utils/formatters'
-import {TextRed} from '@cm/components/styles/common-components/Alert'
 import {roleMaster} from '@cm/class/builders/PageBuilderVariables'
 
 export class PageBuilder {

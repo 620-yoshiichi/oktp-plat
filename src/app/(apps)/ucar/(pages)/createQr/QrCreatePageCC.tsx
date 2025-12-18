@@ -14,7 +14,6 @@ import {UcarCL} from '@app/(apps)/ucar/class/UcarCL'
 import {UpassDataDisplay} from '@app/(apps)/ucar/(pages)/createQr/CC/UpassDataDisplay'
 import {Card} from '@cm/shadcn/ui/card'
 import {useState} from 'react'
-import {isDev} from '@cm/lib/methods/common'
 
 const QrCreatePageCC = () => {
   const [sateiID, setsateiID] = useState('')

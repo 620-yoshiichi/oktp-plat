@@ -1,4 +1,3 @@
-import Coloring from '@cm/lib/methods/Coloring'
 
 import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
 import {colType} from '@cm/types/col-types'

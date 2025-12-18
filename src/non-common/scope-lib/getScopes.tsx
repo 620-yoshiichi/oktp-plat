@@ -140,6 +140,7 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
     })()
 
     const newCarMember = {
+      admin,
       isHQ,
       isCR,
       isTorokuTanto,
@@ -165,6 +166,7 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
     const {isHQ, isStoreManager, isSales, newCarWhere, userId, storeId, isChukoshaGroup} = getNewCarProps()
 
     const ucarMember = {
+      admin,
       isChukoshaGroup,
       isHQ,
       isStoreManager,
@@ -201,6 +203,7 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
     )
     const isStoreManager = !!getNewCarProps().isStoreManager
     const qrbpMember = {
+      admin,
       crLeader,
       cr,
       store,

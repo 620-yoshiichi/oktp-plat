@@ -1,8 +1,6 @@
 import {Fields} from '@cm/class/Fields/Fields'
 
-import {R_Stack} from '@cm/components/styles/common-components/common-components'
 import InlineGarageEditor from '../../InlineGarageEditor'
-import Coloring from '@cm/lib/methods/Coloring'
 import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
 import {FubiActionTrigger} from '@app/(apps)/ucar/(pages)/paperProcess/Summay/UcarAlertButtonSummay'
 

@@ -10,7 +10,7 @@ import ProcessSummary from '@app/(apps)/ucar/(pages)/paperProcess/Summay/parts/P
 import {absSize, cl, isDev} from '@cm/lib/methods/common'
 import {UcarProcessCl} from '../UcarProcessCl'
 import {getPaperManagementCols} from '@app/(apps)/ucar/class/ColBuilder/lib/ucar/ucarCols-lib/lib/getPaperManagementCols/getPaperManagementCols'
-import {DocumentChartBarIcon, DocumentIcon, InformationCircleIcon} from '@heroicons/react/20/solid'
+import { DocumentIcon, InformationCircleIcon} from '@heroicons/react/20/solid'
 import {T_LINK} from '@cm/components/styles/common-components/links'
 import {HREF} from '@cm/lib/methods/urls'
 import {TrActionIconClassName} from '@cm/components/DataLogic/TFs/MyTable/hooks/useMyTableLogic'
