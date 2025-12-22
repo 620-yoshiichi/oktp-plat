@@ -48,7 +48,7 @@ export default function Page() {
 //   const selected = query.targetProcessIds ? String(query.targetProcessIds).split(`,`) : []
 
 //   if (selected.length === 0) {
-//     const defaultProcessList: processNameStr[] = ['検査終了', '写真終了', 'GAZOO', '拠点受取']
+//     const defaultProcessList: processNameStr[] = ['検査終了', '写真終了', 'GAZOO', '商品車受取']
 //     const defaultProcessIds = await prisma.ucarProcessMaster.findMany({
 //       where: {name: {in: defaultProcessList}},
 //     })

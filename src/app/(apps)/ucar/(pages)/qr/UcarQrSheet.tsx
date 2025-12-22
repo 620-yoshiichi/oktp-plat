@@ -59,45 +59,54 @@ const UcarQrSheet = ({ucar}) => {
             src: HREF(`${basePath}/ucar/create-process`, {...commonQuery, processCode: STORE_NYUKO.code}, query),
             label: '拠点入庫',
             sheetNumber: 1,
+            target: '営業スタッフ',
           },
           STORE_TENCHO_KENSHU: {
             src: HREF(`${basePath}/ucar/create-process`, {...commonQuery, processCode: STORE_TENCHO_KENSHU.code}, query),
             label: '店長検収',
             sheetNumber: 1,
+            target: '店長',
           },
           CR_CHAKU: {
             src: HREF(`${basePath}/ucar/create-process`, {...commonQuery, processCode: CR_CHAKU.code}, query),
             label: '仕分/到着',
             sheetNumber: 1,
+            target: 'CR',
           },
           repair: {
             src: HREF(`${basePath}/ucar/create-process`, {...commonQuery, processCode: null}, query),
-            label: 'CR',
+            label: 'CR各種',
             sheetNumber: 1,
+            target: 'CR',
           },
 
+          CR_HAISO: {
+            src: HREF(`${basePath}/ucar/create-process`, {...commonQuery, processCode: CR_HAISO.code}, query),
+            label: '商品車受取',
+            sheetNumber: 1,
+            target: '店長',
+          },
           STORE_DELIVERY_STOP: {
             src: HREF(`${basePath}/ucar/create-process`, {...commonQuery, processCode: STORE_DELIVERY_STOP.code}, query),
-            label: '配送停止',
+            label: '配送キャンセル',
             sheetNumber: 1,
+            target: '店長',
+            description: 'CRへの配送',
           },
-          CR_GENCHI_SHORI_YOSEI: {
-            src: HREF(`${basePath}/ucar/create-process`, {...commonQuery, processCode: CR_GENCHI_SHORI_YOSEI.code}, query),
-            label: '現地処理',
-            sheetNumber: 1,
-          },
+
           STORE_SHORUI_SOUHU: {
             src: HREF(`${basePath}/ucar/create-process`, {...commonQuery, processCode: STORE_SHORUI_SOUHU.code}, query),
             label: '書類送付',
             sheetNumber: 2,
+            target: '店長',
           },
         }
 
         const srcDataUrl = await Promise.all(
           Object.keys(srcObject).map(async key => {
-            const {src, label, sheetNumber} = srcObject[key]
+            const {src, label, sheetNumber, target} = srcObject[key]
             const qrCode = await QRCode.toDataURL(srcObject[key].src)
-            return {key, qrCode, src, label, sheetNumber}
+            return {key, qrCode, src, label, sheetNumber, target}
           })
         )
 
@@ -165,6 +174,11 @@ const Page1 = ({ucar, srcDataUrlObject}) => {
       return acc
     }, [])
 
+  const QRcodeOnSheet1 = srcDataUrlObject.filter(d => d.sheetNumber === 1)
+  const firstRow = QRcodeOnSheet1.slice(0, 5)
+  const secondRow = QRcodeOnSheet1.slice(5)
+  //
+
   return (
     <div className="qr-sheet-page page-1">
       {/* 車両情報テーブル */}
@@ -173,20 +187,45 @@ const Page1 = ({ucar, srcDataUrlObject}) => {
       </div>
 
       {/* QRコード（シート1用） */}
-      <div>
-        <div className={`grid grid-cols-4 gap-8 mx-auto w-full`}>
-          {srcDataUrlObject
-            .filter(d => d.sheetNumber === 1)
-            .map(({key, qrCode, src, label}) => (
-              <div key={key} className="qr-code-item ">
-                <Link href={src} target="_blank" className={isDev ? 't-link' : ''}>
-                  <div className="qr-label">{label}</div>
+      <C_Stack className={`gap-8`}>
+        <R_Stack className={` gap-0   mx-auto w-full `}>
+          {firstRow.map(({key, qrCode, src, label, target}) => (
+            <div key={key} className="qr-code-item w-1/5">
+              <R_Stack className={`w-full mb-1 justify-between`}>
+                <Link className={`font-bold text-base`} href={src} target="_blank">
+                  <div>{label}</div>
                 </Link>
-                <img src={qrCode} alt={label} className="qr-image " />
+
+                <span className="text-xs text-gray-500 block">({target})</span>
+              </R_Stack>
+
+              <img src={qrCode} alt={label} className="qr-image " />
+            </div>
+          ))}
+        </R_Stack>
+
+        <hr />
+
+        <div className={`bg-gray-200/50 p-2`}>
+          <span className={`text-center text-gray-500`}>下記は、必要な場合のみ使用してください</span>
+
+          <R_Stack className={` gap-0   mx-auto w-full `}>
+            {secondRow.map(({key, qrCode, src, label, target}) => (
+              <div key={key} className="qr-code-item w-1/5 scale-90 ">
+                <R_Stack className={`w-full mb-1 justify-between`}>
+                  <Link className={`font-bold text-base`} href={src} target="_blank">
+                    <div>{label}</div>
+                  </Link>
+
+                  <span className="text-xs text-gray-500 block">({target})</span>
+                </R_Stack>
+
+                <img src={qrCode} alt={label} className="qr-image" />
               </div>
             ))}
+          </R_Stack>
         </div>
-      </div>
+      </C_Stack>
     </div>
   )
 }

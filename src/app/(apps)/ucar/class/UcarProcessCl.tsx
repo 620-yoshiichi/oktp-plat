@@ -36,7 +36,7 @@ export type processNameStr =
   | '検査'
   | '写真'
   | 'GAZOO'
-  | '拠点受取'
+  | '商品車受取'
   | '書類送付'
   | '配送停止'
   | '現地処理'
@@ -147,6 +147,7 @@ export class UcarProcessCl {
       type: '加修',
       list: [`main`],
     },
+
     CR_CHAKU: {
       code: 'CR02',
       bqFieldName: 'datetime_4',
@@ -155,6 +156,7 @@ export class UcarProcessCl {
       type: '加修',
       list: [`main`],
     },
+
     CR_KENSHU: {
       code: 'CR03',
       bqFieldName: 'datetime_6',
@@ -206,7 +208,7 @@ export class UcarProcessCl {
     CR_HAISO: {
       code: 'CR09',
       bqFieldName: 'datetime_14',
-      label: '拠点受取',
+      label: '商品車受取',
       color: '#c54509',
       type: '店長',
       list: [`main`],

@@ -34,7 +34,7 @@ const UnAuthorizedPage = () => {
             >
               戻る
             </div>
-            <T_LINK href={HREF(`/login?rootPath=${rootPath}`, {}, query)}>ログイン</T_LINK>
+            <T_LINK href={HREF(`/login`, {rootPath}, query)}>ログイン</T_LINK>
           </R_Stack>
         </C_Stack>
       </Center>

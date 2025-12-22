@@ -57,8 +57,8 @@ export const QrbpEasySearchBuilder = async () => {
         OR: [
           {ProcessNameMaster: {name: 'キャンセル'}},
           {ProcessNameMaster: {name: '洗車'}},
-          {ProcessNameMaster: {name: '作業完了'}},
           {ProcessNameMaster: {name: '拠点受取'}},
+          {ProcessNameMaster: {name: '作業完了'}},
         ],
       },
     }

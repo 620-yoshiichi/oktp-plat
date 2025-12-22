@@ -2,6 +2,7 @@ export const getAppSwitchMenus = (scopes: any) => {
   const {isNewCarMember} = scopes.getNewCarProps()
   const {isUcarMember} = scopes.getUcarProps()
   const {isQrbpMember} = scopes.getQrbpProps()
+
   return {
     tabId: ``,
     label: `アプリ`,

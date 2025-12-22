@@ -41,7 +41,7 @@ export const UCAR_CONSTANTS = {
               ?.map(s => s.name),
           },
         },
-        {id: `runnable`, form: {}, label: `自力走行`, type: 'boolean'},
+        {id: `runnable`, form: {}, label: `自力走行可`, type: 'boolean'},
         {
           id: `remarks`,
           form: {},

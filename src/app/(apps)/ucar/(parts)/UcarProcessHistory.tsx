@@ -8,6 +8,7 @@ import {formatDate} from '@cm/class/Days/date-utils/formatters'
 import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
 import {ucarData} from '@app/(apps)/ucar/class/UcarCL'
 import {R_Stack} from '@cm/components/styles/common-components/common-components'
+import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 
 const UcarProcessHistory = ({
   ucar,
@@ -78,25 +79,35 @@ const UcarProcessHistory = ({
 export default UcarProcessHistory
 
 const PopoverButton = ({href, label, color, active}) => {
-  return (
-    <div>
-      <T_LINK href={href} className={` text-inherit no-underline`} target="_blank">
-        <div
-          className={cl(active ? '' : ' bg-gray-200  opacity-30 scale-80')}
-          style={{
-            fontWeight: active ? 'bold' : 'normal',
-            fontSize: 10,
-            height: 16,
-            padding: 0,
-            width: 60,
-            textAlign: 'center',
-            backgroundColor: active ? color : '',
-          }}
-          // active={active}
-        >
-          {label}
-        </div>
-      </T_LINK>
+  const {accessScopes} = useGlobal()
+  const {admin} = accessScopes()
+  const content = (
+    <div
+      className={cl(active ? '' : ' bg-gray-200  opacity-30 scale-80')}
+      style={{
+        fontWeight: active ? 'bold' : 'normal',
+        fontSize: 10,
+        height: 16,
+        padding: 0,
+        width: 60,
+        textAlign: 'center',
+        backgroundColor: active ? color : '',
+      }}
+      // active={active}
+    >
+      {label}
     </div>
   )
+
+  if (admin) {
+    return (
+      <div>
+        <T_LINK href={href} className={` text-inherit no-underline`} target="_blank">
+          {content}
+        </T_LINK>
+      </div>
+    )
+  } else {
+    return content
+  }
 }

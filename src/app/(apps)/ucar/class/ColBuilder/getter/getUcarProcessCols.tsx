@@ -6,6 +6,7 @@ import {Fields} from '@cm/class/Fields/Fields'
 import {UCAR_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-constants'
 import {UcarProcessCl} from '@app/(apps)/ucar/class/UcarProcessCl'
 import {formatDate} from '@cm/class/Days/date-utils/formatters'
+import {defaultRegister} from '@cm/class/builders/ColBuilderVariables'
 
 export const getUcarProcessCols = (props: columnGetterType) => {
   const {useGlobalProps, ColBuilderExtraProps} = props
@@ -38,9 +39,10 @@ export const getUcarProcessCols = (props: columnGetterType) => {
       },
 
       {
-        ...{id: 'userId', label: 'ユーザー'},
+        id: 'userId',
+        label: 'ユーザー',
         forSelect: {},
-        form: {disabled: true, defaultValue: userId},
+        form: {disabled: true, defaultValue: userId, ...defaultRegister},
       },
       {
         id: 'processCode',

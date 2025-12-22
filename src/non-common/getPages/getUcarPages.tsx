@@ -16,7 +16,7 @@ export const getUcarPages = (props: PageGetterType) => {
       tabId: 'ucar',
       label: 'Ucar業務',
 
-      // exclusiveTo: isUcarMember,
+      exclusiveTo: isUcarMember,
       ROOT: [rootPath],
       children: [
         {tabId: 'createQr', label: 'QR発行', ROOT: [rootPath]},
@@ -31,6 +31,12 @@ export const getUcarPages = (props: PageGetterType) => {
         {
           tabId: 'sateiIdConverter',
           label: '査定ID変換',
+          ROOT: [rootPath],
+        },
+        {
+          tabId: 'create-process',
+          label: '工程登録',
+          hide: true,
           ROOT: [rootPath],
         },
       ],
