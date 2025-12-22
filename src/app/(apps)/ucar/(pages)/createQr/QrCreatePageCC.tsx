@@ -49,6 +49,8 @@ const QrCreatePageCC = () => {
   })
 
   if (isUcarLoading || isUpassLoading) return <></>
+
+  console.log({isLastSateiId}) //logs
   return (
     <div className={`p-4`}>
       <FitMargin>
@@ -69,49 +71,41 @@ const QrCreatePageCC = () => {
                 </C_Stack>
               ) : (
                 <>
-                  {ucar?.UPASS ? (
+                  {ucar?.UPASS && isLastSateiId ? (
+                    <></>
+                  ) : (
                     <>
                       {isLastSateiId ? (
                         <div>
-                          <R_Stack className="gap-6 items-start">
-                            {/* UPASSデータが存在する場合、詳細情報を表示 */}
-
-                            <Card>
-                              <DataInitiationForm
-                                {...{
-                                  stores,
-                                  ucar,
-                                  toggleLoad,
-                                  session,
-                                  sateiID_Input,
-                                  hasUpassData: !!upassData,
-                                }}
-                              />
-                            </Card>
-                            {upassData && (
-                              <Card>
-                                <h3 className="text-lg font-semibold mb-4">UPASSデータ詳細</h3>
-                                <UpassDataDisplay upassData={upassData} />
-                              </Card>
-                            )}
-                          </R_Stack>
+                          <DataInitiationForm
+                            {...{
+                              stores,
+                              ucar,
+                              toggleLoad,
+                              session,
+                              sateiID_Input,
+                              hasUpassData: !!upassData,
+                            }}
+                          />
                         </div>
                       ) : (
-                        AlertComponent
+                        <div>
+                          {AlertComponent ? (
+                            AlertComponent
+                          ) : (
+                            <DataInitiationForm
+                              {...{
+                                stores,
+                                ucar,
+                                toggleLoad,
+                                session,
+                                sateiID_Input,
+                                hasUpassData: !!upassData,
+                              }}
+                            />
+                          )}
+                        </div>
                       )}
-                    </>
-                  ) : (
-                    <>
-                      <DataInitiationForm
-                        {...{
-                          stores,
-                          ucar,
-                          toggleLoad,
-                          session,
-                          sateiID_Input,
-                          hasUpassData: !!upassData,
-                        }}
-                      />
                     </>
                   )}
                 </>

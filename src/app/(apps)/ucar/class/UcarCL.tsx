@@ -107,9 +107,10 @@ export class UcarCL {
           </Alert>
         )}
       </>
-    ) : (
+    ) : upass ? (
       <Alert color="red">査定IDが見つかりません</Alert>
-    )
+    ) : null
+
     return {
       Tree: familyTree.sort((a, b) => {
         return new Date(a.sateiDate).getTime() - new Date(b.sateiDate).getTime()
