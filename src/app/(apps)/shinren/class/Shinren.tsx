@@ -133,9 +133,8 @@ export class Shinren {
         },
         where: {userId: session?.id},
         nameChanger: (op: any) => {
-          const newName = Shinren.rentaCustomer.getUniqueName(op)
-
-          return {...op, name: newName}
+          const label = Shinren.rentaCustomer.getUniqueName(op)
+          return {...op, label}
         },
       }
       return {option, config}

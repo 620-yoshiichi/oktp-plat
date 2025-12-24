@@ -13,8 +13,8 @@ export default function FilterConfig({commonFilterQuery}) {
       label: `基準日`,
       forSelect: {
         optionsOrOptionFetcher: [
-          {name: `振当`, value: `DD_FR`},
-          {name: `納車`, value: `DD_NOSYA`},
+          {id: 'DD_FR', label: '振当'},
+          {id: 'DD_NOSYA', label: '納車'},
         ],
       },
     },
@@ -24,9 +24,9 @@ export default function FilterConfig({commonFilterQuery}) {
       label: `並び替え`,
       forSelect: {
         optionsOrOptionFetcher: [
-          {name: `昇順(書類)`, value: `ASC`},
-          {name: `降順(書類)`, value: `DESC`},
-          {name: `コード順`, value: `CODE`},
+          {id: 'ASC', label: '昇順(書類)'},
+          {id: 'DESC', label: '降順(書類)'},
+          {id: 'CODE', label: 'コード順'},
         ],
       },
     },

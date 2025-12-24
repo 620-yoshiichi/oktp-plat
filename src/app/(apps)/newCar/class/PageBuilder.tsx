@@ -215,13 +215,12 @@ export class PageBuilder {
               form: {...defaultRegister},
               forSelect: {
                 optionsOrOptionFetcher: [
-                  //
-                  {id: 'NO_CYUMON', value: '注文番号'},
-                  {id: 'DD_JUCYU', value: '受注日'},
-                  {id: 'CUSTOM_DD_SEISANYOTEI', value: '生産予定日'},
-                  {id: 'DD_FR', value: '振当日'},
-                  {id: 'DD_TOUROKU', value: '登録日'},
-                  {id: 'DD_NOSYA', value: '納車日'},
+                  {id: 'NO_CYUMON', label: '注文番号'},
+                  {id: 'DD_JUCYU', label: '受注日'},
+                  {id: 'CUSTOM_DD_SEISANYOTEI', label: '生産予定日'},
+                  {id: 'DD_FR', label: '振当日'},
+                  {id: 'DD_TOUROKU', label: '登録日'},
+                  {id: 'DD_NOSYA', label: '納車日'},
                 ],
               },
             },
@@ -231,9 +230,8 @@ export class PageBuilder {
               form: {...defaultRegister},
               forSelect: {
                 optionsOrOptionFetcher: [
-                  //
-                  {id: `asc`, value: '過去から（昇順）'},
-                  {id: `desc`, value: '最新から（降順）'},
+                  {id: 'asc', label: '過去から（昇順）'},
+                  {id: 'desc', label: '最新から（降順）'},
                 ],
               },
             },

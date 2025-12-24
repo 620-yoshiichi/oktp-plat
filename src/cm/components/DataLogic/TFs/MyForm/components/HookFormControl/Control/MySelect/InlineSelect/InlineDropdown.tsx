@@ -30,7 +30,7 @@ export const InlineDropdown = React.memo((props: InlineDropdownProps) => {
  }
 
  // nullオプション（選択解除）
- const nullOption: optionType = { id: null as any, label: '選択解除', name: '選択解除', value: null as any }
+ const nullOption: optionType = { id: null as any, label: '選択解除' }
 
  return (
   <div

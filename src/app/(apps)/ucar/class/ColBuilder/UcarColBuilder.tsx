@@ -10,7 +10,7 @@ import ProcessSummary from '@app/(apps)/ucar/(pages)/paperProcess/Summay/parts/P
 import {absSize, cl, isDev} from '@cm/lib/methods/common'
 import {UcarProcessCl} from '../UcarProcessCl'
 import {getPaperManagementCols} from '@app/(apps)/ucar/class/ColBuilder/lib/ucar/ucarCols-lib/lib/getPaperManagementCols/getPaperManagementCols'
-import { DocumentIcon, InformationCircleIcon} from '@heroicons/react/20/solid'
+import {DocumentIcon, InformationCircleIcon} from '@heroicons/react/20/solid'
 import {T_LINK} from '@cm/components/styles/common-components/links'
 import {HREF} from '@cm/lib/methods/urls'
 import {TrActionIconClassName} from '@cm/components/DataLogic/TFs/MyTable/hooks/useMyTableLogic'
@@ -86,19 +86,26 @@ export const ucarColBuilder = (props: columnGetterType) => {
       format: (value, row) => row.number98,
       form: {},
       forSelect: {
+        config: {
+          select: {
+            id: 'number',
+            number: 'text',
+            sortNumber: 'number',
+          },
+        },
         optionsOrOptionFetcher: [
           currentNumber98
             ? {
                 id: currentNumber98,
-                value: currentNumber98,
                 label: currentNumber98,
               }
             : undefined,
+
           ...getAvailable98NumbersReturn?.available98Numbers.map(d => {
+            const str = String(d.sortNumber)
             return {
-              id: d.number,
-              value: d.number,
-              label: d.number,
+              id: d.sortNumber,
+              label: str,
             }
           }),
         ].filter(d => Boolean),

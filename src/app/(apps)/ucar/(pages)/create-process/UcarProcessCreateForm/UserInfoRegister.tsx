@@ -17,8 +17,8 @@ export const bankMasterCol: colType = {
         code: 'text',
       },
       nameChanger: op => {
-        const name = `${op?.name}[${op?.code ?? ''}]`
-        return {...op, name}
+        const label = `${op?.name}[${op?.code ?? ''}]`
+        return {...op, label}
       },
     },
     // allowCreateOptions: {
@@ -74,8 +74,8 @@ export const bankBranchMasterCol: colType = {
         return result
       },
       nameChanger: op => {
-        const name = op?.name ? `${op?.name}[${op?.code ?? ''}]` : ''
-        return {...op, name}
+        const label = op?.name ? `${op?.name}[${op?.code ?? ''}]` : ''
+        return {...op, label}
       },
     },
 

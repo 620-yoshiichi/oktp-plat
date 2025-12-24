@@ -18,9 +18,14 @@ export type optionsOrOptionFetcherType = (
   props: optionsOrOptionFetcherProps
 ) => Promise<{optionObjArr: optionType[]; modelName?: string}>
 
+/**
+ * セレクトオプションの型定義
+ * - id: DBに格納される識別子（必須）
+ * - label: UIに表示される値（任意、なければidを文字列化）
+ * - color: オプションの色（任意）
+ */
 export type optionType = {
-  id?: any
+  id: any
   label?: string
-  value: string
   color?: string
 } & anyObject

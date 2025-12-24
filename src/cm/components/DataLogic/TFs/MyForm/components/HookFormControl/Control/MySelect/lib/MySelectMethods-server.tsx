@@ -2,8 +2,8 @@ import {optionType} from 'src/cm/class/Fields/col-operator-types'
 
 export const getNameFromSelectOption = ({col, record}) => {
   if (col.forSelect?.config?.nameChanger) {
-    const chanegedName = record ? col.forSelect?.config?.nameChanger(record).name : ''
-    return chanegedName
+    const changed = record ? col.forSelect?.config?.nameChanger(record) : null
+    return changed?.label ?? ''
   }
 }
 
@@ -30,27 +30,31 @@ export const convertColIdToModelName = ({col}) => {
   return key
 }
 
+/**
+ * オプション配列を正規化する
+ * - id: DBに格納される識別子（必須）
+ * - label: UIに表示される値（なければidを文字列化）
+ */
 export const mapAdjustOptionValue = (optionObjArr: optionType[]) => {
-  if (Array.isArray(optionObjArr ?? [])) {
-    const result = (optionObjArr ?? [])?.map(optionObj => adjustOptionValue({optionObj})) ?? []
-    return [...result]
-  } else {
+  if (!Array.isArray(optionObjArr ?? [])) {
     throw new Error('optionObjArr is not array')
   }
+  return (optionObjArr ?? []).map(optionObj => normalizeOption(optionObj))
+}
 
-  function adjustOptionValue({optionObj}) {
-    const value = optionObj?.value ?? optionObj?.code ?? optionObj
-
-    const label = optionObj?.label ?? optionObj?.name
-    const name = optionObj?.name
-
-    const result: optionType = {
-      value,
-      id: optionObj?.id ?? value,
-      label: label ?? value,
-      name: name ?? value,
-      color: optionObj?.color,
+function normalizeOption(optionObj: any): optionType {
+  // プリミティブ値の場合はそのままidとして使用
+  if (typeof optionObj !== 'object' || optionObj === null) {
+    return {
+      id: optionObj,
+      label: String(optionObj ?? ''),
     }
-    return result
+  }
+
+  // Prismaデータ（id/name）から変換
+  return {
+    id: optionObj.id,
+    label: optionObj.label ?? optionObj.name ?? String(optionObj.id ?? ''),
+    color: optionObj.color,
   }
 }
