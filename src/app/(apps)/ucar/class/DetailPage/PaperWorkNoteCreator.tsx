@@ -7,14 +7,14 @@ import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doS
 import ChildCreator from '@cm/components/DataLogic/RTs/ChildCreator/ChildCreator'
 import {QueryBuilder} from '@app/(apps)/ucar/class/QueryBuilder'
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
-import {atomTypes} from '@cm/hooks/useJotai'
 import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
 import {OKTP_CONSTANTS} from '@app/oktpCommon/constants'
-import {UcarCL} from '@app/(apps)/ucar/class/UcarCL'
+import {UcarCL, ucarData} from '@app/(apps)/ucar/class/UcarCL'
 import {formatDate} from '@cm/class/Days/date-utils/formatters'
+import {UseRecordsReturn} from '@cm/components/DataLogic/TFs/PropAdjustor/hooks/useRecords/useRecords'
 
-export default function PaperWorkNoteCreator(props: atomTypes[`selectedUcarNotes`]) {
-  const {UcarData, mutateRecords} = props
+export default function PaperWorkNoteCreator(props: {UcarData: ucarData; UseRecordsReturn: UseRecordsReturn}) {
+  const {UcarData, UseRecordsReturn} = props
   const useGlobalProps = useGlobal()
   const {router, accessScopes, session, query, toggleLoad} = useGlobalProps
   const scopes = accessScopes()
@@ -93,22 +93,28 @@ export default function PaperWorkNoteCreator(props: atomTypes[`selectedUcarNotes
                 window.open(`/ucar/fubiHensoHyo/${ucarPaperWorkNotes.id}`, '_blank')
               }
 
-              const LatestUcarPaperWorkNotes = [
-                ...UcarData.UcarPaperWorkNotes.filter(d => d.id !== ucarPaperWorkNotes.id),
-                ucarPaperWorkNotes,
-              ].sort((a, b) => {
-                return a.createdAt > b.createdAt ? -1 : 1
-              })
+              // const LatestUcarPaperWorkNotes = [
+              //   ...UcarData.UcarPaperWorkNotes.filter(d => d.id !== ucarPaperWorkNotes.id),
+              //   ucarPaperWorkNotes,
+              // ].sort((a, b) => {
+              //   return a.createdAt > b.createdAt ? -1 : 1
+              // })
 
-              mutateRecords({
-                record: {
-                  ...UcarData,
-                  UcarPaperWorkNotes: LatestUcarPaperWorkNotes,
+              // mutateRecords({
+              //   record: {
+              //     ...UcarData,
+              //     UcarPaperWorkNotes: LatestUcarPaperWorkNotes,
+              //   },
+              // })
+
+              // router.refresh()
+              //
+
+              await UseRecordsReturn?.refreshSingleRecord({
+                findUniqueWhereArgs: {
+                  sateiID: UcarData.sateiID,
                 },
               })
-
-              router.refresh()
-              //
             },
           },
         },

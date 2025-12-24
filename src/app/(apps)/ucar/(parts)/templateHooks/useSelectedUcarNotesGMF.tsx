@@ -1,14 +1,18 @@
 'use client'
 import PaperWorkNoteCreator from '@app/(apps)/ucar/class/DetailPage/PaperWorkNoteCreator'
+import {ucarData} from '@app/(apps)/ucar/class/UcarCL'
+import {UseRecordsReturn} from '@cm/components/DataLogic/TFs/PropAdjustor/hooks/useRecords/useRecords'
 import {useGlobalModalForm} from '@cm/components/utils/modal/useGlobalModalForm'
-import {atomTypes} from '@cm/hooks/useJotai'
 
 const useSelectedUcarNotesGMF = () => {
-  return useGlobalModalForm<atomTypes[`selectedUcarNotes`]>(`selectedUcarNotes`, null, {
+  return useGlobalModalForm<{
+    UcarData: ucarData
+    UseRecordsReturn: UseRecordsReturn
+  }>(`selectedUcarNotes`, null, {
     mainJsx: props => {
       const {GMF_OPEN, setGMF_OPEN, close} = props
-      const {UcarData, mutateRecords} = GMF_OPEN
-      return <PaperWorkNoteCreator {...{UcarData, mutateRecords}} />
+      const {UcarData, UseRecordsReturn} = GMF_OPEN
+      return <PaperWorkNoteCreator {...{UcarData, UseRecordsReturn}} />
     },
   })
 }

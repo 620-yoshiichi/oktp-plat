@@ -6,16 +6,22 @@ import {UseRecordsReturn} from '@cm/components/DataLogic/TFs/PropAdjustor/hooks/
 
 import React from 'react'
 
-export default function CheckPointList(props: {newCar; HK_USE_RECORDS: UseRecordsReturn; width}) {
+export default function CheckPointList(props: {newCar; UseRecordsReturn: UseRecordsReturn; width}) {
   const newCar = props.newCar as newCarModel
-  const {HK_USE_RECORDS, width} = props
+  const {UseRecordsReturn, width} = props
 
   return (
     <C_Stack className={`gap-1 gsakjglas`}>
       {CHECK_POINTS.map((cp, i) => {
         return (
           <div key={i} style={{width}}>
-            <CheckPoint {...{newCar, cp, HK_USE_RECORDS}} />
+            <CheckPoint
+              {...{
+                newCar,
+                cp,
+                UseRecordsReturn,
+              }}
+            />
           </div>
         )
       })}

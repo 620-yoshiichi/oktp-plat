@@ -36,7 +36,7 @@ export default function useInitMySelect(props: ControlProps) {
 
   const currentValueToReadableStr = getcurrentValueToReadableStr({col, record, currentValue, options}) ?? ''
 
-  const COLOR = options?.find(op => op?.id === currentValue)?.color
+  const COLOR = options?.find(op => op?.value === currentValue)?.color
 
   const [searchedInput, setsearchedInput] = useState('')
 
@@ -44,8 +44,10 @@ export default function useInitMySelect(props: ControlProps) {
   useEffect(() => {
     if (options) {
       const pickedOption = mapAdjustOptionValue([record])[0]
-      const pickedOptionsIsAlreadyInOptions = pickedOption?.id && options?.find(op => op?.id === pickedOption?.id)
-      const uniqueOptions = pickedOption?.id && !pickedOptionsIsAlreadyInOptions ? [...options, pickedOption] : options
+
+      const pickedOptionsIsAlreadyInOptions = pickedOption?.value && options?.find(op => op?.value === pickedOption?.value)
+      const uniqueOptions = pickedOption?.value && !pickedOptionsIsAlreadyInOptions ? [...options, pickedOption] : options
+
       const sorted = [...uniqueOptions]
       setFilteredOptions(sorted)
     }
@@ -57,8 +59,8 @@ export default function useInitMySelect(props: ControlProps) {
       const {liftUpNewValueOnChange, ReactHookForm, field} = controlContextValue
       try {
         setIsOptionsVisible(false)
-        // option.id がDBに格納される識別子
-        const newValue = option?.id ?? ''
+        // option.value がDBに格納される値
+        const newValue = option?.value ?? ''
 
         const props = {id: col.id, newValue, ReactHookForm}
 
@@ -97,17 +99,19 @@ export default function useInitMySelect(props: ControlProps) {
 
 /**
  * 現在の値を読みやすい文字列に変換
- * - options から id が一致するものの label を返す
+ * - options から value が一致するものの label を返す
  */
 const getcurrentValueToReadableStr = ({col, record, currentValue, options}) => {
   // options から現在の値に一致するオプションの label を取得
-  const matchedOption = options?.find(op => op?.id === currentValue)
+  const matchedOption = options?.find(op => op?.value === currentValue)
+
   if (matchedOption?.label) {
     return matchedOption.label
   }
 
   // record から取得
-  if (record?.label) return record.label
+  if (record?.name) return record.name
+
   if (getNameFromSelectOption({col, record})) return getNameFromSelectOption({col, record})
 
   // プリミティブ値の場合

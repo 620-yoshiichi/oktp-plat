@@ -1,7 +1,7 @@
 'use client'
 
 import {DataInitiationForm} from '@app/(apps)/ucar/(pages)/createQr/DataInitiationForm'
-import {C_Stack, FitMargin, R_Stack} from '@cm/components/styles/common-components/common-components'
+import {C_Stack, FitMargin} from '@cm/components/styles/common-components/common-components'
 import useDoStandardPrisma from '@cm/hooks/useDoStandardPrisma'
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 import NotAvailable from '@cm/components/utils/NotAvailable'
@@ -11,8 +11,6 @@ import {HREF} from '@cm/lib/methods/urls'
 import {T_LINK} from '@cm/components/styles/common-components/links'
 import useSWR from 'swr'
 import {UcarCL} from '@app/(apps)/ucar/class/UcarCL'
-import {UpassDataDisplay} from '@app/(apps)/ucar/(pages)/createQr/CC/UpassDataDisplay'
-import {Card} from '@cm/shadcn/ui/card'
 import {useState} from 'react'
 
 const QrCreatePageCC = () => {

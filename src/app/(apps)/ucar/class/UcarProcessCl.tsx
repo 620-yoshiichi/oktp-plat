@@ -6,6 +6,7 @@ import {Code, codeItemCore} from '@cm/class/Code'
 import {Prisma} from '@prisma/generated/prisma/client'
 import {requestDeliberySS} from '@app/(apps)/ucar/class/lib/postHandler/ requestDeliberySS'
 import {UcarCL} from '@app/(apps)/ucar/class/UcarCL'
+import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
 export type shortcutNameStr =
   | 'STORE_QR_ISSUE'
   | 'STORE_NYUKO'
@@ -260,8 +261,16 @@ export class UcarProcessCl {
             ].join('\n'),
           }
           await knockEmailApi({...emailObject})
+
+          // スクラップでの仕分登録を自動実施
+          await doStandardPrisma('ucar', 'update', {
+            where: {sateiID: props.sateiID},
+            data: {
+              destination: UCAR_CODE.SHIWAKE.raw.SCRAP.code,
+            },
+          })
         },
-        buildCompleteMessage: () => '拠点長へ現地処理の旨をメール通知しました。',
+        buildCompleteMessage: () => '拠点長へ現地処理の旨をメール通知し、スクラップでの仕分登録を実施しました。',
       },
     },
   })

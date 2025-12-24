@@ -10,6 +10,7 @@ import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
 
 import React, {useEffect, useState} from 'react'
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+import {updateNumber98IssueHistory} from '@app/(apps)/ucar/(lib)/num98/updateNumber98IssueHistory'
 
 export default function UcrDetailUpdater({sateiID, close, getAvailable98NumbersReturn, useRecordsReturn}) {
   const useGlobalProps = useGlobal()
@@ -31,8 +32,6 @@ export default function UcrDetailUpdater({sateiID, close, getAvailable98NumbersR
 }
 
 const Main = ({close, useGlobalProps, ucar, getAvailable98NumbersReturn, useRecordsReturn}) => {
-  const {query, router, toggleLoad} = useGlobalProps
-
   const formData = ucar
 
   const columns = ColBuilder.ucar({
@@ -80,24 +79,27 @@ const Main = ({close, useGlobalProps, ucar, getAvailable98NumbersReturn, useReco
     }
 
     if (confirm(`データを更新しますか？`)) {
+      const sateiID = data?.sateiID ?? ''
+
+      // updateでは除外すべきフィールド
+      const updateData = {...data}
+      delete updateData.sateiID // whereで指定した@uniqueフィールドはupdateから除外（エラー回避のため）
+
+      // create用のデータ（sateiIDは必須）
+      const createData = {...updateData, sateiID}
+
       const res = await doStandardPrisma('ucar', 'upsert', {
-        where: {sateiID: data?.sateiID ?? ''},
-        create: data,
-        update: data,
+        where: {sateiID},
+        create: createData,
+        update: updateData,
       })
 
       //98番号が変更の場合
       if (numberChanged && res.success) {
-        const {result: last98Number} = await doStandardPrisma('number98', 'findFirst', {orderBy: {sortNumber: 'desc'}})
-        const isLast98Number = last98Number?.number === number98
-
-        if (isLast98Number) {
-          //最後の番号だったら履歴を削除
-          await doStandardPrisma('number98IssueHistory', 'deleteMany', {where: {}})
-        } else {
-          // それ以外は履歴を作成
-          await doStandardPrisma('number98IssueHistory', 'create', {data: {number: number98 ?? ''}})
-        }
+        await updateNumber98IssueHistory({
+          prevNumber98: prevRecord?.number98,
+          newNumber98: number98,
+        })
       }
 
       close()

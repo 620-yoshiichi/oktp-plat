@@ -40,15 +40,15 @@ const InlineSelect = React.memo((props: {contexts: contextsType}) => {
 
   // オプションから表示文字列を取得
   const getOptionDisplayString = useCallback((option: optionType): string => {
-    // label があればそれを使用、なければ id を文字列化
-    return option.label ? String(option.label) : String(option.id ?? '')
+    // label があればそれを使用、なければ value を文字列化
+    return option.label ? String(option.label) : String(option.value ?? '')
   }, [])
 
   // オプション選択（クリックのみで確定）
   const handleSelectOption = useCallback(
     async (option: optionType) => {
       // 選択解除の場合は空文字を表示
-      const isNullOption = option.id === null || option.id === undefined
+      const isNullOption = option.value === null || option.value === undefined
       const displayStr = isNullOption ? '' : getOptionDisplayString(option)
       setInputValue(displayStr)
       setIsFocused(false)

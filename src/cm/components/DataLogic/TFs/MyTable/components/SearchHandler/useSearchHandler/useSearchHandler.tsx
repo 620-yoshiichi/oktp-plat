@@ -17,7 +17,6 @@ import {cl} from 'src/cm/lib/methods/common'
 import {confirmSearch} from '@cm/components/DataLogic/TFs/MyTable/components/SearchHandler/SearchHandler'
 import {Padding} from '@cm/components/styles/common-components/common-components'
 
-import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
 import useWindowSize from '@cm/hooks/useWindowSize'
 import {useJotaiByKey} from '@cm/hooks/useJotai'
 import {Button} from '@cm/components/styles/common-components/Button'
@@ -62,9 +61,8 @@ export const useSearchHandler = (props: SearchHandler) => {
   //confirm
   const ResetBtnMemo = useMemo(() => {
     return (
-      <IconBtn
+      <Button
         {...{
-          rounded: false,
           color: `red`,
           onClick: () => {
             addQuery({[searchQueryKey]: ``})
@@ -73,7 +71,7 @@ export const useSearchHandler = (props: SearchHandler) => {
         }}
       >
         解除
-      </IconBtn>
+      </Button>
     )
   }, [query, allData, ReactHookForm, modalOpen])
 
@@ -163,7 +161,7 @@ export const useSearchHandler = (props: SearchHandler) => {
                 addQuery,
               }}
             />
-            {ResetBtnMemo}
+            {/* {ResetBtnMemo} */}
           </R_Stack>
         </div>
       )
@@ -171,25 +169,4 @@ export const useSearchHandler = (props: SearchHandler) => {
   }, [query, ResetBtnMemo, modalOpen])
 
   return {SearchedItemListMemo, SearchModalMemo}
-}
-
-export const confirmSeach = ({
-  allData,
-  MainColObject,
-  SearchColObject,
-  dataModelName,
-  addQuery,
-  searchQueryKey,
-  SearchQuery,
-  toggleLoad,
-}) => {
-  const searchQueryResult = SearchQuery.createQueryStr({allData, MainColObject, SearchColObject})
-
-  const newQuery = {
-    [searchQueryKey]: `${dataModelName.toUpperCase()}${searchQueryResult}`,
-  }
-
-  toggleLoad(async () => {
-    addQuery(newQuery)
-  })
 }

@@ -19,6 +19,7 @@ import {Absolute, C_Stack, R_Stack} from '@cm/components/styles/common-component
 import {PencilIcon, TrashIcon} from 'lucide-react'
 
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+import {updateNumber98IssueHistory} from '@app/(apps)/ucar/(lib)/num98/updateNumber98IssueHistory'
 import {UcarCL, ucarData} from '../UcarCL'
 import {UCAR_CODE} from '../UCAR_CODE'
 import {__shared_get_shiwakeKekkeCol} from '@app/(apps)/ucar/class/ColBuilder/getter/shared_shiwakeKekkeCol'
@@ -27,6 +28,7 @@ import {getDMMFModel} from '@cm/lib/methods/prisma-schema'
 import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
 import ShadModal from '@cm/shadcn/ui/Organisms/ShadModal'
 import {defaultRegister} from '@cm/class/builders/ColBuilderVariables'
+import {GoogleSheet_Append} from '@app/api/google/actions/sheetAPI'
 
 export const UCAR_TABLE_ROW_HEIGHT = 120
 
@@ -85,6 +87,34 @@ export const ucarColBuilder = (props: columnGetterType) => {
       label: '98番号',
       format: (value, row) => row.number98,
       form: {},
+      search: {},
+      td: {
+        editable: {
+          upsertController: {
+            validateUpdate: async ({latestFormData, formData}) => {
+              const prevNumber98 = formData?.number98
+              const newNumber98 = latestFormData?.number98
+              const numberChanged = prevNumber98 !== newNumber98
+
+              if (numberChanged) {
+                const confirmed = confirm('98番号を更新します。よろしいですか？')
+                if (!confirmed) {
+                  return {success: false, message: '98番号の更新をキャンセルしました'}
+                }
+              }
+              return {success: true, message: ''}
+            },
+            finalizeUpdate: async ({res, formData}) => {
+              if (res.success) {
+                await updateNumber98IssueHistory({
+                  prevNumber98: formData?.number98,
+                  newNumber98: res.result?.number98,
+                })
+              }
+            },
+          },
+        },
+      },
       forSelect: {
         config: {
           select: {
@@ -96,7 +126,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
         optionsOrOptionFetcher: [
           currentNumber98
             ? {
-                id: currentNumber98,
+                value: currentNumber98,
                 label: currentNumber98,
               }
             : undefined,
@@ -104,8 +134,8 @@ export const ucarColBuilder = (props: columnGetterType) => {
           ...getAvailable98NumbersReturn?.available98Numbers.map(d => {
             const str = String(d.sortNumber)
             return {
-              id: d.sortNumber,
-              label: str,
+              value: d.number,
+              label: d.sortNumber,
             }
           }),
         ].filter(d => Boolean),
@@ -284,12 +314,20 @@ export const ucarColBuilder = (props: columnGetterType) => {
               }
               className={cl(TrActionIconClassName, 'h-5 w-5 text-blue-500')}
             />
-            {isDev && (
+            {(isChukoshaGroup || isDev) && (
               <TrashIcon
                 onClick={async () => {
-                  if (confirm('削除しますか？')) {
-                    await doStandardPrisma('ucar', 'delete', {where: {id: row.id}})
-                    useGlobalProps.router.refresh()
+                  if (confirm('不要なデータとして非表示にしますか？')) {
+                    useGlobalProps.toggleLoad(async () => {
+                      const res = await GoogleSheet_Append({
+                        spreadsheetId:
+                          'https://docs.google.com/spreadsheets/d/1a_4Rh4lbqimejsClcm2keXiqzWUe5qFAiX5LfUlW6lI/edit?gid=363856092#gid=363856092',
+                        range: '不要査定ID登録!A1:A',
+                        values: [[row.sateiID]] as string[][],
+                      })
+
+                      await doStandardPrisma('ucar', 'update', {where: {id: row.id}, data: {active: false}})
+                    })
                   }
                 }}
                 className={cl(TrActionIconClassName, 'h-5 w-5 text-red-500')}

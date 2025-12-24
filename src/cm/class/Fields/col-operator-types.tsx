@@ -20,12 +20,12 @@ export type optionsOrOptionFetcherType = (
 
 /**
  * セレクトオプションの型定義
- * - id: DBに格納される識別子（必須）
- * - label: UIに表示される値（任意、なければidを文字列化）
+ * - value: DBに格納される値（必須）
+ * - label: UIに表示される値（任意、なければvalueを文字列化）
  * - color: オプションの色（任意）
  */
 export type optionType = {
-  id: any
+  value: any
   label?: string
   color?: string
 } & anyObject

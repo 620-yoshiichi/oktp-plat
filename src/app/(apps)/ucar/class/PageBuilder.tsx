@@ -8,6 +8,9 @@ import ChildCreator from '@cm/components/DataLogic/RTs/ChildCreator/ChildCreator
 
 import {CommonGlobalIdSelector} from '@app/oktpCommon/CommonGlobalIdSelector'
 import {roleMaster} from '@cm/class/builders/PageBuilderVariables'
+import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
+import {Fields} from '@cm/class/Fields/Fields'
+import {Button} from '@cm/components/styles/common-components/Button'
 
 export class PageBuilder {
   static roleMaster = roleMaster
@@ -65,14 +68,55 @@ export class PageBuilder {
     },
   }
   static ucar = {
-    top: () => (
-      <div>
-        {/* 本システムでは
-        <TextRed>{formatDate(UCAR_CONSTANTS.commonQuery.THRESHOLD_DATE)}</TextRed>
-        以降に作成<TextRed>（QRシート発行 または 中古車Gでの受付）</TextRed>
-        がされたもののみが表示されます。 */}
-      </div>
-    ),
+    top: (props: DetailPagePropType) => {
+      const {query, addQuery} = props.useGlobalProps
+      const {BasicForm, latestFormData} = useBasicFormProps({
+        columns: new Fields([
+          //
+          {
+            id: `__search__sateiID`,
+            label: `査定ID`,
+            inputProps: {placeholder: ''},
+            form: {defaultValue: query.__search__sateiID},
+          },
+          {
+            id: `__search__number98`,
+            label: `98番号`,
+            inputProps: {placeholder: '5桁の番号'},
+            form: {defaultValue: query.__search__number98},
+          },
+        ]).transposeColumns(),
+      })
+      return (
+        <BasicForm
+          {...{
+            alignMode: 'row',
+            latestFormData,
+            ControlOptions: {
+              ControlStyle: {
+                width: 120,
+                fontSize: 12,
+                height: 24,
+              },
+            },
+            onSubmit: async data => {
+              const {__search__sateiID, __search__number98} = data
+              addQuery({__search__sateiID, __search__number98})
+            },
+          }}
+        >
+          <Button size="sm">検索</Button>
+        </BasicForm>
+      )
+      return (
+        <div>
+          {/* 本システムでは
+      <TextRed>{formatDate(UCAR_CONSTANTS.commonQuery.THRESHOLD_DATE)}</TextRed>
+      以降に作成<TextRed>（QRシート発行 または 中古車Gでの受付）</TextRed>
+      がされたもののみが表示されます。 */}
+        </div>
+      )
+    },
   }
 
   static getGlobalIdSelector = CommonGlobalIdSelector

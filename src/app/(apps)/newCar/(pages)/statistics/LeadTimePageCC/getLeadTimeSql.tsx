@@ -55,7 +55,7 @@ export const getLeadTimeSql = ({from, to, dataKey, groupBySelect, groupBy, order
     WHERE
       "${dataKey}" >= '${formatDate(from)}'
         AND "${dataKey}" < '${formatDate(Days.month.getNextMonthLastDate(to, 0))}'
-        ${additionalWherePhrase}
+        ${additionalWherePhrase ?? ''}
 
 
 

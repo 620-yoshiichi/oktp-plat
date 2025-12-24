@@ -24,6 +24,7 @@ export const availableNumberWhere: Prisma.Number98WhereInput = {
 
 export const number98Select: Prisma.Number98Select = {
   number: true,
+  sortNumber: true,
   Ucar: {
     select: {sateiID: true},
   },

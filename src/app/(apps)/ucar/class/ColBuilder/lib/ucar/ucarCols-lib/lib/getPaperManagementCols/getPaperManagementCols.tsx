@@ -153,7 +153,7 @@ export const getPaperManagementCols = ({
             <FubiActionTrigger
               {...{
                 UcarData: row,
-                mutateRecords: UseRecordsReturn.mutateRecords,
+                UseRecordsReturn,
               }}
             />
           )

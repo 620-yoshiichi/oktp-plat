@@ -11,7 +11,6 @@ import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doS
 import {toastByResult} from '@cm/lib/ui/notifications'
 
 import React from 'react'
-import {QueryBuilder} from '@app/(apps)/newCar/class/QueryBuilder'
 
 import {atomTypes} from '@cm/hooks/useJotai'
 import {useGlobalModalForm} from '@cm/components/utils/modal/useGlobalModalForm'
@@ -69,13 +68,14 @@ export const CkecnPointForm = ({cp, newCar, setopen, UseRecordsReturn}) => {
     toastByResult(res)
     setopen(null)
     // const {result} = await updateActionStatusByCar({newCar: res.result})
+    // const {result: latestRecord} = await doStandardPrisma(`newCar`, `findUnique`, {
+    //   where: {id: newCar.id},
+    //   include: QueryBuilder.getInclude({}).newCar.include,
+    // })
 
-    const {result: latestRecord} = await doStandardPrisma(`newCar`, `findUnique`, {
-      where: {id: newCar.id},
-      include: QueryBuilder.getInclude({}).newCar.include,
+    await UseRecordsReturn?.refreshSingleRecord({
+      findUniqueWhereArgs: {id: newCar.id},
     })
-
-    UseRecordsReturn?.mutateRecords({record: latestRecord})
   }
 
   const width = 700

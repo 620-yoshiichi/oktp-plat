@@ -62,14 +62,6 @@
     "**/*.spec.ts",
     "**/*.test.ts",
     "coverage",
-    "**/scheme-json-export.js",
-    "src/app/(apps)/QRBP/**/*",
-    "src/app/(apps)/ai21/**/*",
-    "src/app/(apps)/common/**/*",
-    "src/app/(apps)/delivery/**/*",
-    "src/app/(apps)/generated/**/*",
-    "src/app/(apps)/newCar/**/*",
-    "src/app/(apps)/shinren/**/*",
-    "src/app/(apps)/template/**/*"
+    "**/scheme-json-export.js"
   ]
 }

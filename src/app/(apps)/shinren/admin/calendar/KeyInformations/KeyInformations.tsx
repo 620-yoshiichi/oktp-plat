@@ -48,10 +48,10 @@ const KeyInformations = props => {
             const isReadKey = before90Days ? 'isRead' : 'isRead2'
             const IS_READ = record[isReadKey]
 
-            const {color, label, id, value} = calendarDataType ?? {}
+            const {color, label} = calendarDataType ?? {}
 
             return (
-              <tr key={j} className={`border-y-[1px] `} style={{...getColorStyles(color + '80')}}>
+              <tr key={j} className={`border-y `} style={{...getColorStyles(color + '80')}}>
                 <td>{label}</td>
                 <td>{formatDate(date, 'YY-MM-DD(ddd)')}</td>
                 <td>{item}</td>

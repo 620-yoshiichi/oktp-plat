@@ -74,7 +74,7 @@ export class UCAR_CODE {
     CPO: {
       code: '04',
       label: 'CPO',
-      color: '#60w3',
+      color: '#60b330',
     },
     ONLINE: {
       code: '05',

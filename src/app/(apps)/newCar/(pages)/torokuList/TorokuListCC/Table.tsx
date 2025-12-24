@@ -10,22 +10,6 @@ import {T_LINK} from '@cm/components/styles/common-components/links'
 
 export default function Table({cars, setshowEditor}) {
   const TABLE = CsvTable({
-    // headerRecords: [
-    //   {
-    //     csvTableRow: [
-    //       {cellValue: '保留中申請数\n(総数)'},
-    //       {cellValue: '注文番号', style: {minWidth: 90}},
-    //       {cellValue: 'スタッフ(拠点)'},
-    //       {cellValue: '買主\n(名義人)', style: {minWidth: 100}},
-    //       {cellValue: '車名\n(フレームNo)', style: {minWidth: 100}},
-    //       {cellValue: '振当日'},
-    //       {cellValue: '登録予定\n(実績)', style: {minWidth: 100}},
-    //       {cellValue: '入金チェック区分\n(OK/NG)'},
-    //       {cellValue: '過去備考一覧', style: {minWidth: 200}},
-    //       {cellValue: '登録申請最終更新時刻'},
-    //     ],
-    //   },
-    // ],
     records: cars.map(car => {
       const {
         NO_CYUMON,
@@ -140,17 +124,6 @@ export default function Table({cars, setshowEditor}) {
             ),
             style: {minWidth: 80},
           },
-
-          // {
-          //   label: '入金チェック区分\n(OK/NG)',
-          //   cellValue: (
-          //     <>
-          //       <div>{CUSTOM_paymentCheckCustomerType}</div>
-          //       <small>({CUSTOM_paymentCheck ? 'OK' : 'NG'})</small>
-          //     </>
-          //   ),
-          //   style: {minWidth: 80},
-          // },
 
           {
             label: '過去備考一覧',

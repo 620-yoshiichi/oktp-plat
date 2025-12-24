@@ -10,6 +10,7 @@ import {ucarWhere} from '@app/(apps)/ucar/(constants)/ucarWhere'
 import {getAvailable98Numbers} from '@app/(apps)/ucar/(lib)/num98/getAvailable98Numbers'
 import {getMasterPageCommonConfig} from '@cm/components/DataLogic/helpers/getMasterPageCommonConfig'
 import {setCustomParams} from '@cm/components/DataLogic/helpers/SetCustomParams'
+import {Prisma} from '@prisma/generated/prisma/client'
 
 export default async function DynamicMasterPage(props) {
   return getMasterPageCommonConfig({
@@ -58,13 +59,39 @@ const parameters = async ({params, query, session, scopes}) => {
           const {session, scopes} = await initServerComopnent({query})
           const {isHQ, isStoreManager, isSales, carWhere} = scopes.getUcarProps()
 
-          const {result: stores} = await doStandardPrisma(`store`, `findMany`, {
-            orderBy: {name: 'asc'},
-            where: ucarWhere.ucarStores,
-          })
+          const [stores, getAvailable98NumbersReturn] = await Promise.all([
+            (
+              await doStandardPrisma(`store`, `findMany`, {
+                orderBy: {name: 'asc'},
+                where: ucarWhere.ucarStores,
+              })
+            )?.result,
+            await getAvailable98Numbers({take: 20}),
+          ])
 
           const easySearchExtraProps = {stores}
-          const getAvailable98NumbersReturn = await getAvailable98Numbers({take: 10})
+
+          const whereAND: Prisma.UcarWhereInput[] = [
+            //
+            carWhere,
+            {active: true},
+            // {createdAt: {gte: UCAR_CONSTANTS.commonQuery.THRESHOLD_DATE}},
+          ]
+
+          if (query.__search__sateiID) {
+            whereAND.push({
+              sateiID: {
+                contains: query.__search__sateiID,
+              },
+            })
+          }
+          if (query.__search__number98) {
+            whereAND.push({
+              number98: {
+                contains: query.__search__number98,
+              },
+            })
+          }
 
           return {
             editType: {type: `modal`},
@@ -75,13 +102,7 @@ const parameters = async ({params, query, session, scopes}) => {
                 //
                 {createdAt: 'desc'},
               ],
-              where: {
-                AND: [
-                  //
-                  carWhere,
-                  // {createdAt: {gte: UCAR_CONSTANTS.commonQuery.THRESHOLD_DATE}},
-                ],
-              },
+              where: {AND: whereAND},
             },
             easySearchExtraProps,
             PageBuilderExtraProps: {getAvailable98NumbersReturn},

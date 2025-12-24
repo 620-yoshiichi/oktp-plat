@@ -46,13 +46,12 @@ export default function useStatisTicsTable({commonFilterQuery, fromKey, toKey}) 
   )
 
   const {leadTimeAggSql} = SqlGetter({})
+
   useEffect(() => {
-    if (data === null) {
-      fetchRawSql({sql: leadTimeAggSql}).then(d => {
-        setdata(d.rows ?? [])
-      })
-    }
-  }, [query])
+    fetchRawSql({sql: leadTimeAggSql}).then(d => {
+      setdata(d.rows ?? [])
+    })
+  }, [query, leadTimeAggSql])
 
   const Table = (props: {dataToCompare?: any}) => {
     const {dataToCompare} = props

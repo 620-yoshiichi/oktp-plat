@@ -14,7 +14,12 @@ export default function LeadTimePageCC() {
 
   const compareMode = false
 
-  const commonFilterQuery = {dataKey: 'DD_NOSYA', by: `スタッフ`, sort: 'ASC', ...query}
+  const commonFilterQuery = {
+    dataKey: 'DD_NOSYA',
+    by: `スタッフ`,
+    sort: 'ASC',
+    ...query,
+  }
 
   const tableOne = useStatisTicsTable({
     commonFilterQuery,

@@ -1,6 +1,5 @@
 import {C_Stack, R_Stack} from '@cm/components/styles/common-components/common-components'
 
-
 import useSelectedUcarNotesGMF from '@app/(apps)/ucar/(parts)/templateHooks/useSelectedUcarNotesGMF'
 import {Fragment} from 'react'
 import {CsvTable} from '@cm/components/styles/common-components/CsvTable/CsvTable'
@@ -11,11 +10,20 @@ import {ScrollText} from 'lucide-react'
 import Coloring from '@cm/lib/methods/Coloring'
 import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
 import ShadPopover from '@cm/shadcn/ui/Organisms/ShadPopover'
+import {UseRecordsReturn} from '@cm/components/DataLogic/TFs/PropAdjustor/hooks/useRecords/useRecords'
 
-export const FubiActionTrigger = ({UcarData, mutateRecords}: {UcarData: any; mutateRecords: any}) => {
+export const FubiActionTrigger = ({UcarData, UseRecordsReturn}: {UcarData: any; UseRecordsReturn: UseRecordsReturn}) => {
   const selectedUcarNotesGMF = useSelectedUcarNotesGMF()
   return (
-    <C_Stack className={` justify-between `} onClick={() => selectedUcarNotesGMF.setGMF_OPEN({UcarData, mutateRecords})}>
+    <C_Stack
+      className={` justify-between `}
+      onClick={() =>
+        selectedUcarNotesGMF.setGMF_OPEN({
+          UcarData,
+          UseRecordsReturn,
+        })
+      }
+    >
       {UCAR_CODE.PAPER_WORK_NOTE_TYPES.array.map((d, i) => {
         const {code: value} = d
         const NOTE_TYPE = UCAR_CODE.PAPER_WORK_NOTE_TYPES.byCode(value)

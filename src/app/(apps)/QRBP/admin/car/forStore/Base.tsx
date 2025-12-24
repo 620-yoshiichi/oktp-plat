@@ -43,11 +43,11 @@ export default function CarForStoreBase(props: {
   //   serverFetchihngData as serverFetchihngDataType
 
   const countPerPage = BP_Car.const.defaultCountPerPage
-  const HK_USE_RECORDS = useRecords({dataModelName, serverFetchProps, initialModelRecords, countPerPage})
+  const UseRecordsReturn = useRecords({dataModelName, serverFetchProps, initialModelRecords, countPerPage})
 
-  const {formData, setformData} = useInitFormState(null, HK_USE_RECORDS?.records, false, 'car')
+  const {formData, setformData} = useInitFormState(null, UseRecordsReturn?.records, false, 'car')
 
-  const bpNumbersInTable = (HK_USE_RECORDS?.records ?? []).map(record => {
+  const bpNumbersInTable = (UseRecordsReturn?.records ?? []).map(record => {
     return DoubledBP.goodbyCode.make(record)
   })
   const {data: subCarsInCurrentCars = []} = useSWR(`/`, async () => {
@@ -91,11 +91,11 @@ export default function CarForStoreBase(props: {
   }
 
   const {records, setrecords, mutateRecords, deleteRecord, easySearchPrismaDataOnServer, prismaDataExtractionQuery} =
-    HK_USE_RECORDS
+    UseRecordsReturn
 
   const dataViewrProps: ClientPropsType2 = {
     params,
-    totalCount: HK_USE_RECORDS.totalCount,
+    totalCount: UseRecordsReturn.totalCount,
 
     // easySearchObject: initialModelRecords.easySearchObject
     ...commonProps,
@@ -122,7 +122,7 @@ export default function CarForStoreBase(props: {
                 prismaDataExtractionQuery: dataViewrProps.prismaDataExtractionQuery,
                 easySearchPrismaDataOnServer,
                 useGlobalProps,
-                HK_USE_RECORDS: HK_USE_RECORDS,
+                UseRecordsReturn: UseRecordsReturn,
               }}
             />
           </Paper>

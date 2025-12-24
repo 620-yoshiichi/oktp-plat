@@ -48,7 +48,7 @@ export default function CarForCrBase(props: {
 
   const countPerPage = BP_Car.const.defaultCountPerPage
   const dataModelName = 'car'
-  const HK_USE_RECORDS = useRecords({
+  const UseRecordsReturn = useRecords({
     dataModelName,
     fetchTime,
     serverFetchProps,
@@ -56,14 +56,14 @@ export default function CarForCrBase(props: {
     countPerPage,
   })
 
-  const {formData, setformData} = useInitFormState(null, HK_USE_RECORDS?.records, false, 'forCrCarForm')
+  const {formData, setformData} = useInitFormState(null, UseRecordsReturn?.records, false, 'forCrCarForm')
   const [showDamageSelector, setshowDamageSelector] = useState(false)
 
   const handleClose = () => {
     seteditModalOpen(null)
   }
 
-  const bpNumbersInTable = (HK_USE_RECORDS?.records ?? []).map(record => {
+  const bpNumbersInTable = (UseRecordsReturn?.records ?? []).map(record => {
     return DoubledBP.goodbyCode.make(record)
   })
 
@@ -111,11 +111,11 @@ export default function CarForCrBase(props: {
     delete: false,
   }
 
-  const {records, setrecords, mutateRecords, deleteRecord, easySearchPrismaDataOnServer} = HK_USE_RECORDS
+  const {records, setrecords, mutateRecords, deleteRecord, easySearchPrismaDataOnServer} = UseRecordsReturn
 
   const dataViewrProps: ClientPropsType2 = {
     params,
-    totalCount: HK_USE_RECORDS.totalCount,
+    totalCount: UseRecordsReturn.totalCount,
     records,
     setrecords,
     mutateRecords,
@@ -153,7 +153,7 @@ export default function CarForCrBase(props: {
                 dataModelName: dataViewrProps.dataModelName,
                 easySearchPrismaDataOnServer,
                 useGlobalProps,
-                UseRecordsReturn: HK_USE_RECORDS,
+                UseRecordsReturn: UseRecordsReturn,
                 hideEasySearch: dataViewrProps?.myTable?.hideEasySearch,
               }}
             />

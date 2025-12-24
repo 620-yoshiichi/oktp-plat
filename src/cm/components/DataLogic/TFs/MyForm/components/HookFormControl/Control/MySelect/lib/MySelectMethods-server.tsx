@@ -32,8 +32,8 @@ export const convertColIdToModelName = ({col}) => {
 
 /**
  * オプション配列を正規化する
- * - id: DBに格納される識別子（必須）
- * - label: UIに表示される値（なければidを文字列化）
+ * - value: DBに格納される値（必須）
+ * - label: UIに表示される値（なければvalueを文字列化）
  */
 export const mapAdjustOptionValue = (optionObjArr: optionType[]) => {
   if (!Array.isArray(optionObjArr ?? [])) {
@@ -43,18 +43,21 @@ export const mapAdjustOptionValue = (optionObjArr: optionType[]) => {
 }
 
 function normalizeOption(optionObj: any): optionType {
-  // プリミティブ値の場合はそのままidとして使用
+  // プリミティブ値の場合はそのままvalueとして使用
   if (typeof optionObj !== 'object' || optionObj === null) {
     return {
-      id: optionObj,
+      value: optionObj,
       label: String(optionObj ?? ''),
     }
   }
 
-  // Prismaデータ（id/name）から変換
+  // Prismaデータ（id/name）やカスタムデータから変換
+  // value > id の優先順位で取得
+  const value = optionObj.value ?? optionObj.id
+
   return {
-    id: optionObj.id,
-    label: optionObj.label ?? optionObj.name ?? String(optionObj.id ?? ''),
+    value,
+    label: optionObj.label ?? optionObj.name ?? String(value ?? ''),
     color: optionObj.color,
   }
 }

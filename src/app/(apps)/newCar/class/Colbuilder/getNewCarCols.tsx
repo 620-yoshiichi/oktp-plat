@@ -37,12 +37,14 @@ export const getNewCarCols = (props: columnGetterType) => {
   const {pathname, query, accessScopes} = props.useGlobalProps
 
   const {newCarWhere, isStoreManager, isHQ} = accessScopes().getNewCarProps()
+
   const {storeId} = newCarWhere
 
   const stuffSwitcherGMF = useStuffSwitcher()
   const tempoTsuikoGMF = useTempoTsuikoGMF()
 
-  const HK_USE_RECORDS = props.ColBuilderExtraProps?.HK_USE_RECORDS as UseRecordsReturn
+  const UseRecordsReturn = props.ColBuilderExtraProps?.UseRecordsReturn as UseRecordsReturn
+
   return new Fields([
     ...new Fields([
       {id: `NO_CYUMON`, label: `注文No`, search: {}},
@@ -92,7 +94,9 @@ export const getNewCarCols = (props: columnGetterType) => {
       {
         id: `userId`,
         label: `担当`,
-        forSelect: {config: getForSelectWhere({storeId})},
+        forSelect: {
+          config: getForSelectWhere({storeId}),
+        },
         format: (value, row) => {
           const switched = row.orderSwitchingHisotoryId ? true : false
           if (isStoreManager || isHQ) {
@@ -238,7 +242,7 @@ export const getNewCarCols = (props: columnGetterType) => {
       {
         id: `KB_OSSSIN`,
         label: 'OSS',
-        search: {},
+
         format: (value, row, col) => {
           if (isDev) {
             if (!row.KB_OSSSIN) {
@@ -319,7 +323,7 @@ export const getNewCarCols = (props: columnGetterType) => {
                       newCar: params.newCar,
                       usedIn: 'newCarList',
                       onRefresh: () => {
-                        HK_USE_RECORDS.updateData()
+                        UseRecordsReturn.updateData()
                       },
                     })
                   },
@@ -340,7 +344,6 @@ export const getNewCarCols = (props: columnGetterType) => {
     {
       id: `CUSTOM_paymentCheckCustomerType`,
       label: '入金チェック区分',
-      search: {},
       td: {hidden: true},
     },
 
@@ -354,7 +357,7 @@ export const getNewCarCols = (props: columnGetterType) => {
               <CheckPointList
                 {...{
                   newCar,
-                  HK_USE_RECORDS,
+                  UseRecordsReturn,
                   width: 180,
                 }}
               />

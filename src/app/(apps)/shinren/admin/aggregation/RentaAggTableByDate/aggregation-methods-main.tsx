@@ -79,7 +79,10 @@ export const GET_ALL_AGG_DATA = async (props: {userIdWhere; whereQuery; commonBy
         promptActivityCount,
       })
 
-      const CustomVisitTypeMaster = [{value: '新規(計)', color: '#ff0000'}, ...Shinren.constants.visitTypes]
+      const CustomVisitTypeMaster = [
+        {value: '新規(計)', label: '新規(計)', color: '#ff0000'},
+        ...Shinren.constants.visitTypes.map(v => ({value: v.value, label: v.value, color: v.color})),
+      ]
 
       const visitTypeCount = await createUserGroupedByArr({
         user,
@@ -118,7 +121,7 @@ export const GET_ALL_AGG_DATA = async (props: {userIdWhere; whereQuery; commonBy
         GroupedByArrSort: outcomeGroupedByArr,
         MASTER: {
           Array: outcomeMasters.map(op => {
-            return {...op, label: op.name, value: String(op.id)}
+            return {...op, value: op.id, label: op.name}
           }),
           dataKey: 'outcomeMasterId',
         },
@@ -130,7 +133,7 @@ export const GET_ALL_AGG_DATA = async (props: {userIdWhere; whereQuery; commonBy
         GroupedByArrSort: purposeGroupedByArr,
         MASTER: {
           Array: purposeMaters.map(op => {
-            return {...op, label: op.name, value: String(op.id)}
+            return {...op, value: op.id, label: op.name}
           }),
           dataKey: 'purposeMasterId',
         },
