@@ -50,7 +50,6 @@ const QrCreatePageCC = () => {
 
   if (isUcarLoading || isUpassLoading) return <></>
 
-  console.log({isLastSateiId}) //logs
   return (
     <div className={`p-4`}>
       <FitMargin>

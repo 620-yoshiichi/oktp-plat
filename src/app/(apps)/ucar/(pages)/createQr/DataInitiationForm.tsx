@@ -43,7 +43,6 @@ export const DataInitiationForm = ({stores, ucar, toggleLoad, session, sateiID_I
       ...data,
     }
 
-    return
     await toggleLoad(async () => {
       const res = await doStandardPrisma('ucar', 'upsert', {
         where: {
@@ -64,6 +63,7 @@ export const DataInitiationForm = ({stores, ucar, toggleLoad, session, sateiID_I
   if (!stores) {
     return <></>
   }
+
   return (
     <C_Stack className="gap-4">
       {!hasUpassData && <TextRed className="text-sm  mb-2">UPASSDBにデータがありません。車両情報を入力してください。</TextRed>}

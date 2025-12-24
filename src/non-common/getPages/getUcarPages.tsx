@@ -6,7 +6,7 @@ export const getUcarPages = (props: PageGetterType) => {
   const {session, rootPath, pathname, query, roles} = props
 
   const scopes = getScopes(session, {query, roles})
-
+  const {admin} = scopes
   const ucarProps = scopes.getUcarProps()
 
   const {isUcarMember, isHQ, isChukoshaGroup} = ucarProps
@@ -16,16 +16,21 @@ export const getUcarPages = (props: PageGetterType) => {
       tabId: 'ucar',
       label: 'Ucar業務',
 
-      exclusiveTo: isUcarMember,
       ROOT: [rootPath],
       children: [
-        {tabId: 'createQr', label: 'QR発行', ROOT: [rootPath]},
+        {
+          tabId: 'createQr',
+          label: 'QR発行',
+          ROOT: [rootPath],
+          exclusiveTo: isUcarMember,
+        },
         {
           tabId: 'ucar',
           label: '車両一覧',
           link: {
             query: {displayColumns: '下取書類,商品化'},
           },
+          exclusiveTo: isUcarMember,
         },
 
         {
@@ -38,21 +43,20 @@ export const getUcarPages = (props: PageGetterType) => {
           label: '工程登録',
           hide: true,
           ROOT: [rootPath],
+          exclusiveTo: isUcarMember,
         },
       ],
     },
     {
       tabId: '',
       label: '中古車G',
-
       ROOT: [rootPath],
       children: [
         {
           tabId: 'ucar',
           label: '書類管理',
-          link: {
-            query: {displayColumns: '下取書類,商品化'},
-          },
+          link: {query: {displayColumns: '下取書類,商品化'}},
+          exclusiveTo: isHQ || isChukoshaGroup || admin,
         },
         {
           tabId: 'ucar',
@@ -60,22 +64,33 @@ export const getUcarPages = (props: PageGetterType) => {
           link: {
             query: {displayColumns: '自動車税'},
           },
+          exclusiveTo: isHQ || isChukoshaGroup || admin,
         },
-        {tabId: 'tax-keiri', label: '自動車税 - 依頼中', ROOT: [rootPath]},
-        {tabId: 'tax-keiri', label: '自動車税 - 経理', ROOT: [rootPath]},
+        {
+          tabId: 'tax-keiri',
+          label: '自動車税 - 依頼中',
+          ROOT: [rootPath],
+          exclusiveTo: isHQ || isChukoshaGroup || admin,
+        },
+        {
+          tabId: 'tax-keiri',
+          label: '自動車税 - 経理',
+          ROOT: [rootPath],
+          exclusiveTo: isHQ || isChukoshaGroup || admin,
+        },
 
         {
           tabId: 'familyTree',
           label: 'ファミリーツリー',
           ROOT: [rootPath],
+          exclusiveTo: isHQ || isChukoshaGroup || admin,
         },
       ],
-      // exclusiveTo: isHQ || isChukoshaGroup,
     },
     {
       tabId: '',
       label: '本部',
-      // exclusiveTo: isHQ,
+      exclusiveTo: isHQ || isChukoshaGroup || admin,
       ROOT: [rootPath],
       children: [
         {tabId: 'kouteiKanri', label: '工程管理', ROOT: [rootPath]},
@@ -86,7 +101,7 @@ export const getUcarPages = (props: PageGetterType) => {
     {
       tabId: '',
       label: '設定',
-      // exclusiveTo: scopes.admin,
+      exclusiveTo: admin,
       ROOT: [rootPath],
       children: [
         {tabId: 'store', label: '拠点', link: {}},

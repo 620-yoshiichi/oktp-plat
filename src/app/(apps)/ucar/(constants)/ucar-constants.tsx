@@ -4,6 +4,7 @@ import {Prisma} from '@prisma/generated/prisma/client'
 import {defaultRegister} from '@cm/class/builders/ColBuilderVariables'
 import {isDev} from '@cm/lib/methods/common'
 import {toUtc} from '@cm/class/Days/date-utils/calculations'
+const showDefaultValue = isDev
 
 export const sold: Prisma.UcarWhereInput = {
   // KI_HANKAKA: {gt: 0}
@@ -54,88 +55,102 @@ export const UCAR_CONSTANTS = {
       new Fields([
         {
           id: `tmpPlate`,
-          form: {...defaultRegister, defaultValue: isDev ? 'tmpPlate' : null},
+          form: {...defaultRegister, defaultValue: showDefaultValue ? '1625' : null},
           label: `プレート番号`,
           type: 'text',
+          inputProps: {placeholder: '1625'},
         },
         {
           id: `tmpVehicleNo`,
-          form: {...defaultRegister, defaultValue: isDev ? 'tmpVehicleNo' : null},
+          form: {...defaultRegister, defaultValue: showDefaultValue ? 'AZSH35-4002743' : null},
           label: `車両No`,
           type: 'text',
+          inputProps: {placeholder: 'AZSH35-4002743'},
         },
         {
           id: `tmpColor`,
-          form: {...defaultRegister, defaultValue: isDev ? 'tmpColor' : null},
+          form: {...defaultRegister, defaultValue: showDefaultValue ? 'パール' : null},
           label: `色`,
           type: 'text',
+          inputProps: {placeholder: 'パール'},
         },
         {
           id: `tmpModelYear`,
-          form: {...defaultRegister, defaultValue: isDev ? 'tmpModelYear' : null},
+          form: {...defaultRegister, defaultValue: showDefaultValue ? '3' : null},
           label: `年式`,
           type: 'text',
+          inputProps: {placeholder: '3'},
         },
         {
           id: `tmpBrandName`,
-          form: {...defaultRegister, defaultValue: isDev ? 'tmpBrandName' : null},
+          form: {...defaultRegister, defaultValue: showDefaultValue ? 'トヨタ' : null},
           label: `ブランド名`,
           type: 'text',
+          inputProps: {placeholder: 'トヨタ'},
         },
         {
           id: `tmpModelName`,
-          form: {...defaultRegister, defaultValue: isDev ? 'tmpModelName' : null},
+          form: {...defaultRegister, defaultValue: showDefaultValue ? 'ｸﾗｳﾝ ｸﾛｽｵｰﾊﾞｰ' : null},
           label: `車種名`,
           type: 'text',
+          inputProps: {placeholder: 'ｸﾗｳﾝ ｸﾛｽｵｰﾊﾞｰ'},
         },
         {
           id: `tmpGrade`,
-          form: {...defaultRegister, defaultValue: isDev ? 'tmpGrade' : null},
+          form: {...defaultRegister, defaultValue: showDefaultValue ? '2.5 CROSSOVER G"Advanced･Leather Package"' : null},
           label: `グレード`,
           type: 'text',
+          inputProps: {placeholder: '2.5 CROSSOVER G"Advanced･Leather Package"'},
         },
         {
           id: `tmpType`,
-          form: {...defaultRegister, defaultValue: isDev ? 'tmpType' : null},
+          form: {...defaultRegister, defaultValue: showDefaultValue ? '6AA-AZSH35' : null},
           label: `型式`,
           type: 'text',
+          inputProps: {placeholder: '6AA-AZSH35'},
         },
         {
           id: `tmpCommonType`,
-          form: {...defaultRegister, defaultValue: isDev ? 'tmpCommonType' : null},
+          form: {...defaultRegister, defaultValue: showDefaultValue ? 'AZSH35-AEXMB' : null},
           label: `通称型式`,
           type: 'text',
+          inputProps: {placeholder: 'AZSH35-AEXMB'},
         },
         {
           id: `tmpFrameNumber`,
-          form: {...defaultRegister, defaultValue: isDev ? 'tmpFrameNumber' : null},
+          form: {...defaultRegister, defaultValue: showDefaultValue ? '4002743' : null},
           label: `フレーム番号`,
           type: 'text',
+          inputProps: {placeholder: '4002743'},
         },
         {
           id: `tmpTransmissionType`,
-          form: {...defaultRegister, defaultValue: isDev ? 'tmpTransmissionType' : null},
+          form: {...defaultRegister, defaultValue: showDefaultValue ? 'AT' : null},
           label: `ミッション名称`,
           type: 'text',
+          inputProps: {placeholder: 'AT'},
         },
         {
           id: `tmpRegistrationClassNumber`,
-          form: {...defaultRegister, defaultValue: isDev ? 'tmpRegistrationClassNumber' : null},
+          form: {...defaultRegister, defaultValue: showDefaultValue ? '330' : null},
           label: `分類番号`,
           type: 'text',
+          inputProps: {placeholder: '330'},
         },
         {
           id: `tmpRegistrationKana`,
-          form: {...defaultRegister, defaultValue: isDev ? 'tmpRegistrationKana' : null},
+          form: {...defaultRegister, defaultValue: showDefaultValue ? 'ひ' : null},
           label: `かな`,
           type: 'text',
+          inputProps: {placeholder: 'ひ'},
         },
         {
           id: `tmpLandAffairsName`,
-          form: {...defaultRegister, defaultValue: isDev ? 'tmpLandAffairsName' : null},
+          form: {...defaultRegister, defaultValue: showDefaultValue ? '倉敷' : null},
           label: `陸事名`,
           type: 'text',
+          inputProps: {placeholder: '倉敷'},
         },
-      ]).buildFormGroup({groupName: '車両情報（UPASSDBにデータがない場合）'}).plain,
+      ]).buildFormGroup({groupName: '車両情報（当日査定の場合必須）'}).plain,
   },
 }

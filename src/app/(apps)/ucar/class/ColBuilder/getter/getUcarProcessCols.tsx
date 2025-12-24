@@ -42,7 +42,11 @@ export const getUcarProcessCols = (props: columnGetterType) => {
         id: 'userId',
         label: 'ユーザー',
         forSelect: {},
-        form: {disabled: true, defaultValue: userId, ...defaultRegister},
+        form: {
+          disabled: true,
+          defaultValue: userId,
+          ...defaultRegister,
+        },
       },
       {
         id: 'processCode',
