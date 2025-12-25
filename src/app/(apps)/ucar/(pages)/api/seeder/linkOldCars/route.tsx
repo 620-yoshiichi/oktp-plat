@@ -2,6 +2,7 @@ import {NextRequest, NextResponse} from 'next/server'
 import prisma from 'src/lib/prisma'
 import {processBatchWithRetry} from '@cm/lib/server-actions/common-server-actions/processBatchWithRetry'
 import {handlePrismaError} from '@cm/lib/prisma-helper'
+import {isDev} from '@cm/lib/methods/common'
 
 /**
  * Ucar と OldCars_Base の紐付けバッチ処理
@@ -25,6 +26,15 @@ export const POST = async (req: NextRequest) => {
     skipped: 0,
     errors: [],
   }
+
+  if (!isDev) {
+    return NextResponse.json({message: 'This is not allowed in production', ...result})
+  }
+
+  await prisma.ucar.updateMany({
+    where: {number98: {not: ''}},
+    data: {DD_SIIRE: null},
+  })
 
   // 98番号が入力されていて、OldCars_Baseとの紐付けがされていないUcarを取得
   const ucarsWithNumber98 = await prisma.ucar.findMany({
@@ -60,13 +70,11 @@ export const POST = async (req: NextRequest) => {
             const latestOldCar = await prisma.oldCars_Base.findFirst({
               where: {
                 NO_SYARYOU: ucar?.number98 ?? '',
-                DD_SIIRE: {
-                  not: null,
-                },
-                NO_SIRETYUM: {
-                  not: null,
-                  notIn: [''],
-                },
+                DD_SIIRE: {not: null},
+                // NO_SIRETYUM: {
+                //   not: null,
+                //   notIn: [''],
+                // },
               },
               orderBy: {
                 DD_SIIRE: 'desc', // 仕入日の降順で最新を取得

@@ -1046,7 +1046,7 @@ model TenpoTsuikoData {
 datasource db {
   provider     = "postgresql"
   relationMode = "prisma"
-  url = "postgres://mutsuo:timeSpacer817@localhost:5432/ucar"
+  url = "postgresql://neondb_owner:npg_4zMwB2exIHQX@ep-green-lake-a1bs7dwq-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require"
 }
 
 generator client {
