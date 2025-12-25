@@ -2,13 +2,14 @@
 import React from 'react'
 import {getSession, signIn} from 'next-auth/react'
 import useGlobal from 'src/cm/hooks/globalHooks/useGlobal'
-import {basePath} from 'src/cm/lib/methods/common'
+import {basePath, sleep} from 'src/cm/lib/methods/common'
 
 import {toast} from 'react-toastify'
 import useBasicFormProps from 'src/cm/hooks/useBasicForm/useBasicFormProps'
 import {Fields} from 'src/cm/class/Fields/Fields'
 import {fetchAlt} from '@cm/lib/http/fetch-client'
 import {Button} from '@cm/components/styles/common-components/Button'
+import {CheckLogin} from '@app/api/prisma/login/checkLogin'
 
 export default function LoginForm(props) {
   const {error} = props
@@ -46,31 +47,33 @@ export default function LoginForm(props) {
                 ControlStyle: {width: 250},
               },
               onSubmit: async data => {
-                const apiPath = `${basePath}/api/prisma/login`
-                const user = await fetchAlt(apiPath, {
-                  email: data.email,
-                  password: data.password,
-                })
-                if (!user) {
-                  toast.error(`正しい認証情報を入力してください。`)
-                  return
-                }
+                toggleLoad(
+                  async () => {
+                    const user = await CheckLogin({authId: data.loginKeyField, authPw: data.password})
 
-                // const result = await toggleLoad(async () => {
-                const result = await signIn('credentials', {
-                  email: data.email,
-                  password: data.password,
-                  redirect: false,
-                })
+                    if (!user) {
+                      toast.error(`正しい認証情報を入力してください。`)
+                      return
+                    }
+                    // const result = await toggleLoad(async () => {
+                    const result = await signIn('credentials', {
+                      loginKeyField: data.loginKeyField,
+                      password: data.password,
+                      redirect: false,
+                    })
 
-                if (result?.ok) {
-                  const session = await getSession()
-                  toast.success(`ログインしました。`)
-                  router.refresh()
-                } else if (result?.error) {
-                  toast.error(`ログインに失敗しました。:${result.error}`)
-                }
-                // })
+                    if (result?.ok) {
+                      // const session = await getSession()
+                      toast.success(`ログインしました。`)
+
+                      await sleep(500)
+                      router.push(`/`)
+                    } else if (result?.error) {
+                      toast.error(`ログインに失敗しました。:${result.error}`)
+                    }
+                  },
+                  {refresh: false, mutate: false}
+                )
               },
             }}
           >

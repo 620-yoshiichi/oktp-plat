@@ -17,6 +17,7 @@ import {cl} from 'src/cm/lib/methods/common'
 import {confirmSearch} from '@cm/components/DataLogic/TFs/MyTable/components/SearchHandler/SearchHandler'
 import {Padding} from '@cm/components/styles/common-components/common-components'
 
+import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
 import useWindowSize from '@cm/hooks/useWindowSize'
 import {useJotaiByKey} from '@cm/hooks/useJotai'
 import {Button} from '@cm/components/styles/common-components/Button'
@@ -61,8 +62,9 @@ export const useSearchHandler = (props: SearchHandler) => {
   //confirm
   const ResetBtnMemo = useMemo(() => {
     return (
-      <Button
+      <IconBtn
         {...{
+          rounded: false,
           color: `red`,
           onClick: () => {
             addQuery({[searchQueryKey]: ``})
@@ -71,7 +73,7 @@ export const useSearchHandler = (props: SearchHandler) => {
         }}
       >
         解除
-      </Button>
+      </IconBtn>
     )
   }, [query, allData, ReactHookForm, modalOpen])
 
@@ -161,7 +163,7 @@ export const useSearchHandler = (props: SearchHandler) => {
                 addQuery,
               }}
             />
-            {/* {ResetBtnMemo} */}
+            {ResetBtnMemo}
           </R_Stack>
         </div>
       )

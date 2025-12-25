@@ -29,6 +29,7 @@ import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
 import ShadModal from '@cm/shadcn/ui/Organisms/ShadModal'
 import {defaultRegister} from '@cm/class/builders/ColBuilderVariables'
 import {GoogleSheet_Append} from '@app/api/google/actions/sheetAPI'
+import {getAvailable98Numbers} from '../../(lib)/num98/getAvailable98Numbers'
 
 export const UCAR_TABLE_ROW_HEIGHT = 120
 
@@ -123,22 +124,41 @@ export const ucarColBuilder = (props: columnGetterType) => {
             sortNumber: 'number',
           },
         },
-        optionsOrOptionFetcher: [
-          currentNumber98
-            ? {
-                value: currentNumber98,
-                label: currentNumber98,
-              }
-            : undefined,
+        optionsOrOptionFetcher: async ({searchInput}) => {
+          const getAvailable98NumbersReturn = await getAvailable98Numbers({
+            additionalWhere: {
+              number: {
+                contains: searchInput ?? '',
+              },
+            },
+          })
+          return {
+            optionObjArr: [
+              ...getAvailable98NumbersReturn?.available98Numbers.map(d => {
+                return {
+                  value: d.number,
+                  label: String(d.sortNumber) ?? '',
+                }
+              }),
+            ],
+          }
+        },
+        // optionsOrOptionFetcher: [
+        //   currentNumber98
+        //     ? {
+        //         value: currentNumber98,
+        //         label: currentNumber98,
+        //       }
+        //     : undefined,
 
-          ...getAvailable98NumbersReturn?.available98Numbers.map(d => {
-            const str = String(d.sortNumber)
-            return {
-              value: d.number,
-              label: d.sortNumber,
-            }
-          }),
-        ].filter(d => Boolean),
+        //   ...getAvailable98NumbersReturn?.available98Numbers.map(d => {
+        //     const str = String(d.sortNumber)
+        //     return {
+        //       value: d.number,
+        //       label: d.sortNumber,
+        //     }
+        //   }),
+        // ].filter(d => Boolean),
       },
     },
     {

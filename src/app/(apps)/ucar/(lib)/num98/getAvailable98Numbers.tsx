@@ -4,12 +4,13 @@ import {superTrim} from '@cm/lib/methods/common'
 import prisma from 'src/lib/prisma'
 
 import {availableNumberWhere, number98Select} from '@app/(apps)/ucar/(lib)/num98/num98Constants'
+import {Prisma} from '@prisma/generated/prisma/client'
 
 export type getAvailable98NumbersReturn = Awaited<ReturnType<typeof getAvailable98Numbers>>
 export type number98Item = Awaited<ReturnType<typeof getAvailable98Numbers>>['available98Numbers'][number]
 
-export const getAvailable98Numbers = async (props: {take?: number}) => {
-  const {take = 10} = props
+export const getAvailable98Numbers = async (props: {take?: number; additionalWhere?: Prisma.Number98WhereInput}) => {
+  const {take = 10, additionalWhere = {}} = props
   const lastnNmber98History = await prisma.number98IssueHistory.findFirst({
     orderBy: [{createdAt: `desc`}],
     take: 1,
@@ -39,7 +40,8 @@ export const getAvailable98Numbers = async (props: {take?: number}) => {
       AND: [
         // 利用中の98番号を除外
         {...availableNumberWhere},
-        {sortNumber: {gt: Number(superTrim(nextNumber98))}},
+        {sortNumber: {gte: Number(superTrim(nextNumber98))}},
+        additionalWhere,
       ],
     },
 
@@ -56,6 +58,7 @@ export const getAvailable98Numbers = async (props: {take?: number}) => {
           // 利用中の98番号を除外
           {...availableNumberWhere},
           {sortNumber: {lte: Number(superTrim(nextNumber98))}},
+          additionalWhere,
         ],
       },
       take,

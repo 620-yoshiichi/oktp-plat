@@ -32,7 +32,7 @@ export class DoubledBP {
 
   static params = {
     create: car => {
-      const params = {bpNumber: car.bpNumber, orderedAt: formatDate(car.orderedAt)}
+      const params = {bpNumber: car?.bpNumber, orderedAt: formatDate(car?.orderedAt)}
       return params
     },
     getCarByParams: async ({bpNumber, orderedAtString}) => {

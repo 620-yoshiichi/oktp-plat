@@ -11,6 +11,7 @@ export type transposeColumnsOptionProps = {
 export type optionsOrOptionFetcherProps = {
   latestFormData?: anyObject
   col: colType
+  searchInput?: string
   // additionalQuery?: anyObject
 }
 
