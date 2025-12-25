@@ -14,7 +14,7 @@ export const getUcarPages = (props: PageGetterType) => {
   const pathSource: pathItemType[] = [
     {
       tabId: 'ucar',
-      label: 'Ucar業務',
+      label: 'QRメイン機能',
 
       ROOT: [rootPath],
       children: [
