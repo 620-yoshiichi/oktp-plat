@@ -20,7 +20,9 @@ export class BP_Car {
     ProcessOrderBy: [
       //
       {date: 'asc'},
-      {ProcessNameMaster: {sortOrder: 'asc'}},
+      {
+        ProcessNameMaster: {sortOrder: 'asc'},
+      },
       {id: 'asc'},
     ],
     carTypes: [
@@ -53,9 +55,9 @@ export class BP_Car {
 
     timeTypes: [
       ...new Array(500).fill('').map((dummy, idx) => {
-        const value = NumHandler.round((Number(idx + 1) * 10) / 100, 1).toFixed(1)
-
-        return {id: value, value, name: value}
+        const value = NumHandler.round((Number(idx + 1) * 10) / 100, 1)
+        const label = value.toFixed(1)
+        return {value, label}
       }),
     ],
 

@@ -13,6 +13,7 @@ import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doS
 import {Days} from '@cm/class/Days/Days'
 import {formatDate} from '@cm/class/Days/date-utils/formatters'
 import {separateFormData} from '@cm/lib/formMethods/separateFormData'
+import {getMidnight} from '@cm/class/Days/date-utils/calculations'
 
 export const createCrCar = async ({session, toggleLoad, latestFormData, formData: oldFormData, columns}) => {
   if (!String(latestFormData?.bpNumber).startsWith('30')) {
@@ -44,6 +45,7 @@ export const createCrCar = async ({session, toggleLoad, latestFormData, formData
                 processNameMasterId: Number(acceptionProcess.id),
                 userId: session?.id,
                 storeId: latestFormData?.storeId,
+                date: getMidnight(new Date()),
               },
             ],
           },

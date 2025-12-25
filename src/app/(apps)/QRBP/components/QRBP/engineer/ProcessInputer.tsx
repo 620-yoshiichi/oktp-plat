@@ -18,6 +18,7 @@ import TableForm from '@cm/components/DataLogic/TFs/PropAdjustor/components/Tabl
 import {useParams} from 'next/navigation'
 import useInitFormState from '@cm/hooks/useInitFormState'
 import CarProcessChildCreator from '@app/(apps)/QRBP/components/QRBP/forCr/CarProcessChildCreator'
+import {BP_Car} from '@app/(apps)/QRBP/class/BP_Car'
 
 export default function ProcessInputer({
   serverFetchProps,
@@ -63,7 +64,7 @@ export default function ProcessInputer({
           formData,
           setformData,
           columns,
-          additional: {},
+
           myForm: {alignMode: 'console'},
           myTable: {
             ...myTable,
