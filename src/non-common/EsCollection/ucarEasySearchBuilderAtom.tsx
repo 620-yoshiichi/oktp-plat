@@ -27,10 +27,13 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
 
   type EsObj = EasySearchObjectAtom<Prisma.UcarWhereInput>
 
+  const isNotYoyakuwaku = {
+    OR: [{daihatsuReserve: null}, {daihatsuReserve: ''}],
+  }
   const commonWhere: Prisma.UcarWhereInput = {
     AND: [
       //
-      {daihatsuReserve: null},
+      isNotYoyakuwaku,
       UCAR_CONSTANTS.commonQuery,
     ],
   }
@@ -128,7 +131,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     CONDITION: {
       AND: [
         //
-        commonWhere,
+
         {number98: {not: ''}},
         {OldCars_Base: {DD_SIIRE: {not: null}}},
       ],
@@ -140,7 +143,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     CONDITION: {
       AND: [
         //
-        commonWhere,
+
         {number98: {not: ''}},
         {NOT: {OldCars_Base: {DD_SIIRE: {not: null}}}},
       ],
@@ -152,7 +155,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     CONDITION: {
       AND: [
         //
-        commonWhere,
+
         {number98: ''},
       ],
     },
@@ -288,8 +291,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     CONDITION: {
       AND: [
         //
-        commonWhere,
-        {daihatsuReserve: {not: null}},
+        {NOT: isNotYoyakuwaku},
       ],
     },
   }

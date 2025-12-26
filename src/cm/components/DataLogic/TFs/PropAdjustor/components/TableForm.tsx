@@ -24,8 +24,6 @@ const TableForm = (props: ClientPropsType2) => {
 
   const {EditForm, myForm, myModal, setformData, formData} = props
 
-  // console.log(formData?.id)  //logs
-
   // ✅ オブジェクト作成なのでメモ化有効
   const modalStyle = {
     padding: '10px 10px',
@@ -40,7 +38,6 @@ const TableForm = (props: ClientPropsType2) => {
   )
   formComponent
 
-  console.log(formData) //logs
   return (
     <div>
       <MyTable ClientProps2={ClientProps2} />

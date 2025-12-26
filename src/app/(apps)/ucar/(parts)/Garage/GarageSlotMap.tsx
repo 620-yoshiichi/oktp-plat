@@ -11,6 +11,7 @@ import {C_Stack, R_Stack} from '@cm/components/styles/common-components/common-c
 import {Card} from '@cm/shadcn/ui/card'
 import {TextGray, TextGreen, TextLink, TextRed} from '@cm/components/styles/common-components/Alert'
 import {isGarageSlotAvailable} from '@app/(apps)/ucar/(lib)/garage/garageUtils'
+import {Button} from '@cm/components/styles/common-components/Button'
 
 export default function GarageSlotMap({
   isValidating,
@@ -80,7 +81,10 @@ export default function GarageSlotMap({
               return (
                 <C_Stack
                   key={i}
-                  className={` border rounded gap-1 p-1.5 ${isCurrentSlot ? 'bg-blue-50 border-blue-500 border-2   ' : ''}`}
+                  className={` border rounded gap-1 p-1.5
+                    ${Status.available ? 'border-2 border-yellow-500 bg-yellow-50' : 'opacity-30'}
+                    ${isCurrentSlot ? 'bg-blue-50 border-blue-500 border-2' : ''}
+                    `}
                 >
                   <R_Stack className={`  justify-between `}>
                     <R_Stack className={`gap-0.5`}>
@@ -108,7 +112,7 @@ export default function GarageSlotMap({
                     {/* <span className={occupiedSlotCount > 0 ? '' : 'opacity-30'}>{occupiedSlotCount}</span>
                     <small>/ </small> */}
                   </R_Stack>
-                  <R_Stack className={` justify-end`}>
+                  <R_Stack className={` justify-end `}>
                     <div>
                       {isCurrentSlot ? (
                         <TextGreen className={` font-bold`}>適応中</TextGreen>
@@ -116,7 +120,8 @@ export default function GarageSlotMap({
                         currentSlot?.id ? (
                           <TextGray>{Status.label}</TextGray>
                         ) : (
-                          <TextLink
+                          <Button
+                            size="sm"
                             className={usedByCurrentCar ? 'disabled' : ''}
                             onClick={async () => {
                               const query: Prisma.AppliedUcarGarageSlotCreateArgs = {
@@ -150,10 +155,10 @@ export default function GarageSlotMap({
                             }}
                           >
                             発行
-                          </TextLink>
+                          </Button>
                         )
                       ) : (
-                        <TextRed>{Status.label}</TextRed>
+                        <TextRed className={`text-xs`}>{Status.label}</TextRed>
                       )}
 
                       {/* {occupiedSlotCount === 0 ? (

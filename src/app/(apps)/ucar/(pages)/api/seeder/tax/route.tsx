@@ -150,7 +150,6 @@ export const POST = async (req: NextRequest) => {
               : undefined,
             paybackScheduledAt: paybackScheduledAt ? toIsoDate(paybackScheduledAt) : undefined,
 
-            customerName: taxCustomerName || undefined,
             upperCarregisteredAt: upperCarregisteredAt ? toIsoDate(upperCarregisteredAt) : undefined,
             annualTax: annualTax ? Number(annualTax) : undefined,
             earlyYear: earlyYear ? Number(earlyYear) : undefined,
