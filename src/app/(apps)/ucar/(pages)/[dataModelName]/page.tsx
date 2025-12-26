@@ -11,6 +11,7 @@ import {getAvailable98Numbers} from '@app/(apps)/ucar/(lib)/num98/getAvailable98
 import {getMasterPageCommonConfig} from '@cm/components/DataLogic/helpers/getMasterPageCommonConfig'
 import {setCustomParams} from '@cm/components/DataLogic/helpers/SetCustomParams'
 import {Prisma} from '@prisma/generated/prisma/client'
+import {UCAR_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-constants'
 
 export default async function DynamicMasterPage(props) {
   return getMasterPageCommonConfig({
@@ -74,8 +75,8 @@ const parameters = async ({params, query, session, scopes}) => {
           const whereAND: Prisma.UcarWhereInput[] = [
             //
             carWhere,
-            {active: true},
-            // {createdAt: {gte: UCAR_CONSTANTS.commonQuery.THRESHOLD_DATE}},
+
+            {...UCAR_CONSTANTS.commonQuery},
           ]
 
           if (query.__search__sateiID) {

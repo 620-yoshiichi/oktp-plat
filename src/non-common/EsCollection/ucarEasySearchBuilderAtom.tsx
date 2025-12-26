@@ -31,7 +31,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     AND: [
       //
       {daihatsuReserve: null},
-      UCAR_CONSTANTS.commonQuery.THRESHOLD_ARRIVED_AT, //受付日の制限,
+      UCAR_CONSTANTS.commonQuery,
     ],
   }
 

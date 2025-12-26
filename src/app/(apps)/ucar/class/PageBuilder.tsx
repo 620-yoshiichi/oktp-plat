@@ -108,14 +108,7 @@ export class PageBuilder {
           <Button size="sm">検索</Button>
         </BasicForm>
       )
-      return (
-        <div>
-          {/* 本システムでは
-      <TextRed>{formatDate(UCAR_CONSTANTS.commonQuery.THRESHOLD_DATE)}</TextRed>
-      以降に作成<TextRed>（QRシート発行 または 中古車Gでの受付）</TextRed>
-      がされたもののみが表示されます。 */}
-        </div>
-      )
+      return <div></div>
     },
   }
 

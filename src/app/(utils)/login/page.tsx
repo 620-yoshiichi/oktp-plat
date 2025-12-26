@@ -37,6 +37,8 @@ const AdminLogin = async props => {
       <C_Stack className={`items-center gap-4`}>
         <GoogleLogin callbackUrl={`/${redirectRoot}`} />
 
+        <hr />
+
         <LoginClient {...{rootPath, error}} />
       </C_Stack>
     </Absolute>

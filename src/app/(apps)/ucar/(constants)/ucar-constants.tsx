@@ -13,18 +13,12 @@ export const unsold: Prisma.UcarWhereInput = {
   // KI_HANKAKA: {not: {gt: 0}}
 }
 
-const THRESHOLD_DATE = toUtc(new Date(`2025-04-01`))
+const THRESHOLD_DATE = toUtc(new Date(`2025-01-01`))
 
 export const UCAR_CONSTANTS = {
   shiireGroupUserId: 99999931,
   commonQuery: {
-    THRESHOLD_DATE,
-    THRESHOLD_ARRIVED_AT: {
-      AND: [
-        //
-        // {createdAt: {gte: THRESHOLD_DATE}},
-      ],
-    },
+    AND: [{createdAt: {gte: THRESHOLD_DATE}}, {active: true}],
   },
 
   columns: {
