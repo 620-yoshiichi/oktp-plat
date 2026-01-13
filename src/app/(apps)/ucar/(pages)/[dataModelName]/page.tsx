@@ -75,8 +75,6 @@ const parameters = async ({params, query, session, scopes}) => {
             query.__search__number98 && {number98: {contains: query.__search__number98}}, //検索時,
           ].filter(Boolean)
 
-          whereAND.forEach(w => console.log(w))
-
           return {
             editType: {type: `modal`},
             additional: {

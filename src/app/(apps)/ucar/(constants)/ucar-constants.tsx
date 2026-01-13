@@ -15,11 +15,21 @@ export const unsold: Prisma.UcarWhereInput = {
 
 const THRESHOLD_DATE = toUtc(new Date(`2025-01-01`))
 
-export const UCAR_CONSTANTS = {
+export const UCAR_CONSTANTS: {
+  shiireGroupUserId: number
+  commonQuery: Prisma.UcarWhereInput
+  columns: any
+} = {
   shiireGroupUserId: 99999931,
   commonQuery: {
     AND: [
-      {createdAt: {gte: THRESHOLD_DATE}}, //作成日が2025-01-01以降のもの
+      {
+        OR: [
+          {OldCars_Base: {KI_HANKAKA: '0'}}, //まだ売り上げが立っていないもの
+          {createdAt: {gte: THRESHOLD_DATE}}, //作成日が2025-01-01以降のもの
+        ],
+      },
+
       {active: true},
     ],
   },
