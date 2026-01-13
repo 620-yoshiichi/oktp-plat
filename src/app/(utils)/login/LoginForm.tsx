@@ -1,13 +1,12 @@
 'use client'
 import React from 'react'
-import {getSession, signIn} from 'next-auth/react'
+import { signIn} from 'next-auth/react'
 import useGlobal from 'src/cm/hooks/globalHooks/useGlobal'
-import {basePath, sleep} from 'src/cm/lib/methods/common'
+import { sleep} from 'src/cm/lib/methods/common'
 
 import {toast} from 'react-toastify'
 import useBasicFormProps from 'src/cm/hooks/useBasicForm/useBasicFormProps'
 import {Fields} from 'src/cm/class/Fields/Fields'
-import {fetchAlt} from '@cm/lib/http/fetch-client'
 import {Button} from '@cm/components/styles/common-components/Button'
 import {CheckLogin} from '@app/api/prisma/login/checkLogin'
 

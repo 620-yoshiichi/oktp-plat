@@ -317,16 +317,19 @@ export const forcedUsers: {
 
   {
     code: 815113,
-    // storeCode: 94,
     apps: [`ucar`],
     userRoles: ['中古車G'],
   }, //久山さん
   {
     code: 813030,
-    // storeCode: 94,
     apps: [`ucar`],
     userRoles: ['中古車G'],
   }, //森山さん
+  {
+    code: 813676,
+    apps: [`ucar`],
+    userRoles: ['中古車G'],
+  }, //渡辺恵美さん
 ]
 
 export const KB_SEIBETU_LABEL = {1: '男', 2: '女', 3: '法人'}

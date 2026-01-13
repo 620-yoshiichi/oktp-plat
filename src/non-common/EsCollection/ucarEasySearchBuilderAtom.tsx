@@ -118,8 +118,22 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
       AND: [
         //
         commonWhere,
-        notFinalizedWhere,
+        {AND: [notFinalizedWhere, {secondMeihenbi: null}]},
+
         {inkanCertificateExpiredAt: {lte: addDays(new Date(), 30)}},
+      ],
+    },
+  }
+  const paperStatus__isKeiYon: EsObj = {
+    label: '軽四',
+    notify: true,
+    description: '軽四の車両',
+    CONDITION: {
+      AND: [
+        //
+        commonWhere,
+        notFinalizedWhere,
+        {inkanAlternate: UCAR_CODE.INKAN_ALTERNATES.raw.KEI.code},
       ],
     },
   }
@@ -432,6 +446,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     paperStatus__unReceived,
     paperStatus__paperErrorHq,
     paperStatus__inkanDeadline,
+    paperStatus__isKeiYon,
 
     destination__undecided,
     destination__meihen_not_done,

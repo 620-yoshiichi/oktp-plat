@@ -15,12 +15,16 @@ export default function InlineGarageEditor({row}) {
 
   const processCodeItem = UCAR_CODE.PROCESSED_AS.byCode(row.processedAs)
 
-  if (processCodeItem?.label === `名義変更`) {
-    const garageCreated = row?.AppliedUcarGarageSlot
-    return <div>{getGarageMakeIcon({garageCreated, row, setshowGarageRegister: GarageEditorGMF.setGMF_OPEN})}</div>
-  }
+  if (UCAR_CODE.INKAN_ALTERNATES.byCode(row.inkanAlternate)?.label === `軽四`) {
+    return <small>軽四</small>
+  } else {
+    if (processCodeItem?.label === `名義変更`) {
+      const garageCreated = row?.AppliedUcarGarageSlot
+      return <div>{getGarageMakeIcon({garageCreated, row, setshowGarageRegister: GarageEditorGMF.setGMF_OPEN})}</div>
+    }
 
-  return null
+    return null
+  }
 }
 
 const getGarageMakeIcon = ({garageCreated, row, setshowGarageRegister}) => {

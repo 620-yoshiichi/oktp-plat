@@ -160,7 +160,7 @@ export class UCAR_CODE {
     },
     KEI: {
       code: '02',
-      label: '軽',
+      label: '軽四',
       color: 'red',
       notifyByEmail: false,
       qrPaperSpreadSheetNotationList: ['k', 'ｋ', 'K', 'Ｋ'],

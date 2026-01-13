@@ -9,7 +9,7 @@ import PlaceHolder from '@cm/components/utils/loader/PlaceHolder'
 import AutoGridContainer from '@cm/components/utils/AutoGridContainer'
 import {C_Stack, R_Stack} from '@cm/components/styles/common-components/common-components'
 import {Card} from '@cm/shadcn/ui/card'
-import {TextGray, TextGreen, TextLink, TextRed} from '@cm/components/styles/common-components/Alert'
+import {TextGray, TextGreen, TextRed} from '@cm/components/styles/common-components/Alert'
 import {isGarageSlotAvailable} from '@app/(apps)/ucar/(lib)/garage/garageUtils'
 import {Button} from '@cm/components/styles/common-components/Button'
 

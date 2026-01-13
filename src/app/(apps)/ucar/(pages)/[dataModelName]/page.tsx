@@ -61,12 +61,7 @@ const parameters = async ({params, query, session, scopes}) => {
           const {isHQ, isStoreManager, isSales, carWhere} = scopes.getUcarProps()
 
           const [stores, getAvailable98NumbersReturn] = await Promise.all([
-            (
-              await doStandardPrisma(`store`, `findMany`, {
-                orderBy: {name: 'asc'},
-                where: ucarWhere.ucarStores,
-              })
-            )?.result,
+            (await doStandardPrisma(`store`, `findMany`, {orderBy: {name: 'asc'}, where: ucarWhere.ucarStores}))?.result,
             await getAvailable98Numbers({take: 20}),
           ])
 
@@ -75,34 +70,19 @@ const parameters = async ({params, query, session, scopes}) => {
           const whereAND: Prisma.UcarWhereInput[] = [
             //
             carWhere,
-
             {...UCAR_CONSTANTS.commonQuery},
-          ]
+            query.__search__sateiID && {sateiID: {contains: query.__search__sateiID}}, //検索時
+            query.__search__number98 && {number98: {contains: query.__search__number98}}, //検索時,
+          ].filter(Boolean)
 
-          if (query.__search__sateiID) {
-            whereAND.push({
-              sateiID: {
-                contains: query.__search__sateiID,
-              },
-            })
-          }
-          if (query.__search__number98) {
-            whereAND.push({
-              number98: {
-                contains: query.__search__number98,
-              },
-            })
-          }
+          whereAND.forEach(w => console.log(w))
 
           return {
             editType: {type: `modal`},
             additional: {
               select: ucarQuery.select as any,
               omit: ucarQuery.omit as any,
-              orderBy: [
-                //
-                {createdAt: 'desc'},
-              ],
+              orderBy: [{createdAt: 'desc'}],
               where: {AND: whereAND},
             },
             easySearchExtraProps,

@@ -18,7 +18,10 @@ const THRESHOLD_DATE = toUtc(new Date(`2025-01-01`))
 export const UCAR_CONSTANTS = {
   shiireGroupUserId: 99999931,
   commonQuery: {
-    AND: [{createdAt: {gte: THRESHOLD_DATE}}, {active: true}],
+    AND: [
+      {createdAt: {gte: THRESHOLD_DATE}}, //作成日が2025-01-01以降のもの
+      {active: true},
+    ],
   },
 
   columns: {
