@@ -1,6 +1,7 @@
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 import {basePath, handleDB} from '@cm/lib/methods/common'
 import {knockEmailApi} from '@cm/lib/methods/knockEmailApi'
+import {fetchUserRole} from 'src/non-common/serverSideFunction'
 
 import {addDays, differenceInDays} from 'date-fns'
 
@@ -125,10 +126,22 @@ export class BP_Car {
   setProcess = async (session, processName, showAlert = true) => {
     const validRole = BP_Car.getValidRole(processName)?.validRole
 
-    const fromRegularUser = validRole && session.type === validRole
+    // UserRole経由で権限チェック
+    let userRoleNames: string[] = []
+    if (session?.roles) {
+      // クライアントサイドでrolesが既に含まれている場合
+      userRoleNames = session.roles.map((r: any) => r.name || r.RoleMaster?.name).filter(Boolean)
+    } else if (session?.id) {
+      // サーバーサイドまたはrolesが含まれていない場合、fetchUserRoleで取得
+      const {roles} = await fetchUserRole({session})
+      userRoleNames = roles?.map((r: any) => r.name || r.RoleMaster?.name).filter(Boolean) || []
+    }
+    
+    const fromRegularUser = validRole && userRoleNames.includes(validRole)
 
-    if (showAlert && fromRegularUser === false) {
-      const msg = `【${processName}】の正規の入力者は【${validRole}】です。\n【${session?.type}】として強制入力を実施してよろしいですか？`
+    if (showAlert && fromRegularUser === false && validRole) {
+      const currentRoles = userRoleNames.length > 0 ? userRoleNames.join('、') : '権限なし'
+      const msg = `【${processName}】の正規の入力者は【${validRole}】です。\n現在の権限:【${currentRoles}】\n強制入力を実施してよろしいですか？`
       if (!confirm(msg)) {
         return {
           success: false,

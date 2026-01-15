@@ -9,7 +9,7 @@ import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doS
 import {surroundings} from '@cm/components/DataLogic/types/customParams-types'
 import {anyObject} from '@cm/types/utility-types'
 import IconLetter from '@cm/components/styles/common-components/IconLetter'
-import {Settings, Search} from 'lucide-react'
+import {Settings, Search, Filter, UserIcon} from 'lucide-react'
 import {Center, C_Stack} from '@cm/components/styles/common-components/common-components'
 
 export type PageBuidlerClassType = {
@@ -52,17 +52,21 @@ export const roleMaster: DataModelBuilder = {
 }
 
 const RoleAllocationTable = ({PageBuilderExtraProps}) => {
-  const {rootPath} = useGlobal()
+  const {rootPath, query, addQuery} = useGlobal()
   type user = User & {UserRole: UserRole[]}
   const [users, setusers] = useState<user[]>([])
   const [roles, setroles] = useState<RoleMaster[]>([])
-  const [searchTerm, setSearchTerm] = useState('')
-  const [selectedRoleFilter, setSelectedRoleFilter] = useState<string>('all')
+  const [searchTerm, setSearchTerm] = useState<string>(query?.roleSearchTerm || '')
+  const [selectedRoleFilter, setSelectedRoleFilter] = useState<string>(query?.roleFilter || 'all')
+  const [selectedUserId, setSelectedUserId] = useState<number | null>(query?.roleUserId ? Number(query.roleUserId) : null)
 
   const fetchUsers = async () => {
-    const apps = {has: rootPath}
+    // 共通マスタページの場合は全アプリのユーザーを取得
+    const whereCondition =
+      rootPath === 'common' ? PageBuilderExtraProps?.where || {} : {...PageBuilderExtraProps?.where, apps: {has: rootPath}}
+
     const {result: users = []} = await doStandardPrisma(`user`, `findMany`, {
-      where: {...PageBuilderExtraProps?.where, apps},
+      where: whereCondition,
       include: {UserRole: {include: {RoleMaster: {}}}},
       orderBy: [{code: `asc`}, {sortOrder: `asc`}, {name: `asc`}],
     })
@@ -80,8 +84,25 @@ const RoleAllocationTable = ({PageBuilderExtraProps}) => {
     fetchRoles()
   }, [PageBuilderExtraProps?.where, PageBuilderExtraProps?.where?.userId, PageBuilderExtraProps?.where?.roleMasterId])
 
+  // 検索・フィルタ変更時にURLクエリを更新
+  useEffect(() => {
+    const newQuery: any = {}
+    if (searchTerm) newQuery.roleSearchTerm = searchTerm
+    if (selectedRoleFilter !== 'all') newQuery.roleFilter = selectedRoleFilter
+    if (selectedUserId) newQuery.roleUserId = String(selectedUserId)
+
+    if (Object.keys(newQuery).length > 0 || query?.roleSearchTerm || query?.roleFilter || query?.roleUserId) {
+      addQuery(newQuery)
+    }
+  }, [searchTerm, selectedRoleFilter, selectedUserId])
+
   // フィルタリングされたユーザーリスト
   const filteredUsers = users.filter(user => {
+    // ユーザーIDフィルタ
+    if (selectedUserId && user.id !== selectedUserId) {
+      return false
+    }
+
     // 検索条件でフィルタ
     const matchesSearch =
       user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -107,7 +128,7 @@ const RoleAllocationTable = ({PageBuilderExtraProps}) => {
         </div>
 
         {/* 検索・フィルタエリア */}
-        <div>
+        <div className="space-y-4">
           {/* ユーザー検索 */}
           <div className="flex items-center space-x-2">
             <Search className="h-5 w-5 text-gray-400" />
@@ -120,7 +141,24 @@ const RoleAllocationTable = ({PageBuilderExtraProps}) => {
             />
           </div>
 
-          {/* 権限フィルタ
+          {/* ユーザー別フィルタ */}
+          <div className="flex items-center space-x-2">
+            <UserIcon className="h-5 w-5 text-gray-400" />
+            <select
+              value={selectedUserId || ''}
+              onChange={e => setSelectedUserId(e.target.value ? Number(e.target.value) : null)}
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            >
+              <option value="">すべてのユーザー</option>
+              {users.map(user => (
+                <option key={user.id} value={user.id}>
+                  {user.name} ({user.code})
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* 権限フィルタ */}
           <div className="space-y-2">
             <div className="flex items-center space-x-2">
               <Filter className="h-5 w-5 text-gray-400" />
@@ -163,10 +201,12 @@ const RoleAllocationTable = ({PageBuilderExtraProps}) => {
                 </label>
               ))}
             </div>
-          </div> */}
+          </div>
 
           {/* 検索結果件数表示 */}
-          {/* <div className="text-sm text-gray-500">{filteredUsers.length}件のユーザーが見つかりました</div> */}
+          <div className="text-sm text-gray-500">
+            {filteredUsers.length}件のユーザーが見つかりました（全{users.length}件中）
+          </div>
         </div>
 
         <div className="overflow-hidden  border rounded-lg border-gray-200  ">

@@ -113,13 +113,22 @@ export const getQrbpPages = (props: PageGetterType) => {
       ROOT: [rootPath, 'admin', 'config'],
       exclusiveTo: scopes.admin,
       children: [
+        {
+          tabId: '',
+          label: '共通マスタ',
+          ROOT: ['common', 'admin', 'config'],
+          children: [
+            {tabId: 'store', label: '拠点', link: {}},
+            {tabId: 'user', label: 'ユーザー', link: {}},
+            {tabId: 'roleMaster', label: '役割マスタ', link: {}},
+          ],
+        },
         {tabId: 'area', label: 'エリア', link: {}, exclusiveTo: scopes.admin},
-        {tabId: 'store', label: '拠点', link: {}, exclusiveTo: scopes.admin},
-        {tabId: 'user', label: 'ユーザー', link: {}, exclusiveTo: scopes.admin},
+        {tabId: 'store', label: '拠点（QRBP専用）', link: {}, exclusiveTo: scopes.admin},
+        {tabId: 'user', label: 'ユーザー（QRBP専用）', link: {}, exclusiveTo: scopes.admin},
         {tabId: 'processNameMaster', label: '工程', link: {}, exclusiveTo: scopes.admin},
         {tabId: 'noteNameMaster', label: '備考区分', link: {}, exclusiveTo: scopes.admin},
-
-        {tabId: 'roleMaster', label: '役割マスタ', exclusiveTo: scopes.admin},
+        {tabId: 'roleMaster', label: '役割マスタ（QRBP専用）', exclusiveTo: scopes.admin},
       ],
     },
     login ? getAppSwitchMenus(scopes) : undefined,
