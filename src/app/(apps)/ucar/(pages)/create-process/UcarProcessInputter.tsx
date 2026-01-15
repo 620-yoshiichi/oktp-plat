@@ -103,7 +103,7 @@ const UcarProcessInputter = (props: {UcarData: ucarData}) => {
             },
 
             useGlobalProps,
-            ...limitEditting({exclusiveTo: scopes.admin}),
+            ...limitEditting({exclusiveTo: !scopes.isChukoshaGroup && !scopes.admin}),
           }}
         />
       </FitMargin>

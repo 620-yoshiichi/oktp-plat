@@ -13,7 +13,6 @@ export default function MyRadio(props) {
     <R_Stack className={`  justify-start gap-1.5 pb-1`}>
       {MySelectContextValue.options.map((op, i) => {
         const isActive = op.value === controlContextValue.currentValue
-        console.log(op.id, controlContextValue.currentValue) //////logs
 
         return (
           <div key={i}>

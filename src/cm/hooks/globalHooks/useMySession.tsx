@@ -46,7 +46,6 @@ export default function useCustomSession(props?: {session?: Session | null}) {
 
   const accessScopes = useCallback(() => getScopes(userData, {query, roles}), [userData, query, roles])
 
-  console.log(roles) //logs
   const User = new UserCl({
     user: userData,
     roles,

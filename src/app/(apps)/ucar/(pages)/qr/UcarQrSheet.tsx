@@ -26,12 +26,12 @@ const UcarQrSheet = ({ucar}) => {
   const handlePrint = useReactToPrint({
     contentRef: printRef,
     documentTitle: `QRシート_${ucar?.sateiID}`,
-    pageStyle: `
-      @page {
-        size: A4 landscape;
-      }
+    // pageStyle: `
+    //   @page {
+    //     size: A4 landscape;
+    //   }
 
-    `,
+    // `,
   })
 
   useEffect(() => {
@@ -94,6 +94,12 @@ const UcarQrSheet = ({ucar}) => {
             target: '店長',
             description: 'CRへの配送',
           },
+          INFO_EDIT: {
+            src: HREF(`${basePath}/ucar/edit-info`, commonQuery, query),
+            label: '情報変更',
+            sheetNumber: 1,
+            target: '中古車G',
+          },
 
           STORE_SHORUI_SOUHU: {
             src: HREF(`${basePath}/ucar/create-process`, {...commonQuery, processCode: STORE_SHORUI_SOUHU.code}, query),
@@ -153,6 +159,78 @@ const renderMain = ({ucar, srcDataUrlObject, printRef}) => {
   )
 }
 
+// レクサス用情報ボックス
+const LexusInfoBox = () => {
+  return (
+    <table
+      className="lexus-info-box"
+      style={{width: '100%', borderCollapse: 'collapse', border: '2px solid #333', fontSize: '10px'}}
+    >
+      <tbody>
+        <tr>
+          <td
+            style={{
+              border: '1px solid #333',
+              padding: '4px 6px',
+              textAlign: 'center',
+              fontWeight: 'bold',
+              backgroundColor: '#f5f5f5',
+            }}
+          >
+            レクサス用
+          </td>
+          <td
+            colSpan={3}
+            style={{
+              border: '1px solid #333',
+              padding: '4px 6px',
+              textAlign: 'center',
+              fontWeight: 'bold',
+              backgroundColor: '#f5f5f5',
+            }}
+          >
+            CPO・U-CAR・オークション
+          </td>
+        </tr>
+        <tr>
+          <td style={{border: '1px solid #333', padding: '4px 6px', textAlign: 'center', fontSize: '9px'}}>返却希望日</td>
+          <td style={{border: '1px solid #333', padding: '4px 6px', textAlign: 'center', fontSize: '9px', width: '25%'}}>
+            まるクリ
+          </td>
+          <td style={{border: '1px solid #333', padding: '4px 6px', textAlign: 'center', fontSize: '9px', width: '25%'}}>加修</td>
+          <td style={{border: '1px solid #333', padding: '4px 6px', textAlign: 'center', fontSize: '9px', width: '25%'}}>
+            サーチアップ
+          </td>
+        </tr>
+        <tr style={{height: 60}}>
+          <td style={{border: '1px solid #333', padding: '4px 6px', textAlign: 'center', height: '20px'}}>/</td>
+          <td style={{border: '1px solid #333', padding: '4px 6px', textAlign: 'center', height: '20px', width: '25%'}}></td>
+          <td style={{border: '1px solid #333', padding: '4px 6px', textAlign: 'center', height: '20px', width: '25%'}}></td>
+          <td style={{border: '1px solid #333', padding: '4px 6px', textAlign: 'center', height: '20px', width: '25%'}}></td>
+        </tr>
+        <tr>
+          <td
+            colSpan={4}
+            style={{
+              border: '1px solid #333',
+              padding: '4px 6px',
+              textAlign: 'center',
+              fontSize: '9px',
+              fontWeight: 'bold',
+              backgroundColor: '#f5f5f5',
+            }}
+          >
+            備考欄
+          </td>
+        </tr>
+        <tr style={{height: 40}}>
+          <td colSpan={4} style={{border: '1px solid #333', padding: '4px 6px', height: '40px'}}></td>
+        </tr>
+      </tbody>
+    </table>
+  )
+}
+
 // ページ1: 車両情報 + QRコード（6個）
 const Page1 = ({ucar, srcDataUrlObject}) => {
   const cols = [
@@ -182,9 +260,14 @@ const Page1 = ({ucar, srcDataUrlObject}) => {
 
   return (
     <div className="qr-sheet-page page-1">
-      {/* 車両情報テーブル */}
-      <div className="car-info-section ">
-        <CarInfoTable ucar={ucar} />
+      {/* 車両情報テーブルと右上の情報枠 */}
+      <div className="car-info-section" style={{display: 'flex', gap: '10px', alignItems: 'flex-start'}}>
+        <div style={{flex: 1}}>
+          <CarInfoTable ucar={ucar} />
+        </div>
+        <div style={{width: '280px', flexShrink: 0}}>
+          <LexusInfoBox />
+        </div>
       </div>
 
       {/* QRコード（シート1用） */}

@@ -1,280 +1,79 @@
-import {KaonaviUserType} from '@app/oktpCommon/api/seeder/kaonavi/kaonabi-types'
-import {obj__initializeProperty} from '@cm/class/ObjHandler/transformers'
-
-import {doTransaction, transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
 import {NextRequest, NextResponse} from 'next/server'
 import prisma from 'src/lib/prisma'
-import {allOktpRoles, forcedUsers, oktpRoleString, workTypeConfigs} from '@app/oktpCommon/constants'
+import {getKaonaviMemberArray} from './lib/kaonavi-api'
+import {transformKaonaviUserToUserData, createUserFromForcedUserOnly} from './lib/user-transformer'
+import {resetAllOktpRoles, upsertMultipleUserRoles} from './lib/role-handler'
+import {forcedUsers} from './lib/forced-users'
+import {ProcessingErrors, UserWithRoles} from './lib/types'
 
-import {Prisma} from '@prisma/generated/prisma/client'
-import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
-
+/**
+ * Kaonavi APIからユーザーデータを取得し、システムのユーザーデータに同期する
+ * forcedUsersに登録されているユーザーは、KaonaviにデータがなくてもUPSERTされる
+ */
 export const POST = async (req: NextRequest) => {
-  /**店舗データを作成する */
+  // 1. 必要なマスターデータを取得
   const stores = await prisma.store.findMany()
-  const kaores = await getKaonaviMemberArray()
+  const kaonaviResponse = await getKaonaviMemberArray()
+  const memberData = kaonaviResponse.member_data
 
-  const member_data: KaonaviUserType[] = kaores.member_data
-  const workTypeMaster = {}
-  const emailMaster = {}
+  // 2. 集計用のマスターオブジェクトを初期化
+  const workTypeMaster: Record<string, boolean> = {}
+  const emailMaster: Record<string, number> = {}
+  const processingErrors: ProcessingErrors = {workTypeCountError: []}
 
-  const transactionQuerys: transactionQuery<'user' | 'roleMaster' | 'userRole' | 'roleMaster', 'upsert'>[] = []
-
-  async function resetAllOktpRoles() {
-    const res = await doTransaction({
-      transactionQueryList: allOktpRoles.map((roleString: string): transactionQuery<'roleMaster', 'upsert'> => {
-        return {
-          model: `roleMaster`,
-          method: `upsert`,
-          queryObject: {
-            where: {name: roleString},
-            create: {name: roleString},
-            update: {name: roleString},
-          },
-        }
-      }),
-    })
-
-    const roleMaster = res.result
-    return {roleMaster}
-  }
-
+  // 3. ロールマスターをリセット
   const {roleMaster} = await resetAllOktpRoles()
 
-  const erros: {
-    workTypeCountError: Array<{
-      name: string
-      code: string
-      workTypes: any[] | undefined
-    }>
-  } = {workTypeCountError: []}
+  // 4. Kaonaviユーザーデータをシステムのユーザーデータに変換
+  const transformResults = await Promise.all(
+    memberData.map(async kaonaviUser => {
+      return await transformKaonaviUserToUserData({
+        kaonaviUser,
+        stores,
+        workTypeMaster,
+        emailMaster,
+      })
+    })
+  )
 
-  const activeMembers = member_data.filter(item => {
-    // const isInForcedUsers = forcedUsers.find(d => String(d.code) === String(item.code))
-    // return (item.mail && item.retired_date === '') || isInForcedUsers
-    return true
+  // 5. 変換結果からユーザーとロールのリスト、エラーを抽出
+  const usersWithRoles: UserWithRoles[] = []
+  transformResults.forEach(result => {
+    if (result.userWithRoles) {
+      usersWithRoles.push(result.userWithRoles)
+    }
+    if (result.errors.length > 0) {
+      processingErrors.workTypeCountError.push(...result.errors)
+    }
   })
-  const userWithRoleStringsList: {
-    userId: number
-    code: number | null
-    userRoles: oktpRoleString[]
-  }[] = (
-    await Promise.all(
-      activeMembers.map(async item => {
-        const activeState = item.retired_date === '' ? true : false
-        const kaonaviStoreCode = parseInt(item.department.code.substr(0, 2) || 0)
-        const store = stores.find(store => String(store.code) === String(kaonaviStoreCode))
-        const storeId = store?.id
 
-        const workTypes = item.custom_fields.find(d => d.name === `職務`)?.values
+  // 6. Kaonaviに存在しないforcedUsersを処理
+  const kaonaviUserCodes = new Set(memberData.map(user => String(user.code)))
+  const forcedUsersNotInKaonavi = forcedUsers.filter(forcedUser => !kaonaviUserCodes.has(String(forcedUser.code)))
 
-        workTypes?.forEach(wt => {
-          obj__initializeProperty(workTypeMaster, wt, true)
-        })
-        obj__initializeProperty(emailMaster, item.mail, 0)
-        emailMaster[item.mail]++
+  const forcedUserResults = await Promise.all(
+    forcedUsersNotInKaonavi.map(async forcedUser => {
+      return await createUserFromForcedUserOnly(forcedUser, stores)
+    })
+  )
 
-        if ((workTypes ?? []).length > 1) {
-          erros.workTypeCountError.push({
-            name: item.name,
-            code: item.code,
-            workTypes,
-          })
-        }
+  // 7. forcedUsersから作成されたユーザーを追加
+  forcedUserResults.forEach(result => {
+    if (result) {
+      usersWithRoles.push(result)
+    }
+  })
 
-        const firstWorkType = workTypes?.[0]
-
-        const apps = Object.keys(workTypeConfigs[firstWorkType]?.apps ?? {})
-
-        const userData = {
-          code: Number(item.code),
-          name: item.name,
-          email: item?.mail ? item?.mail : null,
-          password: item.code,
-          // sortOrder: storeCode,
-          active: activeState,
-          storeId,
-          apps: apps.length > 0 ? apps : undefined,
-        }
-
-        const findFromForcedUsers = forcedUsers.find(d => String(d.code) === String(item.code))
-        if (findFromForcedUsers) {
-          const {userRoles, apps} = findFromForcedUsers ?? {}
-
-          const arrangedStoreCode = findFromForcedUsers?.storeCode ?? kaonaviStoreCode
-
-          userData.apps = apps
-          userData.storeId = stores.find(store => store.code === arrangedStoreCode)?.id
-
-          const user = await prisma.user.upsert({
-            where: {code: userData.code},
-            create: {...userData},
-            update: {...userData},
-          })
-
-          // 重複したロールを削除
-          const uniqueUserRoles = Array.from(new Set(userRoles ?? []))
-          return {userId: user.id, code: user.code, userRoles: uniqueUserRoles}
-        } else {
-          const apps = Object.keys(workTypeConfigs[firstWorkType]?.apps ?? {})
-          const userRoles = Array.from(
-            new Set(
-              apps.reduce((acc, APP_NAME) => {
-                const roles: oktpRoleString[] = workTypeConfigs[firstWorkType].apps[APP_NAME]?.roles
-                return [...acc, ...(roles ?? [])]
-              }, [] as oktpRoleString[])
-            )
-          )
-
-          //顔ナビデータからの自動作成
-          const userUpsertQuery: Prisma.UserUpsertArgs = {
-            where: {
-              code: userData.code,
-            },
-            create: {...userData},
-            update: {...userData},
-          }
-
-          try {
-            const user = await prisma.user.upsert({
-              where: {code: userData.code},
-              create: {...userData},
-              update: {...userData},
-            })
-            return {
-              userId: user.id,
-              code: user.code,
-              userRoles,
-            }
-          } catch (error) {
-            console.error('error', {userData}) //////////
-            return undefined
-          }
-        }
-      })
-    )
-  ).filter((item): item is {userId: number; code: number | null; userRoles: oktpRoleString[]} => item !== undefined)
-
-  const result = (
-    await Promise.all(
-      userWithRoleStringsList.map(async upsertedUser => {
-        const {userId, code, userRoles = []} = upsertedUser ?? {}
-
-        try {
-          // 重複したロールを削除
-          const uniqueUserRoles = Array.from(new Set(userRoles))
-          const upsertedUserRole = await Promise.all(
-            uniqueUserRoles?.map(async roleName => {
-              const roleId = (roleMaster ?? []).find(d => d.name === roleName)?.id
-              // if (roleName === '中古車G') {
-              //   console.log({code, userId: userId, roleId}) //////logs
-              // }
-              if (roleId) {
-                const userRoleUpsertPayload: Prisma.UserRoleUpsertArgs = {
-                  where: {userId_roleMasterId_unique: {userId: userId, roleMasterId: roleId}},
-                  create: {userId: userId, roleMasterId: roleId},
-                  update: {userId: userId, roleMasterId: roleId},
-                }
-
-                const res = await doStandardPrisma(`userRole`, `upsert`, userRoleUpsertPayload)
-                // console.log(res) //logs
-                return res
-              }
-            })
-          )
-
-          return {upsertedUser, upsertedUserRole}
-        } catch (error) {
-          console.error({error, data: upsertedUser})
-        }
-      })
-    )
-  ).filter(d => d)
-  // const result = (
-  //   await Promise.all(
-  //     transactionQuerys.map(async d => {
-  //       const {model, method, queryObject} = d
-  //       try {
-  //         const upsertedUser = await prisma[model][method](queryObject)
-
-  //         const roles =
-  //           userWithRoleStringsList.find(d => {
-  //             return d?.code.toString() === upsertedUser.code.toString()
-  //           })?.userRoles ?? []
-
-  //         const upsertedUserRole = await Promise.all(
-  //           roles?.map(async roleName => {
-  //             {
-  //               const roleId = (roleMaster ?? []).find(d => d.name === roleName)?.id
-
-  //               if (roleId) {
-  //                 const userRoleUpsertPayload: Prisma.UserRoleUpsertArgs = {
-  //                   where: {userId_roleMasterId_unique: {userId: upsertedUser.id, roleMasterId: roleId}},
-  //                   create: {userId: upsertedUser.id, roleMasterId: roleId},
-  //                   update: {userId: upsertedUser.id, roleMasterId: roleId},
-  //                 }
-
-  //                 return await doStandardPrisma(`userRole`, `upsert`, userRoleUpsertPayload)
-  //               }
-  //             }
-  //           })
-  //         )
-  //         return {upsertedUser, upsertedUserRole}
-  //       } catch (error) {
-  //         console.error({error, data: queryObject.create})
-  //       }
-  //     })
-  //   )
-  // ).filter(d => d)
+  // 8. ユーザーロールを一括でupsert
+  const result = await upsertMultipleUserRoles(usersWithRoles, roleMaster)
 
   return NextResponse.json({
     success: true,
     emailMaster,
-    result: result,
+    result,
     message: 'ユーザーデータ更新完了',
     workTypeMaster,
+    errors: processingErrors,
+    processedForcedUsersCount: forcedUsersNotInKaonavi.length,
   })
-}
-
-function base64Encode(str) {
-  return Buffer.from(str, 'ascii').toString('base64')
-}
-
-async function getKaonaviMemberArray() {
-  const consumerKey = 'f40b50b07ef780720b51d511bcedf6'
-  const consumerSecret = '2885a8ec422087f0b2674a888e0089a3c991ab8ff6e97dd5375b3daa60fe4b79'
-  const credentials = base64Encode(`${consumerKey}:${consumerSecret}`)
-
-  // カオナビ認証情報の設定（トークン取得のため）
-  const options = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-      Authorization: `Basic ${credentials}`,
-    },
-    body: 'grant_type=client_credentials',
-  }
-
-  // カオナビにてトークン発行
-  const jsonData = await fetch('https://api.kaonavi.jp/api/v2.0/token', options).then(response => response.json())
-
-  // トークンを使用してリクエストの詳細を指定
-
-  const {access_token} = jsonData
-  const requestOptions = {
-    method: 'GET',
-    headers: {
-      'Kaonavi-Token': access_token,
-    },
-  }
-
-  const responsJson = await fetch('https://api.kaonavi.jp/api/v2.0/members', requestOptions).then(res => res.json())
-
-  // 結果がupdate_atとmember_dataに分かれて渡されるのでmember_dataのみ取得
-  const {update_at, member_data} = responsJson
-  // return {message:"ユーザーデータ更新しました"}
-  return {
-    update_at,
-    member_data,
-  }
 }
