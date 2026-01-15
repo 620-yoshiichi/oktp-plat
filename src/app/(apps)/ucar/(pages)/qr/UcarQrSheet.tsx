@@ -26,12 +26,23 @@ const UcarQrSheet = ({ucar}) => {
   const handlePrint = useReactToPrint({
     contentRef: printRef,
     documentTitle: `QRシート_${ucar?.sateiID}`,
-    // pageStyle: `
-    //   @page {
-    //     size: A4 landscape;
-    //   }
-
-    // `,
+    pageStyle: `
+      @page {
+        size: A4 landscape;
+        margin: 0;
+        padding: 0;
+      }
+      @media print {
+        * {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        body {
+          margin: 0;
+          padding: 0;
+        }
+      }
+    `,
   })
 
   useEffect(() => {
@@ -271,7 +282,7 @@ const Page1 = ({ucar, srcDataUrlObject}) => {
       </div>
 
       {/* QRコード（シート1用） */}
-      <C_Stack className={`gap-8`}>
+      <C_Stack className={`gap-8 qr-codes-section-page1`}>
         <R_Stack className={` gap-0   mx-auto w-full `}>
           {firstRow.map(({key, qrCode, src, label, target}) => (
             <div key={key} className="qr-code-item w-1/5">
@@ -288,9 +299,9 @@ const Page1 = ({ucar, srcDataUrlObject}) => {
           ))}
         </R_Stack>
 
-        <hr />
+        <hr className="print-hr" />
 
-        <div className={`bg-gray-200/50 p-2`}>
+        <div className={`bg-gray-200/50 p-2 second-row-section`}>
           <span className={`text-center text-gray-500`}>下記は、必要な場合のみ使用してください</span>
 
           <R_Stack className={` gap-0   mx-auto w-full `}>

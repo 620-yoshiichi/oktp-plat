@@ -32,6 +32,7 @@ import {UcarCL} from '@app/(apps)/ucar/class/UcarCL'
 import ShadModal from '@cm/shadcn/ui/Organisms/ShadModal'
 import {CsvTable} from '@cm/components/styles/common-components/CsvTable/CsvTable'
 import {NumHandler} from '@cm/class/NumHandler'
+import Coloring from '@cm/lib/methods/Coloring'
 
 export const getNewCarCols = (props: columnGetterType) => {
   const {pathname, query, accessScopes} = props.useGlobalProps
@@ -179,6 +180,18 @@ export const getNewCarCols = (props: columnGetterType) => {
         convertColId: {storeId: 'Store.name', userId: 'User.name'},
       }).plain,
     ...new Fields([
+      {
+        id: 'DD_KIBONOKI',
+        label: '希望納期',
+        type: `date`,
+        form: {hidden: true},
+        format: (value, row, col) => {
+          if (!row['DD_KIBONOKI']) {
+            return <Coloring color="red">なるはや</Coloring>
+          }
+          return <div>{formatDate(row['DD_KIBONOKI'])}</div>
+        },
+      },
       {
         id: 'CUSTOM_DD_SEISANYOTEI',
         label: '生産予定日',

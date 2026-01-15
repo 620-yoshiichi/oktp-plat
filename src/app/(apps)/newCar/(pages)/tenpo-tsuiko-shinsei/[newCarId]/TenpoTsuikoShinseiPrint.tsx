@@ -7,6 +7,7 @@ interface NewCarData {
   id: number
   KJ_KURUMAME?: string
   NO_CYUMON?: string
+  NO_FRAME?: string
   APPINDEX: string
   KJ_KAINMEI1?: string
   KJ_MEIGIME1?: string
@@ -98,6 +99,10 @@ export default function TenpoTsuikoShinseiPrint({newCarId, headerId}: {newCarId:
           <div className="info-item">
             <label>注文番号</label>
             <div>{newCar.NO_CYUMON || '-'}</div>
+          </div>
+          <div className="info-item">
+            <label>車両フレームナンバー</label>
+            <div>{newCar.NO_FRAME || '-'}</div>
           </div>
           <div className="info-item">
             <label>追工件数</label>

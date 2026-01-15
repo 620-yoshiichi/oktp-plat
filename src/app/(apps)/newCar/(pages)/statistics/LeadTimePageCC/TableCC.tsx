@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 
 import {CsvTable} from '@cm/components/styles/common-components/CsvTable/CsvTable'
 
@@ -9,15 +9,85 @@ import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
 import {Fields} from '@cm/class/Fields/Fields'
 
 import {cl} from '@cm/lib/methods/common'
-import {LeadTimeColumn} from '@app/(apps)/newCar/(pages)/statistics/LeadTimePageCC/LeadTimeColumnsList'
+import {LeadTimeColumn, LeadTimeColumnList} from '@app/(apps)/newCar/(pages)/statistics/LeadTimePageCC/LeadTimeColumnsList'
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 import {formatDate} from '@cm/class/Days/date-utils/formatters'
 import {useLeadTimeUserModal} from '@app/(apps)/newCar/(pages)/statistics/LeadTimePageCC/useLeadTimeUserModal'
+import {fetchRawSql} from '@cm/class/Fields/lib/methods'
+import {CSVLink} from 'react-csv'
 
 export const TableCC = (props: {SqlGetter; selectCols; LeadTimeColumnList: LeadTimeColumn[]; data; dataToCompare?: any}) => {
   const {SqlGetter, selectCols, LeadTimeColumnList, data, dataToCompare = []} = props
 
   const {setGMF_OPEN: setleadtimeTableUser} = useLeadTimeUserModal()
+
+  // 様式B用のCSV出力
+  const formatBLinkRef = useRef<any>(null)
+  const [formatBCsvDataArr, setFormatBCsvDataArr] = useState<any[]>([])
+  const [isLoadingFormatB, setIsLoadingFormatB] = useState(false)
+  const formatBLinkId = useMemo(() => `csv-link-format-b-${Date.now()}`, [])
+
+  const handleFormatBCsvExport = useCallback(async () => {
+    setIsLoadingFormatB(true)
+    try {
+      // 全ユーザー分の詳細データを取得（additionalWherePhraseなし）
+      const {leadTimeDetailSql} = SqlGetter({
+        additionalWherePhrase: undefined,
+      })
+
+      const result = await fetchRawSql({sql: leadTimeDetailSql})
+      const allData = result.rows ?? []
+
+      // 店舗 > ユーザー順にソート
+      const sortedData = [...allData].sort((a, b) => {
+        const storeCompare = (a['storeName'] || '').localeCompare(b['storeName'] || '')
+        if (storeCompare !== 0) return storeCompare
+        return (a['userName'] || '').localeCompare(b['userName'] || '')
+      })
+
+      // モーダルの内容と同じ形式でCSVデータを整形
+      const csvDataArray = sortedData.map(d => {
+        const rowObj: any = {
+          注文No: d['NO_CYUMON'] || '',
+          買主名: d['KJ_KAINMEI1'] || '',
+          名義人名: d['KJ_MEIGIME1'] || '',
+          担当スタッフ: d['userName'] || '',
+          車名: d['KJ_KURUMAME'] || '',
+          納車日: formatDate(d['DD_NOSYA']) || '',
+        }
+
+        // LeadTimeColumnListの各カラムを追加
+        LeadTimeColumnList.forEach(col => {
+          rowObj[col.avgDataLabel] = d[col.avgDataKey] ?? ''
+        })
+
+        return rowObj
+      })
+
+      setFormatBCsvDataArr(csvDataArray)
+    } catch (error) {
+      console.error('様式B CSV出力エラー:', error)
+      alert('CSV出力中にエラーが発生しました')
+    } finally {
+      setIsLoadingFormatB(false)
+    }
+  }, [SqlGetter])
+
+  const outputFormatBCsv = useCallback(() => {
+    if (formatBCsvDataArr.length > 0 && formatBLinkRef.current) {
+      const link = document.getElementById(formatBLinkId)
+      if (link) {
+        link.click()
+        alert('CSVファイルをダウンロードしました')
+      }
+    }
+  }, [formatBCsvDataArr, formatBLinkId])
+
+  useEffect(() => {
+    if (formatBCsvDataArr.length > 0) {
+      outputFormatBCsv()
+    }
+  }, [formatBCsvDataArr, outputFormatBCsv])
 
   const TB = CsvTable({
     ...{
@@ -94,8 +164,24 @@ export const TableCC = (props: {SqlGetter; selectCols; LeadTimeColumnList: LeadT
   return (
     <Center>
       <C_Stack>
-        <div className={` w-full justify-end`}>
+        <div className={` w-full justify-end flex gap-2`}>
           <TB.Downloader>{/* <button className={`t-link`}> CSV</button> */}</TB.Downloader>
+          <div>
+            <button
+              onClick={handleFormatBCsvExport}
+              className={`t-link`}
+              type="button"
+              disabled={isLoadingFormatB}
+            >
+              {isLoadingFormatB ? '読み込み中...' : 'CSV（様式B）'}
+            </button>
+            <CSVLink
+              id={formatBLinkId}
+              ref={formatBLinkRef}
+              data={formatBCsvDataArr}
+              filename="LeadTime_Detail.csv"
+            />
+          </div>
         </div>
         <TB.WithWrapper />
       </C_Stack>

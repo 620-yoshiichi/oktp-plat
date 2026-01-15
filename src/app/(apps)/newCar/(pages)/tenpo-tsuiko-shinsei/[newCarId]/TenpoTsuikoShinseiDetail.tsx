@@ -17,6 +17,7 @@ interface NewCarData {
   id: number
   KJ_KURUMAME?: string
   NO_CYUMON?: string
+  NO_FRAME?: string
   APPINDEX: string
   KJ_KAINMEI1?: string
   KJ_MEIGIME1?: string

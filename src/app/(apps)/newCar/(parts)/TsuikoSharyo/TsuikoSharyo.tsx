@@ -9,6 +9,7 @@ interface TsuikoSharyoProps {
     APPINDEX: string
     KJ_KURUMAME?: string
     NO_CYUMON?: string
+    NO_FRAME?: string
     KJ_KAINMEI1?: string
     KJ_MEIGIME1?: string
     DD_HAISKIBO?: Date
@@ -69,6 +70,11 @@ export default function TsuikoSharyo({newCar}: TsuikoSharyoProps) {
           <div>
             <label className="block text-sm font-medium text-gray-600">注文番号</label>
             <div className="mt-1 font-mono">{newCar.NO_CYUMON || '未設定'}</div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-600">車両フレームナンバー</label>
+            <div className="mt-1 font-mono">{newCar.NO_FRAME || '未設定'}</div>
           </div>
 
           <div>

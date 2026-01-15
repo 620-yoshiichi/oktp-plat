@@ -65,6 +65,8 @@ export const NewCarEasySearchBuilder = async () => {
       | `tenpoTsuiko_Finished`
       | `shitadoriAri`
       | `sateiNyukoYoteiKeikoku`
+      | `nokiAri`
+      | `nokiNashi`
 
     type CONDITION_TYPE = Prisma.NewCarWhereInput
     type exclusiveGroups = EasySearchObjectExclusiveGroup<exclusiveKeyStrings, CONDITION_TYPE>
@@ -378,6 +380,21 @@ export const NewCarEasySearchBuilder = async () => {
       },
     }
 
+    const Ex_Naruhaya: exclusiveGroups = {
+      nokiAri: {
+        label: `あり`,
+        CONDITION: {
+          DD_KIBONOKI: {not: null},
+        },
+      },
+      nokiNashi: {
+        label: `なし`,
+        CONDITION: {
+          DD_KIBONOKI: null,
+        },
+      },
+    }
+
     const dataArr: makeEasySearchGroupsProp[] = []
     toRowGroup(
       1,
@@ -394,6 +411,7 @@ export const NewCarEasySearchBuilder = async () => {
         {exclusiveGroup: Ex_Payment, name: `入金状況`},
         {exclusiveGroup: Ex_Tsuiko, name: `追工申請`},
         (isDev ? {exclusiveGroup: Ex_SateiNyukoYotei, name: `下取入庫予定`} : null) as any,
+        {exclusiveGroup: Ex_Naruhaya, name: `希望納期`},
       ]
         .filter(Boolean)
         .map(d => ({...d, additionalProps: {refresh: true}}))

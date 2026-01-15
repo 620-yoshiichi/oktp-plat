@@ -3,7 +3,6 @@
 import {columnGetterType} from '@cm/types/types'
 import {colType} from '@cm/types/col-types'
 import {Fields} from '@cm/class/Fields/Fields'
-import {defaultRegister} from '@cm/class/builders/ColBuilderVariables'
 import {R_Stack} from '@cm/components/styles/common-components/common-components'
 import {PencilSquareIcon} from '@heroicons/react/20/solid'
 import useRoleGMF from '@cm/hooks/useRoleGMF'
@@ -156,7 +155,7 @@ export class ColBuilder {
         type: 'array',
         form: {
           disabled: !scopes.admin,
-          editFormat: props => {
+          editFormat: (props: any) => {
             return <AppsArraySelector {...props} />
           },
         },
@@ -272,7 +271,7 @@ export class ColBuilder {
         label: 'アプリ',
         type: 'array',
         form: {
-          editFormat: props => {
+          editFormat: (props: any) => {
             return <AppsArraySelector {...props} />
           },
         },

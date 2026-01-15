@@ -10,7 +10,6 @@ import {obj__cleanObject} from '@cm/class/ObjHandler/transformers'
 
 // 分離したフックとコンポーネント
 import {useAdminContext} from './hooks/useAdminContext'
-import {useAccessValidation} from './hooks/useAccessValidation'
 import {AdminLayout} from './components/AdminLayout'
 
 import {adminProps} from '@cm/components/layout/Admin/type'

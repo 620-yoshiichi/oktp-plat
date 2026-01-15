@@ -35,18 +35,22 @@
  box-sizing: border-box;
  display: flex;
  flex-direction: column;
+ position: relative;
 }
 
 @media print {
  .qr-sheet-page {
   width: 100% !important;
   max-width: none !important;
-  height: 100vh;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: 100vh !important;
   margin: 0 !important;
   padding: 5mm !important;
   box-shadow: none;
   page-break-after: always;
   page-break-inside: avoid;
+  overflow: hidden !important;
   box-sizing: border-box !important;
  }
 }
@@ -56,6 +60,7 @@
  display: flex;
  flex-direction: column;
  gap: 20px;
+ overflow: hidden;
 }
 
 .car-info-section {
@@ -119,6 +124,15 @@
  width: 180px;
  height: 180px;
  border: 1px solid #ccc;
+}
+
+@media print {
+ .qr-image {
+  width: 140px !important;
+  height: 140px !important;
+  max-width: 140px !important;
+  max-height: 140px !important;
+ }
 }
 
 /* ページ2: 2カラムレイアウト */
@@ -282,24 +296,37 @@
  }
 
  .qr-sheet-page {
-  page-break-inside: avoid;
-  break-inside: avoid;
+  page-break-inside: avoid !important;
+  break-inside: avoid !important;
+  overflow: hidden !important;
+  position: relative !important;
  }
 
  .page-1 {
-  page-break-after: always;
-  break-after: page;
+  page-break-after: always !important;
+  break-after: page !important;
+  overflow: hidden !important;
+  max-height: 100vh !important;
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
  }
 
  .page-2 {
-  page-break-before: always;
-  break-before: page;
+  page-break-before: always !important;
+  break-before: page !important;
  }
 
  /* テーブルの幅を最大限活用 */
  .car-info-table {
   width: 100% !important;
-  font-size: 11px;
+  font-size: 10px !important;
+ }
+
+ .car-info-table td {
+  padding: 2px 4px !important;
+  height: 20px !important;
+  font-size: 9px !important;
  }
 
  .checklist-table {
@@ -329,6 +356,39 @@
 
  .qr-label {
   font-size: 12px;
+ }
+
+ /* ページ1のQRコードセクションの調整 */
+ .qr-codes-section-page1 {
+  gap: 10px !important;
+  flex-shrink: 1 !important;
+ }
+
+ .car-info-section {
+  flex-shrink: 0 !important;
+  margin-bottom: 5mm !important;
+ }
+
+ .second-row-section {
+  padding: 4px !important;
+  margin-top: 2mm !important;
+ }
+
+ .print-hr {
+  margin: 2mm 0 !important;
+ }
+
+ .qr-code-item {
+  padding: 2px !important;
+ }
+
+ .qr-code-item .font-bold {
+  font-size: 11px !important;
+ }
+
+ .qr-code-item .text-sm {
+  font-size: 9px !important;
+  padding: 1px 4px !important;
  }
 
  /* 印刷時に非表示 */

@@ -1,6 +1,7 @@
 import {anyObject} from '@cm/types/utility-types'
 
 import {getNewCarPages} from 'src/non-common/getPages/getNewCarPages'
+import {getOktpCommonPages} from 'src/non-common/getPages/getOktpCommonPages'
 import {getQrbpPages} from 'src/non-common/getPages/getQrbpages'
 
 import {getShinrenPages} from 'src/non-common/getPages/getShinrenPages'
@@ -44,6 +45,7 @@ export const PAGES: any = {
   newCar_PAGES: getNewCarPages,
   QRBP_PAGES: getQrbpPages,
   shinren_PAGES: getShinrenPages,
+  oktpCommon_PAGES: getOktpCommonPages,
 }
 
 export const CleansePathSource = (props: anyObject) => {

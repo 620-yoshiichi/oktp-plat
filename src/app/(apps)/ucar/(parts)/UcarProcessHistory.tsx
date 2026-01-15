@@ -80,7 +80,8 @@ export default UcarProcessHistory
 
 const PopoverButton = ({href, label, color, active}) => {
   const {accessScopes} = useGlobal()
-  const {admin} = accessScopes()
+  const {getUcarProps, admin} = accessScopes()
+  const {isChukoshaGroup, isStoreManager} = getUcarProps()
   const content = (
     <div
       className={cl(active ? '' : ' bg-gray-200  opacity-30 scale-80')}
@@ -99,7 +100,7 @@ const PopoverButton = ({href, label, color, active}) => {
     </div>
   )
 
-  if (admin) {
+  if (admin || isChukoshaGroup || isStoreManager) {
     return (
       <div>
         <T_LINK href={href} className={` text-inherit no-underline`} target="_blank">
