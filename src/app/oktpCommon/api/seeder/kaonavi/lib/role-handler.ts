@@ -1,7 +1,7 @@
 import {doTransaction, transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 import {Prisma} from '@prisma/generated/prisma/client'
-import {allOktpRoles, oktpRoleString} from '@app/oktpCommon/constants'
+import {allOktpRoles} from '@app/oktpCommon/constants'
 import {UserWithRoles} from './types'
 
 /**

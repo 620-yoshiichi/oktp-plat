@@ -1,4 +1,3 @@
-import {UCAR_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-constants'
 
 export type appString = 'ucar' | `newCar` | `QRBP`
 export type oktpRoleString =

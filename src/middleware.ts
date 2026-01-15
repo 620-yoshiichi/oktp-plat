@@ -1,34 +1,76 @@
+// middleware.ts
 import {getToken} from 'next-auth/jwt'
 import {NextRequest, NextResponse} from 'next/server'
+import type {JWT} from 'next-auth/jwt'
 
-const defaultPathValidateConfig = {
-  isValid: session => session?.email,
-  redirect: (origin, rootPath) => `${origin}/not-found?rootPath=${rootPath}`,
+/**
+ * セッション検証関数の型定義
+ */
+type SessionValidator = (session: JWT | null) => boolean
+
+/**
+ * リダイレクトURL生成関数の型定義
+ */
+type RedirectUrlBuilder = (origin: string, rootPath: string) => string
+
+/**
+ * パス検証設定
+ */
+const pathValidation = {
+  isValid: (session: JWT | null): boolean => {
+    return Boolean(session?.email)
+  },
+  redirect: (origin: string, rootPath: string): string => {
+    return `${origin}/not-found?rootPath=${rootPath}`
+  },
+} satisfies {
+  isValid: SessionValidator
+  redirect: RedirectUrlBuilder
 }
-type rootPath = {
+
+/**
+ * パス設定の型定義
+ */
+type PathConfig = {
+  matcher: string
+  isValid: SessionValidator
+  redirect: RedirectUrlBuilder
+}
+
+type RootPathConfig = {
   rootPath: string
-  paths: {
-    matcher: string
-    isValid: (session: any) => boolean
-    redirect: (origin: string, rootPath: string) => string
-  }[]
+  paths: PathConfig[]
 }
 
-const getFreePathsMathcer = (rootPath, pathArray) => {
+/**
+ * 認証が必要なパスのマッチャーを生成（除外パス以外にマッチさせる）
+ * @param rootPath - ルートパス名（例: 'ucar'）
+ * @param pathArray - 認証不要なパスの配列（例: ['/sateiIdConverter']）
+ * @returns 正規表現パターン文字列
+ */
+const getFreePathsMatcher = (rootPath: string, pathArray: string[]): string => {
   const defaultFreePaths = [`/.*api`, `/seeder`]
-  return `/${rootPath}(?!${[...defaultFreePaths, ...pathArray].join(`|`)})/.+`
+  const allFreePaths = [...defaultFreePaths, ...pathArray]
+
+  // 1. 特殊文字（/）をエスケープし、完全一致またはディレクトリ区切りとして機能させる
+  // 2. (?!(?:path1|path2)(?:/|$)) で、除外パス（およびその配下）にマッチしないことを確認
+  // 3. (?:/.*)? で、ルート直下およびサブディレクトリすべてを網羅
+  const excludedPathsPattern = allFreePaths.join('|')
+  const result = `^/${rootPath}(?!(?:${excludedPathsPattern})(?:/|$))(?:/.*)?$`
+
+  return result
 }
-export const rootPaths: rootPath[] = [
+export const rootPaths: RootPathConfig[] = [
   {
     rootPath: 'newCar',
-    paths: [{matcher: getFreePathsMathcer(`newCar`, [`/`]), ...defaultPathValidateConfig}],
+    paths: [{matcher: getFreePathsMatcher(`newCar`, [`/`]), ...pathValidation}],
   },
   {
     rootPath: 'QRBP',
     paths: [
       {
-        matcher: getFreePathsMathcer(`QRBP`, ['/', `/engineer`, `/process/history`]),
-        ...defaultPathValidateConfig,
+        matcher: getFreePathsMatcher(`QRBP`, ['/', `/engineer`, `/process/history`]),
+        ...pathValidation,
       },
     ],
   },
@@ -36,8 +78,8 @@ export const rootPaths: rootPath[] = [
     rootPath: 'shinren',
     paths: [
       {
-        matcher: getFreePathsMathcer(`shinren`, []),
-        ...defaultPathValidateConfig,
+        matcher: getFreePathsMatcher(`shinren`, []),
+        ...pathValidation,
       },
     ],
   },
@@ -45,40 +87,86 @@ export const rootPaths: rootPath[] = [
     rootPath: 'ucar',
     paths: [
       {
-        matcher: getFreePathsMathcer(`ucar`, [
-          //
-          '/',
+        // /ucar や /ucar/ucar は通さないようホワイトリストで明示していない
+        matcher: getFreePathsMatcher('ucar', [
           '/sateiIdConverter',
-          `/admin/InstantQr`,
+          '/admin/InstantQr',
+          // ホワイトリストとしてトップ（/）やucar直下（/ucar）は通さない
+          // '/': コメントアウト・未追加
+          // '/ucar': コメントアウト・未追加
         ]),
-        ...defaultPathValidateConfig,
+        ...pathValidation,
       },
     ],
   },
 ]
+/**
+ * Next.js middleware関数
+ * 認証が必要なパスへのアクセスを検証し、未認証の場合はリダイレクト
+ */
+export async function middleware(req: NextRequest): Promise<NextResponse> {
+  try {
+    // NextAuthからセッショントークンを取得
+    const session: JWT | null = await getToken({req})
 
-export async function middleware(req: NextRequest) {
-  // get session from next auth
-  const session = await getToken({req})
+    const {pathname, origin} = req.nextUrl
 
-  /**必要情報 */
-  const {pathname, origin, search, href} = req.nextUrl
+    // 対象となるルートパスを検索
+    const targetPathConfig = rootPaths.find(config => {
+      const rootPathRegex = new RegExp(`^/${config.rootPath}`)
+      return rootPathRegex.test(pathname)
+    })
 
-  const isTargetPath = rootPaths.find(d => {
-    const reg = new RegExp(`^/${d.rootPath}`)
-    return reg.test(pathname)
-  })
-
-  if (isTargetPath) {
-    const match = isTargetPath.paths.length > 0 && isTargetPath.paths.find(d => new RegExp(d.matcher).test(pathname))
-    if (match && !match.isValid(session)) {
-      const redirectUrl = match.redirect(origin, isTargetPath.rootPath)
-      return NextResponse.redirect(redirectUrl)
+    if (!targetPathConfig) {
+      // 対象パスでない場合はそのまま通過
+      return NextResponse.next()
     }
-  }
 
-  return NextResponse.next()
+    // パス設定に一致するマッチャーを検索
+    if (targetPathConfig.paths.length > 0) {
+      const matchedPathConfig = targetPathConfig.paths.find(pathConfig => {
+        try {
+          const matcherRegex = new RegExp(pathConfig.matcher)
+
+          return matcherRegex.test(pathname)
+        } catch (error) {
+          // 正規表現エラーの場合はログを出力してスキップ
+          console.error(`Invalid regex pattern: ${pathConfig.matcher}`, error)
+          return false
+        }
+      })
+
+      const isValid = matchedPathConfig?.isValid(session)
+      // マッチしたパスで認証が必要な場合、セッションを検証
+      if (matchedPathConfig && !isValid) {
+        const redirectUrl = matchedPathConfig.redirect(origin, targetPathConfig.rootPath)
+
+        return NextResponse.redirect(new URL(redirectUrl, req.url))
+      }
+    }
+
+    return NextResponse.next()
+  } catch (error) {
+    // エラーが発生した場合はログを出力してそのまま通過
+    // （本番環境では適切なエラーハンドリングを検討）
+    console.error('Middleware error:', error)
+    return NextResponse.next()
+  }
 }
-const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
-}
+
+/**
+ * Middleware設定
+ * マッチャーで対象となるパスを指定
+ * Next.jsのmiddlewareでは、config.matcherは静的な値である必要があります
+ */
+export const config = {
+  matcher: [
+    '/ucar(.*)',
+    '/newCar(.*)',
+    '/QRBP(.*)',
+    '/shinren(.*)',
+    '/((?!api|_next/static|favicon.ico|manifest|next-js-icon).*)',
+  ],
+} as const
+
+export default middleware

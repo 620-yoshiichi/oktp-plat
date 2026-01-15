@@ -1,13 +1,10 @@
 'use client'
 
-import {ColBuilder} from '@app/(apps)/ucar/class/ColBuilder/ColBuilder'
 
-import ChildCreator from '@cm/components/DataLogic/RTs/ChildCreator/ChildCreator'
-import {limitEditting} from '@cm/constants/defaults'
 
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 import {UcarProcessCreateForm} from '@app/(apps)/ucar/(pages)/create-process/UcarProcessCreateForm/UcarProcessCreateForm'
-import {C_Stack, FitMargin, Padding} from '@cm/components/styles/common-components/common-components'
+import {C_Stack, FitMargin} from '@cm/components/styles/common-components/common-components'
 
 import {UcarProcessCl} from '@app/(apps)/ucar/class/UcarProcessCl'
 import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
@@ -72,43 +69,43 @@ const UcarProcessInputter = (props: {UcarData: ucarData}) => {
     )
   }
 
-  const columns = ColBuilder.ucarProcess({
-    useGlobalProps,
-    ColBuilderExtraProps: {
-      carId: UcarData.id,
-      sateiID: UcarData.sateiID,
-      storeId,
-      UcarData,
-      processCode,
-    },
-  })
+  // const columns = ColBuilder.ucarProcess({
+  //   useGlobalProps,
+  //   ColBuilderExtraProps: {
+  //     carId: UcarData.id,
+  //     sateiID: UcarData.sateiID,
+  //     storeId,
+  //     UcarData,
+  //     processCode,
+  //   },
+  // })
 
-  return (
-    <Padding>
-      <FitMargin>
-        <ChildCreator
-          {...{
-            columns,
-            ParentData: UcarData,
-            models: {parent: 'ucar', children: 'ucarProcess'},
-            additional: {
-              where: {
-                sateiID: UcarData?.sateiID,
-                ucarId: undefined,
-              },
-              include: {
-                User: {},
-                Ucar: {},
-              },
-            },
+  // return (
+  //   <Padding>
+  //     <FitMargin>
+  //       <ChildCreator
+  //         {...{
+  //           columns,
+  //           ParentData: UcarData,
+  //           models: {parent: 'ucar', children: 'ucarProcess'},
+  //           additional: {
+  //             where: {
+  //               sateiID: UcarData?.sateiID,
+  //               ucarId: undefined,
+  //             },
+  //             include: {
+  //               User: {},
+  //               Ucar: {},
+  //             },
+  //           },
 
-            useGlobalProps,
-            ...limitEditting({exclusiveTo: !scopes.isChukoshaGroup && !scopes.admin}),
-          }}
-        />
-      </FitMargin>
-    </Padding>
-  )
+  //           useGlobalProps,
+  //           ...limitEditting({exclusiveTo: !scopes.isChukoshaGroup && !scopes.admin}),
+  //         }}
+  //       />
+  //     </FitMargin>
+  //   </Padding>
+  // )
 }
 
 export default UcarProcessInputter

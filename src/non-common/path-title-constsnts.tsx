@@ -181,7 +181,9 @@ export const identifyPathItem = ({allPathsPattenrs, pathname}) => {
       return pathSegmentMatched ? (acc += 1) : acc
     }, 0)
 
-    return check === pathnameSplitArr.length && pathnameSplitArr.length === itemHrefArray.length
+    const isHit = check === pathnameSplitArr.length && pathnameSplitArr.length === itemHrefArray.length
+
+    return isHit
   })
 
   return matchedPathItem as pathItemType

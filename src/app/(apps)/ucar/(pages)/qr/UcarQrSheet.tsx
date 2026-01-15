@@ -280,7 +280,7 @@ const Page1 = ({ucar, srcDataUrlObject}) => {
                   <div>{label}</div>
                 </Link>
 
-                <span className="text-xs text-gray-500 block">({target})</span>
+                <span className="text-sm font-bold text-gray-800 bg-yellow-100 px-2 py-0.5 rounded block">({target})</span>
               </R_Stack>
 
               <img src={qrCode} alt={label} className="qr-image " />
@@ -301,7 +301,7 @@ const Page1 = ({ucar, srcDataUrlObject}) => {
                     <div>{label}</div>
                   </Link>
 
-                  <span className="text-xs text-gray-500 block">({target})</span>
+                  <span className="text-sm font-bold text-gray-800 bg-yellow-100 px-2 py-0.5 rounded block">({target})</span>
                 </R_Stack>
 
                 <img src={qrCode} alt={label} className="qr-image" />

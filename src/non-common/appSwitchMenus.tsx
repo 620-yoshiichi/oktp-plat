@@ -9,7 +9,7 @@ export const getAppSwitchMenus = (scopes: any) => {
     children: [
       {tabId: 'newCar', label: '納期CS', exclusiveTo: isNewCarMember},
       {tabId: 'QRBP', label: 'BP', exclusiveTo: isQrbpMember},
-      {tabId: 'ucar', label: 'QRシステム', exclusiveTo: isUcarMember},
+      {tabId: 'ucar', label: 'QRシステム'},
     ],
 
     ROOT: [],

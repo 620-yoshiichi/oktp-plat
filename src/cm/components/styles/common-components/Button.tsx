@@ -1,8 +1,8 @@
-import {cn} from '@shadcn/lib/utils'
-import {htmlProps} from '@cm/types/utility-types'
-import {colorVariants} from '@cm/lib/methods/colorVariants'
+import { cn } from '@shadcn/lib/utils'
+import { htmlProps } from '@cm/types/utility-types'
+import { colorVariants } from '@cm/lib/methods/colorVariants'
 
-import {tv} from 'tailwind-variants'
+import { tv } from 'tailwind-variants'
 
 export const Button = (
   props: htmlProps & {
@@ -11,11 +11,11 @@ export const Button = (
     size?: 'xs' | 'sm' | 'md' | 'lg'
   }
 ) => {
-  const {className, style, color, active, size = 'md', ...rest} = props
+  const { className, style, color, active, size = 'md', ...rest } = props
 
   const buttonVariants = tv({
     base: cn(
-      `t-btn transition-all  ease-in-out transform  `,
+      `t-btn transition-all  ease-in-out transform shadow-md `,
       `ring-1 `,
       `focus:outline-none focus:ring-2  focus:ring-opacity-50`,
       `disabled:opacity-50 disabled:cursor-not-allowed `

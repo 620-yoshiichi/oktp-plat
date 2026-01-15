@@ -8,7 +8,6 @@ import {toast} from 'react-toastify'
 
 import {Alert} from '@cm/components/styles/common-components/Alert'
 import {getAvailable98NumbersReturn} from '@app/(apps)/ucar/(lib)/num98/getAvailable98Numbers'
-import {T_LINK} from '@cm/components/styles/common-components/links'
 import {Button} from '@cm/components/styles/common-components/Button'
 import useUcarDetailUpdatorGMF from '@app/(apps)/ucar/(parts)/templateHooks/useUcarDetailUpdatorGMF'
 import {UseRecordsReturn} from '@cm/components/DataLogic/TFs/PropAdjustor/hooks/useRecords/useRecords'

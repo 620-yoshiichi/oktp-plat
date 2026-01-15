@@ -5,19 +5,23 @@ import {useGlobalPropType} from 'src/cm/hooks/globalHooks/useGlobalOrigin'
 import {AccessValidationResult, CheckValidAccessProps} from '@cm/components/layout/Admin/type'
 import {addQuerySentence} from '@cm/lib/methods/urls'
 
-const checkValidAccess = (props: CheckValidAccessProps) => {
+const checkValidAccess = (props: CheckValidAccessProps): {valid: boolean; path: string} => {
   const {allPathsPatterns, pathname, origin = '', redirectUrl} = props
   const matchedPathItem = identifyPathItem({allPathsPattenrs: allPathsPatterns, pathname})
 
-  if (matchedPathItem?.exclusiveTo === false) {
-    const rootPath = matchedPathItem?.href?.split('/')[1]
+  if (!matchedPathItem) {
+    return {valid: true, path: ''}
+  }
+
+  if (matchedPathItem.exclusiveTo === false) {
+    const rootPath = matchedPathItem.href?.split('/')[1]
     const encodedRedirectUrl = encodeURIComponent(redirectUrl)
     const path = `${origin}/not-found?rootPath=${encodedRedirectUrl ?? rootPath}`
 
     return {valid: false, path}
-  } else {
-    return {valid: true, path: ''}
   }
+
+  return {valid: true, path: ''}
 }
 
 export const useAccessValidation = (useGlobalProps: useGlobalPropType): AccessValidationResult => {
