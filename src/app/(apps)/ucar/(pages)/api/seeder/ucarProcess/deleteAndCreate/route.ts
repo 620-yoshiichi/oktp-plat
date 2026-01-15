@@ -18,7 +18,7 @@ import {UCAR_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-constants'
 
 export const GET = async (req: NextRequest) => {
   const shiireGroupUser = await prisma.user.findFirst({
-    where: {code: UCAR_CONSTANTS.shiireGroupUserId},
+    where: {code: UCAR_CONSTANTS.shiireGroupUserCode},
   })
   const result: any = {}
   if ((await isCron({req})) === false) {
@@ -72,6 +72,9 @@ export const GET = async (req: NextRequest) => {
             ...rest
           } = d
 
+          const runnableStr = UCAR_CODE.RUNNABLE.byCode(runnable_0)?.label
+          const remarksStr = remarks_0 ?? ''
+
           // 発行時刻がなければ、最短の発行事項を表示
           let earliestDatetime: any = null
           if (!rest['datetime_0']) {
@@ -115,6 +118,8 @@ export const GET = async (req: NextRequest) => {
                     storeId: user?.storeId,
                     qrIssuedAt: ucarCreatedAt,
                     createdAt: ucarCreatedAt,
+                    runnable: runnableStr,
+                    remarks: remarksStr,
                   },
                   update: {
                     userId,
@@ -122,6 +127,8 @@ export const GET = async (req: NextRequest) => {
                     qrIssuedAt: ucarCreatedAt,
                     createdAt: ucarCreatedAt,
                     dataSource: UCAR_CODE.UCAR_DATA_SOURCE.raw.BIG_QUERY_QR_PROCESS.code,
+                    runnable: runnableStr,
+                    remarks: remarksStr,
                   },
                 })
               }

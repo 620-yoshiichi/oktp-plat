@@ -4,6 +4,7 @@ import {Prisma} from '@prisma/generated/prisma/client'
 import {defaultRegister} from '@cm/class/builders/ColBuilderVariables'
 import {isDev} from '@cm/lib/methods/common'
 import {toUtc} from '@cm/class/Days/date-utils/calculations'
+import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
 const showDefaultValue = isDev
 
 export const sold: Prisma.UcarWhereInput = {
@@ -16,11 +17,11 @@ export const unsold: Prisma.UcarWhereInput = {
 const THRESHOLD_DATE = toUtc(new Date(`2025-01-01`))
 
 export const UCAR_CONSTANTS: {
-  shiireGroupUserId: number
+  shiireGroupUserCode: number
   commonQuery: Prisma.UcarWhereInput
   columns: any
 } = {
-  shiireGroupUserId: 99999931,
+  shiireGroupUserCode: 99999931,
   commonQuery: {
     AND: [
       {
@@ -49,7 +50,15 @@ export const UCAR_CONSTANTS: {
               ?.map(s => s.name),
           },
         },
-        {id: `runnable`, form: {}, label: `自力走行可`, type: 'boolean'},
+        {
+          id: `runnable`,
+          form: {register: {required: `必須です`}},
+          label: `自力走行可`,
+          forSelect: {
+            radio: {},
+            codeMaster: UCAR_CODE.RUNNABLE,
+          },
+        },
         {
           id: `remarks`,
           form: {},

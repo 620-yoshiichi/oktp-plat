@@ -88,7 +88,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
       label: '98番号',
       format: (value, row) => row.number98,
       form: {},
-      search: {},
+
       td: {
         editable: {
           upsertController: {
@@ -271,27 +271,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
     // },
   ])
 
-  const searchCols = [
-    {
-      id: 'sateiID',
-      label: '査定ID',
-      form: {hidden: true},
-      td: {hidden: true},
-      type: 'text',
-      search: {},
-    },
-    {
-      id: 'userId',
-      label: 'ユーザー',
-      form: {hidden: true},
-      forSelect: {},
-      td: {hidden: true},
-      search: {},
-    },
-  ]
-
   const base: colType[] = [
-    ...searchCols,
     //
 
     {

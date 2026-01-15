@@ -103,7 +103,7 @@ const DestinationForm = ({UcarData, stores, onComplete}) => {
     columns,
     formData: {
       destination: UcarData.destination || '',
-      runnable: UcarData.runnable || false,
+      runnable: UcarData.runnable,
       remarks: UcarData.remarks || '',
     },
   })
@@ -257,25 +257,8 @@ export const ProcessApplicationForm = ({columns, stores, UcarData, useGlobalProp
   return (
     <div>
       <C_Stack className={`mx-auto w-fit gap-10`}>
-        {/* ステップ2: プロセス登録 */}
-        {/* ステップ1: 前提条件の入力
-        {needsCustomerInfo ||
-          (needsDestination && (
-            <Card>
-              {isPaperSendProcess && (
-                <FitMargin>
-                  <CustomerInfoForm UcarData={UcarData} onComplete={() => setCustomerInfoRegistered(true)} />
-                </FitMargin>
-              )}
-
-              {isCrChakuProcess && (
-                <FitMargin>
-                  <DestinationForm UcarData={UcarData} stores={stores} onComplete={() => setDestinationRegistered(true)} />
-                </FitMargin>
-              )}
-            </Card>
-          ))} */}
         {!prerequisitesMet && <PrerequisitesWarning needsCustomerInfo={needsCustomerInfo} needsDestination={needsDestination} />}
+
         {(needsCustomerInfo || needsDestination) && (
           <Card>
             {needsCustomerInfo && (

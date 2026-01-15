@@ -32,7 +32,7 @@ model Ucar {
   processedAs               String?
   purchaseType              String?
   remarks                   String?
-  runnable                  Boolean?
+  runnable                  String?
   storeToPickUp             String?
 
   //銀行情報

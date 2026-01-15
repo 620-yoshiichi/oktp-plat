@@ -31,7 +31,7 @@ export const POST = async (req: NextRequest) => {
 
   // デフォルトユーザー取得
   const shiireGroupUser = await prisma.user.findFirst({
-    where: {code: UCAR_CONSTANTS.shiireGroupUserId},
+    where: {code: UCAR_CONSTANTS.shiireGroupUserCode},
   })
 
   if (!shiireGroupUser) {

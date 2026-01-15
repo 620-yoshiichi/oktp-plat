@@ -15,7 +15,7 @@ export const Button = (
 
   const buttonVariants = tv({
     base: cn(
-      `t-btn transition-all duration-300 ease-in-out transform shadow-md `,
+      `t-btn transition-all  ease-in-out transform  `,
       `ring-1 `,
       `focus:outline-none focus:ring-2  focus:ring-opacity-50`,
       `disabled:opacity-50 disabled:cursor-not-allowed `
@@ -29,7 +29,7 @@ export const Button = (
         lg: 'text-[18px] py-[6px] px-[18px] ',
       },
       active: {
-        false: 'opacity-50 cursor-not-allowed',
+        false: 'opacity-40 ',
         true: 'cursor-pointer',
       },
     },

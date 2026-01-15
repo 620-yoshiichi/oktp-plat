@@ -39,7 +39,7 @@ export const POST = async (req: NextRequest) => {
     prisma.bankBranchMaster.findMany({}),
     prisma.user.findFirst({
       where: {
-        code: UCAR_CONSTANTS.shiireGroupUserId,
+        code: UCAR_CONSTANTS.shiireGroupUserCode,
       },
     }),
   ])

@@ -73,6 +73,7 @@ const parameters = async ({params, query, session, scopes}) => {
             {...UCAR_CONSTANTS.commonQuery},
             query.__search__sateiID && {sateiID: {contains: query.__search__sateiID}}, //検索時
             query.__search__number98 && {number98: {contains: query.__search__number98}}, //検索時,
+            query.__search__chassisNumber && {UPASS: {chassisNumber: {contains: query.__search__chassisNumber}}}, //検索時,
           ].filter(Boolean)
 
           return {

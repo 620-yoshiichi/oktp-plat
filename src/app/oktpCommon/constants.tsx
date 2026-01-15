@@ -1,3 +1,5 @@
+import {UCAR_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-constants'
+
 export type appString = 'ucar' | `newCar` | `QRBP`
 export type oktpRoleString =
   //newCar
@@ -330,6 +332,36 @@ export const forcedUsers: {
     apps: [`ucar`],
     userRoles: ['中古車G'],
   }, //渡辺恵美さん
+  {
+    code: 826051,
+    apps: [`ucar`],
+    userRoles: ['中古車G'],
+  }, //下江さん
+  {
+    code: 815997,
+    apps: [`ucar`],
+    userRoles: ['中古車G'],
+  }, //馬場さん
+  {
+    code: 825241,
+    apps: [`ucar`],
+    userRoles: ['中古車G'],
+  }, //加藤さん
+  {
+    code: 811461,
+    apps: [`ucar`],
+    userRoles: ['中古車G'],
+  }, //島田さん
+  {
+    code: 817400,
+    apps: [`ucar`],
+    userRoles: ['中古車G'],
+  }, //柳瀬さん
+  {
+    code: UCAR_CONSTANTS.shiireGroupUserCode,
+    apps: [`ucar`],
+    userRoles: ['中古車G'],
+  }, //仕入れグループさん
 ]
 
 export const KB_SEIBETU_LABEL = {1: '男', 2: '女', 3: '法人'}

@@ -3,8 +3,8 @@
   color: oklch(0.32 0 0);
   --color-border-gray: oklch(0.8 0.032 261.325);
   --color-background: oklch(1 0 0);
-  --color-primary-main: #486f55;
-  --color-primary-light: #bdd4a2;
+  --color-primary-main: #407eb9;
+  --color-primary-light: #ebf5fc;
   --color-primary-text: white;
   --color-primary: 222 100% 60%; /* fallback HSL */
   --color-primary-foreground: 0 0% 100%;
@@ -187,7 +187,6 @@
   .table-wrapper {
     padding: 0;
     border-radius: var(--radius-md);
-    border: 1px solid var(--color-border-gray);
     overflow: auto;
     white-space: normal;
     border: 1px solid var(--color-gray-300);
@@ -310,9 +309,7 @@
     opacity: 0.3;
   }
   .t-btn:hover {
-    opacity: 0.5;
-    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.4), 0 0 50px rgba(128, 128, 128, 0.1);
-    border-color: transparent;
+    box-shadow: 4px 3px 3px 0px rgba(0, 0, 0, 0.5) !important;
   }
   .icon-btn {
     display: flex;

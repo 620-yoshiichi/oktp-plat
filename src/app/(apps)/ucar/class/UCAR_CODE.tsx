@@ -88,6 +88,19 @@ export class UCAR_CODE {
     },
   })
 
+  static RUNNABLE = new Code({
+    YES: {
+      code: '01',
+      label: '可',
+      color: 'green',
+    },
+    NO: {
+      code: '02',
+      label: '不可',
+      color: 'red',
+    },
+  })
+
   static PURCHASE_TYPES = new Code({
     SHITADORI: {
       code: '01',

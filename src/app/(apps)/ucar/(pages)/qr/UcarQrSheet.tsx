@@ -12,6 +12,7 @@ import {upassCols} from '@app/(apps)/ucar/files/upass/upass-columns'
 import {UcarProcessCl} from '@app/(apps)/ucar/class/UcarProcessCl'
 import {UcarCL} from '@app/(apps)/ucar/class/UcarCL'
 import {Button} from '@cm/components/styles/common-components/Button'
+import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
 
 // 新しいHTML/CSSベースのQRシートコンポーネント
 const UcarQrSheet = ({ucar}) => {
@@ -365,7 +366,20 @@ const Page2 = ({ucar, srcDataUrlObject}) => {
 
 // 車両情報コンパクト版
 const CarInfoTable = ({ucar}) => {
-  const cols = upassCols.filter(col => col.showIn?.qrCreate)
+  const cols = [
+    ...upassCols.filter(col => col.showIn?.qrCreate),
+    {
+      en: 'runnable',
+      showIn: {qrCreate: {label: '自力走行可'}},
+      format: carData => UCAR_CODE.RUNNABLE.byCode(carData?.runnable)?.label,
+    },
+    {
+      en: 'remarks',
+      showIn: {qrCreate: {label: '店舗特記事項'}},
+      format: carData => carData?.remarks,
+    },
+  ].map(col => ({...col, label: col.showIn?.qrCreate?.label}))
+
   const splitByTwoColumns = cols.reduce((acc: any[], col, i) => {
     if (i % 2 === 0) {
       acc.push([col])
@@ -403,7 +417,7 @@ const CarInfoTable = ({ucar}) => {
           <tr key={i}>
             {cols.map((col, j) => {
               // 値の取得優先順位: ucar[col.en] > ucar.UPASS[col.en] > ucar[tmpフィールド]
-              let value = ucar[col.en] ?? ucar?.UPASS?.[col.en]
+              let value = col?.format ? col.format(ucar) : (ucar[col.en] ?? ucar?.UPASS?.[col.en])
               if (!value) {
                 const tmpFieldName = getTmpFieldName(col.en)
                 if (tmpFieldName) {
@@ -412,7 +426,7 @@ const CarInfoTable = ({ucar}) => {
               }
               return (
                 <React.Fragment key={j}>
-                  <td className="label-cell">{col.showIn?.qrCreate?.label}</td>
+                  <td className="label-cell">{col.label}</td>
                   <td className="value-cell">{value || ''}</td>
                 </React.Fragment>
               )

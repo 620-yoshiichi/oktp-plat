@@ -5,6 +5,7 @@ import {SheetRequests} from '@app/api/google/actions/SheetRequests'
 import {UCAR_GOOGLE_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-google-constants'
 import {UcarCL} from '../../UcarCL'
 import {UcarProcessCl} from '@app/(apps)/ucar/class/UcarProcessCl'
+import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
 export const requestDeliberySS = async ({sateiID, type}) => {
   const ucar = await UcarCL.fetcher.getUcarDataBySateiId(sateiID)
 
@@ -24,12 +25,13 @@ export const requestDeliberySS = async ({sateiID, type}) => {
   const {
     notation: {plate, modelName, modelYear, nenshiki},
   } = new UcarCL(ucar)
+  const runnableStr = UCAR_CODE.RUNNABLE.byCode(ucar.runnable ?? '')?.label
 
   try {
     const updateRow = [
       ucar.storeToPickUp ?? '',
       modelName ?? '',
-      ucar.runnable ? `可` : `不可`,
+      runnableStr,
       new Date(),
       plate,
       '',

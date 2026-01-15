@@ -54,7 +54,7 @@ const PropAdjustor = React.memo<PropAdjustorPropsType>(props => {
       position: 'sticky' as const,
       top: appbarHeight + 10,
       zIndex: Z_INDEX.EasySearcher,
-      marginBottom: 12,
+      marginBottom: 4,
     }),
     [appbarHeight]
   )

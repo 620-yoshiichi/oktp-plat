@@ -118,6 +118,9 @@ export const upassCols: upassColumn[] = [
     en: 'chassisNumber',
     sampleData: 'AZSH35-4002743',
     category: 'CAR_INFO',
+    showIn: {
+      ucarMainTable: {label: '車体番号'},
+    },
   },
   {
     jp: '店舗査定_フレームNo',
@@ -126,7 +129,6 @@ export const upassCols: upassColumn[] = [
     category: 'CAR_INFO',
     showIn: {
       qrCreate: {label: 'フレーム番号'},
-      ucarMainTable: {label: 'フレーム番号'},
     },
   },
   {

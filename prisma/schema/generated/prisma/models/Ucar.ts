@@ -91,7 +91,7 @@ export type UcarMinAggregateOutputType = {
   processedAs: string | null
   purchaseType: string | null
   remarks: string | null
-  runnable: boolean | null
+  runnable: string | null
   storeToPickUp: string | null
   souhsinJikoku: Date | null
   henkinRequired: boolean | null
@@ -181,7 +181,7 @@ export type UcarMaxAggregateOutputType = {
   processedAs: string | null
   purchaseType: string | null
   remarks: string | null
-  runnable: boolean | null
+  runnable: string | null
   storeToPickUp: string | null
   souhsinJikoku: Date | null
   henkinRequired: boolean | null
@@ -760,7 +760,7 @@ export type UcarGroupByOutputType = {
   processedAs: string | null
   purchaseType: string | null
   remarks: string | null
-  runnable: boolean | null
+  runnable: string | null
   storeToPickUp: string | null
   souhsinJikoku: Date | null
   henkinRequired: boolean | null
@@ -873,7 +873,7 @@ export type UcarWhereInput = {
   processedAs?: Prisma.StringNullableFilter<"Ucar"> | string | null
   purchaseType?: Prisma.StringNullableFilter<"Ucar"> | string | null
   remarks?: Prisma.StringNullableFilter<"Ucar"> | string | null
-  runnable?: Prisma.BoolNullableFilter<"Ucar"> | boolean | null
+  runnable?: Prisma.StringNullableFilter<"Ucar"> | string | null
   storeToPickUp?: Prisma.StringNullableFilter<"Ucar"> | string | null
   souhsinJikoku?: Prisma.DateTimeNullableFilter<"Ucar"> | Date | string | null
   henkinRequired?: Prisma.BoolNullableFilter<"Ucar"> | boolean | null
@@ -1084,7 +1084,7 @@ export type UcarWhereUniqueInput = Prisma.AtLeast<{
   processedAs?: Prisma.StringNullableFilter<"Ucar"> | string | null
   purchaseType?: Prisma.StringNullableFilter<"Ucar"> | string | null
   remarks?: Prisma.StringNullableFilter<"Ucar"> | string | null
-  runnable?: Prisma.BoolNullableFilter<"Ucar"> | boolean | null
+  runnable?: Prisma.StringNullableFilter<"Ucar"> | string | null
   storeToPickUp?: Prisma.StringNullableFilter<"Ucar"> | string | null
   souhsinJikoku?: Prisma.DateTimeNullableFilter<"Ucar"> | Date | string | null
   henkinRequired?: Prisma.BoolNullableFilter<"Ucar"> | boolean | null
@@ -1286,7 +1286,7 @@ export type UcarScalarWhereWithAggregatesInput = {
   processedAs?: Prisma.StringNullableWithAggregatesFilter<"Ucar"> | string | null
   purchaseType?: Prisma.StringNullableWithAggregatesFilter<"Ucar"> | string | null
   remarks?: Prisma.StringNullableWithAggregatesFilter<"Ucar"> | string | null
-  runnable?: Prisma.BoolNullableWithAggregatesFilter<"Ucar"> | boolean | null
+  runnable?: Prisma.StringNullableWithAggregatesFilter<"Ucar"> | string | null
   storeToPickUp?: Prisma.StringNullableWithAggregatesFilter<"Ucar"> | string | null
   souhsinJikoku?: Prisma.DateTimeNullableWithAggregatesFilter<"Ucar"> | Date | string | null
   henkinRequired?: Prisma.BoolNullableWithAggregatesFilter<"Ucar"> | boolean | null
@@ -1371,7 +1371,7 @@ export type UcarCreateInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -1468,7 +1468,7 @@ export type UcarUncheckedCreateInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -1557,7 +1557,7 @@ export type UcarUpdateInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1654,7 +1654,7 @@ export type UcarUncheckedUpdateInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1748,7 +1748,7 @@ export type UcarCreateManyInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -1833,7 +1833,7 @@ export type UcarUpdateManyMutationInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1916,7 +1916,7 @@ export type UcarUncheckedUpdateManyInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2799,7 +2799,7 @@ export type UcarCreateWithoutOldCars_BaseInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -2892,7 +2892,7 @@ export type UcarUncheckedCreateWithoutOldCars_BaseInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -3015,7 +3015,7 @@ export type UcarScalarWhereInput = {
   processedAs?: Prisma.StringNullableFilter<"Ucar"> | string | null
   purchaseType?: Prisma.StringNullableFilter<"Ucar"> | string | null
   remarks?: Prisma.StringNullableFilter<"Ucar"> | string | null
-  runnable?: Prisma.BoolNullableFilter<"Ucar"> | boolean | null
+  runnable?: Prisma.StringNullableFilter<"Ucar"> | string | null
   storeToPickUp?: Prisma.StringNullableFilter<"Ucar"> | string | null
   souhsinJikoku?: Prisma.DateTimeNullableFilter<"Ucar"> | Date | string | null
   henkinRequired?: Prisma.BoolNullableFilter<"Ucar"> | boolean | null
@@ -3100,7 +3100,7 @@ export type UcarCreateWithoutUPASSInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -3195,7 +3195,7 @@ export type UcarUncheckedCreateWithoutUPASSInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -3300,7 +3300,7 @@ export type UcarUpdateWithoutUPASSInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -3395,7 +3395,7 @@ export type UcarUncheckedUpdateWithoutUPASSInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -3484,7 +3484,7 @@ export type UcarCreateWithoutQR_ProsessInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -3580,7 +3580,7 @@ export type UcarUncheckedCreateWithoutQR_ProsessInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -3684,7 +3684,7 @@ export type UcarUpdateWithoutQR_ProsessInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -3780,7 +3780,7 @@ export type UcarUncheckedUpdateWithoutQR_ProsessInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -3868,7 +3868,7 @@ export type UcarCreateWithoutNewCarInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -3964,7 +3964,7 @@ export type UcarUncheckedCreateWithoutNewCarInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -4078,7 +4078,7 @@ export type UcarCreateWithoutStoreInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -4174,7 +4174,7 @@ export type UcarUncheckedCreateWithoutStoreInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -4272,7 +4272,7 @@ export type UcarCreateWithoutDestinationStoreInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -4368,7 +4368,7 @@ export type UcarUncheckedCreateWithoutDestinationStoreInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -4466,7 +4466,7 @@ export type UcarCreateWithoutTmpRentalStoreInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -4562,7 +4562,7 @@ export type UcarUncheckedCreateWithoutTmpRentalStoreInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -4708,7 +4708,7 @@ export type UcarCreateWithoutUserInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -4804,7 +4804,7 @@ export type UcarUncheckedCreateWithoutUserInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -4918,7 +4918,7 @@ export type UcarCreateWithoutNumber98Input = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -5013,7 +5013,7 @@ export type UcarUncheckedCreateWithoutNumber98Input = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -5128,7 +5128,7 @@ export type UcarCreateWithoutAppliedUcarGarageSlotInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -5224,7 +5224,7 @@ export type UcarUncheckedCreateWithoutAppliedUcarGarageSlotInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -5328,7 +5328,7 @@ export type UcarUpdateWithoutAppliedUcarGarageSlotInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -5424,7 +5424,7 @@ export type UcarUncheckedUpdateWithoutAppliedUcarGarageSlotInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -5512,7 +5512,7 @@ export type UcarCreateWithoutBankMasterInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -5608,7 +5608,7 @@ export type UcarUncheckedCreateWithoutBankMasterInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -5722,7 +5722,7 @@ export type UcarCreateWithoutBankBranchMasterInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -5818,7 +5818,7 @@ export type UcarUncheckedCreateWithoutBankBranchMasterInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -5932,7 +5932,7 @@ export type UcarCreateWithoutUcarProcessInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -6028,7 +6028,7 @@ export type UcarUncheckedCreateWithoutUcarProcessInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -6132,7 +6132,7 @@ export type UcarUpdateWithoutUcarProcessInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -6228,7 +6228,7 @@ export type UcarUncheckedUpdateWithoutUcarProcessInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -6316,7 +6316,7 @@ export type UcarCreateWithoutUcarPaperWorkNotesInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -6412,7 +6412,7 @@ export type UcarUncheckedCreateWithoutUcarPaperWorkNotesInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -6516,7 +6516,7 @@ export type UcarUpdateWithoutUcarPaperWorkNotesInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -6612,7 +6612,7 @@ export type UcarUncheckedUpdateWithoutUcarPaperWorkNotesInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -6702,7 +6702,7 @@ export type UcarCreateManyOldCars_BaseInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -6787,7 +6787,7 @@ export type UcarUpdateWithoutOldCars_BaseInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -6880,7 +6880,7 @@ export type UcarUncheckedUpdateWithoutOldCars_BaseInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -6971,7 +6971,7 @@ export type UcarUncheckedUpdateManyWithoutOldCars_BaseInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -7061,7 +7061,7 @@ export type UcarCreateManyNewCarInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -7145,7 +7145,7 @@ export type UcarUpdateWithoutNewCarInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -7241,7 +7241,7 @@ export type UcarUncheckedUpdateWithoutNewCarInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -7334,7 +7334,7 @@ export type UcarUncheckedUpdateManyWithoutNewCarInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -7423,7 +7423,7 @@ export type UcarCreateManyStoreInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -7512,7 +7512,7 @@ export type UcarCreateManyDestinationStoreInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -7601,7 +7601,7 @@ export type UcarCreateManyTmpRentalStoreInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -7685,7 +7685,7 @@ export type UcarUpdateWithoutStoreInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -7781,7 +7781,7 @@ export type UcarUncheckedUpdateWithoutStoreInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -7874,7 +7874,7 @@ export type UcarUncheckedUpdateManyWithoutStoreInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -7958,7 +7958,7 @@ export type UcarUpdateWithoutDestinationStoreInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -8054,7 +8054,7 @@ export type UcarUncheckedUpdateWithoutDestinationStoreInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -8147,7 +8147,7 @@ export type UcarUncheckedUpdateManyWithoutDestinationStoreInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -8231,7 +8231,7 @@ export type UcarUpdateWithoutTmpRentalStoreInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -8327,7 +8327,7 @@ export type UcarUncheckedUpdateWithoutTmpRentalStoreInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -8420,7 +8420,7 @@ export type UcarUncheckedUpdateManyWithoutTmpRentalStoreInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -8509,7 +8509,7 @@ export type UcarCreateManyUserInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -8593,7 +8593,7 @@ export type UcarUpdateWithoutUserInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -8689,7 +8689,7 @@ export type UcarUncheckedUpdateWithoutUserInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -8782,7 +8782,7 @@ export type UcarUncheckedUpdateManyWithoutUserInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -8870,7 +8870,7 @@ export type UcarCreateManyNumber98Input = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -8955,7 +8955,7 @@ export type UcarUpdateWithoutNumber98Input = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -9050,7 +9050,7 @@ export type UcarUncheckedUpdateWithoutNumber98Input = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -9143,7 +9143,7 @@ export type UcarUncheckedUpdateManyWithoutNumber98Input = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -9233,7 +9233,7 @@ export type UcarCreateManyBankMasterInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -9317,7 +9317,7 @@ export type UcarUpdateWithoutBankMasterInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -9413,7 +9413,7 @@ export type UcarUncheckedUpdateWithoutBankMasterInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -9506,7 +9506,7 @@ export type UcarUncheckedUpdateManyWithoutBankMasterInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -9595,7 +9595,7 @@ export type UcarCreateManyBankBranchMasterInput = {
   processedAs?: string | null
   purchaseType?: string | null
   remarks?: string | null
-  runnable?: boolean | null
+  runnable?: string | null
   storeToPickUp?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
@@ -9679,7 +9679,7 @@ export type UcarUpdateWithoutBankBranchMasterInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -9775,7 +9775,7 @@ export type UcarUncheckedUpdateWithoutBankBranchMasterInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -9868,7 +9868,7 @@ export type UcarUncheckedUpdateManyWithoutBankBranchMasterInput = {
   processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  runnable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -10453,7 +10453,7 @@ export type $UcarPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     processedAs: string | null
     purchaseType: string | null
     remarks: string | null
-    runnable: boolean | null
+    runnable: string | null
     storeToPickUp: string | null
     souhsinJikoku: Date | null
     henkinRequired: boolean | null
@@ -10977,7 +10977,7 @@ export interface UcarFieldRefs {
   readonly processedAs: Prisma.FieldRef<"Ucar", 'String'>
   readonly purchaseType: Prisma.FieldRef<"Ucar", 'String'>
   readonly remarks: Prisma.FieldRef<"Ucar", 'String'>
-  readonly runnable: Prisma.FieldRef<"Ucar", 'Boolean'>
+  readonly runnable: Prisma.FieldRef<"Ucar", 'String'>
   readonly storeToPickUp: Prisma.FieldRef<"Ucar", 'String'>
   readonly souhsinJikoku: Prisma.FieldRef<"Ucar", 'DateTime'>
   readonly henkinRequired: Prisma.FieldRef<"Ucar", 'Boolean'>

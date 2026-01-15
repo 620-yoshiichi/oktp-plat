@@ -11,7 +11,7 @@ export const POST = async (req: NextRequest) => {
   const result: any = {}
   const shiireGroupUser = await prisma.user.findFirst({
     where: {
-      code: UCAR_CONSTANTS.shiireGroupUserId,
+      code: UCAR_CONSTANTS.shiireGroupUserCode,
     },
   })
 

@@ -18546,7 +18546,7 @@
           "isId": false,
           "isReadOnly": false,
           "hasDefaultValue": false,
-          "type": "Boolean",
+          "type": "String",
           "nativeType": null,
           "isGenerated": false,
           "isUpdatedAt": false

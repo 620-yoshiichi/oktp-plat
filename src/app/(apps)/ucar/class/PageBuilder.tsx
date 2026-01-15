@@ -77,13 +77,25 @@ export class PageBuilder {
             id: `__search__sateiID`,
             label: `査定ID`,
             inputProps: {placeholder: ''},
-            form: {defaultValue: query.__search__sateiID},
+            form: {
+              defaultValue: query.__search__sateiID,
+              style: {width: 190},
+            },
           },
           {
             id: `__search__number98`,
             label: `98番号`,
             inputProps: {placeholder: '5桁の番号'},
             form: {defaultValue: query.__search__number98},
+          },
+          {
+            id: `__search__chassisNumber`,
+            label: `車体番号`,
+            inputProps: {placeholder: 'XXXXX-XXXXXX'},
+            form: {
+              defaultValue: query.__search__chassisNumber,
+              style: {width: 190},
+            },
           },
         ]).transposeColumns(),
       })
@@ -100,8 +112,8 @@ export class PageBuilder {
               },
             },
             onSubmit: async data => {
-              const {__search__sateiID, __search__number98} = data
-              addQuery({__search__sateiID, __search__number98})
+              const {__search__sateiID, __search__number98, __search__chassisNumber} = data
+              addQuery({__search__sateiID, __search__number98, __search__chassisNumber})
             },
           }}
         >
