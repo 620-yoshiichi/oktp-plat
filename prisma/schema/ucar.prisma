@@ -34,6 +34,8 @@ model Ucar {
   remarks                   String?
   runnable                  String?
   storeToPickUp             String?
+  shitadoriKbn              String?
+  kounyuShaOrderNumber      String?
 
   //銀行情報
   souhsinJikoku        DateTime?

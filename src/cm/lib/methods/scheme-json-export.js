@@ -18566,6 +18566,34 @@
           "isUpdatedAt": false
         },
         {
+          "name": "shitadoriKbn",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "String",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "kounyuShaOrderNumber",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "String",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
           "name": "souhsinJikoku",
           "kind": "scalar",
           "isList": false,

@@ -45,7 +45,7 @@ export const PAGES: any = {
   newCar_PAGES: getNewCarPages,
   QRBP_PAGES: getQrbpPages,
   shinren_PAGES: getShinrenPages,
-  oktpCommon_PAGES: getOktpCommonPages,
+  common_PAGES: getOktpCommonPages,
 }
 
 export const CleansePathSource = (props: anyObject) => {

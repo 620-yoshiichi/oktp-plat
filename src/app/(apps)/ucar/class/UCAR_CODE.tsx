@@ -8,7 +8,8 @@ type codeAtom = {
   [key: string]: {
     code: string
     label: any
-    color: string
+    color?: string
+    requireChumonNo?: boolean
     checkAlert?: (ucar: ucarData) => boolean
     Trigger?: (props: {row: ucarData}) => JSX.Element
   }
@@ -243,6 +244,34 @@ export class UCAR_CODE {
       code: '05',
       label: '課税なし',
       color: '#FFF2CC',
+    },
+  })
+
+  static SHITADORI_KBN = new UcarAlertCode({
+    SHITADORI: {
+      code: '01',
+      label: '下取り',
+    },
+    SHITADORI_ATSUKAI_KAITORI: {
+      code: '02',
+      label: '買取（下取扱い）',
+      requireChumonNo: true,
+    },
+    KAITORI: {
+      code: '03',
+      label: '買取',
+    },
+    SHAYOSHA: {
+      code: '04',
+      label: '社用車',
+    },
+    DAISHA: {
+      code: '05',
+      label: '代車',
+    },
+    SHIJOSHA: {
+      code: '06',
+      label: '試乗車',
     },
   })
 

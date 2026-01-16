@@ -6658,6 +6658,8 @@ export const UcarScalarFieldEnum = {
   remarks: 'remarks',
   runnable: 'runnable',
   storeToPickUp: 'storeToPickUp',
+  shitadoriKbn: 'shitadoriKbn',
+  kounyuShaOrderNumber: 'kounyuShaOrderNumber',
   souhsinJikoku: 'souhsinJikoku',
   henkinRequired: 'henkinRequired',
   accountingRecievedAt: 'accountingRecievedAt',

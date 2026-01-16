@@ -26,13 +26,6 @@ export default function NewCarTemplate({children}) {
 
   return (
     <>
-      {(isStoreManager || scopes.admin) && (
-        <div style={{position: 'fixed', bottom: '20px', right: '20px'}}>
-          <R_Stack>
-            <AppSwitcher />
-          </R_Stack>
-        </div>
-      )}
       <section>
         {/* モーダルの順番大事 */}
         <stuffSwitcherGMF.Modal />

@@ -16,10 +16,9 @@ export const AppSwitcher = () => {
   if (PC) {
     return (
       <>
-        {isDev && allowed && <T_LINK {...{href: `/ucar`}}>QRシステム</T_LINK>}
         {allowed && <T_LINK {...{href: `/newCar`}}>納期CSアプリ</T_LINK>}
+        {allowed && <T_LINK {...{href: `/ucar`}}>QRシステム</T_LINK>}
         {allowed && <T_LINK {...{href: `/QRBP`}}>BPアプリ</T_LINK>}
-        {/* {allowed && <T_LINK {...{href: `/ucar`}}>Ucarアプリへ</T_LINK>} */}
       </>
     )
   }

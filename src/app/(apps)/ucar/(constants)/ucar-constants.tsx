@@ -61,9 +61,35 @@ export const UCAR_CONSTANTS: {
         },
         {
           id: `remarks`,
-          form: {},
           label: `店舗特記事項`,
+          form: {},
           type: 'textarea',
+        },
+        {
+          id: `shitadoriKbn`,
+          label: `下取区分`,
+          form: {...defaultRegister},
+          forSelect: {codeMaster: UCAR_CODE.SHITADORI_KBN},
+        },
+        {
+          id: `kounyuShaOrderNumber`,
+          label: `注文No`,
+          form: {
+            descriptionNoteAfter: `「買取（下取扱い）」の時のみ入力`,
+            register: {
+              validate: (value, row) => {
+                const SHITADORI_KBN_CODE = UCAR_CODE.SHITADORI_KBN.byCode(row.shitadoriKbn)
+                if (SHITADORI_KBN_CODE?.requireChumonNo) {
+                  value = String(value ?? '')
+                  const reg = /^\d{2}\s\d{5}$/
+                  if (!reg.test(value)) {
+                    return '「2桁数字」「半角スペース」「5桁数字」で入力してください。'
+                  }
+                }
+              },
+            },
+          },
+          type: 'text',
         },
       ]).buildFormGroup({groupName: '入庫時情報'}).plain,
 

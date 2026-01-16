@@ -93,6 +93,8 @@ export type UcarMinAggregateOutputType = {
   remarks: string | null
   runnable: string | null
   storeToPickUp: string | null
+  shitadoriKbn: string | null
+  kounyuShaOrderNumber: string | null
   souhsinJikoku: Date | null
   henkinRequired: boolean | null
   accountingRecievedAt: Date | null
@@ -183,6 +185,8 @@ export type UcarMaxAggregateOutputType = {
   remarks: string | null
   runnable: string | null
   storeToPickUp: string | null
+  shitadoriKbn: string | null
+  kounyuShaOrderNumber: string | null
   souhsinJikoku: Date | null
   henkinRequired: boolean | null
   accountingRecievedAt: Date | null
@@ -273,6 +277,8 @@ export type UcarCountAggregateOutputType = {
   remarks: number
   runnable: number
   storeToPickUp: number
+  shitadoriKbn: number
+  kounyuShaOrderNumber: number
   souhsinJikoku: number
   henkinRequired: number
   accountingRecievedAt: number
@@ -405,6 +411,8 @@ export type UcarMinAggregateInputType = {
   remarks?: true
   runnable?: true
   storeToPickUp?: true
+  shitadoriKbn?: true
+  kounyuShaOrderNumber?: true
   souhsinJikoku?: true
   henkinRequired?: true
   accountingRecievedAt?: true
@@ -495,6 +503,8 @@ export type UcarMaxAggregateInputType = {
   remarks?: true
   runnable?: true
   storeToPickUp?: true
+  shitadoriKbn?: true
+  kounyuShaOrderNumber?: true
   souhsinJikoku?: true
   henkinRequired?: true
   accountingRecievedAt?: true
@@ -585,6 +595,8 @@ export type UcarCountAggregateInputType = {
   remarks?: true
   runnable?: true
   storeToPickUp?: true
+  shitadoriKbn?: true
+  kounyuShaOrderNumber?: true
   souhsinJikoku?: true
   henkinRequired?: true
   accountingRecievedAt?: true
@@ -762,6 +774,8 @@ export type UcarGroupByOutputType = {
   remarks: string | null
   runnable: string | null
   storeToPickUp: string | null
+  shitadoriKbn: string | null
+  kounyuShaOrderNumber: string | null
   souhsinJikoku: Date | null
   henkinRequired: boolean | null
   accountingRecievedAt: Date | null
@@ -875,6 +889,8 @@ export type UcarWhereInput = {
   remarks?: Prisma.StringNullableFilter<"Ucar"> | string | null
   runnable?: Prisma.StringNullableFilter<"Ucar"> | string | null
   storeToPickUp?: Prisma.StringNullableFilter<"Ucar"> | string | null
+  shitadoriKbn?: Prisma.StringNullableFilter<"Ucar"> | string | null
+  kounyuShaOrderNumber?: Prisma.StringNullableFilter<"Ucar"> | string | null
   souhsinJikoku?: Prisma.DateTimeNullableFilter<"Ucar"> | Date | string | null
   henkinRequired?: Prisma.BoolNullableFilter<"Ucar"> | boolean | null
   accountingRecievedAt?: Prisma.DateTimeNullableFilter<"Ucar"> | Date | string | null
@@ -979,6 +995,8 @@ export type UcarOrderByWithRelationInput = {
   remarks?: Prisma.SortOrderInput | Prisma.SortOrder
   runnable?: Prisma.SortOrderInput | Prisma.SortOrder
   storeToPickUp?: Prisma.SortOrderInput | Prisma.SortOrder
+  shitadoriKbn?: Prisma.SortOrderInput | Prisma.SortOrder
+  kounyuShaOrderNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   souhsinJikoku?: Prisma.SortOrderInput | Prisma.SortOrder
   henkinRequired?: Prisma.SortOrderInput | Prisma.SortOrder
   accountingRecievedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -1086,6 +1104,8 @@ export type UcarWhereUniqueInput = Prisma.AtLeast<{
   remarks?: Prisma.StringNullableFilter<"Ucar"> | string | null
   runnable?: Prisma.StringNullableFilter<"Ucar"> | string | null
   storeToPickUp?: Prisma.StringNullableFilter<"Ucar"> | string | null
+  shitadoriKbn?: Prisma.StringNullableFilter<"Ucar"> | string | null
+  kounyuShaOrderNumber?: Prisma.StringNullableFilter<"Ucar"> | string | null
   souhsinJikoku?: Prisma.DateTimeNullableFilter<"Ucar"> | Date | string | null
   henkinRequired?: Prisma.BoolNullableFilter<"Ucar"> | boolean | null
   accountingRecievedAt?: Prisma.DateTimeNullableFilter<"Ucar"> | Date | string | null
@@ -1190,6 +1210,8 @@ export type UcarOrderByWithAggregationInput = {
   remarks?: Prisma.SortOrderInput | Prisma.SortOrder
   runnable?: Prisma.SortOrderInput | Prisma.SortOrder
   storeToPickUp?: Prisma.SortOrderInput | Prisma.SortOrder
+  shitadoriKbn?: Prisma.SortOrderInput | Prisma.SortOrder
+  kounyuShaOrderNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   souhsinJikoku?: Prisma.SortOrderInput | Prisma.SortOrder
   henkinRequired?: Prisma.SortOrderInput | Prisma.SortOrder
   accountingRecievedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -1288,6 +1310,8 @@ export type UcarScalarWhereWithAggregatesInput = {
   remarks?: Prisma.StringNullableWithAggregatesFilter<"Ucar"> | string | null
   runnable?: Prisma.StringNullableWithAggregatesFilter<"Ucar"> | string | null
   storeToPickUp?: Prisma.StringNullableWithAggregatesFilter<"Ucar"> | string | null
+  shitadoriKbn?: Prisma.StringNullableWithAggregatesFilter<"Ucar"> | string | null
+  kounyuShaOrderNumber?: Prisma.StringNullableWithAggregatesFilter<"Ucar"> | string | null
   souhsinJikoku?: Prisma.DateTimeNullableWithAggregatesFilter<"Ucar"> | Date | string | null
   henkinRequired?: Prisma.BoolNullableWithAggregatesFilter<"Ucar"> | boolean | null
   accountingRecievedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Ucar"> | Date | string | null
@@ -1373,6 +1397,8 @@ export type UcarCreateInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -1470,6 +1496,8 @@ export type UcarUncheckedCreateInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -1559,6 +1587,8 @@ export type UcarUpdateInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1656,6 +1686,8 @@ export type UcarUncheckedUpdateInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1750,6 +1782,8 @@ export type UcarCreateManyInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -1835,6 +1869,8 @@ export type UcarUpdateManyMutationInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1918,6 +1954,8 @@ export type UcarUncheckedUpdateManyInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2023,6 +2061,8 @@ export type UcarCountOrderByAggregateInput = {
   remarks?: Prisma.SortOrder
   runnable?: Prisma.SortOrder
   storeToPickUp?: Prisma.SortOrder
+  shitadoriKbn?: Prisma.SortOrder
+  kounyuShaOrderNumber?: Prisma.SortOrder
   souhsinJikoku?: Prisma.SortOrder
   henkinRequired?: Prisma.SortOrder
   accountingRecievedAt?: Prisma.SortOrder
@@ -2133,6 +2173,8 @@ export type UcarMaxOrderByAggregateInput = {
   remarks?: Prisma.SortOrder
   runnable?: Prisma.SortOrder
   storeToPickUp?: Prisma.SortOrder
+  shitadoriKbn?: Prisma.SortOrder
+  kounyuShaOrderNumber?: Prisma.SortOrder
   souhsinJikoku?: Prisma.SortOrder
   henkinRequired?: Prisma.SortOrder
   accountingRecievedAt?: Prisma.SortOrder
@@ -2223,6 +2265,8 @@ export type UcarMinOrderByAggregateInput = {
   remarks?: Prisma.SortOrder
   runnable?: Prisma.SortOrder
   storeToPickUp?: Prisma.SortOrder
+  shitadoriKbn?: Prisma.SortOrder
+  kounyuShaOrderNumber?: Prisma.SortOrder
   souhsinJikoku?: Prisma.SortOrder
   henkinRequired?: Prisma.SortOrder
   accountingRecievedAt?: Prisma.SortOrder
@@ -2801,6 +2845,8 @@ export type UcarCreateWithoutOldCars_BaseInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -2894,6 +2940,8 @@ export type UcarUncheckedCreateWithoutOldCars_BaseInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -3017,6 +3065,8 @@ export type UcarScalarWhereInput = {
   remarks?: Prisma.StringNullableFilter<"Ucar"> | string | null
   runnable?: Prisma.StringNullableFilter<"Ucar"> | string | null
   storeToPickUp?: Prisma.StringNullableFilter<"Ucar"> | string | null
+  shitadoriKbn?: Prisma.StringNullableFilter<"Ucar"> | string | null
+  kounyuShaOrderNumber?: Prisma.StringNullableFilter<"Ucar"> | string | null
   souhsinJikoku?: Prisma.DateTimeNullableFilter<"Ucar"> | Date | string | null
   henkinRequired?: Prisma.BoolNullableFilter<"Ucar"> | boolean | null
   accountingRecievedAt?: Prisma.DateTimeNullableFilter<"Ucar"> | Date | string | null
@@ -3102,6 +3152,8 @@ export type UcarCreateWithoutUPASSInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -3197,6 +3249,8 @@ export type UcarUncheckedCreateWithoutUPASSInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -3302,6 +3356,8 @@ export type UcarUpdateWithoutUPASSInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3397,6 +3453,8 @@ export type UcarUncheckedUpdateWithoutUPASSInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3486,6 +3544,8 @@ export type UcarCreateWithoutQR_ProsessInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -3582,6 +3642,8 @@ export type UcarUncheckedCreateWithoutQR_ProsessInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -3686,6 +3748,8 @@ export type UcarUpdateWithoutQR_ProsessInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3782,6 +3846,8 @@ export type UcarUncheckedUpdateWithoutQR_ProsessInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3870,6 +3936,8 @@ export type UcarCreateWithoutNewCarInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -3966,6 +4034,8 @@ export type UcarUncheckedCreateWithoutNewCarInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -4080,6 +4150,8 @@ export type UcarCreateWithoutStoreInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -4176,6 +4248,8 @@ export type UcarUncheckedCreateWithoutStoreInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -4274,6 +4348,8 @@ export type UcarCreateWithoutDestinationStoreInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -4370,6 +4446,8 @@ export type UcarUncheckedCreateWithoutDestinationStoreInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -4468,6 +4546,8 @@ export type UcarCreateWithoutTmpRentalStoreInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -4564,6 +4644,8 @@ export type UcarUncheckedCreateWithoutTmpRentalStoreInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -4710,6 +4792,8 @@ export type UcarCreateWithoutUserInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -4806,6 +4890,8 @@ export type UcarUncheckedCreateWithoutUserInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -4920,6 +5006,8 @@ export type UcarCreateWithoutNumber98Input = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -5015,6 +5103,8 @@ export type UcarUncheckedCreateWithoutNumber98Input = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -5130,6 +5220,8 @@ export type UcarCreateWithoutAppliedUcarGarageSlotInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -5226,6 +5318,8 @@ export type UcarUncheckedCreateWithoutAppliedUcarGarageSlotInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -5330,6 +5424,8 @@ export type UcarUpdateWithoutAppliedUcarGarageSlotInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5426,6 +5522,8 @@ export type UcarUncheckedUpdateWithoutAppliedUcarGarageSlotInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5514,6 +5612,8 @@ export type UcarCreateWithoutBankMasterInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -5610,6 +5710,8 @@ export type UcarUncheckedCreateWithoutBankMasterInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -5724,6 +5826,8 @@ export type UcarCreateWithoutBankBranchMasterInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -5820,6 +5924,8 @@ export type UcarUncheckedCreateWithoutBankBranchMasterInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -5934,6 +6040,8 @@ export type UcarCreateWithoutUcarProcessInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -6030,6 +6138,8 @@ export type UcarUncheckedCreateWithoutUcarProcessInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -6134,6 +6244,8 @@ export type UcarUpdateWithoutUcarProcessInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6230,6 +6342,8 @@ export type UcarUncheckedUpdateWithoutUcarProcessInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6318,6 +6432,8 @@ export type UcarCreateWithoutUcarPaperWorkNotesInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -6414,6 +6530,8 @@ export type UcarUncheckedCreateWithoutUcarPaperWorkNotesInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -6518,6 +6636,8 @@ export type UcarUpdateWithoutUcarPaperWorkNotesInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6614,6 +6734,8 @@ export type UcarUncheckedUpdateWithoutUcarPaperWorkNotesInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6704,6 +6826,8 @@ export type UcarCreateManyOldCars_BaseInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -6789,6 +6913,8 @@ export type UcarUpdateWithoutOldCars_BaseInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6882,6 +7008,8 @@ export type UcarUncheckedUpdateWithoutOldCars_BaseInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6973,6 +7101,8 @@ export type UcarUncheckedUpdateManyWithoutOldCars_BaseInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7063,6 +7193,8 @@ export type UcarCreateManyNewCarInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -7147,6 +7279,8 @@ export type UcarUpdateWithoutNewCarInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7243,6 +7377,8 @@ export type UcarUncheckedUpdateWithoutNewCarInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7336,6 +7472,8 @@ export type UcarUncheckedUpdateManyWithoutNewCarInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7425,6 +7563,8 @@ export type UcarCreateManyStoreInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -7514,6 +7654,8 @@ export type UcarCreateManyDestinationStoreInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -7603,6 +7745,8 @@ export type UcarCreateManyTmpRentalStoreInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -7687,6 +7831,8 @@ export type UcarUpdateWithoutStoreInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7783,6 +7929,8 @@ export type UcarUncheckedUpdateWithoutStoreInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7876,6 +8024,8 @@ export type UcarUncheckedUpdateManyWithoutStoreInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7960,6 +8110,8 @@ export type UcarUpdateWithoutDestinationStoreInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8056,6 +8208,8 @@ export type UcarUncheckedUpdateWithoutDestinationStoreInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8149,6 +8303,8 @@ export type UcarUncheckedUpdateManyWithoutDestinationStoreInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8233,6 +8389,8 @@ export type UcarUpdateWithoutTmpRentalStoreInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8329,6 +8487,8 @@ export type UcarUncheckedUpdateWithoutTmpRentalStoreInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8422,6 +8582,8 @@ export type UcarUncheckedUpdateManyWithoutTmpRentalStoreInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8511,6 +8673,8 @@ export type UcarCreateManyUserInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -8595,6 +8759,8 @@ export type UcarUpdateWithoutUserInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8691,6 +8857,8 @@ export type UcarUncheckedUpdateWithoutUserInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8784,6 +8952,8 @@ export type UcarUncheckedUpdateManyWithoutUserInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8872,6 +9042,8 @@ export type UcarCreateManyNumber98Input = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -8957,6 +9129,8 @@ export type UcarUpdateWithoutNumber98Input = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -9052,6 +9226,8 @@ export type UcarUncheckedUpdateWithoutNumber98Input = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -9145,6 +9321,8 @@ export type UcarUncheckedUpdateManyWithoutNumber98Input = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -9235,6 +9413,8 @@ export type UcarCreateManyBankMasterInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -9319,6 +9499,8 @@ export type UcarUpdateWithoutBankMasterInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -9415,6 +9597,8 @@ export type UcarUncheckedUpdateWithoutBankMasterInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -9508,6 +9692,8 @@ export type UcarUncheckedUpdateManyWithoutBankMasterInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -9597,6 +9783,8 @@ export type UcarCreateManyBankBranchMasterInput = {
   remarks?: string | null
   runnable?: string | null
   storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
   souhsinJikoku?: Date | string | null
   henkinRequired?: boolean | null
   accountingRecievedAt?: Date | string | null
@@ -9681,6 +9869,8 @@ export type UcarUpdateWithoutBankBranchMasterInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -9777,6 +9967,8 @@ export type UcarUncheckedUpdateWithoutBankBranchMasterInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -9870,6 +10062,8 @@ export type UcarUncheckedUpdateManyWithoutBankBranchMasterInput = {
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -9999,6 +10193,8 @@ export type UcarSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   remarks?: boolean
   runnable?: boolean
   storeToPickUp?: boolean
+  shitadoriKbn?: boolean
+  kounyuShaOrderNumber?: boolean
   souhsinJikoku?: boolean
   henkinRequired?: boolean
   accountingRecievedAt?: boolean
@@ -10104,6 +10300,8 @@ export type UcarSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   remarks?: boolean
   runnable?: boolean
   storeToPickUp?: boolean
+  shitadoriKbn?: boolean
+  kounyuShaOrderNumber?: boolean
   souhsinJikoku?: boolean
   henkinRequired?: boolean
   accountingRecievedAt?: boolean
@@ -10204,6 +10402,8 @@ export type UcarSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   remarks?: boolean
   runnable?: boolean
   storeToPickUp?: boolean
+  shitadoriKbn?: boolean
+  kounyuShaOrderNumber?: boolean
   souhsinJikoku?: boolean
   henkinRequired?: boolean
   accountingRecievedAt?: boolean
@@ -10304,6 +10504,8 @@ export type UcarSelectScalar = {
   remarks?: boolean
   runnable?: boolean
   storeToPickUp?: boolean
+  shitadoriKbn?: boolean
+  kounyuShaOrderNumber?: boolean
   souhsinJikoku?: boolean
   henkinRequired?: boolean
   accountingRecievedAt?: boolean
@@ -10367,7 +10569,7 @@ export type UcarSelectScalar = {
   newCarId?: boolean
 }
 
-export type UcarOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "qrIssuedAt" | "processLastUpdatedAt" | "active" | "sortOrder" | "sateiDataConfirmedAt" | "dataSource" | "sateiID" | "number98" | "NO_SIRETYUM" | "DD_SIIRE" | "arrivedAt" | "meihenBi" | "masshoBi" | "secondMeihenbi" | "destination" | "inkanCertificateExpiredAt" | "inspectionExpiredAt" | "plate" | "processedAs" | "purchaseType" | "remarks" | "runnable" | "storeToPickUp" | "souhsinJikoku" | "henkinRequired" | "accountingRecievedAt" | "paybackScheduledAt" | "upperCarregisteredAt" | "registerDate" | "registerdAt" | "annualTax" | "earlyYear" | "earlyMonth" | "storeNumber" | "accountType" | "accountNumber" | "accountNameKana" | "paymentNoticeRecievedAt" | "isPayed" | "petCount" | "petPrice" | "prefCount" | "prefPrice" | "taxCustomerName" | "taxJobNote" | "destinationStoreId" | "daihatsuReserve" | "exception" | "inkanAlternate" | "inspectionAlternate" | "paymentNoticeRecieved" | "remarksHq" | "tmpPlate" | "tmpVehicleNo" | "tmpColor" | "tmpModelYear" | "tmpBrandName" | "tmpModelName" | "tmpGrade" | "tmpType" | "tmpCommonType" | "tmpFrameNumber" | "tmpTransmissionType" | "tmpRegistrationClassNumber" | "tmpRegistrationKana" | "tmpLandAffairsName" | "modified_brandName" | "modified_modelName" | "modified_frameNumber" | "modified_chassisNumber" | "modified_type" | "modified_grade" | "modified_modelYear" | "modified_length" | "modified_width" | "modified_height" | "ucarLastProcessMasterId" | "bankMasterId" | "yuchoShitenNo" | "bankBranchMasterId" | "userId" | "storeId" | "tmpRentalStoreId" | "newCarId", ExtArgs["result"]["ucar"]>
+export type UcarOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "qrIssuedAt" | "processLastUpdatedAt" | "active" | "sortOrder" | "sateiDataConfirmedAt" | "dataSource" | "sateiID" | "number98" | "NO_SIRETYUM" | "DD_SIIRE" | "arrivedAt" | "meihenBi" | "masshoBi" | "secondMeihenbi" | "destination" | "inkanCertificateExpiredAt" | "inspectionExpiredAt" | "plate" | "processedAs" | "purchaseType" | "remarks" | "runnable" | "storeToPickUp" | "shitadoriKbn" | "kounyuShaOrderNumber" | "souhsinJikoku" | "henkinRequired" | "accountingRecievedAt" | "paybackScheduledAt" | "upperCarregisteredAt" | "registerDate" | "registerdAt" | "annualTax" | "earlyYear" | "earlyMonth" | "storeNumber" | "accountType" | "accountNumber" | "accountNameKana" | "paymentNoticeRecievedAt" | "isPayed" | "petCount" | "petPrice" | "prefCount" | "prefPrice" | "taxCustomerName" | "taxJobNote" | "destinationStoreId" | "daihatsuReserve" | "exception" | "inkanAlternate" | "inspectionAlternate" | "paymentNoticeRecieved" | "remarksHq" | "tmpPlate" | "tmpVehicleNo" | "tmpColor" | "tmpModelYear" | "tmpBrandName" | "tmpModelName" | "tmpGrade" | "tmpType" | "tmpCommonType" | "tmpFrameNumber" | "tmpTransmissionType" | "tmpRegistrationClassNumber" | "tmpRegistrationKana" | "tmpLandAffairsName" | "modified_brandName" | "modified_modelName" | "modified_frameNumber" | "modified_chassisNumber" | "modified_type" | "modified_grade" | "modified_modelYear" | "modified_length" | "modified_width" | "modified_height" | "ucarLastProcessMasterId" | "bankMasterId" | "yuchoShitenNo" | "bankBranchMasterId" | "userId" | "storeId" | "tmpRentalStoreId" | "newCarId", ExtArgs["result"]["ucar"]>
 export type UcarInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   DestinationStore?: boolean | Prisma.Ucar$DestinationStoreArgs<ExtArgs>
   Number98?: boolean | Prisma.Ucar$Number98Args<ExtArgs>
@@ -10455,6 +10657,8 @@ export type $UcarPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     remarks: string | null
     runnable: string | null
     storeToPickUp: string | null
+    shitadoriKbn: string | null
+    kounyuShaOrderNumber: string | null
     souhsinJikoku: Date | null
     henkinRequired: boolean | null
     accountingRecievedAt: Date | null
@@ -10979,6 +11183,8 @@ export interface UcarFieldRefs {
   readonly remarks: Prisma.FieldRef<"Ucar", 'String'>
   readonly runnable: Prisma.FieldRef<"Ucar", 'String'>
   readonly storeToPickUp: Prisma.FieldRef<"Ucar", 'String'>
+  readonly shitadoriKbn: Prisma.FieldRef<"Ucar", 'String'>
+  readonly kounyuShaOrderNumber: Prisma.FieldRef<"Ucar", 'String'>
   readonly souhsinJikoku: Prisma.FieldRef<"Ucar", 'DateTime'>
   readonly henkinRequired: Prisma.FieldRef<"Ucar", 'Boolean'>
   readonly accountingRecievedAt: Prisma.FieldRef<"Ucar", 'DateTime'>

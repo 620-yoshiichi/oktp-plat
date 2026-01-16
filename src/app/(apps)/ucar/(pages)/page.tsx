@@ -1,5 +1,11 @@
+import TopPage from '@cm/components/layout/Navigation/TopPage'
+
 const UcarHomePage = () => {
-  return <>中古車QRシステム</>
+  return (
+    <>
+      <TopPage />
+    </>
+  )
 }
 
 export default UcarHomePage

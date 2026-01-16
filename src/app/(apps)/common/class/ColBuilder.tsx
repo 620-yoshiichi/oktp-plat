@@ -266,20 +266,6 @@ export class ColBuilder {
         form: {},
         sort: {},
       },
-      {
-        id: 'apps',
-        label: 'アプリ',
-        type: 'array',
-        form: {
-          editFormat: (props: any) => {
-            return <AppsArraySelector {...props} />
-          },
-        },
-        format: (value, row) => {
-          return value?.join(' / ') || ''
-        },
-        sort: {},
-      },
     ]).transposeColumns()
   }
 }

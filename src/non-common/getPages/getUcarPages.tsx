@@ -30,7 +30,7 @@ export const getUcarPages = (props: PageGetterType) => {
           link: {
             query: {displayColumns: '下取書類,商品化'},
           },
-          // exclusiveTo: isUcarMember,
+          exclusiveTo: isUcarMember,
         },
 
         {

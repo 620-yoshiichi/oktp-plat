@@ -78,27 +78,27 @@ export const getNewCarPages = (props: PageGetterType) => {
       ],
     },
 
-    {
-      tabId: ``,
-      label: `管理者`,
-      ...commons,
-      children: [
-        {
-          tabId: '',
-          label: '共通マスタ',
-          ROOT: ['common', 'admin', 'config'],
-          children: [
-            {tabId: 'store', label: '拠点', link: {}},
-            {tabId: 'user', label: 'ユーザー', link: {}},
-            {tabId: 'roleMaster', label: '役割マスタ', link: {}},
-          ],
-        },
-        {tabId: 'batch', label: 'バッチ', exclusiveTo: scopes.admin},
-        {tabId: 'user', label: 'ユーザー（NewCar専用）', exclusiveTo: scopes.admin},
-        {tabId: 'store', label: '拠点（NewCar専用）', exclusiveTo: scopes.admin},
-        {tabId: 'roleMaster', label: '役割マスタ（NewCar専用）', exclusiveTo: scopes.admin},
-      ],
-    },
+    // {
+    //   tabId: ``,
+    //   label: `管理者`,
+    //   ...commons,
+    //   children: [
+    //     {
+    //       tabId: '',
+    //       label: '共通マスタ',
+    //       ROOT: ['common', 'admin', 'config'],
+    //       children: [
+    //         {tabId: 'store', label: '拠点', link: {}},
+    //         {tabId: 'user', label: 'ユーザー', link: {}},
+    //         {tabId: 'roleMaster', label: '役割マスタ', link: {}},
+    //       ],
+    //     },
+    //     {tabId: 'batch', label: 'バッチ', exclusiveTo: scopes.admin},
+    //     {tabId: 'user', label: 'ユーザー（NewCar専用）', exclusiveTo: scopes.admin},
+    //     {tabId: 'store', label: '拠点（NewCar専用）', exclusiveTo: scopes.admin},
+    //     {tabId: 'roleMaster', label: '役割マスタ（NewCar専用）', exclusiveTo: scopes.admin},
+    //   ],
+    // },
     getAppSwitchMenus(scopes),
   ]
 

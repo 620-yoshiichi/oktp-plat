@@ -9,7 +9,8 @@ export const getAppSwitchMenus = (scopes: any) => {
     children: [
       {tabId: 'newCar', label: '納期CS', exclusiveTo: isNewCarMember},
       {tabId: 'QRBP', label: 'BP', exclusiveTo: isQrbpMember},
-      {tabId: 'ucar', label: 'QRシステム'},
+      {tabId: 'ucar', label: 'QRシステム', exclusiveTo: isUcarMember},
+      {tabId: 'common', label: '管理者設定', exclusiveTo: scopes.admin},
     ],
 
     ROOT: [],

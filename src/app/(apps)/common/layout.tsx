@@ -8,7 +8,7 @@ export default async function NewCarLayout(props) {
     <Admin
       {...{
         AppName: '共通',
-        PagesMethod: 'oktpCommon_PAGES',
+        PagesMethod: 'common_PAGES',
         PageBuilderGetter: {class: PageBuilder, getter: 'getGlobalIdSelector'},
       }}
     >

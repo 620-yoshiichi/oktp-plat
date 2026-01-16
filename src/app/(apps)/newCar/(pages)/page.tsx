@@ -1,4 +1,5 @@
 import GoogleLogin from '@app/(apps)/newCar/GoogleLogin'
+import TopPage from '@cm/components/layout/Navigation/TopPage'
 
 import {CenterScreen} from '@cm/components/styles/common-components/common-components'
 
@@ -8,20 +9,9 @@ import React from 'react'
 import {initServerComopnent} from 'src/non-common/serverSideFunction'
 
 export default async function Page(props) {
-  const query = await props.searchParams
-  const {session, scopes} = await initServerComopnent({query})
-  const {rootPath} = query
-  const redirectPath = rootPath === 'undefined' ? '/' : (rootPath ?? '')
-
-  if (session.id && typeof session.id === `string`) {
-    return <SignOuter {...{redirectPath: '/login'}} />
-  }
-
   return (
     <div>
-      <CenterScreen>
-        {!scopes.login ? <GoogleLogin callbackUrl={`/${redirectPath ?? ''}`} /> : <div>メニューを選択してください</div>}
-      </CenterScreen>
+      <TopPage />
     </div>
   )
 }
