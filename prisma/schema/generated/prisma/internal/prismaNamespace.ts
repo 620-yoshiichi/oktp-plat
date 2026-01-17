@@ -425,6 +425,7 @@ export const ModelName = {
   UserRole: 'UserRole',
   Calendar: 'Calendar',
   ChainMethodLock: 'ChainMethodLock',
+  CronExecutionLog: 'CronExecutionLog',
   RentaStore: 'RentaStore',
   RentaDeal: 'RentaDeal',
   RentaDailyReport: 'RentaDailyReport',
@@ -464,7 +465,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "car" | "userProcessConfirmation" | "notes" | "damageNameMaster" | "noteNameMaster" | "bpSummary" | "processNameMaster" | "process" | "releaseNotes" | "crUser" | "juchuShitadoriDb" | "oldCars_Base" | "zAIKO_Base" | "upassFamilyTree" | "uPASS" | "qR_Prosess" | "deliverSchedule" | "area" | "loadingVehicle" | "slot" | "newCar" | "orderSwitchingHisotory" | "desiredTorokuDate" | "newCarLeadTime" | "crInspectionHistory" | "seisanYoteiHistory" | "userProgressAggregationTable" | "progressAggregationTable" | "progressAggregationTableRecord" | "furiateStatusOnApprovement" | "carTransferHistory" | "tenpoTsuikoShinseiHeader" | "tenpoTsuikoShinseiDetail" | "tenpoTsuikoData" | "store" | "user" | "googleAccessToken" | "roleMaster" | "userRole" | "calendar" | "chainMethodLock" | "rentaStore" | "rentaDeal" | "rentaDailyReport" | "rentaCustomer" | "rentaReference" | "refFrom" | "refTo" | "purpose" | "purposeMaster" | "outcome" | "outcomeMaster" | "alternateInfo" | "insuranceInfo" | "extraInfo" | "ucar" | "number98" | "number98IssueHistory" | "appliedUcarGarageSlot" | "ucarGarageSlotMaster" | "ucarGarageLocationMaster" | "bankMaster" | "bankBranchMaster" | "ucarProcess" | "ucarPaperWorkNotes"
+    modelProps: "car" | "userProcessConfirmation" | "notes" | "damageNameMaster" | "noteNameMaster" | "bpSummary" | "processNameMaster" | "process" | "releaseNotes" | "crUser" | "juchuShitadoriDb" | "oldCars_Base" | "zAIKO_Base" | "upassFamilyTree" | "uPASS" | "qR_Prosess" | "deliverSchedule" | "area" | "loadingVehicle" | "slot" | "newCar" | "orderSwitchingHisotory" | "desiredTorokuDate" | "newCarLeadTime" | "crInspectionHistory" | "seisanYoteiHistory" | "userProgressAggregationTable" | "progressAggregationTable" | "progressAggregationTableRecord" | "furiateStatusOnApprovement" | "carTransferHistory" | "tenpoTsuikoShinseiHeader" | "tenpoTsuikoShinseiDetail" | "tenpoTsuikoData" | "store" | "user" | "googleAccessToken" | "roleMaster" | "userRole" | "calendar" | "chainMethodLock" | "cronExecutionLog" | "rentaStore" | "rentaDeal" | "rentaDailyReport" | "rentaCustomer" | "rentaReference" | "refFrom" | "refTo" | "purpose" | "purposeMaster" | "outcome" | "outcomeMaster" | "alternateInfo" | "insuranceInfo" | "extraInfo" | "ucar" | "number98" | "number98IssueHistory" | "appliedUcarGarageSlot" | "ucarGarageSlotMaster" | "ucarGarageLocationMaster" | "bankMaster" | "bankBranchMaster" | "ucarProcess" | "ucarPaperWorkNotes"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -3502,6 +3503,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    CronExecutionLog: {
+      payload: Prisma.$CronExecutionLogPayload<ExtArgs>
+      fields: Prisma.CronExecutionLogFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CronExecutionLogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CronExecutionLogPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CronExecutionLogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CronExecutionLogPayload>
+        }
+        findFirst: {
+          args: Prisma.CronExecutionLogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CronExecutionLogPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CronExecutionLogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CronExecutionLogPayload>
+        }
+        findMany: {
+          args: Prisma.CronExecutionLogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CronExecutionLogPayload>[]
+        }
+        create: {
+          args: Prisma.CronExecutionLogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CronExecutionLogPayload>
+        }
+        createMany: {
+          args: Prisma.CronExecutionLogCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CronExecutionLogCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CronExecutionLogPayload>[]
+        }
+        delete: {
+          args: Prisma.CronExecutionLogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CronExecutionLogPayload>
+        }
+        update: {
+          args: Prisma.CronExecutionLogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CronExecutionLogPayload>
+        }
+        deleteMany: {
+          args: Prisma.CronExecutionLogDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CronExecutionLogUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CronExecutionLogUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CronExecutionLogPayload>[]
+        }
+        upsert: {
+          args: Prisma.CronExecutionLogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CronExecutionLogPayload>
+        }
+        aggregate: {
+          args: Prisma.CronExecutionLogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCronExecutionLog>
+        }
+        groupBy: {
+          args: Prisma.CronExecutionLogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CronExecutionLogGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CronExecutionLogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CronExecutionLogCountAggregateOutputType> | number
+        }
+      }
+    }
     RentaStore: {
       payload: Prisma.$RentaStorePayload<ExtArgs>
       fields: Prisma.RentaStoreFieldRefs
@@ -6373,6 +6448,22 @@ export const ChainMethodLockScalarFieldEnum = {
 export type ChainMethodLockScalarFieldEnum = (typeof ChainMethodLockScalarFieldEnum)[keyof typeof ChainMethodLockScalarFieldEnum]
 
 
+export const CronExecutionLogScalarFieldEnum = {
+  id: 'id',
+  batchId: 'batchId',
+  batchName: 'batchName',
+  startedAt: 'startedAt',
+  completedAt: 'completedAt',
+  duration: 'duration',
+  status: 'status',
+  errorMessage: 'errorMessage',
+  result: 'result',
+  createdAt: 'createdAt'
+} as const
+
+export type CronExecutionLogScalarFieldEnum = (typeof CronExecutionLogScalarFieldEnum)[keyof typeof CronExecutionLogScalarFieldEnum]
+
+
 export const RentaStoreScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
@@ -6690,7 +6781,7 @@ export const UcarScalarFieldEnum = {
   paymentNoticeRecieved: 'paymentNoticeRecieved',
   remarksHq: 'remarksHq',
   tmpPlate: 'tmpPlate',
-  tmpVehicleNo: 'tmpVehicleNo',
+  tmpChassisNumber: 'tmpChassisNumber',
   tmpColor: 'tmpColor',
   tmpModelYear: 'tmpModelYear',
   tmpBrandName: 'tmpBrandName',
@@ -7086,6 +7177,7 @@ export type GlobalOmitConfig = {
   userRole?: Prisma.UserRoleOmit
   calendar?: Prisma.CalendarOmit
   chainMethodLock?: Prisma.ChainMethodLockOmit
+  cronExecutionLog?: Prisma.CronExecutionLogOmit
   rentaStore?: Prisma.RentaStoreOmit
   rentaDeal?: Prisma.RentaDealOmit
   rentaDailyReport?: Prisma.RentaDailyReportOmit

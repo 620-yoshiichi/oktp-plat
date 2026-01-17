@@ -16,31 +16,31 @@ export type BatchAction = {
 export const getUcarActions = (offset: number, limit: number): BatchAction[] => [
   {
     label: `古物 Rawデータ取り込み`,
-    description: ` /api/cron/oldCars/deleteAndCreate`,
+    description: ` /api/cron/execute/oldCarsDeleteAndCreate`,
     effectOn: 'batch',
     purpose: ``,
     tableName: 'oldCars_Base',
     onClick: async () => {
-      const res = await fetchAlt(`${basePath}/ucar/api/cron/oldCars/deleteAndCreate`, {}, {method: `GET`})
+      const res = await fetchAlt(`${basePath}/api/cron/execute/oldCarsDeleteAndCreate`, {}, {method: `GET`})
       console.debug(res)
       return res
     },
   },
   {
     label: `在庫 Rawデータ取り込み`,
-    description: ` /api/cron/zaiko/deleteAndCreate`,
+    description: ` /api/cron/execute/zaikoDeleteAndCreate`,
     effectOn: 'batch',
     purpose: ``,
     tableName: 'zAIKO_Base',
     onClick: async () => {
-      const res = await fetchAlt(`${basePath}/ucar/api/cron/zaiko/deleteAndCreate`, {}, {method: `GET`})
+      const res = await fetchAlt(`${basePath}/api/cron/execute/zaikoDeleteAndCreate`, {}, {method: `GET`})
       console.debug(res)
       return res
     },
   },
   {
     label: `AI査定 Rawデータ取り込み`,
-    description: ` /api/cron/aisatei/deleteAndCreate`,
+    description: ` /api/cron/execute/aisateiDeleteAndCreate`,
     effectOn: 'batch',
     tableName: 'uPASS',
     prismaArgs: {
@@ -49,14 +49,14 @@ export const getUcarActions = (offset: number, limit: number): BatchAction[] => 
       },
     },
     onClick: async () => {
-      const res = await fetchAlt(`${basePath}/ucar/api/cron/aisatei/deleteAndCreate`, {}, {method: `GET`})
+      const res = await fetchAlt(`${basePath}/api/cron/execute/aisateiDeleteAndCreate`, {}, {method: `GET`})
       console.debug(res)
       return res
     },
   },
   {
     label: `U-PASS Rawデータ取り込み`,
-    description: ` /api/cron/upass/deleteAndCreate`,
+    description: ` /api/cron/execute/upassDeleteAndCreate`,
     effectOn: 'batch',
     purpose: ``,
     tableName: 'uPASS',
@@ -66,19 +66,19 @@ export const getUcarActions = (offset: number, limit: number): BatchAction[] => 
       },
     },
     onClick: async () => {
-      const res = await fetchAlt(`${basePath}/ucar/api/cron/upass/deleteAndCreate`, {}, {method: `GET`})
+      const res = await fetchAlt(`${basePath}/api/cron/execute/upassDeleteAndCreate`, {}, {method: `GET`})
       console.debug(res)
       return res
     },
   },
   {
     label: `受注下取りDB Rawデータ取り込み`,
-    description: `/api/cron/juchuShitadoriDb/deleteAndCreate`,
+    description: `/api/cron/execute/juchuShitadoriDbDeleteAndCreate`,
     effectOn: 'batch',
     purpose: ``,
     tableName: 'juchuShitadoriDb',
     onClick: async () => {
-      const res = await fetchAlt(`${basePath}/ucar/api/cron/juchuShitadoriDb/deleteAndCreate`, {}, {method: `GET`})
+      const res = await fetchAlt(`${basePath}/api/cron/execute/juchuShitadoriDbDeleteAndCreate`, {}, {method: `GET`})
       console.debug(res)
       return res
     },
@@ -239,7 +239,7 @@ export const getNewCarActions = (): BatchAction[] => [
     onClick: {
       name: `upsertNewCarOrders`,
       main: async () => {
-        const res = await fetchAlt(`${basePath}/newCar/api/cron/orderUpsert`, {}, {method: 'GET'})
+        const res = await fetchAlt(`${basePath}/api/cron/execute/orderUpsert`, {}, {method: 'GET'})
         return res
       },
     },
@@ -251,7 +251,7 @@ export const getNewCarActions = (): BatchAction[] => [
     onClick: {
       name: `tenpoTsuikoUpsert`,
       main: async () => {
-        const res = await fetchAlt(`${basePath}/newCar/api/cron/tenpoTsuikoUpsert`, {}, {method: 'GET'})
+        const res = await fetchAlt(`${basePath}/api/cron/execute/tenpoTsuikoUpsert`, {}, {method: 'GET'})
         return res
       },
     },
@@ -263,7 +263,7 @@ export const getNewCarActions = (): BatchAction[] => [
     onClick: {
       name: `fetchSeisanYoteiDiff`,
       main: async () => {
-        const res = await fetchAlt(`${basePath}/newCar/api/cron/fetchSeisanYoteiDiff`, {}, {method: 'GET'})
+        const res = await fetchAlt(`${basePath}/api/cron/execute/fetchSeisanYoteiDiff`, {}, {method: 'GET'})
         return res
       },
     },
@@ -275,7 +275,7 @@ export const getNewCarActions = (): BatchAction[] => [
     onClick: {
       name: `notifySeisanYoteiDiff`,
       main: async () => {
-        const res = await fetchAlt(`${basePath}/newCar/api/cron/notifySeisanYoteiDiff`, {}, {method: 'GET'})
+        const res = await fetchAlt(`${basePath}/api/cron/execute/notifySeisanYoteiDiff`, {}, {method: 'GET'})
         return res
       },
     },
@@ -287,23 +287,23 @@ export const getNewCarActions = (): BatchAction[] => [
     onClick: {
       name: `aggregateProgress`,
       main: async () => {
-        const res = await fetchAlt(`${basePath}/newCar/api/cron/aggregateProgress`, {}, {method: 'GET'})
+        const res = await fetchAlt(`${basePath}/api/cron/execute/aggregateProgress`, {}, {method: 'GET'})
         return res
       },
     },
   },
-  {
-    label: `稼働日カレンダー更新`,
-    description: ``,
-    purpose: ``,
-    onClick: {
-      name: `updateCalendar`,
-      main: async () => {
-        const res = await fetchAlt(`${basePath}/newCar/api/seed/calendar`, {})
-        return res
-      },
-    },
-  },
+  // {
+  //   label: `稼働日カレンダー更新`,
+  //   description: ``,
+  //   purpose: ``,
+  //   onClick: {
+  //     name: `updateCalendar`,
+  //     main: async () => {
+  //       const res = await fetchAlt(`${basePath}/newCar/api/seed/calendar`, {})
+  //       return res
+  //     },
+  //   },
+  // },
 ]
 
 // QRBPアプリのバッチ処理定義

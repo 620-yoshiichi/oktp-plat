@@ -75,7 +75,7 @@ export const DataInitiationForm = ({stores, ucar, toggleLoad, session, sateiID_I
         }}
       >
         <div className="flex justify-center mt-6">
-          <Button color="red">確定</Button>
+          <Button color="red">QRシート発行</Button>
         </div>
       </BasicForm>
     </C_Stack>

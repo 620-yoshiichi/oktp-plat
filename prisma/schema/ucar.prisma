@@ -77,7 +77,7 @@ model Ucar {
 
   // UPASSDBにデータがない場合の一時フィールド（tmp{XXXXXX}形式）
   tmpPlate                   String? // プレート番号 (registrationSerialNumber相当)
-  tmpVehicleNo               String? // 車両No (NO_SYARYOU相当)
+  tmpChassisNumber           String? // 車台番号 (NO_SYARYOU相当)
   tmpColor                   String? // 色 (exteriorColor相当)
   tmpModelYear               String? // 年式 (modelYear相当)
   tmpBrandName               String? // ブランド名 (brandName相当)

@@ -64,9 +64,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
 
   const {query, session} = useGlobalProps
 
-  // const modifiedCols =
 
-  const CAR_MODIFIED_COLS = new Fields(getModifiedCols())
 
   const SETTING_COLS = new Fields([
     {
@@ -215,39 +213,86 @@ export const ucarColBuilder = (props: columnGetterType) => {
 
   // 基本情報
   const CAR_COLS: colType[] = [
-    ...upassCols
-      .filter(d => d.showIn?.ucarMainTable)
-      .map(d => {
-        const label = d.showIn?.ucarMainTable?.label
+    // ...upassCols
+    //   .filter(d => d.showIn?.ucarMainTable)
+    //   .map(d => {
+    //     const label = d.showIn?.ucarMainTable?.label
 
-        const format = (value, row) => {
-          const inst = new UcarCL(row)
-          value = inst.notation[d.en]
-          return <div className={`max-w-[240px]  text-xs  truncate`}>{value}</div>
-        }
+    //     const format = (value, row) => {
+    //       const inst = new UcarCL(row)
+    //       value = inst.notation[d.en]
+    //       return <div className={`max-w-[240px]  text-xs  truncate`}>{value}</div>
+    //     }
 
-        const col = {
-          id: `readOnly_UPASS.${d.en}`,
-          label,
-          format,
-          form: {
-            hidden: true,
-            defaultValue: props => {
-              return props?.formData?.[`UPASS`]?.[d.en]
-            },
-          },
-        }
+    //     const col = {
+    //       id: `readOnly_UPASS.${d.en}`,
+    //       label,
+    //       format,
+    //       form: {
+    //         hidden: true,
+    //         defaultValue: props => {
+    //           return props?.formData?.[`UPASS`]?.[d.en]
+    //         },
+    //       },
+    //     }
 
-        return col
-      }),
+    //     return col
+    //   }),
+
+
 
     {
-      id: 'createdAt',
-      label: '作成日',
-      type: 'date',
+      id: 'modelName',
+      label: '車種',
       form: {hidden: true},
-      td: {style: {...{verticalAlign: 'middle'}}},
+      format: (value, row) => {
+        const inst = new UcarCL(row as unknown as ucarData)
+        return [inst.notation.brandName,inst.notation.modelName].join(' ')
+      },
     },
+    {
+      id: 'plate',
+      label: 'プレート',
+      form: {hidden: true},
+
+      format: (value, row) => {
+        return new UcarCL(row as unknown as ucarData).notation.plate
+      },
+    },
+    {
+      id: 'chassisNumber',
+      label: '車体番号',
+      form: {hidden: true},
+      format: (value, row) => {
+        return new UcarCL(row as unknown as ucarData).notation.chassisNumber
+      },
+    },
+
+    {
+      id: 'grade',
+      label: 'グレード',
+      form: {hidden: true},
+      format: (value, row) => {
+        return new UcarCL(row as unknown as ucarData).notation.grade
+      },
+    },
+    {
+      id: 'type',
+      label: '型式',
+      form: {hidden: true},
+      format: (value, row) => {
+        return new UcarCL(row as unknown as ucarData).notation.type
+      },
+    },
+
+  {
+    id: 'createdAt',
+    label: '作成日',
+    type: 'date',
+    form: {hidden: true},
+    td: {style: {...{verticalAlign: 'middle'}}},
+  },
+
     // {
     //   id: 'tmpRentalStoreId',
     //   label: 'レンタル先',
@@ -257,19 +302,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
     // },
   ]
 
-  const PAPER_WORK_ALERT_COLS = new Fields([
-    // {
-    //   id: `currentStatus`,
-    //   label: `不備・アラート`,
-    //   form: {hidden: true},
-    //   format: (value, row) => {
-    //     const UcarData = row
-    //     const statuses = getCurrentStatuses({UcarData})
-    //     return <UcarAlertButtonSummay {...{statuses, UcarData, mutateRecords}} />
-    //   },
-    //   td: {style: {...{minWidth: 80}}},
-    // },
-  ])
+
 
   const base: colType[] = [
     //
@@ -397,7 +430,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
       ...SHIIRE_G_SETTING_COLS.buildFormGroup({groupName: `仕入G設定情報`}).plain,
     ]).showSummaryInTd({wrapperWidthPx: 200, editable: isChukoshaGroup}).plain,
 
-    ...PAPER_WORK_ALERT_COLS.plain,
+
 
     // ...CAR_MODIFIED_COLS.buildFormGroup({groupName: `修正情報`}).plain,
   ]

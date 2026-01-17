@@ -70,7 +70,7 @@ if (isDev) {
 
     if (isCritical) {
       console.error(`🚨 メモリ使用量が危険レベル: ${heapUsedMB}MB / ${limitMB}MB`)
-      throw new Error(`メモリ制限を超過しました: ${heapUsedMB}MB`)
+      // throw new Error(`メモリ制限を超過しました: ${heapUsedMB}MB`)
     }
 
     if (isOverLimit) {
@@ -247,9 +247,12 @@ export const batchCloneBigQuery = async () => {
           soruceList: recordsParsedDate,
           mainProcess: async batch => {
             try {
-              await doTransaction({transactionQueryList: batch, mode: 'parallel'})
+              await doTransaction({
+                transactionQueryList: batch,
+                mode: 'parallel',
+              })
             } catch (error) {
-              console.error(`バッチ処理エラー:`, error)
+              console.error(`バッチ処理エラー:`, error, batch)
               throw error
             }
           },

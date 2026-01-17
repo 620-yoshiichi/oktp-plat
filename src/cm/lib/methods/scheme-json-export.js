@@ -4050,8 +4050,8 @@
         {
           "name": "ZAIKO_Base",
           "kind": "object",
-          "isList": true,
-          "isRequired": true,
+          "isList": false,
+          "isRequired": false,
           "isUnique": false,
           "isId": false,
           "isReadOnly": false,
@@ -4631,6 +4631,11 @@
           "NO_SIRETYUM",
           "NO_SYARYOU",
           "DD_KEIRIKEI"
+        ],
+        [
+          "NO_SIRETYUM",
+          "NO_SYARYOU",
+          "DD_SIIRE"
         ]
       ],
       "uniqueIndexes": [
@@ -4640,6 +4645,14 @@
             "NO_SIRETYUM",
             "NO_SYARYOU",
             "DD_KEIRIKEI"
+          ]
+        },
+        {
+          "name": null,
+          "fields": [
+            "NO_SIRETYUM",
+            "NO_SYARYOU",
+            "DD_SIIRE"
           ]
         }
       ],
@@ -14525,6 +14538,169 @@
       "isGenerated": false
     },
     {
+      "name": "CronExecutionLog",
+      "dbName": null,
+      "schema": null,
+      "fields": [
+        {
+          "name": "id",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": true,
+          "isUnique": false,
+          "isId": true,
+          "isReadOnly": false,
+          "hasDefaultValue": true,
+          "type": "Int",
+          "nativeType": null,
+          "default": {
+            "name": "autoincrement",
+            "args": []
+          },
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "batchId",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": true,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "String",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "batchName",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": true,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "String",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "startedAt",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": true,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": true,
+          "type": "DateTime",
+          "nativeType": null,
+          "default": {
+            "name": "now",
+            "args": []
+          },
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "completedAt",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "DateTime",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "duration",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "Int",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "status",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": true,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "String",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "errorMessage",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "String",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "result",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "String",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "createdAt",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": true,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": true,
+          "type": "DateTime",
+          "nativeType": null,
+          "default": {
+            "name": "now",
+            "args": []
+          },
+          "isGenerated": false,
+          "isUpdatedAt": false
+        }
+      ],
+      "primaryKey": null,
+      "uniqueFields": [],
+      "uniqueIndexes": [],
+      "isGenerated": false
+    },
+    {
       "name": "RentaStore",
       "dbName": null,
       "schema": null,
@@ -19037,7 +19213,7 @@
           "isUpdatedAt": false
         },
         {
-          "name": "tmpVehicleNo",
+          "name": "tmpChassisNumber",
           "kind": "scalar",
           "isList": false,
           "isRequired": false,
@@ -21944,6 +22120,22 @@
       ]
     },
     {
+      "model": "ZAIKO_Base",
+      "type": "unique",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "NO_SIRETYUM"
+        },
+        {
+          "name": "NO_SYARYOU"
+        },
+        {
+          "name": "DD_SIIRE"
+        }
+      ]
+    },
+    {
       "model": "UpassFamilyTree",
       "type": "unique",
       "isDefinedOnField": true,
@@ -22776,6 +22968,46 @@
       "fields": [
         {
           "name": "id"
+        }
+      ]
+    },
+    {
+      "model": "CronExecutionLog",
+      "type": "id",
+      "isDefinedOnField": true,
+      "fields": [
+        {
+          "name": "id"
+        }
+      ]
+    },
+    {
+      "model": "CronExecutionLog",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "batchId"
+        }
+      ]
+    },
+    {
+      "model": "CronExecutionLog",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "startedAt"
+        }
+      ]
+    },
+    {
+      "model": "CronExecutionLog",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "status"
         }
       ]
     },

@@ -31,11 +31,15 @@ const useProcessPrerequisites = ({processCode, UcarData}) => {
 
   // 書類送付プロセスの場合：お客様情報が必要
   const needsCustomerInfo = isPaperSendProcess && !UcarData.taxCustomerName
+
+
   const [customerInfoRegistered, setCustomerInfoRegistered] = useState(!needsCustomerInfo)
 
   // CR着プロセスの場合：仕分け先が必要
   const needsDestination = isCrChakuProcess && !UcarData.destination
   const [DestinationRegistered, setDestinationRegistered] = useState(!needsDestination)
+
+
 
   // UcarDataが更新されたときに状態を更新
   useEffect(() => {
@@ -253,6 +257,8 @@ export const ProcessApplicationForm = ({columns, stores, UcarData, useGlobalProp
     }
     previousPrerequisitesMet.current = prerequisitesMet
   }, [prerequisitesMet])
+
+
 
   return (
     <div>

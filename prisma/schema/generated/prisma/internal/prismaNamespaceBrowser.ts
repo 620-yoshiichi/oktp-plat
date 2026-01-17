@@ -92,6 +92,7 @@ export const ModelName = {
   UserRole: 'UserRole',
   Calendar: 'Calendar',
   ChainMethodLock: 'ChainMethodLock',
+  CronExecutionLog: 'CronExecutionLog',
   RentaStore: 'RentaStore',
   RentaDeal: 'RentaDeal',
   RentaDailyReport: 'RentaDailyReport',
@@ -1190,6 +1191,22 @@ export const ChainMethodLockScalarFieldEnum = {
 export type ChainMethodLockScalarFieldEnum = (typeof ChainMethodLockScalarFieldEnum)[keyof typeof ChainMethodLockScalarFieldEnum]
 
 
+export const CronExecutionLogScalarFieldEnum = {
+  id: 'id',
+  batchId: 'batchId',
+  batchName: 'batchName',
+  startedAt: 'startedAt',
+  completedAt: 'completedAt',
+  duration: 'duration',
+  status: 'status',
+  errorMessage: 'errorMessage',
+  result: 'result',
+  createdAt: 'createdAt'
+} as const
+
+export type CronExecutionLogScalarFieldEnum = (typeof CronExecutionLogScalarFieldEnum)[keyof typeof CronExecutionLogScalarFieldEnum]
+
+
 export const RentaStoreScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
@@ -1507,7 +1524,7 @@ export const UcarScalarFieldEnum = {
   paymentNoticeRecieved: 'paymentNoticeRecieved',
   remarksHq: 'remarksHq',
   tmpPlate: 'tmpPlate',
-  tmpVehicleNo: 'tmpVehicleNo',
+  tmpChassisNumber: 'tmpChassisNumber',
   tmpColor: 'tmpColor',
   tmpModelYear: 'tmpModelYear',
   tmpBrandName: 'tmpBrandName',

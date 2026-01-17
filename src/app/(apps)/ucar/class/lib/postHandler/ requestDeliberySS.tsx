@@ -14,7 +14,7 @@ export const requestDeliberySS = async ({sateiID, type}) => {
   const {SS_URL, SH_NAME, parentFolderIds} = NOTICE
 
   const getProcessEnterPass = (processCode: string) =>
-    `=ENCODEURL("http://localhost:3000/ucar/create-process?sateiID=${sateiID}&processCode=${processCode}")`
+    `=ENCODEURL("${process.env.NEXT_PUBLIC_BASEPATH}/ucar/create-process?sateiID=${sateiID}&processCode=${processCode}")`
 
   const {CR_HAISO_JURYO, CR_CHAKU, CR_GENCHI_SHORI_YOSEI} = UcarProcessCl.CODE.raw
 
@@ -23,8 +23,16 @@ export const requestDeliberySS = async ({sateiID, type}) => {
   const URL_CR_CHAKU = getProcessEnterPass(CR_CHAKU.code)
 
   const {
-    notation: {plate, modelName, modelYear, nenshiki},
+    notation
   } = new UcarCL(ucar)
+
+  const  {plate, modelName, modelYear,
+    chassisNumber,
+    exteriorColor
+
+  } = notation
+
+
   const runnableStr = UCAR_CODE.RUNNABLE.byCode(ucar.runnable ?? '')?.label
 
   try {
@@ -34,10 +42,10 @@ export const requestDeliberySS = async ({sateiID, type}) => {
       runnableStr,
       new Date(),
       plate,
-      '',
-      '',
+      chassisNumber,
+      exteriorColor,
       ucar.remarks ?? '',
-      nenshiki ?? '',
+      modelYear
     ]
 
     const urls = [URL_CR_HAISO_JURYO, URL_GENTI_SHORI, URL_CR_CHAKU]
@@ -64,7 +72,12 @@ export const requestDeliberySS = async ({sateiID, type}) => {
     }
 
     console.debug('PDFを生成処理③')
-    const generatePdf_res = await GoogleDrive_GeneratePdf({spreadsheetId: SS_ID, parentFolderIds})
+    const generatePdf_res = await GoogleDrive_GeneratePdf({
+
+      spreadsheetId: SS_ID,
+      parentFolderIds,
+      pdfName: `${ucar.sateiID}_${type}`
+    })
 
     console.debug(generatePdf_res)
 

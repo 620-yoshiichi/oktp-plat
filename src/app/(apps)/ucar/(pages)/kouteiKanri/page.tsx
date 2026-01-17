@@ -4,34 +4,20 @@ import {CsvTable} from '@cm/components/styles/common-components/CsvTable/CsvTabl
 import {getColorStyles} from '@cm/lib/methods/colors'
 import {cn} from '@cm/shadcn/lib/utils'
 
-import prisma from 'src/lib/prisma'
 import {initServerComopnent} from 'src/non-common/serverSideFunction'
 import {UcarCL, ucarData} from '@app/(apps)/ucar/class/UcarCL'
-import {QueryBuilder} from '@app/(apps)/ucar/class/QueryBuilder'
+
 import {Days} from '@cm/class/Days/Days'
 
 export default async function DynamicMasterPage(props) {
   const query = await props.searchParams
   const {session, scopes} = await initServerComopnent({query})
 
-  const include = QueryBuilder.getInclude({})
+  const ucar = await UcarCL.fetcher.getUcarDataList({
+    where: {
+      daihatsuReserve: null,
+      sateiID:'17361343'
 
-  const ucar = await prisma.ucar.findMany({
-    where: {daihatsuReserve: null},
-    include: {
-      UcarProcess: {
-        include: {},
-        orderBy: {
-          date: {sort: 'desc', nulls: 'last'},
-        },
-      },
-      UPASS: {
-        include: {
-          RootUpass: {
-            include: {UPASS: {}},
-          },
-        },
-      },
     },
     orderBy: [
       //
@@ -40,6 +26,8 @@ export default async function DynamicMasterPage(props) {
     ],
     take: 100,
   })
+
+
 
   const allProcess = UcarProcessCl.CODE.array?.filter(process => process.list?.includes('main')) ?? []
 
@@ -94,6 +82,41 @@ export default async function DynamicMasterPage(props) {
                 style: {minWidth: 120},
               },
 
+              {
+                label: '配布店舗',
+                cellValue: ucarInst.data?.DestinationStore?.name,
+                style: {minWidth: 100},
+              },
+              {
+                label: '在庫店舗',
+                cellValue: ucarInst.ai21Data.MJ_ZAIKOST,
+                style: {minWidth: 100},
+              },
+              {
+                label: '展示店舗',
+                cellValue: ucarInst.ai21Data.CD_TENJTENP,
+                style: {minWidth: 120},
+              },
+              {
+                label: '仕入日',
+                cellValue: formatDate(ucarInst.ai21Data.DD_SIIRE, 'YY/MM/DD(ddd)'),
+                style: {minWidth: 120, textAlign: 'right'},
+              },
+              {
+                label: '売上日',
+                cellValue: formatDate(ucarInst.ai21Data.DD_URIAGE, 'YY/MM/DD(ddd)'),
+                style: {minWidth: 120, textAlign: 'right'},
+              },
+              {
+                label: '仕入価格',
+                cellValue: ucarInst.ai21Data.KI_SIIREKA,
+                style: {minWidth: 120, textAlign: 'right'},
+              },
+              {
+                label: '売上金額',
+                cellValue: ucarInst.ai21Data.KI_HANKAKA,
+                style: {minWidth: 120, textAlign: 'right'},
+              },
               {
                 label: '現在の工程',
                 cellValue: lastProcessCodeItem?.label,

@@ -125,7 +125,7 @@ export type UcarMinAggregateOutputType = {
   paymentNoticeRecieved: string | null
   remarksHq: string | null
   tmpPlate: string | null
-  tmpVehicleNo: string | null
+  tmpChassisNumber: string | null
   tmpColor: string | null
   tmpModelYear: string | null
   tmpBrandName: string | null
@@ -217,7 +217,7 @@ export type UcarMaxAggregateOutputType = {
   paymentNoticeRecieved: string | null
   remarksHq: string | null
   tmpPlate: string | null
-  tmpVehicleNo: string | null
+  tmpChassisNumber: string | null
   tmpColor: string | null
   tmpModelYear: string | null
   tmpBrandName: string | null
@@ -309,7 +309,7 @@ export type UcarCountAggregateOutputType = {
   paymentNoticeRecieved: number
   remarksHq: number
   tmpPlate: number
-  tmpVehicleNo: number
+  tmpChassisNumber: number
   tmpColor: number
   tmpModelYear: number
   tmpBrandName: number
@@ -443,7 +443,7 @@ export type UcarMinAggregateInputType = {
   paymentNoticeRecieved?: true
   remarksHq?: true
   tmpPlate?: true
-  tmpVehicleNo?: true
+  tmpChassisNumber?: true
   tmpColor?: true
   tmpModelYear?: true
   tmpBrandName?: true
@@ -535,7 +535,7 @@ export type UcarMaxAggregateInputType = {
   paymentNoticeRecieved?: true
   remarksHq?: true
   tmpPlate?: true
-  tmpVehicleNo?: true
+  tmpChassisNumber?: true
   tmpColor?: true
   tmpModelYear?: true
   tmpBrandName?: true
@@ -627,7 +627,7 @@ export type UcarCountAggregateInputType = {
   paymentNoticeRecieved?: true
   remarksHq?: true
   tmpPlate?: true
-  tmpVehicleNo?: true
+  tmpChassisNumber?: true
   tmpColor?: true
   tmpModelYear?: true
   tmpBrandName?: true
@@ -806,7 +806,7 @@ export type UcarGroupByOutputType = {
   paymentNoticeRecieved: string | null
   remarksHq: string | null
   tmpPlate: string | null
-  tmpVehicleNo: string | null
+  tmpChassisNumber: string | null
   tmpColor: string | null
   tmpModelYear: string | null
   tmpBrandName: string | null
@@ -921,7 +921,7 @@ export type UcarWhereInput = {
   paymentNoticeRecieved?: Prisma.StringNullableFilter<"Ucar"> | string | null
   remarksHq?: Prisma.StringNullableFilter<"Ucar"> | string | null
   tmpPlate?: Prisma.StringNullableFilter<"Ucar"> | string | null
-  tmpVehicleNo?: Prisma.StringNullableFilter<"Ucar"> | string | null
+  tmpChassisNumber?: Prisma.StringNullableFilter<"Ucar"> | string | null
   tmpColor?: Prisma.StringNullableFilter<"Ucar"> | string | null
   tmpModelYear?: Prisma.StringNullableFilter<"Ucar"> | string | null
   tmpBrandName?: Prisma.StringNullableFilter<"Ucar"> | string | null
@@ -1027,7 +1027,7 @@ export type UcarOrderByWithRelationInput = {
   paymentNoticeRecieved?: Prisma.SortOrderInput | Prisma.SortOrder
   remarksHq?: Prisma.SortOrderInput | Prisma.SortOrder
   tmpPlate?: Prisma.SortOrderInput | Prisma.SortOrder
-  tmpVehicleNo?: Prisma.SortOrderInput | Prisma.SortOrder
+  tmpChassisNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   tmpColor?: Prisma.SortOrderInput | Prisma.SortOrder
   tmpModelYear?: Prisma.SortOrderInput | Prisma.SortOrder
   tmpBrandName?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -1136,7 +1136,7 @@ export type UcarWhereUniqueInput = Prisma.AtLeast<{
   paymentNoticeRecieved?: Prisma.StringNullableFilter<"Ucar"> | string | null
   remarksHq?: Prisma.StringNullableFilter<"Ucar"> | string | null
   tmpPlate?: Prisma.StringNullableFilter<"Ucar"> | string | null
-  tmpVehicleNo?: Prisma.StringNullableFilter<"Ucar"> | string | null
+  tmpChassisNumber?: Prisma.StringNullableFilter<"Ucar"> | string | null
   tmpColor?: Prisma.StringNullableFilter<"Ucar"> | string | null
   tmpModelYear?: Prisma.StringNullableFilter<"Ucar"> | string | null
   tmpBrandName?: Prisma.StringNullableFilter<"Ucar"> | string | null
@@ -1242,7 +1242,7 @@ export type UcarOrderByWithAggregationInput = {
   paymentNoticeRecieved?: Prisma.SortOrderInput | Prisma.SortOrder
   remarksHq?: Prisma.SortOrderInput | Prisma.SortOrder
   tmpPlate?: Prisma.SortOrderInput | Prisma.SortOrder
-  tmpVehicleNo?: Prisma.SortOrderInput | Prisma.SortOrder
+  tmpChassisNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   tmpColor?: Prisma.SortOrderInput | Prisma.SortOrder
   tmpModelYear?: Prisma.SortOrderInput | Prisma.SortOrder
   tmpBrandName?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -1342,7 +1342,7 @@ export type UcarScalarWhereWithAggregatesInput = {
   paymentNoticeRecieved?: Prisma.StringNullableWithAggregatesFilter<"Ucar"> | string | null
   remarksHq?: Prisma.StringNullableWithAggregatesFilter<"Ucar"> | string | null
   tmpPlate?: Prisma.StringNullableWithAggregatesFilter<"Ucar"> | string | null
-  tmpVehicleNo?: Prisma.StringNullableWithAggregatesFilter<"Ucar"> | string | null
+  tmpChassisNumber?: Prisma.StringNullableWithAggregatesFilter<"Ucar"> | string | null
   tmpColor?: Prisma.StringNullableWithAggregatesFilter<"Ucar"> | string | null
   tmpModelYear?: Prisma.StringNullableWithAggregatesFilter<"Ucar"> | string | null
   tmpBrandName?: Prisma.StringNullableWithAggregatesFilter<"Ucar"> | string | null
@@ -1428,7 +1428,7 @@ export type UcarCreateInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -1528,7 +1528,7 @@ export type UcarUncheckedCreateInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -1618,7 +1618,7 @@ export type UcarUpdateInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1718,7 +1718,7 @@ export type UcarUncheckedUpdateInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1814,7 +1814,7 @@ export type UcarCreateManyInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -1900,7 +1900,7 @@ export type UcarUpdateManyMutationInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1986,7 +1986,7 @@ export type UcarUncheckedUpdateManyInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2093,7 +2093,7 @@ export type UcarCountOrderByAggregateInput = {
   paymentNoticeRecieved?: Prisma.SortOrder
   remarksHq?: Prisma.SortOrder
   tmpPlate?: Prisma.SortOrder
-  tmpVehicleNo?: Prisma.SortOrder
+  tmpChassisNumber?: Prisma.SortOrder
   tmpColor?: Prisma.SortOrder
   tmpModelYear?: Prisma.SortOrder
   tmpBrandName?: Prisma.SortOrder
@@ -2205,7 +2205,7 @@ export type UcarMaxOrderByAggregateInput = {
   paymentNoticeRecieved?: Prisma.SortOrder
   remarksHq?: Prisma.SortOrder
   tmpPlate?: Prisma.SortOrder
-  tmpVehicleNo?: Prisma.SortOrder
+  tmpChassisNumber?: Prisma.SortOrder
   tmpColor?: Prisma.SortOrder
   tmpModelYear?: Prisma.SortOrder
   tmpBrandName?: Prisma.SortOrder
@@ -2297,7 +2297,7 @@ export type UcarMinOrderByAggregateInput = {
   paymentNoticeRecieved?: Prisma.SortOrder
   remarksHq?: Prisma.SortOrder
   tmpPlate?: Prisma.SortOrder
-  tmpVehicleNo?: Prisma.SortOrder
+  tmpChassisNumber?: Prisma.SortOrder
   tmpColor?: Prisma.SortOrder
   tmpModelYear?: Prisma.SortOrder
   tmpBrandName?: Prisma.SortOrder
@@ -2876,7 +2876,7 @@ export type UcarCreateWithoutOldCars_BaseInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -2972,7 +2972,7 @@ export type UcarUncheckedCreateWithoutOldCars_BaseInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -3097,7 +3097,7 @@ export type UcarScalarWhereInput = {
   paymentNoticeRecieved?: Prisma.StringNullableFilter<"Ucar"> | string | null
   remarksHq?: Prisma.StringNullableFilter<"Ucar"> | string | null
   tmpPlate?: Prisma.StringNullableFilter<"Ucar"> | string | null
-  tmpVehicleNo?: Prisma.StringNullableFilter<"Ucar"> | string | null
+  tmpChassisNumber?: Prisma.StringNullableFilter<"Ucar"> | string | null
   tmpColor?: Prisma.StringNullableFilter<"Ucar"> | string | null
   tmpModelYear?: Prisma.StringNullableFilter<"Ucar"> | string | null
   tmpBrandName?: Prisma.StringNullableFilter<"Ucar"> | string | null
@@ -3183,7 +3183,7 @@ export type UcarCreateWithoutUPASSInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -3281,7 +3281,7 @@ export type UcarUncheckedCreateWithoutUPASSInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -3387,7 +3387,7 @@ export type UcarUpdateWithoutUPASSInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3485,7 +3485,7 @@ export type UcarUncheckedUpdateWithoutUPASSInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3575,7 +3575,7 @@ export type UcarCreateWithoutQR_ProsessInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -3674,7 +3674,7 @@ export type UcarUncheckedCreateWithoutQR_ProsessInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -3779,7 +3779,7 @@ export type UcarUpdateWithoutQR_ProsessInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3878,7 +3878,7 @@ export type UcarUncheckedUpdateWithoutQR_ProsessInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3967,7 +3967,7 @@ export type UcarCreateWithoutNewCarInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -4066,7 +4066,7 @@ export type UcarUncheckedCreateWithoutNewCarInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -4181,7 +4181,7 @@ export type UcarCreateWithoutStoreInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -4280,7 +4280,7 @@ export type UcarUncheckedCreateWithoutStoreInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -4379,7 +4379,7 @@ export type UcarCreateWithoutDestinationStoreInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -4477,7 +4477,7 @@ export type UcarUncheckedCreateWithoutDestinationStoreInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -4577,7 +4577,7 @@ export type UcarCreateWithoutTmpRentalStoreInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -4676,7 +4676,7 @@ export type UcarUncheckedCreateWithoutTmpRentalStoreInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -4823,7 +4823,7 @@ export type UcarCreateWithoutUserInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -4922,7 +4922,7 @@ export type UcarUncheckedCreateWithoutUserInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -5037,7 +5037,7 @@ export type UcarCreateWithoutNumber98Input = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -5135,7 +5135,7 @@ export type UcarUncheckedCreateWithoutNumber98Input = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -5251,7 +5251,7 @@ export type UcarCreateWithoutAppliedUcarGarageSlotInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -5350,7 +5350,7 @@ export type UcarUncheckedCreateWithoutAppliedUcarGarageSlotInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -5455,7 +5455,7 @@ export type UcarUpdateWithoutAppliedUcarGarageSlotInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5554,7 +5554,7 @@ export type UcarUncheckedUpdateWithoutAppliedUcarGarageSlotInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5643,7 +5643,7 @@ export type UcarCreateWithoutBankMasterInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -5742,7 +5742,7 @@ export type UcarUncheckedCreateWithoutBankMasterInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -5857,7 +5857,7 @@ export type UcarCreateWithoutBankBranchMasterInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -5956,7 +5956,7 @@ export type UcarUncheckedCreateWithoutBankBranchMasterInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -6071,7 +6071,7 @@ export type UcarCreateWithoutUcarProcessInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -6170,7 +6170,7 @@ export type UcarUncheckedCreateWithoutUcarProcessInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -6275,7 +6275,7 @@ export type UcarUpdateWithoutUcarProcessInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6374,7 +6374,7 @@ export type UcarUncheckedUpdateWithoutUcarProcessInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6463,7 +6463,7 @@ export type UcarCreateWithoutUcarPaperWorkNotesInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -6562,7 +6562,7 @@ export type UcarUncheckedCreateWithoutUcarPaperWorkNotesInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -6667,7 +6667,7 @@ export type UcarUpdateWithoutUcarPaperWorkNotesInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6766,7 +6766,7 @@ export type UcarUncheckedUpdateWithoutUcarPaperWorkNotesInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6858,7 +6858,7 @@ export type UcarCreateManyOldCars_BaseInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -6944,7 +6944,7 @@ export type UcarUpdateWithoutOldCars_BaseInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7040,7 +7040,7 @@ export type UcarUncheckedUpdateWithoutOldCars_BaseInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7133,7 +7133,7 @@ export type UcarUncheckedUpdateManyWithoutOldCars_BaseInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7225,7 +7225,7 @@ export type UcarCreateManyNewCarInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -7310,7 +7310,7 @@ export type UcarUpdateWithoutNewCarInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7409,7 +7409,7 @@ export type UcarUncheckedUpdateWithoutNewCarInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7504,7 +7504,7 @@ export type UcarUncheckedUpdateManyWithoutNewCarInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7595,7 +7595,7 @@ export type UcarCreateManyStoreInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -7685,7 +7685,7 @@ export type UcarCreateManyDestinationStoreInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -7777,7 +7777,7 @@ export type UcarCreateManyTmpRentalStoreInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -7862,7 +7862,7 @@ export type UcarUpdateWithoutStoreInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7961,7 +7961,7 @@ export type UcarUncheckedUpdateWithoutStoreInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8056,7 +8056,7 @@ export type UcarUncheckedUpdateManyWithoutStoreInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8141,7 +8141,7 @@ export type UcarUpdateWithoutDestinationStoreInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8239,7 +8239,7 @@ export type UcarUncheckedUpdateWithoutDestinationStoreInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8334,7 +8334,7 @@ export type UcarUncheckedUpdateManyWithoutDestinationStoreInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8420,7 +8420,7 @@ export type UcarUpdateWithoutTmpRentalStoreInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8519,7 +8519,7 @@ export type UcarUncheckedUpdateWithoutTmpRentalStoreInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8614,7 +8614,7 @@ export type UcarUncheckedUpdateManyWithoutTmpRentalStoreInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8705,7 +8705,7 @@ export type UcarCreateManyUserInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -8790,7 +8790,7 @@ export type UcarUpdateWithoutUserInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8889,7 +8889,7 @@ export type UcarUncheckedUpdateWithoutUserInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8984,7 +8984,7 @@ export type UcarUncheckedUpdateManyWithoutUserInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9074,7 +9074,7 @@ export type UcarCreateManyNumber98Input = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -9160,7 +9160,7 @@ export type UcarUpdateWithoutNumber98Input = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9258,7 +9258,7 @@ export type UcarUncheckedUpdateWithoutNumber98Input = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9353,7 +9353,7 @@ export type UcarUncheckedUpdateManyWithoutNumber98Input = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9445,7 +9445,7 @@ export type UcarCreateManyBankMasterInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -9530,7 +9530,7 @@ export type UcarUpdateWithoutBankMasterInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9629,7 +9629,7 @@ export type UcarUncheckedUpdateWithoutBankMasterInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9724,7 +9724,7 @@ export type UcarUncheckedUpdateManyWithoutBankMasterInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9815,7 +9815,7 @@ export type UcarCreateManyBankBranchMasterInput = {
   paymentNoticeRecieved?: string | null
   remarksHq?: string | null
   tmpPlate?: string | null
-  tmpVehicleNo?: string | null
+  tmpChassisNumber?: string | null
   tmpColor?: string | null
   tmpModelYear?: string | null
   tmpBrandName?: string | null
@@ -9900,7 +9900,7 @@ export type UcarUpdateWithoutBankBranchMasterInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9999,7 +9999,7 @@ export type UcarUncheckedUpdateWithoutBankBranchMasterInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -10094,7 +10094,7 @@ export type UcarUncheckedUpdateManyWithoutBankBranchMasterInput = {
   paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tmpVehicleNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -10225,7 +10225,7 @@ export type UcarSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   paymentNoticeRecieved?: boolean
   remarksHq?: boolean
   tmpPlate?: boolean
-  tmpVehicleNo?: boolean
+  tmpChassisNumber?: boolean
   tmpColor?: boolean
   tmpModelYear?: boolean
   tmpBrandName?: boolean
@@ -10332,7 +10332,7 @@ export type UcarSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   paymentNoticeRecieved?: boolean
   remarksHq?: boolean
   tmpPlate?: boolean
-  tmpVehicleNo?: boolean
+  tmpChassisNumber?: boolean
   tmpColor?: boolean
   tmpModelYear?: boolean
   tmpBrandName?: boolean
@@ -10434,7 +10434,7 @@ export type UcarSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   paymentNoticeRecieved?: boolean
   remarksHq?: boolean
   tmpPlate?: boolean
-  tmpVehicleNo?: boolean
+  tmpChassisNumber?: boolean
   tmpColor?: boolean
   tmpModelYear?: boolean
   tmpBrandName?: boolean
@@ -10536,7 +10536,7 @@ export type UcarSelectScalar = {
   paymentNoticeRecieved?: boolean
   remarksHq?: boolean
   tmpPlate?: boolean
-  tmpVehicleNo?: boolean
+  tmpChassisNumber?: boolean
   tmpColor?: boolean
   tmpModelYear?: boolean
   tmpBrandName?: boolean
@@ -10569,7 +10569,7 @@ export type UcarSelectScalar = {
   newCarId?: boolean
 }
 
-export type UcarOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "qrIssuedAt" | "processLastUpdatedAt" | "active" | "sortOrder" | "sateiDataConfirmedAt" | "dataSource" | "sateiID" | "number98" | "NO_SIRETYUM" | "DD_SIIRE" | "arrivedAt" | "meihenBi" | "masshoBi" | "secondMeihenbi" | "destination" | "inkanCertificateExpiredAt" | "inspectionExpiredAt" | "plate" | "processedAs" | "purchaseType" | "remarks" | "runnable" | "storeToPickUp" | "shitadoriKbn" | "kounyuShaOrderNumber" | "souhsinJikoku" | "henkinRequired" | "accountingRecievedAt" | "paybackScheduledAt" | "upperCarregisteredAt" | "registerDate" | "registerdAt" | "annualTax" | "earlyYear" | "earlyMonth" | "storeNumber" | "accountType" | "accountNumber" | "accountNameKana" | "paymentNoticeRecievedAt" | "isPayed" | "petCount" | "petPrice" | "prefCount" | "prefPrice" | "taxCustomerName" | "taxJobNote" | "destinationStoreId" | "daihatsuReserve" | "exception" | "inkanAlternate" | "inspectionAlternate" | "paymentNoticeRecieved" | "remarksHq" | "tmpPlate" | "tmpVehicleNo" | "tmpColor" | "tmpModelYear" | "tmpBrandName" | "tmpModelName" | "tmpGrade" | "tmpType" | "tmpCommonType" | "tmpFrameNumber" | "tmpTransmissionType" | "tmpRegistrationClassNumber" | "tmpRegistrationKana" | "tmpLandAffairsName" | "modified_brandName" | "modified_modelName" | "modified_frameNumber" | "modified_chassisNumber" | "modified_type" | "modified_grade" | "modified_modelYear" | "modified_length" | "modified_width" | "modified_height" | "ucarLastProcessMasterId" | "bankMasterId" | "yuchoShitenNo" | "bankBranchMasterId" | "userId" | "storeId" | "tmpRentalStoreId" | "newCarId", ExtArgs["result"]["ucar"]>
+export type UcarOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "qrIssuedAt" | "processLastUpdatedAt" | "active" | "sortOrder" | "sateiDataConfirmedAt" | "dataSource" | "sateiID" | "number98" | "NO_SIRETYUM" | "DD_SIIRE" | "arrivedAt" | "meihenBi" | "masshoBi" | "secondMeihenbi" | "destination" | "inkanCertificateExpiredAt" | "inspectionExpiredAt" | "plate" | "processedAs" | "purchaseType" | "remarks" | "runnable" | "storeToPickUp" | "shitadoriKbn" | "kounyuShaOrderNumber" | "souhsinJikoku" | "henkinRequired" | "accountingRecievedAt" | "paybackScheduledAt" | "upperCarregisteredAt" | "registerDate" | "registerdAt" | "annualTax" | "earlyYear" | "earlyMonth" | "storeNumber" | "accountType" | "accountNumber" | "accountNameKana" | "paymentNoticeRecievedAt" | "isPayed" | "petCount" | "petPrice" | "prefCount" | "prefPrice" | "taxCustomerName" | "taxJobNote" | "destinationStoreId" | "daihatsuReserve" | "exception" | "inkanAlternate" | "inspectionAlternate" | "paymentNoticeRecieved" | "remarksHq" | "tmpPlate" | "tmpChassisNumber" | "tmpColor" | "tmpModelYear" | "tmpBrandName" | "tmpModelName" | "tmpGrade" | "tmpType" | "tmpCommonType" | "tmpFrameNumber" | "tmpTransmissionType" | "tmpRegistrationClassNumber" | "tmpRegistrationKana" | "tmpLandAffairsName" | "modified_brandName" | "modified_modelName" | "modified_frameNumber" | "modified_chassisNumber" | "modified_type" | "modified_grade" | "modified_modelYear" | "modified_length" | "modified_width" | "modified_height" | "ucarLastProcessMasterId" | "bankMasterId" | "yuchoShitenNo" | "bankBranchMasterId" | "userId" | "storeId" | "tmpRentalStoreId" | "newCarId", ExtArgs["result"]["ucar"]>
 export type UcarInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   DestinationStore?: boolean | Prisma.Ucar$DestinationStoreArgs<ExtArgs>
   Number98?: boolean | Prisma.Ucar$Number98Args<ExtArgs>
@@ -10689,7 +10689,7 @@ export type $UcarPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     paymentNoticeRecieved: string | null
     remarksHq: string | null
     tmpPlate: string | null
-    tmpVehicleNo: string | null
+    tmpChassisNumber: string | null
     tmpColor: string | null
     tmpModelYear: string | null
     tmpBrandName: string | null
@@ -11215,7 +11215,7 @@ export interface UcarFieldRefs {
   readonly paymentNoticeRecieved: Prisma.FieldRef<"Ucar", 'String'>
   readonly remarksHq: Prisma.FieldRef<"Ucar", 'String'>
   readonly tmpPlate: Prisma.FieldRef<"Ucar", 'String'>
-  readonly tmpVehicleNo: Prisma.FieldRef<"Ucar", 'String'>
+  readonly tmpChassisNumber: Prisma.FieldRef<"Ucar", 'String'>
   readonly tmpColor: Prisma.FieldRef<"Ucar", 'String'>
   readonly tmpModelYear: Prisma.FieldRef<"Ucar", 'String'>
   readonly tmpBrandName: Prisma.FieldRef<"Ucar", 'String'>

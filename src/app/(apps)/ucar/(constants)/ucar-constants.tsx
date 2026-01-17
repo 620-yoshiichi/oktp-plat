@@ -95,17 +95,11 @@ export const UCAR_CONSTANTS: {
 
     getTmpCarInfoCol: () =>
       new Fields([
+
         {
-          id: `tmpPlate`,
-          form: {...defaultRegister, defaultValue: showDefaultValue ? '1625' : null},
-          label: `プレート番号`,
-          type: 'text',
-          inputProps: {placeholder: '1625'},
-        },
-        {
-          id: `tmpVehicleNo`,
+          id: `tmpChassisNumber`,
           form: {...defaultRegister, defaultValue: showDefaultValue ? 'AZSH35-4002743' : null},
-          label: `車両No`,
+          label: `車台番号`,
           type: 'text',
           inputProps: {placeholder: 'AZSH35-4002743'},
         },
@@ -118,10 +112,10 @@ export const UCAR_CONSTANTS: {
         },
         {
           id: `tmpModelYear`,
-          form: {...defaultRegister, defaultValue: showDefaultValue ? '3' : null},
+          form: {...defaultRegister, defaultValue: showDefaultValue ? '2024' : null},
           label: `年式`,
           type: 'text',
-          inputProps: {placeholder: '3'},
+          inputProps: {placeholder: '2024'},
         },
         {
           id: `tmpBrandName`,
@@ -173,6 +167,13 @@ export const UCAR_CONSTANTS: {
           inputProps: {placeholder: 'AT'},
         },
         {
+          id: `tmpLandAffairsName`,
+          form: {...defaultRegister, defaultValue: showDefaultValue ? '倉敷' : null},
+          label: `陸自名`,
+          type: 'text',
+          inputProps: {placeholder: '倉敷'},
+        },
+        {
           id: `tmpRegistrationClassNumber`,
           form: {...defaultRegister, defaultValue: showDefaultValue ? '330' : null},
           label: `分類番号`,
@@ -187,12 +188,13 @@ export const UCAR_CONSTANTS: {
           inputProps: {placeholder: 'ひ'},
         },
         {
-          id: `tmpLandAffairsName`,
-          form: {...defaultRegister, defaultValue: showDefaultValue ? '倉敷' : null},
-          label: `陸事名`,
+          id: `tmpPlate`,
+          form: {...defaultRegister, defaultValue: showDefaultValue ? '1625' : null},
+          label: `プレート番号`,
           type: 'text',
-          inputProps: {placeholder: '倉敷'},
+          inputProps: {placeholder: '1625'},
         },
+
       ]).buildFormGroup({groupName: '車両情報（当日査定の場合必須）'}).plain,
   },
 }

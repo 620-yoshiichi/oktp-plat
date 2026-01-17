@@ -18,43 +18,43 @@
  "trailingSlash": false,
  "crons": [
   {
-   "path": "/newCar/api/cron/orderUpsert",
+   "path": "/api/cron/execute/orderUpsert",
    "schedule": "0 21,3 * * *"
   },
   {
-   "path": "/newCar/api/cron/tenpoTsuikoUpsert",
+   "path": "/api/cron/execute/tenpoTsuikoUpsert",
    "schedule": "0 22-23,0-10 * * *"
   },
   {
-   "path": "/newCar/api/cron/fetchSeisanYoteiDiff",
+   "path": "/api/cron/execute/fetchSeisanYoteiDiff",
    "schedule": "15 1 * * *"
   },
   {
-   "path": "/newCar/api/cron/notifySeisanYoteiDiff",
+   "path": "/api/cron/execute/notifySeisanYoteiDiff",
    "schedule": "0,30 * * * *"
   },
   {
-   "path": "/newCar/api/cron/aggregateProgress",
+   "path": "/api/cron/execute/aggregateProgress",
    "schedule": "0 11 28-31 * *"
   },
   {
-   "path": "/ucar/api/cron/oldCars/deleteAndCreate",
+   "path": "/api/cron/execute/oldCarsDeleteAndCreate",
    "schedule": "0 22 * * *"
   },
   {
-   "path": "/ucar/api/cron/zaiko/deleteAndCreate",
+   "path": "/api/cron/execute/zaikoDeleteAndCreate",
    "schedule": "0 22 * * *"
   },
   {
-   "path": "/ucar/api/cron/aisatei/deleteAndCreate",
+   "path": "/api/cron/execute/aisateiDeleteAndCreate",
    "schedule": "0 22 * * *"
   },
   {
-   "path": "/ucar/api/cron/upass/deleteAndCreate",
+   "path": "/api/cron/execute/upassDeleteAndCreate",
    "schedule": "0 22 * * *"
   },
   {
-   "path": "/ucar/api/cron/juchuShitadoriDb/deleteAndCreate",
+   "path": "/api/cron/execute/juchuShitadoriDbDeleteAndCreate",
    "schedule": "0 22 * * *"
   }
  ]

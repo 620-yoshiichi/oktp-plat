@@ -223,6 +223,11 @@ export type Calendar = Prisma.CalendarModel
  */
 export type ChainMethodLock = Prisma.ChainMethodLockModel
 /**
+ * Model CronExecutionLog
+ * 
+ */
+export type CronExecutionLog = Prisma.CronExecutionLogModel
+/**
  * Model RentaStore
  * 
  */

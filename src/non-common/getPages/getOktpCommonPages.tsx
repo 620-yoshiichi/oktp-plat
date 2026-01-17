@@ -12,20 +12,16 @@ export const getOktpCommonPages = (props: PageGetterType) => {
     {
       tabId: '',
       ROOT: [rootPath, 'admin'],
-      label: '共通マスタ',
+      label: '管理者設定',
+      exclusiveTo: admin,
       children: [
         {tabId: 'store', label: '拠点'},
         {tabId: 'user', label: 'ユーザー'},
         {tabId: 'roleMaster', label: '役割マスタ'},
+        {tabId: 'batch', label: 'バッチ'},
       ],
     },
-    {
-      tabId: 'batch',
-      label: 'バッチ',
-      exclusiveTo: admin,
-      ROOT: [rootPath, 'admin'],
-      link: {},
-    },
+
     getAppSwitchMenus(scopes),
   ]
 

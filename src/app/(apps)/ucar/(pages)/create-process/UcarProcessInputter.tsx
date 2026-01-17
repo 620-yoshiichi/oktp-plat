@@ -28,7 +28,7 @@ const UcarProcessInputter = (props: {UcarData: ucarData}) => {
   if (!UcarData) return <div></div>
 
   if (processCode || mode === 'create') {
-    return <UcarProcessCreateForm {...{UcarData, useGlobalProps}}></UcarProcessCreateForm>
+    return <UcarProcessCreateForm {...{UcarData, useGlobalProps}} />
   } else {
     return (
       <FitMargin className={`p-4`}>

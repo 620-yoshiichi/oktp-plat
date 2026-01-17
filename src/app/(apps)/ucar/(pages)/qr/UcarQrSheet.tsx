@@ -355,6 +355,8 @@ const Page2 = ({ucar, srcDataUrlObject}) => {
     {group: '連絡事項', label: '', type: 'checkbox'},
   ]
 
+
+
   return (
     <div className="qr-sheet-page page-2">
       <div className="page-2-content">
@@ -487,7 +489,7 @@ const CarInfoTable = ({ucar}) => {
   const getTmpFieldName = (upassFieldName: string): string | null => {
     const mapping: Record<string, string> = {
       registrationSerialNumber: 'tmpPlate',
-      NO_SYARYOU: 'tmpVehicleNo',
+      NO_SYARYOU: 'tmpChassisNumber',
       exteriorColor: 'tmpColor',
       modelYear: 'tmpModelYear',
       brandName: 'tmpBrandName',

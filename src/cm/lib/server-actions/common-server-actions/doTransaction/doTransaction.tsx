@@ -52,6 +52,7 @@ export const doTransaction = async (props: {transactionQueryList: transactionQue
       const promises = transactionQueryList.map(async q => {
         try {
           const {model, method, queryObject} = q
+
           return prisma[model][method](queryObject)
         } catch (error) {
           errorItemList.push({...q, error: error.message})

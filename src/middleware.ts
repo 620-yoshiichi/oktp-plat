@@ -2,6 +2,8 @@
 import {getToken} from 'next-auth/jwt'
 import {NextRequest, NextResponse} from 'next/server'
 import type {JWT} from 'next-auth/jwt'
+import { HREF } from '@cm/lib/methods/urls'
+import { basePath } from '@cm/lib/methods/common'
 
 /**
  * セッション検証関数の型定義
@@ -109,7 +111,13 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
     // NextAuthからセッショントークンを取得
     const session: JWT | null = await getToken({req})
 
-    const {pathname, origin} = req.nextUrl
+    const {pathname, origin,searchParams} = req.nextUrl
+    const query= {}
+    searchParams.forEach((value, key) => {
+      query[key] = value
+    })
+
+
 
     // 対象となるルートパスを検索
     const targetPathConfig = rootPaths.find(config => {
@@ -139,7 +147,14 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
       const isValid = matchedPathConfig?.isValid(session)
       // マッチしたパスで認証が必要な場合、セッションを検証
       if (matchedPathConfig && !isValid) {
-        const redirectUrl = matchedPathConfig.redirect(origin, targetPathConfig.rootPath)
+
+        const callBackUrl =  encodeURIComponent(HREF(`${pathname}`, query, query))
+
+
+
+
+
+        const redirectUrl = matchedPathConfig.redirect(origin, callBackUrl)
 
         return NextResponse.redirect(new URL(redirectUrl, req.url))
       }

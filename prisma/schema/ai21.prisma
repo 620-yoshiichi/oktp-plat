@@ -119,9 +119,9 @@ model OldCars_Base {
   DD_NOSYA    DateTime?
   MJ_SITADOTE String?
 
-  Number98   Number98?    @relation(fields: [NO_SYARYOU], references: [number])
+  Number98   Number98?   @relation(fields: [NO_SYARYOU], references: [number])
   Ucar       Ucar[]
-  ZAIKO_Base ZAIKO_Base[]
+  ZAIKO_Base ZAIKO_Base?
 
   @@unique([NO_SIRETYUM, NO_SYARYOU, DD_SIIRE])
   @@index([NO_SYARYOU])
@@ -168,6 +168,7 @@ model ZAIKO_Base {
   OldCars_Base OldCars_Base? @relation(fields: [NO_SIRETYUM, NO_SYARYOU, DD_SIIRE], references: [NO_SIRETYUM, NO_SYARYOU, DD_SIIRE])
 
   @@unique([NO_SIRETYUM, NO_SYARYOU, DD_KEIRIKEI])
+  @@unique([NO_SIRETYUM, NO_SYARYOU, DD_SIIRE])
   @@index([NO_SYARYOU])
   @@index([CD_ZAIKOTEN])
   @@index([NO_SIRETYUM, NO_SYARYOU, DD_SIIRE])

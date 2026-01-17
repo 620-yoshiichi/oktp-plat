@@ -16,6 +16,7 @@ import {
   OldCars_Base,
   UpassFamilyTree,
   Prisma,
+  ZAIKO_Base,
 } from '@prisma/generated/prisma/client'
 import {roleIs} from 'src/non-common/scope-lib/judgeIsAdmin'
 import {QueryBuilder} from '@app/(apps)/ucar/class/QueryBuilder'
@@ -33,7 +34,11 @@ export type UpassStandardType = UPASS & {
   }
 }
 export type ucarData = Ucar & {
-  OldCars_Base: OldCars_Base
+  DestinationStore: Store
+  OldCars_Base: OldCars_Base & {
+    ZAIKO_Base: ZAIKO_Base
+  }
+
   UPASS: UpassStandardType
   Number98: Number98
   User: User
@@ -150,6 +155,18 @@ export class UcarCL {
     return currentUPASS?.MyUpassTree?.RootUpass
   }
 
+  get ai21Data() {
+    return {
+      DD_SIIRE: this.data?.OldCars_Base.DD_SIIRE, //仕入日
+      KI_SIIREKA: this.data?.OldCars_Base.KI_SIIREKA, //仕入価格
+      DD_URIAGE: this.data?.OldCars_Base.DD_URIAGE, //売上日
+      CD_TENJTENP: this.data?.OldCars_Base?.ZAIKO_Base?.CD_TENJTENP ?? '', //在庫店舗
+      MJ_ZAIKOST: this.data?.OldCars_Base?.ZAIKO_Base?.MJ_ZAIKOST ?? '', //展示店舗
+      KI_HANKAKA: this.data?.OldCars_Base?.KI_HANKAKA ?? 0,
+      //売上金額
+    }
+  }
+
   get notation() {
     const UPASS = (UcarCL.getLatestUPASS(this.data.UPASS) ?? {}) as UPASS
 
@@ -158,40 +175,44 @@ export class UcarCL {
       UPASS.registrationClassNumber,
       UPASS.registrationKana,
       UPASS.registrationSerialNumber,
+    ].join('') || [
+      this.data.tmpLandAffairsName,
+      this.data.tmpRegistrationClassNumber,
+      this.data.tmpRegistrationKana,
+      this.data.tmpPlate
     ].join('')
 
-    const nenshiki = UPASS.modelYear ? new Date().getFullYear() - Number(UPASS?.modelYear) : ' '
+    const nenshiki = UPASS.modelYear ? new Date().getFullYear() - Number(UPASS?.modelYear) : ''
 
     return {
       sateiID: this.data.sateiID,
       storeName: this.data?.Store?.name,
       staffName: this.data?.User?.name,
-
-      nenshiki,
+      nenshiki: nenshiki || this.data.tmpModelYear,
       plate,
-      grade: UPASS.grade || this.data.tmpGrade || ' ',
+      grade: UPASS.grade || this.data.tmpGrade || '',
       customerName: UPASS.customerName,
-      modelName: UPASS.modelName,
-      modelYear: (UPASS.modelYear || this.data.tmpModelYear || ' ').replace('発売モデル', ''),
-      exteriorColor: UPASS.exteriorColor,
-      type: UPASS.type || this.data.tmpType || ' ',
-      chassisNumber: UPASS.chassisNumber || ' ',
-      length: UPASS.length || ' ',
-      width: UPASS.width || ' ',
-      height: UPASS.height || ' ',
+      modelName: UPASS.modelName || this.data.tmpModelName || '',
+      modelYear: (UPASS.modelYear || this.data.tmpModelYear || '').replace('発売モデル', ''),
+      exteriorColor: UPASS.exteriorColor || this.data.tmpColor || '',
+      type: UPASS.type || this.data.tmpType || '',
+      chassisNumber: UPASS.chassisNumber || this.data.tmpChassisNumber || '',
+      length: UPASS.length || '',
+      width: UPASS.width || '',
+      height: UPASS.height || '',
 
-      commonType: UPASS.commonType || this.data.tmpCommonType || ' ',
-      engineType: UPASS.engineType || ' ',
-      vehicleHistory: UPASS.vehicleHistory || ' ',
-      capacityMin: UPASS.capacityMin || ' ',
-      capacityMax: UPASS.capacityMax || ' ',
-      maxLoad: UPASS.maxLoad || ' ',
-      weight: UPASS.weight || ' ',
-      frameNumber: UPASS.chassisNumber || this.data.tmpFrameNumber || ' ',
-      brandName: UPASS.brandName || this.data.tmpBrandName || ' ',
-      registrationClassNumber: UPASS.registrationClassNumber || this.data.tmpRegistrationClassNumber || ' ',
-      registrationKana: UPASS.registrationKana || this.data.tmpRegistrationKana || ' ',
-      registrationSerialNumber: UPASS.registrationSerialNumber || this.data.tmpPlate || ' ',
+      commonType: UPASS.commonType || this.data.tmpCommonType || '',
+      engineType: UPASS.engineType || '',
+      vehicleHistory: UPASS.vehicleHistory || '',
+      capacityMin: UPASS.capacityMin || '',
+      capacityMax: UPASS.capacityMax || '',
+      maxLoad: UPASS.maxLoad || '',
+      weight: UPASS.weight || '',
+      frameNumber: UPASS.chassisNumber || this.data.tmpFrameNumber || '',
+      brandName: UPASS.brandName || this.data.tmpBrandName || '',
+      registrationClassNumber: UPASS.registrationClassNumber || this.data.tmpRegistrationClassNumber || '',
+      registrationKana: UPASS.registrationKana || this.data.tmpRegistrationKana || '',
+      registrationSerialNumber: UPASS.registrationSerialNumber || this.data.tmpPlate || '',
 
       assessmentdatetime: UPASS.assessmentdatetime,
       assessmentprice: UPASS.assessmentPrice,
@@ -278,13 +299,20 @@ export class UcarCL {
     return faimilyTree.length === 0
   }
   static fetcher = {
-    getUcarDataList: async (props: {where: Prisma.UcarWhereInput; take?: number; skip?: number}) => {
-      const {where, take, skip} = props
+    getUcarDataList: async (props: {
+      where: Prisma.UcarWhereInput
+      orderBy: Prisma.UcarOrderByWithRelationInput | Prisma.UcarOrderByWithRelationInput[]
+      take?: number
+      skip?: number
+      include?: Prisma.UcarInclude
+    }) => {
+      const {where, take, skip, include, orderBy} = props
       const {result: ucar} = await doStandardPrisma(`ucar`, `findMany`, {
-        include: QueryBuilder.getInclude({}).ucar.include,
+        include: include ?? QueryBuilder.getInclude({}).ucar.include,
         where,
         take,
         skip,
+        orderBy,
       })
 
       return ucar as ucarData[]
@@ -303,6 +331,12 @@ export class UcarCL {
       const {result: tenchoList} = await doStandardPrisma(`user`, `findMany`, {
         where: {
           Store: {Ucar: {some: {sateiID}}},
+          UserRole: {some: {
+            OR:[
+              {RoleMaster: {name: '店長'}},
+          {RoleMaster: {name: '副店長'}},
+            ]
+          }},
         },
       })
       return {tenchoList}
