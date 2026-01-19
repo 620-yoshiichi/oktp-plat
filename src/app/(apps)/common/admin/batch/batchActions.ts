@@ -7,6 +7,7 @@ export type BatchAction = {
   description: string
   purpose?: string
   effectOn?: 'batch' | 'click'
+  schedule?: string // Cron schedule (required when effectOn is 'batch')
   tableName?: string
   prismaArgs?: any
   onClick: (() => Promise<any>) | {name: string; main: () => Promise<any>}
@@ -18,6 +19,7 @@ export const getUcarActions = (offset: number, limit: number): BatchAction[] => 
     label: `古物 Rawデータ取り込み`,
     description: ` /api/cron/execute/oldCarsDeleteAndCreate`,
     effectOn: 'batch',
+    schedule: '0 22 * * *',
     purpose: ``,
     tableName: 'oldCars_Base',
     onClick: async () => {
@@ -30,6 +32,7 @@ export const getUcarActions = (offset: number, limit: number): BatchAction[] => 
     label: `在庫 Rawデータ取り込み`,
     description: ` /api/cron/execute/zaikoDeleteAndCreate`,
     effectOn: 'batch',
+    schedule: '0 22 * * *',
     purpose: ``,
     tableName: 'zAIKO_Base',
     onClick: async () => {
@@ -40,8 +43,9 @@ export const getUcarActions = (offset: number, limit: number): BatchAction[] => 
   },
   {
     label: `AI査定 Rawデータ取り込み`,
-    description: ` /api/cron/execute/aisateiDeleteAndCreate`,
+    description: `/api/cron/execute/aisateiDeleteAndCreate`,
     effectOn: 'batch',
+    schedule: '0 22 * * *',
     tableName: 'uPASS',
     prismaArgs: {
       where: {
@@ -58,6 +62,7 @@ export const getUcarActions = (offset: number, limit: number): BatchAction[] => 
     label: `U-PASS Rawデータ取り込み`,
     description: ` /api/cron/execute/upassDeleteAndCreate`,
     effectOn: 'batch',
+    schedule: '0 22 * * *',
     purpose: ``,
     tableName: 'uPASS',
     prismaArgs: {
@@ -75,6 +80,7 @@ export const getUcarActions = (offset: number, limit: number): BatchAction[] => 
     label: `受注下取りDB Rawデータ取り込み`,
     description: `/api/cron/execute/juchuShitadoriDbDeleteAndCreate`,
     effectOn: 'batch',
+    schedule: '0 22 * * *',
     purpose: ``,
     tableName: 'juchuShitadoriDb',
     onClick: async () => {
@@ -234,8 +240,10 @@ export const getCommonActions = (): BatchAction[] => [
 export const getNewCarActions = (): BatchAction[] => [
   {
     label: `注残データ作成`,
-    description: `sheet API とBigQueryを用いてデータを更新`,
-    purpose: ``,
+    description: `/api/cron/execute/orderUpsert`,
+    effectOn: 'batch',
+    schedule: '0 21,3 * * *',
+    purpose: `sheet API とBigQueryを用いてデータを更新`,
     onClick: {
       name: `upsertNewCarOrders`,
       main: async () => {
@@ -246,8 +254,10 @@ export const getNewCarActions = (): BatchAction[] => [
   },
   {
     label: `追工データ更新`,
-    description: `BigQueryを用いてデータを更新`,
-    purpose: ``,
+    description: `/api/cron/execute/tenpoTsuikoUpsert`,
+    effectOn: 'batch',
+    schedule: '0 22-23,0-10 * * *',
+    purpose: `BigQueryを用いてデータを更新`,
     onClick: {
       name: `tenpoTsuikoUpsert`,
       main: async () => {
@@ -258,7 +268,9 @@ export const getNewCarActions = (): BatchAction[] => [
   },
   {
     label: `生産予定フェッチ`,
-    description: ``,
+    description: `/api/cron/execute/fetchSeisanYoteiDiff`,
+    effectOn: 'batch',
+    schedule: '15 1 * * *',
     purpose: ``,
     onClick: {
       name: `fetchSeisanYoteiDiff`,
@@ -270,7 +282,9 @@ export const getNewCarActions = (): BatchAction[] => [
   },
   {
     label: `生産予定通知`,
-    description: ``,
+    description: `/api/cron/execute/notifySeisanYoteiDiff`,
+    effectOn: 'batch',
+    schedule: '0,30 * * * *',
     purpose: ``,
     onClick: {
       name: `notifySeisanYoteiDiff`,
@@ -282,7 +296,9 @@ export const getNewCarActions = (): BatchAction[] => [
   },
   {
     label: `日次集計`,
-    description: ``,
+    description: `/api/cron/execute/aggregateProgress`,
+    effectOn: 'batch',
+    schedule: '0 11 28-31 * *',
     purpose: ``,
     onClick: {
       name: `aggregateProgress`,
@@ -308,14 +324,16 @@ export const getNewCarActions = (): BatchAction[] => [
 
 // QRBPアプリのバッチ処理定義
 export const getQRBPActions = (): BatchAction[] => [
+
   {
-    label: `NewCarデータ取り込み`,
-    description: `GAS APIからNewCarデータを取得し、DBに反映する`,
-    purpose: `QRBPアプリで使用するNewCarデータを同期する`,
+    label: `BP車両データ取り込み`,
+    description: `スプレッドシートからBP車両データを取得し、carテーブルにupsertする`,
+    purpose: `webapp_dataシートの車両データをDBに同期する（過去365日分）`,
+    effectOn: 'click',
     onClick: {
-      name: `qrbpNewCarSeeder`,
+      name: `activateBpSpread`,
       main: async () => {
-        const res = await fetchAlt(`${basePath}/QRBP/seeder/newCar`, {}, {method: 'GET'})
+        const res = await fetchAlt(`${basePath}/QRBP/seeder/activate-bp-spread`, {}, {method: 'GET'})
         return res
       },
     },

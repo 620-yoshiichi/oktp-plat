@@ -17,6 +17,7 @@ export const GET = async (req: NextRequest) => {
     const status = {status: 401, statusText: `Unauthorized`}
     return NextResponse.json(res, status)
   }
+  return NextResponse.json({success: true, message: `OK`})
   let result = {}
 
   const users = await prisma.user.findMany({

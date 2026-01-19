@@ -104,7 +104,7 @@ export const executeAggregateProgress = async () => {
   }
 
   const res = await doTransaction({transactionQueryList})
-  console.debug(res)
+
 
   return {success: true, message: '日次集計完了', result: {count: transactionQueryList.length}}
 }

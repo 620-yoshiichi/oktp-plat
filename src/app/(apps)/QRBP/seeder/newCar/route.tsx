@@ -7,6 +7,10 @@ import {NextRequest, NextResponse} from 'next/server'
 const GAS_API_KEY = `https://script.google.com/macros/s/AKfycbzshePE75BQDJnbEkYw2PDnln7Vj38oCitPeGnt-28kyn6U8v2hDCJIcNqeQWh024o/exec`
 
 export async function GET(req: NextRequest) {
+  return NextResponse.json({
+    success: false,
+    message: 'This endpoint is no longer available.',
+  })
   const rootPath = 'QRBP'
   const dataModelName = 'newCar'
   const deleteMode = req.nextUrl.searchParams.get('delete') === 'true'

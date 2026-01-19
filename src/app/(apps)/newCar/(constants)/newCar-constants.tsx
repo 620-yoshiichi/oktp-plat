@@ -62,9 +62,7 @@ export const NEW_CAR_CONST = {
     } as Prisma.NewCarInclude,
   },
 
-  // USER: {
-  //   ROLES: ['店長', `営業`, `需給担当者`, `本部管理者`, `新車登録担当`, `CR(新点)`] as oktpRoleString[],
-  // },
+
 
   NEW_CAR: {
     WHERE: {

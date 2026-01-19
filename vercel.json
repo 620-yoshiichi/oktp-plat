@@ -18,6 +18,30 @@
  "trailingSlash": false,
  "crons": [
   {
+   "path": "/api/cron/execute/aggregateProgress",
+   "schedule": "0 11 28-31 * *"
+  },
+  {
+   "path": "/api/cron/execute/aisateiDeleteAndCreate",
+   "schedule": "0 22 * * *"
+  },
+  {
+   "path": "/api/cron/execute/fetchSeisanYoteiDiff",
+   "schedule": "15 1 * * *"
+  },
+  {
+   "path": "/api/cron/execute/juchuShitadoriDbDeleteAndCreate",
+   "schedule": "0 22 * * *"
+  },
+  {
+   "path": "/api/cron/execute/notifySeisanYoteiDiff",
+   "schedule": "0,30 * * * *"
+  },
+  {
+   "path": "/api/cron/execute/oldCarsDeleteAndCreate",
+   "schedule": "0 22 * * *"
+  },
+  {
    "path": "/api/cron/execute/orderUpsert",
    "schedule": "0 21,3 * * *"
   },
@@ -26,35 +50,11 @@
    "schedule": "0 22-23,0-10 * * *"
   },
   {
-   "path": "/api/cron/execute/fetchSeisanYoteiDiff",
-   "schedule": "15 1 * * *"
-  },
-  {
-   "path": "/api/cron/execute/notifySeisanYoteiDiff",
-   "schedule": "0,30 * * * *"
-  },
-  {
-   "path": "/api/cron/execute/aggregateProgress",
-   "schedule": "0 11 28-31 * *"
-  },
-  {
-   "path": "/api/cron/execute/oldCarsDeleteAndCreate",
-   "schedule": "0 22 * * *"
-  },
-  {
-   "path": "/api/cron/execute/zaikoDeleteAndCreate",
-   "schedule": "0 22 * * *"
-  },
-  {
-   "path": "/api/cron/execute/aisateiDeleteAndCreate",
-   "schedule": "0 22 * * *"
-  },
-  {
    "path": "/api/cron/execute/upassDeleteAndCreate",
    "schedule": "0 22 * * *"
   },
   {
-   "path": "/api/cron/execute/juchuShitadoriDbDeleteAndCreate",
+   "path": "/api/cron/execute/zaikoDeleteAndCreate",
    "schedule": "0 22 * * *"
   }
  ]

@@ -1,5 +1,8 @@
 /**
- * vercel.jsonをBATCH_MASTERから動的に生成するスクリプト
+ * vercel.jsonのcronジョブをbatchActions.tsから動的に生成するスクリプト
+ *
+ * batchActions.tsの各アクション関数（getCommonActions, getUcarActions, getNewCarActions, getQRBPActions）
+ * から、effectOnが'batch'のアクションを抽出し、scheduleとdescriptionからcron設定を生成します。
  *
  * 使用方法:
  *   node scripts/generateVercelJson.js
@@ -16,70 +19,75 @@ const path = require('path')
 
 async function generateVercelJson() {
   try {
-    // TypeScriptファイルを読み込むために、tsxまたはts-nodeが必要
-    // 簡易的な方法として、BATCH_MASTERの設定を直接読み込む
-    // ただし、Node.jsでTypeScriptを直接実行するには追加の設定が必要
-
-    // 別の方法: BATCH_MASTERの設定をJSONファイルとしてエクスポートする
-    // または、このスクリプト自体をTypeScriptに変換する
-
-    // ここでは、既存のvercel.jsonを読み込んで、crons部分だけを更新する方法を採用
     const vercelJsonPath = path.join(__dirname, '../vercel.json')
     const vercelJson = JSON.parse(fs.readFileSync(vercelJsonPath, 'utf8'))
 
-    // BATCH_MASTERからcrons設定を取得
-    // TypeScriptファイルを実行するために、tsxを使用
     const {execSync} = require('child_process')
 
-    // tsxを使ってTypeScriptファイルを実行し、crons設定を取得
-    const batchMasterPath = path.join(__dirname, '../src/non-common/cron/batchMaster.ts')
-
-    // 一時的なスクリプトを作成してcrons設定を取得
-    const tempScript = `
-      const {getVercelCronsConfig} = require('../src/non-common/cron/batchMaster.ts')
-      console.log(JSON.stringify(getVercelCronsConfig()))
-    `
-
-    // より簡単な方法: BATCH_MASTERの設定を直接読み込む
-    // TypeScriptファイルをJavaScriptにコンパイルするか、tsxを使用
-
-    // 実際の実装: vercel.jsonのcrons部分をBATCH_MASTERから生成
-    // ここでは、手動で同期するのではなく、スクリプトで自動生成
-
-    // 既存のvercel.jsonの構造を保持しつつ、crons部分だけを更新
-    const cronsConfig = [
-      {path: '/api/cron/execute/orderUpsert', schedule: '0 21,3 * * *'},
-      {path: '/api/cron/execute/tenpoTsuikoUpsert', schedule: '0 22-23,0-10 * * *'},
-      {path: '/api/cron/execute/fetchSeisanYoteiDiff', schedule: '15 1 * * *'},
-      {path: '/api/cron/execute/notifySeisanYoteiDiff', schedule: '0,30 * * * *'},
-      {path: '/api/cron/execute/aggregateProgress', schedule: '0 11 28-31 * *'},
-      {path: '/api/cron/execute/oldCarsDeleteAndCreate', schedule: '0 22 * * *'},
-      {path: '/api/cron/execute/zaikoDeleteAndCreate', schedule: '0 22 * * *'},
-      {path: '/api/cron/execute/aisateiDeleteAndCreate', schedule: '0 22 * * *'},
-      {path: '/api/cron/execute/upassDeleteAndCreate', schedule: '0 22 * * *'},
-      {path: '/api/cron/execute/juchuShitadoriDbDeleteAndCreate', schedule: '0 22 * * *'},
-    ]
-
-    // BATCH_MASTERから動的に取得する方法
-    // tsxを使用してTypeScriptファイルを実行
+    // batchActions.tsからcronジョブを取得
     try {
-      const tsx = require.resolve('tsx')
-      const batchMasterCode = `
-        import {getVercelCronsConfig} from '../src/non-common/cron/batchMaster.ts'
-        console.log(JSON.stringify(getVercelCronsConfig()))
-      `
+      // 一時的なTypeScriptファイルを作成
+      const tempScriptPath = path.join(__dirname, 'temp-generate-crons.ts')
+      const batchActionsCode = `import {getCommonActions, getUcarActions, getNewCarActions, getQRBPActions} from '../src/app/(apps)/common/admin/batch/batchActions'
 
-      const result = execSync(`npx tsx -e "${batchMasterCode.replace(/"/g, '\\"')}"`, {
+const offset = 0
+const limit = 5000
+
+const batch = {
+  common: getCommonActions(),
+  ucar: getUcarActions(offset, limit),
+  newCar: getNewCarActions(),
+  qrbp: getQRBPActions(),
+}
+
+// effectOnが'batch'のアクションを抽出し、cron設定を生成
+const cronJobs = []
+
+for (const appActions of Object.values(batch)) {
+  for (const action of appActions) {
+    if (action.effectOn === 'batch' && action.schedule && action.description) {
+      // descriptionからAPIパスを取得（前後の空白を削除）
+      const apiPath = action.description.trim()
+      cronJobs.push({
+        path: apiPath,
+        schedule: action.schedule,
+      })
+    }
+  }
+}
+
+// パスでソート（一貫性のため）
+cronJobs.sort((a, b) => a.path.localeCompare(b.path))
+
+console.log(JSON.stringify(cronJobs))
+`
+
+      fs.writeFileSync(tempScriptPath, batchActionsCode, 'utf8')
+
+      // DATABASE_URLが必要なモジュールがあるため、ダミー値を設定
+      const env = {...process.env, DATABASE_URL: 'postgresql://dummy:dummy@localhost:5432/dummy'}
+
+      const result = execSync(`npx tsx ${tempScriptPath}`, {
         cwd: path.join(__dirname, '..'),
         encoding: 'utf8',
+        env: env,
       })
 
+      // 一時ファイルを削除
+      fs.unlinkSync(tempScriptPath)
+
       const dynamicCrons = JSON.parse(result.trim())
+
+      if (!Array.isArray(dynamicCrons) || dynamicCrons.length === 0) {
+        throw new Error('No cron jobs found in batch actions')
+      }
+
       vercelJson.crons = dynamicCrons
+      console.log(`✅ ${dynamicCrons.length}個のcronジョブをbatchActions.tsから取得しました`)
     } catch (error) {
-      console.warn('tsxを使用した動的生成に失敗しました。手動設定を使用します。', error.message)
-      // tsxが利用できない場合は、手動設定を使用
-      vercelJson.crons = cronsConfig
+      console.error('❌ batchActions.tsからのcronジョブ取得に失敗しました:', error.message)
+      console.error(error.stack)
+      process.exit(1)
     }
 
     // vercel.jsonを更新

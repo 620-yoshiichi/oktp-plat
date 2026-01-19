@@ -1,6 +1,6 @@
 import {useMemo} from 'react'
 import {identifyPathItem, PAGES} from 'src/non-common/path-title-constsnts'
-import {rootPaths} from 'src/middleware'
+import {rootPaths} from 'src/proxy'
 import {useGlobalPropType} from 'src/cm/hooks/globalHooks/useGlobalOrigin'
 import {AccessValidationResult, CheckValidAccessProps} from '@cm/components/layout/Admin/type'
 import {addQuerySentence} from '@cm/lib/methods/urls'

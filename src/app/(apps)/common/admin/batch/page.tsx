@@ -17,16 +17,19 @@ export default function Page() {
   const limit = 5000
   const offset = 0
 
-  const commonActions = getCommonActions()
-  const ucarActions = getUcarActions(offset, limit)
-  const newCarActions = getNewCarActions()
-  const qrbpActions = getQRBPActions()
+
+  const batch = {
+    common: getCommonActions(),
+    ucar: getUcarActions(offset, limit),
+    newCar: getNewCarActions(),
+    qrbp: getQRBPActions(),
+  }
 
   // Ucarアプリのデータ件数取得
-  const ucarKey = JSON.stringify(ucarActions)
+        const ucarKey = JSON.stringify(batch.ucar)
   const {data: ucarCount} = useSWR(ucarKey, async () => {
     const countList = await Promise.all(
-      ucarActions.map(async action => {
+      batch.ucar.map(async action => {
         if (action.tableName) {
           const args = action.prismaArgs as any
           const res = await doStandardPrisma(action.tableName as PrismaModelNames, 'count', args as never)
@@ -131,19 +134,19 @@ export default function Page() {
   const tabComponents = [
     {
       label: '共通',
-      component: <div>{renderBatchTable(commonActions, '共通')}</div>,
+      component: <div>{renderBatchTable(batch.common, '共通')}</div>,
     },
     {
       label: 'Ucar',
-      component: <div>{renderBatchTable(ucarActions, 'Ucar', ucarCount)}</div>,
+      component: <div>{renderBatchTable(batch.ucar, 'Ucar', ucarCount)}</div>,
     },
     {
       label: 'NewCar',
-      component: <div>{renderBatchTable(newCarActions, 'NewCar')}</div>,
+      component: <div>{renderBatchTable(batch.newCar, 'NewCar')}</div>,
     },
     {
       label: 'QRBP',
-      component: <div>{renderBatchTable(qrbpActions, 'QRBP')}</div>,
+      component: <div>{renderBatchTable(batch.qrbp, 'QRBP')}</div>,
     },
   ]
 

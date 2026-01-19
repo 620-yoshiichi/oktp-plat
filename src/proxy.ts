@@ -1,9 +1,10 @@
-// middleware.ts
+// proxy.ts
 import {getToken} from 'next-auth/jwt'
 import {NextRequest, NextResponse} from 'next/server'
 import type {JWT} from 'next-auth/jwt'
 import { HREF } from '@cm/lib/methods/urls'
 import { basePath } from '@cm/lib/methods/common'
+import prisma from 'src/lib/prisma'
 
 /**
  * セッション検証関数の型定義
@@ -99,15 +100,17 @@ export const rootPaths: RootPathConfig[] = [
   },
 ]
 /**
- * Next.js middleware関数
+ * Next.js proxy関数
  * 認証が必要なパスへのアクセスを検証し、未認証の場合はリダイレクト
  */
-export async function middleware(req: NextRequest): Promise<NextResponse> {
+export async function proxy(req: NextRequest): Promise<NextResponse> {
 
 
   try {
     // NextAuthからセッショントークンを取得
     const session: JWT | null = await getToken({req})
+
+
 
     const {pathname, origin,searchParams} = req.nextUrl
     const query= {}
@@ -154,24 +157,24 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
   } catch (error) {
     // エラーが発生した場合はログを出力してそのまま通過
     // （本番環境では適切なエラーハンドリングを検討）
-    console.error('Middleware error:', error)
+    console.error('Proxy error:', error)
     return NextResponse.next()
   }
 }
 
 /**
- * Middleware設定
+ * Proxy設定
  * マッチャーで対象となるパスを指定
- * Next.jsのmiddlewareでは、config.matcherは静的な値である必要があります
+ * Next.jsのproxyでは、config.matcherは静的な値である必要があります
  */
 // const config = {
 //   matcher: [
 //     '/ucar(.*)',
 //     '/newCar(.*)',
 //     '/QRBP(.*)',
-//     '/shinren(.*)',
+//     '/shinren(.*)',/g
 //     '/((?!api|_next/static|favicon.ico|manifest|next-js-icon).*)',
 //   ],
 // } as const
 
-export default middleware
+export default proxy

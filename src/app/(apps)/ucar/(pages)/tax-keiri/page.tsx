@@ -15,6 +15,7 @@ export default async function page(props) {
 
   const ucarList = await UcarCL.fetcher.getUcarDataList({
     where: {paybackScheduledAt: toUtc(query.from)},
+    orderBy: {paybackScheduledAt: 'asc'},
   })
 
   return <TaxKeiriTable ucarList={ucarList} />

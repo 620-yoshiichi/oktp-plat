@@ -53,7 +53,10 @@ export default async function Page(props) {
   const serverFetchProps = {
     DetailePageId: params?.[`id`] ? Number(params?.[`id`]) : undefined,
     dataModelName,
-    additional: {where: {...additionalWhere}},
+    additional: {
+      where: {...additionalWhere}
+
+    },
     include,
     session,
     query,
@@ -65,7 +68,6 @@ export default async function Page(props) {
   const initialModelRecords = await getInitModelRecordsProps({
     ...serverFetchProps,
     query,
-
     rootPath: 'QRBP',
     env: 'forCr',
   })

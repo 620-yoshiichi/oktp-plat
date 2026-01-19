@@ -1,5 +1,9 @@
 import ffmpeg from 'fluent-ffmpeg'
-import AWS from 'aws-sdk'
+import {
+  S3Client,
+  DeleteObjectCommand,
+  PutObjectCommand,
+} from '@aws-sdk/client-s3'
 import multer from 'multer'
 
 import {v4 as uuidv4} from 'uuid'
@@ -7,10 +11,12 @@ import {v4 as uuidv4} from 'uuid'
 import {getFileInfo} from 'src/non-common/serverSideFunction'
 import {requestResultType} from '@cm/types/types'
 
-const s3 = new AWS.S3({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+const s3 = new S3Client({
   region: process.env.AWS_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+  },
 })
 
 export const config = {
@@ -130,7 +136,7 @@ async function deleteImageFromS3({s3, backetKey, deleteImageUrl}) {
 
   try {
     console.info(params)
-    const deletedImageres = await s3.deleteObject(params).promise()
+    const deletedImageres = await s3.send(new DeleteObjectCommand(params))
     console.log('画像削除　成功', {deletedImageres})
     return deletedImageres
   } catch (error) {
@@ -150,8 +156,12 @@ async function updateImageToS3({s3, backetKey, fileBuffer, mimetype, ext}) {
   const {Bucket, Key, ContentType} = params
   console.info({Bucket, Key, ContentType})
   try {
+    const response = await s3.send(new PutObjectCommand(params))
     console.log('画像追加　成功')
-    return await s3.upload(params).promise()
+    return {
+      ...response,
+      Location: `https://${Bucket}.s3.${process.env.AWS_REGION}.amazonaws.com/${Key}`,
+    }
   } catch (error) {
     console.error('画像追加　エラー', error)
   }
