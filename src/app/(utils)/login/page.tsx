@@ -4,7 +4,6 @@ import {Absolute, C_Stack} from 'src/cm/components/styles/common-components/comm
 
 import Redirector from 'src/cm/components/utils/Redirector'
 import PlaceHolder from 'src/cm/components/utils/loader/PlaceHolder'
-import LoginClient from './LoginForm'
 import {initServerComopnent} from 'src/non-common/serverSideFunction'
 import GoogleLogin from '@app/(apps)/newCar/GoogleLogin'
 

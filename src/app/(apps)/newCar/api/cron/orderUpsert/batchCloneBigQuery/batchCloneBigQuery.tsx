@@ -1,16 +1,16 @@
-import {newCarAppUserWhere, StoreManagerForselectConfig} from '@app/(apps)/newCar/(constants)/forSelectConfig'
-import {newCarSql} from '@app/(apps)/newCar/(models)/newCarSql'
+import { newCarAppUserWhere, StoreManagerForselectConfig } from '@app/(apps)/newCar/(constants)/forSelectConfig'
+import { newCarSql } from '@app/(apps)/newCar/(models)/newCarSql'
 
-import {BQ} from '@app/api/google/big-query/BigQuery'
-import {BQ_parser} from '@app/api/google/big-query/bigQueryParser'
-import {getMidnight} from '@cm/class/Days/date-utils/calculations'
+import { BQ } from '@app/api/google/big-query/BigQuery'
+import { BQ_parser } from '@app/api/google/big-query/bigQueryParser'
+import { getMidnight } from '@cm/class/Days/date-utils/calculations'
 
-import {funcOrVar, isDev, ObjectMap} from '@cm/lib/methods/common'
+import { funcOrVar, ObjectMap } from '@cm/lib/methods/common'
 import prisma from 'src/lib/prisma'
-import {processBatchWithRetry} from '@cm/lib/server-actions/common-server-actions/processBatchWithRetry'
-import {addDays} from 'date-fns'
+import { processBatchWithRetry } from '@cm/lib/server-actions/common-server-actions/processBatchWithRetry'
+import { addDays } from 'date-fns'
 
-import {doTransaction} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
+import { doTransaction } from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
 
 export const maxUpdateGte = addDays(getMidnight(), -30)
 
@@ -58,39 +58,39 @@ const BATCH_SIZE = Number(process.env.BATCH_SIZE) || 500 // デフォルト100�
 const PAGE_SIZE = Number(process.env.PAGE_SIZE) || 10000 // BigQueryのページサイズ
 
 // 開発用メモリ監視
-if (isDev) {
-  // メモリ制限チェック関数
-  const checkMemoryLimit = (limitMB: number = 2048) => {
-    const used = process.memoryUsage()
-    const heapUsedMB = Math.round(used.heapUsed / 1024 / 1024)
-    const heapTotalMB = Math.round(used.heapTotal / 1024 / 1024)
+// if (isDev) {
+//   // メモリ制限チェック関数
+//   const checkMemoryLimit = (limitMB: number = 2048) => {
+//     const used = process.memoryUsage()
+//     const heapUsedMB = Math.round(used.heapUsed / 1024 / 1024)
+//     const heapTotalMB = Math.round(used.heapTotal / 1024 / 1024)
 
-    const isOverLimit = heapUsedMB > limitMB * 0.8 // 80%を超えたら警告
-    const isCritical = heapUsedMB > limitMB * 0.9 // 90%を超えたら危険
+//     const isOverLimit = heapUsedMB > limitMB * 0.8 // 80%を超えたら警告
+//     const isCritical = heapUsedMB > limitMB * 0.9 // 90%を超えたら危険
 
-    if (isCritical) {
-      console.error(`🚨 メモリ使用量が危険レベル: ${heapUsedMB}MB / ${limitMB}MB`)
-      // throw new Error(`メモリ制限を超過しました: ${heapUsedMB}MB`)
-    }
+//     if (isCritical) {
+//       console.error(`🚨 メモリ使用量が危険レベル: ${heapUsedMB}MB / ${limitMB}MB`)
+//       // throw new Error(`メモリ制限を超過しました: ${heapUsedMB}MB`)
+//     }
 
-    if (isOverLimit) {
-      console.warn(`⚠️ メモリ使用量が制限に近づいています: ${heapUsedMB}MB / ${limitMB}MB`)
-    }
+//     if (isOverLimit) {
+//       console.warn(`⚠️ メモリ使用量が制限に近づいています: ${heapUsedMB}MB / ${limitMB}MB`)
+//     }
 
-    return {
-      heapUsedMB,
-      heapTotalMB,
-      limitMB,
-      usagePercent: (heapUsedMB / limitMB) * 100,
-      isOverLimit,
-      isCritical,
-    }
-  }
-  setInterval(() => {
-    const memInfo = checkMemoryLimit()
-    console.log(`📊 メモリ使用状況: ${memInfo.heapUsedMB}MB (${memInfo.usagePercent.toFixed(1)}%)`)
-  }, 10000) // 10秒ごとに監視
-}
+//     return {
+//       heapUsedMB,
+//       heapTotalMB,
+//       limitMB,
+//       usagePercent: (heapUsedMB / limitMB) * 100,
+//       isOverLimit,
+//       isCritical,
+//     }
+//   }
+//   setInterval(() => {
+//     const memInfo = checkMemoryLimit()
+//     console.log(`📊 メモリ使用状況: ${memInfo.heapUsedMB}MB (${memInfo.usagePercent.toFixed(1)}%)`)
+//   }, 10000) // 10秒ごとに監視
+// }
 
 // 設定確認とログ出力を追加
 const logInfo = () => {
@@ -139,9 +139,9 @@ export const batchCloneBigQuery = async () => {
 
     // 事前データの取得（最小限の情報のみ）
     const [stores, storeManagers, users] = await Promise.all([
-      await prisma.store.findMany({select: {id: true, code: true}}),
-      await prisma.user.findMany({include: {Store: true}, where}),
-      await prisma.user.findMany({select: {id: true, code: true}, where: newCarAppUserWhere}),
+      await prisma.store.findMany({ select: { id: true, code: true } }),
+      await prisma.user.findMany({ include: { Store: true }, where }),
+      await prisma.user.findMany({ select: { id: true, code: true }, where: newCarAppUserWhere }),
     ])
 
     // オブジェクトマップの作成
@@ -152,13 +152,13 @@ export const batchCloneBigQuery = async () => {
     const switchingHistory = await prisma.orderSwitchingHisotory.findMany({
       select: {
         userId: true,
-        NewCar: {select: {APPINDEX: true, storeId: true, userId: true}},
+        NewCar: { select: { APPINDEX: true, storeId: true, userId: true } },
       },
     })
     const switchingHistoryObj = Object.fromEntries(switchingHistory.map(d => [d.NewCar?.APPINDEX, d]))
 
     const nonTargetusers: any[] = []
-    const {GET} = new BQ({datasetId: `OrdersDB`, tableId: `Orders_Base`})
+    const { GET } = new BQ({ datasetId: `OrdersDB`, tableId: `Orders_Base` })
 
     // ページング処理による段階的なデータ取得
     let totalProcessedCount = 0
@@ -192,7 +192,7 @@ export const batchCloneBigQuery = async () => {
               return BQ_parser.parseDate(value)
             }) as any
 
-            const {APPINDEX, NO_CYUMON, CD_HANSTAFF, CD_TENPO, KB_ZAIKOJYO, ...rest} = parsed
+            const { APPINDEX, NO_CYUMON, CD_HANSTAFF, CD_TENPO, KB_ZAIKOJYO, ...rest } = parsed
 
             let userId: number | undefined = userObj[CD_HANSTAFF]?.id
             let storeId: number | undefined = storeObj[CD_TENPO]?.id
@@ -204,7 +204,7 @@ export const batchCloneBigQuery = async () => {
               })
 
               if (theManager === undefined) {
-                const data = {reason: `スタッフ・店長特定不可`, NO_CYUMON, CD_HANSTAFF}
+                const data = { reason: `スタッフ・店長特定不可`, NO_CYUMON, CD_HANSTAFF }
                 nonTargetusers.push(data)
                 return null
               }
@@ -224,15 +224,15 @@ export const batchCloneBigQuery = async () => {
               NO_CYUMON,
               CD_HANSTAFF,
               CD_TENPO,
-              Store: {connect: {id: storeId}},
-              User: {connect: {id: userId}},
+              Store: { connect: { id: storeId } },
+              User: { connect: { id: userId } },
               ...rest,
             }
 
             return {
               model: `newCar`,
               method: `upsert`,
-              queryObject: {where: {APPINDEX: data?.APPINDEX ?? ''}, create: data, update: data},
+              queryObject: { where: { APPINDEX: data?.APPINDEX ?? '' }, create: data, update: data },
             }
           } catch (error) {
             console.error(`レコード変換エラー:`, error, obj?.APPINDEX)

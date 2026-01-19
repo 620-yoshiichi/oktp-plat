@@ -1,3 +1,4 @@
+'use server'
 import {deleteAndInsertUpassData} from '@app/(apps)/ucar/(pages)/api/cron/upass/deleteAndCreate/deleteAndInsertUpassData'
 import {createUpassFamilyTree} from '@app/(apps)/ucar/(pages)/api/cron/upass/deleteAndCreate/createUpassFamilyTree'
 

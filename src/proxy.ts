@@ -3,8 +3,6 @@ import {getToken} from 'next-auth/jwt'
 import {NextRequest, NextResponse} from 'next/server'
 import type {JWT} from 'next-auth/jwt'
 import { HREF } from '@cm/lib/methods/urls'
-import { basePath } from '@cm/lib/methods/common'
-import prisma from 'src/lib/prisma'
 
 /**
  * セッション検証関数の型定義

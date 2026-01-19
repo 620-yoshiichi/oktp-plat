@@ -24,7 +24,7 @@ const createExecutionLog = async (batchConfig: BatchConfig) => {
 /**
  * 実行ログを更新（成功）
  */
-const updateExecutionLogSuccess = async (logId: number, startTime: number, result: any) => {
+const updateExecutionLogForSuccess = async (logId: number, startTime: number, result: any) => {
   const duration = Date.now() - startTime
   const resultString = result ? JSON.stringify(result).slice(0, 5000) : null // 5000文字まで
 
@@ -42,7 +42,7 @@ const updateExecutionLogSuccess = async (logId: number, startTime: number, resul
 /**
  * 実行ログを更新（失敗）
  */
-const updateExecutionLogFailure = async (logId: number, startTime: number, error: Error) => {
+const updateExecutionLogForFailure = async (logId: number, startTime: number, error: Error) => {
   const duration = Date.now() - startTime
 
   await prisma.cronExecutionLog.update({
@@ -63,6 +63,8 @@ const updateExecutionLogFailure = async (logId: number, startTime: number, error
  * - エラーハンドリング
  */
 export const executeCronBatch = async (req: NextRequest, batchConfig: BatchConfig): Promise<NextResponse> => {
+
+
   // 認証チェック
   if ((await isCron({req})) === false) {
     return NextResponse.json({success: false, message: `Unauthorized`, result: null}, {status: 401, statusText: `Unauthorized`})
@@ -71,17 +73,24 @@ export const executeCronBatch = async (req: NextRequest, batchConfig: BatchConfi
   const startTime = Date.now()
   let log: {id: number} | null = null
 
+
+
   try {
     // 実行開始ログを記録
     log = await createExecutionLog(batchConfig)
 
     console.log(`[CRON] Starting batch: ${batchConfig.name} (${batchConfig.id})`)
 
+    // handlerの存在チェック
+    if (!batchConfig.handler) {
+      throw new Error(`Handler not found for batch: ${batchConfig.id}`)
+    }
+
     // バッチ処理を実行
     const result = await batchConfig.handler()
 
     // 実行成功ログを記録
-    await updateExecutionLogSuccess(log.id, startTime, result)
+    await updateExecutionLogForSuccess(log.id, startTime, result)
 
     console.log(`[CRON] Completed batch: ${batchConfig.name} (${batchConfig.id}) in ${Date.now() - startTime}ms`)
 
@@ -97,7 +106,7 @@ export const executeCronBatch = async (req: NextRequest, batchConfig: BatchConfi
 
     // 実行失敗ログを記録
     if (log) {
-      await updateExecutionLogFailure(log.id, startTime, error)
+      await updateExecutionLogForFailure(log.id, startTime, error)
     }
 
     return NextResponse.json(

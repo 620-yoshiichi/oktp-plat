@@ -1,3 +1,4 @@
+'use server'
 import {batchAlignCars} from '@app/(apps)/newCar/api/cron/orderUpsert/batchAlignCars'
 import {batchCloneBigQuery} from '@app/(apps)/newCar/api/cron/orderUpsert/batchCloneBigQuery/batchCloneBigQuery'
 

@@ -1,3 +1,4 @@
+'use server'
 import {formatDate} from '@cm/class/Days/date-utils/formatters'
 import {getMidnight} from '@cm/class/Days/date-utils/calculations'
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'

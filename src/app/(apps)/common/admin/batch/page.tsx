@@ -1,40 +1,96 @@
 'use client'
 
-import {PrismaModelNames} from '@cm/types/prisma-types'
-import {Padding, R_Stack, C_Stack} from '@cm/components/styles/common-components/common-components'
-import {CssString} from '@cm/components/styles/cssString'
-import {MarkDownDisplay} from '@cm/components/utils/texts/MarkdownDisplay'
+
+import { C_Stack, Padding, R_Stack } from '@cm/components/styles/common-components/common-components'
+import { CssString } from '@cm/components/styles/cssString'
+import BasicTabs, { tabComponent } from '@cm/components/utils/tabs/BasicTabs'
+import { MarkDownDisplay } from '@cm/components/utils/texts/MarkdownDisplay'
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
-import {cl} from '@cm/lib/methods/common'
-import {toast} from 'react-toastify'
-import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+import { cl } from '@cm/lib/methods/common'
+import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+import { PrismaModelNames } from '@cm/types/prisma-types'
+import { toast } from 'react-toastify'
+import { BATCH_MASTER, BatchConfig } from 'src/non-common/cron/batchMaster'
 import useSWR from 'swr'
-import BasicTabs from '@cm/components/utils/tabs/BasicTabs'
-import {getUcarActions, getNewCarActions, getQRBPActions, getCommonActions, BatchAction} from './batchActions'
+import { fetchAlt } from '@cm/lib/http/fetch-client'
+import { basePath } from '@cm/lib/methods/common'
+import useModal from '@cm/components/utils/modal/useModal'
+import React from 'react'
+import { formatDate } from '@cm/class/Days/date-utils/formatters'
+
+
+type CronExecutionLog = {
+  id: number
+  batchId: string
+  batchName: string
+  startedAt: Date | string
+  completedAt: Date | string | null
+  duration: number | null
+  status: 'success' | 'failure' | 'running'
+  errorMessage: string | null
+  result: string | null
+  createdAt: Date | string
+}
 
 export default function Page() {
-  const {toggleLoad} = useGlobal()
-  const limit = 5000
-  const offset = 0
+  const { toggleLoad } = useGlobal()
+  const { Modal, handleOpen, handleClose, open } = useModal<{ batchId: string; batchName: string }>()
 
+  const batch: { common: BatchConfig[], ucar: BatchConfig[], newCar: BatchConfig[], qrbp: BatchConfig[] } = { common: [], ucar: [], newCar: [], qrbp: [] }
 
-  const batch = {
-    common: getCommonActions(),
-    ucar: getUcarActions(offset, limit),
-    newCar: getNewCarActions(),
-    qrbp: getQRBPActions(),
-  }
+  Object.keys(BATCH_MASTER).forEach(key => {
+    const item = BATCH_MASTER[key]
+
+    if (!batch[item.app]) {
+      batch[item.app] = []
+    }
+    batch[item.app].push({
+      id: item.id,
+      name: item.name,
+      description: item.description,
+      purpose: item.purpose,
+      app: item.app,
+      effectOn: item.effectOn,
+      schedule: item.schedule,
+      tableName: item.tableName,
+      prismaArgs: item.prismaArgs,
+      handler: item.handler,
+    })
+  })
+
+  // 全バッチIDのリストを作成
+  const allBatchIds = Object.values(batch).flat().map(b => b.id)
+
+  // 各バッチのログデータを取得
+  const { data: batchLogs, mutate: mutateBatchLogs } = useSWR(
+    allBatchIds.length > 0 ? `batch-logs-${allBatchIds.join(',')}` : null,
+    async () => {
+      const logs = await Promise.all(
+        allBatchIds.map(async batchId => {
+          try {
+            const res = await fetchAlt(`${basePath}/api/cron/logs/${batchId}`, {}, { method: 'GET' })
+            return { batchId, ...res }
+          } catch (error) {
+            return { batchId, latest: null, history: [] }
+          }
+        })
+      )
+      return Object.fromEntries(logs.map(log => [log.batchId, log]))
+    }
+  )
+
 
   // Ucarアプリのデータ件数取得
-        const ucarKey = JSON.stringify(batch.ucar)
-  const {data: ucarCount} = useSWR(ucarKey, async () => {
+  const ucarKey = JSON.stringify(batch.ucar)
+  const { data: ucarCount } = useSWR(ucarKey, async () => {
     const countList = await Promise.all(
       batch.ucar.map(async action => {
         if (action.tableName) {
           const args = action.prismaArgs as any
+
           const res = await doStandardPrisma(action.tableName as PrismaModelNames, 'count', args as never)
           return {
-            name: action.label,
+            name: action.name,
             count: res.result,
           }
         }
@@ -43,9 +99,35 @@ export default function Page() {
     return Object.fromEntries(countList.filter(d => d !== undefined).map(d => [d.name, d.count]))
   })
 
-  const {paddingTd, borderCerlls} = CssString.table
+  const { paddingTd, borderCerlls } = CssString.table
 
-  const renderTable = (actions: BatchAction[], title: string, counts?: Record<string, number>) => {
+  const getStatusColor = (status: string, variant: 'text' | 'bg' = 'text') => {
+    switch (status) {
+      case 'success':
+        return variant === 'text' ? 'text-green-600' : 'text-green-600 bg-green-50'
+      case 'failure':
+        return variant === 'text' ? 'text-red-600' : 'text-red-600 bg-red-50'
+      case 'running':
+        return variant === 'text' ? 'text-blue-600' : 'text-blue-600 bg-blue-50'
+      default:
+        return variant === 'text' ? 'text-gray-600' : 'text-gray-600 bg-gray-50'
+    }
+  }
+
+  const getStatusText = (status: string) => {
+    switch (status) {
+      case 'success':
+        return '成功'
+      case 'failure':
+        return '失敗'
+      case 'running':
+        return '実行中'
+      default:
+        return '-'
+    }
+  }
+
+  const renderTable = (actions: BatchConfig[], title: string, counts?: Record<string, number>) => {
     const hasEffectOn = actions.some(action => action.effectOn)
 
     return (
@@ -59,40 +141,80 @@ export default function Page() {
                 <th>詳細</th>
                 <th>用途</th>
                 {hasEffectOn && <th>種別</th>}
+                <th>最終実行時刻と結果</th>
                 <th></th>
               </tr>
             </thead>
             <tbody className={``}>
               {actions.map((action, idx) => {
-                const count = counts?.[action.label]
+                const count = counts?.[action.name]
+                const logData = batchLogs?.[action.id]
+                const latestLog = logData?.latest as CronExecutionLog | null
+
                 const handleClick = async () => {
-                  const onClickFn = typeof action.onClick === 'function' ? action.onClick : action.onClick.main
-                  const res = await toggleLoad(async () => await onClickFn())
+                  let res: any
+
+                  if (action.handler) {
+                    // batchアクションの場合、/api/cron/execute/${action.id}を呼び出す
+                    res = await toggleLoad(async () => {
+                      return await fetchAlt(`${basePath}/api/cron/execute/${action.id}`, {}, { method: 'GET' })
+                    })
+                  } else {
+                    toast.error(`${action.name}の実行関数が設定されていません`)
+                    return
+                  }
+
                   if (res instanceof Error || res?.error || res?.success === false) {
                     const errorMessage = res?.message || res?.error?.message || res?.error || '不明なエラーが発生しました'
-                    toast.error(`${action.label}の実行中にエラーが発生しました: ${errorMessage}`)
+                    toast.error(`${action.name}の実行中にエラーが発生しました: ${errorMessage}`)
                   } else if (res?.success === true || res?.success === undefined) {
-                    toast.success(`${action.label}が完了しました`)
+                    toast.success(`${action.name}が完了しました`)
+                    // ログデータを再取得
+                    mutateBatchLogs()
                   }
+                }
+
+                const handleLogClick = () => {
+                  handleOpen({ batchId: action.id, batchName: action.name })
                 }
 
                 return (
                   <tr key={idx} className={`  `}>
                     <td className={`min-w-[320px]`}>
                       <R_Stack className={` justify-between`}>
-                        {action.label}
+                        {action.name}
                         {count !== undefined && (
                           <span className={`text-sm text-blue-500 font-bold`}>{count.toLocaleString()}</span>
                         )}
                       </R_Stack>
                     </td>
                     <td>
-                      <MarkDownDisplay>{action.description}</MarkDownDisplay>
+                      <MarkDownDisplay>{action.description || ''}</MarkDownDisplay>
                     </td>
                     <td>
                       <MarkDownDisplay>{action.purpose || ''}</MarkDownDisplay>
                     </td>
                     {hasEffectOn && <td className={`w-[80px] text-center`}>{action.effectOn || '-'}</td>}
+                    <td className={`min-w-[200px]`}>
+                      {latestLog ? (
+                        <button
+                          onClick={handleLogClick}
+                          className={`text-left hover:underline cursor-pointer ${getStatusColor(latestLog.status, 'text')}`}
+                        >
+                          <div className={`text-sm`}>
+                            <div>{formatDate(new Date(latestLog.completedAt || latestLog.startedAt), 'YYYY-MM-DD HH:mm:ss')}</div>
+                          </div>
+                          <R_Stack>
+                            <div className={`font-bold`}>{getStatusText(latestLog.status)}</div>
+                            {latestLog.duration && (
+                              <div className={`text-xs text-gray-500`}>{latestLog.duration}ms</div>
+                            )}
+                          </R_Stack>
+                        </button>
+                      ) : (
+                        <span className={`text-gray-400 text-sm`}>実行履歴なし</span>
+                      )}
+                    </td>
                     <td>
                       <button className={`t-link w-[100px] text-2xl`} onClick={handleClick}>
                         実行
@@ -108,7 +230,7 @@ export default function Page() {
     )
   }
 
-  const renderBatchTable = (actions: BatchAction[], appName: string, counts?: Record<string, number>) => {
+  const renderBatchTable = (actions: BatchConfig[], appName: string, counts?: Record<string, number>) => {
     const batchActions = actions.filter(action => action.effectOn === 'batch')
     const clickActions = actions.filter(action => action.effectOn === 'click' || !action.effectOn)
 
@@ -131,24 +253,47 @@ export default function Page() {
     )
   }
 
-  const tabComponents = [
-    {
-      label: '共通',
-      component: <div>{renderBatchTable(batch.common, '共通')}</div>,
-    },
-    {
-      label: 'Ucar',
-      component: <div>{renderBatchTable(batch.ucar, 'Ucar', ucarCount)}</div>,
-    },
-    {
-      label: 'NewCar',
-      component: <div>{renderBatchTable(batch.newCar, 'NewCar')}</div>,
-    },
-    {
-      label: 'QRBP',
-      component: <div>{renderBatchTable(batch.qrbp, 'QRBP')}</div>,
-    },
-  ]
+  const tabComponents = Object.keys(batch).map(key => {
+    const actions = batch[key as keyof typeof batch] as BatchConfig[]
+    if (actions.length > 0) {
+      return {
+        label: key,
+        component: <div>{renderBatchTable(actions, key, ucarCount)}</div>,
+      }
+    }
+  }).filter(Boolean) as tabComponent[]
+
+
+
+  // [
+  //   {
+  //     label: '共通',
+  //     component: <div>{renderBatchTable(batch.common, '共通')}</div>,
+  //   },
+  //   {
+  //     label: 'Ucar',
+  //     component: <div>{renderBatchTable(batch.ucar, 'Ucar', ucarCount)}</div>,
+  //   },
+  //   {
+  //     label: 'NewCar',
+  //     component: <div>{renderBatchTable(batch.newCar, 'NewCar')}</div>,
+  //   },
+  //   {
+  //     label: 'QRBP',
+  //     component: <div>{renderBatchTable(batch.qrbp, 'QRBP')}</div>,
+  //   },
+  // ]
+
+  // モーダル内の履歴データを取得
+  const selectedBatchId = open?.batchId
+  const { data: historyData } = useSWR(
+    selectedBatchId ? `batch-history-${selectedBatchId}` : null,
+    async () => {
+      if (!selectedBatchId) return null
+      const res = await fetchAlt(`${basePath}/api/cron/logs/${selectedBatchId}?limit=50`, {}, { method: 'GET' })
+      return res
+    }
+  )
 
   return (
     <Padding>
@@ -160,6 +305,74 @@ export default function Page() {
 
         <BasicTabs id="batch-tabs" TabComponentArray={tabComponents} headingText="アプリを選択" />
       </div>
+
+      <Modal
+        title={open ? `${open.batchName} - 実行履歴` : ''}
+        description="過去50件の実行履歴を表示します"
+        style={{ maxWidth: '90vw', width: '1000px' }}
+      >
+        {historyData?.history && historyData.history.length > 0 ? (
+          <div className={`max-h-[70vh] overflow-auto`}>
+            <table className={cl(paddingTd, borderCerlls, `w-full`)}>
+              <thead className={`sticky top-0 bg-white`}>
+                <tr>
+                  <th>実行開始時刻</th>
+                  <th>完了時刻</th>
+                  <th>実行時間</th>
+                  <th>ステータス</th>
+                  <th>エラーメッセージ</th>
+                  <th>結果</th>
+                </tr>
+              </thead>
+              <tbody>
+                {historyData.history.map((log: CronExecutionLog) => (
+                  <tr key={log.id}>
+                    <td className={`text-sm`}>
+                      {formatDate(new Date(log.startedAt))}
+                    </td>
+                    <td className={`text-sm`}>
+                      {log.completedAt ? formatDate(new Date(log.completedAt)) : '-'}
+                    </td>
+                    <td className={`text-sm`}>
+                      {log.duration ? `${log.duration}ms` : '-'}
+                    </td>
+                    <td className={`text-center`}>
+                      <span className={`px-2 py-1 rounded ${getStatusColor(log.status, 'bg')}`}>
+                        {getStatusText(log.status)}
+                      </span>
+                    </td>
+                    <td className={`text-sm max-w-[300px] wrap-break-word`}>
+                      {log.errorMessage ? (
+                        <div className={`text-red-600`}>{log.errorMessage}</div>
+                      ) : (
+                        '-'
+                      )}
+                    </td>
+                    <td className={`text-sm max-w-[300px] wrap-break-word`}>
+                      {log.result ? (
+                        <details>
+                          <summary className={`cursor-pointer text-blue-600 hover:underline`}>
+                            結果を表示
+                          </summary>
+                          <pre className={`mt-2 p-2 bg-gray-100 rounded text-xs overflow-auto max-h-[200px]`}>
+                            {typeof log.result === 'string' ? log.result : JSON.stringify(log.result, null, 2)}
+                          </pre>
+                        </details>
+                      ) : (
+                        '-'
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div className={`text-center text-gray-500 py-8`}>
+            実行履歴がありません
+          </div>
+        )}
+      </Modal>
     </Padding>
   )
 }

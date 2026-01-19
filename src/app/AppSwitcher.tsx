@@ -3,7 +3,6 @@
 import {T_LINK} from '@cm/components/styles/common-components/links'
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 import useWindowSize from '@cm/hooks/useWindowSize'
-import {isDev} from '@cm/lib/methods/common'
 
 export const AppSwitcher = () => {
   const {PC} = useWindowSize()

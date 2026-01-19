@@ -1,3 +1,5 @@
+
+
 import {executeOrderUpsert} from './handlers/orderUpsert'
 import {executeTenpoTsuikoUpsert} from './handlers/tenpoTsuikoUpsert'
 import {executeFetchSeisanYoteiDiff} from './handlers/fetchSeisanYoteiDiff'
@@ -8,6 +10,18 @@ import {executeZaikoDeleteAndCreate} from './handlers/zaikoDeleteAndCreate'
 import {executeAisateiDeleteAndCreate} from './handlers/aisateiDeleteAndCreate'
 import {executeUpassDeleteAndCreate} from './handlers/upassDeleteAndCreate'
 import {executeJuchuShitadoriDbDeleteAndCreate} from './handlers/juchuShitadoriDbDeleteAndCreate'
+import {
+  executeNum98,
+  executeUcarProcessDeleteAndCreate,
+  executeQrPaper,
+  executeTenchoShoruiSakusei,
+  executeShiwake,
+  executeTax,
+  executeGarage,
+  executeLinkOldCars,
+  executeKaonaviBatch,
+  executeActivateBpSpread,
+} from './handlers/clickActionHandlers'
 
 /**
  * バッチ設定の型定義
@@ -15,9 +29,15 @@ import {executeJuchuShitadoriDbDeleteAndCreate} from './handlers/juchuShitadoriD
 export type BatchConfig = {
   id: string // バッチ識別子（vercel.jsonのpathと対応）
   name: string // バッチ名称
-  schedule: string // Cronスケジュール（vercel.jsonと同期）
+  schedule?: string // Cronスケジュール（vercel.jsonと同期、effectOnが'batch'の場合必須）
   description?: string // 説明
-  handler: () => Promise<any> // 実行関数
+  purpose?: string // 用途
+  app: 'common' | 'ucar' | 'newCar' | 'qrbp' // アプリ識別
+  effectOn: 'batch' | 'click' // 実行種別
+  handler?: () => Promise<any> // 実行関数（effectOnが'batch'の場合必須）
+  onClick?: {name: string; main: () => Promise<any>} // クリック実行関数（UI用）
+  tableName?: string // テーブル名（カウント表示用）
+  prismaArgs?: any // Prisma引数（カウント表示用）
 }
 
 /**
@@ -30,74 +50,237 @@ export const BATCH_MASTER: Record<string, BatchConfig> = {
     id: 'orderUpsert',
     name: '注残データ作成',
     schedule: '0 21,3 * * *',
-    description: 'sheet API とBigQueryを用いてデータを更新',
+    description: '/api/cron/execute/orderUpsert',
+    purpose: 'sheet API とBigQueryを用いてデータを更新',
+    app: 'newCar',
+    effectOn: 'batch',
     handler: executeOrderUpsert,
   },
   tenpoTsuikoUpsert: {
     id: 'tenpoTsuikoUpsert',
     name: '追工データ更新',
     schedule: '0 22-23,0-10 * * *',
-    description: 'BigQueryを用いてデータを更新',
+    description: '/api/cron/execute/tenpoTsuikoUpsert',
+    purpose: 'BigQueryを用いてデータを更新',
+    app: 'newCar',
+    effectOn: 'batch',
     handler: executeTenpoTsuikoUpsert,
   },
   fetchSeisanYoteiDiff: {
     id: 'fetchSeisanYoteiDiff',
     name: '生産予定フェッチ',
     schedule: '15 1 * * *',
-    description: '生産予定履歴テーブルを作成する',
+    description: '/api/cron/execute/fetchSeisanYoteiDiff',
+    purpose: '生産予定履歴テーブルを作成する',
+    app: 'newCar',
+    effectOn: 'batch',
     handler: executeFetchSeisanYoteiDiff,
   },
   notifySeisanYoteiDiff: {
     id: 'notifySeisanYoteiDiff',
     name: '生産予定通知',
     schedule: '0,30 * * * *',
-    description: '生産予定変更をメールで通知する',
+    description: '/api/cron/execute/notifySeisanYoteiDiff',
+    purpose: '生産予定変更をメールで通知する',
+    app: 'newCar',
+    effectOn: 'batch',
     handler: executeNotifySeisanYoteiDiff,
   },
   aggregateProgress: {
     id: 'aggregateProgress',
     name: '日次集計',
     schedule: '0 11 28-31 * *',
-    description: '月末に進捗データを集計する',
+    description: '/api/cron/execute/aggregateProgress',
+    purpose: '月末に進捗データを集計する',
+    app: 'newCar',
+    effectOn: 'batch',
     handler: executeAggregateProgress,
   },
 
   // ============ ucar アプリ ============
   oldCarsDeleteAndCreate: {
     id: 'oldCarsDeleteAndCreate',
-    name: '古物台帳 Rawデータ取り込み',
+    name: '古物 Rawデータ取り込み',
     schedule: '0 22 * * *',
-    description: 'BigQueryから古物台帳データを同期する',
+    description: '/api/cron/execute/oldCarsDeleteAndCreate',
+    purpose: '',
+    app: 'ucar',
+    effectOn: 'batch',
     handler: executeOldCarsDeleteAndCreate,
+    tableName: 'oldCars_Base',
   },
   zaikoDeleteAndCreate: {
     id: 'zaikoDeleteAndCreate',
     name: '在庫 Rawデータ取り込み',
     schedule: '0 22 * * *',
-    description: 'BigQueryから在庫データを同期する',
+    description: '/api/cron/execute/zaikoDeleteAndCreate',
+    purpose: '',
+    app: 'ucar',
+    effectOn: 'batch',
     handler: executeZaikoDeleteAndCreate,
+    tableName: 'zAIKO_Base',
   },
   aisateiDeleteAndCreate: {
     id: 'aisateiDeleteAndCreate',
     name: 'AI査定 Rawデータ取り込み',
     schedule: '0 22 * * *',
-    description: 'BigQueryからAI査定データを同期する',
+    description: '/api/cron/execute/aisateiDeleteAndCreate',
+    purpose: '',
+    app: 'ucar',
+    effectOn: 'batch',
     handler: executeAisateiDeleteAndCreate,
+    tableName: 'uPASS',
+    prismaArgs: {
+      where: {
+        dataSource: 'aisatei',
+      },
+    },
   },
   upassDeleteAndCreate: {
     id: 'upassDeleteAndCreate',
     name: 'U-PASS Rawデータ取り込み',
     schedule: '0 22 * * *',
-    description: 'BigQueryからU-PASSデータを同期する',
+    description: '/api/cron/execute/upassDeleteAndCreate',
+    purpose: '',
+    app: 'ucar',
+    effectOn: 'batch',
     handler: executeUpassDeleteAndCreate,
+    tableName: 'uPASS',
+    prismaArgs: {
+      where: {
+        dataSource: 'upass',
+      },
+    },
   },
   juchuShitadoriDbDeleteAndCreate: {
     id: 'juchuShitadoriDbDeleteAndCreate',
     name: '受注下取りDB Rawデータ取り込み',
     schedule: '0 22 * * *',
-    description: 'BigQueryから受注下取りデータを同期する',
+    description: '/api/cron/execute/juchuShitadoriDbDeleteAndCreate',
+    purpose: '',
+    app: 'ucar',
+    effectOn: 'batch',
     handler: executeJuchuShitadoriDbDeleteAndCreate,
+    tableName: 'juchuShitadoriDb',
   },
+
+  num98: {
+    id: 'num98',
+    name: '98データ作成',
+    description: '/api/seeder/num98',
+    purpose: 'ai21の98番号一覧データを作成する',
+    app: 'ucar',
+    effectOn: 'click',
+    handler: executeNum98,
+    tableName: 'number98',
+  },
+  ucarProcessDeleteAndCreate: {
+    id: 'ucarProcessDeleteAndCreate',
+    name: 'UcarProcess 初期シーディング',
+    description: '/api/seeder/ucarProcess/deleteAndCreate',
+    purpose: 'BigQuery Ucar_QR.AI_satei テーブルからデータを取り込む。',
+    app: 'ucar',
+    effectOn: 'click',
+    handler: executeUcarProcessDeleteAndCreate,
+    tableName: 'ucar',
+    prismaArgs: {
+      where: {
+        dataSource: 'BIG_QUERY_QR_PROCESS', // UCAR_CODEは後で解決
+      },
+    },
+  },
+  qrPaper: {
+    id: 'qrPaper',
+    name: 'UcarPaperデータ作成',
+    description: '/api/seeder/qrPaper',
+    purpose: 'QR PAPER(「新システム反映用」シート)よりデータを作成し、ucarテーブルに反映する。',
+    app: 'ucar',
+    effectOn: 'click',
+    handler: executeQrPaper,
+    tableName: 'ucar',
+  },
+  tenchoShoruiSakusei: {
+    id: 'tenchoShoruiSakusei',
+    name: '店長書類送信データ作成',
+    description: '/api/seeder/tenchoShoruiSakusei',
+    purpose: '',
+    app: 'ucar',
+    effectOn: 'click',
+    handler: executeTenchoShoruiSakusei,
+    tableName: 'ucar',
+  },
+  shiwake: {
+    id: 'shiwake',
+    name: '仕分け結果',
+    description: '/api/seeder/shiwake',
+    purpose: '',
+    app: 'ucar',
+    effectOn: 'click',
+    handler: executeShiwake,
+    tableName: 'ucar',
+  },
+  tax: {
+    id: 'tax',
+    name: '自動車税データ作成',
+    description: '/api/seeder/tax',
+    purpose: '',
+    app: 'ucar',
+    effectOn: 'click',
+    handler: executeTax,
+    tableName: 'ucar',
+  },
+  garage: {
+    id: 'garage',
+    name: '車庫データ作成',
+    description: '/api/seeder/garage',
+    purpose: 'QR PAPER「車庫空き状況」シートよりデータを作成し、反映する',
+    app: 'ucar',
+    effectOn: 'click',
+    handler: executeGarage,
+    tableName: 'AppliedUcarGarageSlot',
+  },
+  linkOldCars: {
+    id: 'linkOldCars',
+    name: '古物データ自動紐付け',
+    description: '/api/seeder/linkOldCars',
+    purpose: '98番号が入力されているUcarのうち、OldCars_Baseが紐づいていない車両に対して、該当の98番号のうちもっとも新しい仕入日のOldCars_Baseに対してリレーションを貼る',
+    app: 'ucar',
+    effectOn: 'click',
+    handler: executeLinkOldCars,
+    tableName: 'ucar',
+  },
+
+
+
+
+
+
+  // ============ common アプリ ============
+  kaonaviBatch: {
+    id: 'kaonaviBatch',
+    name: '顔ナビユーザー連携',
+    description: '顔ナビAPIを用いてユーザー情報を取得し、DBに保存する',
+    purpose: '',
+    app: 'common',
+    effectOn: 'click',
+    handler: executeKaonaviBatch,
+  },
+
+  // ============ qrbp アプリ ============
+  activateBpSpread: {
+    id: 'activateBpSpread',
+    name: 'BP車両データ取り込み',
+    description: 'スプレッドシートからBP車両データを取得し、carテーブルにupsertする',
+    purpose: 'webapp_dataシートの車両データをDBに同期する（過去365日分）',
+    app: 'qrbp',
+    effectOn: 'click',
+    handler: executeActivateBpSpread,
+  },
+
+
+
+
+
 }
 
 /**
@@ -105,31 +288,26 @@ export const BATCH_MASTER: Record<string, BatchConfig> = {
  * BATCH_MASTERからvercel.jsonのcrons設定を生成する
  */
 export const getVercelCronsConfig = () => {
-  return Object.values(BATCH_MASTER).map(batch => ({
-    path: `/api/cron/execute/${batch.id}`,
-    schedule: batch.schedule,
-  }))
+  return Object.values(BATCH_MASTER)
+    .filter(batch => batch.effectOn === 'batch' && batch.handler)
+    .map(batch => ({
+      path: `/api/cron/execute/${batch.id}`,
+      schedule: batch.schedule,
+    }))
 }
 
-/**
- * バッチIDからバッチ設定を取得
- */
-export const getBatchConfig = (batchId: string): BatchConfig | undefined => {
-  return BATCH_MASTER[batchId]
-}
 
-/**
- * 全バッチIDのリストを取得
- */
-export const getAllBatchIds = (): string[] => {
-  return Object.keys(BATCH_MASTER)
-}
+
+
+
 
 /**
  * vercel.json生成用のJSON形式でエクスポート
  * スクリプトから直接読み込めるようにする
  */
-export const BATCH_MASTER_JSON = Object.values(BATCH_MASTER).map(batch => ({
-  path: `/api/cron/execute/${batch.id}`,
-  schedule: batch.schedule,
-}))
+export const BATCH_MASTER_JSON = Object.values(BATCH_MASTER)
+  .filter(batch => batch.effectOn === 'batch' && batch.handler)
+  .map(batch => ({
+    path: `/api/cron/execute/${batch.id}`,
+    schedule: batch.schedule,
+  }))

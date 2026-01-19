@@ -1,26 +1,28 @@
-import {BQ} from '@app/api/google/big-query/BigQuery'
+import { BQ } from '@app/api/google/big-query/BigQuery'
 
-import {sql} from '@cm/class/SqlBuilder/SqlBuilder'
-import {doTransaction} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
+import { sql } from '@cm/class/SqlBuilder/SqlBuilder'
+import { doTransaction } from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
 import prisma from 'src/lib/prisma'
-import {transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
-import {Prisma} from '@prisma/generated/prisma/client'
-import {NextRequest, NextResponse} from 'next/server'
-import {isCron} from 'src/non-common/serverSideFunction'
-import {processBatchWithRetry} from '@cm/lib/server-actions/common-server-actions/processBatchWithRetry'
-import {toUtc} from '@cm/class/Days/date-utils/calculations'
+import { transactionQuery } from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
+import { Prisma } from '@prisma/generated/prisma/client'
+import { NextRequest, NextResponse } from 'next/server'
+import { isCron } from 'src/non-common/serverSideFunction'
+import { processBatchWithRetry } from '@cm/lib/server-actions/common-server-actions/processBatchWithRetry'
+import { toUtc } from '@cm/class/Days/date-utils/calculations'
 
 export const GET = async (req: NextRequest) => {
-  if ((await isCron({req})) === false) {
-    const res = {success: false, message: `Unauthorized`, result: null}
-    const status = {status: 401, statusText: `Unauthorized`}
+  console.warn('orderUpsert route is not used')
+  return NextResponse.json({ success: true, message: `Unauthorized`, result: null }, { status: 401, statusText: `Unauthorized` })
+  if ((await isCron({ req })) === false) {
+    const res = { success: false, message: `Unauthorized`, result: null }
+    const status = { status: 401, statusText: `Unauthorized` }
     return NextResponse.json(res, status)
   }
   let result = {}
   const createSeisanYoteiHistoryTableRes = await createSeisanYoteiHistoryTable()
 
   try {
-    result = {createSeisanYoteiHistoryTableRes}
+    result = { createSeisanYoteiHistoryTableRes }
   } catch (error) {
     console.error(error.stack) //////////
   }
@@ -55,7 +57,7 @@ async function createSeisanYoteiHistoryTable() {
           IN (SELECT APPINDEX_FKEY FROM rn_added where row_number  >=2)
   `
 
-  const rows = await new BQ({datasetId: `OrdersDB`, tableId: `Orders_Base`}).GET({sqlString: lastRecordSq})
+  const rows = await new BQ({ datasetId: `OrdersDB`, tableId: `Orders_Base` }).GET({ sqlString: lastRecordSq })
 
   const ToObject = rows.reduce((acc, cur) => {
     const {
@@ -106,8 +108,8 @@ async function createSeisanYoteiHistoryTable() {
       ].join(`_`)
 
       const newCar = await prisma.newCar.findUnique({
-        select: {id: true},
-        where: {APPINDEX: APPINDEX_FKEY},
+        select: { id: true },
+        where: { APPINDEX: APPINDEX_FKEY },
       })
 
       const newCarId: number = newCar?.id ?? 0
@@ -129,7 +131,7 @@ async function createSeisanYoteiHistoryTable() {
         newCarId,
       }
       const args: Prisma.SeisanYoteiHistoryUpsertArgs = {
-        where: {key},
+        where: { key },
         create: payload,
         update: payload,
       }
@@ -145,7 +147,7 @@ async function createSeisanYoteiHistoryTable() {
   const res = await processBatchWithRetry({
     soruceList: transactionQueryList,
     mainProcess: async batch => {
-      return await doTransaction({transactionQueryList: batch})
+      return await doTransaction({ transactionQueryList: batch })
     },
   })
 

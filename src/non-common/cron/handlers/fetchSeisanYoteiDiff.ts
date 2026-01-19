@@ -1,3 +1,4 @@
+'use server'
 import {BQ} from '@app/api/google/big-query/BigQuery'
 import {sql} from '@cm/class/SqlBuilder/SqlBuilder'
 import {doTransaction} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'

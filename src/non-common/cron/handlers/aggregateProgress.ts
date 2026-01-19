@@ -1,3 +1,4 @@
+'use server'
 import {sql} from '@cm/class/SqlBuilder/SqlBuilder'
 import {useRawSql} from '@cm/class/SqlBuilder/useRawSql'
 import {doTransaction, transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'

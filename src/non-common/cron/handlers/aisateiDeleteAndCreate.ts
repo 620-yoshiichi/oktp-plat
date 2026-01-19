@@ -1,3 +1,4 @@
+'use server'
 import {sateiTableCompartionCols} from '@app/(apps)/ucar/class/ColBuilder/AI_SATEI_COLS'
 import {upassCols} from '@app/(apps)/ucar/files/upass/upass-columns'
 import {bigQuery__select} from '@app/api/google/big-query/bigQueryApi'

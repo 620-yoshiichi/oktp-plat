@@ -13,13 +13,14 @@ import {isCron} from 'src/non-common/serverSideFunction'
  * - ...
  */
 export const GET = async (req: NextRequest, {params}: {params: Promise<{batchId: string}>}) => {
+  const {batchId} = await params
+
   if ((await isCron({req})) === false) {
     const res = {success: false, message: `Unauthorized`, result: null}
     const status = {status: 401, statusText: `Unauthorized`}
     return NextResponse.json(res, status)
   }
 
-  const {batchId} = await params
   const batchConfig = BATCH_MASTER[batchId]
 
   // バッチが見つからない場合
@@ -32,6 +33,18 @@ export const GET = async (req: NextRequest, {params}: {params: Promise<{batchId:
         availableBatches: Object.keys(BATCH_MASTER),
       },
       {status: 404}
+    )
+  }
+
+  // handlerが存在しない場合（clickアクションなど）
+  if (!batchConfig.handler) {
+    console.error(`[CRON] Handler not found for batch: ${batchId}`)
+    return NextResponse.json(
+      {
+        success: false,
+        message: `Handler not found for batch: ${batchId}. This batch may be a click action.`,
+      },
+      {status: 400}
     )
   }
 

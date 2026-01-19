@@ -10,8 +10,6 @@ import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 
 import React from 'react'
 import useTempoTsuikoGMF from '@app/(apps)/newCar/templateHooks/useTempoTsuikoGMF'
-import {AppSwitcher} from '@app/AppSwitcher'
-import {R_Stack} from '@cm/components/styles/common-components/common-components'
 
 export default function NewCarTemplate({children}) {
   const crScheduleSwitcherModal_HK = useCrScheduleSwitcherModal()

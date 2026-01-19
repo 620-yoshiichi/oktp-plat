@@ -9,7 +9,7 @@ import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
 import {Fields} from '@cm/class/Fields/Fields'
 
 import {cl} from '@cm/lib/methods/common'
-import {LeadTimeColumn, LeadTimeColumnList} from '@app/(apps)/newCar/(pages)/statistics/LeadTimePageCC/LeadTimeColumnsList'
+import {LeadTimeColumn} from '@app/(apps)/newCar/(pages)/statistics/LeadTimePageCC/LeadTimeColumnsList'
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 import {formatDate} from '@cm/class/Days/date-utils/formatters'
 import {useLeadTimeUserModal} from '@app/(apps)/newCar/(pages)/statistics/LeadTimePageCC/useLeadTimeUserModal'

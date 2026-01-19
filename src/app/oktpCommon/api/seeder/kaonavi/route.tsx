@@ -1,17 +1,19 @@
-import {NextRequest, NextResponse} from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import prisma from 'src/lib/prisma'
-import {getKaonaviMemberArray} from './lib/kaonavi-api'
-import {transformKaonaviUserToUserData, createUserFromForcedUserOnly} from './lib/user-transformer'
-import {resetAllOktpRoles, upsertMultipleUserRoles} from './lib/role-handler'
-import {forcedUsers} from './lib/forced-users'
-import {ProcessingErrors, UserWithRoles} from './lib/types'
-import {upsertStoresFromKaonavi} from './lib/store-transformer'
+import { getKaonaviMemberArray } from './lib/kaonavi-api'
+import { transformKaonaviUserToUserData, createUserFromForcedUserOnly } from './lib/user-transformer'
+import { resetAllOktpRoles, upsertMultipleUserRoles } from './lib/role-handler'
+import { forcedUsers } from './lib/forced-users'
+import { ProcessingErrors, UserWithRoles } from './lib/types'
+import { upsertStoresFromKaonavi } from './lib/store-transformer'
 
 /**
  * Kaonavi APIからユーザーデータを取得し、システムのユーザーデータに同期する
  * forcedUsersに登録されているユーザーは、KaonaviにデータがなくてもUPSERTされる
  */
 export const POST = async (req: NextRequest) => {
+  console.warn('orderUpsert route is not used')
+  return NextResponse.json({ success: true, message: `Unauthorized`, result: null }, { status: 401, statusText: `Unauthorized` })
   // 1. Kaonavi APIからメンバーデータを取得
   const kaonaviResponse = await getKaonaviMemberArray()
   const memberData = kaonaviResponse.member_data
@@ -25,10 +27,10 @@ export const POST = async (req: NextRequest) => {
   // 4. 集計用のマスターオブジェクトを初期化
   const workTypeMaster: Record<string, boolean> = {}
   const emailMaster: Record<string, number> = {}
-  const processingErrors: ProcessingErrors = {workTypeCountError: []}
+  const processingErrors: ProcessingErrors = { workTypeCountError: [] }
 
   // 5. ロールマスターをリセット
-  const {roleMaster} = await resetAllOktpRoles()
+  const { roleMaster } = await resetAllOktpRoles()
 
   // 6. Kaonaviユーザーデータをシステムのユーザーデータに変換
   const transformResults = await Promise.all(

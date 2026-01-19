@@ -1,3 +1,4 @@
+'use server'
 import {batchTenpoTsuikoData} from '@app/(apps)/newCar/api/cron/orderUpsert/batchTenpoTsuikoData/batchTenpoTsuikoData'
 
 /**

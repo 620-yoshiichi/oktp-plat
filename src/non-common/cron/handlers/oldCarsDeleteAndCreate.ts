@@ -1,3 +1,4 @@
+'use server'
 import {bigQuery__select} from '@app/api/google/big-query/bigQueryApi'
 import {sql} from '@cm/class/SqlBuilder/SqlBuilder'
 import prisma from 'src/lib/prisma'

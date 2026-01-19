@@ -1,23 +1,25 @@
-import {sql} from '@cm/class/SqlBuilder/SqlBuilder'
-import {useRawSql} from '@cm/class/SqlBuilder/useRawSql'
-import {doTransaction, transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
-import {Prisma} from '@prisma/generated/prisma/client'
+import { sql } from '@cm/class/SqlBuilder/SqlBuilder'
+import { useRawSql } from '@cm/class/SqlBuilder/useRawSql'
+import { doTransaction, transactionQuery } from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
+import { Prisma } from '@prisma/generated/prisma/client'
 
 import prisma from 'src/lib/prisma'
-import {NextRequest, NextResponse} from 'next/server'
-import {isCron} from 'src/non-common/serverSideFunction'
-import {newCarAppUserWhere} from '@app/(apps)/newCar/(constants)/forSelectConfig'
-import {Days} from '@cm/class/Days/Days'
-import {getMidnight} from '@cm/class/Days/date-utils/calculations'
-import {formatDate} from '@cm/class/Days/date-utils/formatters'
+import { NextRequest, NextResponse } from 'next/server'
+import { isCron } from 'src/non-common/serverSideFunction'
+import { newCarAppUserWhere } from '@app/(apps)/newCar/(constants)/forSelectConfig'
+import { Days } from '@cm/class/Days/Days'
+import { getMidnight } from '@cm/class/Days/date-utils/calculations'
+import { formatDate } from '@cm/class/Days/date-utils/formatters'
 
 export const GET = async (req: NextRequest) => {
-  if ((await isCron({req})) === false) {
-    const res = {success: false, message: `Unauthorized`, result: null}
-    const status = {status: 401, statusText: `Unauthorized`}
+  console.warn('orderUpsert route is not used')
+  return NextResponse.json({ success: true, message: `Unauthorized`, result: null }, { status: 401, statusText: `Unauthorized` })
+  if ((await isCron({ req })) === false) {
+    const res = { success: false, message: `Unauthorized`, result: null }
+    const status = { status: 401, statusText: `Unauthorized` }
     return NextResponse.json(res, status)
   }
-  return NextResponse.json({success: true, message: `OK`})
+  return NextResponse.json({ success: true, message: `OK` })
   let result = {}
 
   const users = await prisma.user.findMany({
@@ -27,17 +29,17 @@ export const GET = async (req: NextRequest) => {
   const transactionQueryList: transactionQuery<'userProgressAggregationTable', 'upsert'>[] = []
 
   const aggregationFields = [
-    {timing: `m0Status`, count: `m0StatusCount`, alert: `DD_FR`},
-    {timing: `m1Status`, count: `m1StatusCount`, alert: `m1Alert`},
-    {timing: `m2Status`, count: `m2StatusCount`, alert: `m2Alert`},
+    { timing: `m0Status`, count: `m0StatusCount`, alert: `DD_FR` },
+    { timing: `m1Status`, count: `m1StatusCount`, alert: `m1Alert` },
+    { timing: `m2Status`, count: `m2StatusCount`, alert: `m2Alert` },
   ]
 
   const queryByThisMonth = true
-  const {firstDayOfMonth, lastDayOfMonth} = Days.month.getMonthDatum(getMidnight())
+  const { firstDayOfMonth, lastDayOfMonth } = Days.month.getMonthDatum(getMidnight())
 
   for (const field of aggregationFields) {
-    const {timing} = field
-    const {rows} = await useRawSql({
+    const { timing } = field
+    const { rows } = await useRawSql({
       sql: sql`
     WITH RECURSIVE status_values AS (
       SELECT DISTINCT "${field.timing}" as label
@@ -64,13 +66,12 @@ export const GET = async (req: NextRequest) => {
     LEFT JOIN "NewCar" car ON
       car."userId" = usc."userId"
       AND car."${field.timing}" = usc.label
-      ${
-        queryByThisMonth
+      ${queryByThisMonth
           ? sql`AND car."${field.alert}" is not null
              AND car."${field.alert}" >= '${formatDate(firstDayOfMonth)}'
              AND car."${field.alert}" <= '${formatDate(lastDayOfMonth)}'`
           : sql``
-      }
+        }
     GROUP BY
       usc."userId",
       usc."storeId",
@@ -110,7 +111,7 @@ export const GET = async (req: NextRequest) => {
     }
   }
 
-  const res = await doTransaction({transactionQueryList})
+  const res = await doTransaction({ transactionQueryList })
   console.debug(res)
 
   result = {}
