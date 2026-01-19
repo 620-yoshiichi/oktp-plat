@@ -38,6 +38,10 @@
    "schedule": "0,30 * * * *"
   },
   {
+   "path": "/api/cron/execute/oldCarsDeleteAndCreate",
+   "schedule": "0 22 * * *"
+  },
+  {
    "path": "/api/cron/execute/orderUpsert",
    "schedule": "0 21,3 * * *"
   },
@@ -51,10 +55,6 @@
   },
   {
    "path": "/api/cron/execute/zaikoDeleteAndCreate",
-   "schedule": "0 22 * * *"
-  },
-  {
-   "path": "http://localhost:3000/api/cron/execute/oldCarsDeleteAndCreate",
    "schedule": "0 22 * * *"
   }
  ]
