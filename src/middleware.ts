@@ -65,15 +65,11 @@ const getFreePathsMatcher = (rootPath: string, pathArray: string[]): string => {
 export const rootPaths: RootPathConfig[] = [
   {
     rootPath: 'newCar',
-    paths: [{matcher: getFreePathsMatcher(`newCar`, [`/`]), ...pathValidation}],
+    paths: [{matcher: getFreePathsMatcher(`newCar`, []), ...pathValidation}],
   },
   {
     rootPath: 'QRBP',
-    paths: [
-      {
-        matcher: getFreePathsMatcher(`QRBP`, ['/', `/engineer`, `/process/history`]),
-        ...pathValidation,
-      },
+    paths: [{matcher: getFreePathsMatcher(`QRBP`, ['', `/engineer`, `/process/history`]), ...pathValidation,},
     ],
   },
   {
@@ -107,6 +103,8 @@ export const rootPaths: RootPathConfig[] = [
  * 認証が必要なパスへのアクセスを検証し、未認証の場合はリダイレクト
  */
 export async function middleware(req: NextRequest): Promise<NextResponse> {
+
+
   try {
     // NextAuthからセッショントークンを取得
     const session: JWT | null = await getToken({req})
@@ -116,7 +114,6 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
     searchParams.forEach((value, key) => {
       query[key] = value
     })
-
 
 
     // 対象となるルートパスを検索
@@ -135,7 +132,6 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
       const matchedPathConfig = targetPathConfig.paths.find(pathConfig => {
         try {
           const matcherRegex = new RegExp(pathConfig.matcher)
-
           return matcherRegex.test(pathname)
         } catch (error) {
           // 正規表現エラーの場合はログを出力してスキップ
@@ -147,13 +143,7 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
       const isValid = matchedPathConfig?.isValid(session)
       // マッチしたパスで認証が必要な場合、セッションを検証
       if (matchedPathConfig && !isValid) {
-
         const callBackUrl =  encodeURIComponent(HREF(`${pathname}`, query, query))
-
-
-
-
-
         const redirectUrl = matchedPathConfig.redirect(origin, callBackUrl)
 
         return NextResponse.redirect(new URL(redirectUrl, req.url))
@@ -174,14 +164,14 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
  * マッチャーで対象となるパスを指定
  * Next.jsのmiddlewareでは、config.matcherは静的な値である必要があります
  */
-const config = {
-  matcher: [
-    '/ucar(.*)',
-    '/newCar(.*)',
-    '/QRBP(.*)',
-    '/shinren(.*)',
-    '/((?!api|_next/static|favicon.ico|manifest|next-js-icon).*)',
-  ],
-} as const
+// const config = {
+//   matcher: [
+//     '/ucar(.*)',
+//     '/newCar(.*)',
+//     '/QRBP(.*)',
+//     '/shinren(.*)',
+//     '/((?!api|_next/static|favicon.ico|manifest|next-js-icon).*)',
+//   ],
+// } as const
 
 export default middleware

@@ -1,12 +1,34 @@
 'use client'
+import LoginForm from '@app/(utils)/login/LoginForm'
 import {Button} from '@cm/components/styles/common-components/Button'
 import {C_Stack, R_Stack} from '@cm/components/styles/common-components/common-components'
+import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 import {signIn} from 'next-auth/react'
-import React from 'react'
+import React, {useState} from 'react'
 
 export default function GoogleLogin({callbackUrl}) {
+  const [mode, setMode] = useState<'google' | 'email'>('google')
+  const {query} =  useGlobal()
+  const {rootPath, error} = query
+
+
+  if (mode === 'email') {
+    return (
+      <C_Stack className="gap-4 items-center">
+        <LoginForm {...{rootPath, error}} />
+        <button
+          type="button"
+          className="text-blue-600 underline text-sm"
+          onClick={() => setMode('google')}
+        >
+          Googleでログインする方はこちら
+        </button>
+      </C_Stack>
+    )
+  }
+
   return (
-    <C_Stack>
+    <C_Stack className="gap-4">
       <Button
         className={`p-4 text-2xl`}
         color={`gray`}
@@ -21,6 +43,13 @@ export default function GoogleLogin({callbackUrl}) {
           Googleでログイン
         </R_Stack>
       </Button>
+      <button
+        type="button"
+        className="text-blue-600 underline text-sm"
+        onClick={() => setMode('email')}
+      >
+       メールアドレスとパスワードでログイン
+      </button>
     </C_Stack>
   )
 }

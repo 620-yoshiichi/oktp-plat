@@ -39,7 +39,7 @@ const AdminLogin = async props => {
 
         <hr />
 
-        <LoginClient {...{rootPath, error}} />
+        {/* <LoginClient {...{rootPath, error}} /> */}
       </C_Stack>
     </Absolute>
   )

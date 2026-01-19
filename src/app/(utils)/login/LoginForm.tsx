@@ -84,15 +84,18 @@ export default function LoginForm(props) {
       </section>
       <section>
         {process.env.NEXT_PUBLIC_NO_LOGIN !== 'false' && (
-          <Button
-            onClick={() => {
-              const path = prompt('パスワードを入力してください。')
-              if (!path) return
-              router.push(`/${path}`)
-            }}
-          >
-            ログインせずに利用
-          </Button>
+          <button
+          type="button"
+          className="text-blue-600 underline text-sm"
+          onClick={() => {
+            const path = prompt('パスワードを入力してください。')
+            if (!path) return
+            router.push(`/${path}`)
+          }}
+        >
+          ログインせずに利用
+        </button>
+
         )}
       </section>
     </>
