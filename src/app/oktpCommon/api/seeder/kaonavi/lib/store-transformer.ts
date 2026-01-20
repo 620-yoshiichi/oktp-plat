@@ -18,7 +18,11 @@ function extractUniqueStoresFromMembers(memberData: KaonaviUserType[]): Array<{c
   for (const member of memberData) {
     if (member.department?.code) {
       const storeCode = extractStoreCodeFromDepartment(String(member.department.code))
-      const storeName = member.department.name || `店舗${storeCode.toString().padStart(2, '0')}`
+        const storeName = member.department.names[0]
+
+
+
+
 
       // 既存の店舗名がある場合は上書きしない（最初に見つかった名前を保持）
       if (!storeMap.has(storeCode)) {

@@ -14,7 +14,7 @@ model Store {
   createdAt DateTime  @default(now())
   active    Boolean   @default(true)
   sortOrder Float     @default(0)
-  name      String    @unique
+  name      String
   areaId    Int?
   updatedAt DateTime? @updatedAt
 
@@ -155,14 +155,14 @@ model ChainMethodLock {
 
 model CronExecutionLog {
   id           Int       @id @default(autoincrement())
-  batchId      String    // バッチ識別子
-  batchName    String    // バッチ名称
+  batchId      String // バッチ識別子
+  batchName    String // バッチ名称
   startedAt    DateTime  @default(now())
   completedAt  DateTime?
-  duration     Int?      // 実行時間（ミリ秒）
-  status       String    // 'success' | 'failure' | 'running'
-  errorMessage String?   // エラーメッセージ
-  result       String?   // 実行結果（JSON文字列、簡略化）
+  duration     Int? // 実行時間（ミリ秒）
+  status       String // 'success' | 'failure' | 'running'
+  errorMessage String? // エラーメッセージ
+  result       String? // 実行結果（JSON文字列、簡略化）
   createdAt    DateTime  @default(now())
 
   @@index([batchId])

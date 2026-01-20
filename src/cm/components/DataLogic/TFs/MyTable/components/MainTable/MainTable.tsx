@@ -1,12 +1,12 @@
 import React from 'react'
-import {SortableContext, verticalListSortingStrategy} from '@dnd-kit/sortable'
-import {DndContext, closestCenter} from '@dnd-kit/core'
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
+import { DndContext, closestCenter } from '@dnd-kit/core'
 
-import {TableWrapper} from '@cm/components/styles/common-components/Table'
-import {TableSkelton} from '@cm/components/utils/loader/TableSkelton'
+import { TableWrapper } from '@cm/components/styles/common-components/Table'
+import { TableSkelton } from '@cm/components/utils/loader/TableSkelton'
 import PlaceHolder from '@cm/components/utils/loader/PlaceHolder'
-import {MyTableProps, UseMyTableLogicReturn} from '@cm/components/DataLogic/TFs/MyTable/MyTable'
-import {cn} from '@cm/shadcn/lib/utils'
+import { MyTableProps, UseMyTableLogicReturn } from '@cm/components/DataLogic/TFs/MyTable/MyTable'
+import { cn } from '@cm/shadcn/lib/utils'
 
 // MainTable用のprops型（useMyTableLogicReturnを含む）
 export interface MainTableProps extends MyTableProps {
@@ -15,7 +15,7 @@ export interface MainTableProps extends MyTableProps {
 
 export const MainTable = React.memo<MainTableProps>(props => {
   // 🔧 useMyTableLogicはMyTableから渡される（二重呼び出しを防ぐ）
-  const {useMyTableLogicReturn} = props
+  const { useMyTableLogicReturn } = props
   const {
     tableData,
     mainTableProps: {
@@ -35,11 +35,11 @@ export const MainTable = React.memo<MainTableProps>(props => {
     Components,
   } = useMyTableLogicReturn
 
-  const {records, emptyDataStyle} = tableData
+  const { records, emptyDataStyle } = tableData
 
   const combinedTableStyle = {
     ...tableStyle,
-    ...{borderCollapse: 'separate' as const, borderSpacing: showHeader ? '0px' : '0px 6px'},
+    ...{ borderCollapse: 'separate' as const, borderSpacing: showHeader ? '0px' : '0px 6px' },
   }
 
   // TableWrapperCardのclassNameを直接計算（コンポーネント内定義を避ける）
@@ -102,7 +102,7 @@ const RenderTableContent = ({
   if (records.length === 0) {
     return (
       <div style={emptyDataStyle}>
-        <PlaceHolder>データが見つかりません</PlaceHolder>
+        <PlaceHolder className={`px-10 py-6`}>データが見つかりません</PlaceHolder>
       </div>
     )
   }
@@ -138,7 +138,7 @@ const RenderTableContent = ({
 
             <tbody>
               {records?.map((record, recIdx: number) => (
-                <Components.DraggableTableRowCallBack key={record.id} {...{record, recIdx, rows, Components}} />
+                <Components.DraggableTableRowCallBack key={record.id} {...{ record, recIdx, rows, Components }} />
               ))}
             </tbody>
           </table>

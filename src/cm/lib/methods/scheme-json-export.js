@@ -12825,7 +12825,7 @@
           "kind": "scalar",
           "isList": false,
           "isRequired": true,
-          "isUnique": true,
+          "isUnique": false,
           "isId": false,
           "isReadOnly": false,
           "hasDefaultValue": false,
@@ -22784,16 +22784,6 @@
       "fields": [
         {
           "name": "code"
-        }
-      ]
-    },
-    {
-      "model": "Store",
-      "type": "unique",
-      "isDefinedOnField": true,
-      "fields": [
-        {
-          "name": "name"
         }
       ]
     },

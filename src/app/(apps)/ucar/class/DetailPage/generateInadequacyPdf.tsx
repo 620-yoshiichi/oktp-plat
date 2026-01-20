@@ -1,5 +1,7 @@
 'use server'
 
+import { basePath } from "@cm/lib/methods/common"
+
 export type GenerateInadequacyPdfParams = {
   storeManagerName?: string
   staffName?: string
@@ -17,8 +19,8 @@ export const generateInadequacyPdf = async (params: GenerateInadequacyPdfParams)
   try {
     // API Routeを呼び出してPDF Bufferを取得
     // サーバーアクション内では、相対URLまたは絶対URLを使用可能
-    const apiUrl = process.env.NEXT_PUBLIC_BASEPATH
-      ? `${process.env.NEXT_PUBLIC_BASEPATH}/api/ucar/generate-inadequacy-pdf`
+    const apiUrl = basePath
+      ? `${basePath}/api/ucar/generate-inadequacy-pdf`
       : '/api/ucar/generate-inadequacy-pdf'
 
     const response = await fetch(apiUrl, {

@@ -317,13 +317,13 @@ export type StoreOrderByWithRelationInput = {
 export type StoreWhereUniqueInput = Prisma.AtLeast<{
   id?: number
   code?: number
-  name?: string
   AND?: Prisma.StoreWhereInput | Prisma.StoreWhereInput[]
   OR?: Prisma.StoreWhereInput[]
   NOT?: Prisma.StoreWhereInput | Prisma.StoreWhereInput[]
   createdAt?: Prisma.DateTimeFilter<"Store"> | Date | string
   active?: Prisma.BoolFilter<"Store"> | boolean
   sortOrder?: Prisma.FloatFilter<"Store"> | number
+  name?: Prisma.StringFilter<"Store"> | string
   areaId?: Prisma.IntNullableFilter<"Store"> | number | null
   updatedAt?: Prisma.DateTimeNullableFilter<"Store"> | Date | string | null
   tel?: Prisma.StringNullableFilter<"Store"> | string | null
@@ -340,7 +340,7 @@ export type StoreWhereUniqueInput = Prisma.AtLeast<{
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableListRelationFilter
   DestinatedUcar?: Prisma.UcarListRelationFilter
   TmpRentalUcar?: Prisma.UcarListRelationFilter
-}, "id" | "code" | "name">
+}, "id" | "code">
 
 export type StoreOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

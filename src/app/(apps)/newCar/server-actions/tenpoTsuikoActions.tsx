@@ -1,13 +1,13 @@
 'use server'
 
-import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
-import {knockEmailApi} from '@cm/lib/methods/knockEmailApi'
-import {Prisma} from '@prisma/generated/prisma/client'
-import {isDev} from '@cm/lib/methods/common'
-import {getMidnight} from '@cm/class/Days/date-utils/calculations'
+import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+import { knockEmailApi } from '@cm/lib/methods/knockEmailApi'
+import { Prisma } from '@prisma/generated/prisma/client'
+import { basePath, isDev } from '@cm/lib/methods/common'
+import { getMidnight } from '@cm/class/Days/date-utils/calculations'
 
 const getRedirectUrl = (newCarId: number) => {
-  return process.env.NEXT_PUBLIC_BASEPATH + '/newCar?rootPath=newCar/tenpo-tsuiko-shinsei/' + newCarId
+  return basePath + '/newCar?rootPath=newCar/tenpo-tsuiko-shinsei/' + newCarId
 }
 
 const nonDisplayList = [
@@ -124,11 +124,11 @@ export async function getTenpoTsuikoData(
     const startDate = getMidnight(new Date(2025, 9, 1))
 
     // 検索条件を構築
-    const whereCondition: {AND: Prisma.NewCarWhereInput[]} = {
+    const whereCondition: { AND: Prisma.NewCarWhereInput[] } = {
       AND: [
         //
-        {DD_HAISKIBO: {gte: startDate}},
-        {NO_CYUMON: {notIn: nonDisplayList}},
+        { DD_HAISKIBO: { gte: startDate } },
+        { NO_CYUMON: { notIn: nonDisplayList } },
       ],
     }
 
@@ -139,11 +139,11 @@ export async function getTenpoTsuikoData(
           contains: searchNoCyumon.trim(),
           mode: 'insensitive', // 大文字小文字を区別しない
         },
-        TenpoTsuikoData: {some: {id: {gte: 0}}},
+        TenpoTsuikoData: { some: { id: { gte: 0 } } },
       })
     } else {
       whereCondition.AND.push({
-        TenpoTsuikoData: {some: {id: {gte: 0}}},
+        TenpoTsuikoData: { some: { id: { gte: 0 } } },
       })
     }
 
@@ -153,7 +153,7 @@ export async function getTenpoTsuikoData(
         case '未申請':
           // 申請履歴がない、またはアクティブな申請がない車両
           whereCondition.AND.push({
-            OR: [{TenpoTsuikoShinseiHeader: {none: {}}}, {TenpoTsuikoShinseiHeader: {none: {active: true}}}],
+            OR: [{ TenpoTsuikoShinseiHeader: { none: {} } }, { TenpoTsuikoShinseiHeader: { none: { active: true } } }],
           })
           break
         case '申請中':
@@ -163,7 +163,7 @@ export async function getTenpoTsuikoData(
               some: {
                 active: true,
                 TenpoTsuikoShinseiDetail: {
-                  some: {status: 'pending'},
+                  some: { status: 'pending' },
                 },
               },
             },
@@ -176,7 +176,7 @@ export async function getTenpoTsuikoData(
               some: {
                 active: true,
                 TenpoTsuikoShinseiDetail: {
-                  every: {status: 'approved'},
+                  every: { status: 'approved' },
                 },
               },
             },
@@ -189,7 +189,7 @@ export async function getTenpoTsuikoData(
               some: {
                 active: true,
                 TenpoTsuikoShinseiDetail: {
-                  some: {status: 'rejected'},
+                  some: { status: 'rejected' },
                 },
               },
             },
@@ -199,21 +199,21 @@ export async function getTenpoTsuikoData(
     }
 
     // 追工データがある車両を取得（車両ベース）
-    const {result: carsWithTsuiko} = await doStandardPrisma('newCar', 'findMany', {
+    const { result: carsWithTsuiko } = await doStandardPrisma('newCar', 'findMany', {
       where: whereCondition,
       include: {
-        Store: {select: {id: true, name: true, code: true}},
-        User: {select: {id: true, name: true, email: true}},
+        Store: { select: { id: true, name: true, code: true } },
+        User: { select: { id: true, name: true, email: true } },
         TenpoTsuikoShinseiHeader: {
-          include: {TenpoTsuikoShinseiDetail: {include: {User: true}}},
-          orderBy: {createdAt: 'desc'},
+          include: { TenpoTsuikoShinseiDetail: { include: { User: true } } },
+          orderBy: { createdAt: 'desc' },
         },
         TenpoTsuikoData: {
           where: {},
-          orderBy: {createdAt: 'desc'},
+          orderBy: { createdAt: 'desc' },
         },
       },
-      orderBy: {createdAt: 'desc'},
+      orderBy: { createdAt: 'desc' },
       // take: 100,
     })
 
@@ -236,13 +236,13 @@ export async function getTenpoTsuikoData(
 /**
  * 店舗追工申請を作成
  */
-export const createTenpoTsuikoShinsei = async (params: {newCarId: number}) => {
+export const createTenpoTsuikoShinsei = async (params: { newCarId: number }) => {
   try {
-    const {newCarId} = params
+    const { newCarId } = params
 
     // 1. NewCarデータと関連店舗情報、既存申請を取得
-    const {result: newCar} = await doStandardPrisma('newCar', 'findUnique', {
-      where: {id: newCarId},
+    const { result: newCar } = await doStandardPrisma('newCar', 'findUnique', {
+      where: { id: newCarId },
       include: {
         Store: true,
         User: true,
@@ -252,7 +252,7 @@ export const createTenpoTsuikoShinsei = async (params: {newCarId: number}) => {
           },
         },
         TenpoTsuikoShinseiHeader: {
-          where: {active: true},
+          where: { active: true },
           include: {
             TenpoTsuikoShinseiDetail: true,
           },
@@ -291,7 +291,7 @@ export const createTenpoTsuikoShinsei = async (params: {newCarId: number}) => {
     }
 
     // 5. TenpoTsuikoShinseiHeaderを作成
-    const {result: header} = await doStandardPrisma('tenpoTsuikoShinseiHeader', 'create', {
+    const { result: header } = await doStandardPrisma('tenpoTsuikoShinseiHeader', 'create', {
       data: {
         date: new Date(),
         newCarId: newCar.id,
@@ -337,7 +337,7 @@ export const createTenpoTsuikoShinsei = async (params: {newCarId: number}) => {
       success: true,
       message: '店舗連絡を作成し、初回承認者にメールを送信しました',
       headerId: header.id,
-      approvers: approvers.map(a => ({id: a.id, name: a.name, email: a.email})),
+      approvers: approvers.map(a => ({ id: a.id, name: a.name, email: a.email })),
     }
   } catch (error) {
     console.error('店舗連絡作成エラー:', error)
@@ -358,19 +358,19 @@ export async function processApproval(params: {
   userId: number
 }) {
   try {
-    const {detailId, status, comment, userId} = params
+    const { detailId, status, comment, userId } = params
 
     // 権限確認
-    const {result: detail} = await doStandardPrisma('tenpoTsuikoShinseiDetail', 'findUnique', {
-      where: {id: detailId},
+    const { result: detail } = await doStandardPrisma('tenpoTsuikoShinseiDetail', 'findUnique', {
+      where: { id: detailId },
       include: {
         User: true,
         TenpoTsuikoShinseiHeader: {
           include: {
-            NewCar: {include: {User: true, Store: true}},
+            NewCar: { include: { User: true, Store: true } },
             TenpoTsuikoShinseiDetail: {
-              include: {User: true},
-              orderBy: {approvalOrder: 'asc'},
+              include: { User: true },
+              orderBy: { approvalOrder: 'asc' },
             },
           },
         },
@@ -399,8 +399,8 @@ export async function processApproval(params: {
     }
 
     // 1. 承認詳細を更新
-    const {result: updatedDetail} = await doStandardPrisma('tenpoTsuikoShinseiDetail', 'update', {
-      where: {id: detailId},
+    const { result: updatedDetail } = await doStandardPrisma('tenpoTsuikoShinseiDetail', 'update', {
+      where: { id: detailId },
       data: {
         status,
         comment,
@@ -410,10 +410,10 @@ export async function processApproval(params: {
         User: true,
         TenpoTsuikoShinseiHeader: {
           include: {
-            NewCar: {include: {User: true, Store: true}},
+            NewCar: { include: { User: true, Store: true } },
             TenpoTsuikoShinseiDetail: {
-              include: {User: true},
-              orderBy: {approvalOrder: 'asc'},
+              include: { User: true },
+              orderBy: { approvalOrder: 'asc' },
             },
           },
         },
@@ -442,8 +442,8 @@ export async function processApproval(params: {
       if (nextDetail) {
         // 次の承認者を有効化
         await doStandardPrisma('tenpoTsuikoShinseiDetail', 'update', {
-          where: {id: nextDetail.id},
-          data: {status: 'pending'},
+          where: { id: nextDetail.id },
+          data: { status: 'pending' },
         })
 
         // 次の承認者にメール送信
@@ -483,8 +483,8 @@ export async function processApproval(params: {
 export async function getTenpoTsuikoHistory(newCarId: number) {
   try {
     // 指定された車両の店舗追工申請履歴を取得
-    const {result: histories} = await doStandardPrisma('tenpoTsuikoShinseiHeader', 'findMany', {
-      where: {newCarId},
+    const { result: histories } = await doStandardPrisma('tenpoTsuikoShinseiHeader', 'findMany', {
+      where: { newCarId },
       include: {
         NewCar: {
           include: {
@@ -493,12 +493,12 @@ export async function getTenpoTsuikoHistory(newCarId: number) {
           },
         },
         TenpoTsuikoShinseiDetail: {
-          include: {User: true},
-          orderBy: {approvalOrder: 'asc'},
+          include: { User: true },
+          orderBy: { approvalOrder: 'asc' },
         },
       },
       take: 1,
-      orderBy: {createdAt: 'desc'},
+      orderBy: { createdAt: 'desc' },
     })
 
     return {
@@ -523,12 +523,12 @@ export async function getTenpoTsuikoHistory(newCarId: number) {
 export async function getNewCarData(newCarId: number) {
   try {
     // 車両データを取得
-    const {result: newCar} = await doStandardPrisma('newCar', 'findUnique', {
-      where: {id: newCarId},
+    const { result: newCar } = await doStandardPrisma('newCar', 'findUnique', {
+      where: { id: newCarId },
       include: {
-        Store: {select: {id: true, name: true, code: true}},
-        User: {select: {id: true, name: true, email: true}},
-        TenpoTsuikoData: {orderBy: {createdAt: 'desc'}},
+        Store: { select: { id: true, name: true, code: true } },
+        User: { select: { id: true, name: true, email: true } },
+        TenpoTsuikoData: { orderBy: { createdAt: 'desc' } },
       },
     })
 
@@ -560,31 +560,31 @@ export async function getNewCarData(newCarId: number) {
 async function getApproverList(storeId: number, staffUserId: number) {
   try {
     // 店長取得
-    const {result: managers} = await doStandardPrisma('user', 'findMany', {
+    const { result: managers } = await doStandardPrisma('user', 'findMany', {
       where: {
         storeId,
         active: true,
         UserRole: {
           some: {
-            RoleMaster: {name: '店長'},
+            RoleMaster: { name: '店長' },
           },
         },
       },
     })
 
     // 担当スタッフ取得
-    const {result: staff} = await doStandardPrisma('user', 'findUnique', {
-      where: {id: staffUserId},
+    const { result: staff } = await doStandardPrisma('user', 'findUnique', {
+      where: { id: staffUserId },
     })
 
     // サービス副店長取得
-    const {result: serviceManagers} = await doStandardPrisma('user', 'findMany', {
+    const { result: serviceManagers } = await doStandardPrisma('user', 'findMany', {
       where: {
         storeId,
         active: true,
         UserRole: {
           some: {
-            RoleMaster: {name: 'サービス副店長'},
+            RoleMaster: { name: 'サービス副店長' },
           },
         },
       },
@@ -604,7 +604,7 @@ async function getApproverList(storeId: number, staffUserId: number) {
 }
 
 // メール送信関数
-async function sendNotificationEmail({approver, newCar, type}) {
+async function sendNotificationEmail({ approver, newCar, type }) {
   try {
     if (!approver?.email) {
       console.warn('承認者のメールアドレスが設定されていません:', approver?.name)

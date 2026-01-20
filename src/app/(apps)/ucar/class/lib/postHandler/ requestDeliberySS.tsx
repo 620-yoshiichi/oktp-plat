@@ -1,22 +1,23 @@
-import {GoogleDrive_GeneratePdf} from '@app/api/google/actions/driveAPI'
-import {GoogleSheet_BatchUpdate, getSheetIdx, GoogleSheet_GetSheetList} from '@app/api/google/actions/sheetAPI'
+import { GoogleDrive_GeneratePdf } from '@app/api/google/actions/driveAPI'
+import { GoogleSheet_BatchUpdate, getSheetIdx, GoogleSheet_GetSheetList } from '@app/api/google/actions/sheetAPI'
 
-import {SheetRequests} from '@app/api/google/actions/SheetRequests'
-import {UCAR_GOOGLE_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-google-constants'
-import {UcarCL} from '../../UcarCL'
-import {UcarProcessCl} from '@app/(apps)/ucar/class/UcarProcessCl'
-import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
-export const requestDeliberySS = async ({sateiID, type}) => {
+import { SheetRequests } from '@app/api/google/actions/SheetRequests'
+import { UCAR_GOOGLE_CONSTANTS } from '@app/(apps)/ucar/(constants)/ucar-google-constants'
+import { UcarCL } from '../../UcarCL'
+import { UcarProcessCl } from '@app/(apps)/ucar/class/UcarProcessCl'
+import { UCAR_CODE } from '@app/(apps)/ucar/class/UCAR_CODE'
+import { basePath } from '@cm/lib/methods/common'
+export const requestDeliberySS = async ({ sateiID, type }) => {
   const ucar = await UcarCL.fetcher.getUcarDataBySateiId(sateiID)
 
   const NOTICE = type === `配送手配` ? UCAR_GOOGLE_CONSTANTS.hikitoriNotice : UCAR_GOOGLE_CONSTANTS.cancelNotice
 
-  const {SS_URL, SH_NAME, parentFolderIds} = NOTICE
+  const { SS_URL, SH_NAME, parentFolderIds } = NOTICE
 
   const getProcessEnterPass = (processCode: string) =>
-    `=ENCODEURL("${process.env.NEXT_PUBLIC_BASEPATH}/ucar/create-process?sateiID=${sateiID}&processCode=${processCode}")`
+    `=ENCODEURL("${basePath}/ucar/create-process?sateiID=${sateiID}&processCode=${processCode}")`
 
-  const {CR_HAISO_JURYO, CR_CHAKU, CR_GENCHI_SHORI_YOSEI} = UcarProcessCl.CODE.raw
+  const { CR_HAISO_JURYO, CR_CHAKU, CR_GENCHI_SHORI_YOSEI } = UcarProcessCl.CODE.raw
 
   const URL_CR_HAISO_JURYO = getProcessEnterPass(CR_HAISO_JURYO.code)
   const URL_GENTI_SHORI = getProcessEnterPass(CR_GENCHI_SHORI_YOSEI.code)
@@ -26,7 +27,7 @@ export const requestDeliberySS = async ({sateiID, type}) => {
     notation
   } = new UcarCL(ucar)
 
-  const  {plate, modelName, modelYear,
+  const { plate, modelName, modelYear,
     chassisNumber,
     exteriorColor
 
@@ -51,8 +52,8 @@ export const requestDeliberySS = async ({sateiID, type}) => {
     const urls = [URL_CR_HAISO_JURYO, URL_GENTI_SHORI, URL_CR_CHAKU]
 
     console.time('PDFを生成処理')
-    const sheetList = await GoogleSheet_GetSheetList({spreadsheetId: SS_URL})
-    const upDateSheetId = await getSheetIdx({sheetList, sheetName: SH_NAME})
+    const sheetList = await GoogleSheet_GetSheetList({ spreadsheetId: SS_URL })
+    const upDateSheetId = await getSheetIdx({ sheetList, sheetName: SH_NAME })
 
     console.debug('PDFを生成処理①')
 
@@ -83,8 +84,8 @@ export const requestDeliberySS = async ({sateiID, type}) => {
 
     console.timeEnd('PDFを生成処理')
 
-    return {success: true, message: `CRへ配送手配を実施しました。`}
+    return { success: true, message: `CRへ配送手配を実施しました。` }
   } catch (error) {
-    return {success: false, message: `CRへ配送手配時にエラーが発生しました。管理者まで連絡してください。`}
+    return { success: false, message: `CRへ配送手配時にエラーが発生しました。管理者まで連絡してください。` }
   }
 }

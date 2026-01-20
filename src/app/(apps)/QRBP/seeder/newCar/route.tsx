@@ -1,6 +1,7 @@
 export const dynamic = 'auto'
 
 import {fetchAlt} from '@cm/lib/http/fetch-client'
+import { basePath } from '@cm/lib/methods/common'
 
 import {NextRequest, NextResponse} from 'next/server'
 
@@ -35,7 +36,7 @@ export async function GET(req: NextRequest) {
   }
 
   chunks.map(async (chunk, idx) => {
-    const res = await fetchAlt(`${process.env.NEXT_PUBLIC_BASEPATH}/${rootPath}/seeder/${dataModelName}/batch-update`, {
+    const res = await fetchAlt(`${basePath}/${rootPath}/seeder/${dataModelName}/batch-update`, {
       chunkIdx: idx,
       data: chunk,
     })

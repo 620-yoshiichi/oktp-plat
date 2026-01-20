@@ -12,14 +12,13 @@ import { upsertStoresFromKaonavi } from './lib/store-transformer'
  * forcedUsersに登録されているユーザーは、KaonaviにデータがなくてもUPSERTされる
  */
 export const POST = async (req: NextRequest) => {
-  console.warn('orderUpsert route is not used')
-  return NextResponse.json({ success: true, message: `Unauthorized`, result: null }, { status: 401, statusText: `Unauthorized` })
+
   // 1. Kaonavi APIからメンバーデータを取得
   const kaonaviResponse = await getKaonaviMemberArray()
   const memberData = kaonaviResponse.member_data
 
   // 2. 顔ナビデータから店舗情報をアップサート
-  const upsertedStoreCount = await upsertStoresFromKaonavi(memberData)
+  // const upsertedStoreCount = await upsertStoresFromKaonavi(memberData)
 
   // 3. アップサート後の最新の店舗データを取得
   const stores = await prisma.store.findMany()
@@ -83,6 +82,6 @@ export const POST = async (req: NextRequest) => {
     workTypeMaster,
     errors: processingErrors,
     processedForcedUsersCount: forcedUsersNotInKaonavi.length,
-    upsertedStoreCount,
+
   })
 }
