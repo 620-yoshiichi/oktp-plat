@@ -15,8 +15,27 @@ import useSWR from 'swr'
 import { fetchAlt } from '@cm/lib/http/fetch-client'
 import { basePath } from '@cm/lib/methods/common'
 import useModal from '@cm/components/utils/modal/useModal'
-import React from 'react'
+import React, { useState, useCallback } from 'react'
 import { formatDate } from '@cm/class/Days/date-utils/formatters'
+
+/**
+ * SSEメッセージをパースする
+ */
+const parseSSEMessage = (text: string) => {
+  const messages: any[] = []
+  const lines = text.split('\n\n')
+  for (const line of lines) {
+    if (line.startsWith('data: ')) {
+      try {
+        const data = JSON.parse(line.slice(6))
+        messages.push(data)
+      } catch {
+        // パースエラーは無視
+      }
+    }
+  }
+  return messages
+}
 
 
 type CronExecutionLog = {
@@ -35,6 +54,9 @@ type CronExecutionLog = {
 export default function Page() {
   const { toggleLoad } = useGlobal()
   const { Modal, handleOpen, handleClose, open } = useModal<{ batchId: string; batchName: string }>()
+
+  // 実行中のバッチIDと進捗メッセージを管理
+  const [runningBatches, setRunningBatches] = useState<Record<string, string>>({})
 
   const batch: { common: BatchConfig[], ucar: BatchConfig[], newCar: BatchConfig[], qrbp: BatchConfig[] } = { common: [], ucar: [], newCar: [], qrbp: [] }
 
@@ -152,25 +174,76 @@ export default function Page() {
                 const latestLog = logData?.latest as CronExecutionLog | null
 
                 const handleClick = async () => {
-                  let res: any
-
-                  if (action.handler) {
-                    // batchアクションの場合、/api/cron/execute/${action.id}を呼び出す
-                    res = await toggleLoad(async () => {
-                      return await fetchAlt(`${basePath}/api/cron/execute/${action.id}`, {}, { method: 'GET' })
-                    })
-                  } else {
+                  if (!action.handler) {
                     toast.error(`${action.name}の実行関数が設定されていません`)
                     return
                   }
 
-                  if (res instanceof Error || res?.error || res?.success === false) {
-                    const errorMessage = res?.message || res?.error?.message || res?.error || '不明なエラーが発生しました'
-                    toast.error(`${action.name}の実行中にエラーが発生しました: ${errorMessage}`)
-                  } else if (res?.success === true || res?.success === undefined) {
-                    toast.success(`${action.name}が完了しました`)
-                    // ログデータを再取得
-                    mutateBatchLogs()
+                  // 実行中状態を設定
+                  setRunningBatches(prev => ({ ...prev, [action.id]: '処理を開始しています...' }))
+
+                  let isCompleted = false
+
+                  try {
+                    // ストリーミングレスポンスで進捗を取得
+                    const response = await fetch(`${basePath}/api/cron/execute/${action.id}?stream=true`)
+
+                    if (!response.body) {
+                      throw new Error('レスポンスボディがありません')
+                    }
+
+                    const reader = response.body.getReader()
+                    const decoder = new TextDecoder()
+
+                    while (true) {
+                      const { done, value } = await reader.read()
+                      if (done) break
+
+                      const text = decoder.decode(value, { stream: true })
+                      const messages = parseSSEMessage(text)
+
+                      for (const data of messages) {
+                        if (data.type === 'progress') {
+                          // 進捗メッセージを更新
+                          setRunningBatches(prev => ({ ...prev, [action.id]: data.message }))
+                        } else if (data.type === 'complete') {
+                          isCompleted = true
+                          // 完了処理
+                          setRunningBatches(prev => {
+                            const newState = { ...prev }
+                            delete newState[action.id]
+                            return newState
+                          })
+
+                          if (data.success) {
+                            toast.success(`${action.name}が完了しました`)
+                          } else {
+                            toast.error(`${action.name}の実行中にエラーが発生しました: ${data.error || data.message}`)
+                          }
+                          // ログデータを再取得
+                          mutateBatchLogs()
+                        }
+                      }
+                    }
+
+                    // ストリームが終了したが complete メッセージを受け取っていない場合
+                    if (!isCompleted) {
+                      setRunningBatches(prev => {
+                        const newState = { ...prev }
+                        delete newState[action.id]
+                        return newState
+                      })
+                      // ログデータを再取得（完了したかもしれないので）
+                      mutateBatchLogs()
+                    }
+                  } catch (error: any) {
+                    // エラー時は実行中状態をクリア
+                    setRunningBatches(prev => {
+                      const newState = { ...prev }
+                      delete newState[action.id]
+                      return newState
+                    })
+                    toast.error(`${action.name}の実行中にエラーが発生しました: ${error.message}`)
                   }
                 }
 
@@ -215,10 +288,20 @@ export default function Page() {
                         <span className={`text-gray-400 text-sm`}>実行履歴なし</span>
                       )}
                     </td>
-                    <td>
-                      <button className={`t-link w-[100px] text-2xl`} onClick={handleClick}>
-                        実行
-                      </button>
+                    <td className={`min-w-[180px]`}>
+                      {runningBatches[action.id] ? (
+                        <div className={`flex flex-col items-center gap-1`}>
+                          <div className={`flex items-center gap-2`}>
+                            <div className={`animate-spin h-4 w-4 border-2 border-blue-500 border-t-transparent rounded-full`} />
+                            <span className={`text-blue-600 font-bold`}>実行中</span>
+                          </div>
+                          <span className={`text-xs text-gray-500`}>{runningBatches[action.id]}</span>
+                        </div>
+                      ) : (
+                        <button className={`t-link w-[100px] text-2xl`} onClick={handleClick}>
+                          実行
+                        </button>
+                      )}
                     </td>
                   </tr>
                 )

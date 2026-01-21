@@ -62,6 +62,156 @@ const updateExecutionLogForFailure = async (logId: number, startTime: number, er
  * - 実行ログの記録（開始/完了/エラー）
  * - エラーハンドリング
  */
+/**
+ * SSEメッセージの型
+ */
+type SSEMessage = {
+  type: 'progress' | 'complete'
+  message?: string
+  success?: boolean
+  result?: any
+  error?: string
+  batchId?: string
+  duration?: number
+}
+
+/**
+ * SSEメッセージを文字列としてフォーマット
+ */
+const formatSSEMessage = (data: SSEMessage): string => {
+  return `data: ${JSON.stringify(data)}\n\n`
+}
+
+/**
+ * SSEメッセージをエンコード
+ */
+const encodeSSEMessage = (data: SSEMessage): Uint8Array => {
+  const encoder = new TextEncoder()
+  return encoder.encode(formatSSEMessage(data))
+}
+
+/**
+ * ストリーミング対応のCronバッチ実行
+ * - 15秒ごとに進捗メッセージを送信
+ * - 完了時に結果を送信
+ */
+export const executeCronBatchWithProgress = async (req: NextRequest, batchConfig: BatchConfig): Promise<Response> => {
+  // 認証チェック
+  if ((await isCron({req})) === false) {
+    return new Response(
+      formatSSEMessage({type: 'complete', success: false, error: 'Unauthorized'}),
+      {
+        status: 401,
+        headers: {
+          'Content-Type': 'text/event-stream',
+          'Cache-Control': 'no-cache',
+          'Connection': 'keep-alive',
+        },
+      }
+    )
+  }
+
+  const startTime = Date.now()
+  let log: {id: number} | null = null
+
+  const stream = new ReadableStream({
+    async start(controller) {
+      // 15秒ごとのkeep-alive送信
+      const keepAliveInterval = setInterval(() => {
+        const elapsed = Math.floor((Date.now() - startTime) / 1000)
+        controller.enqueue(
+          encodeSSEMessage({
+            type: 'progress',
+            message: `処理継続中... (${elapsed}秒経過)`,
+          })
+        )
+      }, 1000)
+
+      try {
+        // 実行開始ログを記録
+        log = await createExecutionLog(batchConfig)
+
+        console.log(`[CRON] Starting batch with progress: ${batchConfig.name} (${batchConfig.id})`)
+
+        // handlerの存在チェック
+        if (!batchConfig.handler) {
+          throw new Error(`Handler not found for batch: ${batchConfig.id}`)
+        }
+
+        // 初回の進捗メッセージ送信
+        controller.enqueue(
+          encodeSSEMessage({
+            type: 'progress',
+            message: '処理を開始しました...',
+          })
+        )
+
+        // バッチ処理を実行
+        const result = await batchConfig.handler()
+
+        // 実行成功ログを記録
+        await updateExecutionLogForSuccess(log.id, startTime, result)
+
+        clearInterval(keepAliveInterval)
+
+        const duration = Date.now() - startTime
+        console.log(`[CRON] Completed batch with progress: ${batchConfig.name} (${batchConfig.id}) in ${duration}ms`)
+
+        // 完了メッセージ送信
+        controller.enqueue(
+          encodeSSEMessage({
+            type: 'complete',
+            success: true,
+            message: `${batchConfig.name} completed`,
+            batchId: batchConfig.id,
+            duration,
+            result,
+          })
+        )
+      } catch (error: any) {
+        clearInterval(keepAliveInterval)
+
+        console.error(`[CRON] Error in batch with progress: ${batchConfig.name} (${batchConfig.id})`, error.stack)
+
+        // 実行失敗ログを記録
+        if (log) {
+          await updateExecutionLogForFailure(log.id, startTime, error)
+        }
+
+        const duration = Date.now() - startTime
+
+        // エラーメッセージ送信
+        controller.enqueue(
+          encodeSSEMessage({
+            type: 'complete',
+            success: false,
+            message: `${batchConfig.name} failed: ${error.message}`,
+            batchId: batchConfig.id,
+            duration,
+            error: error.message,
+          })
+        )
+      } finally {
+        controller.close()
+      }
+    },
+  })
+
+  return new Response(stream, {
+    headers: {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      'Connection': 'keep-alive',
+    },
+  })
+}
+
+/**
+ * Cronバッチを実行する共通ラッパー
+ * - 認証チェック
+ * - 実行ログの記録（開始/完了/エラー）
+ * - エラーハンドリング
+ */
 export const executeCronBatch = async (req: NextRequest, batchConfig: BatchConfig): Promise<NextResponse> => {
 
 

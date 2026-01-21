@@ -1,5 +1,5 @@
 import {NextRequest, NextResponse} from 'next/server'
-import {executeCronBatch} from 'src/non-common/cron/cronExecutor'
+import {executeCronBatch, executeCronBatchWithProgress} from 'src/non-common/cron/cronExecutor'
 import {BATCH_MASTER} from 'src/non-common/cron/batchMaster'
 import {isCron} from 'src/non-common/serverSideFunction'
 
@@ -48,6 +48,14 @@ export const GET = async (req: NextRequest, {params}: {params: Promise<{batchId:
     )
   }
 
-  // バッチ実行（認証チェック・ログ記録込み）
+  // streamパラメータがある場合はストリーミングレスポンスを返す
+  const useStream = req.nextUrl.searchParams.get('stream') === 'true'
+
+  if (useStream) {
+    // ストリーミング対応バッチ実行（15秒ごとに進捗通知）
+    return executeCronBatchWithProgress(req, batchConfig)
+  }
+
+  // 通常のバッチ実行（認証チェック・ログ記録込み）
   return executeCronBatch(req, batchConfig)
 }

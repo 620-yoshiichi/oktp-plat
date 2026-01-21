@@ -101,8 +101,8 @@ const RenderTableContent = ({
   // データなし
   if (records.length === 0) {
     return (
-      <div style={emptyDataStyle}>
-        <PlaceHolder className={`px-10 py-6`}>データが見つかりません</PlaceHolder>
+      <div style={emptyDataStyle} >
+        <PlaceHolder className={`px-10 py-6 mx-auto w-fit  `}>データが見つかりません</PlaceHolder>
       </div>
     )
   }
