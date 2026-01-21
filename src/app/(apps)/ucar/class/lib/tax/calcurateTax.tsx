@@ -10,7 +10,7 @@ export type payBackObjType = {
 }
 
 export const calcurateTax = (props: { row: any }) => {
-  console.log("calcurateTax")  //logs
+
 
   const row = props.row as ucarData
 
@@ -137,7 +137,7 @@ export const calcurateTax = (props: { row: any }) => {
       const idealRefund = calcRefund(idealElapsedMonths) // 本来の還付額
       const actualRefund = calcRefund(actualElapsedMonths) // 実際の県還付額
 
-      console.log({ idealRefund, actualRefund })  //logs
+
       const companyPayment = idealRefund - actualRefund // 当社支払額
       const monthsUntilMarch = calcMonthsUntilMarch(masshoMonth)
 

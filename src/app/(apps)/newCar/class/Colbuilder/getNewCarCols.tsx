@@ -2,44 +2,44 @@
 
 import CheckPointList from '@app/(apps)/newCar/CheckPointList'
 
-import {Fields} from '@cm/class/Fields/Fields'
+import { Fields } from '@cm/class/Fields/Fields'
 
-import {UseRecordsReturn} from '@cm/components/DataLogic/TFs/PropAdjustor/hooks/useRecords/useRecords'
+import { UseRecordsReturn } from '@cm/components/DataLogic/TFs/PropAdjustor/hooks/useRecords/useRecords'
 
-import {columnGetterType} from '@cm/types/types'
-import {btnClass, DesiredTorokuDateRegister} from '@app/(apps)/newCar/(parts)/DesiredTorokuDate/DesiredTorokuDateRegister'
+import { columnGetterType } from '@cm/types/types'
+import { btnClass, DesiredTorokuDateRegister } from '@app/(apps)/newCar/(parts)/DesiredTorokuDate/DesiredTorokuDateRegister'
 
-import {isDev, shorten} from '@cm/lib/methods/common'
-import {getForSelectWhere} from '@app/(apps)/newCar/(constants)/forSelectConfig'
+import { isDev, shorten } from '@cm/lib/methods/common'
+import { getForSelectWhere } from '@app/(apps)/newCar/(constants)/forSelectConfig'
 
-import {NewCar, User, Store} from '@prisma/generated/prisma/client'
-import {Button} from '@cm/components/styles/common-components/Button'
-import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+import { NewCar, User, Store } from '@prisma/generated/prisma/client'
+import { Button } from '@cm/components/styles/common-components/Button'
+import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 
-import {TruckIcon} from '@heroicons/react/20/solid'
+import { TruckIcon } from '@heroicons/react/20/solid'
 import useStuffSwitcher from '@app/(apps)/newCar/templateHooks/useStuffSwitcher'
-import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
-import {R_Stack} from '@cm/components/styles/common-components/common-components'
-import {getOssShinseiData} from '@app/(apps)/newCar/(lib)/oss/ossBigQuery'
-import {createOssShinseiSpread} from '@app/(apps)/newCar/(lib)/updateOssSpread'
-import {T_LINK} from '@cm/components/styles/common-components/links'
-import {toastByResult} from '@cm/lib/ui/notifications'
-import {TenpoTsuikoShinseiStatusButton} from '@app/(apps)/newCar/(pages)/tenpo-tsuiko-renraku/TenpoTsuikoShinseiStatusButton'
+import { IconBtn } from '@cm/components/styles/common-components/IconBtn'
+import { R_Stack } from '@cm/components/styles/common-components/common-components'
+import { getOssShinseiData } from '@app/(apps)/newCar/(lib)/oss/ossBigQuery'
+import { createOssShinseiSpread } from '@app/(apps)/newCar/(lib)/updateOssSpread'
+import { T_LINK } from '@cm/components/styles/common-components/links'
+import { toastByResult } from '@cm/lib/ui/notifications'
+import { TenpoTsuikoShinseiStatusButton } from '@app/(apps)/newCar/(pages)/tenpo-tsuiko-renraku/TenpoTsuikoShinseiStatusButton'
 import useTempoTsuikoGMF from '@app/(apps)/newCar/templateHooks/useTempoTsuikoGMF'
-import {cn} from '@cm/shadcn/lib/utils'
-import {formatDate} from '@cm/class/Days/date-utils/formatters'
-import {UcarCL} from '@app/(apps)/ucar/class/UcarCL'
+import { cn } from '@cm/shadcn/lib/utils'
+import { formatDate } from '@cm/class/Days/date-utils/formatters'
+import { UcarCL } from '@app/(apps)/ucar/class/UcarCL'
 import ShadModal from '@cm/shadcn/ui/Organisms/ShadModal'
-import {CsvTable} from '@cm/components/styles/common-components/CsvTable/CsvTable'
-import {NumHandler} from '@cm/class/NumHandler'
+import { CsvTable } from '@cm/components/styles/common-components/CsvTable/CsvTable'
+import { NumHandler } from '@cm/class/NumHandler'
 import Coloring from '@cm/lib/methods/Coloring'
 
 export const getNewCarCols = (props: columnGetterType) => {
-  const {pathname, query, accessScopes} = props.useGlobalProps
+  const { pathname, query, accessScopes } = props.useGlobalProps
 
-  const {newCarWhere, isStoreManager, isHQ} = accessScopes().getNewCarProps()
+  const { newCarWhere, isStoreManager, isHQ } = accessScopes().getNewCarProps()
 
-  const {storeId} = newCarWhere
+  const { storeId } = newCarWhere
 
   const stuffSwitcherGMF = useStuffSwitcher()
   const tempoTsuikoGMF = useTempoTsuikoGMF()
@@ -48,10 +48,10 @@ export const getNewCarCols = (props: columnGetterType) => {
 
   return new Fields([
     ...new Fields([
-      {id: `NO_CYUMON`, label: `注文No`, search: {}},
-      {id: `KJ_KURUMAME`, label: `車名`, search: {}},
-      {id: `MJ_HANTENKT`, label: `販売店型式`, search: {}},
-      {id: `NO_FRAME`, label: `フレームNo`, type: `text`, search: {}},
+      { id: `NO_CYUMON`, label: `注文No`, search: {} },
+      { id: `KJ_KURUMAME`, label: `車名`, search: {} },
+      { id: `MJ_HANTENKT`, label: `販売店型式`, search: {} },
+      { id: `NO_FRAME`, label: `フレームNo`, type: `text`, search: {} },
       {
         id: `isDaikoNosya`,
         label: `代行納車`,
@@ -69,8 +69,8 @@ export const getNewCarCols = (props: columnGetterType) => {
                   if (confirm(`本部専用メニューです。\n` + message)) {
                     props.useGlobalProps.toggleLoad(async () => {
                       await doStandardPrisma(`newCar`, `update`, {
-                        where: {id: row.id},
-                        data: {isDaikoNosya: !isDaiko},
+                        where: { id: row.id },
+                        data: { isDaikoNosya: !isDaiko },
                       })
                     })
                   }
@@ -83,9 +83,9 @@ export const getNewCarCols = (props: columnGetterType) => {
         },
       },
     ])
-      .customAttributes(() => ({form: {disabled: true}}))
+      .customAttributes(() => ({ form: { disabled: true } }))
       .setNormalTd()
-      .buildFormGroup({groupName: `車両情報`})
+      .buildFormGroup({ groupName: `車両情報` })
       .showSummaryInTd({
         hideUndefinedValue: false,
         labelWidthPx: 75,
@@ -96,14 +96,14 @@ export const getNewCarCols = (props: columnGetterType) => {
         id: `userId`,
         label: `担当`,
         forSelect: {
-          config: getForSelectWhere({storeId}),
+          config: getForSelectWhere({ storeId }),
         },
         format: (value, row) => {
           const switched = row.orderSwitchingHisotoryId ? true : false
           if (isStoreManager || isHQ) {
             return (
               <div
-                onClick={() => stuffSwitcherGMF.setGMF_OPEN({newCar: row})}
+                onClick={() => stuffSwitcherGMF.setGMF_OPEN({ newCar: row })}
                 className={`t-link ${switched ? `text-error-main` : ''}`}
               >
                 <span>{row.User.name}</span>
@@ -116,13 +116,13 @@ export const getNewCarCols = (props: columnGetterType) => {
         },
         search: {},
       },
-      {id: `storeId`, label: `店舗`, forSelect: {}, search: {}},
-      {id: `KJ_KAINMEI1`, label: `買主`, search: {}},
-      {id: `KJ_MEIGIME1`, label: `名義人`, search: {}},
+      { id: `storeId`, label: `店舗`, forSelect: {}, search: {} },
+      { id: `KJ_KAINMEI1`, label: `買主`, search: {} },
+      { id: `KJ_MEIGIME1`, label: `名義人`, search: {} },
       {
         id: `sateiConnection`,
         label: '査定連携',
-        form: {hidden: true},
+        form: { hidden: true },
         format: (value, row) => {
           const UpassHistory = row.JuchuShitadoriDb.map(d => {
             return UcarCL.getLatestUPASS(d.UPASS)
@@ -130,7 +130,7 @@ export const getNewCarCols = (props: columnGetterType) => {
 
           if (isDev) {
             return (
-              <ShadModal Trigger={<TruckIcon {...{className: `h-5`}} />}>
+              <ShadModal Trigger={<TruckIcon {...{ className: `h-5` }} />}>
                 {CsvTable({
                   records: UpassHistory.filter(item => {
                     return item?.sateiID
@@ -138,8 +138,8 @@ export const getNewCarCols = (props: columnGetterType) => {
                     return {
                       csvTableRow: [
                         //
-                        {label: '査定番号', cellValue: item?.sateiID},
-                        {label: '査定日', cellValue: formatDate(item.assessmentdatetime)},
+                        { label: '査定番号', cellValue: item?.sateiID },
+                        { label: '査定日', cellValue: formatDate(item.assessmentdatetime) },
                         {
                           label: '査定額',
                           cellValue: NumHandler.toPrice(item.assessmentPrice),
@@ -170,21 +170,21 @@ export const getNewCarCols = (props: columnGetterType) => {
       },
     ])
       .setNormalTd()
-      .customAttributes(() => ({form: {disabled: true}}))
-      .buildFormGroup({groupName: `その他情報`})
+      .customAttributes(() => ({ form: { disabled: true } }))
+      .buildFormGroup({ groupName: `その他情報` })
       .showSummaryInTd({
         hideUndefinedValue: false,
         labelWidthPx: 45,
         wrapperWidthPx: 160,
 
-        convertColId: {storeId: 'Store.name', userId: 'User.name'},
+        convertColId: { storeId: 'Store.name', userId: 'User.name' },
       }).plain,
     ...new Fields([
       {
         id: 'DD_KIBONOKI',
         label: '希望納期',
         type: `date`,
-        form: {hidden: true},
+        form: { hidden: true },
         format: (value, row, col) => {
           if (!row['DD_KIBONOKI']) {
             return <Coloring color="red">なるはや</Coloring>
@@ -196,7 +196,7 @@ export const getNewCarCols = (props: columnGetterType) => {
         id: 'CUSTOM_DD_SEISANYOTEI',
         label: '生産予定日',
         type: `date`,
-        form: {hidden: true},
+        form: { hidden: true },
         format: (value, row, col) => {
           if (value !== `-`) {
             if (isDev) {
@@ -232,7 +232,7 @@ export const getNewCarCols = (props: columnGetterType) => {
         label: `振当`,
         type: `date`,
         format: (value, row) => {
-          const {DD_FR, CUSTOM_FR_DATE, CUSTOM_FR_PREFIX, CUSTOM_FR_SUFFIX} = row as NewCar
+          const { DD_FR, CUSTOM_FR_DATE, CUSTOM_FR_PREFIX, CUSTOM_FR_SUFFIX } = row as NewCar
           const NOTATION = [CUSTOM_FR_PREFIX, CUSTOM_FR_DATE, CUSTOM_FR_SUFFIX].join(``)
 
           return NOTATION ? (
@@ -261,7 +261,7 @@ export const getNewCarCols = (props: columnGetterType) => {
             if (!row.KB_OSSSIN) {
               return '紙登録'
             }
-            const {ossSpreadsheetUrl} = row
+            const { ossSpreadsheetUrl } = row
 
             return (
               <div>
@@ -275,13 +275,13 @@ export const getNewCarCols = (props: columnGetterType) => {
 
                         if (confirm(`すでに作成されたものを破棄し、新規に作成します。よろしいですか`)) {
                           toggleLoad(async () => {
-                            const ossData = await getOssShinseiData({APPINDEX: row.APPINDEX})
+                            const ossData = await getOssShinseiData({ APPINDEX: row.APPINDEX })
 
-                            const {Store} = row
+                            const { Store } = row
 
                             if (ossData) {
                               const res = await createOssShinseiSpread({
-                                NewCar: row as NewCar & {User: User; Store: Store},
+                                NewCar: row as NewCar & { User: User; Store: Store },
 
                                 BQ_OSS_SHINSEI_DATA: ossData.BQ_OSS_SHINSEI_DATA,
                                 BQ_KOKYAKU_DATA: ossData.BQ_KOKYAKU_DATA,
@@ -325,13 +325,13 @@ export const getNewCarCols = (props: columnGetterType) => {
       {
         id: `tsuikoShonin`,
         label: `店舗追工申請`,
-        form: {hidden: true},
+        form: { hidden: true },
         format: (value, row) => {
           if (row.TenpoTsuikoShinseiHeader.filter(d => d.active !== false).length > 0) {
             return (
               <TenpoTsuikoShinseiStatusButton
                 {...{
-                  handleOpenModal: (params: {newCar: any}) => {
+                  handleOpenModal: (params: { newCar: any }) => {
                     tempoTsuikoGMF.setGMF_OPEN({
                       newCar: params.newCar,
                       usedIn: 'newCarList',
@@ -357,7 +357,7 @@ export const getNewCarCols = (props: columnGetterType) => {
     {
       id: `CUSTOM_paymentCheckCustomerType`,
       label: '入金チェック区分',
-      td: {hidden: true},
+      td: { hidden: true },
     },
 
     ...new Fields([
@@ -375,14 +375,27 @@ export const getNewCarCols = (props: columnGetterType) => {
                 }}
               />
 
-              {!newCar.JuchuShitadoriDb.length && (
-                <R_Stack className={` items-start py-1`}>
-                  <small>下取</small>
-                  <div>
-                    {newCar.JuchuShitadoriDb.map(d => {
-                      const shitadoriAlert =
+
+              <R_Stack className={` items-start py-1`}>
+                <small>下取</small>
+                <div>
+                  {isDev && newCar.JuchuShitadoriDb.map(d => {
+                    let shitadoriAlert = false
+
+                    if (!isDev) {
+                      shitadoriAlert =
                         newCar.m0_deadline_nousya === null ||
                         new Date(newCar.m0_deadline_nousya).getTime() > new Date(d.UPASS?.pickupScheduledDate).getTime()
+                    }
+
+
+
+                    if (d.UPASS) {
+
+                      const notation = UcarCL.getNotationFromUpassModel(d.UPASS, {})
+
+
+
 
                       return (
                         <div
@@ -394,27 +407,39 @@ export const getNewCarCols = (props: columnGetterType) => {
                           }}
                           className={cn(
                             //
-                            shitadoriAlert ? ` cursor-pointer bg-red-500 text-white font-bold` : '',
+                            shitadoriAlert ? `cursor-pointer bg-red-500 text-white font-bold` : '',
                             `text-[10px] leading-3 p-1 `
                           )}
                         >
                           <div>
-                            <span>{shorten(d?.UPASS?.modelName, 8)}</span>(<span>{d.NO_SATEISYO}</span>)
+                            <span>{shorten(notation?.modelName, 8)}</span>(<span>{notation.sateiID}</span>)
                           </div>
                           <div>
                             <span className="mr-0.5">入庫予定:</span>
-                            <span>{formatDate(d?.UPASS?.pickupScheduledDate)}</span>
+                            <span>{formatDate(notation?.pickupScheduledDate)}</span>
                           </div>
                         </div>
                       )
-                    })}
-                  </div>
-                </R_Stack>
-              )}
+                    } else {
+
+
+                      return <div key={d.id}>No UPASS</div>
+                    }
+
+
+
+
+
+
+
+                  })}
+                </div>
+              </R_Stack>
+
             </div>
           )
         },
-        td: {style: {minWidth: 180}},
+        td: { style: { minWidth: 180 } },
       },
     ]).plain,
 
@@ -425,25 +450,25 @@ export const getNewCarCols = (props: columnGetterType) => {
         const newCar = row
         return (
           <div className={`w-[160px]`}>
-            <DesiredTorokuDateRegister {...{newCar, isHQ}} />
+            <DesiredTorokuDateRegister {...{ newCar, isHQ }} />
           </div>
         )
       },
-      td: {style: {minWidth: 160}},
+      td: { style: { minWidth: 160 } },
     },
 
     ...new Fields([
-      {id: `DD_JUCYU`, label: `受注日`, type: `date`},
+      { id: `DD_JUCYU`, label: `受注日`, type: `date` },
       // {id: `DD_SYOUNIN3`, label: `本部承認日`, type: `date`},
-      {id: `DD_HONBSYOK`, label: `書類全完日`, type: `date`},
-      {id: `DD_TOUROKU`, label: `登録日`, type: `date`},
-      {id: `DD_HAISKIBO`, label: `配送希望日`, type: `date`},
-      {id: `DD_HAISOYOT`, label: `配送予定日`, type: `date`},
+      { id: `DD_HONBSYOK`, label: `書類全完日`, type: `date` },
+      { id: `DD_TOUROKU`, label: `登録日`, type: `date` },
+      { id: `DD_HAISKIBO`, label: `配送希望日`, type: `date` },
+      { id: `DD_HAISOYOT`, label: `配送予定日`, type: `date` },
       // {id: `DD_SAGTYYO`, label: `新点予定`, type: `date`},
-      {id: `DD_NOSYA`, label: `納車日`, type: `date`},
+      { id: `DD_NOSYA`, label: `納車日`, type: `date` },
     ])
       .setNormalTd()
-      .customAttributes(() => ({sort: {}, search: {}}))
-      .showSummaryInTd({hideUndefinedValue: false, labelWidthPx: 70, wrapperWidthPx: 170}).plain,
+      .customAttributes(() => ({ sort: {}, search: {} }))
+      .showSummaryInTd({ hideUndefinedValue: false, labelWidthPx: 70, wrapperWidthPx: 170 }).plain,
   ]).transposeColumns()
 }

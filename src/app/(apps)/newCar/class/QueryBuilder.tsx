@@ -1,7 +1,10 @@
-import {includeProps, roopMakeRelationalInclude} from '@cm/class/builders/QueryBuilderVariables'
+import { includeProps, roopMakeRelationalInclude } from '@cm/class/builders/QueryBuilderVariables'
 
-import {Prisma} from '@prisma/generated/prisma/client'
-import {PrismaModelNames} from '@cm/types/prisma-types'
+import { Prisma } from '@prisma/generated/prisma/client'
+
+import { PrismaModelNames } from '@cm/types/prisma-types'
+import { QueryBuilder as UcarQueryBuilder } from '@app/(apps)/ucar/class/QueryBuilder'
+
 
 export class QueryBuilder {
   static getInclude = (includeProps: includeProps) => {
@@ -12,26 +15,18 @@ export class QueryBuilder {
       },
     }
     const roleMaster: Prisma.RoleMasterFindManyArgs = {
-      include: {UserRole: {}},
+      include: { UserRole: {} },
     }
 
     const userRole: Prisma.UserRoleFindManyArgs = {
-      include: {RoleMaster: {}, User: {}},
+      include: { RoleMaster: {}, User: {} },
     }
 
     const newCar: Prisma.NewCarFindManyArgs = {
       include: {
         JuchuShitadoriDb: {
           include: {
-            UPASS: {
-              include: {
-                MyUpassTree: {
-                  include: {
-                    RootUpass: {},
-                  },
-                },
-              },
-            },
+            UPASS: UcarQueryBuilder.getInclude(includeProps).upass
           },
         },
         User: {},
@@ -42,7 +37,7 @@ export class QueryBuilder {
         TenpoTsuikoShinseiHeader: {
           include: {
             TenpoTsuikoShinseiDetail: {
-              include: {User: {}},
+              include: { User: {} },
             },
           },
         },
@@ -51,18 +46,18 @@ export class QueryBuilder {
     const desiredTorokuDate: Prisma.DesiredTorokuDateFindManyArgs = {
       include: {
         NewCar: {
-          include: {User: {}, Store: {}},
+          include: { User: {}, Store: {} },
         },
       },
     }
-    const include: {[keーy in PrismaModelNames]?: any} = {
+    const include: { [keーy in PrismaModelNames]?: any } = {
       user,
       newCar,
       roleMaster,
       userRole,
       desiredTorokuDate,
       store: {
-        include: {User: {}},
+        include: { User: {} },
       },
     }
 

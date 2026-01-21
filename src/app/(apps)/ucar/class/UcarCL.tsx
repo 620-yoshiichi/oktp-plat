@@ -1,4 +1,4 @@
-import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 
 import {
   BankMaster,
@@ -18,13 +18,13 @@ import {
   Prisma,
   ZAIKO_Base,
 } from '@prisma/generated/prisma/client'
-import {roleIs} from 'src/non-common/scope-lib/judgeIsAdmin'
-import {QueryBuilder} from '@app/(apps)/ucar/class/QueryBuilder'
+import { roleIs } from 'src/non-common/scope-lib/judgeIsAdmin'
+import { QueryBuilder } from '@app/(apps)/ucar/class/QueryBuilder'
 
-import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
-import {Alert} from '@cm/components/styles/common-components/Alert'
-import {R_Stack} from '@cm/components/styles/common-components/common-components'
-import {globalIds} from 'src/non-common/searchParamStr'
+import { IconBtn } from '@cm/components/styles/common-components/IconBtn'
+import { Alert } from '@cm/components/styles/common-components/Alert'
+import { R_Stack } from '@cm/components/styles/common-components/common-components'
+import { globalIds } from 'src/non-common/searchParamStr'
 
 export type UpassStandardType = UPASS & {
   MyUpassTree: UpassFamilyTree & {
@@ -43,41 +43,42 @@ export type ucarData = Ucar & {
   Number98: Number98
   User: User
   Store: Store
-  UcarProcess: (UcarProcess & {User: User})[]
-  UcarPaperWorkNotes: UcarPaperWorkNotes & {User: User}
+  UcarProcess: (UcarProcess & { User: User })[]
+  UcarPaperWorkNotes: UcarPaperWorkNotes & { User: User }
   AppliedUcarGarageSlot: AppliedUcarGarageSlot & {
     UcarGarageSlotMaster: UcarGarageSlotMaster & {
       UcarGarageLocationMaster: UcarGarageLocationMaster
     }
   }
   BankMaster: BankMaster
-  BankBranchMaster: BankBranchMaster & {User: User}
+  BankBranchMaster: BankBranchMaster & { User: User }
 }
 
 export class UcarCL {
   data: ucarData
   constructor(ucar: ucarData) {
+
     this.data = ucar
   }
 
   static testSateiID = '163012511000005'
 
-  static getUpassFaimilyTree = async ({sateiID}) => {
-    const {result: upass} = await doStandardPrisma('uPASS', 'findUnique', {
-      where: {sateiID: sateiID},
+  static getUpassFaimilyTree = async ({ sateiID }) => {
+    const { result: upass } = await doStandardPrisma('uPASS', 'findUnique', {
+      where: { sateiID: sateiID },
     })
 
-    const {result: myTree} = await doStandardPrisma('upassFamilyTree', 'findUnique', {
+    const { result: myTree } = await doStandardPrisma('upassFamilyTree', 'findUnique', {
       where: {
         sateiID: sateiID,
       },
     })
 
-    const {result: familyTree} = await doStandardPrisma('upassFamilyTree', 'findMany', {
+    const { result: familyTree } = await doStandardPrisma('upassFamilyTree', 'findMany', {
       where: {
         rootSateiID: myTree?.rootSateiID ?? '',
       },
-      orderBy: {sateiDate: 'asc'},
+      orderBy: { sateiDate: 'asc' },
     })
 
     const lastSateiId = upass?.dataSource === 'aisatei' ? upass.sateiID : familyTree[familyTree.length - 1]?.sateiID
@@ -126,15 +127,15 @@ export class UcarCL {
     }
   }
   static checkSateiIdIsLatest = async (sateiID: string) => {
-    const {result: upass} = await doStandardPrisma('uPASS', 'findUnique', {
-      where: {sateiID},
+    const { result: upass } = await doStandardPrisma('uPASS', 'findUnique', {
+      where: { sateiID },
       include: {
         MyUpassTree: true,
         RootUpass: true,
       },
     })
 
-    const {RootUpass, MyUpassTree} = upass
+    const { RootUpass, MyUpassTree } = upass
 
     if (RootUpass) {
       return true
@@ -167,9 +168,60 @@ export class UcarCL {
     }
   }
 
-  get notation() {
-    const UPASS = (UcarCL.getLatestUPASS(this.data.UPASS) ?? {}) as UPASS
+  static getNotationFromUpassModel = (UPASS: UPASS, tmpUcarData: any) => {
 
+    const plate = [
+      UPASS.landAffairsName,
+      UPASS.registrationClassNumber,
+      UPASS.registrationKana,
+      UPASS.registrationSerialNumber,
+    ].join('') || [
+      tmpUcarData.tmpLandAffairsName,
+      tmpUcarData.tmpRegistrationClassNumber,
+      tmpUcarData.tmpRegistrationKana,
+      tmpUcarData.tmpPlate
+    ].join('')
+
+    const nenshiki = UPASS.modelYear ? new Date().getFullYear() - Number(UPASS?.modelYear) : ''
+
+    return {
+      sateiID: UPASS.sateiID,
+      storeName: tmpUcarData?.Store?.name,
+      staffName: tmpUcarData?.User?.name,
+      nenshiki: nenshiki || tmpUcarData.tmpModelYear,
+      plate,
+      grade: UPASS.grade || tmpUcarData.tmpGrade || '',
+      customerName: UPASS.customerName,
+      modelName: UPASS.modelName || tmpUcarData.tmpModelName || '',
+      modelYear: (UPASS.modelYear || tmpUcarData.tmpModelYear || '').replace('発売モデル', ''),
+      exteriorColor: UPASS.exteriorColor || tmpUcarData.tmpColor || '',
+      type: UPASS.type || tmpUcarData.tmpType || '',
+      chassisNumber: UPASS.chassisNumber || tmpUcarData.tmpChassisNumber || '',
+      length: UPASS.length || '',
+      width: UPASS.width || '',
+      height: UPASS.height || '',
+
+      commonType: UPASS.commonType || tmpUcarData.tmpCommonType || '',
+      engineType: UPASS.engineType || '',
+      vehicleHistory: UPASS.vehicleHistory || '',
+      capacityMin: UPASS.capacityMin || '',
+      capacityMax: UPASS.capacityMax || '',
+      maxLoad: UPASS.maxLoad || '',
+      weight: UPASS.weight || '',
+      frameNumber: UPASS.chassisNumber || tmpUcarData.tmpFrameNumber || '',
+      brandName: UPASS.brandName || tmpUcarData.tmpBrandName || '',
+      registrationClassNumber: UPASS.registrationClassNumber || tmpUcarData.tmpRegistrationClassNumber || '',
+      registrationKana: UPASS.registrationKana || tmpUcarData.tmpRegistrationKana || '',
+      registrationSerialNumber: UPASS.registrationSerialNumber || tmpUcarData.tmpPlate || '',
+
+      assessmentdatetime: UPASS.assessmentdatetime,
+      assessmentprice: UPASS.assessmentPrice,
+      pickupScheduledDate: UPASS.pickupScheduledDate,
+    }
+  }
+  get notation() {
+    return UcarCL.getNotationFromUpassModel(this.data.UPASS ?? {}, this.data)
+    const UPASS = (UcarCL.getLatestUPASS(this.data.UPASS ?? {})) as UPASS
     const plate = [
       UPASS.landAffairsName,
       UPASS.registrationClassNumber,
@@ -252,7 +304,7 @@ export class UcarCL {
       forSelect: {
         config: {
           where: {
-            rentaStoreId: {not: null},
+            rentaStoreId: { not: null },
           },
         },
       },
@@ -263,27 +315,27 @@ export class UcarCL {
   static colConst = () => {
     const getUcarBasicCols = () => {
       return [
-        {id: `Number98.number`, label: `98番号`},
-        {id: `Assessment_ID`, label: `査定ID`},
-        {id: `Model_name`, label: `車名`},
-        {id: `Barracks`, label: `車台番号`},
-        {id: `KI_HANKAKA`, label: `販売価格`},
-        {id: `CD_ZAIKOTEN_NAME`, label: `在庫店舗名`},
+        { id: `Number98.number`, label: `98番号` },
+        { id: `Assessment_ID`, label: `査定ID` },
+        { id: `Model_name`, label: `車名` },
+        { id: `Barracks`, label: `車台番号` },
+        { id: `KI_HANKAKA`, label: `販売価格` },
+        { id: `CD_ZAIKOTEN_NAME`, label: `在庫店舗名` },
       ]
     }
 
-    return {getUcarBasicCols}
+    return { getUcarBasicCols }
   }
 
-  static getUserId = ({session, query}) => {
+  static getUserId = ({ session, query }) => {
     const schoolId = roleIs(['管理者'], session) ? Number(query?.userId ?? session?.id ?? 0) : Number(session?.id ?? 0)
 
     return schoolId
   }
 
   static isLatestSateiID = async sateiID => {
-    const {result: upass} = await doStandardPrisma('uPASS', 'findUnique', {
-      where: {sateiID},
+    const { result: upass } = await doStandardPrisma('uPASS', 'findUnique', {
+      where: { sateiID },
       include: {
         RootUpass: true,
         MyUpassTree: {
@@ -306,8 +358,8 @@ export class UcarCL {
       skip?: number
       include?: Prisma.UcarInclude
     }) => {
-      const {where, take, skip, include, orderBy} = props
-      const {result: ucar} = await doStandardPrisma(`ucar`, `findMany`, {
+      const { where, take, skip, include, orderBy } = props
+      const { result: ucar } = await doStandardPrisma(`ucar`, `findMany`, {
         include: include ?? QueryBuilder.getInclude({}).ucar.include,
         where,
         take,
@@ -319,8 +371,8 @@ export class UcarCL {
     },
 
     getUcarDataBySateiId: async (sateiID: string) => {
-      const {result: ucar} = await doStandardPrisma(`ucar`, `findUnique`, {
-        where: {sateiID},
+      const { result: ucar } = await doStandardPrisma(`ucar`, `findUnique`, {
+        where: { sateiID },
         include: QueryBuilder.getInclude({}).ucar.include,
       })
 
@@ -328,18 +380,20 @@ export class UcarCL {
     },
 
     getTenchoListBySateiId: async (sateiID: string) => {
-      const {result: tenchoList} = await doStandardPrisma(`user`, `findMany`, {
+      const { result: tenchoList } = await doStandardPrisma(`user`, `findMany`, {
         where: {
-          Store: {Ucar: {some: {sateiID}}},
-          UserRole: {some: {
-            OR:[
-              {RoleMaster: {name: '店長'}},
-          {RoleMaster: {name: '副店長'}},
-            ]
-          }},
+          Store: { Ucar: { some: { sateiID } } },
+          UserRole: {
+            some: {
+              OR: [
+                { RoleMaster: { name: '店長' } },
+                { RoleMaster: { name: '副店長' } },
+              ]
+            }
+          },
         },
       })
-      return {tenchoList}
+      return { tenchoList }
     },
   }
 }

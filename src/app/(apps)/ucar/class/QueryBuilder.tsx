@@ -1,15 +1,25 @@
-import {includeProps, roopMakeRelationalInclude} from '@cm/class/builders/QueryBuilderVariables'
+import { includeProps, roopMakeRelationalInclude } from '@cm/class/builders/QueryBuilderVariables'
 
-import {Prisma} from '@prisma/generated/prisma/client'
+import { Prisma } from '@prisma/generated/prisma/client'
 
 export class QueryBuilder {
   static getInclude = (includeProps: includeProps) => {
-    const {session, query} = includeProps
+    const { session, query } = includeProps
 
     const ucarPaperWorkNotes: Prisma.UcarPaperWorkNotesFindManyArgs = {
       include: {
         User: {},
       },
+    }
+
+    const upass: Prisma.UPASSFindManyArgs = {
+      include: {
+        MyUpassTree: {
+          include: {
+            RootUpass: {},
+          },
+        },
+      }
     }
     const ucar: Prisma.UcarFindManyArgs = {
       omit: {
@@ -27,29 +37,20 @@ export class QueryBuilder {
 
         TmpRentalStore: {},
         DestinationStore: {},
-        UPASS: {
-          include: {
-            MyUpassTree: {
-              include: {
-                RootUpass: {},
-              },
-            },
-          },
-        },
-
-        Number98: {select: {id: true, number: true}},
+        UPASS: upass,
+        Number98: { select: { id: true, number: true } },
         UcarProcess: {
           select: {
             id: true,
             date: true,
             processCode: true,
-            User: {select: {name: true}},
+            User: { select: { name: true } },
           },
         },
         User: {
-          select: {name: true},
+          select: { name: true },
         },
-        Store: {select: {name: true}},
+        Store: { select: { name: true } },
         UcarPaperWorkNotes: {
           select: {
             id: true,
@@ -57,10 +58,10 @@ export class QueryBuilder {
             createdAt: true,
             type: true,
             resolvedAt: true,
-            User: {select: {id: true, name: true}},
+            User: { select: { id: true, name: true } },
           },
 
-          orderBy: [{createdAt: `desc`}],
+          orderBy: [{ createdAt: `desc` }],
         },
         AppliedUcarGarageSlot: {
           select: {
@@ -71,13 +72,13 @@ export class QueryBuilder {
               select: {
                 id: true,
                 garageNumber: true,
-                UcarGarageLocationMaster: {select: {id: true, name: true}},
+                UcarGarageLocationMaster: { select: { id: true, name: true } },
               },
             },
           },
         },
-        BankMaster: {select: {id: true, name: true, code: true}},
-        BankBranchMaster: {select: {id: true, name: true, code: true, branchKana: true}},
+        BankMaster: { select: { id: true, name: true, code: true } },
+        BankBranchMaster: { select: { id: true, name: true, code: true, branchKana: true } },
       },
     }
 
@@ -105,7 +106,7 @@ export class QueryBuilder {
                 Ucar: {
                   include: {
                     OldCars_Base: {
-                      select: {KI_HANKAKA: true},
+                      select: { KI_HANKAKA: true },
                     },
                   },
                 },
@@ -117,13 +118,13 @@ export class QueryBuilder {
     }
 
     const user = {
-      include: {Store: {}},
+      include: { Store: {} },
     }
 
     const include = {
       user,
-
       ucar,
+      upass,
       ucarPaperWorkNotes,
       ucarProcess,
       bankMaster,
@@ -221,10 +222,10 @@ const commonOmits = {
 }
 
 export const ucarQuery: Prisma.UcarFindManyArgs = {
-  omit: {...commonOmits, ...ucarOmmit},
+  omit: { ...commonOmits, ...ucarOmmit },
   include: {
-    User: {omit: commonOmits},
-    Store: {omit: commonOmits},
+    User: { omit: commonOmits },
+    Store: { omit: commonOmits },
     UcarProcess: {},
     AppliedUcarGarageSlot: {
       omit: commonOmits,
@@ -242,8 +243,8 @@ export const ucarQuery: Prisma.UcarFindManyArgs = {
   },
 }
 export const ucarSelect: Prisma.UcarSelect = {
-  User: {omit: commonOmits},
-  Store: {omit: commonOmits},
+  User: { omit: commonOmits },
+  Store: { omit: commonOmits },
   UcarProcess: {},
   AppliedUcarGarageSlot: {
     omit: commonOmits,

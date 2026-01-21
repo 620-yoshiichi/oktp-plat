@@ -1,6 +1,6 @@
 'use server'
 
-import {isDelayed, isRequired} from '@app/(apps)/newCar/(constants)/checkpoints/checkpoints'
+import { isDelayed, isRequired } from '@app/(apps)/newCar/(constants)/checkpoints/checkpoints'
 
 import {
   EasySearchObject,
@@ -11,18 +11,18 @@ import {
   makeEasySearchGroupsProp,
   toRowGroup,
 } from '@cm/class/builders/QueryBuilderVariables'
-import {getMidnight} from '@cm/class/Days/date-utils/calculations'
-import {Days} from '@cm/class/Days/Days'
-import {isDev} from '@cm/lib/methods/common'
+import { getMidnight } from '@cm/class/Days/date-utils/calculations'
+import { Days } from '@cm/class/Days/Days'
+import { isDev } from '@cm/lib/methods/common'
 
-import {Prisma} from '@prisma/generated/prisma/client'
+import { Prisma } from '@prisma/generated/prisma/client'
 
 export const NewCarEasySearchBuilder = async () => {
   const newCar = async (props: easySearchType) => {
     'use server'
-    const {isHQ} = props?.easySearchExtraProps ?? {}
+    const { isHQ } = props?.easySearchExtraProps ?? {}
 
-    const {firstDayOfMonth, lastDayOfMonth} = Days.month.getMonthDatum(getMidnight(new Date()))
+    const { firstDayOfMonth, lastDayOfMonth } = Days.month.getMonthDatum(getMidnight(new Date()))
 
     type exclusiveKeyStrings =
       | 'reset'
@@ -64,6 +64,7 @@ export const NewCarEasySearchBuilder = async () => {
       | `tenpoTsuiko_pending`
       | `tenpoTsuiko_Finished`
       | `shitadoriAri`
+      | `shitadoriNashi`
       | `sateiNyukoYoteiKeikoku`
       | `nokiAri`
       | `nokiNashi`
@@ -81,7 +82,7 @@ export const NewCarEasySearchBuilder = async () => {
         label: `対\n象`,
         description: `「生産予定2ヶ月前」活動対象リストです。`,
         CONDITION: {
-          m2Alert: {not: null}, // m2アラートが存在する
+          m2Alert: { not: null }, // m2アラートが存在する
           ...isRequired('m2Status'), // m2ステータスが必須
         },
       },
@@ -93,7 +94,7 @@ export const NewCarEasySearchBuilder = async () => {
         label: `対\n象`,
         description: `「生産予定1ヶ月前」活動対象リストです。`,
         CONDITION: {
-          m1Alert: {not: null}, // m1アラートが存在する
+          m1Alert: { not: null }, // m1アラートが存在する
           ...isRequired('m1Status'), // m1ステータスが必須
         },
       },
@@ -103,7 +104,7 @@ export const NewCarEasySearchBuilder = async () => {
         label: `遅\nれ`,
         CONDITION: {
           AND: [
-            {m1Alert: {not: null}}, // m1アラートが存在する
+            { m1Alert: { not: null } }, // m1アラートが存在する
             isDelayed('m1Status'), // m1ステータスが遅延している
           ],
         },
@@ -116,7 +117,7 @@ export const NewCarEasySearchBuilder = async () => {
         label: `対\n象`,
         description: `振当時活動対象リストです。`,
         CONDITION: {
-          DD_FR: {not: null}, // 振当日が存在する
+          DD_FR: { not: null }, // 振当日が存在する
           ...isRequired('m0Status'), // m0ステータスが必須
         },
       },
@@ -126,7 +127,7 @@ export const NewCarEasySearchBuilder = async () => {
         description: `納車予定日に遅れているリストです。`,
         CONDITION: {
           AND: [
-            {m2Alert: {not: null}}, // m2アラートが存在する
+            { m2Alert: { not: null } }, // m2アラートが存在する
             isDelayed('m0Status'), // m0ステータスが遅延している
           ],
         },
@@ -141,7 +142,7 @@ export const NewCarEasySearchBuilder = async () => {
         CONDITION: {
           lastApprovedDesiredTorokuDate: null, // 最後に承認された登録希望日が存在しない
           DD_TOUROKU: null, // 登録日が存在しない
-          m1Alert: {not: null}, // m1アラートが存在する
+          m1Alert: { not: null }, // m1アラートが存在する
           m1_toroku_prediction: null, // m1登録予測が存在しない
         },
       },
@@ -152,14 +153,14 @@ export const NewCarEasySearchBuilder = async () => {
         CONDITION: {
           lastApprovedDesiredTorokuDate: null, // 最後に承認された登録希望日が存在しない
           DD_TOUROKU: null, // 登録日が存在しない
-          m1Alert: {not: null}, // m1アラートが存在する
-          m1_toroku_prediction: {lt: firstDayOfMonth}, // m1登録予測が月初より前
+          m1Alert: { not: null }, // m1アラートが存在する
+          m1_toroku_prediction: { lt: firstDayOfMonth }, // m1登録予測が月初より前
         },
       },
     }
 
     const FR_BUT_NOT_TOUROKU = {
-      DD_FR: {not: null}, // 振当日が存在する
+      DD_FR: { not: null }, // 振当日が存在する
       DD_TOUROKU: null, // 登録日が存在しないｄしない
     }
 
@@ -175,7 +176,7 @@ export const NewCarEasySearchBuilder = async () => {
         description: `振り当て後、未登録で、登録申請前のものです。`,
         CONDITION: {
           DD_TOUROKU: null, // 登録日が存在しない
-          DD_FR: {not: null}, // 振当日が存在する
+          DD_FR: { not: null }, // 振当日が存在する
           lastApprovedDesiredTorokuDate: null, // 最後に承認された登録希望日が存在しない
         },
       },
@@ -183,7 +184,7 @@ export const NewCarEasySearchBuilder = async () => {
         label: `至急\n申請`,
         description: `配送希望が入っており、登録申請がなされていないものです。`,
         notify: stressedNotify,
-        CONDITION: {torokuApplicationRequired: true}, // 登録申請が必要
+        CONDITION: { torokuApplicationRequired: true }, // 登録申請が必要
       },
 
       torokuKibou_Progress: {
@@ -192,7 +193,7 @@ export const NewCarEasySearchBuilder = async () => {
         description: `登録申請中のリストです。`,
         CONDITION: {
           DD_TOUROKU: null, // 登録日が存在しない
-          DesiredTorokuDate: {some: {status: null}}, // 登録希望日が存在し、ステータスが未設定
+          DesiredTorokuDate: { some: { status: null } }, // 登録希望日が存在し、ステータスが未設定
         },
       },
 
@@ -209,10 +210,10 @@ export const NewCarEasySearchBuilder = async () => {
         label: `今月\n登録予定`,
         description: `「今月の登録済み」「申請済み」「見込み」の総数です。\n画面左上の「納車済み」をチェックすると、今月納車のものも含めてカウントした数字が出ます。。
         `,
-        notify: {background: '#407eb9', color: `white`},
+        notify: { background: '#407eb9', color: `white` },
         CONDITION: {
           OR: [
-            {DD_TOUROKU: thisMonthWhere}, // 登録日が今月
+            { DD_TOUROKU: thisMonthWhere }, // 登録日が今月
             {
               DD_TOUROKU: null, // 登録日が存在しない
               lastApprovedDesiredTorokuDate: thisMonthWhere, // 最後に承認された登録希望日が今月
@@ -235,7 +236,7 @@ export const NewCarEasySearchBuilder = async () => {
         CONDITION: {
           ...FR_BUT_NOT_TOUROKU, // 振当日が存在し、登録日が存在しない
           DD_HAISKIBO: null, // 配送希望日が存在しない
-          DesiredTorokuDate: {some: {status: '承認'}}, // 登録希望日が存在し、ステータスが承認
+          DesiredTorokuDate: { some: { status: '承認' } }, // 登録希望日が存在し、ステータスが承認
         },
       },
 
@@ -253,32 +254,32 @@ export const NewCarEasySearchBuilder = async () => {
         label: `メモあり`,
         CONDITION: {
           OR: [
-            {m0_remarks: {not: null}}, // m0メモが存在する
-            {m1_remarks: {not: null}}, // m1メモが存在する
-            {m2_remarks: {not: null}}, // m2メモが存在する
+            { m0_remarks: { not: null } }, // m0メモが存在する
+            { m1_remarks: { not: null } }, // m1メモが存在する
+            { m2_remarks: { not: null } }, // m2メモが存在する
           ],
         },
       },
     }
 
     const Ex_FR: exclusiveGroups = {
-      furiate: {label: `済`, CONDITION: {DD_FR: {not: null}}}, // 振当日が存在する
-      not_furiate: {label: `未`, CONDITION: {DD_FR: null}}, // 振当日が存在しない
+      furiate: { label: `済`, CONDITION: { DD_FR: { not: null } } }, // 振当日が存在する
+      not_furiate: { label: `未`, CONDITION: { DD_FR: null } }, // 振当日が存在しない
     }
 
     const Ex_Nousya: exclusiveGroups = {
       not_nousya: {
         label: `未`,
         CONDITION: {
-          DD_FR: {not: null}, // 振当日が存在する
+          DD_FR: { not: null }, // 振当日が存在する
           DD_NOSYA: null, // 納車日が存在しない
         },
       },
       nousya: {
         label: `済`,
         CONDITION: {
-          DD_FR: {not: null}, // 振当日が存在する
-          DD_NOSYA: {not: null}, // 納車日が存在する
+          DD_FR: { not: null }, // 振当日が存在する
+          DD_NOSYA: { not: null }, // 納車日が存在する
         },
       },
     }
@@ -286,7 +287,7 @@ export const NewCarEasySearchBuilder = async () => {
       toroku_nonFr: {
         label: `登録済かつ未納車`,
         CONDITION: {
-          DD_TOUROKU: {not: null}, // 登録日が存在する
+          DD_TOUROKU: { not: null }, // 登録日が存在する
           DD_NOSYA: null, // 納車日が存在しない
         },
       },
@@ -296,15 +297,15 @@ export const NewCarEasySearchBuilder = async () => {
       not_touroku: {
         label: `未`,
         CONDITION: {
-          DD_FR: {not: null}, // 振当日が存在する
+          DD_FR: { not: null }, // 振当日が存在する
           DD_TOUROKU: null, // 登録日が存在しない
         },
       },
       touroku: {
         label: `済`,
         CONDITION: {
-          DD_FR: {not: null}, // 振当日が存在する
-          DD_TOUROKU: {not: null}, // 登録日が存在する
+          DD_FR: { not: null }, // 振当日が存在する
+          DD_TOUROKU: { not: null }, // 登録日が存在する
         },
       },
     }
@@ -315,7 +316,7 @@ export const NewCarEasySearchBuilder = async () => {
         notify: true,
         description: `登録申請済みのもので、入金条件を満たしていないものが表示されます。`,
         CONDITION: {
-          lastApprovedDesiredTorokuDate: {not: null}, // 登録予定日あり
+          lastApprovedDesiredTorokuDate: { not: null }, // 登録予定日あり
           CUSTOM_paymentCheck: false, // 入金条件を満たしていない
         },
       },
@@ -331,7 +332,7 @@ export const NewCarEasySearchBuilder = async () => {
               active: true, // アクティブな申請が存在する
               TenpoTsuikoShinseiDetail: {
                 some: {
-                  status: {notIn: ['approved']},
+                  status: { notIn: ['approved'] },
                 },
               }, // 承認状態が保留中か承認済み
             },
@@ -348,7 +349,7 @@ export const NewCarEasySearchBuilder = async () => {
               active: true, // アクティブな申請が存在する
               TenpoTsuikoShinseiDetail: {
                 some: {
-                  status: {in: ['approved']},
+                  status: { in: ['approved'] },
                 },
               }, // 承認状態が保留中か承認済み
             },
@@ -360,14 +361,22 @@ export const NewCarEasySearchBuilder = async () => {
     //入庫予定日
     const Ex_SateiNyukoYotei: exclusiveGroups = {
       shitadoriAri: {
-        label: `下取有`,
+        label: `下有`,
         notify: false,
         CONDITION: {
           JuchuShitadoriDb: {
             some: {
-              APPINDEX_FKEY: {not: null},
+              APPINDEX_FKEY: { not: null },
+              NO_SATEISYO: { not: '' },
             },
           },
+        },
+      },
+      shitadoriNashi: {
+        label: `下無`,
+        notify: false,
+        CONDITION: {
+          JuchuShitadoriDb: { none: {} },
         },
       },
       sateiNyukoYoteiKeikoku: {
@@ -375,7 +384,7 @@ export const NewCarEasySearchBuilder = async () => {
         notify: true,
         description: `下取入庫予定が接近しているものです。`,
         CONDITION: {
-          shitadoriAlertCount: {gte: 1},
+          shitadoriAlertCount: { gte: 1 },
         },
       },
     }
@@ -384,7 +393,7 @@ export const NewCarEasySearchBuilder = async () => {
       nokiAri: {
         label: `あり`,
         CONDITION: {
-          DD_KIBONOKI: {not: null},
+          DD_KIBONOKI: { not: null },
         },
       },
       nokiNashi: {
@@ -400,33 +409,34 @@ export const NewCarEasySearchBuilder = async () => {
       1,
       dataArr,
       [
-        {exclusiveGroup: Ex_exclusive0, name: `全て`},
-        {exclusiveGroup: Ex_m2, name: `2ヶ月前`},
-        {exclusiveGroup: Ex_m1, name: `1ヶ月前`},
-        {exclusiveGroup: Ex_m0, name: `振当時`},
+        { exclusiveGroup: Ex_exclusive0, name: `全て` },
+        { exclusiveGroup: Ex_m2, name: `2ヶ月前` },
+        { exclusiveGroup: Ex_m1, name: `1ヶ月前` },
+        { exclusiveGroup: Ex_m0, name: `振当時` },
 
-        {exclusiveGroup: Ex_mikomi, name: `見込み`},
-        {exclusiveGroup: torokuKibou, name: `登録希望日申請`},
-        {exclusiveGroup: Ex_Delivery, name: `配送配送`},
-        {exclusiveGroup: Ex_Payment, name: `入金状況`},
-        {exclusiveGroup: Ex_Tsuiko, name: `追工申請`},
-        (isDev ? {exclusiveGroup: Ex_SateiNyukoYotei, name: `下取入庫予定`} : null) as any,
-        {exclusiveGroup: Ex_Naruhaya, name: `希望納期`},
+        { exclusiveGroup: Ex_mikomi, name: `見込み` },
+        { exclusiveGroup: torokuKibou, name: `登録希望日申請` },
+        { exclusiveGroup: Ex_Delivery, name: `配送配送` },
+        { exclusiveGroup: Ex_Payment, name: `入金状況` },
+        { exclusiveGroup: Ex_Tsuiko, name: `追工申請` },
+
+        (isDev ? { exclusiveGroup: Ex_SateiNyukoYotei, name: `下取入庫予定` } : null) as any,
+        { exclusiveGroup: Ex_Naruhaya, name: `希望納期` },
       ]
         .filter(Boolean)
-        .map(d => ({...d, additionalProps: {refresh: true}}))
+        .map(d => ({ ...d, additionalProps: { refresh: true } }))
     )
 
     toRowGroup(
       2,
       dataArr,
       [
-        {exclusiveGroup: Ex_FR, name: `振当状況`},
-        {exclusiveGroup: Ex_Touroku, name: `登録状況`},
+        { exclusiveGroup: Ex_FR, name: `振当状況` },
+        { exclusiveGroup: Ex_Touroku, name: `登録状況` },
         // {exclusiveGroup: Ex_Nousya, name: `納車状況`},
-        {exclusiveGroup: Ex_TOROKU_NONFR, name: `登録済かつ未納車`},
-        {exclusiveGroup: Ex_Notes, name: `メモ`},
-      ].map(d => ({...d, additionalProps: {refresh: true, defaultOpen: false}}))
+        { exclusiveGroup: Ex_TOROKU_NONFR, name: `登録済かつ未納車` },
+        { exclusiveGroup: Ex_Notes, name: `メモ` },
+      ].map(d => ({ ...d, additionalProps: { refresh: true, defaultOpen: false } }))
     )
 
     const result = makeEasySearchGroups(dataArr) as keys
@@ -434,7 +444,7 @@ export const NewCarEasySearchBuilder = async () => {
     return result
   }
 
-  return {newCar}
+  return { newCar }
 }
 
-const stressedNotify = {border: `3px solid red`, padding: 3, color: `red`, background: `#ffeeb5`}
+const stressedNotify = { border: `3px solid red`, padding: 3, color: `red`, background: `#ffeeb5` }
