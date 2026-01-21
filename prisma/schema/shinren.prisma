@@ -83,6 +83,12 @@ model RentaDailyReport {
   @@index([rentaCustomerId])
   @@index([rentaStoreId])
   @@index([userId])
+  // Phase 1: 日付・複合インデックス
+  @@index([date])
+  @@index([userId, date])
+  @@index([rentaStoreId, date])
+  @@index([visitType])
+  @@index([approachType])
 }
 
 model RentaCustomer {
@@ -129,6 +135,9 @@ model RentaCustomer {
 
   @@index([rentaStoreId])
   @@index([userId])
+  // Phase 2: ステータスインデックス
+  @@index([type])
+  @@index([result])
 }
 
 model RentaReference {
@@ -146,6 +155,7 @@ model RentaReference {
   RentaCustomer   RentaCustomer @relation(fields: [rentaCustomerId], references: [id], onDelete: Cascade)
 
   @@unique([rentaCustomerId, refFromId, refToId], name: "unique_rentaCustomerId_refFromId_refToId")
+  @@index([rentaCustomerId])
 }
 
 model RefFrom {

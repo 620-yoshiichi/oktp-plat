@@ -1,11 +1,11 @@
-import {judgeIsAdmin, roleIs} from 'src/non-common/scope-lib/judgeIsAdmin'
+import { judgeIsAdmin, roleIs } from 'src/non-common/scope-lib/judgeIsAdmin'
 
-import {MyTableType} from '@cm/types/types'
-import {MyFormType} from '@cm/types/form-types'
-import {anyObject} from '@cm/types/utility-types'
+import { MyTableType } from '@cm/types/types'
+import { MyFormType } from '@cm/types/form-types'
+import { anyObject } from '@cm/types/utility-types'
 
-import {arr__findCommonValues} from '@cm/class/ArrHandler/array-utils/data-operations'
-import {globalIds} from 'src/non-common/searchParamStr'
+import { arr__findCommonValues } from '@cm/class/ArrHandler/array-utils/data-operations'
+import { globalIds } from 'src/non-common/searchParamStr'
 
 type roleArray = string[] | string
 type session = any
@@ -41,20 +41,20 @@ type oktpUserTypes = {
   isCR?: boolean
   isStoreManager?: boolean
   isSales?: boolean
+  isInSalesDepartment?: boolean
   isTorokuTanto?: boolean
-
   isNewCarMember: boolean
   newCarWhere: carWhereType
 }
 
-type getScopeOptionsProps = {query?: anyObject; roles?: any[]}
+type getScopeOptionsProps = { query?: anyObject; roles?: any[] }
 export const getScopes = (session: session, options?: getScopeOptionsProps) => {
-  const {query, roles} = options ?? {}
+  const { query, roles } = options ?? {}
 
   const login = session?.id ? true : false
   const id = session?.id
 
-  const {admin, getGlobalUserId} = judgeIsAdmin(session, query)
+  const { admin, getGlobalUserId } = judgeIsAdmin(session, query)
 
   type UcarScopeType = {
     carWhere: carWhereType
@@ -65,6 +65,7 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
     isStoreManager?: boolean
     isSales?: boolean
     isChukoshaGroup?: boolean
+    isInSalesDepartment?: boolean
   }
 
   const getNewCarProps = () => {
@@ -101,6 +102,10 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
       (roles ?? []).map(d => d.name)
     )
 
+
+    const isInSalesDepartment = isSales || isStoreManager
+
+
     const newCarWhere = (() => {
       let newCarWhere: carWhereType = {
         storeId: undefined,
@@ -124,8 +129,8 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
           newCarWhere = {
             OR: [
               //
-              {userId: session?.id},
-              {storeId: session?.storeId},
+              { userId: session?.id },
+              { storeId: session?.storeId },
             ],
           }
         }
@@ -140,6 +145,7 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
     })()
 
     const newCarMember = {
+
       admin,
       isHQ,
       isCR,
@@ -147,6 +153,7 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
       isStoreManager,
       isChukoshaGroup,
       isSales,
+      isInSalesDepartment,
     }
 
     const result: oktpUserTypes = {
@@ -160,10 +167,10 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
     }
 
     // addAdminToRoles(result, session)
-    return {...result}
+    return { ...result }
   }
   const getUcarProps = () => {
-    const {isHQ, isStoreManager, isSales, newCarWhere, userId, storeId, isChukoshaGroup} = getNewCarProps()
+    const { isHQ, isStoreManager, isSales, newCarWhere, userId, storeId, isChukoshaGroup, isInSalesDepartment } = getNewCarProps()
 
     const ucarMember = {
       admin,
@@ -171,6 +178,7 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
       isHQ,
       isStoreManager,
       isSales,
+      isInSalesDepartment
     }
 
     const result: UcarScopeType = {
@@ -270,10 +278,10 @@ const addAdminToRoles: (targetObject: any, session: anyObject) => anyObject = (t
   return targetObject
 }
 
-export const limitEditting = (props: {exclusiveTo?: boolean; myTable?: MyTableType; myForm?: MyFormType}) => {
+export const limitEditting = (props: { exclusiveTo?: boolean; myTable?: MyTableType; myForm?: MyFormType }) => {
   const {
     exclusiveTo,
-    myTable = {update: false, delete: false},
+    myTable = { update: false, delete: false },
     myForm = {
       update: false,
       delete: false,

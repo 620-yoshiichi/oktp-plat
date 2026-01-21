@@ -48,6 +48,10 @@ model Car {
   @@index([scheduledAt])
   @@index([crScheduledAt])
   @@index([damageNameMasterId])
+  // Phase 2: パフォーマンスインデックス
+  @@index([active])
+  @@index([carType])
+  @@index([processLastUpdatedAt])
 }
 
 model UserProcessConfirmation {
@@ -140,8 +144,7 @@ model ProcessNameMaster {
   repetitionLimit  Int?
   updatedAt        DateTime? @updatedAt
   Process          Process[]
-
-  @@index([name])
+  // @@index([name]) は @unique と重複するため削除
 }
 
 model Process {
@@ -169,6 +172,9 @@ model Process {
   @@index([carId])
   @@index([storeId])
   @@index([userId])
+  // Phase 2: パフォーマンスインデックス
+  @@index([active])
+  @@index([storeId, date])
 }
 
 model ReleaseNotes {

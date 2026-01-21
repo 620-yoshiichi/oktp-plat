@@ -136,6 +136,7 @@ model Ucar {
 
   OldCars_Base OldCars_Base? @relation(fields: [NO_SIRETYUM, number98, DD_SIIRE], references: [NO_SIRETYUM, NO_SYARYOU, DD_SIIRE])
 
+  @@unique([NO_SIRETYUM, number98, DD_SIIRE])
   @@index([bankBranchMasterId])
   @@index([bankMasterId])
   @@index([userId])
@@ -145,6 +146,13 @@ model Ucar {
   @@index([sateiID])
   @@index([destinationStoreId])
   @@index([tmpRentalStoreId])
+  // Phase 2: パフォーマンスインデックス
+  @@index([active])
+  @@index([active, createdAt])
+  @@index([qrIssuedAt])
+  @@index([processLastUpdatedAt])
+  @@index([arrivedAt])
+  @@index([NO_SIRETYUM, number98, DD_SIIRE])
 }
 
 model Number98 {
@@ -275,6 +283,8 @@ model UcarProcess {
   @@index([date])
   @@index([userId])
   @@index([sateiID])
+  @@index([processCode])
+  @@index([sateiID, processCode])
 }
 
 model UcarPaperWorkNotes {

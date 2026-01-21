@@ -158,9 +158,9 @@ export class UcarCL {
 
   get ai21Data() {
     return {
-      DD_SIIRE: this.data?.OldCars_Base.DD_SIIRE, //仕入日
-      KI_SIIREKA: this.data?.OldCars_Base.KI_SIIREKA, //仕入価格
-      DD_URIAGE: this.data?.OldCars_Base.DD_URIAGE, //売上日
+      DD_SIIRE: this.data?.OldCars_Base?.DD_SIIRE, //仕入日
+      KI_SIIREKA: this.data?.OldCars_Base?.KI_SIIREKA, //仕入価格
+      DD_URIAGE: this.data?.OldCars_Base?.DD_URIAGE, //売上日
       CD_TENJTENP: this.data?.OldCars_Base?.ZAIKO_Base?.CD_TENJTENP ?? '', //在庫店舗
       MJ_ZAIKOST: this.data?.OldCars_Base?.ZAIKO_Base?.MJ_ZAIKOST ?? '', //展示店舗
       KI_HANKAKA: this.data?.OldCars_Base?.KI_HANKAKA ?? 0,
@@ -186,6 +186,7 @@ export class UcarCL {
 
     return {
       sateiID: UPASS.sateiID,
+
       storeName: tmpUcarData?.Store?.name,
       staffName: tmpUcarData?.User?.name,
       nenshiki: nenshiki || tmpUcarData.tmpModelYear,

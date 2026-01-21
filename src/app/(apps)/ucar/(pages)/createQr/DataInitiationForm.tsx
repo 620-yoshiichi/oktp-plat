@@ -1,36 +1,36 @@
 'use client'
 
-import {Fields} from '@cm/class/Fields/Fields'
+import { Fields } from '@cm/class/Fields/Fields'
 
-import {Button} from '@cm/components/styles/common-components/Button'
-import {C_Stack} from '@cm/components/styles/common-components/common-components'
+import { Button } from '@cm/components/styles/common-components/Button'
+import { C_Stack } from '@cm/components/styles/common-components/common-components'
 
 import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
 
-import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
-import {toastByResult} from '@cm/lib/ui/notifications'
-import {UCAR_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-constants'
+import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+import { toastByResult } from '@cm/lib/ui/notifications'
+import { UCAR_CONSTANTS } from '@app/(apps)/ucar/(constants)/ucar-constants'
 
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
-import {HREF} from '@cm/lib/methods/urls'
-import {useRouter} from 'next/navigation'
-import {TextRed} from '@cm/components/styles/common-components/Alert'
-import {toUtc} from '@cm/class/Days/date-utils/calculations'
+import { HREF } from '@cm/lib/methods/urls'
+import { useRouter } from 'next/navigation'
+import { TextRed } from '@cm/components/styles/common-components/Alert'
+import { toUtc } from '@cm/class/Days/date-utils/calculations'
 
-export const DataInitiationForm = ({stores, ucar, toggleLoad, session, sateiID_Input, hasUpassData}) => {
-  const {addQuery, query, accessScopes} = useGlobal()
+export const DataInitiationForm = ({ stores, ucar, toggleLoad, session, sateiID_Input, hasUpassData }) => {
+  const { addQuery, query, accessScopes } = useGlobal()
   const scopes = accessScopes()
-  const {isHQ, isStoreManager, isSales, carWhere, userId, storeId} = scopes.getUcarProps()
+  const { isHQ, userId, storeId } = scopes.getUcarProps()
   const router = useRouter()
 
   // 基本フィールド（店舗、自力走行可否、備考）
-  const baseColumns = UCAR_CONSTANTS.columns.getQrSheetIssueInfoCol({stores})
+  const baseColumns = UCAR_CONSTANTS.columns.getQrSheetIssueInfoCol({ stores })
 
   // UPASSDBにデータがない場合の追加フィールド
   const tmpColumns = hasUpassData ? [] : UCAR_CONSTANTS.columns.getTmpCarInfoCol()
   const allColumns = new Fields([...baseColumns, ...tmpColumns]).transposeColumns()
 
-  const {BasicForm, latestFormData} = useBasicFormProps({
+  const { BasicForm, latestFormData } = useBasicFormProps({
     columns: allColumns,
   })
 
@@ -55,7 +55,7 @@ export const DataInitiationForm = ({stores, ucar, toggleLoad, session, sateiID_I
       toastByResult(res)
       if (res.success) {
         // QRシートページへ遷移
-        router.push(HREF(`/ucar/qr`, {sateiID: sateiID_Input}, query))
+        router.push(HREF(`/ucar/qr`, { sateiID: sateiID_Input }, query))
       }
     })
   }

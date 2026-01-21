@@ -1,15 +1,14 @@
 'use client'
 
-import {columnGetterType} from '@cm/types/types'
-import {colType} from '@cm/types/col-types'
-import {Fields} from '@cm/class/Fields/Fields'
-import {R_Stack} from '@cm/components/styles/common-components/common-components'
-import {PencilSquareIcon} from '@heroicons/react/20/solid'
+import { columnGetterType } from '@cm/types/types'
+import { colType } from '@cm/types/col-types'
+import { Fields } from '@cm/class/Fields/Fields'
+import { R_Stack } from '@cm/components/styles/common-components/common-components'
+import { PencilSquareIcon } from '@heroicons/react/20/solid'
 import useRoleGMF from '@cm/hooks/useRoleGMF'
-import {getScopes} from 'src/non-common/scope-lib/getScopes'
-import {allOktpRoles} from '@app/oktpCommon/constants'
-import AppsArraySelector from '@app/(apps)/common/user/components/AppsArraySelector'
-import {BP_Car} from '@app/(apps)/QRBP/class/BP_Car'
+import { getScopes } from 'src/non-common/scope-lib/getScopes'
+import { allOktpRoles } from '@app/oktpCommon/constants'
+import { BP_Car } from '@app/(apps)/QRBP/class/BP_Car'
 
 export class ColBuilder {
   static store = (props: columnGetterType) => {
@@ -19,39 +18,39 @@ export class ColBuilder {
         label: '拠点コード',
         type: 'number',
         td: {},
-        form: {register: {required: '必須'}},
+        form: { register: { required: '必須' } },
         search: {},
         sort: {},
       },
       {
         id: 'name',
         label: '名前',
-        form: {register: {required: '必須'}},
+        form: { register: { required: '必須' } },
         search: {},
         sort: {},
       },
       {
         id: 'tel',
         label: '電話番号',
-        form: {register: {}},
+        form: { register: {} },
         search: {},
       },
       {
         id: 'fax',
         label: 'FAX番号',
-        form: {register: {}},
+        form: { register: {} },
         search: {},
       },
       {
         id: 'address',
         label: '住所',
-        form: {register: {}},
+        form: { register: {} },
         search: {},
       },
       {
         id: 'areaId',
         label: '配送エリア区分',
-        form: {register: {}},
+        form: { register: {} },
         forSelect: {},
         search: {},
       },
@@ -75,8 +74,8 @@ export class ColBuilder {
   }
 
   static user = (props: columnGetterType) => {
-    const {useGlobalProps} = props
-    const {session} = useGlobalProps
+    const { useGlobalProps } = props
+    const { session } = useGlobalProps
     const scopes = getScopes(session)
 
     // 共通カラム（常に表示）
@@ -93,7 +92,7 @@ export class ColBuilder {
         type: 'number',
         label: 'コード',
         form: {
-          register: {required: '必須'},
+          register: { required: '必須' },
           disabled: !scopes.admin,
         },
         sort: {},
@@ -104,7 +103,7 @@ export class ColBuilder {
         label: '拠点',
         forSelect: {},
         form: {
-          register: {required: '必須'},
+          register: { required: '必須' },
           disabled: !scopes.admin,
         },
         sort: {},
@@ -114,7 +113,7 @@ export class ColBuilder {
         id: 'name',
         label: '氏名',
         form: {
-          register: {required: '必須'},
+          register: { required: '必須' },
           disabled: !scopes.admin,
         },
         sort: {},
@@ -133,7 +132,7 @@ export class ColBuilder {
         id: 'email',
         label: 'メールアドレス',
         form: {
-          register: {required: '必須'},
+          // register: { required: '必須' },
           disabled: !scopes.admin,
         },
         sort: {},
@@ -147,48 +146,48 @@ export class ColBuilder {
         form: {
           disabled: !scopes.admin,
         },
-        td: {hidden: true},
+        td: { hidden: true },
       },
-      {
-        id: 'apps',
-        label: 'アプリ',
-        type: 'array',
-        form: {
-          disabled: !scopes.admin,
-          editFormat: (props: any) => {
-            return <AppsArraySelector {...props} />
-          },
-        },
-        format: (value, row) => {
-          return value?.join(' / ') || ''
-        },
-        sort: {},
-      },
+      // {
+      //   id: 'apps',
+      //   label: 'アプリ',
+      //   type: 'array',
+      //   form: {
+      //     disabled: !scopes.admin,
+      //     editFormat: (props: any) => {
+      //       return <AppsArraySelector {...props} />
+      //     },
+      //   },
+      //   format: (value, row) => {
+      //     return value?.join(' / ') || ''
+      //   },
+      //   sort: {},
+      // },
       {
         id: 'userRoles',
         label: '権限',
         format: (value, row: any) => {
-          const {setGMF_OPEN} = useRoleGMF()
+          const { setGMF_OPEN } = useRoleGMF()
           return (
-            <R_Stack {...{className: `onHover flex-nowrap gap-0.5`, onClick: () => setGMF_OPEN({user: row})}}>
+            <R_Stack {...{ className: `onHover flex-nowrap gap-0.5`, onClick: () => setGMF_OPEN({ user: row }) }}>
               <PencilSquareIcon className={`min-w-4 h-4`} />
               <small>{row.UserRole?.map(role => role.RoleMaster.name).join(' / ') || '権限なし'}</small>
             </R_Stack>
           )
         },
-        form: {hidden: true},
+        form: { hidden: true },
         sort: {},
       },
-      {
-        id: 'role',
-        label: '権限（旧・非推奨）',
-        format: value => value || '',
-        form: {
-          disabled: true, // 編集不可（UserRole経由で管理）
-        },
-        sort: {},
-        search: {},
-      },
+      // {
+      //   id: 'role',
+      //   label: '権限（旧・非推奨）',
+      //   format: value => value || '',
+      //   form: {
+      //     disabled: true, // 編集不可（UserRole経由で管理）
+      //   },
+      //   sort: {},
+      //   search: {},
+      // },
     ]
 
     // QRBP固有のカラム（条件付き表示）
@@ -196,8 +195,8 @@ export class ColBuilder {
     const qrbpCols: colType[] = [
       {
         id: 'type2',
-        label: '区分2（エンジニアチーム）',
-        form: {disabled: !scopes.admin},
+        label: 'エンジニアチーム',
+        form: { disabled: !scopes.admin },
         search: {},
         sort: {},
         forSelect: {
@@ -237,7 +236,7 @@ export class ColBuilder {
         id: 'name',
         label: '役割名称',
         form: {
-          register: {required: '必須'},
+          register: { required: '必須' },
         },
         forSelect: {
           optionsOrOptionFetcher: allOktpRoles,

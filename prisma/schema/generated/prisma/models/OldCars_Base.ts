@@ -525,7 +525,7 @@ export type OldCars_BaseWhereInput = {
   DD_NOSYA?: Prisma.DateTimeNullableFilter<"OldCars_Base"> | Date | string | null
   MJ_SITADOTE?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
   Number98?: Prisma.XOR<Prisma.Number98NullableScalarRelationFilter, Prisma.Number98WhereInput> | null
-  Ucar?: Prisma.UcarListRelationFilter
+  Ucar?: Prisma.XOR<Prisma.UcarNullableScalarRelationFilter, Prisma.UcarWhereInput> | null
   ZAIKO_Base?: Prisma.XOR<Prisma.ZAIKO_BaseNullableScalarRelationFilter, Prisma.ZAIKO_BaseWhereInput> | null
 }
 
@@ -574,7 +574,7 @@ export type OldCars_BaseOrderByWithRelationInput = {
   DD_NOSYA?: Prisma.SortOrderInput | Prisma.SortOrder
   MJ_SITADOTE?: Prisma.SortOrderInput | Prisma.SortOrder
   Number98?: Prisma.Number98OrderByWithRelationInput
-  Ucar?: Prisma.UcarOrderByRelationAggregateInput
+  Ucar?: Prisma.UcarOrderByWithRelationInput
   ZAIKO_Base?: Prisma.ZAIKO_BaseOrderByWithRelationInput
 }
 
@@ -627,7 +627,7 @@ export type OldCars_BaseWhereUniqueInput = Prisma.AtLeast<{
   DD_NOSYA?: Prisma.DateTimeNullableFilter<"OldCars_Base"> | Date | string | null
   MJ_SITADOTE?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
   Number98?: Prisma.XOR<Prisma.Number98NullableScalarRelationFilter, Prisma.Number98WhereInput> | null
-  Ucar?: Prisma.UcarListRelationFilter
+  Ucar?: Prisma.XOR<Prisma.UcarNullableScalarRelationFilter, Prisma.UcarWhereInput> | null
   ZAIKO_Base?: Prisma.XOR<Prisma.ZAIKO_BaseNullableScalarRelationFilter, Prisma.ZAIKO_BaseWhereInput> | null
 }, "APPINDEX" | "id" | "APPINDEX" | "NO_SIRETYUM_NO_SYARYOU_DD_SIIRE">
 
@@ -775,7 +775,7 @@ export type OldCars_BaseCreateInput = {
   DD_NOSYA?: Date | string | null
   MJ_SITADOTE?: string | null
   Number98?: Prisma.Number98CreateNestedOneWithoutOldCars_BaseInput
-  Ucar?: Prisma.UcarCreateNestedManyWithoutOldCars_BaseInput
+  Ucar?: Prisma.UcarCreateNestedOneWithoutOldCars_BaseInput
   ZAIKO_Base?: Prisma.ZAIKO_BaseCreateNestedOneWithoutOldCars_BaseInput
 }
 
@@ -823,7 +823,7 @@ export type OldCars_BaseUncheckedCreateInput = {
   DD_SITASYUK?: Date | string | null
   DD_NOSYA?: Date | string | null
   MJ_SITADOTE?: string | null
-  Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutOldCars_BaseInput
+  Ucar?: Prisma.UcarUncheckedCreateNestedOneWithoutOldCars_BaseInput
   ZAIKO_Base?: Prisma.ZAIKO_BaseUncheckedCreateNestedOneWithoutOldCars_BaseInput
 }
 
@@ -870,7 +870,7 @@ export type OldCars_BaseUpdateInput = {
   DD_NOSYA?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   MJ_SITADOTE?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Number98?: Prisma.Number98UpdateOneWithoutOldCars_BaseNestedInput
-  Ucar?: Prisma.UcarUpdateManyWithoutOldCars_BaseNestedInput
+  Ucar?: Prisma.UcarUpdateOneWithoutOldCars_BaseNestedInput
   ZAIKO_Base?: Prisma.ZAIKO_BaseUpdateOneWithoutOldCars_BaseNestedInput
 }
 
@@ -918,7 +918,7 @@ export type OldCars_BaseUncheckedUpdateInput = {
   DD_SITASYUK?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_NOSYA?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   MJ_SITADOTE?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  Ucar?: Prisma.UcarUncheckedUpdateManyWithoutOldCars_BaseNestedInput
+  Ucar?: Prisma.UcarUncheckedUpdateOneWithoutOldCars_BaseNestedInput
   ZAIKO_Base?: Prisma.ZAIKO_BaseUncheckedUpdateOneWithoutOldCars_BaseNestedInput
 }
 
@@ -1345,7 +1345,7 @@ export type OldCars_BaseCreateWithoutZAIKO_BaseInput = {
   DD_NOSYA?: Date | string | null
   MJ_SITADOTE?: string | null
   Number98?: Prisma.Number98CreateNestedOneWithoutOldCars_BaseInput
-  Ucar?: Prisma.UcarCreateNestedManyWithoutOldCars_BaseInput
+  Ucar?: Prisma.UcarCreateNestedOneWithoutOldCars_BaseInput
 }
 
 export type OldCars_BaseUncheckedCreateWithoutZAIKO_BaseInput = {
@@ -1392,7 +1392,7 @@ export type OldCars_BaseUncheckedCreateWithoutZAIKO_BaseInput = {
   DD_SITASYUK?: Date | string | null
   DD_NOSYA?: Date | string | null
   MJ_SITADOTE?: string | null
-  Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutOldCars_BaseInput
+  Ucar?: Prisma.UcarUncheckedCreateNestedOneWithoutOldCars_BaseInput
 }
 
 export type OldCars_BaseCreateOrConnectWithoutZAIKO_BaseInput = {
@@ -1454,7 +1454,7 @@ export type OldCars_BaseUpdateWithoutZAIKO_BaseInput = {
   DD_NOSYA?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   MJ_SITADOTE?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Number98?: Prisma.Number98UpdateOneWithoutOldCars_BaseNestedInput
-  Ucar?: Prisma.UcarUpdateManyWithoutOldCars_BaseNestedInput
+  Ucar?: Prisma.UcarUpdateOneWithoutOldCars_BaseNestedInput
 }
 
 export type OldCars_BaseUncheckedUpdateWithoutZAIKO_BaseInput = {
@@ -1501,7 +1501,7 @@ export type OldCars_BaseUncheckedUpdateWithoutZAIKO_BaseInput = {
   DD_SITASYUK?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_NOSYA?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   MJ_SITADOTE?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  Ucar?: Prisma.UcarUncheckedUpdateManyWithoutOldCars_BaseNestedInput
+  Ucar?: Prisma.UcarUncheckedUpdateOneWithoutOldCars_BaseNestedInput
 }
 
 export type OldCars_BaseCreateWithoutUcarInput = {
@@ -1750,7 +1750,7 @@ export type OldCars_BaseCreateWithoutNumber98Input = {
   DD_SITASYUK?: Date | string | null
   DD_NOSYA?: Date | string | null
   MJ_SITADOTE?: string | null
-  Ucar?: Prisma.UcarCreateNestedManyWithoutOldCars_BaseInput
+  Ucar?: Prisma.UcarCreateNestedOneWithoutOldCars_BaseInput
   ZAIKO_Base?: Prisma.ZAIKO_BaseCreateNestedOneWithoutOldCars_BaseInput
 }
 
@@ -1797,7 +1797,7 @@ export type OldCars_BaseUncheckedCreateWithoutNumber98Input = {
   DD_SITASYUK?: Date | string | null
   DD_NOSYA?: Date | string | null
   MJ_SITADOTE?: string | null
-  Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutOldCars_BaseInput
+  Ucar?: Prisma.UcarUncheckedCreateNestedOneWithoutOldCars_BaseInput
   ZAIKO_Base?: Prisma.ZAIKO_BaseUncheckedCreateNestedOneWithoutOldCars_BaseInput
 }
 
@@ -1963,7 +1963,7 @@ export type OldCars_BaseUpdateWithoutNumber98Input = {
   DD_SITASYUK?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_NOSYA?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   MJ_SITADOTE?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  Ucar?: Prisma.UcarUpdateManyWithoutOldCars_BaseNestedInput
+  Ucar?: Prisma.UcarUpdateOneWithoutOldCars_BaseNestedInput
   ZAIKO_Base?: Prisma.ZAIKO_BaseUpdateOneWithoutOldCars_BaseNestedInput
 }
 
@@ -2010,7 +2010,7 @@ export type OldCars_BaseUncheckedUpdateWithoutNumber98Input = {
   DD_SITASYUK?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_NOSYA?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   MJ_SITADOTE?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  Ucar?: Prisma.UcarUncheckedUpdateManyWithoutOldCars_BaseNestedInput
+  Ucar?: Prisma.UcarUncheckedUpdateOneWithoutOldCars_BaseNestedInput
   ZAIKO_Base?: Prisma.ZAIKO_BaseUncheckedUpdateOneWithoutOldCars_BaseNestedInput
 }
 
@@ -2060,35 +2060,6 @@ export type OldCars_BaseUncheckedUpdateManyWithoutNumber98Input = {
 }
 
 
-/**
- * Count Type OldCars_BaseCountOutputType
- */
-
-export type OldCars_BaseCountOutputType = {
-  Ucar: number
-}
-
-export type OldCars_BaseCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  Ucar?: boolean | OldCars_BaseCountOutputTypeCountUcarArgs
-}
-
-/**
- * OldCars_BaseCountOutputType without action
- */
-export type OldCars_BaseCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the OldCars_BaseCountOutputType
-   */
-  select?: Prisma.OldCars_BaseCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * OldCars_BaseCountOutputType without action
- */
-export type OldCars_BaseCountOutputTypeCountUcarArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.UcarWhereInput
-}
-
 
 export type OldCars_BaseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2137,7 +2108,6 @@ export type OldCars_BaseSelect<ExtArgs extends runtime.Types.Extensions.Internal
   Number98?: boolean | Prisma.OldCars_Base$Number98Args<ExtArgs>
   Ucar?: boolean | Prisma.OldCars_Base$UcarArgs<ExtArgs>
   ZAIKO_Base?: boolean | Prisma.OldCars_Base$ZAIKO_BaseArgs<ExtArgs>
-  _count?: boolean | Prisma.OldCars_BaseCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["oldCars_Base"]>
 
 export type OldCars_BaseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -2285,7 +2255,6 @@ export type OldCars_BaseInclude<ExtArgs extends runtime.Types.Extensions.Interna
   Number98?: boolean | Prisma.OldCars_Base$Number98Args<ExtArgs>
   Ucar?: boolean | Prisma.OldCars_Base$UcarArgs<ExtArgs>
   ZAIKO_Base?: boolean | Prisma.OldCars_Base$ZAIKO_BaseArgs<ExtArgs>
-  _count?: boolean | Prisma.OldCars_BaseCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type OldCars_BaseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Number98?: boolean | Prisma.OldCars_Base$Number98Args<ExtArgs>
@@ -2298,7 +2267,7 @@ export type $OldCars_BasePayload<ExtArgs extends runtime.Types.Extensions.Intern
   name: "OldCars_Base"
   objects: {
     Number98: Prisma.$Number98Payload<ExtArgs> | null
-    Ucar: Prisma.$UcarPayload<ExtArgs>[]
+    Ucar: Prisma.$UcarPayload<ExtArgs> | null
     ZAIKO_Base: Prisma.$ZAIKO_BasePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -2740,7 +2709,7 @@ readonly fields: OldCars_BaseFieldRefs;
 export interface Prisma__OldCars_BaseClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   Number98<T extends Prisma.OldCars_Base$Number98Args<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OldCars_Base$Number98Args<ExtArgs>>): Prisma.Prisma__Number98Client<runtime.Types.Result.GetResult<Prisma.$Number98Payload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  Ucar<T extends Prisma.OldCars_Base$UcarArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OldCars_Base$UcarArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UcarPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  Ucar<T extends Prisma.OldCars_Base$UcarArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OldCars_Base$UcarArgs<ExtArgs>>): Prisma.Prisma__UcarClient<runtime.Types.Result.GetResult<Prisma.$UcarPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   ZAIKO_Base<T extends Prisma.OldCars_Base$ZAIKO_BaseArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OldCars_Base$ZAIKO_BaseArgs<ExtArgs>>): Prisma.Prisma__ZAIKO_BaseClient<runtime.Types.Result.GetResult<Prisma.$ZAIKO_BasePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -3245,11 +3214,6 @@ export type OldCars_Base$UcarArgs<ExtArgs extends runtime.Types.Extensions.Inter
    */
   include?: Prisma.UcarInclude<ExtArgs> | null
   where?: Prisma.UcarWhereInput
-  orderBy?: Prisma.UcarOrderByWithRelationInput | Prisma.UcarOrderByWithRelationInput[]
-  cursor?: Prisma.UcarWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.UcarScalarFieldEnum | Prisma.UcarScalarFieldEnum[]
 }
 
 /**

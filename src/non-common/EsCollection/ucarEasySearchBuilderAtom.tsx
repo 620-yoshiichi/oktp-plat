@@ -7,28 +7,36 @@ import {
   toRowGroup,
 } from '@cm/class/builders/QueryBuilderVariables'
 
-import {Prisma} from '@prisma/generated/prisma/client'
-import {addDays} from 'date-fns'
+import { Prisma } from '@prisma/generated/prisma/client'
+import { addDays } from 'date-fns'
 
-import {shorten} from '@cm/lib/methods/common'
-import {sold, unsold} from '@app/(apps)/ucar/(constants)/ucar-constants'
-import {IsActiveDisplay} from '@app/(apps)/ucar/(lib)/isActiveDisplays'
-import {UcarProcessCl} from '@app/(apps)/ucar/class/UcarProcessCl'
-import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
-import {UCAR_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-constants'
+import { shorten } from '@cm/lib/methods/common'
+import { sold, unsold } from '@app/(apps)/ucar/(constants)/ucar-constants'
+import { IsActiveDisplay } from '@app/(apps)/ucar/(lib)/isActiveDisplays'
+import { UcarProcessCl } from '@app/(apps)/ucar/class/UcarProcessCl'
+import { UCAR_CODE } from '@app/(apps)/ucar/class/UCAR_CODE'
+import { UCAR_CONSTANTS } from '@app/(apps)/ucar/(constants)/ucar-constants'
+import { initServerComopnent } from 'src/non-common/serverSideFunction'
+import { obj__cleanObject } from '@cm/class/ObjHandler/transformers'
 
-export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
+export const ucarEasySearchBuilderAtom = async (props: easySearchType) => {
+  const { session, scopes } = await initServerComopnent({ query: props.query })
+  const { isHQ, isSales, isInSalesDepartment, } = scopes.getUcarProps()
+
+
   const processMasterRaw = UcarProcessCl.CODE.raw
-  type CONDITION_TYPE = Prisma.UcarWhereInput
 
-  const {query, easySearchExtraProps} = props
-  const {enginerringProcesses, stores} = easySearchExtraProps ?? {}
-  const notFinalizedWhere = {meihenBi: null, masshoBi: null}
+
+  const { query, easySearchExtraProps } = props
+  const { enginerringProcesses, stores } = easySearchExtraProps ?? {}
+  const notFinalizedWhere = { meihenBi: null, masshoBi: null }
+
+
 
   type EsObj = EasySearchObjectAtom<Prisma.UcarWhereInput>
 
   const isNotYoyakuwaku = {
-    OR: [{daihatsuReserve: null}, {daihatsuReserve: ''}],
+    OR: [{ daihatsuReserve: null }, { daihatsuReserve: '' }],
   }
   const commonWhere: Prisma.UcarWhereInput = {
     AND: [
@@ -54,8 +62,8 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
       AND: [
         //
         commonWhere,
-        {UcarProcess: {none: tenchoQrChecked}}, //店長が未チェック、
-        {UcarProcess: {none: stuffQrChecked}}, //かつスタッフが未チェック
+        { UcarProcess: { none: tenchoQrChecked } }, //店長が未チェック、
+        { UcarProcess: { none: stuffQrChecked } }, //かつスタッフが未チェック
       ],
     },
   }
@@ -68,8 +76,8 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
       AND: [
         //
         commonWhere,
-        {UcarProcess: {some: stuffQrChecked}}, //スタッフがチェック済み
-        {UcarProcess: {none: tenchoQrChecked}}, //かつ店長が未チェック
+        { UcarProcess: { some: stuffQrChecked } }, //スタッフがチェック済み
+        { UcarProcess: { none: tenchoQrChecked } }, //かつ店長が未チェック
       ],
     },
   }
@@ -84,8 +92,8 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
       AND: [
         //
         commonWhere,
-        {UcarProcess: {some: {processCode: processMasterRaw.STORE_SHORUI_SOUHU.code}}},
-        {arrivedAt: null},
+        { UcarProcess: { some: { processCode: processMasterRaw.STORE_SHORUI_SOUHU.code } } },
+        { arrivedAt: null },
       ],
     },
   }
@@ -118,9 +126,9 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
       AND: [
         //
         commonWhere,
-        {AND: [notFinalizedWhere, {secondMeihenbi: null}]},
+        { AND: [notFinalizedWhere, { secondMeihenbi: null }] },
 
-        {inkanCertificateExpiredAt: {lte: addDays(new Date(), 30)}},
+        { inkanCertificateExpiredAt: { lte: addDays(new Date(), 30) } },
       ],
     },
   }
@@ -133,7 +141,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
         //
         commonWhere,
         notFinalizedWhere,
-        {inkanAlternate: UCAR_CODE.INKAN_ALTERNATES.raw.KEI.code},
+        { inkanAlternate: UCAR_CODE.INKAN_ALTERNATES.raw.KEI.code },
       ],
     },
   }
@@ -146,8 +154,8 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
       AND: [
         //
 
-        {number98: {not: ''}},
-        {OldCars_Base: {DD_SIIRE: {not: null}}},
+        { number98: { not: '' } },
+        { OldCars_Base: { DD_SIIRE: { not: null } } },
       ],
     },
   }
@@ -158,8 +166,8 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
       AND: [
         //
 
-        {number98: {not: ''}},
-        {NOT: {OldCars_Base: {DD_SIIRE: {not: null}}}},
+        { number98: { not: '' } },
+        { NOT: { OldCars_Base: { DD_SIIRE: { not: null } } } },
       ],
     },
   }
@@ -170,7 +178,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
       AND: [
         //
 
-        {number98: ''},
+        { number98: '' },
       ],
     },
   }
@@ -185,7 +193,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
       AND: [
         //
         commonWhere,
-        {processedAs: null},
+        { processedAs: null },
       ],
     },
   }
@@ -198,8 +206,8 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
       AND: [
         //
         commonWhere,
-        {processedAs: UCAR_CODE.PROCESSED_AS.raw.MEIGIHENKO.code},
-        {meihenBi: null},
+        { processedAs: UCAR_CODE.PROCESSED_AS.raw.MEIGIHENKO.code },
+        { meihenBi: null },
       ],
     },
   }
@@ -212,7 +220,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
       AND: [
         //
         commonWhere,
-        {destination: null},
+        { destination: null },
       ],
     },
   }
@@ -224,7 +232,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
       AND: [
         //
         commonWhere,
-        {destination: {not: null}},
+        { destination: { not: null } },
       ],
     },
   }
@@ -237,8 +245,8 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
       AND: [
         //
         commonWhere,
-        {processedAs: UCAR_CODE.PROCESSED_AS.raw.MASSESHO.code},
-        {masshoBi: null},
+        { processedAs: UCAR_CODE.PROCESSED_AS.raw.MASSESHO.code },
+        { masshoBi: null },
       ],
     },
   }
@@ -250,8 +258,8 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
       AND: [
         //
         commonWhere,
-        {processedAs: UCAR_CODE.PROCESSED_AS.raw.MEIGIHENKO.code},
-        {meihenBi: {not: null}},
+        { processedAs: UCAR_CODE.PROCESSED_AS.raw.MEIGIHENKO.code },
+        { meihenBi: { not: null } },
       ],
     },
   }
@@ -263,8 +271,8 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
       AND: [
         //
         commonWhere,
-        {processedAs: UCAR_CODE.PROCESSED_AS.raw.MASSESHO.code},
-        {masshoBi: {not: null}},
+        { processedAs: UCAR_CODE.PROCESSED_AS.raw.MASSESHO.code },
+        { masshoBi: { not: null } },
       ],
     },
   }
@@ -276,7 +284,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
       AND: [
         //
         commonWhere,
-        {AppliedUcarGarageSlot: {isNot: null}},
+        { AppliedUcarGarageSlot: { isNot: null } },
       ],
     },
   }
@@ -305,7 +313,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     CONDITION: {
       AND: [
         //
-        {NOT: isNotYoyakuwaku},
+        { NOT: isNotYoyakuwaku },
       ],
     },
   }
@@ -318,7 +326,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
       AND: [
         //
         commonWhere,
-        {Model_name: {not: null}},
+        { Model_name: { not: null } },
       ],
     },
   }
@@ -329,7 +337,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
       AND: [
         //
         commonWhere,
-        {Model_name: null},
+        { Model_name: null },
       ],
     },
   }
@@ -337,13 +345,13 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
   // ===========税========
 
   const hasException = {
-    AND: [{exception: {not: null}}, {exception: {not: ''}}],
+    AND: [{ exception: { not: null } }, { exception: { not: '' } }],
   }
   const taxTargetCommonCondition: Prisma.UcarWhereInput = {
     AND: [
       //
-      {henkinRequired: {not: false}},
-      {NOT: hasException},
+      { henkinRequired: { not: false } },
+      { NOT: hasException },
     ],
   }
 
@@ -356,7 +364,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
         //
         commonWhere,
         taxTargetCommonCondition,
-        {paybackScheduledAt: null},
+        { paybackScheduledAt: null },
       ],
     },
   }
@@ -369,8 +377,8 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
         //
         commonWhere,
         taxTargetCommonCondition,
-        {paybackScheduledAt: {not: null}},
-        {accountingRecievedAt: null},
+        { paybackScheduledAt: { not: null } },
+        { accountingRecievedAt: null },
       ],
     },
   }
@@ -383,7 +391,7 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
         //
         commonWhere,
         taxTargetCommonCondition,
-        {accountingRecievedAt: {not: null}},
+        { accountingRecievedAt: { not: null } },
       ],
     },
   }
@@ -419,76 +427,65 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     sold: {
       label: '売上済み',
       description: '売上が確定している車両',
-      CONDITION: {...sold},
+      CONDITION: { ...sold },
     },
   }
 
-  // ===========加修工程別========
-  const Ex_ResaleProcessGroup = {
-    ...Object.fromEntries(
-      (enginerringProcesses ?? []).map(process => {
-        const key = `${process.name}IsLast`
-        const value = {
-          label: `${process.name}`,
-          description: `最終工程が${process.name}のもの`,
-          CONDITION: {ucarLastProcessMasterId: process.id},
-        }
 
-        return [key, value]
-      })
-    ),
-  }
-
-  const atoms = {
+  const atoms = obj__cleanObject({
     pending__retendedOnStuff,
     pending__retendedOnStore,
 
     paperStatus__unReceived,
     paperStatus__paperErrorHq,
-    paperStatus__inkanDeadline,
-    paperStatus__isKeiYon,
+    paperStatus__inkanDeadline: isInSalesDepartment ? null : paperStatus__inkanDeadline,
+    paperStatus__isKeiYon: isInSalesDepartment ? null : paperStatus__isKeiYon,
 
-    destination__undecided,
-    destination__meihen_not_done,
+    destination__undecided: isInSalesDepartment ? null : destination__undecided,
+    destination__meihen_not_done: isInSalesDepartment ? null : destination__meihen_not_done,
 
-    destination__massho_not_done,
+    destination__massho_not_done: isInSalesDepartment ? null : destination__massho_not_done,
 
-    number98__exist,
-    number98__pending,
-    number98__notExist,
+    number98__exist: isInSalesDepartment ? null : number98__exist,
+    number98__pending: isInSalesDepartment ? null : number98__pending,
+    number98__notExist: isInSalesDepartment ? null : number98__notExist,
 
-    shiwake__undecided,
-    shiwake__decided,
+    shiwake__undecided: isInSalesDepartment ? null : shiwake__undecided,
+    shiwake__decided: isInSalesDepartment ? null : shiwake__decided,
 
-    destinationCompleted__meihen_done,
-    destinationCompleted__massho_done,
-    destinationCompleted__shakoShomeiDone,
+    destinationCompleted__meihen_done: isInSalesDepartment ? null : destinationCompleted__meihen_done,
+    destinationCompleted__massho_done: isInSalesDepartment ? null : destinationCompleted__massho_done,
+    destinationCompleted__shakoShomeiDone: isInSalesDepartment ? null : destinationCompleted__shakoShomeiDone,
 
-    tax__unScheduled,
-    tax__scheduled_pending,
-    tax__scheduled_done,
-    tax__has_exception,
+    tax__unScheduled: isInSalesDepartment ? null : tax__unScheduled,
+    tax__scheduled_pending: isInSalesDepartment ? null : tax__scheduled_pending,
+    tax__scheduled_done: isInSalesDepartment ? null : tax__scheduled_done,
+    tax__has_exception: isInSalesDepartment ? null : tax__has_exception,
 
-    satei__linked,
-    satei__nonlinked,
+    satei__linked: isInSalesDepartment ? null : satei__linked,
+    satei__nonlinked: isInSalesDepartment ? null : satei__nonlinked,
 
-    shinko__reserve,
-  }
+    shinko__reserve: isInSalesDepartment ? null : shinko__reserve,
+  })
+
+
+
+
 
   const ExGroup = makeExGroup(atoms)
 
   const dataArr: makeEasySearchGroupsProp[] = []
 
   const forEigyou = [
-    {exclusiveGroup: ExGroup[`pending`], name: `店舗ステータス`},
-    {exclusiveGroup: ExGroup[`paperStatus`], name: `書類受付ステータス`},
+    { exclusiveGroup: ExGroup[`pending`], name: `店舗ステータス` },
+    { exclusiveGroup: ExGroup[`paperStatus`], name: `書類受付ステータス` },
   ]
 
   const paperGroups = [
     {
       exclusiveGroup: ExGroup[`shinko`],
       name: `新古車予約枠`,
-      additionalProps: {defaultOpen: false},
+      additionalProps: { defaultOpen: false },
     },
 
     {
@@ -498,18 +495,18 @@ export const ucarEasySearchBuilderAtom = (props: easySearchType) => {
     {
       exclusiveGroup: ExGroup[`number98`],
       name: `98番号付与状況`,
-      additionalProps: {defaultOpen: false},
+      additionalProps: { defaultOpen: false },
     },
     {
       exclusiveGroup: ExGroup[`shiwake`],
       name: `仕分結果`,
-      additionalProps: {defaultOpen: false},
+      additionalProps: { defaultOpen: false },
     },
 
     {
       exclusiveGroup: ExGroup[`destinationCompleted`],
       name: `名変抹消完了`,
-      additionalProps: {defaultOpen: false},
+      additionalProps: { defaultOpen: false },
     },
   ]
 

@@ -120,7 +120,7 @@ model OldCars_Base {
   MJ_SITADOTE String?
 
   Number98   Number98?   @relation(fields: [NO_SYARYOU], references: [number])
-  Ucar       Ucar[]
+  Ucar       Ucar?
   ZAIKO_Base ZAIKO_Base?
 
   @@unique([NO_SIRETYUM, NO_SYARYOU, DD_SIIRE])
@@ -172,6 +172,7 @@ model ZAIKO_Base {
   @@index([NO_SYARYOU])
   @@index([CD_ZAIKOTEN])
   @@index([NO_SIRETYUM, NO_SYARYOU, DD_SIIRE])
+  @@index([APPINDEX_FKEY])
 }
 
 model UpassFamilyTree {
@@ -185,6 +186,7 @@ model UpassFamilyTree {
   RootUpass UPASS @relation(name: "RootUpass", fields: [rootSateiID], references: [sateiID])
 
   @@unique([sateiID, rootSateiID])
+  @@index([rootSateiID])
 }
 
 model UPASS {

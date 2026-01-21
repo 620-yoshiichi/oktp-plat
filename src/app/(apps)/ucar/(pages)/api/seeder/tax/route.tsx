@@ -1,14 +1,14 @@
-import {NextRequest, NextResponse} from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
-import {doTransaction, transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
+import { doTransaction, transactionQuery } from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
 import prisma from 'src/lib/prisma'
-import {GoogleSheet_Read} from '@app/api/google/actions/sheetAPI'
-import {formatDate} from '@cm/class/Days/date-utils/formatters'
-import {toUtc} from '@cm/class/Days/date-utils/calculations'
-import {handlePrismaError} from '@cm/lib/prisma-helper'
-import {Days} from '@cm/class/Days/Days'
-import {processBatchWithRetry} from '@cm/lib/server-actions/common-server-actions/processBatchWithRetry'
-import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
+import { GoogleSheet_Read } from '@app/api/google/actions/sheetAPI'
+import { formatDate } from '@cm/class/Days/date-utils/formatters'
+import { toUtc } from '@cm/class/Days/date-utils/calculations'
+import { handlePrismaError } from '@cm/lib/prisma-helper'
+import { Days } from '@cm/class/Days/Days'
+import { processBatchWithRetry } from '@cm/lib/server-actions/common-server-actions/processBatchWithRetry'
+import { UCAR_CODE } from '@app/(apps)/ucar/class/UCAR_CODE'
 
 export const POST = async (req: NextRequest) => {
   const spread_res = await GoogleSheet_Read({
@@ -59,11 +59,8 @@ export const POST = async (req: NextRequest) => {
   })
 
   // 最初に銀行データを作成
-  const {upsertedBanks, upsertedBranches} = await upsertBankData(rows)
+  const { upsertedBanks, upsertedBranches } = await upsertBankData(rows)
 
-  const number98List = await prisma.number98.findMany({
-    select: {id: true, number: true},
-  })
 
   // 銀行マスタを取得（bankMasterId / bankBranchMasterId を設定するため）
   const bankMasters = await prisma.bankMaster.findMany({})
@@ -180,8 +177,8 @@ export const POST = async (req: NextRequest) => {
 
           try {
             await prisma.ucar.update({
-              where: {sateiID: String(sateiID)},
-              data: {...updateData},
+              where: { sateiID: String(sateiID) },
+              data: { ...updateData },
             })
           } catch (error) {
             const errorMessage = handlePrismaError(error)
@@ -210,15 +207,15 @@ const upsertBankData = async (rows: any[]) => {
           const bankCode = String(rawBankCode).padStart(4, '0') // 銀行コードは4桁
           const bankNameOnly = nameParts.join('_') || rawBankCode // 「_」がない場合はそのまま使用
 
-          return {bankCode, bankNameOnly}
+          return { bankCode, bankNameOnly }
         })
         .filter(Boolean)
         .map(d => [d!.bankCode, d])
     ).values(),
-  ] as {bankCode: string; bankNameOnly: string}[]
+  ] as { bankCode: string; bankNameOnly: string }[]
 
   // BankMaster を upsert（codeでユニーク）
-  uniqueBankData.forEach(({bankCode, bankNameOnly}) => {
+  uniqueBankData.forEach(({ bankCode, bankNameOnly }) => {
     const data = {
       code: bankCode,
       name: bankNameOnly,
@@ -227,20 +224,20 @@ const upsertBankData = async (rows: any[]) => {
       model: 'bankMaster',
       method: 'upsert',
       queryObject: {
-        where: {code: bankCode},
+        where: { code: bankCode },
         create: data,
         update: data,
       },
     })
   })
 
-  const {result: upsertedBanks} = await doTransaction({transactionQueryList: bankQuery})
+  const { result: upsertedBanks } = await doTransaction({ transactionQueryList: bankQuery })
 
   // BankBranchMaster を upsert（bankCodeベースのリレーション）
   const branchQuery: transactionQuery<'bankMaster' | 'bankBranchMaster', 'upsert'>[] = []
 
   rows.forEach(row => {
-    const {bankName, branchName, bankKana, bankBranchCode: rawBranchCode} = row
+    const { bankName, branchName, bankKana, bankBranchCode: rawBranchCode } = row
 
     if (!bankName || !rawBranchCode) {
       return
@@ -257,7 +254,7 @@ const upsertBankData = async (rows: any[]) => {
       method: 'upsert',
       queryObject: {
         where: {
-          unique_code_bankCode: {code: branchCode, bankCode},
+          unique_code_bankCode: { code: branchCode, bankCode },
         },
         create: {
           bankCode,
@@ -273,7 +270,7 @@ const upsertBankData = async (rows: any[]) => {
     })
   })
 
-  const {result: upsertedBranches} = await doTransaction({transactionQueryList: branchQuery})
+  const { result: upsertedBranches } = await doTransaction({ transactionQueryList: branchQuery })
 
   console.log({
     upsertedBanks: upsertedBanks.length,

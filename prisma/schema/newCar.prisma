@@ -124,6 +124,20 @@ model NewCar {
 
   @@index([userId])
   @@index([storeId])
+  // Phase 1: 日付フィールドインデックス
+  @@index([DD_FR])
+  @@index([DD_TOUROKU])
+  @@index([DD_NOSYA])
+  @@index([DD_TORIKESI])
+  @@index([DD_JUCYU])
+  // Phase 1: ステータス・アラートインデックス
+  @@index([m0Status])
+  @@index([m1Status])
+  @@index([m2Status])
+  @@index([m1Alert])
+  @@index([m2Alert])
+  @@index([lastApprovedDesiredTorokuDate])
+  @@index([m1_toroku_prediction])
 }
 
 model OrderSwitchingHisotory {
@@ -151,6 +165,7 @@ model DesiredTorokuDate {
   NewCar     NewCar    @relation(fields: [newCarId], references: [id], onDelete: Cascade)
 
   @@index([newCarId])
+  @@index([status])
 }
 
 model NewCarLeadTime {
@@ -250,6 +265,7 @@ model ProgressAggregationTableRecord {
   progressAggregationTableId Int
 
   @@unique([progressAggregationTableId, timing, label], name: "progressAggregationTableId_timing_label_unique")
+  @@index([progressAggregationTableId])
 }
 
 model FuriateStatusOnApprovement {
@@ -322,6 +338,7 @@ model TenpoTsuikoShinseiDetail {
 
   @@index([userId])
   @@index([tenpoTsuikoShinseiHeaderId])
+  @@index([status])
 }
 
 model TenpoTsuikoData {

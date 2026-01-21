@@ -4033,8 +4033,8 @@
         {
           "name": "Ucar",
           "kind": "object",
-          "isList": true,
-          "isRequired": true,
+          "isList": false,
+          "isRequired": false,
           "isUnique": false,
           "isId": false,
           "isReadOnly": false,
@@ -19916,8 +19916,23 @@
         }
       ],
       "primaryKey": null,
-      "uniqueFields": [],
-      "uniqueIndexes": [],
+      "uniqueFields": [
+        [
+          "NO_SIRETYUM",
+          "number98",
+          "DD_SIIRE"
+        ]
+      ],
+      "uniqueIndexes": [
+        {
+          "name": null,
+          "fields": [
+            "NO_SIRETYUM",
+            "number98",
+            "DD_SIIRE"
+          ]
+        }
+      ],
       "isGenerated": false
     },
     {
@@ -21628,6 +21643,36 @@
       ]
     },
     {
+      "model": "Car",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "active"
+        }
+      ]
+    },
+    {
+      "model": "Car",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "carType"
+        }
+      ]
+    },
+    {
+      "model": "Car",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "processLastUpdatedAt"
+        }
+      ]
+    },
+    {
       "model": "UserProcessConfirmation",
       "type": "id",
       "isDefinedOnField": true,
@@ -21815,16 +21860,6 @@
       ]
     },
     {
-      "model": "ProcessNameMaster",
-      "type": "normal",
-      "isDefinedOnField": false,
-      "fields": [
-        {
-          "name": "name"
-        }
-      ]
-    },
-    {
       "model": "Process",
       "type": "id",
       "isDefinedOnField": true,
@@ -21884,6 +21919,29 @@
       "fields": [
         {
           "name": "userId"
+        }
+      ]
+    },
+    {
+      "model": "Process",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "active"
+        }
+      ]
+    },
+    {
+      "model": "Process",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "storeId"
+        },
+        {
+          "name": "date"
         }
       ]
     },
@@ -22105,6 +22163,16 @@
     },
     {
       "model": "ZAIKO_Base",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "APPINDEX_FKEY"
+        }
+      ]
+    },
+    {
+      "model": "ZAIKO_Base",
       "type": "unique",
       "isDefinedOnField": false,
       "fields": [
@@ -22152,6 +22220,16 @@
       "fields": [
         {
           "name": "sateiID"
+        }
+      ]
+    },
+    {
+      "model": "UpassFamilyTree",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "rootSateiID"
         }
       ]
     },
@@ -22389,6 +22467,126 @@
       ]
     },
     {
+      "model": "NewCar",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "DD_FR"
+        }
+      ]
+    },
+    {
+      "model": "NewCar",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "DD_TOUROKU"
+        }
+      ]
+    },
+    {
+      "model": "NewCar",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "DD_NOSYA"
+        }
+      ]
+    },
+    {
+      "model": "NewCar",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "DD_TORIKESI"
+        }
+      ]
+    },
+    {
+      "model": "NewCar",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "DD_JUCYU"
+        }
+      ]
+    },
+    {
+      "model": "NewCar",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "m0Status"
+        }
+      ]
+    },
+    {
+      "model": "NewCar",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "m1Status"
+        }
+      ]
+    },
+    {
+      "model": "NewCar",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "m2Status"
+        }
+      ]
+    },
+    {
+      "model": "NewCar",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "m1Alert"
+        }
+      ]
+    },
+    {
+      "model": "NewCar",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "m2Alert"
+        }
+      ]
+    },
+    {
+      "model": "NewCar",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "lastApprovedDesiredTorokuDate"
+        }
+      ]
+    },
+    {
+      "model": "NewCar",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "m1_toroku_prediction"
+        }
+      ]
+    },
+    {
       "model": "OrderSwitchingHisotory",
       "type": "id",
       "isDefinedOnField": true,
@@ -22425,6 +22623,16 @@
       "fields": [
         {
           "name": "newCarId"
+        }
+      ]
+    },
+    {
+      "model": "DesiredTorokuDate",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "status"
         }
       ]
     },
@@ -22612,6 +22820,16 @@
     },
     {
       "model": "ProgressAggregationTableRecord",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "progressAggregationTableId"
+        }
+      ]
+    },
+    {
+      "model": "ProgressAggregationTableRecord",
       "type": "unique",
       "isDefinedOnField": false,
       "name": "progressAggregationTableId_timing_label_unique",
@@ -22714,6 +22932,16 @@
       "fields": [
         {
           "name": "tenpoTsuikoShinseiHeaderId"
+        }
+      ]
+    },
+    {
+      "model": "TenpoTsuikoShinseiDetail",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "status"
         }
       ]
     },
@@ -23112,6 +23340,62 @@
       ]
     },
     {
+      "model": "RentaDailyReport",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "date"
+        }
+      ]
+    },
+    {
+      "model": "RentaDailyReport",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "userId"
+        },
+        {
+          "name": "date"
+        }
+      ]
+    },
+    {
+      "model": "RentaDailyReport",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "rentaStoreId"
+        },
+        {
+          "name": "date"
+        }
+      ]
+    },
+    {
+      "model": "RentaDailyReport",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "visitType"
+        }
+      ]
+    },
+    {
+      "model": "RentaDailyReport",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "approachType"
+        }
+      ]
+    },
+    {
       "model": "RentaCustomer",
       "type": "id",
       "isDefinedOnField": true,
@@ -23152,6 +23436,26 @@
       ]
     },
     {
+      "model": "RentaCustomer",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "type"
+        }
+      ]
+    },
+    {
+      "model": "RentaCustomer",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "result"
+        }
+      ]
+    },
+    {
       "model": "RentaReference",
       "type": "id",
       "isDefinedOnField": true,
@@ -23178,6 +23482,16 @@
       "fields": [
         {
           "name": "refToId"
+        }
+      ]
+    },
+    {
+      "model": "RentaReference",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "rentaCustomerId"
         }
       ]
     },
@@ -23579,6 +23893,91 @@
       ]
     },
     {
+      "model": "Ucar",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "active"
+        }
+      ]
+    },
+    {
+      "model": "Ucar",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "active"
+        },
+        {
+          "name": "createdAt"
+        }
+      ]
+    },
+    {
+      "model": "Ucar",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "qrIssuedAt"
+        }
+      ]
+    },
+    {
+      "model": "Ucar",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "processLastUpdatedAt"
+        }
+      ]
+    },
+    {
+      "model": "Ucar",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "arrivedAt"
+        }
+      ]
+    },
+    {
+      "model": "Ucar",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "NO_SIRETYUM"
+        },
+        {
+          "name": "number98"
+        },
+        {
+          "name": "DD_SIIRE"
+        }
+      ]
+    },
+    {
+      "model": "Ucar",
+      "type": "unique",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "NO_SIRETYUM"
+        },
+        {
+          "name": "number98"
+        },
+        {
+          "name": "DD_SIIRE"
+        }
+      ]
+    },
+    {
       "model": "Number98",
       "type": "id",
       "isDefinedOnField": true,
@@ -23807,6 +24206,29 @@
       "fields": [
         {
           "name": "sateiID"
+        }
+      ]
+    },
+    {
+      "model": "UcarProcess",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "processCode"
+        }
+      ]
+    },
+    {
+      "model": "UcarProcess",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "sateiID"
+        },
+        {
+          "name": "processCode"
         }
       ]
     },

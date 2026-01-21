@@ -1,10 +1,10 @@
-import {Fields} from '@cm/class/Fields/Fields'
+import { Fields } from '@cm/class/Fields/Fields'
 
-import {Prisma} from '@prisma/generated/prisma/client'
-import {defaultRegister} from '@cm/class/builders/ColBuilderVariables'
-import {isDev} from '@cm/lib/methods/common'
-import {toUtc} from '@cm/class/Days/date-utils/calculations'
-import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
+import { Prisma } from '@prisma/generated/prisma/client'
+import { defaultRegister } from '@cm/class/builders/ColBuilderVariables'
+import { isDev } from '@cm/lib/methods/common'
+import { toUtc } from '@cm/class/Days/date-utils/calculations'
+import { UCAR_CODE } from '@app/(apps)/ucar/class/UCAR_CODE'
 const showDefaultValue = isDev
 
 export const sold: Prisma.UcarWhereInput = {
@@ -23,24 +23,32 @@ export const UCAR_CONSTANTS: {
 } = {
   shiireGroupUserCode: 99999931,
   commonQuery: {
-    AND: [
+    OR: [
+      { DD_SIIRE: null },
       {
-        OR: [
-          {OldCars_Base: {KI_HANKAKA: '0'}}, //まだ売り上げが立っていないもの
-          {createdAt: {gte: THRESHOLD_DATE}}, //作成日が2025-01-01以降のもの
-        ],
-      },
+        AND: [
 
-      {active: true},
-    ],
+
+          {
+            OR: [
+              { OldCars_Base: { KI_HANKAKA: '0' } }, //まだ売り上げが立っていないもの
+              { createdAt: { gte: THRESHOLD_DATE } }, //作成日が2025-01-01以降のもの
+            ],
+          },
+
+          { active: true },
+        ],
+      }
+    ]
+
   },
 
   columns: {
-    getQrSheetIssueInfoCol: ({stores}) =>
+    getQrSheetIssueInfoCol: ({ stores }) =>
       new Fields([
         {
           id: `storeToPickUp`,
-          form: {register: {required: `必須です`}},
+          form: { register: { required: `必須です` } },
           label: `引取先拠点`,
           forSelect: {
             optionsOrOptionFetcher: (stores ?? [])
@@ -52,7 +60,7 @@ export const UCAR_CONSTANTS: {
         },
         {
           id: `runnable`,
-          form: {register: {required: `必須です`}},
+          form: { register: { required: `必須です` } },
           label: `自力走行可`,
           forSelect: {
             radio: {},
@@ -68,8 +76,8 @@ export const UCAR_CONSTANTS: {
         {
           id: `shitadoriKbn`,
           label: `下取区分`,
-          form: {...defaultRegister},
-          forSelect: {codeMaster: UCAR_CODE.SHITADORI_KBN},
+          form: { ...defaultRegister },
+          forSelect: { codeMaster: UCAR_CODE.SHITADORI_KBN },
         },
         {
           id: `kounyuShaOrderNumber`,
@@ -91,110 +99,110 @@ export const UCAR_CONSTANTS: {
           },
           type: 'text',
         },
-      ]).buildFormGroup({groupName: '入庫時情報'}).plain,
+      ]).buildFormGroup({ groupName: '入庫時情報' }).plain,
 
     getTmpCarInfoCol: () =>
       new Fields([
 
         {
           id: `tmpChassisNumber`,
-          form: {...defaultRegister, defaultValue: showDefaultValue ? 'AZSH35-4002743' : null},
+          form: { ...defaultRegister, defaultValue: showDefaultValue ? 'AZSH35-4002743' : null },
           label: `車台番号`,
           type: 'text',
-          inputProps: {placeholder: 'AZSH35-4002743'},
+          inputProps: { placeholder: 'AZSH35-4002743' },
         },
         {
           id: `tmpColor`,
-          form: {...defaultRegister, defaultValue: showDefaultValue ? 'パール' : null},
+          form: { ...defaultRegister, defaultValue: showDefaultValue ? 'パール' : null },
           label: `色`,
           type: 'text',
-          inputProps: {placeholder: 'パール'},
+          inputProps: { placeholder: 'パール' },
         },
         {
           id: `tmpModelYear`,
-          form: {...defaultRegister, defaultValue: showDefaultValue ? '2024' : null},
+          form: { ...defaultRegister, defaultValue: showDefaultValue ? '2024' : null },
           label: `年式`,
           type: 'text',
-          inputProps: {placeholder: '2024'},
+          inputProps: { placeholder: '2024' },
         },
         {
           id: `tmpBrandName`,
-          form: {...defaultRegister, defaultValue: showDefaultValue ? 'トヨタ' : null},
+          form: { ...defaultRegister, defaultValue: showDefaultValue ? 'トヨタ' : null },
           label: `ブランド名`,
           type: 'text',
-          inputProps: {placeholder: 'トヨタ'},
+          inputProps: { placeholder: 'トヨタ' },
         },
         {
           id: `tmpModelName`,
-          form: {...defaultRegister, defaultValue: showDefaultValue ? 'ｸﾗｳﾝ ｸﾛｽｵｰﾊﾞｰ' : null},
+          form: { ...defaultRegister, defaultValue: showDefaultValue ? 'ｸﾗｳﾝ ｸﾛｽｵｰﾊﾞｰ' : null },
           label: `車種名`,
           type: 'text',
-          inputProps: {placeholder: 'ｸﾗｳﾝ ｸﾛｽｵｰﾊﾞｰ'},
+          inputProps: { placeholder: 'ｸﾗｳﾝ ｸﾛｽｵｰﾊﾞｰ' },
         },
         {
           id: `tmpGrade`,
-          form: {...defaultRegister, defaultValue: showDefaultValue ? '2.5 CROSSOVER G"Advanced･Leather Package"' : null},
+          form: { ...defaultRegister, defaultValue: showDefaultValue ? '2.5 CROSSOVER G"Advanced･Leather Package"' : null },
           label: `グレード`,
           type: 'text',
-          inputProps: {placeholder: '2.5 CROSSOVER G"Advanced･Leather Package"'},
+          inputProps: { placeholder: '2.5 CROSSOVER G"Advanced･Leather Package"' },
         },
         {
           id: `tmpType`,
-          form: {...defaultRegister, defaultValue: showDefaultValue ? '6AA-AZSH35' : null},
+          form: { ...defaultRegister, defaultValue: showDefaultValue ? '6AA-AZSH35' : null },
           label: `型式`,
           type: 'text',
-          inputProps: {placeholder: '6AA-AZSH35'},
+          inputProps: { placeholder: '6AA-AZSH35' },
         },
         {
           id: `tmpCommonType`,
-          form: {...defaultRegister, defaultValue: showDefaultValue ? 'AZSH35-AEXMB' : null},
+          form: { ...defaultRegister, defaultValue: showDefaultValue ? 'AZSH35-AEXMB' : null },
           label: `通称型式`,
           type: 'text',
-          inputProps: {placeholder: 'AZSH35-AEXMB'},
+          inputProps: { placeholder: 'AZSH35-AEXMB' },
         },
         {
           id: `tmpFrameNumber`,
-          form: {...defaultRegister, defaultValue: showDefaultValue ? '4002743' : null},
+          form: { ...defaultRegister, defaultValue: showDefaultValue ? '4002743' : null },
           label: `フレーム番号`,
           type: 'text',
-          inputProps: {placeholder: '4002743'},
+          inputProps: { placeholder: '4002743' },
         },
         {
           id: `tmpTransmissionType`,
-          form: {...defaultRegister, defaultValue: showDefaultValue ? 'AT' : null},
+          form: { ...defaultRegister, defaultValue: showDefaultValue ? 'AT' : null },
           label: `ミッション名称`,
           type: 'text',
-          inputProps: {placeholder: 'AT'},
+          inputProps: { placeholder: 'AT' },
         },
         {
           id: `tmpLandAffairsName`,
-          form: {...defaultRegister, defaultValue: showDefaultValue ? '倉敷' : null},
+          form: { ...defaultRegister, defaultValue: showDefaultValue ? '倉敷' : null },
           label: `陸自名`,
           type: 'text',
-          inputProps: {placeholder: '倉敷'},
+          inputProps: { placeholder: '倉敷' },
         },
         {
           id: `tmpRegistrationClassNumber`,
-          form: {...defaultRegister, defaultValue: showDefaultValue ? '330' : null},
+          form: { ...defaultRegister, defaultValue: showDefaultValue ? '330' : null },
           label: `分類番号`,
           type: 'text',
-          inputProps: {placeholder: '330'},
+          inputProps: { placeholder: '330' },
         },
         {
           id: `tmpRegistrationKana`,
-          form: {...defaultRegister, defaultValue: showDefaultValue ? 'ひ' : null},
+          form: { ...defaultRegister, defaultValue: showDefaultValue ? 'ひ' : null },
           label: `かな`,
           type: 'text',
-          inputProps: {placeholder: 'ひ'},
+          inputProps: { placeholder: 'ひ' },
         },
         {
           id: `tmpPlate`,
-          form: {...defaultRegister, defaultValue: showDefaultValue ? '1625' : null},
+          form: { ...defaultRegister, defaultValue: showDefaultValue ? '1625' : null },
           label: `プレート番号`,
           type: 'text',
-          inputProps: {placeholder: '1625'},
+          inputProps: { placeholder: '1625' },
         },
 
-      ]).buildFormGroup({groupName: '車両情報（当日査定の場合必須）'}).plain,
+      ]).buildFormGroup({ groupName: '車両情報（当日査定の場合必須）' }).plain,
   },
 }

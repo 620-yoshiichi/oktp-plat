@@ -1,16 +1,16 @@
 'use client'
 
-import {CenterScreen, C_Stack} from '@cm/components/styles/common-components/common-components'
-import {T_LINK} from '@cm/components/styles/common-components/links'
+import { CenterScreen, C_Stack } from '@cm/components/styles/common-components/common-components'
+import { T_LINK } from '@cm/components/styles/common-components/links'
 
 const TopPage = () => {
   if (process.env.NEXT_PUBLIC_ROOTPATH === `QRBP`) {
     return (
       <CenterScreen>
         <C_Stack className={` gap-8 items-center`}>
-          <T_LINK {...{href: `/newCar`}}>納期CSアプリ</T_LINK>
-          <T_LINK {...{href: `/QRBP`}}>BPアプリ</T_LINK>
-          {process.env.NEXT_PUBLIC_IS_STAGING && <T_LINK {...{href: `/ucar`}}>QRシステム</T_LINK>}
+          <T_LINK {...{ href: `/newCar` }}>納期CSアプリ</T_LINK>
+          <T_LINK {...{ href: `/QRBP` }}>BPアプリ</T_LINK>
+          <T_LINK {...{ href: `/ucar` }}>QRシステム</T_LINK>
         </C_Stack>
       </CenterScreen>
     )

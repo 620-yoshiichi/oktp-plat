@@ -15,7 +15,7 @@ import {UCAR_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-constants'
 
 // kobutsu = 古物台帳
 // 古物台帳のデータを同期するためのAPI
-
+const offset = 1
 export const GET = async (req: NextRequest) => {
   const shiireGroupUser = await prisma.user.findFirst({
     where: {code: UCAR_CONSTANTS.shiireGroupUserCode},
@@ -32,6 +32,7 @@ export const GET = async (req: NextRequest) => {
   const sqlString = sql`
   SELECT * FROM okayamatoyopet.Ucar_QR.QR_Prosess
   where email_0 not like '%ichiya%'  AND email_0 not like '%mutsuo%'
+  -- limit 1000 offset ${offset* 1000}
   `
 
   // if (!isDev) {
@@ -100,8 +101,9 @@ export const GET = async (req: NextRequest) => {
             return
           }
 
-          const ucarCreatedAt = BQ_parser.parseDate(rest['datetime_0']) ?? earliestDatetime
 
+
+          const ucarCreatedAt = BQ_parser.parseDate(rest['datetime_0']) ?? earliestDatetime
           const restKeys = Object.keys(rest)
 
           await Promise.all(
@@ -175,6 +177,8 @@ export const GET = async (req: NextRequest) => {
             where: {sateiID: sateiId},
             data: {processLastUpdatedAt: processLastUpdatedAt},
           })
+
+
         }
       }
     },
