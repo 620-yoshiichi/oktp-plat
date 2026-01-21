@@ -410,10 +410,10 @@ export default function Page() {
                 {historyData.history.map((log: CronExecutionLog) => (
                   <tr key={log.id}>
                     <td className={`text-sm`}>
-                      {formatDate(new Date(log.startedAt))}
+                      {formatDate(new Date(log.startedAt), 'YYYY-MM-DD(ddd) HH:mm:ss')}
                     </td>
                     <td className={`text-sm`}>
-                      {log.completedAt ? formatDate(new Date(log.completedAt)) : '-'}
+                      {log.completedAt ? formatDate(new Date(log.completedAt), 'YYYY-MM-DD(ddd) HH:mm:ss') : '-'}
                     </td>
                     <td className={`text-sm`}>
                       {log.duration ? `${log.duration}ms` : '-'}
