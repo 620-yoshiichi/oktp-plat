@@ -22,6 +22,7 @@ import {
   executeKaonaviBatch,
   executeActivateBpSpread,
 } from './handlers/clickActionHandlers'
+import { executeDisactivateUnnecessaryUcar } from 'src/non-common/cron/handlers/executeDisactivateUnnecessaryUcar'
 
 /**
  * バッチ設定の型定義
@@ -247,6 +248,17 @@ export const BATCH_MASTER: Record<string, BatchConfig> = {
     app: 'ucar',
     effectOn: 'click',
     handler: executeLinkOldCars,
+    tableName: 'ucar',
+
+  },
+  disactivateUnnecessaryUcar: {
+    id: 'disactivateUnnecessaryUcar',
+    name: '不要なUcarの無効化',
+    description: '/api/cron/execute/disactivateUnnecessaryUcar',
+    purpose: '不要なUcarを無効化する',
+    app: 'ucar',
+    effectOn: 'click',
+    handler: executeDisactivateUnnecessaryUcar,
     tableName: 'ucar',
   },
 

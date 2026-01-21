@@ -1,14 +1,13 @@
 'use client'
 
-import {ColBuilder} from '@app/(apps)/shinren/class/ColBuilder'
-import {Fields} from '@cm/class/Fields/Fields'
+import { ColBuilder } from '@app/(apps)/shinren/class/ColBuilder'
+import { Fields } from '@cm/class/Fields/Fields'
 import GlobalIdSelector from '@cm/components/GlobalIdSelector/GlobalIdSelector'
 import DailyReportDetail from '@app/(apps)/shinren/class/DetailPage/RentaDailyReportDetailPage'
 import RentaCustomerDetail from '@app/(apps)/shinren/class/DetailPage/RentaCustomerDetail/RentaCustomerDetail'
-import {Shinren} from '@app/(apps)/shinren/class/Shinren'
-import {DetailPagePropType} from '@cm/types/types'
-import {CSVLink} from 'react-csv'
-import {formatDate} from '@cm/class/Days/date-utils/formatters'
+import { DetailPagePropType } from '@cm/types/types'
+import { CSVLink } from 'react-csv'
+import { formatDate } from '@cm/class/Days/date-utils/formatters'
 
 import Accordion from '@cm/components/utils/Accordions/Accordion'
 
@@ -16,13 +15,15 @@ import MyForm from '@cm/components/DataLogic/TFs/MyForm/MyForm'
 import ChildCreator from '@cm/components/DataLogic/RTs/ChildCreator/ChildCreator'
 
 import DailyReportAggregationTable from '@app/(apps)/shinren/class/pagebuilders/DailyReportAggregationTable/DailyReportAggregationTable'
-import {Paper} from '@cm/components/styles/common-components/paper'
+import { Paper } from '@cm/components/styles/common-components/paper'
 import GlobalAccordion from '@cm/components/utils/Accordions/GlobalAccordion'
-import {useState} from 'react'
-import {Button} from '@cm/components/styles/common-components/Button'
-import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
-import {R_Stack} from '@cm/components/styles/common-components/common-components'
+import { useState } from 'react'
+import { Button } from '@cm/components/styles/common-components/Button'
+import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+import { R_Stack } from '@cm/components/styles/common-components/common-components'
 import useWindowSize from '@cm/hooks/useWindowSize'
+import { colType } from '@cm/types/col-types'
+import { globalIds } from 'src/non-common/searchParamStr'
 
 type insuranceAlternateCommonPropsType = {
   additional: {
@@ -42,8 +43,8 @@ type insuranceAlternateCommonPropsType = {
 }
 
 export const makeChildCreatorProps = props => {
-  const {dailyReort, rentaCustomer, useGlobalProps, childrenModelName} = props
-  const INSU_ALT_PROPS = makeINSU_ALT_PROPS({dailyReort, rentaCustomer})
+  const { dailyReort, rentaCustomer, useGlobalProps, childrenModelName } = props
+  const INSU_ALT_PROPS = makeINSU_ALT_PROPS({ dailyReort, rentaCustomer })
   return {
     ...INSU_ALT_PROPS.others,
     additional: INSU_ALT_PROPS.additional,
@@ -55,12 +56,12 @@ export const makeChildCreatorProps = props => {
   }
 }
 const makeINSU_ALT_PROPS = props => {
-  const {dailyReort, rentaCustomer} = props
+  const { dailyReort, rentaCustomer } = props
   const rentaCustomerId = dailyReort?.rentaCustomerId ?? rentaCustomer?.id
   const rentaDailyReportId = dailyReort?.id
   const INSU_ALT_PROPS: insuranceAlternateCommonPropsType = {
-    additional: {payload: {rentaCustomerId, rentaDailyReportId}},
-    ColBuilderExtraProps: {rentaCustomerId},
+    additional: { payload: { rentaCustomerId, rentaDailyReportId } },
+    ColBuilderExtraProps: { rentaCustomerId },
     others: {
       myForm: undefined,
       myTable: undefined,
@@ -71,7 +72,7 @@ const makeINSU_ALT_PROPS = props => {
 }
 
 export class PageBuilder {
-  static getGlobalIdSelector = ({useGlobalProps}) => {
+  static getGlobalIdSelector = ({ useGlobalProps }) => {
     return () => {
       const admin = useGlobalProps.accessScopes().admin
 
@@ -79,26 +80,46 @@ export class PageBuilder {
         return <></>
       }
 
-      const columns = Fields.transposeColumns([])
+      const colSource: colType[] = []
       if (admin) {
-        columns.push([Shinren.col.globalUserIdColumn])
+        colSource.push({
+          label: 'ス',
+          id: globalIds.globalUserId,
+          forSelect: {
+            config: {
+              modelName: 'user',
+              where: {
+                app: 'shinren',
+              },
+              orderBy: [
+                {
+                  RentaStore: { code: 'asc' },
+                },
+                { code: 'asc' },
+              ],
+            },
+          },
+        })
       }
 
+      const columns = new Fields(colSource).transposeColumns()
+
+
       if (admin) {
-        return <GlobalIdSelector {...{useGlobalProps, columns}} />
+        return <GlobalIdSelector {...{ useGlobalProps, columns }} />
       }
     }
   }
 
   static rentaDailyReport = {
     top: (props: DetailPagePropType) => {
-      const {device} = useWindowSize()
-      const {userWithCount} = props.PageBuilderExtraProps ?? {}
+      const { device } = useWindowSize()
+      const { userWithCount } = props.PageBuilderExtraProps ?? {}
 
       return (
         <GlobalAccordion id={`dailyReportTopAggregation`} defaultOpen={device.PC} label={`集計`}>
           <Paper>
-            <DailyReportAggregationTable {...{userWithCount}} />
+            <DailyReportAggregationTable {...{ userWithCount }} />
           </Paper>
         </GlobalAccordion>
       )
@@ -107,7 +128,7 @@ export class PageBuilder {
   }
   static rentaStore = {
     form: (props: DetailPagePropType) => {
-      const {useGlobalProps} = props
+      const { useGlobalProps } = props
       const rentaStore = props.formData ?? {}
       return (
         <div>
@@ -124,10 +145,10 @@ export class PageBuilder {
                 },
                 useGlobalProps,
                 ParentData: rentaStore,
-                models: {parent: 'rentaStore', children: 'user'},
+                models: { parent: 'rentaStore', children: 'user' },
                 columns: ColBuilder.user({
                   useGlobalProps,
-                  ColBuilderExtraProps: {storeId: rentaStore.id},
+                  ColBuilderExtraProps: { storeId: rentaStore.id },
                 }),
               }}
             />
@@ -148,11 +169,11 @@ export class PageBuilder {
             <Button
               color={`red`}
               onClick={async () => {
-                const {where, include, orderBy} = props.prismaDataExtractionQuery ?? {}
+                const { where, include, orderBy } = props.prismaDataExtractionQuery ?? {}
 
-                const {result: records} = await doStandardPrisma(`rentaCustomer`, `findMany`, {
+                const { result: records } = await doStandardPrisma(`rentaCustomer`, `findMany`, {
                   where,
-                  include: {RentaDailyReport: {}},
+                  include: { RentaDailyReport: {} },
                   orderBy,
                 })
 

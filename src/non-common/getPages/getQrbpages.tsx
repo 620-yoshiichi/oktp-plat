@@ -1,12 +1,12 @@
-import {getAppSwitchMenus} from 'src/non-common/appSwitchMenus'
-import {CleansePathSource, PageGetterType} from 'src/non-common/path-title-constsnts'
-import {getScopes} from 'src/non-common/scope-lib/getScopes'
+import { getAppSwitchMenus } from 'src/non-common/appSwitchMenus'
+import { CleansePathSource, PageGetterType } from 'src/non-common/path-title-constsnts'
+import { getScopes } from 'src/non-common/scope-lib/getScopes'
 
 export const getQrbpPages = (props: PageGetterType) => {
-  const {session, rootPath, pathname, query, roles} = props
+  const { session, rootPath, pathname, query, roles } = props
 
-  const scopes = getScopes(session, {query, roles})
-  const {login} = scopes
+  const scopes = getScopes(session, { query, roles })
+  const { login } = scopes
   const QRBP = scopes.getQrbpProps()
 
   const newCar = scopes.getNewCarProps()
@@ -28,10 +28,10 @@ export const getQrbpPages = (props: PageGetterType) => {
             query: scopes.admin
               ? {}
               : {
-                  isMyCrCar: true,
-                  orderBy: 'orderedAt',
-                  orderDirection: 'desc',
-                },
+                isMyCrCar: true,
+                orderBy: 'orderedAt',
+                orderDirection: 'desc',
+              },
           },
           children: [
             {
@@ -113,27 +113,15 @@ export const getQrbpPages = (props: PageGetterType) => {
       ROOT: [rootPath, 'admin', 'config'],
       exclusiveTo: scopes.admin,
       children: [
-        {
-          tabId: '',
-          label: '共通マスタ',
-          ROOT: ['common', 'admin', 'config'],
-          children: [
-            {tabId: 'store', label: '拠点', link: {}},
-            {tabId: 'user', label: 'ユーザー', link: {}},
-            {tabId: 'roleMaster', label: '役割マスタ', link: {}},
-          ],
-        },
-        {tabId: 'area', label: 'エリア', link: {}, exclusiveTo: scopes.admin},
-        {tabId: 'store', label: '拠点（QRBP専用）', link: {}, exclusiveTo: scopes.admin},
-        {tabId: 'user', label: 'ユーザー（QRBP専用）', link: {}, exclusiveTo: scopes.admin},
-        {tabId: 'processNameMaster', label: '工程', link: {}, exclusiveTo: scopes.admin},
-        {tabId: 'noteNameMaster', label: '備考区分', link: {}, exclusiveTo: scopes.admin},
-        {tabId: 'roleMaster', label: '役割マスタ（QRBP専用）', exclusiveTo: scopes.admin},
+
+        { tabId: 'area', label: 'エリア', link: {}, exclusiveTo: scopes.admin },
+        { tabId: 'processNameMaster', label: '工程', link: {}, exclusiveTo: scopes.admin },
+        { tabId: 'noteNameMaster', label: '備考区分', link: {}, exclusiveTo: scopes.admin },
       ],
     },
     login ? getAppSwitchMenus(scopes) : undefined,
   ].filter(Boolean)
-  const {cleansedPathSource, navItems, breads, allPathsPattenrs} = CleansePathSource({
+  const { cleansedPathSource, navItems, breads, allPathsPattenrs } = CleansePathSource({
     rootPath,
     pathSource,
     pathname,

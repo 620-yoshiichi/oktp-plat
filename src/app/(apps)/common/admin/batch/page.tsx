@@ -15,7 +15,7 @@ import useSWR from 'swr'
 import { fetchAlt } from '@cm/lib/http/fetch-client'
 import { basePath } from '@cm/lib/methods/common'
 import useModal from '@cm/components/utils/modal/useModal'
-import React, { useState, useCallback } from 'react'
+import React, { useState } from 'react'
 import { formatDate } from '@cm/class/Days/date-utils/formatters'
 
 /**
@@ -156,15 +156,15 @@ export default function Page() {
       <div>
         <h2 className={`text-xl font-bold mb-4`}>{title}</h2>
         <div className={``}>
-          <table className={cl(paddingTd, borderCerlls, `max-w-[90vw]`)}>
+          <table className={cl(paddingTd, borderCerlls, ` w-full`)}>
             <thead>
               <tr>
-                <th>バッチ処理</th>
-                <th>詳細</th>
-                <th>用途</th>
-                {hasEffectOn && <th>種別</th>}
-                <th>最終実行時刻と結果</th>
-                <th></th>
+                <th style={{ width: '400px' }}>バッチ処理</th>
+
+                <th style={{ width: '400px' }}>用途</th>
+
+                <th style={{ minWidth: '200px' }}>最終実行時刻と結果</th>
+                <th style={{ maxWidth: '30px' }}>実行</th>
               </tr>
             </thead>
             <tbody className={``}>
@@ -260,14 +260,13 @@ export default function Page() {
                           <span className={`text-sm text-blue-500 font-bold`}>{count.toLocaleString()}</span>
                         )}
                       </R_Stack>
+                      <MarkDownDisplay className={`text-gray-500 text-sm`}>{action.description || ''}</MarkDownDisplay>
                     </td>
-                    <td>
-                      <MarkDownDisplay>{action.description || ''}</MarkDownDisplay>
-                    </td>
+
                     <td>
                       <MarkDownDisplay>{action.purpose || ''}</MarkDownDisplay>
                     </td>
-                    {hasEffectOn && <td className={`w-[80px] text-center`}>{action.effectOn || '-'}</td>}
+
                     <td className={`min-w-[200px]`}>
                       {latestLog ? (
                         <button
@@ -288,7 +287,7 @@ export default function Page() {
                         <span className={`text-gray-400 text-sm`}>実行履歴なし</span>
                       )}
                     </td>
-                    <td className={`min-w-[180px]`}>
+                    <td className={`min-w-[180px] text-center`}>
                       {runningBatches[action.id] ? (
                         <div className={`flex flex-col items-center gap-1`}>
                           <div className={`flex items-center gap-2`}>
@@ -298,7 +297,7 @@ export default function Page() {
                           <span className={`text-xs text-gray-500`}>{runningBatches[action.id]}</span>
                         </div>
                       ) : (
-                        <button className={`t-link w-[100px] text-2xl`} onClick={handleClick}>
+                        <button className={`t-link w-[100px] `} onClick={handleClick}>
                           実行
                         </button>
                       )}

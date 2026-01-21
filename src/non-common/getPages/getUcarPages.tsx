@@ -1,15 +1,15 @@
-import {getAppSwitchMenus} from 'src/non-common/appSwitchMenus'
-import {CleansePathSource, PageGetterType, pathItemType} from 'src/non-common/path-title-constsnts'
-import {getScopes} from 'src/non-common/scope-lib/getScopes'
+import { getAppSwitchMenus } from 'src/non-common/appSwitchMenus'
+import { CleansePathSource, PageGetterType, pathItemType } from 'src/non-common/path-title-constsnts'
+import { getScopes } from 'src/non-common/scope-lib/getScopes'
 
 export const getUcarPages = (props: PageGetterType) => {
-  const {session, rootPath, pathname, query, roles} = props
+  const { session, rootPath, pathname, query, roles } = props
 
-  const scopes = getScopes(session, {query, roles})
-  const {admin} = scopes
+  const scopes = getScopes(session, { query, roles })
+  const { admin } = scopes
   const ucarProps = scopes.getUcarProps()
 
-  const {isUcarMember, isHQ, isChukoshaGroup} = ucarProps
+  const { isUcarMember, isHQ, isChukoshaGroup } = ucarProps
 
   const pathSource: pathItemType[] = [
     {
@@ -28,7 +28,7 @@ export const getUcarPages = (props: PageGetterType) => {
           tabId: 'ucar',
           label: '車両一覧',
           link: {
-            query: {displayColumns: '下取書類,商品化'},
+            query: { displayColumns: '下取書類,商品化' },
           },
           exclusiveTo: isUcarMember,
         },
@@ -56,14 +56,14 @@ export const getUcarPages = (props: PageGetterType) => {
         {
           tabId: 'ucar',
           label: '書類管理',
-          link: {query: {displayColumns: '下取書類,商品化'}},
+          link: { query: { displayColumns: '下取書類,商品化' } },
           exclusiveTo: isHQ || isChukoshaGroup || admin,
         },
         {
           tabId: 'ucar',
           label: '自動車税業務',
           link: {
-            query: {displayColumns: '自動車税'},
+            query: { displayColumns: '自動車税' },
           },
           exclusiveTo: isHQ || isChukoshaGroup || admin,
         },
@@ -94,8 +94,8 @@ export const getUcarPages = (props: PageGetterType) => {
       exclusiveTo: isHQ || isChukoshaGroup || admin,
       ROOT: [rootPath],
       children: [
-        {tabId: 'kouteiKanri', label: '工程管理', ROOT: [rootPath]},
-        {tabId: 'zaikoTairyu', label: '在庫滞留状況', ROOT: [rootPath]},
+        { tabId: 'kouteiKanri', label: '工程管理', ROOT: [rootPath] },
+        { tabId: 'zaikoTairyu', label: '在庫滞留状況', ROOT: [rootPath] },
       ],
     },
 
@@ -105,30 +105,16 @@ export const getUcarPages = (props: PageGetterType) => {
       exclusiveTo: admin,
       ROOT: [rootPath],
       children: [
-        {
-          tabId: '',
-          label: '共通マスタ',
-          ROOT: ['common', 'admin', 'config'],
-          children: [
-            {tabId: 'store', label: '拠点', link: {}},
-            {tabId: 'user', label: 'ユーザー', link: {}},
-            {tabId: 'roleMaster', label: '権限設定', link: {}},
-          ],
-        },
-        {tabId: 'store', label: '拠点（Ucar専用）', link: {}},
-        {tabId: 'user', label: 'ユーザー（Ucar専用）', link: {}},
-        {tabId: 'ucarProcess', label: '作業記録', link: {}},
-        {tabId: 'bankMaster', label: '銀行', link: {}},
-        {tabId: `98list`, label: `98番号と売上`},
-        {tabId: `ucarGarageLocationMaster`, label: '車庫一覧', children: []},
-        {tabId: `roleMaster`, label: '権限設定（Ucar専用）', children: []},
-        {tabId: `batch`, label: 'バッチ', children: []},
+        { tabId: 'ucarProcess', label: '作業記録', link: {} },
+        { tabId: 'bankMaster', label: '銀行', link: {} },
+        { tabId: `98list`, label: `98番号と売上` },
+        { tabId: `ucarGarageLocationMaster`, label: '車庫一覧', children: [] },
       ],
     },
 
     getAppSwitchMenus(scopes),
   ]
-  const {cleansedPathSource, navItems, breads, allPathsPattenrs} = CleansePathSource({
+  const { cleansedPathSource, navItems, breads, allPathsPattenrs } = CleansePathSource({
     rootPath,
     pathSource,
     pathname,

@@ -5,7 +5,6 @@ import { transformKaonaviUserToUserData, createUserFromForcedUserOnly } from './
 import { resetAllOktpRoles, upsertMultipleUserRoles } from './lib/role-handler'
 import { forcedUsers } from './lib/forced-users'
 import { ProcessingErrors, UserWithRoles } from './lib/types'
-import { upsertStoresFromKaonavi } from './lib/store-transformer'
 
 /**
  * Kaonavi APIからユーザーデータを取得し、システムのユーザーデータに同期する

@@ -1,22 +1,22 @@
-import {getAppSwitchMenus} from 'src/non-common/appSwitchMenus'
-import {pathItemType} from 'src/non-common/path-title-constsnts'
+import { getAppSwitchMenus } from 'src/non-common/appSwitchMenus'
+import { pathItemType } from 'src/non-common/path-title-constsnts'
 
-import {CleansePathSource, PageGetterType} from 'src/non-common/path-title-constsnts'
-import {getScopes} from 'src/non-common/scope-lib/getScopes'
+import { CleansePathSource, PageGetterType } from 'src/non-common/path-title-constsnts'
+import { getScopes } from 'src/non-common/scope-lib/getScopes'
 
 export const getNewCarPages = (props: PageGetterType) => {
-  const {session, query, rootPath, pathname, roles} = props
+  const { session, query, rootPath, pathname, roles } = props
 
-  const scopes = getScopes(session, {query, roles})
+  const scopes = getScopes(session, { query, roles })
 
-  const {login, admin} = scopes
+  const { login, admin } = scopes
 
-  const linkToMyData = {link: {query: {g_userIdArr: session?.id}}}
+  const linkToMyData = { link: { query: { g_userIdArr: session?.id } } }
 
-  const loginOnly = {exclusiveTo: login, ROOT: [rootPath]}
-  const commons = {...loginOnly, ...linkToMyData}
+  const loginOnly = { exclusiveTo: login, ROOT: [rootPath] }
+  const commons = { ...loginOnly, ...linkToMyData }
 
-  const {isHQ, isCR, isNewCarMember, isStoreManager} = scopes.getNewCarProps()
+  const { isHQ, isCR, isNewCarMember, isStoreManager } = scopes.getNewCarProps()
 
   const pathSource: pathItemType[] = [
     {
@@ -30,15 +30,15 @@ export const getNewCarPages = (props: PageGetterType) => {
           tabId: 'crOperation',
           label: 'CR着工確認',
           link: {
-            query: {pending: true, not_registered: true},
+            query: { pending: true, not_registered: true },
           },
         },
         {
           tabId: 'vehicleTransfer',
           label: '車両移動補助',
-          link: {query: {transferType: `可能`, trasferStutus: `移動なし`}},
+          link: { query: { transferType: `可能`, trasferStutus: `移動なし` } },
         },
-        {tabId: 'tenpo-tsuiko-renraku', label: '店舗追工連絡'},
+        { tabId: 'tenpo-tsuiko-renraku', label: '店舗追工連絡' },
       ],
     },
     {
@@ -58,7 +58,7 @@ export const getNewCarPages = (props: PageGetterType) => {
           },
         },
 
-        {tabId: 'prediction', label: '集計', ...commons},
+        { tabId: 'prediction', label: '集計', ...commons },
         // {tabId: 'loginCheck', label: 'ログインチェック', ...commons},
       ],
       exclusiveTo: isNewCarMember,
@@ -70,35 +70,15 @@ export const getNewCarPages = (props: PageGetterType) => {
       exclusiveTo: isNewCarMember && isHQ,
       ROOT: [rootPath],
       children: [
-        {tabId: 'torokuList', label: '登希履歴', link: {query: {pending: true, not_registered: true}}},
+        { tabId: 'torokuList', label: '登希履歴', link: { query: { pending: true, not_registered: true } } },
         // {tabId: `paymentCheck`, label: `支払確認`, exclusiveTo: isHQ},
-        {tabId: 'calendar', label: '稼働スケジュール'},
-        {tabId: 'statistics', label: 'LT'},
-        {tabId: 'tairyuList', label: '滞留リスト'},
+        { tabId: 'calendar', label: '稼働スケジュール' },
+        { tabId: 'statistics', label: 'LT' },
+        { tabId: 'tairyuList', label: '滞留リスト' },
       ],
     },
 
-    // {
-    //   tabId: ``,
-    //   label: `管理者`,
-    //   ...commons,
-    //   children: [
-    //     {
-    //       tabId: '',
-    //       label: '共通マスタ',
-    //       ROOT: ['common', 'admin', 'config'],
-    //       children: [
-    //         {tabId: 'store', label: '拠点', link: {}},
-    //         {tabId: 'user', label: 'ユーザー', link: {}},
-    //         {tabId: 'roleMaster', label: '役割マスタ', link: {}},
-    //       ],
-    //     },
-    //     {tabId: 'batch', label: 'バッチ', exclusiveTo: scopes.admin},
-    //     {tabId: 'user', label: 'ユーザー（NewCar専用）', exclusiveTo: scopes.admin},
-    //     {tabId: 'store', label: '拠点（NewCar専用）', exclusiveTo: scopes.admin},
-    //     {tabId: 'roleMaster', label: '役割マスタ（NewCar専用）', exclusiveTo: scopes.admin},
-    //   ],
-    // },
+
     getAppSwitchMenus(scopes),
   ]
 
