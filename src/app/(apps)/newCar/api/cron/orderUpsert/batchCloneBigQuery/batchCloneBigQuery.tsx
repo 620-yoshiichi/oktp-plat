@@ -229,19 +229,11 @@ export const batchCloneBigQuery = async () => {
               ...rest,
             }
 
-            // #region agent log
-            fetch('http://127.0.0.1:7243/ingest/2f19b60b-6ff5-4ce2-bb73-d9ffe580d2a6',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'batchCloneBigQuery.tsx:222',message:'data object created',data:{APPINDEX,storeId,userId,storeIdType:typeof storeId,userIdType:typeof userId,hasStoreId:storeId!==undefined,hasUserId:userId!==undefined,hasStoreIdInData:'storeId' in data,hasUserIdInData:'userId' in data,dataKeys:Object.keys(data).slice(0,20)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
-            // #endregion
-
             const queryObject = {
               where: { APPINDEX: data?.APPINDEX ?? '' },
               create: data,
               update: data
             }
-
-            // #region agent log
-            fetch('http://127.0.0.1:7243/ingest/2f19b60b-6ff5-4ce2-bb73-d9ffe580d2a6',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'batchCloneBigQuery.tsx:236',message:'queryObject created detailed',data:{whereAPPINDEX:queryObject.where.APPINDEX,whereAPPINDEXType:typeof queryObject.where.APPINDEX,createStore:queryObject.create.Store,createUser:queryObject.create.User,createStoreType:typeof queryObject.create.Store,createUserType:typeof queryObject.create.User,createStoreId:queryObject.create.Store?.connect?.id,createUserId:queryObject.create.User?.connect?.id,createStoreIdType:typeof queryObject.create.Store?.connect?.id,createUserIdType:typeof queryObject.create.User?.connect?.id},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
-            // #endregion
 
             return {
               model: `newCar`,
