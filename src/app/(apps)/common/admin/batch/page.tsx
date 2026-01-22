@@ -149,6 +149,13 @@ export default function Page() {
     }
   }
 
+  // 当日かどうかをチェックする関数
+  const isToday = (date: Date | string) => {
+    const today = new Date()
+    const checkDate = new Date(date)
+    return checkDate.toDateString() === today.toDateString()
+  }
+
   const renderTable = (actions: BatchConfig[], title: string, counts?: Record<string, number>) => {
     const hasEffectOn = actions.some(action => action.effectOn)
 
@@ -271,9 +278,17 @@ export default function Page() {
                       {latestLog ? (
                         <button
                           onClick={handleLogClick}
-                          className={`text-left hover:underline cursor-pointer ${getStatusColor(latestLog.status, 'text')}`}
+                          className={`text-left hover:underline cursor-pointer w-full`}
                         >
-                          <div className={`text-sm`}>
+                          {/* アラート表示 */}
+                          {(!isToday(latestLog.completedAt || latestLog.startedAt) || latestLog.status === 'failure') && (
+                            <div className={`text-amber-600 font-bold mb-1 text-sm`}>
+                              ⚠️ アラート
+                            </div>
+                          )}
+
+                          {/* 時刻とステータス */}
+                          <div className={`text-sm ${getStatusColor(latestLog.status, 'text')}`}>
                             <div>{formatDate(new Date(latestLog.completedAt || latestLog.startedAt), 'YYYY-MM-DD HH:mm:ss')}</div>
                           </div>
                           <R_Stack>
@@ -282,6 +297,27 @@ export default function Page() {
                               <div className={`text-xs text-gray-500`}>{latestLog.duration}ms</div>
                             )}
                           </R_Stack>
+
+                          {/* メッセージ表示 */}
+                          {latestLog.status === 'success' && latestLog.result && (
+                            <div className={`text-xs text-gray-600 mt-1 line-clamp-2`}>
+                              {(() => {
+                                try {
+                                  const parsed = typeof latestLog.result === 'string' 
+                                    ? JSON.parse(latestLog.result) 
+                                    : latestLog.result
+                                  return parsed?.message || ''
+                                } catch {
+                                  return typeof latestLog.result === 'string' ? latestLog.result : ''
+                                }
+                              })()}
+                            </div>
+                          )}
+                          {latestLog.status === 'failure' && latestLog.errorMessage && (
+                            <div className={`text-xs text-red-600 mt-1 line-clamp-2`}>
+                              {latestLog.errorMessage}
+                            </div>
+                          )}
                         </button>
                       ) : (
                         <span className={`text-gray-400 text-sm`}>実行履歴なし</span>

@@ -10,12 +10,15 @@ export const executeUpassDeleteAndCreate = async () => {
   const deleteAndInsertResult = await deleteAndInsertUpassData()
   const createFamilyTreeResult = await createUpassFamilyTree()
 
+  const totalCount = deleteAndInsertResult.count + createFamilyTreeResult.count
+
   return {
     success: true,
-    message: 'U-PASSデータ取り込み完了',
+    message: `U-PASSデータ取り込み完了 ${totalCount}件（データ: ${deleteAndInsertResult.count}件、ツリー: ${createFamilyTreeResult.count}件）`,
     result: {
-      deleteAndInsertUpassData: deleteAndInsertResult,
-      createUpassFamilyTree: createFamilyTreeResult,
+      totalCount,
+      upassDataCount: deleteAndInsertResult.count,
+      familyTreeCount: createFamilyTreeResult.count,
     },
   }
 }

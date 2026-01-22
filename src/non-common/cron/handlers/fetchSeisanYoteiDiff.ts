@@ -17,8 +17,8 @@ export const executeFetchSeisanYoteiDiff = async () => {
 
   return {
     success: true,
-    message: '生産予定フェッチ完了',
-    result: createSeisanYoteiHistoryTableRes,
+    message: `生産予定フェッチ完了 ${createSeisanYoteiHistoryTableRes.count}件`,
+    result: {count: createSeisanYoteiHistoryTableRes.count},
   }
 }
 
@@ -146,7 +146,5 @@ async function createSeisanYoteiHistoryTable() {
 
   return {
     count: Object.keys(ToObject).length,
-    ToObject,
-    res,
   }
 }

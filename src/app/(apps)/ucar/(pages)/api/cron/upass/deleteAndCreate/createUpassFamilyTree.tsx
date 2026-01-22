@@ -1,7 +1,7 @@
 import prisma from 'src/lib/prisma'
 
 export const createUpassFamilyTree = async () => {
-  const result = {}
+  let totalTreeCount = 0
 
   // 初回ファミリーツリーの作成
   const firstUpassDataList = await prisma.uPASS.findMany({
@@ -19,8 +19,6 @@ export const createUpassFamilyTree = async () => {
       ],
     },
   })
-
-  result['firstUpassDataList'] = firstUpassDataList
 
   for (let i = 0; i < firstUpassDataList.length; i++) {
     const satei = firstUpassDataList[i]
@@ -58,6 +56,8 @@ export const createUpassFamilyTree = async () => {
         rootSateiID: satei.sateiID,
       })),
     })
+
+    totalTreeCount += tree.length
   }
 
   //途中から参加するメンバー
@@ -86,8 +86,11 @@ export const createUpassFamilyTree = async () => {
           sateiDate: satei.assessmentdatetime,
         },
       })
+      totalTreeCount++
     }
   }
 
-  return result
+  return {
+    count: totalTreeCount,
+  }
 }

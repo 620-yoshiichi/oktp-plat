@@ -43,13 +43,6 @@ const parseCSVLine = (line: string): string[] => {
 }
 
 export const deleteAndInsertUpassData = async () => {
-  const result: any = {}
-
-  // const {header, body} = await getUpassCsv()
-
-  // result.header = header
-  // result.body = body
-
   const body = await bigQuery__select({
     datasetId: 'Ucar_QR',
     tableId: 'UPASS_RAW',
@@ -79,8 +72,6 @@ export const deleteAndInsertUpassData = async () => {
     return obj
   })
 
-  result['necessaryDataList'] = necessaryDataList
-
   const dataSource = 'upass'
   await useRawSql({sql: sql`delete from "UPASS" where "dataSource" = '${dataSource}' `})
 
@@ -102,6 +93,7 @@ export const deleteAndInsertUpassData = async () => {
     }),
   })
 
-  result['created'] = created
-  return result
+  return {
+    count: necessaryDataList.length,
+  }
 }

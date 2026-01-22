@@ -63,6 +63,10 @@ const getFreePathsMatcher = (rootPath: string, pathArray: string[]): string => {
 }
 export const rootPaths: RootPathConfig[] = [
   {
+    rootPath: 'common',
+    paths: [{matcher: getFreePathsMatcher(`common`, []), ...pathValidation}],
+  },
+  {
     rootPath: 'newCar',
     paths: [{matcher: getFreePathsMatcher(`newCar`, []), ...pathValidation}],
   },

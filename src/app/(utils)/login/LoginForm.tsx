@@ -1,37 +1,34 @@
 'use client'
 import React from 'react'
-import { signIn} from 'next-auth/react'
+import { signIn } from 'next-auth/react'
 import useGlobal from 'src/cm/hooks/globalHooks/useGlobal'
-import { sleep} from 'src/cm/lib/methods/common'
+import { sleep } from 'src/cm/lib/methods/common'
 
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
 import useBasicFormProps from 'src/cm/hooks/useBasicForm/useBasicFormProps'
-import {Fields} from 'src/cm/class/Fields/Fields'
-import {Button} from '@cm/components/styles/common-components/Button'
-import {CheckLogin} from '@app/api/prisma/login/checkLogin'
+import { Fields } from 'src/cm/class/Fields/Fields'
+import { Button } from '@cm/components/styles/common-components/Button'
+import { CheckLogin } from '@app/api/prisma/login/checkLogin'
 
 export default function LoginForm(props) {
-  const {error} = props
-  const {toggleLoad, router} = useGlobal()
+  const { error } = props
+  const { toggleLoad, router } = useGlobal()
   const columns = Fields.transposeColumns([
     {
-      id: 'email',
-      label: 'メールアドレス',
-      form: {
-        register: {
-          required: '必須項目です',
-        },
-      },
+      id: 'loginKeyField',
+      label: process.env.NEXT_PUBLIC_LOGIN_KEY_FIELD_LABEL ?? 'メールアドレス',
+      form: { register: { required: '必須項目です' } },
     },
     {
       id: 'password',
       label: 'パスワード',
       form: {
-        register: {required: '必須項目です'},
+        register: { required: '必須項目です' },
       },
     },
   ])
-  const {BasicForm, latestFormData} = useBasicFormProps({columns, focusOnMount: false})
+  const { BasicForm, latestFormData } = useBasicFormProps({ columns, focusOnMount: false })
+  console.log(latestFormData)  //logs
 
   return (
     <>
@@ -43,12 +40,14 @@ export default function LoginForm(props) {
               latestFormData,
               wrapperClass: 'col-stack gap-4  text-xl items-center',
               ControlOptions: {
-                ControlStyle: {width: 250},
+                ControlStyle: { width: 250 },
               },
               onSubmit: async data => {
                 toggleLoad(
                   async () => {
-                    const user = await CheckLogin({authId: data.loginKeyField, authPw: data.password})
+                    const user = await CheckLogin({
+                      authId: data.loginKeyField, authPw: data.password
+                    })
 
                     if (!user) {
                       toast.error(`正しい認証情報を入力してください。`)
@@ -71,7 +70,7 @@ export default function LoginForm(props) {
                       toast.error(`ログインに失敗しました。:${result.error}`)
                     }
                   },
-                  {refresh: false, mutate: false}
+                  { refresh: false, mutate: false }
                 )
               },
             }}
@@ -85,16 +84,16 @@ export default function LoginForm(props) {
       <section>
         {process.env.NEXT_PUBLIC_NO_LOGIN !== 'false' && (
           <button
-          type="button"
-          className="text-blue-600 underline text-sm"
-          onClick={() => {
-            const path = prompt('パスワードを入力してください。')
-            if (!path) return
-            router.push(`/${path}`)
-          }}
-        >
-          ログインせずに利用
-        </button>
+            type="button"
+            className="text-blue-600 underline text-sm"
+            onClick={() => {
+              const path = prompt('パスワードを入力してください。')
+              if (!path) return
+              router.push(`/${path}`)
+            }}
+          >
+            ログインせずに利用
+          </button>
 
         )}
       </section>

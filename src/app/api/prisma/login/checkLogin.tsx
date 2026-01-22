@@ -28,6 +28,7 @@ export const CheckLogin = async ({ authId, authPw }) => {
     const PrismaClient = prisma?.[name] as any
 
     try {
+      console.log({ authKey, authId })  //logs
       const userData = await PrismaClient?.findUnique({ where: { [authKey.id]: authId } })
 
       if (userData) {
@@ -52,6 +53,7 @@ export const CheckLogin = async ({ authId, authPw }) => {
     let match = false
 
     match = String(userData?.[authKey.pw]) === String(authPw)
+
 
     if (!match) {
       const hasedMatch = await verifyPassword(authPw, userData?.[authKey.pw])
