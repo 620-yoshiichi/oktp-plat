@@ -14,10 +14,10 @@ type processBatchWithRetryType = (props: {
 export const processBatchWithRetry: processBatchWithRetryType = async ({
   soruceList,
   mainProcess,
-  options = { batchSize: 500, retries: 1 },
+  options,
 }) => {
   try {
-    const { batchSize, retries } = options
+    const { batchSize = 500, retries = 1, } = options ?? {}
 
     const chunks: any[] = []
     for (let i = 0; i < retries; i++) {

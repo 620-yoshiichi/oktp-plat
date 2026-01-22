@@ -192,7 +192,7 @@ export const batchCloneBigQuery = async () => {
               return BQ_parser.parseDate(value)
             }) as any
 
-            const { APPINDEX, NO_CYUMON, CD_HANSTAFF, CD_TENPO, KB_ZAIKOJYO, ...rest } = parsed
+            const { APPINDEX, NO_CYUMON, CD_HANSTAFF, CD_TENPO, KB_ZAIKOJYO, storeId: restStoreId, userId: restUserId, ...rest } = parsed
 
             let userId: number | undefined = userObj[CD_HANSTAFF]?.id
             let storeId: number | undefined = storeObj[CD_TENPO]?.id
@@ -229,11 +229,26 @@ export const batchCloneBigQuery = async () => {
               ...rest,
             }
 
+            // #region agent log
+            fetch('http://127.0.0.1:7243/ingest/2f19b60b-6ff5-4ce2-bb73-d9ffe580d2a6',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'batchCloneBigQuery.tsx:222',message:'data object created',data:{APPINDEX,storeId,userId,storeIdType:typeof storeId,userIdType:typeof userId,hasStoreId:storeId!==undefined,hasUserId:userId!==undefined,hasStoreIdInData:'storeId' in data,hasUserIdInData:'userId' in data,dataKeys:Object.keys(data).slice(0,20)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
+            // #endregion
+
+            const queryObject = {
+              where: { APPINDEX: data?.APPINDEX ?? '' },
+              create: data,
+              update: data
+            }
+
+            // #region agent log
+            fetch('http://127.0.0.1:7243/ingest/2f19b60b-6ff5-4ce2-bb73-d9ffe580d2a6',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'batchCloneBigQuery.tsx:236',message:'queryObject created detailed',data:{whereAPPINDEX:queryObject.where.APPINDEX,whereAPPINDEXType:typeof queryObject.where.APPINDEX,createStore:queryObject.create.Store,createUser:queryObject.create.User,createStoreType:typeof queryObject.create.Store,createUserType:typeof queryObject.create.User,createStoreId:queryObject.create.Store?.connect?.id,createUserId:queryObject.create.User?.connect?.id,createStoreIdType:typeof queryObject.create.Store?.connect?.id,createUserIdType:typeof queryObject.create.User?.connect?.id},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+            // #endregion
+
             return {
               model: `newCar`,
               method: `upsert`,
-              queryObject: { where: { APPINDEX: data?.APPINDEX ?? '' }, create: data, update: data },
+              queryObject,
             }
+
           } catch (error) {
             console.error(`レコード変換エラー:`, error, obj?.APPINDEX)
             return null
@@ -243,24 +258,36 @@ export const batchCloneBigQuery = async () => {
 
       // バッチ処理の実行
       if (recordsParsedDate.length > 0) {
-        await processBatchWithRetry({
+        const batchResult = await processBatchWithRetry({
           soruceList: recordsParsedDate,
           mainProcess: async batch => {
+
+            // #region agent log
+            fetch('http://127.0.0.1:7243/ingest/2f19b60b-6ff5-4ce2-bb73-d9ffe580d2a6',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'batchCloneBigQuery.tsx:253',message:'batch before doTransaction',data:{batchLength:batch.length,firstItem:batch[0]?{model:batch[0].model,method:batch[0].method,queryObjectKeys:Object.keys(batch[0]?.queryObject||{})}:null},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
+            // #endregion
+
             try {
               await doTransaction({
                 transactionQueryList: batch,
                 mode: 'parallel',
               })
             } catch (error) {
-              console.error(`バッチ処理エラー:`, error, batch)
+              // #region agent log
+              fetch('http://127.0.0.1:7243/ingest/2f19b60b-6ff5-4ce2-bb73-d9ffe580d2a6',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'batchCloneBigQuery.tsx:262',message:'error caught in batch',data:{errorMessage:error?.message,errorType:typeof error,errorIsNumber:typeof error==='number',errorString:String(error)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});
+              // #endregion
+
+              console.error(`バッチ処理エラー:`, error)
               throw error
             }
           },
           options: {
             batchSize: BATCH_SIZE,
-            retries: 3, // リトライ回数を増加
+            retries: 1, // リトライ回数を増加
           },
         })
+        if (batchResult.success === false) {
+          throw new Error(batchResult.message)
+        }
       }
 
       totalProcessedCount += recordsParsedDate.length

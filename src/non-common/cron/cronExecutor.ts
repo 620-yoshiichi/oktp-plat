@@ -149,25 +149,49 @@ export const executeCronBatchWithProgress = async (req: NextRequest, batchConfig
         // バッチ処理を実行
         const result = await batchConfig.handler()
 
-        // 実行成功ログを記録
-        await updateExecutionLogForSuccess(log.id, startTime, result)
+        // 結果がオブジェクトで success: false の場合は失敗として扱う
+        if (result && typeof result === 'object' && result.success === false) {
+          // 実行失敗ログを記録
+          const error = new Error(result.message || 'Batch failed')
+          await updateExecutionLogForFailure(log.id, startTime, error)
 
-        clearInterval(keepAliveInterval)
+          clearInterval(keepAliveInterval)
 
-        const duration = Date.now() - startTime
-        console.log(`[CRON] Completed batch with progress: ${batchConfig.name} (${batchConfig.id}) in ${duration}ms`)
+          const duration = Date.now() - startTime
+          console.error(`[CRON] Failed batch with progress: ${batchConfig.name} (${batchConfig.id}) - ${result.message}`)
 
-        // 完了メッセージ送信
-        controller.enqueue(
-          encodeSSEMessage({
-            type: 'complete',
-            success: true,
-            message: `${batchConfig.name} completed`,
-            batchId: batchConfig.id,
-            duration,
-            result,
-          })
-        )
+          // 失敗メッセージ送信
+          controller.enqueue(
+            encodeSSEMessage({
+              type: 'complete',
+              success: false,
+              message: result.message || `${batchConfig.name} failed`,
+              batchId: batchConfig.id,
+              duration,
+              error: result.message,
+            })
+          )
+        } else {
+          // 実行成功ログを記録
+          await updateExecutionLogForSuccess(log.id, startTime, result)
+
+          clearInterval(keepAliveInterval)
+
+          const duration = Date.now() - startTime
+          console.log(`[CRON] Completed batch with progress: ${batchConfig.name} (${batchConfig.id}) in ${duration}ms`)
+
+          // 完了メッセージ送信
+          controller.enqueue(
+            encodeSSEMessage({
+              type: 'complete',
+              success: true,
+              message: `${batchConfig.name} completed`,
+              batchId: batchConfig.id,
+              duration,
+              result,
+            })
+          )
+        }
       } catch (error: any) {
         clearInterval(keepAliveInterval)
 
@@ -238,6 +262,26 @@ export const executeCronBatch = async (req: NextRequest, batchConfig: BatchConfi
 
     // バッチ処理を実行
     const result = await batchConfig.handler()
+
+    // 結果がオブジェクトで success: false の場合は失敗として扱う
+    if (result && typeof result === 'object' && result.success === false) {
+      // 実行失敗ログを記録
+      const error = new Error(result.message || 'Batch failed')
+      await updateExecutionLogForFailure(log.id, startTime, error)
+
+      console.error(`[CRON] Failed batch: ${batchConfig.name} (${batchConfig.id}) - ${result.message}`)
+
+      return NextResponse.json(
+        {
+          success: false,
+          message: result.message || `${batchConfig.name} failed`,
+          batchId: batchConfig.id,
+          duration: Date.now() - startTime,
+          result: null,
+        },
+        {status: 500}
+      )
+    }
 
     // 実行成功ログを記録
     await updateExecutionLogForSuccess(log.id, startTime, result)

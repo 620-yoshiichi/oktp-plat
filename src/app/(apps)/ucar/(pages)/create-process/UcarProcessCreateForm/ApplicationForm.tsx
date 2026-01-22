@@ -1,30 +1,30 @@
 'use client'
 import useUserInfoRegister from '@app/(apps)/ucar/(pages)/create-process/UcarProcessCreateForm/UserInfoRegister'
 
-import {createProcessWithPostHandler} from '@app/(apps)/ucar/(lib)/server-actions/Ucar-server-actions'
-import {useState, useEffect, useRef} from 'react'
-import {toast} from 'react-toastify'
-import {C_Stack, FitMargin} from '@cm/components/styles/common-components/common-components'
-import {Button} from '@cm/components/styles/common-components/Button'
+import { createProcessWithPostHandler } from '@app/(apps)/ucar/(lib)/server-actions/Ucar-server-actions'
+import { useState, useEffect, useRef } from 'react'
+import { toast } from 'react-toastify'
+import { C_Stack, FitMargin } from '@cm/components/styles/common-components/common-components'
+import { Button } from '@cm/components/styles/common-components/Button'
 
 import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
 
-import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
-import {Alert, Text} from '@cm/components/styles/common-components/Alert'
-import {UcarProcessCl} from '@app/(apps)/ucar/class/UcarProcessCl'
-import {formatDate} from '@cm/class/Days/date-utils/formatters'
-import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
-import {cn} from '@cm/shadcn/lib/utils'
+import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+import { Alert, Text } from '@cm/components/styles/common-components/Alert'
+import { UcarProcessCl } from '@app/(apps)/ucar/class/UcarProcessCl'
+import { formatDate } from '@cm/class/Days/date-utils/formatters'
+import { IconBtn } from '@cm/components/styles/common-components/IconBtn'
+import { cn } from '@cm/shadcn/lib/utils'
 
-import {toastByResult} from '@cm/lib/ui/notifications'
-import {Fields} from '@cm/class/Fields/Fields'
-import {Card} from '@cm/shadcn/ui/card'
-import {__shared_get_shiwakeKekkeCol} from '@app/(apps)/ucar/class/ColBuilder/getter/shared_shiwakeKekkeCol'
+import { toastByResult } from '@cm/lib/ui/notifications'
+import { Fields } from '@cm/class/Fields/Fields'
+import { Card } from '@cm/shadcn/ui/card'
+import { __shared_get_shiwakeKekkeCol } from '@app/(apps)/ucar/class/ColBuilder/getter/shared_shiwakeKekkeCol'
 
 /**
  * プロセスタイプに応じた前提条件のチェックと管理を行う
  */
-const useProcessPrerequisites = ({processCode, UcarData}) => {
+const useProcessPrerequisites = ({ processCode, UcarData }) => {
   const ProcessCodeItem = UcarProcessCl.CODE.byCode(processCode)
   const isCrChakuProcess = ProcessCodeItem?.code === UcarProcessCl.CODE.raw.CR_CHAKU.code
   const isPaperSendProcess = ProcessCodeItem?.code === UcarProcessCl.CODE.raw.STORE_SHORUI_SOUHU.code
@@ -74,8 +74,8 @@ const useProcessPrerequisites = ({processCode, UcarData}) => {
 /**
  * 書類送付プロセス用のお客様情報入力フォーム
  */
-const CustomerInfoForm = ({UcarData, onComplete}) => {
-  const {UserRegisterBasicForm, userData} = useUserInfoRegister({UcarData})
+const CustomerInfoForm = ({ UcarData, onComplete }) => {
+  const { UserRegisterBasicForm, userData } = useUserInfoRegister({ UcarData })
 
   return (
     <div>
@@ -84,8 +84,8 @@ const CustomerInfoForm = ({UcarData, onComplete}) => {
         // alignMode={'col'}
         latestFormData={userData}
         onSubmit={async () => {
-          const {result: updatedUcarData} = await doStandardPrisma(`ucar`, `update`, {
-            where: {id: UcarData.id},
+          const { result: updatedUcarData } = await doStandardPrisma(`ucar`, `update`, {
+            where: { id: UcarData.id },
             data: userData,
           })
           toast.success(`お客様情報を更新しました。そのまま書類送付登録をしてください。`)
@@ -101,9 +101,9 @@ const CustomerInfoForm = ({UcarData, onComplete}) => {
 /**
  * CR着プロセス用の仕分け先入力フォーム
  */
-const DestinationForm = ({UcarData, stores, onComplete}) => {
+const DestinationForm = ({ UcarData, stores, onComplete }) => {
   const columns = new Fields([__shared_get_shiwakeKekkeCol()]).transposeColumns()
-  const {BasicForm, latestFormData} = useBasicFormProps({
+  const { BasicForm, latestFormData } = useBasicFormProps({
     columns,
     formData: {
       destination: UcarData.destination || '',
@@ -118,8 +118,8 @@ const DestinationForm = ({UcarData, stores, onComplete}) => {
       <BasicForm
         latestFormData={latestFormData}
         onSubmit={async data => {
-          const {result: updatedUcarData} = await doStandardPrisma(`ucar`, `update`, {
-            where: {id: UcarData.id},
+          const { result: updatedUcarData } = await doStandardPrisma(`ucar`, `update`, {
+            where: { id: UcarData.id },
             data: {
               destination: data.destination,
               runnable: data.runnable,
@@ -140,7 +140,7 @@ const DestinationForm = ({UcarData, stores, onComplete}) => {
 /**
  * 前提条件が満たされていない場合の警告メッセージ
  */
-const PrerequisitesWarning = ({needsCustomerInfo, needsDestination}) => {
+const PrerequisitesWarning = ({ needsCustomerInfo, needsDestination }) => {
   if (!needsCustomerInfo && !needsDestination) return null
 
   let message = ''
@@ -181,7 +181,7 @@ const ProcessRegistrationForm = ({
           latestFormData={latestFormData}
           onSubmit={async data => {
             toggleLoad(async () => {
-              const {Destination = '-', runnable = null, remarks = '-', ...rest} = data ?? {}
+              const { Destination = '-', runnable = null, remarks = '-', ...rest } = data ?? {}
               if (ProcessCodeItem) {
                 const postHandler = ProcessCodeItem?.postHandler
 
@@ -211,9 +211,9 @@ const ProcessRegistrationForm = ({
   )
 }
 
-export const ProcessApplicationForm = ({columns, stores, UcarData, useGlobalProps, setopenClearnUp, processCode}) => {
-  const {session, toggleLoad, addQuery, router} = useGlobalProps
-  const {id: userId, storeId} = session ?? {}
+export const ProcessApplicationForm = ({ columns, stores, UcarData, useGlobalProps, setopenClearnUp, processCode }) => {
+  const { session, toggleLoad, addQuery, router } = useGlobalProps
+  const { id: userId, storeId } = session ?? {}
   const ucarId = UcarData.id
 
   const processFormRef = useRef<HTMLDivElement | null>(null)
@@ -230,9 +230,9 @@ export const ProcessApplicationForm = ({columns, stores, UcarData, useGlobalProp
     setCustomerInfoRegistered,
     setDestinationRegistered,
     ProcessCodeItem,
-  } = useProcessPrerequisites({processCode, UcarData})
+  } = useProcessPrerequisites({ processCode, UcarData })
 
-  const {BasicForm: ProcessRegisterForm, latestFormData} = useBasicFormProps({
+  const { BasicForm: ProcessRegisterForm, latestFormData } = useBasicFormProps({
     columns,
     formData: {
       userId,
@@ -281,7 +281,7 @@ export const ProcessApplicationForm = ({columns, stores, UcarData, useGlobalProp
           </Card>
         )}
         <Card>
-          <SameProcessAlert {...{registerdProcess, processCode}}>
+          <SameProcessAlert {...{ registerdProcess, processCode }}>
             <C_Stack className={`items-center`}>
               <ProcessRegistrationForm
                 ProcessRegisterForm={ProcessRegisterForm}
@@ -302,14 +302,14 @@ export const ProcessApplicationForm = ({columns, stores, UcarData, useGlobalProp
   )
 }
 
-const SameProcessAlert = ({children, registerdProcess, processCode}) => {
+const SameProcessAlert = ({ children, registerdProcess, processCode }) => {
   if (registerdProcess) {
     const processCodeItem = UcarProcessCl.CODE.byCode(processCode)
     return (
       <div>
         <div className={`p-2 relative `}>
           <div>
-            <Alert color="red">
+            <Alert color="blue">
               <C_Stack className={` items-center`}>
                 <IconBtn color={processCodeItem?.color}>{processCodeItem?.label}</IconBtn>
                 <span>はすでに</span>

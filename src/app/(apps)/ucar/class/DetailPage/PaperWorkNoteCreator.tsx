@@ -1,44 +1,44 @@
 import React from 'react'
-import {toast} from 'react-toastify'
-import {knockEmailApi} from '@cm/lib/methods/knockEmailApi'
-import {limitEditting} from '@cm/constants/defaults'
-import {ColBuilder} from '@app/(apps)/ucar/class/ColBuilder/ColBuilder'
-import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+import { toast } from 'react-toastify'
+import { knockEmailApi } from '@cm/lib/methods/knockEmailApi'
+import { limitEditting } from '@cm/constants/defaults'
+import { ColBuilder } from '@app/(apps)/ucar/class/ColBuilder/ColBuilder'
+import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 import ChildCreator from '@cm/components/DataLogic/RTs/ChildCreator/ChildCreator'
-import {QueryBuilder} from '@app/(apps)/ucar/class/QueryBuilder'
+import { QueryBuilder } from '@app/(apps)/ucar/class/QueryBuilder'
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
-import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
-import {OKTP_CONSTANTS} from '@app/oktpCommon/constants'
-import {UcarCL, ucarData} from '@app/(apps)/ucar/class/UcarCL'
-import {formatDate} from '@cm/class/Days/date-utils/formatters'
-import {UseRecordsReturn} from '@cm/components/DataLogic/TFs/PropAdjustor/hooks/useRecords/useRecords'
+import { UCAR_CODE } from '@app/(apps)/ucar/class/UCAR_CODE'
+import { OKTP_CONSTANTS } from '@app/oktpCommon/constants'
+import { UcarCL, ucarData } from '@app/(apps)/ucar/class/UcarCL'
+import { formatDate } from '@cm/class/Days/date-utils/formatters'
+import { UseRecordsReturn } from '@cm/components/DataLogic/TFs/PropAdjustor/hooks/useRecords/useRecords'
 
-export default function PaperWorkNoteCreator(props: {UcarData: ucarData; UseRecordsReturn: UseRecordsReturn}) {
-  const {UcarData, UseRecordsReturn} = props
+export default function PaperWorkNoteCreator(props: { UcarData: ucarData; UseRecordsReturn: UseRecordsReturn }) {
+  const { UcarData, UseRecordsReturn } = props
   const useGlobalProps = useGlobal()
-  const {router, accessScopes, session, query, toggleLoad} = useGlobalProps
+  const { router, accessScopes, session, query, toggleLoad } = useGlobalProps
   const scopes = accessScopes()
-  const include = QueryBuilder.getInclude({session, query}).ucarPaperWorkNotes.include as any
+  const include = QueryBuilder.getInclude({ session, query }).ucarPaperWorkNotes.include as any
 
   if (!UcarData) return <></>
   return (
     <ChildCreator
       {...{
-        columns: ColBuilder.UcarPaperWorkNotes({useGlobalProps}),
+        columns: ColBuilder.UcarPaperWorkNotes({ useGlobalProps }),
         ParentData: UcarData,
-        models: {parent: 'ucar', children: 'ucarPaperWorkNotes'},
+        models: { parent: 'ucar', children: 'ucarPaperWorkNotes' },
         additional: {
-          payload: {ucarId: UcarData.id, userId: session?.id},
+          payload: { ucarId: UcarData.id, userId: session?.id },
           include,
-          orderBy: [{createdAt: `desc`}],
+          orderBy: [{ createdAt: `desc` }],
         },
         useGlobalProps,
-        ...limitEditting({exclusiveTo: scopes.admin}),
+        ...limitEditting({ exclusiveTo: scopes.admin }),
         myForm: {
           create: {
             executeUpdate: undefined,
             finalizeUpdate: async props => {
-              const {content} = props.res.result
+              const { content } = props.res.result
               const ucarPaperWorkNotes = props.res.result
 
               const TypeObj = UCAR_CODE.PAPER_WORK_NOTE_TYPES.byCode(ucarPaperWorkNotes.type)
@@ -47,20 +47,20 @@ export default function PaperWorkNoteCreator(props: {UcarData: ucarData; UseReco
               if (TypeObj?.notifyByEmail && !ucarPaperWorkNotes.resolvedAt) {
                 const storeManagerWhere = OKTP_CONSTANTS.where.storeManagerWhere
 
-                const {result: SenderUser} = await doStandardPrisma(`user`, `findUnique`, {
-                  where: {id: ucarPaperWorkNotes.userId},
+                const { result: SenderUser } = await doStandardPrisma(`user`, `findUnique`, {
+                  where: { id: ucarPaperWorkNotes.userId },
                 })
 
-                const {result: UcarUser} = await doStandardPrisma(`user`, `findUnique`, {
-                  where: {id: UcarData.userId},
+                const { result: UcarUser } = await doStandardPrisma(`user`, `findUnique`, {
+                  where: { id: UcarData.userId },
                 })
 
-                const {result: StoreManagerUsers} = await doStandardPrisma(`user`, `findMany`, {
+                const { result: StoreManagerUsers } = await doStandardPrisma(`user`, `findMany`, {
                   where: {
                     AND: [
                       //
                       storeManagerWhere,
-                      {storeId: UcarData.storeId},
+                      { storeId: UcarData.storeId },
                     ],
                   },
                 })
@@ -71,14 +71,16 @@ export default function PaperWorkNoteCreator(props: {UcarData: ucarData; UseReco
                 const ucarInst = new UcarCL(ucarData)
 
                 const text = [
-                  `査定番号: ${ucarInst.notation.sateiID}`,
-                  `お客様名: ${ucarInst.notation.customerName}`,
-                  `車名: ${ucarInst.notation.modelName}`,
-                  `印鑑証明期限: ${formatDate(ucarInst.data.inkanCertificateExpiredAt)}`,
+                  `店舗名: ${ucarInst.notation.storeName ?? ''}`,
+                  `スタッフ名: ${ucarInst.notation.staffName ?? ''}`,
+                  `査定番号: ${ucarInst.notation.sateiID ?? ''}`,
+                  `お客様名: ${ucarInst.notation.customerName ?? ''}`,
+                  `車名: ${ucarInst.notation.modelName ?? ''}`,
+                  `印鑑証明期限: ${formatDate(ucarInst.data.inkanCertificateExpiredAt ?? '')}`,
                   ``,
-                  `不備区分: ${inadequacyTypeLabel}`,
-                  `不備申請者: ${SenderUser?.name}`,
-                  `不備内容: ${content}`,
+                  `不備区分: ${inadequacyTypeLabel ?? ''}`,
+                  `不備申請者: ${SenderUser?.name ?? ''}`,
+                  `不備内容: ${content ?? ''}`,
                 ].join('\n')
 
                 await knockEmailApi({

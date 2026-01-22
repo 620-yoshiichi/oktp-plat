@@ -104,7 +104,7 @@ export default function Page() {
 
   // Ucarアプリのデータ件数取得
   const ucarKey = JSON.stringify(batch.ucar)
-  const { data: ucarCount } = useSWR(ucarKey, async () => {
+  const { data: ucarCount, mutate: mutateUcarCount } = useSWR(ucarKey, async () => {
     const countList = await Promise.all(
       batch.ucar.map(async action => {
         if (action.tableName) {
@@ -229,6 +229,10 @@ export default function Page() {
                           }
                           // ログデータを再取得
                           mutateBatchLogs()
+                          // データカウントを再取得
+                          if (action.app === 'ucar' && action.tableName) {
+                            mutateUcarCount()
+                          }
                         }
                       }
                     }
@@ -242,6 +246,10 @@ export default function Page() {
                       })
                       // ログデータを再取得（完了したかもしれないので）
                       mutateBatchLogs()
+                      // データカウントを再取得
+                      if (action.app === 'ucar' && action.tableName) {
+                        mutateUcarCount()
+                      }
                     }
                   } catch (error: any) {
                     // エラー時は実行中状態をクリア
