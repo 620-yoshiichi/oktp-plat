@@ -270,8 +270,8 @@ export default function Page() {
                       <MarkDownDisplay className={`text-gray-500 text-sm`}>{action.description || ''}</MarkDownDisplay>
                     </td>
 
-                    <td>
-                      <MarkDownDisplay>{action.purpose || ''}</MarkDownDisplay>
+                    <td className={`text-sm`}>
+                      <MarkDownDisplay >{action.purpose || ''}</MarkDownDisplay>
                     </td>
 
                     <td className={`min-w-[200px]`}>
@@ -280,16 +280,21 @@ export default function Page() {
                           onClick={handleLogClick}
                           className={`text-left hover:underline cursor-pointer w-full`}
                         >
-                          {/* アラート表示 */}
-                          {(!isToday(latestLog.completedAt || latestLog.startedAt) || latestLog.status === 'failure') && (
-                            <div className={`text-amber-600 font-bold mb-1 text-sm`}>
-                              ⚠️ アラート
-                            </div>
-                          )}
+
 
                           {/* 時刻とステータス */}
                           <div className={`text-sm ${getStatusColor(latestLog.status, 'text')}`}>
-                            <div>{formatDate(new Date(latestLog.completedAt || latestLog.startedAt), 'YYYY-MM-DD HH:mm:ss')}</div>
+
+                            <div>
+                              {/* アラート表示（batch実行のみ） */}
+                              {action.effectOn === 'batch' && (!isToday(latestLog.completedAt || latestLog.startedAt) || latestLog.status === 'failure') && (
+                                <span className={`text-amber-600 font-bold mb-1 text-sm`}>
+                                  ⚠️
+                                </span>
+                              )}
+
+                              <span>{formatDate(new Date(latestLog.completedAt || latestLog.startedAt), 'YYYY-MM-DD HH:mm:ss')}</span>
+                            </div>
                           </div>
                           <R_Stack>
                             <div className={`font-bold`}>{getStatusText(latestLog.status)}</div>
@@ -300,13 +305,17 @@ export default function Page() {
 
                           {/* メッセージ表示 */}
                           {latestLog.status === 'success' && latestLog.result && (
-                            <div className={`text-xs text-gray-600 mt-1 line-clamp-2`}>
+                            <div className={`text-xs text-gray-600 mt-1 line-clamp-2  truncate max-w-[200px]`}>
                               {(() => {
                                 try {
-                                  const parsed = typeof latestLog.result === 'string' 
-                                    ? JSON.parse(latestLog.result) 
+                                  const parsed = typeof latestLog.result === 'string'
+
+                                    ? JSON.parse(latestLog.result)
                                     : latestLog.result
-                                  return parsed?.message || ''
+                                  const count = parsed?.result?.count
+                                  return [
+                                    count && `${count}件`,
+                                    parsed?.message,].filter(Boolean).join(' ')
                                 } catch {
                                   return typeof latestLog.result === 'string' ? latestLog.result : ''
                                 }
