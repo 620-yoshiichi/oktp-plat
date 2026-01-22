@@ -253,21 +253,12 @@ export const batchCloneBigQuery = async () => {
         const batchResult = await processBatchWithRetry({
           soruceList: recordsParsedDate,
           mainProcess: async batch => {
-
-            // #region agent log
-            fetch('http://127.0.0.1:7243/ingest/2f19b60b-6ff5-4ce2-bb73-d9ffe580d2a6',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'batchCloneBigQuery.tsx:253',message:'batch before doTransaction',data:{batchLength:batch.length,firstItem:batch[0]?{model:batch[0].model,method:batch[0].method,queryObjectKeys:Object.keys(batch[0]?.queryObject||{})}:null},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
-            // #endregion
-
             try {
               await doTransaction({
                 transactionQueryList: batch,
                 mode: 'parallel',
               })
             } catch (error) {
-              // #region agent log
-              fetch('http://127.0.0.1:7243/ingest/2f19b60b-6ff5-4ce2-bb73-d9ffe580d2a6',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'batchCloneBigQuery.tsx:262',message:'error caught in batch',data:{errorMessage:error?.message,errorType:typeof error,errorIsNumber:typeof error==='number',errorString:String(error)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});
-              // #endregion
-
               console.error(`バッチ処理エラー:`, error)
               throw error
             }

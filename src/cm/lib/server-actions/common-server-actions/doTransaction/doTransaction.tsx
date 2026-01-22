@@ -52,26 +52,12 @@ export const doTransaction = async (props: { transactionQueryList: transactionQu
         return await Promise.all(promises)
       })
     } else if (mode === 'parallel') {
-      const promises = transactionQueryList.map(async (q, index) => {
+      const promises = transactionQueryList.map(async q => {
         try {
           const { model, method, queryObject } = q
 
-          // #region agent log
-          fetch('http://127.0.0.1:7243/ingest/2f19b60b-6ff5-4ce2-bb73-d9ffe580d2a6',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'doTransaction.tsx:57',message:'before prisma call detailed',data:{index,model,method,where:queryObject?.where,whereType:typeof queryObject?.where,whereAPPINDEX:queryObject?.where?.APPINDEX,whereAPPINDEXType:typeof queryObject?.where?.APPINDEX,createHasStoreId:'storeId' in (queryObject?.create||{}),createHasUserId:'userId' in (queryObject?.create||{}),createStoreIdValue:queryObject?.create?.storeId,createUserIdValue:queryObject?.create?.userId,createStoreIdType:typeof queryObject?.create?.storeId,createUserIdType:typeof queryObject?.create?.userId,createStore:queryObject?.create?.Store,createUser:queryObject?.create?.User,createStoreId:queryObject?.create?.Store?.connect?.id,createUserId:queryObject?.create?.User?.connect?.id},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
-          // #endregion
-
-          const result = await prisma[model][method](queryObject)
-
-          // #region agent log
-          fetch('http://127.0.0.1:7243/ingest/2f19b60b-6ff5-4ce2-bb73-d9ffe580d2a6',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'doTransaction.tsx:60',message:'after prisma call success',data:{index,model,method,resultType:typeof result},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
-          // #endregion
-
-          return result
+          return prisma[model][method](queryObject)
         } catch (error) {
-          // #region agent log
-          fetch('http://127.0.0.1:7243/ingest/2f19b60b-6ff5-4ce2-bb73-d9ffe580d2a6',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'doTransaction.tsx:63',message:'prisma call error',data:{index,model:q.model,method:q.method,errorMessage:error?.message,errorType:typeof error,errorIsNumber:typeof error==='number',queryObjectType:typeof q.queryObject,queryObjectString:String(q.queryObject).slice(0,200)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
-          // #endregion
-
           errorItemList.push({ ...q, error: error.message })
           return null
         }
@@ -89,10 +75,6 @@ export const doTransaction = async (props: { transactionQueryList: transactionQu
 
     return result
   } catch (error) {
-    // #region agent log
-    fetch('http://127.0.0.1:7243/ingest/2f19b60b-6ff5-4ce2-bb73-d9ffe580d2a6',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'doTransaction.tsx:78',message:'catch block error',data:{errorMessage:error?.message,errorType:typeof error,errorIsNumber:typeof error==='number',errorString:String(error),errorKeys:error?Object.keys(error):null},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
-
     throw new Error(error.message)
     // console.error(error.stack)
     // const result: requestResultType = {
