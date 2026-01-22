@@ -52,11 +52,10 @@ export const doTransaction = async (props: { transactionQueryList: transactionQu
         return await Promise.all(promises)
       })
     } else if (mode === 'parallel') {
-      const promises = transactionQueryList.map(async q => {
+      const promises = transactionQueryList.map(async (q, index) => {
         try {
           const { model, method, queryObject } = q
-
-          return prisma[model][method](queryObject)
+          return await prisma[model][method](queryObject)
         } catch (error) {
           errorItemList.push({ ...q, error: error.message })
           return null

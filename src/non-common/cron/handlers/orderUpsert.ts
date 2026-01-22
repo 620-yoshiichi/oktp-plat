@@ -12,10 +12,17 @@ export const executeOrderUpsert = async () => {
 
     const cloneBigQueryResult = await batchCloneBigQuery()
     if (cloneBigQueryResult.success === false) {
-      console.error('[executeOrderUpsert] BigQueryクローン処理失敗:', cloneBigQueryResult.message)
+      const errorDetails = cloneBigQueryResult.error
+        ? ` (エラー詳細: ${cloneBigQueryResult.error.name} - ${cloneBigQueryResult.error.message} )`
+        : ''
+      console.error('[executeOrderUpsert] BigQueryクローン処理失敗:', cloneBigQueryResult.message + errorDetails)
+      if (cloneBigQueryResult.error?.stack) {
+        console.error('[executeOrderUpsert] エラースタック:', cloneBigQueryResult.error.stack)
+      }
       return {
         success: false,
-        message: cloneBigQueryResult.message,
+        message: `BigQueryクローン処理失敗: ${cloneBigQueryResult.message}`,
+        error: cloneBigQueryResult.error,
       }
     }
 
