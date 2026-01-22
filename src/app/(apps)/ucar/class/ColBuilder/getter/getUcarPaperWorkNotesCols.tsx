@@ -1,10 +1,10 @@
 'use client'
-import {columnGetterType} from '@cm/types/types'
-import {colType} from '@cm/types/col-types'
-import {Fields} from '@cm/class/Fields/Fields'
+import { columnGetterType } from '@cm/types/types'
+import { colType } from '@cm/types/col-types'
+import { Fields } from '@cm/class/Fields/Fields'
 
-import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
-import {T_LINK} from '@cm/components/styles/common-components/links'
+import { UCAR_CODE } from '@app/(apps)/ucar/class/UCAR_CODE'
+import { T_LINK } from '@cm/components/styles/common-components/links'
 
 export const getUcarPaperWorkNotesCols = (props: columnGetterType) => {
   const col1: colType[] = [
@@ -13,7 +13,7 @@ export const getUcarPaperWorkNotesCols = (props: columnGetterType) => {
       label: '申請区分',
 
       forSelect: {
-        optionsOrOptionFetcher: UCAR_CODE.PAPER_WORK_NOTE_TYPES.array,
+        codeMaster: UCAR_CODE.PAPER_WORK_NOTE_TYPES,
       },
       form: {
         defaultValue: UCAR_CODE.PAPER_WORK_NOTE_TYPES.raw.FUBI.code,
@@ -23,7 +23,7 @@ export const getUcarPaperWorkNotesCols = (props: columnGetterType) => {
       id: 'createdAt',
       label: '登録日',
       type: 'date',
-      form: {hidden: true},
+      form: { hidden: true },
     },
 
     {
@@ -40,7 +40,7 @@ export const getUcarPaperWorkNotesCols = (props: columnGetterType) => {
       label: '内容',
       type: 'textarea',
       form: {},
-      td: {style: {width: 200}},
+      td: { style: { width: 200 } },
     },
 
     {
@@ -53,7 +53,7 @@ export const getUcarPaperWorkNotesCols = (props: columnGetterType) => {
       id: 'fubiHensoHyo',
       label: '不備返送表',
       type: 'date',
-      form: {hidden: true},
+      form: { hidden: true },
       format: (value, row) => {
         return (
           <T_LINK href={`/ucar/fubiHensoHyo/${row.id}`} target="_blank">
@@ -66,5 +66,5 @@ export const getUcarPaperWorkNotesCols = (props: columnGetterType) => {
 
   const data: colType[] = Fields.mod.addColIndexs([col1])
 
-  return Fields.transposeColumns(data, {...props.transposeColumnsOptions})
+  return Fields.transposeColumns(data, { ...props.transposeColumnsOptions })
 }

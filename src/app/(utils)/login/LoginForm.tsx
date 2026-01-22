@@ -28,7 +28,6 @@ export default function LoginForm(props) {
     },
   ])
   const { BasicForm, latestFormData } = useBasicFormProps({ columns, focusOnMount: false })
-  console.log(latestFormData)  //logs
 
   return (
     <>
