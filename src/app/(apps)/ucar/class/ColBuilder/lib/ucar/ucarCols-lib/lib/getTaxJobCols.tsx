@@ -72,7 +72,7 @@ export const getTaxJobCols = ({ isChukoshaGroup }: { isChukoshaGroup?: boolean }
       label: `例外処理`,
       form: {},
       forSelect: {
-        optionsOrOptionFetcher: UCAR_CODE.TAX_EXCEPTION.array,
+        codeMaster: UCAR_CODE.TAX_EXCEPTION,
       },
       format: (value, row) => {
         const codeItem = UCAR_CODE.TAX_EXCEPTION.byCode(row.exception)
