@@ -247,6 +247,36 @@ export class UCAR_CODE {
     },
   })
 
+  // 申請区分
+  static REQUEST_TYPES = new Code({
+    HIDE: {
+      code: '01',
+      label: '非表示申請',
+      color: '#808080',
+      onApprove: 'setInactive', // 承諾時にactive=falseにする
+    },
+    // 将来の拡張用にここに追加可能
+  })
+
+  // 申請ステータス
+  static REQUEST_STATUS = new Code({
+    PENDING: {
+      code: 'pending',
+      label: '申請中',
+      color: '#ffc107',
+    },
+    APPROVED: {
+      code: 'approved',
+      label: '承諾',
+      color: '#28a745',
+    },
+    REJECTED: {
+      code: 'rejected',
+      label: '却下',
+      color: '#dc3545',
+    },
+  })
+
   static SHITADORI_KBN = new UcarAlertCode({
     SHITADORI: {
       code: '01',

@@ -116,7 +116,8 @@ export const ModelName = {
   BankMaster: 'BankMaster',
   BankBranchMaster: 'BankBranchMaster',
   UcarProcess: 'UcarProcess',
-  UcarPaperWorkNotes: 'UcarPaperWorkNotes'
+  UcarPaperWorkNotes: 'UcarPaperWorkNotes',
+  UcarRequest: 'UcarRequest'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1690,6 +1691,26 @@ export const UcarPaperWorkNotesScalarFieldEnum = {
 } as const
 
 export type UcarPaperWorkNotesScalarFieldEnum = (typeof UcarPaperWorkNotesScalarFieldEnum)[keyof typeof UcarPaperWorkNotesScalarFieldEnum]
+
+
+export const UcarRequestScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  active: 'active',
+  sortOrder: 'sortOrder',
+  sateiID: 'sateiID',
+  requestType: 'requestType',
+  reason: 'reason',
+  status: 'status',
+  approvedAt: 'approvedAt',
+  approvedById: 'approvedById',
+  rejectedReason: 'rejectedReason',
+  userId: 'userId',
+  ucarId: 'ucarId'
+} as const
+
+export type UcarRequestScalarFieldEnum = (typeof UcarRequestScalarFieldEnum)[keyof typeof UcarRequestScalarFieldEnum]
 
 
 export const SortOrder = {

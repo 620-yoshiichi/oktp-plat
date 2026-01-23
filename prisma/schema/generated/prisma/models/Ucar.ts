@@ -957,6 +957,7 @@ export type UcarWhereInput = {
   QR_Prosess?: Prisma.XOR<Prisma.QR_ProsessNullableScalarRelationFilter, Prisma.QR_ProsessWhereInput> | null
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesListRelationFilter
   UcarProcess?: Prisma.UcarProcessListRelationFilter
+  UcarRequest?: Prisma.UcarRequestListRelationFilter
   AppliedUcarGarageSlot?: Prisma.XOR<Prisma.AppliedUcarGarageSlotNullableScalarRelationFilter, Prisma.AppliedUcarGarageSlotWhereInput> | null
   BankMaster?: Prisma.XOR<Prisma.BankMasterNullableScalarRelationFilter, Prisma.BankMasterWhereInput> | null
   BankBranchMaster?: Prisma.XOR<Prisma.BankBranchMasterNullableScalarRelationFilter, Prisma.BankBranchMasterWhereInput> | null
@@ -1063,6 +1064,7 @@ export type UcarOrderByWithRelationInput = {
   QR_Prosess?: Prisma.QR_ProsessOrderByWithRelationInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesOrderByRelationAggregateInput
   UcarProcess?: Prisma.UcarProcessOrderByRelationAggregateInput
+  UcarRequest?: Prisma.UcarRequestOrderByRelationAggregateInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotOrderByWithRelationInput
   BankMaster?: Prisma.BankMasterOrderByWithRelationInput
   BankBranchMaster?: Prisma.BankBranchMasterOrderByWithRelationInput
@@ -1173,6 +1175,7 @@ export type UcarWhereUniqueInput = Prisma.AtLeast<{
   QR_Prosess?: Prisma.XOR<Prisma.QR_ProsessNullableScalarRelationFilter, Prisma.QR_ProsessWhereInput> | null
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesListRelationFilter
   UcarProcess?: Prisma.UcarProcessListRelationFilter
+  UcarRequest?: Prisma.UcarRequestListRelationFilter
   AppliedUcarGarageSlot?: Prisma.XOR<Prisma.AppliedUcarGarageSlotNullableScalarRelationFilter, Prisma.AppliedUcarGarageSlotWhereInput> | null
   BankMaster?: Prisma.XOR<Prisma.BankMasterNullableScalarRelationFilter, Prisma.BankMasterWhereInput> | null
   BankBranchMaster?: Prisma.XOR<Prisma.BankBranchMasterNullableScalarRelationFilter, Prisma.BankBranchMasterWhereInput> | null
@@ -1459,6 +1462,7 @@ export type UcarCreateInput = {
   QR_Prosess?: Prisma.QR_ProsessCreateNestedOneWithoutUcarInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUcarInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUcarInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUcarInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotCreateNestedOneWithoutUcarInput
   BankMaster?: Prisma.BankMasterCreateNestedOneWithoutUcarInput
   BankBranchMaster?: Prisma.BankBranchMasterCreateNestedOneWithoutUcarInput
@@ -1563,6 +1567,7 @@ export type UcarUncheckedCreateInput = {
   QR_Prosess?: Prisma.QR_ProsessUncheckedCreateNestedOneWithoutUcarInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUcarInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUcarInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUcarInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUncheckedCreateNestedOneWithoutUcarInput
 }
 
@@ -1649,6 +1654,7 @@ export type UcarUpdateInput = {
   QR_Prosess?: Prisma.QR_ProsessUpdateOneWithoutUcarNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUcarNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUcarNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUcarNestedInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUpdateOneWithoutUcarNestedInput
   BankMaster?: Prisma.BankMasterUpdateOneWithoutUcarNestedInput
   BankBranchMaster?: Prisma.BankBranchMasterUpdateOneWithoutUcarNestedInput
@@ -1753,6 +1759,7 @@ export type UcarUncheckedUpdateInput = {
   QR_Prosess?: Prisma.QR_ProsessUncheckedUpdateOneWithoutUcarNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUcarNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUcarNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUcarNestedInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUncheckedUpdateOneWithoutUcarNestedInput
 }
 
@@ -2820,6 +2827,20 @@ export type UcarUpdateOneRequiredWithoutUcarPaperWorkNotesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UcarUpdateToOneWithWhereWithoutUcarPaperWorkNotesInput, Prisma.UcarUpdateWithoutUcarPaperWorkNotesInput>, Prisma.UcarUncheckedUpdateWithoutUcarPaperWorkNotesInput>
 }
 
+export type UcarCreateNestedOneWithoutUcarRequestInput = {
+  create?: Prisma.XOR<Prisma.UcarCreateWithoutUcarRequestInput, Prisma.UcarUncheckedCreateWithoutUcarRequestInput>
+  connectOrCreate?: Prisma.UcarCreateOrConnectWithoutUcarRequestInput
+  connect?: Prisma.UcarWhereUniqueInput
+}
+
+export type UcarUpdateOneRequiredWithoutUcarRequestNestedInput = {
+  create?: Prisma.XOR<Prisma.UcarCreateWithoutUcarRequestInput, Prisma.UcarUncheckedCreateWithoutUcarRequestInput>
+  connectOrCreate?: Prisma.UcarCreateOrConnectWithoutUcarRequestInput
+  upsert?: Prisma.UcarUpsertWithoutUcarRequestInput
+  connect?: Prisma.UcarWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UcarUpdateToOneWithWhereWithoutUcarRequestInput, Prisma.UcarUpdateWithoutUcarRequestInput>, Prisma.UcarUncheckedUpdateWithoutUcarRequestInput>
+}
+
 export type UcarCreateWithoutOldCars_BaseInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -2903,6 +2924,7 @@ export type UcarCreateWithoutOldCars_BaseInput = {
   QR_Prosess?: Prisma.QR_ProsessCreateNestedOneWithoutUcarInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUcarInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUcarInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUcarInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotCreateNestedOneWithoutUcarInput
   BankMaster?: Prisma.BankMasterCreateNestedOneWithoutUcarInput
   BankBranchMaster?: Prisma.BankBranchMasterCreateNestedOneWithoutUcarInput
@@ -3003,6 +3025,7 @@ export type UcarUncheckedCreateWithoutOldCars_BaseInput = {
   QR_Prosess?: Prisma.QR_ProsessUncheckedCreateNestedOneWithoutUcarInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUcarInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUcarInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUcarInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUncheckedCreateNestedOneWithoutUcarInput
 }
 
@@ -3105,6 +3128,7 @@ export type UcarUpdateWithoutOldCars_BaseInput = {
   QR_Prosess?: Prisma.QR_ProsessUpdateOneWithoutUcarNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUcarNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUcarNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUcarNestedInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUpdateOneWithoutUcarNestedInput
   BankMaster?: Prisma.BankMasterUpdateOneWithoutUcarNestedInput
   BankBranchMaster?: Prisma.BankBranchMasterUpdateOneWithoutUcarNestedInput
@@ -3205,6 +3229,7 @@ export type UcarUncheckedUpdateWithoutOldCars_BaseInput = {
   QR_Prosess?: Prisma.QR_ProsessUncheckedUpdateOneWithoutUcarNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUcarNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUcarNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUcarNestedInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUncheckedUpdateOneWithoutUcarNestedInput
 }
 
@@ -3291,6 +3316,7 @@ export type UcarCreateWithoutUPASSInput = {
   QR_Prosess?: Prisma.QR_ProsessCreateNestedOneWithoutUcarInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUcarInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUcarInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUcarInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotCreateNestedOneWithoutUcarInput
   BankMaster?: Prisma.BankMasterCreateNestedOneWithoutUcarInput
   BankBranchMaster?: Prisma.BankBranchMasterCreateNestedOneWithoutUcarInput
@@ -3393,6 +3419,7 @@ export type UcarUncheckedCreateWithoutUPASSInput = {
   QR_Prosess?: Prisma.QR_ProsessUncheckedCreateNestedOneWithoutUcarInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUcarInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUcarInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUcarInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUncheckedCreateNestedOneWithoutUcarInput
 }
 
@@ -3495,6 +3522,7 @@ export type UcarUpdateWithoutUPASSInput = {
   QR_Prosess?: Prisma.QR_ProsessUpdateOneWithoutUcarNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUcarNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUcarNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUcarNestedInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUpdateOneWithoutUcarNestedInput
   BankMaster?: Prisma.BankMasterUpdateOneWithoutUcarNestedInput
   BankBranchMaster?: Prisma.BankBranchMasterUpdateOneWithoutUcarNestedInput
@@ -3597,6 +3625,7 @@ export type UcarUncheckedUpdateWithoutUPASSInput = {
   QR_Prosess?: Prisma.QR_ProsessUncheckedUpdateOneWithoutUcarNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUcarNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUcarNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUcarNestedInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUncheckedUpdateOneWithoutUcarNestedInput
 }
 
@@ -3682,6 +3711,7 @@ export type UcarCreateWithoutQR_ProsessInput = {
   Number98?: Prisma.Number98CreateNestedOneWithoutUcarInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUcarInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUcarInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUcarInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotCreateNestedOneWithoutUcarInput
   BankMaster?: Prisma.BankMasterCreateNestedOneWithoutUcarInput
   BankBranchMaster?: Prisma.BankBranchMasterCreateNestedOneWithoutUcarInput
@@ -3785,6 +3815,7 @@ export type UcarUncheckedCreateWithoutQR_ProsessInput = {
   newCarId?: number | null
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUcarInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUcarInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUcarInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUncheckedCreateNestedOneWithoutUcarInput
 }
 
@@ -3886,6 +3917,7 @@ export type UcarUpdateWithoutQR_ProsessInput = {
   Number98?: Prisma.Number98UpdateOneWithoutUcarNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUcarNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUcarNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUcarNestedInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUpdateOneWithoutUcarNestedInput
   BankMaster?: Prisma.BankMasterUpdateOneWithoutUcarNestedInput
   BankBranchMaster?: Prisma.BankBranchMasterUpdateOneWithoutUcarNestedInput
@@ -3989,6 +4021,7 @@ export type UcarUncheckedUpdateWithoutQR_ProsessInput = {
   newCarId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUcarNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUcarNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUcarNestedInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUncheckedUpdateOneWithoutUcarNestedInput
 }
 
@@ -4075,6 +4108,7 @@ export type UcarCreateWithoutNewCarInput = {
   QR_Prosess?: Prisma.QR_ProsessCreateNestedOneWithoutUcarInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUcarInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUcarInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUcarInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotCreateNestedOneWithoutUcarInput
   BankMaster?: Prisma.BankMasterCreateNestedOneWithoutUcarInput
   BankBranchMaster?: Prisma.BankBranchMasterCreateNestedOneWithoutUcarInput
@@ -4177,6 +4211,7 @@ export type UcarUncheckedCreateWithoutNewCarInput = {
   QR_Prosess?: Prisma.QR_ProsessUncheckedCreateNestedOneWithoutUcarInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUcarInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUcarInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUcarInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUncheckedCreateNestedOneWithoutUcarInput
 }
 
@@ -4384,6 +4419,7 @@ export type UcarCreateWithoutStoreInput = {
   QR_Prosess?: Prisma.QR_ProsessCreateNestedOneWithoutUcarInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUcarInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUcarInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUcarInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotCreateNestedOneWithoutUcarInput
   BankMaster?: Prisma.BankMasterCreateNestedOneWithoutUcarInput
   BankBranchMaster?: Prisma.BankBranchMasterCreateNestedOneWithoutUcarInput
@@ -4486,6 +4522,7 @@ export type UcarUncheckedCreateWithoutStoreInput = {
   QR_Prosess?: Prisma.QR_ProsessUncheckedCreateNestedOneWithoutUcarInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUcarInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUcarInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUcarInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUncheckedCreateNestedOneWithoutUcarInput
 }
 
@@ -4581,6 +4618,7 @@ export type UcarCreateWithoutDestinationStoreInput = {
   QR_Prosess?: Prisma.QR_ProsessCreateNestedOneWithoutUcarInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUcarInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUcarInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUcarInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotCreateNestedOneWithoutUcarInput
   BankMaster?: Prisma.BankMasterCreateNestedOneWithoutUcarInput
   BankBranchMaster?: Prisma.BankBranchMasterCreateNestedOneWithoutUcarInput
@@ -4684,6 +4722,7 @@ export type UcarUncheckedCreateWithoutDestinationStoreInput = {
   QR_Prosess?: Prisma.QR_ProsessUncheckedCreateNestedOneWithoutUcarInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUcarInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUcarInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUcarInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUncheckedCreateNestedOneWithoutUcarInput
 }
 
@@ -4780,6 +4819,7 @@ export type UcarCreateWithoutTmpRentalStoreInput = {
   QR_Prosess?: Prisma.QR_ProsessCreateNestedOneWithoutUcarInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUcarInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUcarInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUcarInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotCreateNestedOneWithoutUcarInput
   BankMaster?: Prisma.BankMasterCreateNestedOneWithoutUcarInput
   BankBranchMaster?: Prisma.BankBranchMasterCreateNestedOneWithoutUcarInput
@@ -4882,6 +4922,7 @@ export type UcarUncheckedCreateWithoutTmpRentalStoreInput = {
   QR_Prosess?: Prisma.QR_ProsessUncheckedCreateNestedOneWithoutUcarInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUcarInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUcarInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUcarInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUncheckedCreateNestedOneWithoutUcarInput
 }
 
@@ -5026,6 +5067,7 @@ export type UcarCreateWithoutUserInput = {
   QR_Prosess?: Prisma.QR_ProsessCreateNestedOneWithoutUcarInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUcarInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUcarInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUcarInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotCreateNestedOneWithoutUcarInput
   BankMaster?: Prisma.BankMasterCreateNestedOneWithoutUcarInput
   BankBranchMaster?: Prisma.BankBranchMasterCreateNestedOneWithoutUcarInput
@@ -5128,6 +5170,7 @@ export type UcarUncheckedCreateWithoutUserInput = {
   QR_Prosess?: Prisma.QR_ProsessUncheckedCreateNestedOneWithoutUcarInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUcarInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUcarInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUcarInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUncheckedCreateNestedOneWithoutUcarInput
 }
 
@@ -5239,6 +5282,7 @@ export type UcarCreateWithoutNumber98Input = {
   QR_Prosess?: Prisma.QR_ProsessCreateNestedOneWithoutUcarInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUcarInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUcarInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUcarInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotCreateNestedOneWithoutUcarInput
   BankMaster?: Prisma.BankMasterCreateNestedOneWithoutUcarInput
   BankBranchMaster?: Prisma.BankBranchMasterCreateNestedOneWithoutUcarInput
@@ -5342,6 +5386,7 @@ export type UcarUncheckedCreateWithoutNumber98Input = {
   QR_Prosess?: Prisma.QR_ProsessUncheckedCreateNestedOneWithoutUcarInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUcarInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUcarInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUcarInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUncheckedCreateNestedOneWithoutUcarInput
 }
 
@@ -5454,6 +5499,7 @@ export type UcarCreateWithoutAppliedUcarGarageSlotInput = {
   QR_Prosess?: Prisma.QR_ProsessCreateNestedOneWithoutUcarInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUcarInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUcarInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUcarInput
   BankMaster?: Prisma.BankMasterCreateNestedOneWithoutUcarInput
   BankBranchMaster?: Prisma.BankBranchMasterCreateNestedOneWithoutUcarInput
   User: Prisma.UserCreateNestedOneWithoutUcarInput
@@ -5557,6 +5603,7 @@ export type UcarUncheckedCreateWithoutAppliedUcarGarageSlotInput = {
   QR_Prosess?: Prisma.QR_ProsessUncheckedCreateNestedOneWithoutUcarInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUcarInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUcarInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUcarInput
 }
 
 export type UcarCreateOrConnectWithoutAppliedUcarGarageSlotInput = {
@@ -5658,6 +5705,7 @@ export type UcarUpdateWithoutAppliedUcarGarageSlotInput = {
   QR_Prosess?: Prisma.QR_ProsessUpdateOneWithoutUcarNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUcarNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUcarNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUcarNestedInput
   BankMaster?: Prisma.BankMasterUpdateOneWithoutUcarNestedInput
   BankBranchMaster?: Prisma.BankBranchMasterUpdateOneWithoutUcarNestedInput
   User?: Prisma.UserUpdateOneRequiredWithoutUcarNestedInput
@@ -5761,6 +5809,7 @@ export type UcarUncheckedUpdateWithoutAppliedUcarGarageSlotInput = {
   QR_Prosess?: Prisma.QR_ProsessUncheckedUpdateOneWithoutUcarNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUcarNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUcarNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUcarNestedInput
 }
 
 export type UcarCreateWithoutBankMasterInput = {
@@ -5846,6 +5895,7 @@ export type UcarCreateWithoutBankMasterInput = {
   QR_Prosess?: Prisma.QR_ProsessCreateNestedOneWithoutUcarInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUcarInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUcarInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUcarInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotCreateNestedOneWithoutUcarInput
   BankBranchMaster?: Prisma.BankBranchMasterCreateNestedOneWithoutUcarInput
   User: Prisma.UserCreateNestedOneWithoutUcarInput
@@ -5948,6 +5998,7 @@ export type UcarUncheckedCreateWithoutBankMasterInput = {
   QR_Prosess?: Prisma.QR_ProsessUncheckedCreateNestedOneWithoutUcarInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUcarInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUcarInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUcarInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUncheckedCreateNestedOneWithoutUcarInput
 }
 
@@ -6060,6 +6111,7 @@ export type UcarCreateWithoutBankBranchMasterInput = {
   QR_Prosess?: Prisma.QR_ProsessCreateNestedOneWithoutUcarInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUcarInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUcarInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUcarInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotCreateNestedOneWithoutUcarInput
   BankMaster?: Prisma.BankMasterCreateNestedOneWithoutUcarInput
   User: Prisma.UserCreateNestedOneWithoutUcarInput
@@ -6162,6 +6214,7 @@ export type UcarUncheckedCreateWithoutBankBranchMasterInput = {
   QR_Prosess?: Prisma.QR_ProsessUncheckedCreateNestedOneWithoutUcarInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUcarInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUcarInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUcarInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUncheckedCreateNestedOneWithoutUcarInput
 }
 
@@ -6273,6 +6326,7 @@ export type UcarCreateWithoutUcarProcessInput = {
   Number98?: Prisma.Number98CreateNestedOneWithoutUcarInput
   QR_Prosess?: Prisma.QR_ProsessCreateNestedOneWithoutUcarInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUcarInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUcarInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotCreateNestedOneWithoutUcarInput
   BankMaster?: Prisma.BankMasterCreateNestedOneWithoutUcarInput
   BankBranchMaster?: Prisma.BankBranchMasterCreateNestedOneWithoutUcarInput
@@ -6376,6 +6430,7 @@ export type UcarUncheckedCreateWithoutUcarProcessInput = {
   newCarId?: number | null
   QR_Prosess?: Prisma.QR_ProsessUncheckedCreateNestedOneWithoutUcarInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUcarInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUcarInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUncheckedCreateNestedOneWithoutUcarInput
 }
 
@@ -6477,6 +6532,7 @@ export type UcarUpdateWithoutUcarProcessInput = {
   Number98?: Prisma.Number98UpdateOneWithoutUcarNestedInput
   QR_Prosess?: Prisma.QR_ProsessUpdateOneWithoutUcarNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUcarNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUcarNestedInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUpdateOneWithoutUcarNestedInput
   BankMaster?: Prisma.BankMasterUpdateOneWithoutUcarNestedInput
   BankBranchMaster?: Prisma.BankBranchMasterUpdateOneWithoutUcarNestedInput
@@ -6580,6 +6636,7 @@ export type UcarUncheckedUpdateWithoutUcarProcessInput = {
   newCarId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   QR_Prosess?: Prisma.QR_ProsessUncheckedUpdateOneWithoutUcarNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUcarNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUcarNestedInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUncheckedUpdateOneWithoutUcarNestedInput
 }
 
@@ -6665,6 +6722,7 @@ export type UcarCreateWithoutUcarPaperWorkNotesInput = {
   Number98?: Prisma.Number98CreateNestedOneWithoutUcarInput
   QR_Prosess?: Prisma.QR_ProsessCreateNestedOneWithoutUcarInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUcarInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUcarInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotCreateNestedOneWithoutUcarInput
   BankMaster?: Prisma.BankMasterCreateNestedOneWithoutUcarInput
   BankBranchMaster?: Prisma.BankBranchMasterCreateNestedOneWithoutUcarInput
@@ -6768,6 +6826,7 @@ export type UcarUncheckedCreateWithoutUcarPaperWorkNotesInput = {
   newCarId?: number | null
   QR_Prosess?: Prisma.QR_ProsessUncheckedCreateNestedOneWithoutUcarInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUcarInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUcarInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUncheckedCreateNestedOneWithoutUcarInput
 }
 
@@ -6869,6 +6928,7 @@ export type UcarUpdateWithoutUcarPaperWorkNotesInput = {
   Number98?: Prisma.Number98UpdateOneWithoutUcarNestedInput
   QR_Prosess?: Prisma.QR_ProsessUpdateOneWithoutUcarNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUcarNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUcarNestedInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUpdateOneWithoutUcarNestedInput
   BankMaster?: Prisma.BankMasterUpdateOneWithoutUcarNestedInput
   BankBranchMaster?: Prisma.BankBranchMasterUpdateOneWithoutUcarNestedInput
@@ -6971,6 +7031,403 @@ export type UcarUncheckedUpdateWithoutUcarPaperWorkNotesInput = {
   tmpRentalStoreId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   newCarId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   QR_Prosess?: Prisma.QR_ProsessUncheckedUpdateOneWithoutUcarNestedInput
+  UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUcarNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUcarNestedInput
+  AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUncheckedUpdateOneWithoutUcarNestedInput
+}
+
+export type UcarCreateWithoutUcarRequestInput = {
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  qrIssuedAt?: Date | string
+  processLastUpdatedAt?: Date | string | null
+  active?: boolean
+  sortOrder?: number
+  sateiDataConfirmedAt?: Date | string | null
+  dataSource?: string | null
+  arrivedAt?: Date | string | null
+  meihenBi?: Date | string | null
+  masshoBi?: Date | string | null
+  secondMeihenbi?: Date | string | null
+  destination?: string | null
+  inkanCertificateExpiredAt?: Date | string | null
+  inspectionExpiredAt?: Date | string | null
+  plate?: string | null
+  processedAs?: string | null
+  purchaseType?: string | null
+  remarks?: string | null
+  runnable?: string | null
+  storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
+  souhsinJikoku?: Date | string | null
+  henkinRequired?: boolean | null
+  accountingRecievedAt?: Date | string | null
+  paybackScheduledAt?: Date | string | null
+  upperCarregisteredAt?: Date | string | null
+  registerDate?: Date | string | null
+  registerdAt?: Date | string | null
+  annualTax?: number | null
+  earlyYear?: number | null
+  earlyMonth?: number | null
+  storeNumber?: string | null
+  accountType?: string | null
+  accountNumber?: string | null
+  accountNameKana?: string | null
+  paymentNoticeRecievedAt?: Date | string | null
+  isPayed?: boolean | null
+  petCount?: number | null
+  petPrice?: number | null
+  prefCount?: number | null
+  prefPrice?: number | null
+  taxCustomerName?: string | null
+  taxJobNote?: string | null
+  daihatsuReserve?: string | null
+  exception?: string | null
+  inkanAlternate?: string | null
+  inspectionAlternate?: string | null
+  paymentNoticeRecieved?: string | null
+  remarksHq?: string | null
+  tmpPlate?: string | null
+  tmpChassisNumber?: string | null
+  tmpColor?: string | null
+  tmpModelYear?: string | null
+  tmpBrandName?: string | null
+  tmpModelName?: string | null
+  tmpGrade?: string | null
+  tmpType?: string | null
+  tmpCommonType?: string | null
+  tmpFrameNumber?: string | null
+  tmpTransmissionType?: string | null
+  tmpRegistrationClassNumber?: string | null
+  tmpRegistrationKana?: string | null
+  tmpLandAffairsName?: string | null
+  modified_brandName?: string | null
+  modified_modelName?: string | null
+  modified_frameNumber?: string | null
+  modified_chassisNumber?: string | null
+  modified_type?: string | null
+  modified_grade?: string | null
+  modified_modelYear?: string | null
+  modified_length?: string | null
+  modified_width?: string | null
+  modified_height?: string | null
+  ucarLastProcessMasterId?: number | null
+  yuchoShitenNo?: string | null
+  DestinationStore?: Prisma.StoreCreateNestedOneWithoutDestinatedUcarInput
+  Number98?: Prisma.Number98CreateNestedOneWithoutUcarInput
+  QR_Prosess?: Prisma.QR_ProsessCreateNestedOneWithoutUcarInput
+  UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUcarInput
+  UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUcarInput
+  AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotCreateNestedOneWithoutUcarInput
+  BankMaster?: Prisma.BankMasterCreateNestedOneWithoutUcarInput
+  BankBranchMaster?: Prisma.BankBranchMasterCreateNestedOneWithoutUcarInput
+  User: Prisma.UserCreateNestedOneWithoutUcarInput
+  Store?: Prisma.StoreCreateNestedOneWithoutUcarInput
+  TmpRentalStore?: Prisma.StoreCreateNestedOneWithoutTmpRentalUcarInput
+  NewCar?: Prisma.NewCarCreateNestedOneWithoutUcarInput
+  UPASS?: Prisma.UPASSCreateNestedOneWithoutUcarInput
+  OldCars_Base?: Prisma.OldCars_BaseCreateNestedOneWithoutUcarInput
+}
+
+export type UcarUncheckedCreateWithoutUcarRequestInput = {
+  id?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  qrIssuedAt?: Date | string
+  processLastUpdatedAt?: Date | string | null
+  active?: boolean
+  sortOrder?: number
+  sateiDataConfirmedAt?: Date | string | null
+  dataSource?: string | null
+  sateiID: string
+  number98?: string | null
+  NO_SIRETYUM?: string | null
+  DD_SIIRE?: Date | string | null
+  arrivedAt?: Date | string | null
+  meihenBi?: Date | string | null
+  masshoBi?: Date | string | null
+  secondMeihenbi?: Date | string | null
+  destination?: string | null
+  inkanCertificateExpiredAt?: Date | string | null
+  inspectionExpiredAt?: Date | string | null
+  plate?: string | null
+  processedAs?: string | null
+  purchaseType?: string | null
+  remarks?: string | null
+  runnable?: string | null
+  storeToPickUp?: string | null
+  shitadoriKbn?: string | null
+  kounyuShaOrderNumber?: string | null
+  souhsinJikoku?: Date | string | null
+  henkinRequired?: boolean | null
+  accountingRecievedAt?: Date | string | null
+  paybackScheduledAt?: Date | string | null
+  upperCarregisteredAt?: Date | string | null
+  registerDate?: Date | string | null
+  registerdAt?: Date | string | null
+  annualTax?: number | null
+  earlyYear?: number | null
+  earlyMonth?: number | null
+  storeNumber?: string | null
+  accountType?: string | null
+  accountNumber?: string | null
+  accountNameKana?: string | null
+  paymentNoticeRecievedAt?: Date | string | null
+  isPayed?: boolean | null
+  petCount?: number | null
+  petPrice?: number | null
+  prefCount?: number | null
+  prefPrice?: number | null
+  taxCustomerName?: string | null
+  taxJobNote?: string | null
+  destinationStoreId?: number | null
+  daihatsuReserve?: string | null
+  exception?: string | null
+  inkanAlternate?: string | null
+  inspectionAlternate?: string | null
+  paymentNoticeRecieved?: string | null
+  remarksHq?: string | null
+  tmpPlate?: string | null
+  tmpChassisNumber?: string | null
+  tmpColor?: string | null
+  tmpModelYear?: string | null
+  tmpBrandName?: string | null
+  tmpModelName?: string | null
+  tmpGrade?: string | null
+  tmpType?: string | null
+  tmpCommonType?: string | null
+  tmpFrameNumber?: string | null
+  tmpTransmissionType?: string | null
+  tmpRegistrationClassNumber?: string | null
+  tmpRegistrationKana?: string | null
+  tmpLandAffairsName?: string | null
+  modified_brandName?: string | null
+  modified_modelName?: string | null
+  modified_frameNumber?: string | null
+  modified_chassisNumber?: string | null
+  modified_type?: string | null
+  modified_grade?: string | null
+  modified_modelYear?: string | null
+  modified_length?: string | null
+  modified_width?: string | null
+  modified_height?: string | null
+  ucarLastProcessMasterId?: number | null
+  bankMasterId?: number | null
+  yuchoShitenNo?: string | null
+  bankBranchMasterId?: number | null
+  userId: number
+  storeId?: number | null
+  tmpRentalStoreId?: number | null
+  newCarId?: number | null
+  QR_Prosess?: Prisma.QR_ProsessUncheckedCreateNestedOneWithoutUcarInput
+  UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUcarInput
+  UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUcarInput
+  AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUncheckedCreateNestedOneWithoutUcarInput
+}
+
+export type UcarCreateOrConnectWithoutUcarRequestInput = {
+  where: Prisma.UcarWhereUniqueInput
+  create: Prisma.XOR<Prisma.UcarCreateWithoutUcarRequestInput, Prisma.UcarUncheckedCreateWithoutUcarRequestInput>
+}
+
+export type UcarUpsertWithoutUcarRequestInput = {
+  update: Prisma.XOR<Prisma.UcarUpdateWithoutUcarRequestInput, Prisma.UcarUncheckedUpdateWithoutUcarRequestInput>
+  create: Prisma.XOR<Prisma.UcarCreateWithoutUcarRequestInput, Prisma.UcarUncheckedCreateWithoutUcarRequestInput>
+  where?: Prisma.UcarWhereInput
+}
+
+export type UcarUpdateToOneWithWhereWithoutUcarRequestInput = {
+  where?: Prisma.UcarWhereInput
+  data: Prisma.XOR<Prisma.UcarUpdateWithoutUcarRequestInput, Prisma.UcarUncheckedUpdateWithoutUcarRequestInput>
+}
+
+export type UcarUpdateWithoutUcarRequestInput = {
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  qrIssuedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  processLastUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.FloatFieldUpdateOperationsInput | number
+  sateiDataConfirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  arrivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  meihenBi?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  masshoBi?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  secondMeihenbi?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  destination?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inkanCertificateExpiredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionExpiredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  plate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentNoticeRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPayed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  petCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  petPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  prefCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  prefPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  taxCustomerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxJobNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  daihatsuReserve?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  exception?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inkanAlternate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inspectionAlternate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpModelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpGrade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpCommonType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpFrameNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpTransmissionType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpRegistrationClassNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpRegistrationKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpLandAffairsName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  modified_brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  modified_modelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  modified_frameNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  modified_chassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  modified_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  modified_grade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  modified_modelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  modified_length?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  modified_width?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  modified_height?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ucarLastProcessMasterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  yuchoShitenNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  DestinationStore?: Prisma.StoreUpdateOneWithoutDestinatedUcarNestedInput
+  Number98?: Prisma.Number98UpdateOneWithoutUcarNestedInput
+  QR_Prosess?: Prisma.QR_ProsessUpdateOneWithoutUcarNestedInput
+  UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUcarNestedInput
+  UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUcarNestedInput
+  AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUpdateOneWithoutUcarNestedInput
+  BankMaster?: Prisma.BankMasterUpdateOneWithoutUcarNestedInput
+  BankBranchMaster?: Prisma.BankBranchMasterUpdateOneWithoutUcarNestedInput
+  User?: Prisma.UserUpdateOneRequiredWithoutUcarNestedInput
+  Store?: Prisma.StoreUpdateOneWithoutUcarNestedInput
+  TmpRentalStore?: Prisma.StoreUpdateOneWithoutTmpRentalUcarNestedInput
+  NewCar?: Prisma.NewCarUpdateOneWithoutUcarNestedInput
+  UPASS?: Prisma.UPASSUpdateOneWithoutUcarNestedInput
+  OldCars_Base?: Prisma.OldCars_BaseUpdateOneWithoutUcarNestedInput
+}
+
+export type UcarUncheckedUpdateWithoutUcarRequestInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  qrIssuedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  processLastUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.FloatFieldUpdateOperationsInput | number
+  sateiDataConfirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sateiID?: Prisma.StringFieldUpdateOperationsInput | string
+  number98?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  NO_SIRETYUM?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  DD_SIIRE?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  arrivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  meihenBi?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  masshoBi?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  secondMeihenbi?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  destination?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inkanCertificateExpiredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionExpiredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  plate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  processedAs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchaseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  runnable?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeToPickUp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shitadoriKbn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kounyuShaOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  souhsinJikoku?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  henkinRequired?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  accountingRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paybackScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  upperCarregisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registerDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registerdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  annualTax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  earlyYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  earlyMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  storeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountNameKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentNoticeRecievedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPayed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  petCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  petPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  prefCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  prefPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  taxCustomerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxJobNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  destinationStoreId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  daihatsuReserve?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  exception?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inkanAlternate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inspectionAlternate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentNoticeRecieved?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  remarksHq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpPlate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpChassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpModelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpBrandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpModelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpGrade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpCommonType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpFrameNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpTransmissionType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpRegistrationClassNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpRegistrationKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmpLandAffairsName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  modified_brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  modified_modelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  modified_frameNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  modified_chassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  modified_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  modified_grade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  modified_modelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  modified_length?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  modified_width?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  modified_height?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ucarLastProcessMasterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  bankMasterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  yuchoShitenNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankBranchMasterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  storeId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tmpRentalStoreId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  newCarId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  QR_Prosess?: Prisma.QR_ProsessUncheckedUpdateOneWithoutUcarNestedInput
+  UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUcarNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUcarNestedInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUncheckedUpdateOneWithoutUcarNestedInput
 }
@@ -7149,6 +7606,7 @@ export type UcarUpdateWithoutNewCarInput = {
   QR_Prosess?: Prisma.QR_ProsessUpdateOneWithoutUcarNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUcarNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUcarNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUcarNestedInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUpdateOneWithoutUcarNestedInput
   BankMaster?: Prisma.BankMasterUpdateOneWithoutUcarNestedInput
   BankBranchMaster?: Prisma.BankBranchMasterUpdateOneWithoutUcarNestedInput
@@ -7251,6 +7709,7 @@ export type UcarUncheckedUpdateWithoutNewCarInput = {
   QR_Prosess?: Prisma.QR_ProsessUncheckedUpdateOneWithoutUcarNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUcarNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUcarNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUcarNestedInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUncheckedUpdateOneWithoutUcarNestedInput
 }
 
@@ -7701,6 +8160,7 @@ export type UcarUpdateWithoutStoreInput = {
   QR_Prosess?: Prisma.QR_ProsessUpdateOneWithoutUcarNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUcarNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUcarNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUcarNestedInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUpdateOneWithoutUcarNestedInput
   BankMaster?: Prisma.BankMasterUpdateOneWithoutUcarNestedInput
   BankBranchMaster?: Prisma.BankBranchMasterUpdateOneWithoutUcarNestedInput
@@ -7803,6 +8263,7 @@ export type UcarUncheckedUpdateWithoutStoreInput = {
   QR_Prosess?: Prisma.QR_ProsessUncheckedUpdateOneWithoutUcarNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUcarNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUcarNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUcarNestedInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUncheckedUpdateOneWithoutUcarNestedInput
 }
 
@@ -7979,6 +8440,7 @@ export type UcarUpdateWithoutDestinationStoreInput = {
   QR_Prosess?: Prisma.QR_ProsessUpdateOneWithoutUcarNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUcarNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUcarNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUcarNestedInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUpdateOneWithoutUcarNestedInput
   BankMaster?: Prisma.BankMasterUpdateOneWithoutUcarNestedInput
   BankBranchMaster?: Prisma.BankBranchMasterUpdateOneWithoutUcarNestedInput
@@ -8082,6 +8544,7 @@ export type UcarUncheckedUpdateWithoutDestinationStoreInput = {
   QR_Prosess?: Prisma.QR_ProsessUncheckedUpdateOneWithoutUcarNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUcarNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUcarNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUcarNestedInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUncheckedUpdateOneWithoutUcarNestedInput
 }
 
@@ -8259,6 +8722,7 @@ export type UcarUpdateWithoutTmpRentalStoreInput = {
   QR_Prosess?: Prisma.QR_ProsessUpdateOneWithoutUcarNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUcarNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUcarNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUcarNestedInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUpdateOneWithoutUcarNestedInput
   BankMaster?: Prisma.BankMasterUpdateOneWithoutUcarNestedInput
   BankBranchMaster?: Prisma.BankBranchMasterUpdateOneWithoutUcarNestedInput
@@ -8361,6 +8825,7 @@ export type UcarUncheckedUpdateWithoutTmpRentalStoreInput = {
   QR_Prosess?: Prisma.QR_ProsessUncheckedUpdateOneWithoutUcarNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUcarNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUcarNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUcarNestedInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUncheckedUpdateOneWithoutUcarNestedInput
 }
 
@@ -8629,6 +9094,7 @@ export type UcarUpdateWithoutUserInput = {
   QR_Prosess?: Prisma.QR_ProsessUpdateOneWithoutUcarNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUcarNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUcarNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUcarNestedInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUpdateOneWithoutUcarNestedInput
   BankMaster?: Prisma.BankMasterUpdateOneWithoutUcarNestedInput
   BankBranchMaster?: Prisma.BankBranchMasterUpdateOneWithoutUcarNestedInput
@@ -8731,6 +9197,7 @@ export type UcarUncheckedUpdateWithoutUserInput = {
   QR_Prosess?: Prisma.QR_ProsessUncheckedUpdateOneWithoutUcarNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUcarNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUcarNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUcarNestedInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUncheckedUpdateOneWithoutUcarNestedInput
 }
 
@@ -8998,6 +9465,7 @@ export type UcarUpdateWithoutNumber98Input = {
   QR_Prosess?: Prisma.QR_ProsessUpdateOneWithoutUcarNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUcarNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUcarNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUcarNestedInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUpdateOneWithoutUcarNestedInput
   BankMaster?: Prisma.BankMasterUpdateOneWithoutUcarNestedInput
   BankBranchMaster?: Prisma.BankBranchMasterUpdateOneWithoutUcarNestedInput
@@ -9101,6 +9569,7 @@ export type UcarUncheckedUpdateWithoutNumber98Input = {
   QR_Prosess?: Prisma.QR_ProsessUncheckedUpdateOneWithoutUcarNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUcarNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUcarNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUcarNestedInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUncheckedUpdateOneWithoutUcarNestedInput
 }
 
@@ -9369,6 +9838,7 @@ export type UcarUpdateWithoutBankMasterInput = {
   QR_Prosess?: Prisma.QR_ProsessUpdateOneWithoutUcarNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUcarNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUcarNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUcarNestedInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUpdateOneWithoutUcarNestedInput
   BankBranchMaster?: Prisma.BankBranchMasterUpdateOneWithoutUcarNestedInput
   User?: Prisma.UserUpdateOneRequiredWithoutUcarNestedInput
@@ -9471,6 +9941,7 @@ export type UcarUncheckedUpdateWithoutBankMasterInput = {
   QR_Prosess?: Prisma.QR_ProsessUncheckedUpdateOneWithoutUcarNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUcarNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUcarNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUcarNestedInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUncheckedUpdateOneWithoutUcarNestedInput
 }
 
@@ -9739,6 +10210,7 @@ export type UcarUpdateWithoutBankBranchMasterInput = {
   QR_Prosess?: Prisma.QR_ProsessUpdateOneWithoutUcarNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUcarNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUcarNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUcarNestedInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUpdateOneWithoutUcarNestedInput
   BankMaster?: Prisma.BankMasterUpdateOneWithoutUcarNestedInput
   User?: Prisma.UserUpdateOneRequiredWithoutUcarNestedInput
@@ -9841,6 +10313,7 @@ export type UcarUncheckedUpdateWithoutBankBranchMasterInput = {
   QR_Prosess?: Prisma.QR_ProsessUncheckedUpdateOneWithoutUcarNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUcarNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUcarNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUcarNestedInput
   AppliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotUncheckedUpdateOneWithoutUcarNestedInput
 }
 
@@ -9943,11 +10416,13 @@ export type UcarUncheckedUpdateManyWithoutBankBranchMasterInput = {
 export type UcarCountOutputType = {
   UcarPaperWorkNotes: number
   UcarProcess: number
+  UcarRequest: number
 }
 
 export type UcarCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   UcarPaperWorkNotes?: boolean | UcarCountOutputTypeCountUcarPaperWorkNotesArgs
   UcarProcess?: boolean | UcarCountOutputTypeCountUcarProcessArgs
+  UcarRequest?: boolean | UcarCountOutputTypeCountUcarRequestArgs
 }
 
 /**
@@ -9972,6 +10447,13 @@ export type UcarCountOutputTypeCountUcarPaperWorkNotesArgs<ExtArgs extends runti
  */
 export type UcarCountOutputTypeCountUcarProcessArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.UcarProcessWhereInput
+}
+
+/**
+ * UcarCountOutputType without action
+ */
+export type UcarCountOutputTypeCountUcarRequestArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UcarRequestWhereInput
 }
 
 
@@ -10070,6 +10552,7 @@ export type UcarSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   QR_Prosess?: boolean | Prisma.Ucar$QR_ProsessArgs<ExtArgs>
   UcarPaperWorkNotes?: boolean | Prisma.Ucar$UcarPaperWorkNotesArgs<ExtArgs>
   UcarProcess?: boolean | Prisma.Ucar$UcarProcessArgs<ExtArgs>
+  UcarRequest?: boolean | Prisma.Ucar$UcarRequestArgs<ExtArgs>
   AppliedUcarGarageSlot?: boolean | Prisma.Ucar$AppliedUcarGarageSlotArgs<ExtArgs>
   BankMaster?: boolean | Prisma.Ucar$BankMasterArgs<ExtArgs>
   BankBranchMaster?: boolean | Prisma.Ucar$BankBranchMasterArgs<ExtArgs>
@@ -10385,6 +10868,7 @@ export type UcarInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   QR_Prosess?: boolean | Prisma.Ucar$QR_ProsessArgs<ExtArgs>
   UcarPaperWorkNotes?: boolean | Prisma.Ucar$UcarPaperWorkNotesArgs<ExtArgs>
   UcarProcess?: boolean | Prisma.Ucar$UcarProcessArgs<ExtArgs>
+  UcarRequest?: boolean | Prisma.Ucar$UcarRequestArgs<ExtArgs>
   AppliedUcarGarageSlot?: boolean | Prisma.Ucar$AppliedUcarGarageSlotArgs<ExtArgs>
   BankMaster?: boolean | Prisma.Ucar$BankMasterArgs<ExtArgs>
   BankBranchMaster?: boolean | Prisma.Ucar$BankBranchMasterArgs<ExtArgs>
@@ -10429,6 +10913,7 @@ export type $UcarPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     QR_Prosess: Prisma.$QR_ProsessPayload<ExtArgs> | null
     UcarPaperWorkNotes: Prisma.$UcarPaperWorkNotesPayload<ExtArgs>[]
     UcarProcess: Prisma.$UcarProcessPayload<ExtArgs>[]
+    UcarRequest: Prisma.$UcarRequestPayload<ExtArgs>[]
     AppliedUcarGarageSlot: Prisma.$AppliedUcarGarageSlotPayload<ExtArgs> | null
     BankMaster: Prisma.$BankMasterPayload<ExtArgs> | null
     BankBranchMaster: Prisma.$BankBranchMasterPayload<ExtArgs> | null
@@ -10928,6 +11413,7 @@ export interface Prisma__UcarClient<T, Null = never, ExtArgs extends runtime.Typ
   QR_Prosess<T extends Prisma.Ucar$QR_ProsessArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Ucar$QR_ProsessArgs<ExtArgs>>): Prisma.Prisma__QR_ProsessClient<runtime.Types.Result.GetResult<Prisma.$QR_ProsessPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   UcarPaperWorkNotes<T extends Prisma.Ucar$UcarPaperWorkNotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Ucar$UcarPaperWorkNotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UcarPaperWorkNotesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   UcarProcess<T extends Prisma.Ucar$UcarProcessArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Ucar$UcarProcessArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UcarProcessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  UcarRequest<T extends Prisma.Ucar$UcarRequestArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Ucar$UcarRequestArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UcarRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   AppliedUcarGarageSlot<T extends Prisma.Ucar$AppliedUcarGarageSlotArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Ucar$AppliedUcarGarageSlotArgs<ExtArgs>>): Prisma.Prisma__AppliedUcarGarageSlotClient<runtime.Types.Result.GetResult<Prisma.$AppliedUcarGarageSlotPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   BankMaster<T extends Prisma.Ucar$BankMasterArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Ucar$BankMasterArgs<ExtArgs>>): Prisma.Prisma__BankMasterClient<runtime.Types.Result.GetResult<Prisma.$BankMasterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   BankBranchMaster<T extends Prisma.Ucar$BankBranchMasterArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Ucar$BankBranchMasterArgs<ExtArgs>>): Prisma.Prisma__BankBranchMasterClient<runtime.Types.Result.GetResult<Prisma.$BankBranchMasterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -11553,6 +12039,30 @@ export type Ucar$UcarProcessArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.UcarProcessScalarFieldEnum | Prisma.UcarProcessScalarFieldEnum[]
+}
+
+/**
+ * Ucar.UcarRequest
+ */
+export type Ucar$UcarRequestArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UcarRequest
+   */
+  select?: Prisma.UcarRequestSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UcarRequest
+   */
+  omit?: Prisma.UcarRequestOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UcarRequestInclude<ExtArgs> | null
+  where?: Prisma.UcarRequestWhereInput
+  orderBy?: Prisma.UcarRequestOrderByWithRelationInput | Prisma.UcarRequestOrderByWithRelationInput[]
+  cursor?: Prisma.UcarRequestWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UcarRequestScalarFieldEnum | Prisma.UcarRequestScalarFieldEnum[]
 }
 
 /**

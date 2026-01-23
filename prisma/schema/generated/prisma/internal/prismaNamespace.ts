@@ -449,7 +449,8 @@ export const ModelName = {
   BankMaster: 'BankMaster',
   BankBranchMaster: 'BankBranchMaster',
   UcarProcess: 'UcarProcess',
-  UcarPaperWorkNotes: 'UcarPaperWorkNotes'
+  UcarPaperWorkNotes: 'UcarPaperWorkNotes',
+  UcarRequest: 'UcarRequest'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -465,7 +466,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "car" | "userProcessConfirmation" | "notes" | "damageNameMaster" | "noteNameMaster" | "bpSummary" | "processNameMaster" | "process" | "releaseNotes" | "crUser" | "juchuShitadoriDb" | "oldCars_Base" | "zAIKO_Base" | "upassFamilyTree" | "uPASS" | "qR_Prosess" | "deliverSchedule" | "area" | "loadingVehicle" | "slot" | "newCar" | "orderSwitchingHisotory" | "desiredTorokuDate" | "newCarLeadTime" | "crInspectionHistory" | "seisanYoteiHistory" | "userProgressAggregationTable" | "progressAggregationTable" | "progressAggregationTableRecord" | "furiateStatusOnApprovement" | "carTransferHistory" | "tenpoTsuikoShinseiHeader" | "tenpoTsuikoShinseiDetail" | "tenpoTsuikoData" | "store" | "user" | "googleAccessToken" | "roleMaster" | "userRole" | "calendar" | "chainMethodLock" | "cronExecutionLog" | "rentaStore" | "rentaDeal" | "rentaDailyReport" | "rentaCustomer" | "rentaReference" | "refFrom" | "refTo" | "purpose" | "purposeMaster" | "outcome" | "outcomeMaster" | "alternateInfo" | "insuranceInfo" | "extraInfo" | "ucar" | "number98" | "number98IssueHistory" | "appliedUcarGarageSlot" | "ucarGarageSlotMaster" | "ucarGarageLocationMaster" | "bankMaster" | "bankBranchMaster" | "ucarProcess" | "ucarPaperWorkNotes"
+    modelProps: "car" | "userProcessConfirmation" | "notes" | "damageNameMaster" | "noteNameMaster" | "bpSummary" | "processNameMaster" | "process" | "releaseNotes" | "crUser" | "juchuShitadoriDb" | "oldCars_Base" | "zAIKO_Base" | "upassFamilyTree" | "uPASS" | "qR_Prosess" | "deliverSchedule" | "area" | "loadingVehicle" | "slot" | "newCar" | "orderSwitchingHisotory" | "desiredTorokuDate" | "newCarLeadTime" | "crInspectionHistory" | "seisanYoteiHistory" | "userProgressAggregationTable" | "progressAggregationTable" | "progressAggregationTableRecord" | "furiateStatusOnApprovement" | "carTransferHistory" | "tenpoTsuikoShinseiHeader" | "tenpoTsuikoShinseiDetail" | "tenpoTsuikoData" | "store" | "user" | "googleAccessToken" | "roleMaster" | "userRole" | "calendar" | "chainMethodLock" | "cronExecutionLog" | "rentaStore" | "rentaDeal" | "rentaDailyReport" | "rentaCustomer" | "rentaReference" | "refFrom" | "refTo" | "purpose" | "purposeMaster" | "outcome" | "outcomeMaster" | "alternateInfo" | "insuranceInfo" | "extraInfo" | "ucar" | "number98" | "number98IssueHistory" | "appliedUcarGarageSlot" | "ucarGarageSlotMaster" | "ucarGarageLocationMaster" | "bankMaster" | "bankBranchMaster" | "ucarProcess" | "ucarPaperWorkNotes" | "ucarRequest"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -5353,6 +5354,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    UcarRequest: {
+      payload: Prisma.$UcarRequestPayload<ExtArgs>
+      fields: Prisma.UcarRequestFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UcarRequestFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarRequestPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UcarRequestFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarRequestPayload>
+        }
+        findFirst: {
+          args: Prisma.UcarRequestFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarRequestPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UcarRequestFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarRequestPayload>
+        }
+        findMany: {
+          args: Prisma.UcarRequestFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarRequestPayload>[]
+        }
+        create: {
+          args: Prisma.UcarRequestCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarRequestPayload>
+        }
+        createMany: {
+          args: Prisma.UcarRequestCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UcarRequestCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarRequestPayload>[]
+        }
+        delete: {
+          args: Prisma.UcarRequestDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarRequestPayload>
+        }
+        update: {
+          args: Prisma.UcarRequestUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarRequestPayload>
+        }
+        deleteMany: {
+          args: Prisma.UcarRequestDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UcarRequestUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UcarRequestUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarRequestPayload>[]
+        }
+        upsert: {
+          args: Prisma.UcarRequestUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UcarRequestPayload>
+        }
+        aggregate: {
+          args: Prisma.UcarRequestAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUcarRequest>
+        }
+        groupBy: {
+          args: Prisma.UcarRequestGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UcarRequestGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UcarRequestCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UcarRequestCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -6949,6 +7024,26 @@ export const UcarPaperWorkNotesScalarFieldEnum = {
 export type UcarPaperWorkNotesScalarFieldEnum = (typeof UcarPaperWorkNotesScalarFieldEnum)[keyof typeof UcarPaperWorkNotesScalarFieldEnum]
 
 
+export const UcarRequestScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  active: 'active',
+  sortOrder: 'sortOrder',
+  sateiID: 'sateiID',
+  requestType: 'requestType',
+  reason: 'reason',
+  status: 'status',
+  approvedAt: 'approvedAt',
+  approvedById: 'approvedById',
+  rejectedReason: 'rejectedReason',
+  userId: 'userId',
+  ucarId: 'ucarId'
+} as const
+
+export type UcarRequestScalarFieldEnum = (typeof UcarRequestScalarFieldEnum)[keyof typeof UcarRequestScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -7202,6 +7297,7 @@ export type GlobalOmitConfig = {
   bankBranchMaster?: Prisma.BankBranchMasterOmit
   ucarProcess?: Prisma.UcarProcessOmit
   ucarPaperWorkNotes?: Prisma.UcarPaperWorkNotesOmit
+  ucarRequest?: Prisma.UcarRequestOmit
 }
 
 /* Types for Logging */

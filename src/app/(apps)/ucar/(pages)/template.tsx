@@ -4,6 +4,7 @@ import useGarageEditorGMF from '@app/(apps)/ucar/(parts)/templateHooks/useGarage
 import useNumber98CandidateSelectorGMF from '@app/(apps)/ucar/(parts)/templateHooks/useNumber98CandidateSelectorGMF'
 import useSelectedUcarNotesGMF from '@app/(apps)/ucar/(parts)/templateHooks/useSelectedUcarNotesGMF'
 import useUcarDetailUpdatorGMF from '@app/(apps)/ucar/(parts)/templateHooks/useUcarDetailUpdatorGMF'
+import useUcarRequestGMF from '@app/(apps)/ucar/(parts)/templateHooks/useUcarRequestGMF'
 import {Prisma} from '@prisma/generated/prisma/client'
 import useDoStandardPrisma from '@cm/hooks/useDoStandardPrisma'
 import {CsvTable} from '@cm/components/styles/common-components/CsvTable/CsvTable'
@@ -13,6 +14,7 @@ const Template = ({children}) => {
   const GMF_UcrDetailUpdater = useUcarDetailUpdatorGMF()
   const GMF_GarageRegister = useGarageEditorGMF()
   const GMF_Number98CandidateSelector = useNumber98CandidateSelectorGMF()
+  const GMF_UcarRequest = useUcarRequestGMF()
   return (
     <>
       <section>
@@ -25,6 +27,9 @@ const Template = ({children}) => {
         {GMF_GarageRegister.Modal()}
 
         {GMF_Number98CandidateSelector.Modal()}
+
+        {/* 申請モーダル */}
+        {GMF_UcarRequest.Modal()}
       </section>
 
       {/* main */}

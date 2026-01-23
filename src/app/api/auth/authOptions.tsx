@@ -1,20 +1,22 @@
-import {basePath} from '@cm/lib/methods/common'
+import { basePath } from '@cm/lib/methods/common'
 import CredentialsProvider from 'next-auth/providers/credentials'
 
 import GoogleProvider from 'next-auth/providers/google'
-import {anyObject} from '@cm/types/utility-types'
-import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
-import {fetchAlt} from '@cm/lib/http/fetch-client'
+import { anyObject } from '@cm/types/utility-types'
+import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+import { fetchAlt } from '@cm/lib/http/fetch-client'
+import { googleProvider } from '@app/api/auth/GoogleProvider'
+import { normalCredentialsProvider } from '@app/api/auth/normalCredentialsProvider'
 const maxAge = process.env.NEXT_PUBLIC_ROOTPATH === 'Grouping' ? 60 * 60 : 30 * 24 * 60 * 60
 
-const authorize = async (credentials: {email: string; password: string}, req) => {
-  const {email, password} = credentials
+const authorize = async (credentials: { email: string; password: string }, req) => {
+  const { email, password } = credentials
 
-  const pseudoCredentials = {...credentials} as anyObject
+  const pseudoCredentials = { ...credentials } as anyObject
   const rootPath = pseudoCredentials.rootPath
   let user = undefined
   const apiPath = `${basePath}/api/prisma/login`
-  user = await fetchAlt(apiPath, {email, password, rootPath})
+  user = await fetchAlt(apiPath, { email, password, rootPath })
 
   if (user) {
     return user
@@ -25,32 +27,12 @@ const authorize = async (credentials: {email: string; password: string}, req) =>
 export const authOptions: any = {
   // Configure one or more authentication providers
   providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID ?? '',
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
-      profile: async (profile, tokens) => {
-        const {result: user} = await doStandardPrisma(`user`, `findUnique`, {
-          where: {
-            email: profile.email,
-          },
-        })
-
-        const userInfoSpread = user ?? {}
-
-        return {id: profile.sub, ...userInfoSpread}
-      },
-    }),
-    CredentialsProvider({
-      credentials: {
-        email: {label: 'メールアドレス', type: 'text', placeholder: 'test@test.com'},
-        password: {label: 'パスワード', type: 'password', placeholder: 'password123'},
-      },
-      authorize,
-    }),
+    googleProvider,
+    normalCredentialsProvider,
   ],
 
   callbacks: {
-    async jwt({token, user, account}) {
+    async jwt({ token, user, account }) {
       // 最初のサインイン
       if (account && user) {
         return {
@@ -61,7 +43,7 @@ export const authOptions: any = {
 
       return token
     },
-    async session({session, token}) {
+    async session({ session, token }) {
       session.accessToken = token.accessToken
       session.refreshToken = token.refreshToken
       session.accessTokenExpires = token.accessTokenExpires
@@ -71,7 +53,7 @@ export const authOptions: any = {
 
       return session
     },
-    async redirect({url, baseUrl}) {
+    async redirect({ url, baseUrl }) {
       // callbackUrlが指定されている場合はそのURLを使用
       if (url.startsWith('/')) return `${baseUrl}${url}`
       // 同じオリジンの場合はそのまま返す

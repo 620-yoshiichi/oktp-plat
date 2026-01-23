@@ -1,16 +1,17 @@
 import React from 'react'
 
-import {Absolute, C_Stack} from 'src/cm/components/styles/common-components/common-components'
+import { Absolute, C_Stack } from 'src/cm/components/styles/common-components/common-components'
 
 import Redirector from 'src/cm/components/utils/Redirector'
 import PlaceHolder from 'src/cm/components/utils/loader/PlaceHolder'
-import {initServerComopnent} from 'src/non-common/serverSideFunction'
-import GoogleLogin from '@app/(apps)/newCar/GoogleLogin'
+import { initServerComopnent } from 'src/non-common/serverSideFunction'
+import GoogleLogin from '@app/(utils)/login/components/LogInFormWrapper'
+import LogInForm from '@app/(utils)/login/components/LogInFormWrapper'
 
 const AdminLogin = async props => {
   const query = await props.searchParams
-  const {session} = await initServerComopnent({query})
-  const {rootPath, error} = query
+  const { session } = await initServerComopnent({ query })
+  const { rootPath, error } = query
 
   let redirectRoot = ''
   if (rootPath === 'undefined' || rootPath === undefined) {
@@ -34,11 +35,8 @@ const AdminLogin = async props => {
   return (
     <Absolute className={`w-full p-4`}>
       <C_Stack className={`items-center gap-4`}>
-        <GoogleLogin callbackUrl={`/${redirectRoot}`} />
-
+        <LogInForm callbackUrl={`/${redirectRoot}`} />
         <hr />
-
-        {/* <LoginClient {...{rootPath, error}} /> */}
       </C_Stack>
     </Absolute>
   )

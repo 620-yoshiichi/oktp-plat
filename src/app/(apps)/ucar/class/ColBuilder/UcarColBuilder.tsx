@@ -1,43 +1,45 @@
 'use client'
-import {columnGetterType} from '@cm/types/types'
-import {colType} from '@cm/types/col-types'
-import {Fields} from '@cm/class/Fields/Fields'
+import { columnGetterType } from '@cm/types/types'
+import { colType } from '@cm/types/col-types'
+import { Fields } from '@cm/class/Fields/Fields'
 
-import {IsActiveDisplay} from '@app/(apps)/ucar/(lib)/isActiveDisplays'
-import {upassCols} from '@app/(apps)/ucar/files/upass/upass-columns'
+import { IsActiveDisplay } from '@app/(apps)/ucar/(lib)/isActiveDisplays'
+import { upassCols } from '@app/(apps)/ucar/files/upass/upass-columns'
 
 import ProcessSummary from '@app/(apps)/ucar/(pages)/paperProcess/Summay/parts/ProcessSummary'
-import {absSize, cl, isDev} from '@cm/lib/methods/common'
-import {UcarProcessCl} from '../UcarProcessCl'
-import {getPaperManagementCols} from '@app/(apps)/ucar/class/ColBuilder/lib/ucar/ucarCols-lib/lib/getPaperManagementCols/getPaperManagementCols'
-import {DocumentIcon, InformationCircleIcon} from '@heroicons/react/20/solid'
-import {T_LINK} from '@cm/components/styles/common-components/links'
-import {HREF} from '@cm/lib/methods/urls'
-import {TrActionIconClassName} from '@cm/components/DataLogic/TFs/MyTable/hooks/useMyTableLogic'
+import { absSize, cl, isDev } from '@cm/lib/methods/common'
+import { UcarProcessCl } from '../UcarProcessCl'
+import { getPaperManagementCols } from '@app/(apps)/ucar/class/ColBuilder/lib/ucar/ucarCols-lib/lib/getPaperManagementCols/getPaperManagementCols'
+import { DocumentIcon, InformationCircleIcon } from '@heroicons/react/20/solid'
+import { T_LINK } from '@cm/components/styles/common-components/links'
+import { HREF } from '@cm/lib/methods/urls'
+import { TrActionIconClassName } from '@cm/components/DataLogic/TFs/MyTable/hooks/useMyTableLogic'
 import useUcarDetailUpdatorGMF from '@app/(apps)/ucar/(parts)/templateHooks/useUcarDetailUpdatorGMF'
-import {Absolute, C_Stack, R_Stack} from '@cm/components/styles/common-components/common-components'
-import {PencilIcon, TrashIcon} from 'lucide-react'
+import useUcarRequestGMF from '@app/(apps)/ucar/(parts)/templateHooks/useUcarRequestGMF'
+import { Absolute, C_Stack, R_Stack } from '@cm/components/styles/common-components/common-components'
+import { PencilIcon, TrashIcon, ClipboardListIcon } from 'lucide-react'
 
-import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
-import {updateNumber98IssueHistory} from '@app/(apps)/ucar/(lib)/num98/updateNumber98IssueHistory'
-import {UcarCL, ucarData} from '../UcarCL'
-import {UCAR_CODE} from '../UCAR_CODE'
-import {__shared_get_shiwakeKekkeCol} from '@app/(apps)/ucar/class/ColBuilder/getter/shared_shiwakeKekkeCol'
-import {getTaxJobCols} from '@app/(apps)/ucar/class/ColBuilder/lib/ucar/ucarCols-lib/lib/getTaxJobCols'
-import {getDMMFModel} from '@cm/lib/methods/prisma-schema'
-import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
+import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+import { updateNumber98IssueHistory } from '@app/(apps)/ucar/(lib)/num98/updateNumber98IssueHistory'
+import { UcarCL, ucarData } from '../UcarCL'
+import { UCAR_CODE } from '../UCAR_CODE'
+import { __shared_get_shiwakeKekkeCol } from '@app/(apps)/ucar/class/ColBuilder/getter/shared_shiwakeKekkeCol'
+import { getTaxJobCols } from '@app/(apps)/ucar/class/ColBuilder/lib/ucar/ucarCols-lib/lib/getTaxJobCols'
+import { getDMMFModel } from '@cm/lib/methods/prisma-schema'
+import { IconBtn } from '@cm/components/styles/common-components/IconBtn'
 import ShadModal from '@cm/shadcn/ui/Organisms/ShadModal'
-import {defaultRegister} from '@cm/class/builders/ColBuilderVariables'
-import {GoogleSheet_Append} from '@app/api/google/actions/sheetAPI'
-import {getAvailable98Numbers} from '../../(lib)/num98/getAvailable98Numbers'
+import { defaultRegister } from '@cm/class/builders/ColBuilderVariables'
+import { GoogleSheet_Append } from '@app/api/google/actions/sheetAPI'
+import { getAvailable98Numbers } from '../../(lib)/num98/getAvailable98Numbers'
 
 export const UCAR_TABLE_ROW_HEIGHT = 120
 
 export const ucarColBuilder = (props: columnGetterType) => {
-  const {useGlobalProps} = props
-  const {isChukoshaGroup} = useGlobalProps.accessScopes().getUcarProps()
+  const { useGlobalProps } = props
+  const { isChukoshaGroup, isStoreManager } = useGlobalProps.accessScopes().getUcarProps()
   const GMF_UcrDetailUpdater = useUcarDetailUpdatorGMF()
-  const {UseRecordsReturn, getAvailable98NumbersReturn, currentNumber98} = props.ColBuilderExtraProps ?? {}
+  const GMF_UcarRequest = useUcarRequestGMF()
+  const { UseRecordsReturn, getAvailable98NumbersReturn, currentNumber98 } = props.ColBuilderExtraProps ?? {}
 
   // const mutateRecords = UseRecordsReturn?.mutateRecords
 
@@ -53,7 +55,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
           id: item.name,
           label: `修正_${upassColName?.jp}`,
           form: {},
-          td: {hidden: true},
+          td: { hidden: true },
           // format: (value, row) => {
           //   return row[`modified_${item.name}`]
           // },
@@ -62,7 +64,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
     )
   }
 
-  const {query, session} = useGlobalProps
+  const { query, session } = useGlobalProps
 
 
 
@@ -90,7 +92,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
       td: {
         editable: {
           upsertController: {
-            validateUpdate: async ({latestFormData, formData}) => {
+            validateUpdate: async ({ latestFormData, formData }) => {
               const prevNumber98 = formData?.number98
               const newNumber98 = latestFormData?.number98
               const numberChanged = prevNumber98 !== newNumber98
@@ -98,12 +100,12 @@ export const ucarColBuilder = (props: columnGetterType) => {
               if (numberChanged) {
                 const confirmed = confirm('98番号を更新します。よろしいですか？')
                 if (!confirmed) {
-                  return {success: false, message: '98番号の更新をキャンセルしました'}
+                  return { success: false, message: '98番号の更新をキャンセルしました' }
                 }
               }
-              return {success: true, message: ''}
+              return { success: true, message: '' }
             },
-            finalizeUpdate: async ({res, formData}) => {
+            finalizeUpdate: async ({ res, formData }) => {
               if (res.success) {
                 await updateNumber98IssueHistory({
                   prevNumber98: formData?.number98,
@@ -122,7 +124,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
             sortNumber: 'number',
           },
         },
-        optionsOrOptionFetcher: async ({searchInput}) => {
+        optionsOrOptionFetcher: async ({ searchInput }) => {
           const getAvailable98NumbersReturn = await getAvailable98Numbers({
             additionalWhere: {
               number: {
@@ -191,7 +193,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
     {
       id: 'daihatsuReserve',
       label: '予約枠',
-      td: {hidden: true},
+      td: { hidden: true },
     },
     __shared_get_shiwakeKekkeCol(),
     {
@@ -205,7 +207,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
       forSelect: {
         config: {
           modelName: 'store',
-          orderBy: [{code: 'asc'}],
+          orderBy: [{ code: 'asc' }],
         },
       },
     },
@@ -244,16 +246,16 @@ export const ucarColBuilder = (props: columnGetterType) => {
     {
       id: 'modelName',
       label: '車種',
-      form: {hidden: true},
+      form: { hidden: true },
       format: (value, row) => {
         const inst = new UcarCL(row as unknown as ucarData)
-        return [inst.notation.brandName,inst.notation.modelName].join(' ')
+        return [inst.notation.brandName, inst.notation.modelName].join(' ')
       },
     },
     {
       id: 'plate',
       label: 'プレート',
-      form: {hidden: true},
+      form: { hidden: true },
 
       format: (value, row) => {
         return new UcarCL(row as unknown as ucarData).notation.plate
@@ -262,7 +264,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
     {
       id: 'chassisNumber',
       label: '車体番号',
-      form: {hidden: true},
+      form: { hidden: true },
       format: (value, row) => {
         return new UcarCL(row as unknown as ucarData).notation.chassisNumber
       },
@@ -271,7 +273,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
     {
       id: 'grade',
       label: 'グレード',
-      form: {hidden: true},
+      form: { hidden: true },
       format: (value, row) => {
         return new UcarCL(row as unknown as ucarData).notation.grade
       },
@@ -279,19 +281,19 @@ export const ucarColBuilder = (props: columnGetterType) => {
     {
       id: 'type',
       label: '型式',
-      form: {hidden: true},
+      form: { hidden: true },
       format: (value, row) => {
         return new UcarCL(row as unknown as ucarData).notation.type
       },
     },
 
-  {
-    id: 'createdAt',
-    label: '作成日',
-    type: 'date',
-    form: {hidden: true},
-    td: {style: {...{verticalAlign: 'middle'}}},
-  },
+    {
+      id: 'createdAt',
+      label: '作成日',
+      type: 'date',
+      form: { hidden: true },
+      td: { style: { ...{ verticalAlign: 'middle' } } },
+    },
 
     // {
     //   id: 'tmpRentalStoreId',
@@ -310,7 +312,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
     {
       id: 'actions',
       label: '',
-      form: {hidden: true},
+      form: { hidden: true },
       td: {
         getRowColor: (value, row) => {
           if (row.daihatsuReserve) {
@@ -326,7 +328,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
         },
       },
       format: (value, row) => {
-        const href = HREF(`/ucar/qr`, {sateiID: row.sateiID}, useGlobalProps.query)
+        const href = HREF(`/ucar/qr`, { sateiID: row.sateiID }, useGlobalProps.query)
 
         const alertList = UCAR_CODE.Alert.array.filter(item => item.checkAlert?.(row as unknown as ucarData))
 
@@ -359,11 +361,26 @@ export const ucarColBuilder = (props: columnGetterType) => {
                         values: [[row.sateiID]] as string[][],
                       })
 
-                      await doStandardPrisma('ucar', 'update', {where: {id: row.id}, data: {active: false}})
+                      await doStandardPrisma('ucar', 'update', { where: { id: row.id }, data: { active: false } })
                     })
                   }
                 }}
                 className={cl(TrActionIconClassName, 'h-5 w-5 text-red-500')}
+              />
+            )}
+
+            {/* 申請ボタン（店長・副店長のみ） */}
+            {isStoreManager && (
+              <ClipboardListIcon
+                onClick={() =>
+                  GMF_UcarRequest.setGMF_OPEN({
+                    UcarData: row as unknown as ucarData,
+                    session: useGlobalProps.session,
+                    UseRecordsReturn,
+                  })
+                }
+                className={cl(TrActionIconClassName, 'h-5 w-5 text-purple-500')}
+
               />
             )}
 
@@ -389,7 +406,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
                           </IconBtn>
                         </div>
 
-                        {Trigger && <Trigger {...{row: row as unknown as ucarData}} />}
+                        {Trigger && <Trigger {...{ row: row as unknown as ucarData }} />}
                       </R_Stack>
                     )
                   })}
@@ -407,11 +424,11 @@ export const ucarColBuilder = (props: columnGetterType) => {
         label: '査定番号',
         type: 'text',
         form: {
-          disabled: (props: {record: ucarData}): boolean => {
+          disabled: (props: { record: ucarData }): boolean => {
             const inst = new UcarCL(props?.record)
             return inst.notation.sateiID ? true : false
           },
-          register: {required: '必須'},
+          register: { required: '必須' },
         },
         format: (value, row) => {
           if (row.daihatsuReserve) {
@@ -422,13 +439,13 @@ export const ucarColBuilder = (props: columnGetterType) => {
       },
       ...new Fields(CAR_COLS).plain,
     ])
-      .showSummaryInTd({wrapperWidthPx: 240})
-      .buildFormGroup({groupName: `車両情報`}).plain,
+      .showSummaryInTd({ wrapperWidthPx: 240 })
+      .buildFormGroup({ groupName: `車両情報` }).plain,
 
     ...new Fields([
-      ...SETTING_COLS.buildFormGroup({groupName: `基本情報`}).plain,
-      ...SHIIRE_G_SETTING_COLS.buildFormGroup({groupName: `仕入G設定情報`}).plain,
-    ]).showSummaryInTd({wrapperWidthPx: 200, editable: isChukoshaGroup}).plain,
+      ...SETTING_COLS.buildFormGroup({ groupName: `基本情報` }).plain,
+      ...SHIIRE_G_SETTING_COLS.buildFormGroup({ groupName: `仕入G設定情報` }).plain,
+    ]).showSummaryInTd({ wrapperWidthPx: 200, editable: isChukoshaGroup }).plain,
 
 
 
@@ -444,7 +461,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
   // })
 
   if (IsActiveDisplay(query, `自動車税`)) {
-    const taxCols = getTaxJobCols({isChukoshaGroup})
+    const taxCols = getTaxJobCols({ isChukoshaGroup })
 
     base.push(...taxCols.cols1)
     base.push(...taxCols.cols2)
@@ -469,10 +486,10 @@ export const ucarColBuilder = (props: columnGetterType) => {
         id: 'AllProcesses',
         label: '加修工程',
         type: 'text',
-        td: {style: {...absSize({width: 350})}},
+        td: { style: { ...absSize({ width: 350 }) } },
         format: (value, row, col) => {
           const className = ``
-          return <ProcessSummary {...{className, ucar: row, mainProcessMasters, subProcessMasters, query}} />
+          return <ProcessSummary {...{ className, ucar: row, mainProcessMasters, subProcessMasters, query }} />
         },
       },
     ])

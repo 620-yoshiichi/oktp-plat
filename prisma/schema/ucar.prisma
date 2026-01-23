@@ -108,6 +108,7 @@ model Ucar {
   QR_Prosess         QR_Prosess?
   UcarPaperWorkNotes UcarPaperWorkNotes[]
   UcarProcess        UcarProcess[]
+  UcarRequest        UcarRequest[]
 
   AppliedUcarGarageSlot   AppliedUcarGarageSlot?
   ucarLastProcessMasterId Int?
@@ -304,4 +305,34 @@ model UcarPaperWorkNotes {
 
   @@index([userId])
   @@index([ucarId])
+}
+
+model UcarRequest {
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime? @updatedAt
+  active      Boolean   @default(true)
+  sortOrder   Float     @default(0)
+
+  sateiID     String    // 査定番号
+  requestType String    // 申請区分（UCAR_CODE.REQUEST_TYPES）
+  reason      String?   // 申請理由
+  status      String    @default("pending") // pending, approved, rejected
+
+  approvedAt    DateTime? // 承諾日時
+  approvedById  Int?      // 承諾者ID
+  rejectedReason String?  // 却下理由
+
+  userId      Int       // 申請者ID
+  ucarId      Int       // 対象Ucar ID
+
+  Ucar        Ucar      @relation(fields: [ucarId], references: [id], onDelete: Cascade)
+  User        User      @relation(name: "UcarRequestUser", fields: [userId], references: [id], onDelete: Cascade)
+  ApprovedBy  User?     @relation(name: "UcarRequestApprovedBy", fields: [approvedById], references: [id])
+
+  @@index([sateiID])
+  @@index([userId])
+  @@index([ucarId])
+  @@index([status])
+  @@index([approvedById])
 }

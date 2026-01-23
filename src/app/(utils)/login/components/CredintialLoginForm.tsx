@@ -10,8 +10,8 @@ import { Fields } from 'src/cm/class/Fields/Fields'
 import { Button } from '@cm/components/styles/common-components/Button'
 import { CheckLogin } from '@app/api/prisma/login/checkLogin'
 
-export default function LoginForm(props) {
-  const { error } = props
+export default function CredintialLoginForm(props) {
+  const { error, callbackUrl } = props
   const { toggleLoad, router } = useGlobal()
   const columns = Fields.transposeColumns([
     {
@@ -64,7 +64,7 @@ export default function LoginForm(props) {
                       toast.success(`ログインしました。`)
 
                       await sleep(500)
-                      router.push(`/`)
+                      router.push(callbackUrl)
                     } else if (result?.error) {
                       toast.error(`ログインに失敗しました。:${result.error}`)
                     }

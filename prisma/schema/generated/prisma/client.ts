@@ -369,3 +369,8 @@ export type UcarProcess = Prisma.UcarProcessModel
  * 
  */
 export type UcarPaperWorkNotes = Prisma.UcarPaperWorkNotesModel
+/**
+ * Model UcarRequest
+ * 
+ */
+export type UcarRequest = Prisma.UcarRequestModel

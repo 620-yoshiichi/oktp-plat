@@ -425,6 +425,8 @@ export type UserWhereInput = {
   Ucar?: Prisma.UcarListRelationFilter
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesListRelationFilter
   UcarProcess?: Prisma.UcarProcessListRelationFilter
+  UcarRequest?: Prisma.UcarRequestListRelationFilter
+  UcarRequestApproved?: Prisma.UcarRequestListRelationFilter
   DamageNameMaster?: Prisma.XOR<Prisma.DamageNameMasterNullableScalarRelationFilter, Prisma.DamageNameMasterWhereInput> | null
   RentaStore?: Prisma.XOR<Prisma.RentaStoreNullableScalarRelationFilter, Prisma.RentaStoreWhereInput> | null
   Store?: Prisma.XOR<Prisma.StoreNullableScalarRelationFilter, Prisma.StoreWhereInput> | null
@@ -478,6 +480,8 @@ export type UserOrderByWithRelationInput = {
   Ucar?: Prisma.UcarOrderByRelationAggregateInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesOrderByRelationAggregateInput
   UcarProcess?: Prisma.UcarProcessOrderByRelationAggregateInput
+  UcarRequest?: Prisma.UcarRequestOrderByRelationAggregateInput
+  UcarRequestApproved?: Prisma.UcarRequestOrderByRelationAggregateInput
   DamageNameMaster?: Prisma.DamageNameMasterOrderByWithRelationInput
   RentaStore?: Prisma.RentaStoreOrderByWithRelationInput
   Store?: Prisma.StoreOrderByWithRelationInput
@@ -534,6 +538,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   Ucar?: Prisma.UcarListRelationFilter
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesListRelationFilter
   UcarProcess?: Prisma.UcarProcessListRelationFilter
+  UcarRequest?: Prisma.UcarRequestListRelationFilter
+  UcarRequestApproved?: Prisma.UcarRequestListRelationFilter
   DamageNameMaster?: Prisma.XOR<Prisma.DamageNameMasterNullableScalarRelationFilter, Prisma.DamageNameMasterWhereInput> | null
   RentaStore?: Prisma.XOR<Prisma.RentaStoreNullableScalarRelationFilter, Prisma.RentaStoreWhereInput> | null
   Store?: Prisma.XOR<Prisma.StoreNullableScalarRelationFilter, Prisma.StoreWhereInput> | null
@@ -649,6 +655,8 @@ export type UserCreateInput = {
   Ucar?: Prisma.UcarCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestCreateNestedManyWithoutApprovedByInput
   DamageNameMaster?: Prisma.DamageNameMasterCreateNestedOneWithoutUserInput
   RentaStore?: Prisma.RentaStoreCreateNestedOneWithoutUserInput
   Store?: Prisma.StoreCreateNestedOneWithoutUserInput
@@ -702,6 +710,8 @@ export type UserUncheckedCreateInput = {
   Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutApprovedByInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedCreateNestedManyWithoutUserInput
   UserRole?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedCreateNestedManyWithoutUserInput
@@ -748,6 +758,8 @@ export type UserUpdateInput = {
   Ucar?: Prisma.UcarUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUpdateManyWithoutApprovedByNestedInput
   DamageNameMaster?: Prisma.DamageNameMasterUpdateOneWithoutUserNestedInput
   RentaStore?: Prisma.RentaStoreUpdateOneWithoutUserNestedInput
   Store?: Prisma.StoreUpdateOneWithoutUserNestedInput
@@ -801,6 +813,8 @@ export type UserUncheckedUpdateInput = {
   Ucar?: Prisma.UcarUncheckedUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedUpdateManyWithoutApprovedByNestedInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedUpdateManyWithoutUserNestedInput
   UserRole?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedUpdateManyWithoutUserNestedInput
@@ -1460,6 +1474,36 @@ export type UserUpdateOneRequiredWithoutUcarPaperWorkNotesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUcarPaperWorkNotesInput, Prisma.UserUpdateWithoutUcarPaperWorkNotesInput>, Prisma.UserUncheckedUpdateWithoutUcarPaperWorkNotesInput>
 }
 
+export type UserCreateNestedOneWithoutUcarRequestInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUcarRequestInput, Prisma.UserUncheckedCreateWithoutUcarRequestInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUcarRequestInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutUcarRequestApprovedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUcarRequestApprovedInput, Prisma.UserUncheckedCreateWithoutUcarRequestApprovedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUcarRequestApprovedInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutUcarRequestNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUcarRequestInput, Prisma.UserUncheckedCreateWithoutUcarRequestInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUcarRequestInput
+  upsert?: Prisma.UserUpsertWithoutUcarRequestInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUcarRequestInput, Prisma.UserUpdateWithoutUcarRequestInput>, Prisma.UserUncheckedUpdateWithoutUcarRequestInput>
+}
+
+export type UserUpdateOneWithoutUcarRequestApprovedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUcarRequestApprovedInput, Prisma.UserUncheckedCreateWithoutUcarRequestApprovedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUcarRequestApprovedInput
+  upsert?: Prisma.UserUpsertWithoutUcarRequestApprovedInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUcarRequestApprovedInput, Prisma.UserUpdateWithoutUcarRequestApprovedInput>, Prisma.UserUncheckedUpdateWithoutUcarRequestApprovedInput>
+}
+
 export type UserCreateWithoutCarInput = {
   code?: number | null
   createdAt?: Date | string
@@ -1499,6 +1543,8 @@ export type UserCreateWithoutCarInput = {
   Ucar?: Prisma.UcarCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestCreateNestedManyWithoutApprovedByInput
   DamageNameMaster?: Prisma.DamageNameMasterCreateNestedOneWithoutUserInput
   RentaStore?: Prisma.RentaStoreCreateNestedOneWithoutUserInput
   Store?: Prisma.StoreCreateNestedOneWithoutUserInput
@@ -1551,6 +1597,8 @@ export type UserUncheckedCreateWithoutCarInput = {
   Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutApprovedByInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedCreateNestedManyWithoutUserInput
   UserRole?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedCreateNestedManyWithoutUserInput
@@ -1612,6 +1660,8 @@ export type UserUpdateWithoutCarInput = {
   Ucar?: Prisma.UcarUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUpdateManyWithoutApprovedByNestedInput
   DamageNameMaster?: Prisma.DamageNameMasterUpdateOneWithoutUserNestedInput
   RentaStore?: Prisma.RentaStoreUpdateOneWithoutUserNestedInput
   Store?: Prisma.StoreUpdateOneWithoutUserNestedInput
@@ -1664,6 +1714,8 @@ export type UserUncheckedUpdateWithoutCarInput = {
   Ucar?: Prisma.UcarUncheckedUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedUpdateManyWithoutApprovedByNestedInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedUpdateManyWithoutUserNestedInput
   UserRole?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedUpdateManyWithoutUserNestedInput
@@ -1710,6 +1762,8 @@ export type UserCreateWithoutUserProcessConfirmationInput = {
   Ucar?: Prisma.UcarCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestCreateNestedManyWithoutApprovedByInput
   DamageNameMaster?: Prisma.DamageNameMasterCreateNestedOneWithoutUserInput
   RentaStore?: Prisma.RentaStoreCreateNestedOneWithoutUserInput
   Store?: Prisma.StoreCreateNestedOneWithoutUserInput
@@ -1762,6 +1816,8 @@ export type UserUncheckedCreateWithoutUserProcessConfirmationInput = {
   Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutApprovedByInput
   UserRole?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedCreateNestedManyWithoutUserInput
   TenpoTsuikoShinseiDetail?: Prisma.TenpoTsuikoShinseiDetailUncheckedCreateNestedManyWithoutUserInput
@@ -1823,6 +1879,8 @@ export type UserUpdateWithoutUserProcessConfirmationInput = {
   Ucar?: Prisma.UcarUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUpdateManyWithoutApprovedByNestedInput
   DamageNameMaster?: Prisma.DamageNameMasterUpdateOneWithoutUserNestedInput
   RentaStore?: Prisma.RentaStoreUpdateOneWithoutUserNestedInput
   Store?: Prisma.StoreUpdateOneWithoutUserNestedInput
@@ -1875,6 +1933,8 @@ export type UserUncheckedUpdateWithoutUserProcessConfirmationInput = {
   Ucar?: Prisma.UcarUncheckedUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedUpdateManyWithoutApprovedByNestedInput
   UserRole?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedUpdateManyWithoutUserNestedInput
   TenpoTsuikoShinseiDetail?: Prisma.TenpoTsuikoShinseiDetailUncheckedUpdateManyWithoutUserNestedInput
@@ -1919,6 +1979,8 @@ export type UserCreateWithoutNotesInput = {
   Ucar?: Prisma.UcarCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestCreateNestedManyWithoutApprovedByInput
   DamageNameMaster?: Prisma.DamageNameMasterCreateNestedOneWithoutUserInput
   RentaStore?: Prisma.RentaStoreCreateNestedOneWithoutUserInput
   Store?: Prisma.StoreCreateNestedOneWithoutUserInput
@@ -1971,6 +2033,8 @@ export type UserUncheckedCreateWithoutNotesInput = {
   Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutApprovedByInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedCreateNestedManyWithoutUserInput
   UserRole?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedCreateNestedManyWithoutUserInput
@@ -2032,6 +2096,8 @@ export type UserUpdateWithoutNotesInput = {
   Ucar?: Prisma.UcarUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUpdateManyWithoutApprovedByNestedInput
   DamageNameMaster?: Prisma.DamageNameMasterUpdateOneWithoutUserNestedInput
   RentaStore?: Prisma.RentaStoreUpdateOneWithoutUserNestedInput
   Store?: Prisma.StoreUpdateOneWithoutUserNestedInput
@@ -2084,6 +2150,8 @@ export type UserUncheckedUpdateWithoutNotesInput = {
   Ucar?: Prisma.UcarUncheckedUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedUpdateManyWithoutApprovedByNestedInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedUpdateManyWithoutUserNestedInput
   UserRole?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedUpdateManyWithoutUserNestedInput
@@ -2130,6 +2198,8 @@ export type UserCreateWithoutDamageNameMasterInput = {
   Ucar?: Prisma.UcarCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestCreateNestedManyWithoutApprovedByInput
   RentaStore?: Prisma.RentaStoreCreateNestedOneWithoutUserInput
   Store?: Prisma.StoreCreateNestedOneWithoutUserInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationCreateNestedManyWithoutUserInput
@@ -2181,6 +2251,8 @@ export type UserUncheckedCreateWithoutDamageNameMasterInput = {
   Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutApprovedByInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedCreateNestedManyWithoutUserInput
   UserRole?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedCreateNestedManyWithoutUserInput
@@ -2284,6 +2356,8 @@ export type UserCreateWithoutProcessInput = {
   Ucar?: Prisma.UcarCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestCreateNestedManyWithoutApprovedByInput
   DamageNameMaster?: Prisma.DamageNameMasterCreateNestedOneWithoutUserInput
   RentaStore?: Prisma.RentaStoreCreateNestedOneWithoutUserInput
   Store?: Prisma.StoreCreateNestedOneWithoutUserInput
@@ -2336,6 +2410,8 @@ export type UserUncheckedCreateWithoutProcessInput = {
   Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutApprovedByInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedCreateNestedManyWithoutUserInput
   UserRole?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedCreateNestedManyWithoutUserInput
@@ -2397,6 +2473,8 @@ export type UserUpdateWithoutProcessInput = {
   Ucar?: Prisma.UcarUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUpdateManyWithoutApprovedByNestedInput
   DamageNameMaster?: Prisma.DamageNameMasterUpdateOneWithoutUserNestedInput
   RentaStore?: Prisma.RentaStoreUpdateOneWithoutUserNestedInput
   Store?: Prisma.StoreUpdateOneWithoutUserNestedInput
@@ -2449,6 +2527,8 @@ export type UserUncheckedUpdateWithoutProcessInput = {
   Ucar?: Prisma.UcarUncheckedUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedUpdateManyWithoutApprovedByNestedInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedUpdateManyWithoutUserNestedInput
   UserRole?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedUpdateManyWithoutUserNestedInput
@@ -2494,6 +2574,8 @@ export type UserCreateWithoutCrUserInput = {
   Ucar?: Prisma.UcarCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestCreateNestedManyWithoutApprovedByInput
   DamageNameMaster?: Prisma.DamageNameMasterCreateNestedOneWithoutUserInput
   RentaStore?: Prisma.RentaStoreCreateNestedOneWithoutUserInput
   Store?: Prisma.StoreCreateNestedOneWithoutUserInput
@@ -2546,6 +2628,8 @@ export type UserUncheckedCreateWithoutCrUserInput = {
   Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutApprovedByInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedCreateNestedManyWithoutUserInput
   UserRole?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedCreateNestedManyWithoutUserInput
@@ -2607,6 +2691,8 @@ export type UserUpdateWithoutCrUserInput = {
   Ucar?: Prisma.UcarUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUpdateManyWithoutApprovedByNestedInput
   DamageNameMaster?: Prisma.DamageNameMasterUpdateOneWithoutUserNestedInput
   RentaStore?: Prisma.RentaStoreUpdateOneWithoutUserNestedInput
   Store?: Prisma.StoreUpdateOneWithoutUserNestedInput
@@ -2659,6 +2745,8 @@ export type UserUncheckedUpdateWithoutCrUserInput = {
   Ucar?: Prisma.UcarUncheckedUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedUpdateManyWithoutApprovedByNestedInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedUpdateManyWithoutUserNestedInput
   UserRole?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedUpdateManyWithoutUserNestedInput
@@ -2704,6 +2792,8 @@ export type UserCreateWithoutNewCarInput = {
   Ucar?: Prisma.UcarCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestCreateNestedManyWithoutApprovedByInput
   DamageNameMaster?: Prisma.DamageNameMasterCreateNestedOneWithoutUserInput
   RentaStore?: Prisma.RentaStoreCreateNestedOneWithoutUserInput
   Store?: Prisma.StoreCreateNestedOneWithoutUserInput
@@ -2756,6 +2846,8 @@ export type UserUncheckedCreateWithoutNewCarInput = {
   Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutApprovedByInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedCreateNestedManyWithoutUserInput
   UserRole?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedCreateNestedManyWithoutUserInput
@@ -2817,6 +2909,8 @@ export type UserUpdateWithoutNewCarInput = {
   Ucar?: Prisma.UcarUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUpdateManyWithoutApprovedByNestedInput
   DamageNameMaster?: Prisma.DamageNameMasterUpdateOneWithoutUserNestedInput
   RentaStore?: Prisma.RentaStoreUpdateOneWithoutUserNestedInput
   Store?: Prisma.StoreUpdateOneWithoutUserNestedInput
@@ -2869,6 +2963,8 @@ export type UserUncheckedUpdateWithoutNewCarInput = {
   Ucar?: Prisma.UcarUncheckedUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedUpdateManyWithoutApprovedByNestedInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedUpdateManyWithoutUserNestedInput
   UserRole?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedUpdateManyWithoutUserNestedInput
@@ -2914,6 +3010,8 @@ export type UserCreateWithoutOrderSwitchingHisotoryInput = {
   Ucar?: Prisma.UcarCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestCreateNestedManyWithoutApprovedByInput
   DamageNameMaster?: Prisma.DamageNameMasterCreateNestedOneWithoutUserInput
   RentaStore?: Prisma.RentaStoreCreateNestedOneWithoutUserInput
   Store?: Prisma.StoreCreateNestedOneWithoutUserInput
@@ -2966,6 +3064,8 @@ export type UserUncheckedCreateWithoutOrderSwitchingHisotoryInput = {
   Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutApprovedByInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedCreateNestedManyWithoutUserInput
   UserRole?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedCreateNestedManyWithoutUserInput
@@ -3027,6 +3127,8 @@ export type UserUpdateWithoutOrderSwitchingHisotoryInput = {
   Ucar?: Prisma.UcarUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUpdateManyWithoutApprovedByNestedInput
   DamageNameMaster?: Prisma.DamageNameMasterUpdateOneWithoutUserNestedInput
   RentaStore?: Prisma.RentaStoreUpdateOneWithoutUserNestedInput
   Store?: Prisma.StoreUpdateOneWithoutUserNestedInput
@@ -3079,6 +3181,8 @@ export type UserUncheckedUpdateWithoutOrderSwitchingHisotoryInput = {
   Ucar?: Prisma.UcarUncheckedUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedUpdateManyWithoutApprovedByNestedInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedUpdateManyWithoutUserNestedInput
   UserRole?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedUpdateManyWithoutUserNestedInput
@@ -3124,6 +3228,8 @@ export type UserCreateWithoutCrInspectionHistoryInput = {
   Ucar?: Prisma.UcarCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestCreateNestedManyWithoutApprovedByInput
   DamageNameMaster?: Prisma.DamageNameMasterCreateNestedOneWithoutUserInput
   RentaStore?: Prisma.RentaStoreCreateNestedOneWithoutUserInput
   Store?: Prisma.StoreCreateNestedOneWithoutUserInput
@@ -3176,6 +3282,8 @@ export type UserUncheckedCreateWithoutCrInspectionHistoryInput = {
   Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutApprovedByInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedCreateNestedManyWithoutUserInput
   UserRole?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedCreateNestedManyWithoutUserInput
@@ -3237,6 +3345,8 @@ export type UserUpdateWithoutCrInspectionHistoryInput = {
   Ucar?: Prisma.UcarUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUpdateManyWithoutApprovedByNestedInput
   DamageNameMaster?: Prisma.DamageNameMasterUpdateOneWithoutUserNestedInput
   RentaStore?: Prisma.RentaStoreUpdateOneWithoutUserNestedInput
   Store?: Prisma.StoreUpdateOneWithoutUserNestedInput
@@ -3289,6 +3399,8 @@ export type UserUncheckedUpdateWithoutCrInspectionHistoryInput = {
   Ucar?: Prisma.UcarUncheckedUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedUpdateManyWithoutApprovedByNestedInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedUpdateManyWithoutUserNestedInput
   UserRole?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedUpdateManyWithoutUserNestedInput
@@ -3335,6 +3447,8 @@ export type UserCreateWithoutUserProgressAggregationTableInput = {
   Ucar?: Prisma.UcarCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestCreateNestedManyWithoutApprovedByInput
   DamageNameMaster?: Prisma.DamageNameMasterCreateNestedOneWithoutUserInput
   RentaStore?: Prisma.RentaStoreCreateNestedOneWithoutUserInput
   Store?: Prisma.StoreCreateNestedOneWithoutUserInput
@@ -3387,6 +3501,8 @@ export type UserUncheckedCreateWithoutUserProgressAggregationTableInput = {
   Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutApprovedByInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedCreateNestedManyWithoutUserInput
   UserRole?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
   TenpoTsuikoShinseiDetail?: Prisma.TenpoTsuikoShinseiDetailUncheckedCreateNestedManyWithoutUserInput
@@ -3448,6 +3564,8 @@ export type UserUpdateWithoutUserProgressAggregationTableInput = {
   Ucar?: Prisma.UcarUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUpdateManyWithoutApprovedByNestedInput
   DamageNameMaster?: Prisma.DamageNameMasterUpdateOneWithoutUserNestedInput
   RentaStore?: Prisma.RentaStoreUpdateOneWithoutUserNestedInput
   Store?: Prisma.StoreUpdateOneWithoutUserNestedInput
@@ -3500,6 +3618,8 @@ export type UserUncheckedUpdateWithoutUserProgressAggregationTableInput = {
   Ucar?: Prisma.UcarUncheckedUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedUpdateManyWithoutApprovedByNestedInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedUpdateManyWithoutUserNestedInput
   UserRole?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
   TenpoTsuikoShinseiDetail?: Prisma.TenpoTsuikoShinseiDetailUncheckedUpdateManyWithoutUserNestedInput
@@ -3545,6 +3665,8 @@ export type UserCreateWithoutTenpoTsuikoShinseiDetailInput = {
   Ucar?: Prisma.UcarCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestCreateNestedManyWithoutApprovedByInput
   DamageNameMaster?: Prisma.DamageNameMasterCreateNestedOneWithoutUserInput
   RentaStore?: Prisma.RentaStoreCreateNestedOneWithoutUserInput
   Store?: Prisma.StoreCreateNestedOneWithoutUserInput
@@ -3597,6 +3719,8 @@ export type UserUncheckedCreateWithoutTenpoTsuikoShinseiDetailInput = {
   Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutApprovedByInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedCreateNestedManyWithoutUserInput
   UserRole?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedCreateNestedManyWithoutUserInput
@@ -3658,6 +3782,8 @@ export type UserUpdateWithoutTenpoTsuikoShinseiDetailInput = {
   Ucar?: Prisma.UcarUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUpdateManyWithoutApprovedByNestedInput
   DamageNameMaster?: Prisma.DamageNameMasterUpdateOneWithoutUserNestedInput
   RentaStore?: Prisma.RentaStoreUpdateOneWithoutUserNestedInput
   Store?: Prisma.StoreUpdateOneWithoutUserNestedInput
@@ -3710,6 +3836,8 @@ export type UserUncheckedUpdateWithoutTenpoTsuikoShinseiDetailInput = {
   Ucar?: Prisma.UcarUncheckedUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedUpdateManyWithoutApprovedByNestedInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedUpdateManyWithoutUserNestedInput
   UserRole?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedUpdateManyWithoutUserNestedInput
@@ -3755,6 +3883,8 @@ export type UserCreateWithoutStoreInput = {
   Ucar?: Prisma.UcarCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestCreateNestedManyWithoutApprovedByInput
   DamageNameMaster?: Prisma.DamageNameMasterCreateNestedOneWithoutUserInput
   RentaStore?: Prisma.RentaStoreCreateNestedOneWithoutUserInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationCreateNestedManyWithoutUserInput
@@ -3806,6 +3936,8 @@ export type UserUncheckedCreateWithoutStoreInput = {
   Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutApprovedByInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedCreateNestedManyWithoutUserInput
   UserRole?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedCreateNestedManyWithoutUserInput
@@ -3878,6 +4010,8 @@ export type UserCreateWithoutUserRoleInput = {
   Ucar?: Prisma.UcarCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestCreateNestedManyWithoutApprovedByInput
   DamageNameMaster?: Prisma.DamageNameMasterCreateNestedOneWithoutUserInput
   RentaStore?: Prisma.RentaStoreCreateNestedOneWithoutUserInput
   Store?: Prisma.StoreCreateNestedOneWithoutUserInput
@@ -3930,6 +4064,8 @@ export type UserUncheckedCreateWithoutUserRoleInput = {
   Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutApprovedByInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedCreateNestedManyWithoutUserInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedCreateNestedManyWithoutUserInput
   TenpoTsuikoShinseiDetail?: Prisma.TenpoTsuikoShinseiDetailUncheckedCreateNestedManyWithoutUserInput
@@ -3991,6 +4127,8 @@ export type UserUpdateWithoutUserRoleInput = {
   Ucar?: Prisma.UcarUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUpdateManyWithoutApprovedByNestedInput
   DamageNameMaster?: Prisma.DamageNameMasterUpdateOneWithoutUserNestedInput
   RentaStore?: Prisma.RentaStoreUpdateOneWithoutUserNestedInput
   Store?: Prisma.StoreUpdateOneWithoutUserNestedInput
@@ -4043,6 +4181,8 @@ export type UserUncheckedUpdateWithoutUserRoleInput = {
   Ucar?: Prisma.UcarUncheckedUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedUpdateManyWithoutApprovedByNestedInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedUpdateManyWithoutUserNestedInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedUpdateManyWithoutUserNestedInput
   TenpoTsuikoShinseiDetail?: Prisma.TenpoTsuikoShinseiDetailUncheckedUpdateManyWithoutUserNestedInput
@@ -4088,6 +4228,8 @@ export type UserCreateWithoutRentaStoreInput = {
   Ucar?: Prisma.UcarCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestCreateNestedManyWithoutApprovedByInput
   DamageNameMaster?: Prisma.DamageNameMasterCreateNestedOneWithoutUserInput
   Store?: Prisma.StoreCreateNestedOneWithoutUserInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationCreateNestedManyWithoutUserInput
@@ -4139,6 +4281,8 @@ export type UserUncheckedCreateWithoutRentaStoreInput = {
   Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutApprovedByInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedCreateNestedManyWithoutUserInput
   UserRole?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedCreateNestedManyWithoutUserInput
@@ -4210,6 +4354,8 @@ export type UserCreateWithoutRentaDealInput = {
   Ucar?: Prisma.UcarCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestCreateNestedManyWithoutApprovedByInput
   DamageNameMaster?: Prisma.DamageNameMasterCreateNestedOneWithoutUserInput
   RentaStore?: Prisma.RentaStoreCreateNestedOneWithoutUserInput
   Store?: Prisma.StoreCreateNestedOneWithoutUserInput
@@ -4262,6 +4408,8 @@ export type UserUncheckedCreateWithoutRentaDealInput = {
   Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutApprovedByInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedCreateNestedManyWithoutUserInput
   UserRole?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedCreateNestedManyWithoutUserInput
@@ -4323,6 +4471,8 @@ export type UserUpdateWithoutRentaDealInput = {
   Ucar?: Prisma.UcarUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUpdateManyWithoutApprovedByNestedInput
   DamageNameMaster?: Prisma.DamageNameMasterUpdateOneWithoutUserNestedInput
   RentaStore?: Prisma.RentaStoreUpdateOneWithoutUserNestedInput
   Store?: Prisma.StoreUpdateOneWithoutUserNestedInput
@@ -4375,6 +4525,8 @@ export type UserUncheckedUpdateWithoutRentaDealInput = {
   Ucar?: Prisma.UcarUncheckedUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedUpdateManyWithoutApprovedByNestedInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedUpdateManyWithoutUserNestedInput
   UserRole?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedUpdateManyWithoutUserNestedInput
@@ -4420,6 +4572,8 @@ export type UserCreateWithoutRentaDailyReportInput = {
   Ucar?: Prisma.UcarCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestCreateNestedManyWithoutApprovedByInput
   DamageNameMaster?: Prisma.DamageNameMasterCreateNestedOneWithoutUserInput
   RentaStore?: Prisma.RentaStoreCreateNestedOneWithoutUserInput
   Store?: Prisma.StoreCreateNestedOneWithoutUserInput
@@ -4472,6 +4626,8 @@ export type UserUncheckedCreateWithoutRentaDailyReportInput = {
   Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutApprovedByInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedCreateNestedManyWithoutUserInput
   UserRole?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedCreateNestedManyWithoutUserInput
@@ -4533,6 +4689,8 @@ export type UserUpdateWithoutRentaDailyReportInput = {
   Ucar?: Prisma.UcarUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUpdateManyWithoutApprovedByNestedInput
   DamageNameMaster?: Prisma.DamageNameMasterUpdateOneWithoutUserNestedInput
   RentaStore?: Prisma.RentaStoreUpdateOneWithoutUserNestedInput
   Store?: Prisma.StoreUpdateOneWithoutUserNestedInput
@@ -4585,6 +4743,8 @@ export type UserUncheckedUpdateWithoutRentaDailyReportInput = {
   Ucar?: Prisma.UcarUncheckedUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedUpdateManyWithoutApprovedByNestedInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedUpdateManyWithoutUserNestedInput
   UserRole?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedUpdateManyWithoutUserNestedInput
@@ -4630,6 +4790,8 @@ export type UserCreateWithoutRentaCustomerInput = {
   Ucar?: Prisma.UcarCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestCreateNestedManyWithoutApprovedByInput
   DamageNameMaster?: Prisma.DamageNameMasterCreateNestedOneWithoutUserInput
   RentaStore?: Prisma.RentaStoreCreateNestedOneWithoutUserInput
   Store?: Prisma.StoreCreateNestedOneWithoutUserInput
@@ -4682,6 +4844,8 @@ export type UserUncheckedCreateWithoutRentaCustomerInput = {
   Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutApprovedByInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedCreateNestedManyWithoutUserInput
   UserRole?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedCreateNestedManyWithoutUserInput
@@ -4743,6 +4907,8 @@ export type UserUpdateWithoutRentaCustomerInput = {
   Ucar?: Prisma.UcarUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUpdateManyWithoutApprovedByNestedInput
   DamageNameMaster?: Prisma.DamageNameMasterUpdateOneWithoutUserNestedInput
   RentaStore?: Prisma.RentaStoreUpdateOneWithoutUserNestedInput
   Store?: Prisma.StoreUpdateOneWithoutUserNestedInput
@@ -4795,6 +4961,8 @@ export type UserUncheckedUpdateWithoutRentaCustomerInput = {
   Ucar?: Prisma.UcarUncheckedUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedUpdateManyWithoutApprovedByNestedInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedUpdateManyWithoutUserNestedInput
   UserRole?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedUpdateManyWithoutUserNestedInput
@@ -4840,6 +5008,8 @@ export type UserCreateWithoutPurposeInput = {
   Ucar?: Prisma.UcarCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestCreateNestedManyWithoutApprovedByInput
   DamageNameMaster?: Prisma.DamageNameMasterCreateNestedOneWithoutUserInput
   RentaStore?: Prisma.RentaStoreCreateNestedOneWithoutUserInput
   Store?: Prisma.StoreCreateNestedOneWithoutUserInput
@@ -4892,6 +5062,8 @@ export type UserUncheckedCreateWithoutPurposeInput = {
   Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutApprovedByInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedCreateNestedManyWithoutUserInput
   UserRole?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedCreateNestedManyWithoutUserInput
@@ -4953,6 +5125,8 @@ export type UserUpdateWithoutPurposeInput = {
   Ucar?: Prisma.UcarUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUpdateManyWithoutApprovedByNestedInput
   DamageNameMaster?: Prisma.DamageNameMasterUpdateOneWithoutUserNestedInput
   RentaStore?: Prisma.RentaStoreUpdateOneWithoutUserNestedInput
   Store?: Prisma.StoreUpdateOneWithoutUserNestedInput
@@ -5005,6 +5179,8 @@ export type UserUncheckedUpdateWithoutPurposeInput = {
   Ucar?: Prisma.UcarUncheckedUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedUpdateManyWithoutApprovedByNestedInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedUpdateManyWithoutUserNestedInput
   UserRole?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedUpdateManyWithoutUserNestedInput
@@ -5050,6 +5226,8 @@ export type UserCreateWithoutPurposeMasterInput = {
   Ucar?: Prisma.UcarCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestCreateNestedManyWithoutApprovedByInput
   DamageNameMaster?: Prisma.DamageNameMasterCreateNestedOneWithoutUserInput
   RentaStore?: Prisma.RentaStoreCreateNestedOneWithoutUserInput
   Store?: Prisma.StoreCreateNestedOneWithoutUserInput
@@ -5102,6 +5280,8 @@ export type UserUncheckedCreateWithoutPurposeMasterInput = {
   Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutApprovedByInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedCreateNestedManyWithoutUserInput
   UserRole?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedCreateNestedManyWithoutUserInput
@@ -5163,6 +5343,8 @@ export type UserUpdateWithoutPurposeMasterInput = {
   Ucar?: Prisma.UcarUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUpdateManyWithoutApprovedByNestedInput
   DamageNameMaster?: Prisma.DamageNameMasterUpdateOneWithoutUserNestedInput
   RentaStore?: Prisma.RentaStoreUpdateOneWithoutUserNestedInput
   Store?: Prisma.StoreUpdateOneWithoutUserNestedInput
@@ -5215,6 +5397,8 @@ export type UserUncheckedUpdateWithoutPurposeMasterInput = {
   Ucar?: Prisma.UcarUncheckedUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedUpdateManyWithoutApprovedByNestedInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedUpdateManyWithoutUserNestedInput
   UserRole?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedUpdateManyWithoutUserNestedInput
@@ -5260,6 +5444,8 @@ export type UserCreateWithoutOutcomeInput = {
   Ucar?: Prisma.UcarCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestCreateNestedManyWithoutApprovedByInput
   DamageNameMaster?: Prisma.DamageNameMasterCreateNestedOneWithoutUserInput
   RentaStore?: Prisma.RentaStoreCreateNestedOneWithoutUserInput
   Store?: Prisma.StoreCreateNestedOneWithoutUserInput
@@ -5312,6 +5498,8 @@ export type UserUncheckedCreateWithoutOutcomeInput = {
   Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutApprovedByInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedCreateNestedManyWithoutUserInput
   UserRole?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedCreateNestedManyWithoutUserInput
@@ -5373,6 +5561,8 @@ export type UserUpdateWithoutOutcomeInput = {
   Ucar?: Prisma.UcarUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUpdateManyWithoutApprovedByNestedInput
   DamageNameMaster?: Prisma.DamageNameMasterUpdateOneWithoutUserNestedInput
   RentaStore?: Prisma.RentaStoreUpdateOneWithoutUserNestedInput
   Store?: Prisma.StoreUpdateOneWithoutUserNestedInput
@@ -5425,6 +5615,8 @@ export type UserUncheckedUpdateWithoutOutcomeInput = {
   Ucar?: Prisma.UcarUncheckedUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedUpdateManyWithoutApprovedByNestedInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedUpdateManyWithoutUserNestedInput
   UserRole?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedUpdateManyWithoutUserNestedInput
@@ -5470,6 +5662,8 @@ export type UserCreateWithoutOutcomeMasterInput = {
   Ucar?: Prisma.UcarCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestCreateNestedManyWithoutApprovedByInput
   DamageNameMaster?: Prisma.DamageNameMasterCreateNestedOneWithoutUserInput
   RentaStore?: Prisma.RentaStoreCreateNestedOneWithoutUserInput
   Store?: Prisma.StoreCreateNestedOneWithoutUserInput
@@ -5522,6 +5716,8 @@ export type UserUncheckedCreateWithoutOutcomeMasterInput = {
   Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutApprovedByInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedCreateNestedManyWithoutUserInput
   UserRole?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedCreateNestedManyWithoutUserInput
@@ -5583,6 +5779,8 @@ export type UserUpdateWithoutOutcomeMasterInput = {
   Ucar?: Prisma.UcarUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUpdateManyWithoutApprovedByNestedInput
   DamageNameMaster?: Prisma.DamageNameMasterUpdateOneWithoutUserNestedInput
   RentaStore?: Prisma.RentaStoreUpdateOneWithoutUserNestedInput
   Store?: Prisma.StoreUpdateOneWithoutUserNestedInput
@@ -5635,6 +5833,8 @@ export type UserUncheckedUpdateWithoutOutcomeMasterInput = {
   Ucar?: Prisma.UcarUncheckedUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedUpdateManyWithoutApprovedByNestedInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedUpdateManyWithoutUserNestedInput
   UserRole?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedUpdateManyWithoutUserNestedInput
@@ -5680,6 +5880,8 @@ export type UserCreateWithoutUcarInput = {
   RentaDeal?: Prisma.RentaDealCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestCreateNestedManyWithoutApprovedByInput
   DamageNameMaster?: Prisma.DamageNameMasterCreateNestedOneWithoutUserInput
   RentaStore?: Prisma.RentaStoreCreateNestedOneWithoutUserInput
   Store?: Prisma.StoreCreateNestedOneWithoutUserInput
@@ -5732,6 +5934,8 @@ export type UserUncheckedCreateWithoutUcarInput = {
   RentaDeal?: Prisma.RentaDealUncheckedCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutApprovedByInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedCreateNestedManyWithoutUserInput
   UserRole?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedCreateNestedManyWithoutUserInput
@@ -5793,6 +5997,8 @@ export type UserUpdateWithoutUcarInput = {
   RentaDeal?: Prisma.RentaDealUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUpdateManyWithoutApprovedByNestedInput
   DamageNameMaster?: Prisma.DamageNameMasterUpdateOneWithoutUserNestedInput
   RentaStore?: Prisma.RentaStoreUpdateOneWithoutUserNestedInput
   Store?: Prisma.StoreUpdateOneWithoutUserNestedInput
@@ -5845,6 +6051,8 @@ export type UserUncheckedUpdateWithoutUcarInput = {
   RentaDeal?: Prisma.RentaDealUncheckedUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedUpdateManyWithoutApprovedByNestedInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedUpdateManyWithoutUserNestedInput
   UserRole?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedUpdateManyWithoutUserNestedInput
@@ -5890,6 +6098,8 @@ export type UserCreateWithoutUcarProcessInput = {
   RentaDeal?: Prisma.RentaDealCreateNestedManyWithoutUserInput
   Ucar?: Prisma.UcarCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestCreateNestedManyWithoutApprovedByInput
   DamageNameMaster?: Prisma.DamageNameMasterCreateNestedOneWithoutUserInput
   RentaStore?: Prisma.RentaStoreCreateNestedOneWithoutUserInput
   Store?: Prisma.StoreCreateNestedOneWithoutUserInput
@@ -5942,6 +6152,8 @@ export type UserUncheckedCreateWithoutUcarProcessInput = {
   RentaDeal?: Prisma.RentaDealUncheckedCreateNestedManyWithoutUserInput
   Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutUserInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutApprovedByInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedCreateNestedManyWithoutUserInput
   UserRole?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedCreateNestedManyWithoutUserInput
@@ -6003,6 +6215,8 @@ export type UserUpdateWithoutUcarProcessInput = {
   RentaDeal?: Prisma.RentaDealUpdateManyWithoutUserNestedInput
   Ucar?: Prisma.UcarUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUpdateManyWithoutApprovedByNestedInput
   DamageNameMaster?: Prisma.DamageNameMasterUpdateOneWithoutUserNestedInput
   RentaStore?: Prisma.RentaStoreUpdateOneWithoutUserNestedInput
   Store?: Prisma.StoreUpdateOneWithoutUserNestedInput
@@ -6055,6 +6269,8 @@ export type UserUncheckedUpdateWithoutUcarProcessInput = {
   RentaDeal?: Prisma.RentaDealUncheckedUpdateManyWithoutUserNestedInput
   Ucar?: Prisma.UcarUncheckedUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedUpdateManyWithoutApprovedByNestedInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedUpdateManyWithoutUserNestedInput
   UserRole?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedUpdateManyWithoutUserNestedInput
@@ -6100,6 +6316,8 @@ export type UserCreateWithoutUcarPaperWorkNotesInput = {
   RentaDeal?: Prisma.RentaDealCreateNestedManyWithoutUserInput
   Ucar?: Prisma.UcarCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestCreateNestedManyWithoutApprovedByInput
   DamageNameMaster?: Prisma.DamageNameMasterCreateNestedOneWithoutUserInput
   RentaStore?: Prisma.RentaStoreCreateNestedOneWithoutUserInput
   Store?: Prisma.StoreCreateNestedOneWithoutUserInput
@@ -6152,6 +6370,8 @@ export type UserUncheckedCreateWithoutUcarPaperWorkNotesInput = {
   RentaDeal?: Prisma.RentaDealUncheckedCreateNestedManyWithoutUserInput
   Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutUserInput
   UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutApprovedByInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedCreateNestedManyWithoutUserInput
   UserRole?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedCreateNestedManyWithoutUserInput
@@ -6213,6 +6433,8 @@ export type UserUpdateWithoutUcarPaperWorkNotesInput = {
   RentaDeal?: Prisma.RentaDealUpdateManyWithoutUserNestedInput
   Ucar?: Prisma.UcarUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUpdateManyWithoutApprovedByNestedInput
   DamageNameMaster?: Prisma.DamageNameMasterUpdateOneWithoutUserNestedInput
   RentaStore?: Prisma.RentaStoreUpdateOneWithoutUserNestedInput
   Store?: Prisma.StoreUpdateOneWithoutUserNestedInput
@@ -6265,6 +6487,444 @@ export type UserUncheckedUpdateWithoutUcarPaperWorkNotesInput = {
   RentaDeal?: Prisma.RentaDealUncheckedUpdateManyWithoutUserNestedInput
   Ucar?: Prisma.UcarUncheckedUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedUpdateManyWithoutApprovedByNestedInput
+  UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedUpdateManyWithoutUserNestedInput
+  UserRole?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
+  UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedUpdateManyWithoutUserNestedInput
+  TenpoTsuikoShinseiDetail?: Prisma.TenpoTsuikoShinseiDetailUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutUcarRequestInput = {
+  code?: number | null
+  createdAt?: Date | string
+  active?: boolean
+  sortOrder?: number
+  name?: string
+  kana?: string | null
+  email?: string | null
+  password?: string | null
+  type?: string | null
+  role?: string
+  tempResetCode?: string | null
+  tempResetCodeExpired?: Date | string | null
+  schoolId?: number | null
+  type2?: string | null
+  shopId?: number | null
+  membershipName?: string | null
+  color?: string | null
+  tell?: string | null
+  app?: string | null
+  updatedAt?: Date | string | null
+  apps?: Prisma.UserCreateappsInput | string[]
+  loginCheck?: Date | string | null
+  Car?: Prisma.CarCreateNestedManyWithoutUserInput
+  CrInspectionHistory?: Prisma.CrInspectionHistoryCreateNestedManyWithoutUserInput
+  CrUser?: Prisma.CrUserCreateNestedManyWithoutUserInput
+  NewCar?: Prisma.NewCarCreateNestedManyWithoutUserInput
+  Notes?: Prisma.NotesCreateNestedManyWithoutUserInput
+  OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryCreateNestedManyWithoutUserInput
+  Outcome?: Prisma.OutcomeCreateNestedManyWithoutUserInput
+  OutcomeMaster?: Prisma.OutcomeMasterCreateNestedManyWithoutUserInput
+  Process?: Prisma.ProcessCreateNestedManyWithoutUserInput
+  Purpose?: Prisma.PurposeCreateNestedManyWithoutUserInput
+  PurposeMaster?: Prisma.PurposeMasterCreateNestedManyWithoutUserInput
+  RentaCustomer?: Prisma.RentaCustomerCreateNestedManyWithoutUserInput
+  RentaDailyReport?: Prisma.RentaDailyReportCreateNestedManyWithoutUserInput
+  RentaDeal?: Prisma.RentaDealCreateNestedManyWithoutUserInput
+  Ucar?: Prisma.UcarCreateNestedManyWithoutUserInput
+  UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUserInput
+  UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestCreateNestedManyWithoutApprovedByInput
+  DamageNameMaster?: Prisma.DamageNameMasterCreateNestedOneWithoutUserInput
+  RentaStore?: Prisma.RentaStoreCreateNestedOneWithoutUserInput
+  Store?: Prisma.StoreCreateNestedOneWithoutUserInput
+  UserProcessConfirmation?: Prisma.UserProcessConfirmationCreateNestedManyWithoutUserInput
+  UserRole?: Prisma.UserRoleCreateNestedManyWithoutUserInput
+  UserProgressAggregationTable?: Prisma.UserProgressAggregationTableCreateNestedManyWithoutUserInput
+  TenpoTsuikoShinseiDetail?: Prisma.TenpoTsuikoShinseiDetailCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutUcarRequestInput = {
+  id?: number
+  code?: number | null
+  createdAt?: Date | string
+  active?: boolean
+  sortOrder?: number
+  name?: string
+  kana?: string | null
+  email?: string | null
+  password?: string | null
+  type?: string | null
+  role?: string
+  tempResetCode?: string | null
+  tempResetCodeExpired?: Date | string | null
+  storeId?: number | null
+  schoolId?: number | null
+  rentaStoreId?: number | null
+  type2?: string | null
+  shopId?: number | null
+  membershipName?: string | null
+  damageNameMasterId?: number | null
+  color?: string | null
+  tell?: string | null
+  app?: string | null
+  updatedAt?: Date | string | null
+  apps?: Prisma.UserCreateappsInput | string[]
+  loginCheck?: Date | string | null
+  Car?: Prisma.CarUncheckedCreateNestedManyWithoutUserInput
+  CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedCreateNestedManyWithoutUserInput
+  CrUser?: Prisma.CrUserUncheckedCreateNestedManyWithoutUserInput
+  NewCar?: Prisma.NewCarUncheckedCreateNestedManyWithoutUserInput
+  Notes?: Prisma.NotesUncheckedCreateNestedManyWithoutUserInput
+  OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryUncheckedCreateNestedManyWithoutUserInput
+  Outcome?: Prisma.OutcomeUncheckedCreateNestedManyWithoutUserInput
+  OutcomeMaster?: Prisma.OutcomeMasterUncheckedCreateNestedManyWithoutUserInput
+  Process?: Prisma.ProcessUncheckedCreateNestedManyWithoutUserInput
+  Purpose?: Prisma.PurposeUncheckedCreateNestedManyWithoutUserInput
+  PurposeMaster?: Prisma.PurposeMasterUncheckedCreateNestedManyWithoutUserInput
+  RentaCustomer?: Prisma.RentaCustomerUncheckedCreateNestedManyWithoutUserInput
+  RentaDailyReport?: Prisma.RentaDailyReportUncheckedCreateNestedManyWithoutUserInput
+  RentaDeal?: Prisma.RentaDealUncheckedCreateNestedManyWithoutUserInput
+  Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutUserInput
+  UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUserInput
+  UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUserInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutApprovedByInput
+  UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedCreateNestedManyWithoutUserInput
+  UserRole?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
+  UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedCreateNestedManyWithoutUserInput
+  TenpoTsuikoShinseiDetail?: Prisma.TenpoTsuikoShinseiDetailUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutUcarRequestInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutUcarRequestInput, Prisma.UserUncheckedCreateWithoutUcarRequestInput>
+}
+
+export type UserCreateWithoutUcarRequestApprovedInput = {
+  code?: number | null
+  createdAt?: Date | string
+  active?: boolean
+  sortOrder?: number
+  name?: string
+  kana?: string | null
+  email?: string | null
+  password?: string | null
+  type?: string | null
+  role?: string
+  tempResetCode?: string | null
+  tempResetCodeExpired?: Date | string | null
+  schoolId?: number | null
+  type2?: string | null
+  shopId?: number | null
+  membershipName?: string | null
+  color?: string | null
+  tell?: string | null
+  app?: string | null
+  updatedAt?: Date | string | null
+  apps?: Prisma.UserCreateappsInput | string[]
+  loginCheck?: Date | string | null
+  Car?: Prisma.CarCreateNestedManyWithoutUserInput
+  CrInspectionHistory?: Prisma.CrInspectionHistoryCreateNestedManyWithoutUserInput
+  CrUser?: Prisma.CrUserCreateNestedManyWithoutUserInput
+  NewCar?: Prisma.NewCarCreateNestedManyWithoutUserInput
+  Notes?: Prisma.NotesCreateNestedManyWithoutUserInput
+  OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryCreateNestedManyWithoutUserInput
+  Outcome?: Prisma.OutcomeCreateNestedManyWithoutUserInput
+  OutcomeMaster?: Prisma.OutcomeMasterCreateNestedManyWithoutUserInput
+  Process?: Prisma.ProcessCreateNestedManyWithoutUserInput
+  Purpose?: Prisma.PurposeCreateNestedManyWithoutUserInput
+  PurposeMaster?: Prisma.PurposeMasterCreateNestedManyWithoutUserInput
+  RentaCustomer?: Prisma.RentaCustomerCreateNestedManyWithoutUserInput
+  RentaDailyReport?: Prisma.RentaDailyReportCreateNestedManyWithoutUserInput
+  RentaDeal?: Prisma.RentaDealCreateNestedManyWithoutUserInput
+  Ucar?: Prisma.UcarCreateNestedManyWithoutUserInput
+  UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesCreateNestedManyWithoutUserInput
+  UcarProcess?: Prisma.UcarProcessCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestCreateNestedManyWithoutUserInput
+  DamageNameMaster?: Prisma.DamageNameMasterCreateNestedOneWithoutUserInput
+  RentaStore?: Prisma.RentaStoreCreateNestedOneWithoutUserInput
+  Store?: Prisma.StoreCreateNestedOneWithoutUserInput
+  UserProcessConfirmation?: Prisma.UserProcessConfirmationCreateNestedManyWithoutUserInput
+  UserRole?: Prisma.UserRoleCreateNestedManyWithoutUserInput
+  UserProgressAggregationTable?: Prisma.UserProgressAggregationTableCreateNestedManyWithoutUserInput
+  TenpoTsuikoShinseiDetail?: Prisma.TenpoTsuikoShinseiDetailCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutUcarRequestApprovedInput = {
+  id?: number
+  code?: number | null
+  createdAt?: Date | string
+  active?: boolean
+  sortOrder?: number
+  name?: string
+  kana?: string | null
+  email?: string | null
+  password?: string | null
+  type?: string | null
+  role?: string
+  tempResetCode?: string | null
+  tempResetCodeExpired?: Date | string | null
+  storeId?: number | null
+  schoolId?: number | null
+  rentaStoreId?: number | null
+  type2?: string | null
+  shopId?: number | null
+  membershipName?: string | null
+  damageNameMasterId?: number | null
+  color?: string | null
+  tell?: string | null
+  app?: string | null
+  updatedAt?: Date | string | null
+  apps?: Prisma.UserCreateappsInput | string[]
+  loginCheck?: Date | string | null
+  Car?: Prisma.CarUncheckedCreateNestedManyWithoutUserInput
+  CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedCreateNestedManyWithoutUserInput
+  CrUser?: Prisma.CrUserUncheckedCreateNestedManyWithoutUserInput
+  NewCar?: Prisma.NewCarUncheckedCreateNestedManyWithoutUserInput
+  Notes?: Prisma.NotesUncheckedCreateNestedManyWithoutUserInput
+  OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryUncheckedCreateNestedManyWithoutUserInput
+  Outcome?: Prisma.OutcomeUncheckedCreateNestedManyWithoutUserInput
+  OutcomeMaster?: Prisma.OutcomeMasterUncheckedCreateNestedManyWithoutUserInput
+  Process?: Prisma.ProcessUncheckedCreateNestedManyWithoutUserInput
+  Purpose?: Prisma.PurposeUncheckedCreateNestedManyWithoutUserInput
+  PurposeMaster?: Prisma.PurposeMasterUncheckedCreateNestedManyWithoutUserInput
+  RentaCustomer?: Prisma.RentaCustomerUncheckedCreateNestedManyWithoutUserInput
+  RentaDailyReport?: Prisma.RentaDailyReportUncheckedCreateNestedManyWithoutUserInput
+  RentaDeal?: Prisma.RentaDealUncheckedCreateNestedManyWithoutUserInput
+  Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutUserInput
+  UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedCreateNestedManyWithoutUserInput
+  UcarProcess?: Prisma.UcarProcessUncheckedCreateNestedManyWithoutUserInput
+  UcarRequest?: Prisma.UcarRequestUncheckedCreateNestedManyWithoutUserInput
+  UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedCreateNestedManyWithoutUserInput
+  UserRole?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
+  UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedCreateNestedManyWithoutUserInput
+  TenpoTsuikoShinseiDetail?: Prisma.TenpoTsuikoShinseiDetailUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutUcarRequestApprovedInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutUcarRequestApprovedInput, Prisma.UserUncheckedCreateWithoutUcarRequestApprovedInput>
+}
+
+export type UserUpsertWithoutUcarRequestInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutUcarRequestInput, Prisma.UserUncheckedUpdateWithoutUcarRequestInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutUcarRequestInput, Prisma.UserUncheckedCreateWithoutUcarRequestInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutUcarRequestInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutUcarRequestInput, Prisma.UserUncheckedUpdateWithoutUcarRequestInput>
+}
+
+export type UserUpdateWithoutUcarRequestInput = {
+  code?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.FloatFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  kana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  tempResetCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tempResetCodeExpired?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  schoolId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  type2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  membershipName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tell?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  app?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  apps?: Prisma.UserUpdateappsInput | string[]
+  loginCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Car?: Prisma.CarUpdateManyWithoutUserNestedInput
+  CrInspectionHistory?: Prisma.CrInspectionHistoryUpdateManyWithoutUserNestedInput
+  CrUser?: Prisma.CrUserUpdateManyWithoutUserNestedInput
+  NewCar?: Prisma.NewCarUpdateManyWithoutUserNestedInput
+  Notes?: Prisma.NotesUpdateManyWithoutUserNestedInput
+  OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryUpdateManyWithoutUserNestedInput
+  Outcome?: Prisma.OutcomeUpdateManyWithoutUserNestedInput
+  OutcomeMaster?: Prisma.OutcomeMasterUpdateManyWithoutUserNestedInput
+  Process?: Prisma.ProcessUpdateManyWithoutUserNestedInput
+  Purpose?: Prisma.PurposeUpdateManyWithoutUserNestedInput
+  PurposeMaster?: Prisma.PurposeMasterUpdateManyWithoutUserNestedInput
+  RentaCustomer?: Prisma.RentaCustomerUpdateManyWithoutUserNestedInput
+  RentaDailyReport?: Prisma.RentaDailyReportUpdateManyWithoutUserNestedInput
+  RentaDeal?: Prisma.RentaDealUpdateManyWithoutUserNestedInput
+  Ucar?: Prisma.UcarUpdateManyWithoutUserNestedInput
+  UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUserNestedInput
+  UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUpdateManyWithoutApprovedByNestedInput
+  DamageNameMaster?: Prisma.DamageNameMasterUpdateOneWithoutUserNestedInput
+  RentaStore?: Prisma.RentaStoreUpdateOneWithoutUserNestedInput
+  Store?: Prisma.StoreUpdateOneWithoutUserNestedInput
+  UserProcessConfirmation?: Prisma.UserProcessConfirmationUpdateManyWithoutUserNestedInput
+  UserRole?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
+  UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUpdateManyWithoutUserNestedInput
+  TenpoTsuikoShinseiDetail?: Prisma.TenpoTsuikoShinseiDetailUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutUcarRequestInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  code?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.FloatFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  kana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  tempResetCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tempResetCodeExpired?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  storeId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  schoolId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rentaStoreId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  type2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  membershipName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  damageNameMasterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tell?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  app?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  apps?: Prisma.UserUpdateappsInput | string[]
+  loginCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Car?: Prisma.CarUncheckedUpdateManyWithoutUserNestedInput
+  CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedUpdateManyWithoutUserNestedInput
+  CrUser?: Prisma.CrUserUncheckedUpdateManyWithoutUserNestedInput
+  NewCar?: Prisma.NewCarUncheckedUpdateManyWithoutUserNestedInput
+  Notes?: Prisma.NotesUncheckedUpdateManyWithoutUserNestedInput
+  OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryUncheckedUpdateManyWithoutUserNestedInput
+  Outcome?: Prisma.OutcomeUncheckedUpdateManyWithoutUserNestedInput
+  OutcomeMaster?: Prisma.OutcomeMasterUncheckedUpdateManyWithoutUserNestedInput
+  Process?: Prisma.ProcessUncheckedUpdateManyWithoutUserNestedInput
+  Purpose?: Prisma.PurposeUncheckedUpdateManyWithoutUserNestedInput
+  PurposeMaster?: Prisma.PurposeMasterUncheckedUpdateManyWithoutUserNestedInput
+  RentaCustomer?: Prisma.RentaCustomerUncheckedUpdateManyWithoutUserNestedInput
+  RentaDailyReport?: Prisma.RentaDailyReportUncheckedUpdateManyWithoutUserNestedInput
+  RentaDeal?: Prisma.RentaDealUncheckedUpdateManyWithoutUserNestedInput
+  Ucar?: Prisma.UcarUncheckedUpdateManyWithoutUserNestedInput
+  UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUserNestedInput
+  UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedUpdateManyWithoutApprovedByNestedInput
+  UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedUpdateManyWithoutUserNestedInput
+  UserRole?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
+  UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedUpdateManyWithoutUserNestedInput
+  TenpoTsuikoShinseiDetail?: Prisma.TenpoTsuikoShinseiDetailUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUpsertWithoutUcarRequestApprovedInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutUcarRequestApprovedInput, Prisma.UserUncheckedUpdateWithoutUcarRequestApprovedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutUcarRequestApprovedInput, Prisma.UserUncheckedCreateWithoutUcarRequestApprovedInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutUcarRequestApprovedInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutUcarRequestApprovedInput, Prisma.UserUncheckedUpdateWithoutUcarRequestApprovedInput>
+}
+
+export type UserUpdateWithoutUcarRequestApprovedInput = {
+  code?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.FloatFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  kana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  tempResetCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tempResetCodeExpired?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  schoolId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  type2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  membershipName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tell?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  app?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  apps?: Prisma.UserUpdateappsInput | string[]
+  loginCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Car?: Prisma.CarUpdateManyWithoutUserNestedInput
+  CrInspectionHistory?: Prisma.CrInspectionHistoryUpdateManyWithoutUserNestedInput
+  CrUser?: Prisma.CrUserUpdateManyWithoutUserNestedInput
+  NewCar?: Prisma.NewCarUpdateManyWithoutUserNestedInput
+  Notes?: Prisma.NotesUpdateManyWithoutUserNestedInput
+  OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryUpdateManyWithoutUserNestedInput
+  Outcome?: Prisma.OutcomeUpdateManyWithoutUserNestedInput
+  OutcomeMaster?: Prisma.OutcomeMasterUpdateManyWithoutUserNestedInput
+  Process?: Prisma.ProcessUpdateManyWithoutUserNestedInput
+  Purpose?: Prisma.PurposeUpdateManyWithoutUserNestedInput
+  PurposeMaster?: Prisma.PurposeMasterUpdateManyWithoutUserNestedInput
+  RentaCustomer?: Prisma.RentaCustomerUpdateManyWithoutUserNestedInput
+  RentaDailyReport?: Prisma.RentaDailyReportUpdateManyWithoutUserNestedInput
+  RentaDeal?: Prisma.RentaDealUpdateManyWithoutUserNestedInput
+  Ucar?: Prisma.UcarUpdateManyWithoutUserNestedInput
+  UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUserNestedInput
+  UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUserNestedInput
+  DamageNameMaster?: Prisma.DamageNameMasterUpdateOneWithoutUserNestedInput
+  RentaStore?: Prisma.RentaStoreUpdateOneWithoutUserNestedInput
+  Store?: Prisma.StoreUpdateOneWithoutUserNestedInput
+  UserProcessConfirmation?: Prisma.UserProcessConfirmationUpdateManyWithoutUserNestedInput
+  UserRole?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
+  UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUpdateManyWithoutUserNestedInput
+  TenpoTsuikoShinseiDetail?: Prisma.TenpoTsuikoShinseiDetailUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutUcarRequestApprovedInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  code?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.FloatFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  kana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  tempResetCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tempResetCodeExpired?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  storeId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  schoolId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rentaStoreId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  type2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  membershipName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  damageNameMasterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tell?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  app?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  apps?: Prisma.UserUpdateappsInput | string[]
+  loginCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Car?: Prisma.CarUncheckedUpdateManyWithoutUserNestedInput
+  CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedUpdateManyWithoutUserNestedInput
+  CrUser?: Prisma.CrUserUncheckedUpdateManyWithoutUserNestedInput
+  NewCar?: Prisma.NewCarUncheckedUpdateManyWithoutUserNestedInput
+  Notes?: Prisma.NotesUncheckedUpdateManyWithoutUserNestedInput
+  OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryUncheckedUpdateManyWithoutUserNestedInput
+  Outcome?: Prisma.OutcomeUncheckedUpdateManyWithoutUserNestedInput
+  OutcomeMaster?: Prisma.OutcomeMasterUncheckedUpdateManyWithoutUserNestedInput
+  Process?: Prisma.ProcessUncheckedUpdateManyWithoutUserNestedInput
+  Purpose?: Prisma.PurposeUncheckedUpdateManyWithoutUserNestedInput
+  PurposeMaster?: Prisma.PurposeMasterUncheckedUpdateManyWithoutUserNestedInput
+  RentaCustomer?: Prisma.RentaCustomerUncheckedUpdateManyWithoutUserNestedInput
+  RentaDailyReport?: Prisma.RentaDailyReportUncheckedUpdateManyWithoutUserNestedInput
+  RentaDeal?: Prisma.RentaDealUncheckedUpdateManyWithoutUserNestedInput
+  Ucar?: Prisma.UcarUncheckedUpdateManyWithoutUserNestedInput
+  UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUserNestedInput
+  UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUserNestedInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedUpdateManyWithoutUserNestedInput
   UserRole?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedUpdateManyWithoutUserNestedInput
@@ -6339,6 +6999,8 @@ export type UserUpdateWithoutDamageNameMasterInput = {
   Ucar?: Prisma.UcarUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUpdateManyWithoutApprovedByNestedInput
   RentaStore?: Prisma.RentaStoreUpdateOneWithoutUserNestedInput
   Store?: Prisma.StoreUpdateOneWithoutUserNestedInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUpdateManyWithoutUserNestedInput
@@ -6390,6 +7052,8 @@ export type UserUncheckedUpdateWithoutDamageNameMasterInput = {
   Ucar?: Prisma.UcarUncheckedUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedUpdateManyWithoutApprovedByNestedInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedUpdateManyWithoutUserNestedInput
   UserRole?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedUpdateManyWithoutUserNestedInput
@@ -6492,6 +7156,8 @@ export type UserUpdateWithoutStoreInput = {
   Ucar?: Prisma.UcarUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUpdateManyWithoutApprovedByNestedInput
   DamageNameMaster?: Prisma.DamageNameMasterUpdateOneWithoutUserNestedInput
   RentaStore?: Prisma.RentaStoreUpdateOneWithoutUserNestedInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUpdateManyWithoutUserNestedInput
@@ -6543,6 +7209,8 @@ export type UserUncheckedUpdateWithoutStoreInput = {
   Ucar?: Prisma.UcarUncheckedUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedUpdateManyWithoutApprovedByNestedInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedUpdateManyWithoutUserNestedInput
   UserRole?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedUpdateManyWithoutUserNestedInput
@@ -6645,6 +7313,8 @@ export type UserUpdateWithoutRentaStoreInput = {
   Ucar?: Prisma.UcarUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUpdateManyWithoutApprovedByNestedInput
   DamageNameMaster?: Prisma.DamageNameMasterUpdateOneWithoutUserNestedInput
   Store?: Prisma.StoreUpdateOneWithoutUserNestedInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUpdateManyWithoutUserNestedInput
@@ -6696,6 +7366,8 @@ export type UserUncheckedUpdateWithoutRentaStoreInput = {
   Ucar?: Prisma.UcarUncheckedUpdateManyWithoutUserNestedInput
   UcarPaperWorkNotes?: Prisma.UcarPaperWorkNotesUncheckedUpdateManyWithoutUserNestedInput
   UcarProcess?: Prisma.UcarProcessUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequest?: Prisma.UcarRequestUncheckedUpdateManyWithoutUserNestedInput
+  UcarRequestApproved?: Prisma.UcarRequestUncheckedUpdateManyWithoutApprovedByNestedInput
   UserProcessConfirmation?: Prisma.UserProcessConfirmationUncheckedUpdateManyWithoutUserNestedInput
   UserRole?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
   UserProgressAggregationTable?: Prisma.UserProgressAggregationTableUncheckedUpdateManyWithoutUserNestedInput
@@ -6753,6 +7425,8 @@ export type UserCountOutputType = {
   Ucar: number
   UcarPaperWorkNotes: number
   UcarProcess: number
+  UcarRequest: number
+  UcarRequestApproved: number
   UserProcessConfirmation: number
   UserRole: number
   UserProgressAggregationTable: number
@@ -6777,6 +7451,8 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   Ucar?: boolean | UserCountOutputTypeCountUcarArgs
   UcarPaperWorkNotes?: boolean | UserCountOutputTypeCountUcarPaperWorkNotesArgs
   UcarProcess?: boolean | UserCountOutputTypeCountUcarProcessArgs
+  UcarRequest?: boolean | UserCountOutputTypeCountUcarRequestArgs
+  UcarRequestApproved?: boolean | UserCountOutputTypeCountUcarRequestApprovedArgs
   UserProcessConfirmation?: boolean | UserCountOutputTypeCountUserProcessConfirmationArgs
   UserRole?: boolean | UserCountOutputTypeCountUserRoleArgs
   UserProgressAggregationTable?: boolean | UserCountOutputTypeCountUserProgressAggregationTableArgs
@@ -6915,6 +7591,20 @@ export type UserCountOutputTypeCountUcarProcessArgs<ExtArgs extends runtime.Type
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountUcarRequestArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UcarRequestWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountUcarRequestApprovedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UcarRequestWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountUserProcessConfirmationArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.UserProcessConfirmationWhereInput
 }
@@ -6985,6 +7675,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   Ucar?: boolean | Prisma.User$UcarArgs<ExtArgs>
   UcarPaperWorkNotes?: boolean | Prisma.User$UcarPaperWorkNotesArgs<ExtArgs>
   UcarProcess?: boolean | Prisma.User$UcarProcessArgs<ExtArgs>
+  UcarRequest?: boolean | Prisma.User$UcarRequestArgs<ExtArgs>
+  UcarRequestApproved?: boolean | Prisma.User$UcarRequestApprovedArgs<ExtArgs>
   DamageNameMaster?: boolean | Prisma.User$DamageNameMasterArgs<ExtArgs>
   RentaStore?: boolean | Prisma.User$RentaStoreArgs<ExtArgs>
   Store?: boolean | Prisma.User$StoreArgs<ExtArgs>
@@ -7107,6 +7799,8 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   Ucar?: boolean | Prisma.User$UcarArgs<ExtArgs>
   UcarPaperWorkNotes?: boolean | Prisma.User$UcarPaperWorkNotesArgs<ExtArgs>
   UcarProcess?: boolean | Prisma.User$UcarProcessArgs<ExtArgs>
+  UcarRequest?: boolean | Prisma.User$UcarRequestArgs<ExtArgs>
+  UcarRequestApproved?: boolean | Prisma.User$UcarRequestApprovedArgs<ExtArgs>
   DamageNameMaster?: boolean | Prisma.User$DamageNameMasterArgs<ExtArgs>
   RentaStore?: boolean | Prisma.User$RentaStoreArgs<ExtArgs>
   Store?: boolean | Prisma.User$StoreArgs<ExtArgs>
@@ -7147,6 +7841,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     Ucar: Prisma.$UcarPayload<ExtArgs>[]
     UcarPaperWorkNotes: Prisma.$UcarPaperWorkNotesPayload<ExtArgs>[]
     UcarProcess: Prisma.$UcarProcessPayload<ExtArgs>[]
+    UcarRequest: Prisma.$UcarRequestPayload<ExtArgs>[]
+    UcarRequestApproved: Prisma.$UcarRequestPayload<ExtArgs>[]
     DamageNameMaster: Prisma.$DamageNameMasterPayload<ExtArgs> | null
     RentaStore: Prisma.$RentaStorePayload<ExtArgs> | null
     Store: Prisma.$StorePayload<ExtArgs> | null
@@ -7593,6 +8289,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   Ucar<T extends Prisma.User$UcarArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$UcarArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UcarPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   UcarPaperWorkNotes<T extends Prisma.User$UcarPaperWorkNotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$UcarPaperWorkNotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UcarPaperWorkNotesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   UcarProcess<T extends Prisma.User$UcarProcessArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$UcarProcessArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UcarProcessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  UcarRequest<T extends Prisma.User$UcarRequestArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$UcarRequestArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UcarRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  UcarRequestApproved<T extends Prisma.User$UcarRequestApprovedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$UcarRequestApprovedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UcarRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   DamageNameMaster<T extends Prisma.User$DamageNameMasterArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$DamageNameMasterArgs<ExtArgs>>): Prisma.Prisma__DamageNameMasterClient<runtime.Types.Result.GetResult<Prisma.$DamageNameMasterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   RentaStore<T extends Prisma.User$RentaStoreArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$RentaStoreArgs<ExtArgs>>): Prisma.Prisma__RentaStoreClient<runtime.Types.Result.GetResult<Prisma.$RentaStorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Store<T extends Prisma.User$StoreArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$StoreArgs<ExtArgs>>): Prisma.Prisma__StoreClient<runtime.Types.Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -8456,6 +9154,54 @@ export type User$UcarProcessArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.UcarProcessScalarFieldEnum | Prisma.UcarProcessScalarFieldEnum[]
+}
+
+/**
+ * User.UcarRequest
+ */
+export type User$UcarRequestArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UcarRequest
+   */
+  select?: Prisma.UcarRequestSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UcarRequest
+   */
+  omit?: Prisma.UcarRequestOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UcarRequestInclude<ExtArgs> | null
+  where?: Prisma.UcarRequestWhereInput
+  orderBy?: Prisma.UcarRequestOrderByWithRelationInput | Prisma.UcarRequestOrderByWithRelationInput[]
+  cursor?: Prisma.UcarRequestWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UcarRequestScalarFieldEnum | Prisma.UcarRequestScalarFieldEnum[]
+}
+
+/**
+ * User.UcarRequestApproved
+ */
+export type User$UcarRequestApprovedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UcarRequest
+   */
+  select?: Prisma.UcarRequestSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UcarRequest
+   */
+  omit?: Prisma.UcarRequestOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UcarRequestInclude<ExtArgs> | null
+  where?: Prisma.UcarRequestWhereInput
+  orderBy?: Prisma.UcarRequestOrderByWithRelationInput | Prisma.UcarRequestOrderByWithRelationInput[]
+  cursor?: Prisma.UcarRequestWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UcarRequestScalarFieldEnum | Prisma.UcarRequestScalarFieldEnum[]
 }
 
 /**

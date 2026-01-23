@@ -85,6 +85,8 @@ model User {
   Ucar                         Ucar[]
   UcarPaperWorkNotes           UcarPaperWorkNotes[]
   UcarProcess                  UcarProcess[]
+  UcarRequest                  UcarRequest[]         @relation("UcarRequestUser")
+  UcarRequestApproved          UcarRequest[]         @relation("UcarRequestApprovedBy")
   DamageNameMaster             DamageNameMaster?              @relation(fields: [damageNameMasterId], references: [id], onDelete: Cascade)
   RentaStore                   RentaStore?                    @relation(fields: [rentaStoreId], references: [id], onDelete: Cascade)
   Store                        Store?                         @relation(fields: [storeId], references: [id], onDelete: Cascade)

@@ -23,6 +23,7 @@ type locationInfoType = {
   locationName: string
   address: string
   to: string
+  garageNumber: string
 }
 
 export default function SlotHistoryChecker({ setgarageHistoryModal, ucarGarageSlotMasterId }) {
@@ -142,11 +143,13 @@ export const getGaragePdfFormData = async (
     岡山: {
       locationName: `okayama`,
       address: `岡山県岡山市南区古新田1233-2`,
+      garageNumber: ' No.',
       to: `岡山南 警察署長`,
     },
     倉敷: {
       locationName: `kurashiki`,
-      address: `倉敷市中島668` + ' No.' + GarageNumber,
+      address: `倉敷市中島668`,
+      garageNumber: ' No.' + GarageNumber,
       to: `倉敷 警察署長`,
     },
   }
@@ -179,7 +182,7 @@ export const getGaragePdfFormData = async (
     textbox5: String(width ?? ''),
     textbox6: String(height ?? ''),
     textbox7: locationInfo.address,
-    textbox8: '同上',
+    textbox8: '同上' + " " + locationInfo.garageNumber,
     textbox9: '',
     textbox10: locationInfo.to,
     textbox11: '',

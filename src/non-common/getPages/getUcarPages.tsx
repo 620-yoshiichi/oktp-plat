@@ -96,6 +96,7 @@ export const getUcarPages = (props: PageGetterType) => {
       children: [
         { tabId: 'kouteiKanri', label: '工程管理', ROOT: [rootPath] },
         { tabId: 'zaikoTairyu', label: '在庫滞留状況', ROOT: [rootPath] },
+        { tabId: 'request-admin', label: '申請管理', ROOT: [rootPath] },
       ],
     },
 

@@ -24,7 +24,7 @@ export const UCAR_CONSTANTS: {
   shiireGroupUserCode: 99999931,
   commonQuery: {
     OR: [
-      { DD_SIIRE: null },
+      // { DD_SIIRE: null },
       {
         AND: [
 
