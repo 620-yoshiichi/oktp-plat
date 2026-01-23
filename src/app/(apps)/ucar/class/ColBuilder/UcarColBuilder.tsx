@@ -370,7 +370,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
             )}
 
             {/* 申請ボタン（店長・副店長のみ） */}
-            {isStoreManager && (
+            {/* {isStoreManager && (
               <ClipboardListIcon
                 onClick={() =>
                   GMF_UcarRequest.setGMF_OPEN({
@@ -382,7 +382,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
                 className={cl(TrActionIconClassName, 'h-5 w-5 text-purple-500')}
 
               />
-            )}
+            )} */}
 
             {alertList.length > 0 && (
               <ShadModal

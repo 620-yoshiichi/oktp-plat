@@ -5,7 +5,6 @@ import { Absolute, C_Stack } from 'src/cm/components/styles/common-components/co
 import Redirector from 'src/cm/components/utils/Redirector'
 import PlaceHolder from 'src/cm/components/utils/loader/PlaceHolder'
 import { initServerComopnent } from 'src/non-common/serverSideFunction'
-import GoogleLogin from '@app/(utils)/login/components/LogInFormWrapper'
 import LogInForm from '@app/(utils)/login/components/LogInFormWrapper'
 
 const AdminLogin = async props => {

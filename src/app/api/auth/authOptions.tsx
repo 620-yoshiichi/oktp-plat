@@ -1,9 +1,6 @@
 import { basePath } from '@cm/lib/methods/common'
-import CredentialsProvider from 'next-auth/providers/credentials'
 
-import GoogleProvider from 'next-auth/providers/google'
 import { anyObject } from '@cm/types/utility-types'
-import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 import { fetchAlt } from '@cm/lib/http/fetch-client'
 import { googleProvider } from '@app/api/auth/GoogleProvider'
 import { normalCredentialsProvider } from '@app/api/auth/normalCredentialsProvider'

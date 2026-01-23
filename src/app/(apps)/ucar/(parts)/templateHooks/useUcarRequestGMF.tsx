@@ -1,8 +1,9 @@
 'use client'
-import {ucarData} from '@app/(apps)/ucar/class/UcarCL'
-import {UseRecordsReturn} from '@cm/components/DataLogic/TFs/PropAdjustor/hooks/useRecords/useRecords'
-import {useGlobalModalForm} from '@cm/components/utils/modal/useGlobalModalForm'
+import { ucarData } from '@app/(apps)/ucar/class/UcarCL'
+import { UseRecordsReturn } from '@cm/components/DataLogic/TFs/PropAdjustor/hooks/useRecords/useRecords'
+import { useGlobalModalForm } from '@cm/components/utils/modal/useGlobalModalForm'
 import UcarRequestForm from '@app/(apps)/ucar/(parts)/RequestButton/UcarRequestForm'
+import { atomKey } from '@cm/hooks/useJotai'
 
 export type UcarRequestGMFType = {
   UcarData: ucarData
@@ -11,11 +12,11 @@ export type UcarRequestGMFType = {
 }
 
 const useUcarRequestGMF = () => {
-  return useGlobalModalForm<UcarRequestGMFType>(`ucarRequestGMF`, null, {
+  return useGlobalModalForm<UcarRequestGMFType>(`ucarRequestGMF` as atomKey, null, {
     mainJsx: props => {
-      const {GMF_OPEN, close} = props
-      const {UcarData, session, UseRecordsReturn} = GMF_OPEN
-      return <UcarRequestForm {...{UcarData, session, onClose: close, UseRecordsReturn}} />
+      const { GMF_OPEN, close } = props
+      const { UcarData, session, UseRecordsReturn } = GMF_OPEN
+      return <UcarRequestForm {...{ UcarData, session, onClose: close, UseRecordsReturn }} />
     },
   })
 }
