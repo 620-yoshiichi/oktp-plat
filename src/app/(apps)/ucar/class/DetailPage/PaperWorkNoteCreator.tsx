@@ -18,9 +18,12 @@ export default function PaperWorkNoteCreator(props: { UcarData: ucarData; UseRec
   const useGlobalProps = useGlobal()
   const { router, accessScopes, session, query, toggleLoad } = useGlobalProps
   const scopes = accessScopes()
+  const { isChukoshaGroup } = scopes.getUcarProps()
   const include = QueryBuilder.getInclude({ session, query }).ucarPaperWorkNotes.include as any
 
   if (!UcarData) return <></>
+
+  const { myTable, myForm } = limitEditting({ exclusiveTo: !!isChukoshaGroup }) ?? {}
   return (
     <ChildCreator
       {...{
@@ -33,8 +36,10 @@ export default function PaperWorkNoteCreator(props: { UcarData: ucarData; UseRec
           orderBy: [{ createdAt: `desc` }],
         },
         useGlobalProps,
-        ...limitEditting({ exclusiveTo: scopes.admin }),
+        // ...limitEditting({ exclusiveTo: !!isChukoshaGroup }),
+        myTable,
         myForm: {
+          ...myForm,
           create: {
             executeUpdate: undefined,
             finalizeUpdate: async props => {
@@ -119,8 +124,12 @@ export default function PaperWorkNoteCreator(props: { UcarData: ucarData; UseRec
               })
             },
           },
+
         },
       }}
     />
   )
 }
+
+
+

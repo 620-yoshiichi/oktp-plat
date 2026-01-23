@@ -40,7 +40,7 @@ export const getUcarPaperWorkNotesCols = (props: columnGetterType) => {
       label: '内容',
       type: 'textarea',
       form: {},
-      td: { style: { width: 200 } },
+      td: { style: { minWidth: 280, fontSize: 12 } },
     },
 
     {
@@ -57,7 +57,7 @@ export const getUcarPaperWorkNotesCols = (props: columnGetterType) => {
       format: (value, row) => {
         return (
           <T_LINK href={`/ucar/fubiHensoHyo/${row.id}`} target="_blank">
-            不備返送表
+            表示
           </T_LINK>
         )
       },

@@ -1,10 +1,10 @@
 'use client'
 
-import {formatDate} from '@cm/class/Days/date-utils/formatters'
-import {CssString} from '@cm/components/styles/cssString'
-import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+import { formatDate } from '@cm/class/Days/date-utils/formatters'
+import { CssString } from '@cm/components/styles/cssString'
+import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 
-import {ColoredText} from '@cm/components/styles/common-components/colors'
+import { ColoredText } from '@cm/components/styles/common-components/colors'
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 import useDoStandardPrisma from '@cm/hooks/useDoStandardPrisma'
 import PlaceHolder from '@cm/components/utils/loader/PlaceHolder'
@@ -16,8 +16,8 @@ import {
   UcarGarageLocationMaster,
   UcarGarageSlotMaster,
 } from '@prisma/generated/prisma/client'
-import {UcarCL} from '@app/(apps)/ucar/class/UcarCL'
-import {getGarageSlotStatusLabel} from '@app/(apps)/ucar/(lib)/garage/garageUtils'
+import { UcarCL } from '@app/(apps)/ucar/class/UcarCL'
+import { getGarageSlotStatusLabel } from '@app/(apps)/ucar/(lib)/garage/garageUtils'
 
 type locationInfoType = {
   locationName: string
@@ -25,15 +25,15 @@ type locationInfoType = {
   to: string
 }
 
-export default function SlotHistoryChecker({setgarageHistoryModal, ucarGarageSlotMasterId}) {
-  const {toggleLoad, query} = useGlobal()
+export default function SlotHistoryChecker({ setgarageHistoryModal, ucarGarageSlotMasterId }) {
+  const { toggleLoad, query } = useGlobal()
   const args: Prisma.AppliedUcarGarageSlotFindManyArgs = {
-    where: {ucarGarageSlotMasterId},
+    where: { ucarGarageSlotMasterId },
     include: {
       Ucar: {
         include: {
           Number98: {},
-          OldCars_Base: {select: {KI_HANKAKA: true}},
+          OldCars_Base: { select: { KI_HANKAKA: true } },
           AppliedUcarGarageSlot: {
             include: {
               UcarGarageSlotMaster: {
@@ -91,8 +91,8 @@ export default function SlotHistoryChecker({setgarageHistoryModal, ucarGarageSlo
                     if (confirm('この車庫登録を強制的に「空き」にしますか？')) {
                       // 強制空きフラグの切り替え（finishedAtのトグル）
                       await doStandardPrisma(`appliedUcarGarageSlot`, `update`, {
-                        where: {id: slot.id},
-                        data: {finishedAt: slot.finishedAt ? null : new Date().toISOString()},
+                        where: { id: slot.id },
+                        data: { finishedAt: slot.finishedAt ? null : new Date().toISOString() },
                       })
 
                       mutateAppliedUcarGarageSlot()
@@ -182,9 +182,9 @@ export const getGaragePdfFormData = async (
     textbox8: '同上',
     textbox9: '',
     textbox10: locationInfo.to,
-    textbox11: new Date().getFullYear().toString(),
-    textbox12: new Date().getMonth().toString() + 1,
-    textbox13: new Date().getDate().toString(),
+    textbox11: '',
+    textbox12: '',
+    textbox13: '',
     textbox14: '岡山市北区伊福町1丁目20番12号',
     textbox15: '086',
     textbox16: '897',

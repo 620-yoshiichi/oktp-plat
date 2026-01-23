@@ -198,9 +198,9 @@ export class UcarCL {
       exteriorColor: UPASS.exteriorColor || tmpUcarData.tmpColor || '',
       type: UPASS.type || tmpUcarData.tmpType || '',
       chassisNumber: UPASS.chassisNumber || tmpUcarData.tmpChassisNumber || '',
-      length: UPASS.length || '',
-      width: UPASS.width || '',
-      height: UPASS.height || '',
+      length: UPASS.length ? UPASS.dataSource === 'aisatei' ? Number(UPASS.length) / 10 : Number(UPASS.length) : '',
+      width: UPASS.width ? UPASS.dataSource === 'aisatei' ? Number(UPASS.width) / 10 : Number(UPASS.width) : '',
+      height: UPASS.height ? UPASS.dataSource === 'aisatei' ? Number(UPASS.height) / 10 : Number(UPASS.height) : '',
 
       commonType: UPASS.commonType || tmpUcarData.tmpCommonType || '',
       engineType: UPASS.engineType || '',

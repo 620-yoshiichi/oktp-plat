@@ -1,35 +1,35 @@
 'use client'
 
 import React from 'react'
-import {useParams} from 'next/navigation'
+import { useParams } from 'next/navigation'
 import useSWR from 'swr'
-import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
-import {PDFViewer, PDFDownloadLink} from '@react-pdf/renderer'
-import {InadequacyPdf} from '@app/(apps)/ucar/class/DetailPage/InadequacyPdf'
-import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
-import {UcarCL} from '@app/(apps)/ucar/class/UcarCL'
-import {OKTP_CONSTANTS} from '@app/oktpCommon/constants'
+import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+import { PDFViewer, PDFDownloadLink } from '@react-pdf/renderer'
+import { InadequacyPdf } from '@app/(apps)/ucar/class/DetailPage/InadequacyPdf'
+import { UCAR_CODE } from '@app/(apps)/ucar/class/UCAR_CODE'
+import { UcarCL } from '@app/(apps)/ucar/class/UcarCL'
+import { OKTP_CONSTANTS } from '@app/oktpCommon/constants'
 import PlaceHolder from '@cm/components/utils/loader/PlaceHolder'
-import {C_Stack, R_Stack} from '@cm/components/styles/common-components/common-components'
-import {Button} from '@cm/components/styles/common-components/Button'
-import {Paper} from '@cm/components/styles/common-components/paper'
+import { C_Stack, R_Stack } from '@cm/components/styles/common-components/common-components'
+import { Button } from '@cm/components/styles/common-components/Button'
+import { Paper } from '@cm/components/styles/common-components/paper'
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 
 export default function FubiHensoHyoPage() {
   const params = useParams()
   const noteId = params?.noteId as string
-  const {session} = useGlobal()
+  const { session } = useGlobal()
 
-  const {data, error} = useSWR(noteId ? [`ucarPaperWorkNote`, noteId] : null, async () => {
+  const { data, error } = useSWR(noteId ? [`ucarPaperWorkNote`, noteId] : null, async () => {
     // UcarPaperWorkNoteを取得
-    const {result: note} = await doStandardPrisma(`ucarPaperWorkNotes`, `findUnique`, {
-      where: {id: Number(noteId)},
+    const { result: note } = await doStandardPrisma(`ucarPaperWorkNotes`, `findUnique`, {
+      where: { id: Number(noteId) },
       include: {
-        User: {select: {id: true, name: true}},
+        User: { select: { id: true, name: true } },
         Ucar: {
           include: {
-            User: {select: {id: true, name: true}},
-            Store: {select: {id: true, name: true}},
+            User: { select: { id: true, name: true } },
+            Store: { select: { id: true, name: true } },
           },
         },
       },
@@ -45,9 +45,9 @@ export default function FubiHensoHyoPage() {
 
     // 店長を取得
     const storeManagerWhere = OKTP_CONSTANTS.where.storeManagerWhere
-    const {result: storeManager} = await doStandardPrisma(`user`, `findFirst`, {
+    const { result: storeManager } = await doStandardPrisma(`user`, `findFirst`, {
       where: {
-        AND: [storeManagerWhere, {storeId: ucarData.storeId}],
+        AND: [storeManagerWhere, { storeId: ucarData.storeId }],
       },
     })
 
@@ -76,11 +76,11 @@ export default function FubiHensoHyoPage() {
     return <PlaceHolder />
   }
 
-  const {note, ucarData, ucarInst, storeManager, inadequacyTypeLabel} = data
+  const { note, ucarData, ucarInst, storeManager, inadequacyTypeLabel } = data
 
   const pdfProps = {
     storeManagerName: storeManager?.name || '',
-    staffName: note.User?.name || '',
+    staffName: note.Ucar?.User?.name || '',
     sateiID: ucarInst.notation.sateiID || '',
     carName: ucarInst.notation.modelName || '',
     customerName: ucarInst.notation.customerName || '',
@@ -94,15 +94,15 @@ export default function FubiHensoHyoPage() {
   const pdfFileName = `不備返送票_${ucarInst.notation.sateiID || ''}.pdf`
 
   return (
-    <C_Stack style={{padding: '20px'}}>
-      <R_Stack style={{marginBottom: '20px', gap: '10px'}}>
+    <C_Stack style={{ padding: '20px' }}>
+      <R_Stack style={{ marginBottom: '20px', gap: '10px' }}>
         <PDFDownloadLink document={<InadequacyPdf {...pdfProps} />} fileName={pdfFileName}>
-          {({blob, url, loading, error}) => <Button disabled={loading}>{loading ? 'PDF生成中...' : 'PDFダウンロード'}</Button>}
+          {({ blob, url, loading, error }) => <Button disabled={loading}>{loading ? 'PDF生成中...' : 'PDFダウンロード'}</Button>}
         </PDFDownloadLink>
       </R_Stack>
 
       <Paper>
-        <PDFViewer style={{width: '100%', height: '80vh'}}>
+        <PDFViewer style={{ width: '100%', height: '80vh' }}>
           <InadequacyPdf {...pdfProps} />
         </PDFViewer>
       </Paper>
