@@ -18,6 +18,33 @@ export const POST = async (req: NextRequest) => {
     errors: [] as string[],
   }
 
+  const noNameBankList = await prisma.bankMaster.findMany({
+    where: { name: '' },
+  })
+
+  await Promise.all(noNameBankList.map(async (bank) => {
+    await prisma.bankMaster.update({
+      where: { id: bank.id },
+      data: { name: `不明（${bank.code}）` },
+    })
+  }))
+
+
+  const noNameBranchList = await prisma.bankBranchMaster.findMany({
+    where: { name: '' },
+  })
+
+  await Promise.all(noNameBranchList.map(async (branch) => {
+    await prisma.bankBranchMaster.update({
+      where: { id: branch.id },
+      data: { name: `不明（${branch.code}）` },
+    })
+  }))
+
+  console.log(`不明（銀行コード）の銀行数: ${noNameBankList.length}`)
+  console.log(`不明（支店コード）の支店数: ${noNameBranchList.length}`)
+
+
   try {
     // 1. 銀行データを取得
     console.log('銀行データ取得開始...')
@@ -42,22 +69,22 @@ export const POST = async (req: NextRequest) => {
     const batchSize = 10
     for (let i = 0; i < bankList.length; i += batchSize) {
       const bankBatch = bankList.slice(i, i + batchSize)
-      
+
       await Promise.all(
         bankBatch.map(async (bank: any, idx: number) => {
           try {
             console.log(`支店取得: ${i + idx + 1}/${bankList.length} - ${bank.normalize.name}`)
-            
+
             const branchesUrl = bank.branches_url + '?page=1&per=2000'
             const branchesResponse = await fetch(branchesUrl)
-            
+
             if (!branchesResponse.ok) {
               result.errors.push(`支店データ取得失敗: ${bank.normalize.name} (${bank.code})`)
               return
             }
 
             const branchesList = await branchesResponse.json()
-            
+
             branchesList.forEach((branch: any) => {
               allBranches.push({
                 bankCode: bank.code,
@@ -87,9 +114,13 @@ export const POST = async (req: NextRequest) => {
         await Promise.all(
           batch.map(async (bank: any) => {
             try {
+              // 銀行名が空またはnullの場合は「不明（銀行コード）」で埋める
+              const bankName = bank.normalize?.name || bank.name || ''
+              const finalBankName = bankName.trim() ? bankName : `不明（${bank.code}）`
+
               const data = {
                 code: bank.code,
-                name: bank.normalize.name,
+                name: finalBankName,
               }
 
               // 既存レコードの確認
@@ -110,7 +141,7 @@ export const POST = async (req: NextRequest) => {
               }
             } catch (error: any) {
               const errorMessage = handlePrismaError(error)
-              result.errors.push(`銀行登録エラー: ${bank.normalize.name} (${bank.code}) - ${errorMessage}`)
+              result.errors.push(`銀行登録エラー: ${bank.normalize?.name || bank.code} (${bank.code}) - ${errorMessage}`)
               console.error(`銀行登録エラー: ${bank.code}`, errorMessage)
             }
           })
@@ -129,12 +160,16 @@ export const POST = async (req: NextRequest) => {
         await Promise.all(
           batch.map(async (branch: any) => {
             try {
+              // 支店名が空またはnullの場合は「不明（支店コード）」で埋める
+              const branchName = branch.name || ''
+              const finalBranchName = branchName.trim() ? branchName : `不明（${branch.code}）`
+
               const data = {
                 code: branch.code,
-                name: branch.name,
+                name: finalBranchName,
                 bankCode: branch.bankCode,
-                branchKana: branch.branchKana,
-                searchKana: branch.searchKana,
+                branchKana: branch.branchKana || undefined,
+                searchKana: branch.searchKana || undefined,
               }
 
               // 既存レコードの確認
@@ -166,7 +201,7 @@ export const POST = async (req: NextRequest) => {
             } catch (error: any) {
               const errorMessage = handlePrismaError(error)
               result.errors.push(
-                `支店登録エラー: ${branch.name} (${branch.bankCode}-${branch.code}) - ${errorMessage}`
+                `支店登録エラー: ${branch.name || branch.code} (${branch.bankCode}-${branch.code}) - ${errorMessage}`
               )
               console.error(`支店登録エラー: ${branch.bankCode}-${branch.code}`, errorMessage)
             }

@@ -1,5 +1,3 @@
-
-
 import {executeOrderUpsert} from './handlers/orderUpsert'
 import {executeTenpoTsuikoUpsert} from './handlers/tenpoTsuikoUpsert'
 import {executeFetchSeisanYoteiDiff} from './handlers/fetchSeisanYoteiDiff'
@@ -23,7 +21,7 @@ import {
   executeActivateBpSpread,
   executeBankMaster,
 } from './handlers/clickActionHandlers'
-import { executeDisactivateUnnecessaryUcar } from 'src/non-common/cron/handlers/executeDisactivateUnnecessaryUcar'
+import {executeDisactivateUnnecessaryUcar} from 'src/non-common/cron/handlers/executeDisactivateUnnecessaryUcar'
 
 /**
  * バッチ設定の型定義
@@ -245,12 +243,12 @@ export const BATCH_MASTER: Record<string, BatchConfig> = {
     id: 'linkOldCars',
     name: '古物データ自動紐付け',
     description: '/api/seeder/linkOldCars',
-    purpose: '98番号が入力されているUcarのうち、OldCars_Baseが紐づいていない車両に対して、該当の98番号のうちもっとも新しい仕入日のOldCars_Baseに対してリレーションを貼る',
+    purpose:
+      '98番号が入力されているUcarのうち、OldCars_Baseが紐づいていない車両に対して、該当の98番号のうちもっとも新しい仕入日のOldCars_Baseに対してリレーションを貼る',
     app: 'ucar',
     effectOn: 'click',
     handler: executeLinkOldCars,
     tableName: 'ucar',
-
   },
   disactivateUnnecessaryUcar: {
     id: 'disactivateUnnecessaryUcar',
@@ -262,21 +260,6 @@ export const BATCH_MASTER: Record<string, BatchConfig> = {
     handler: executeDisactivateUnnecessaryUcar,
     tableName: 'ucar',
   },
-  bankMaster: {
-    id: 'bankMaster',
-    name: '銀行マスタ更新',
-    description: '/api/seeder/bank',
-    purpose: '外部API（bank.teraren.com）から銀行・支店データを取得し、マスタを更新する',
-    app: 'ucar',
-    effectOn: 'click',
-    handler: executeBankMaster,
-    tableName: 'BankMaster',
-  },
-
-
-
-
-
 
   // ============ common アプリ ============
   kaonaviBatch: {
@@ -287,6 +270,16 @@ export const BATCH_MASTER: Record<string, BatchConfig> = {
     app: 'common',
     effectOn: 'click',
     handler: executeKaonaviBatch,
+  },
+  bankMaster: {
+    id: 'bankMaster',
+    name: '銀行マスタ更新',
+    description: '/api/seeder/bank',
+    purpose: '外部API（bank.teraren.com）から銀行・支店データを取得し、マスタを更新する',
+    app: 'common',
+    effectOn: 'click',
+    handler: executeBankMaster,
+    tableName: 'BankMaster',
   },
 
   // ============ qrbp アプリ ============
@@ -299,11 +292,6 @@ export const BATCH_MASTER: Record<string, BatchConfig> = {
     effectOn: 'click',
     handler: executeActivateBpSpread,
   },
-
-
-
-
-
 }
 
 /**
@@ -318,11 +306,6 @@ export const getVercelCronsConfig = () => {
       schedule: batch.schedule,
     }))
 }
-
-
-
-
-
 
 /**
  * vercel.json生成用のJSON形式でエクスポート
