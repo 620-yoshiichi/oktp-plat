@@ -237,21 +237,11 @@ export const batchCloneBigQuery = async () => {
                 return d.queryObject?.create.NO_CYUMON === '05 53860'
               })?.queryObject?.create
 
-              if (data) {
-                // console.log(data)  //logs
-              } else {
-                return
-              }
               try {
-
                 const result = await doTransaction({
                   transactionQueryList: batch,
                   mode: 'sequential'
-
-
                 })
-
-
               } catch (error) {
                 const errorMessage = error instanceof Error ? error.message : String(error)
                 console.error(`バッチ処理エラー (offset: ${offset}, batchSize: ${batch.length}):`, {
