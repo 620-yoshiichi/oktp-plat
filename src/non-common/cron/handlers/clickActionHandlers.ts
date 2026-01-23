@@ -55,3 +55,8 @@ export const executeActivateBpSpread = async () => {
   const res = await fetchAlt(`${basePath}/QRBP/seeder/activate-bp-spread`, {}, {method: 'GET'})
   return res
 }
+
+export const executeBankMaster = async () => {
+  const res = await fetchAlt(`${basePath}/ucar/api/seeder/bank`, {}, {method: 'POST'})
+  return res
+}

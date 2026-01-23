@@ -11,11 +11,12 @@ import { processBatchWithRetry } from '@cm/lib/server-actions/common-server-acti
 import { addDays } from 'date-fns'
 
 import { doTransaction } from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
+import { NewCarUpsertArgs } from '@prisma/generated/prisma/models'
 
-export const maxUpdateGte = addDays(getMidnight(), -5)
+export const maxUpdateGte = addDays(getMidnight(), -60)
 
 // バッチサイズの設定（環境に応じて調整）
-const BATCH_SIZE = Number(process.env.BATCH_SIZE) || 500 // デフォルト100件に削減
+const BATCH_SIZE = Number(process.env.BATCH_SIZE) || 500 // デフォルト500件に削減
 const PAGE_SIZE = Number(process.env.PAGE_SIZE) || 10000 // BigQueryのページサイズ
 
 // 開発用メモリ監視
@@ -118,6 +119,7 @@ export const batchCloneBigQuery = async () => {
       try {
         records = await GET({
           sqlString: newCarSql.main.getOrderCloneSql({
+
             maxUpdateGte,
             LIMIT: PAGE_SIZE,
             offset: offset,
@@ -147,7 +149,10 @@ export const batchCloneBigQuery = async () => {
               return BQ_parser.parseDate(value)
             }) as any
 
-            const { APPINDEX, NO_CYUMON, CD_HANSTAFF, CD_TENPO, KB_ZAIKOJYO, ...rest } = parsed
+            const { APPINDEX, NO_CYUMON, CD_HANSTAFF, CD_TENPO,
+              ...rest
+
+            } = parsed
 
             let userId: number | undefined = userObj[CD_HANSTAFF]?.id
             let storeId: number | undefined = storeObj[CD_TENPO]?.id
@@ -174,20 +179,46 @@ export const batchCloneBigQuery = async () => {
               storeId = history.NewCar.storeId
             }
 
-            const data = {
+
+
+
+
+
+
+
+            const createData: NewCarUpsertArgs['create'] = {
               APPINDEX,
               NO_CYUMON,
               CD_HANSTAFF,
               CD_TENPO,
-              Store: { connect: { id: storeId } },
-              User: { connect: { id: userId } },
+              userId: userId,
+              storeId: storeId,
               ...rest,
             }
+
+            const updateData: NewCarUpsertArgs['update'] =
+            {
+              // APPINDEX,
+              NO_CYUMON,
+              CD_HANSTAFF,
+              CD_TENPO,
+
+              userId: userId,
+              storeId: storeId,
+              ...rest
+            }
+
 
             return {
               model: `newCar`,
               method: `upsert`,
-              queryObject: { where: { APPINDEX: data?.APPINDEX ?? '' }, create: data, update: data },
+              queryObject: {
+                where: {
+                  APPINDEX: APPINDEX ?? ''
+                },
+                create: createData,
+                update: updateData
+              },
             }
           } catch (error) {
             console.error(`レコード変換エラー:`, error, obj?.APPINDEX)
@@ -202,8 +233,25 @@ export const batchCloneBigQuery = async () => {
           await processBatchWithRetry({
             soruceList: recordsParsedDate,
             mainProcess: async batch => {
+              const data = batch.find(d => {
+                return d.queryObject?.create.NO_CYUMON === '05 53860'
+              })?.queryObject?.create
+
+              if (data) {
+                // console.log(data)  //logs
+              } else {
+                return
+              }
               try {
-                await doTransaction({ transactionQueryList: batch, mode: 'parallel' })
+
+                const result = await doTransaction({
+                  transactionQueryList: batch,
+                  mode: 'sequential'
+
+
+                })
+
+
               } catch (error) {
                 const errorMessage = error instanceof Error ? error.message : String(error)
                 console.error(`バッチ処理エラー (offset: ${offset}, batchSize: ${batch.length}):`, {

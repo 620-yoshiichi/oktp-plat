@@ -21,6 +21,7 @@ import {
   executeLinkOldCars,
   executeKaonaviBatch,
   executeActivateBpSpread,
+  executeBankMaster,
 } from './handlers/clickActionHandlers'
 import { executeDisactivateUnnecessaryUcar } from 'src/non-common/cron/handlers/executeDisactivateUnnecessaryUcar'
 
@@ -260,6 +261,16 @@ export const BATCH_MASTER: Record<string, BatchConfig> = {
     effectOn: 'click',
     handler: executeDisactivateUnnecessaryUcar,
     tableName: 'ucar',
+  },
+  bankMaster: {
+    id: 'bankMaster',
+    name: '銀行マスタ更新',
+    description: '/api/seeder/bank',
+    purpose: '外部API（bank.teraren.com）から銀行・支店データを取得し、マスタを更新する',
+    app: 'ucar',
+    effectOn: 'click',
+    handler: executeBankMaster,
+    tableName: 'BankMaster',
   },
 
 

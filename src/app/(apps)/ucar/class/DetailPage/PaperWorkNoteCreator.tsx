@@ -79,7 +79,7 @@ export default function PaperWorkNoteCreator(props: { UcarData: ucarData; UseRec
                   `店舗名: ${ucarInst.notation.storeName ?? ''}`,
                   `スタッフ名: ${ucarInst.notation.staffName ?? ''}`,
                   `査定番号: ${ucarInst.notation.sateiID ?? ''}`,
-                  `お客様名: ${ucarInst.notation.customerName ?? ''}`,
+                  `お客様名: ${ucarInst.data.taxCustomerName ?? ''}`,
                   `車名: ${ucarInst.notation.modelName ?? ''}`,
                   `印鑑証明期限: ${formatDate(ucarInst.data.inkanCertificateExpiredAt ?? '')}`,
                   ``,

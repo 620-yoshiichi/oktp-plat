@@ -192,7 +192,7 @@ export class UcarCL {
       nenshiki: nenshiki || tmpUcarData.tmpModelYear,
       plate,
       grade: UPASS.grade || tmpUcarData.tmpGrade || '',
-      customerName: UPASS.customerName,
+      // customerName: UPASS.taxCustomerName || '',
       modelName: UPASS.modelName || tmpUcarData.tmpModelName || '',
       modelYear: (UPASS.modelYear || tmpUcarData.tmpModelYear || '').replace('発売モデル', ''),
       exteriorColor: UPASS.exteriorColor || tmpUcarData.tmpColor || '',
@@ -281,7 +281,7 @@ export class UcarCL {
         `査定ID: ${this.notation.sateiID ?? '-'}`,
         `車名: ${this.notation.modelName ?? '-'}`,
         `車台番号: ${this.notation.frameNumber ?? '-'}`,
-        `お客様: ${this.notation.customerName ?? '-'}`,
+        `お客様: ${this.data.taxCustomerName ?? '-'}`,
       ].join('\n'),
     }
     return {

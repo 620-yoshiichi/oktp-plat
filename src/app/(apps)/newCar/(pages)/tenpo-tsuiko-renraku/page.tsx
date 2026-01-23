@@ -1,21 +1,21 @@
 'use client'
 
-import {useEffect, useState} from 'react'
-import {useSearchParams, useRouter} from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { useSearchParams, useRouter } from 'next/navigation'
 
-import {CsvTable} from '@cm/components/styles/common-components/CsvTable/CsvTable'
-import {toastByResult} from '@cm/lib/ui/notifications'
-import {getTenpoTsuikoData} from '@app/(apps)/newCar/server-actions/tenpoTsuikoActions'
+import { CsvTable } from '@cm/components/styles/common-components/CsvTable/CsvTable'
+import { toastByResult } from '@cm/lib/ui/notifications'
+import { getTenpoTsuikoData } from '@app/(apps)/newCar/server-actions/tenpoTsuikoActions'
 
-import {C_Stack, R_Stack} from '@cm/components/styles/common-components/common-components'
+import { C_Stack, R_Stack } from '@cm/components/styles/common-components/common-components'
 
-import {TenpoTsuikoShinseiStatusButton} from '@app/(apps)/newCar/(pages)/tenpo-tsuiko-renraku/TenpoTsuikoShinseiStatusButton'
+import { TenpoTsuikoShinseiStatusButton } from '@app/(apps)/newCar/(pages)/tenpo-tsuiko-renraku/TenpoTsuikoShinseiStatusButton'
 import useTempoTsuikoGMF from '@app/(apps)/newCar/templateHooks/useTempoTsuikoGMF'
-import {Button} from '@cm/components/styles/common-components/Button'
-import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
-import {getStatusColor} from './TenpoTsuikoShinseiStatusButton'
-import {T_LINK} from '@cm/components/styles/common-components/links'
-import {formatDate} from '@cm/class/Days/date-utils/formatters'
+import { Button } from '@cm/components/styles/common-components/Button'
+import { IconBtn } from '@cm/components/styles/common-components/IconBtn'
+import { getStatusColor } from './TenpoTsuikoShinseiStatusButton'
+import { T_LINK } from '@cm/components/styles/common-components/links'
+import { formatDate } from '@cm/class/Days/date-utils/formatters'
 
 // ステータスフィルターの型定義
 type StatusFilter = 'all' | '未申請' | '申請中' | '承認完了' | '却下'
@@ -56,11 +56,11 @@ export default function TenpoTsuikoRenrakuPage() {
         setTsuikoData(result.data)
       } else {
         console.error('データ取得失敗:', result)
-        toastByResult({success: false, message: result.message || 'エラーが発生しました'})
+        toastByResult({ success: false, message: result.message || 'エラーが発生しました' })
       }
     } catch (error) {
       console.error('データ取得エラー:', error)
-      toastByResult({success: false, message: 'データ取得に失敗しました'})
+      toastByResult({ success: false, message: 'データ取得に失敗しました' })
     } finally {
       setLoading(false)
     }
@@ -172,17 +172,17 @@ export default function TenpoTsuikoRenrakuPage() {
                   {
                     label: '注文番号',
                     cellValue: <div className="font-mono text-sm">{row.NO_CYUMON || '-'}</div>,
-                    style: {width: 120},
+                    style: { width: 120 },
                   },
                   {
                     label: '車名',
                     cellValue: <div className="font-medium">{row.KJ_KURUMAME || '未設定'}</div>,
-                    style: {width: 150},
+                    style: { width: 150 },
                   },
                   {
                     label: '追工件数',
                     cellValue: <div className="font-mono">{row.TenpoTsuikoData?.length || 0}件</div>,
-                    style: {width: 100},
+                    style: { width: 100 },
                   },
                   {
                     label: '追工内容',
@@ -193,7 +193,7 @@ export default function TenpoTsuikoRenrakuPage() {
                         ))}
                       </div>
                     ),
-                    style: {width: 200},
+                    style: { width: 200 },
                   },
                   {
                     label: '追工金額合計',
@@ -202,10 +202,10 @@ export default function TenpoTsuikoRenrakuPage() {
                         {formatCurrency(row.TenpoTsuikoData?.reduce((sum, t) => sum + (t.KI_TUIKOKIN || 0), 0))}
                       </div>
                     ),
-                    style: {width: 120},
+                    style: { width: 120 },
                   },
-                  {label: '店舗', cellValue: <div>{row.Store?.name || '-'}</div>, style: {width: 120}},
-                  {label: '担当者', cellValue: <div>{row.User?.name || '-'}</div>, style: {width: 120}},
+                  { label: '店舗', cellValue: <div>{row.Store?.name || '-'}</div>, style: { width: 120 } },
+                  { label: '担当者', cellValue: <div>{row.User?.name || '-'}</div>, style: { width: 120 } },
 
                   {
                     label: '配送希望日',
@@ -214,14 +214,14 @@ export default function TenpoTsuikoRenrakuPage() {
                         <div>{formatDate(row.DD_HAISKIBO) || '-'}</div>
                       </div>
                     ),
-                    style: {width: 120},
+                    style: { width: 120 },
                   },
                   {
                     label: '操作',
                     cellValue: (
                       <TenpoTsuikoShinseiStatusButton
                         {...{
-                          handleOpenModal: (params: {newCar: any}) => {
+                          handleOpenModal: (params: { newCar: any }) => {
                             tempoTsuikoGMF.setGMF_OPEN({
                               onRefresh: () => fetchData(),
                               newCar: params.newCar,
@@ -232,18 +232,18 @@ export default function TenpoTsuikoRenrakuPage() {
                         }}
                       />
                     ),
-                    style: {width: 120},
+                    style: { width: 120 },
                   },
 
                   {
                     label: 'テスト',
-                    cellValue: <T_LINK {...{href: `/newCar/tenpo-tsuiko-shinsei/${row.id}`}}>テスト</T_LINK>,
-                    style: {width: 120},
+                    cellValue: <T_LINK {...{ href: `/newCar/tenpo-tsuiko-shinsei/${row.id}` }}>テスト</T_LINK>,
+                    style: { width: 120 },
                   },
                 ],
               }
             }),
-          }).WithWrapper({className: 'max-h-[50vh]'})}
+          }).WithWrapper({ className: 'max-h-[50vh]' })}
         </C_Stack>
       </div>
 

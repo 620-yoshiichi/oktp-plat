@@ -83,7 +83,7 @@ export default function FubiHensoHyoPage() {
     staffName: note.Ucar?.User?.name || '',
     sateiID: ucarInst.notation.sateiID || '',
     carName: ucarInst.notation.modelName || '',
-    customerName: ucarInst.notation.customerName || '',
+    customerName: ucarInst.data.taxCustomerName || '',
     inkanCertificateExpiredAt: ucarData.inkanCertificateExpiredAt,
     returnDate: note.createdAt,
     inadequacyType: inadequacyTypeLabel,
