@@ -16,7 +16,7 @@ import { NewCarUpsertArgs } from '@prisma/generated/prisma/models'
 export const maxUpdateGte = addDays(getMidnight(), -5)
 
 // バッチサイズの設定（環境に応じて調整）
-const BATCH_SIZE = Number(process.env.BATCH_SIZE) || 500 // デフォルト500件に削減
+const BATCH_SIZE = Number(process.env.BATCH_SIZE) || 1000 // デフォルト500件に削減
 const PAGE_SIZE = Number(process.env.PAGE_SIZE) || 10000 // BigQueryのページサイズ
 
 // 開発用メモリ監視
@@ -233,14 +233,11 @@ export const batchCloneBigQuery = async () => {
           await processBatchWithRetry({
             soruceList: recordsParsedDate,
             mainProcess: async batch => {
-              const data = batch.find(d => {
-                return d.queryObject?.create.NO_CYUMON === '05 53860'
-              })?.queryObject?.create
+
 
               try {
                 const result = await doTransaction({
                   transactionQueryList: batch,
-                  mode: 'sequential'
                 })
               } catch (error) {
                 const errorMessage = error instanceof Error ? error.message : String(error)
@@ -254,7 +251,7 @@ export const batchCloneBigQuery = async () => {
             },
             options: {
               batchSize: BATCH_SIZE,
-              retries: 3, // リトライ回数を増加
+              retries: 1, // リトライ回数を増加
             },
           })
         } catch (error) {

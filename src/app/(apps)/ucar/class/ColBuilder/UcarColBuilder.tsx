@@ -17,7 +17,7 @@ import { TrActionIconClassName } from '@cm/components/DataLogic/TFs/MyTable/hook
 import useUcarDetailUpdatorGMF from '@app/(apps)/ucar/(parts)/templateHooks/useUcarDetailUpdatorGMF'
 import useUcarRequestGMF from '@app/(apps)/ucar/(parts)/templateHooks/useUcarRequestGMF'
 import { Absolute, C_Stack, R_Stack } from '@cm/components/styles/common-components/common-components'
-import { PencilIcon, TrashIcon, ClipboardListIcon } from 'lucide-react'
+import { PencilIcon, TrashIcon } from 'lucide-react'
 
 import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 import { updateNumber98IssueHistory } from '@app/(apps)/ucar/(lib)/num98/updateNumber98IssueHistory'

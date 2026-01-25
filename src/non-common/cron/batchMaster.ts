@@ -101,7 +101,7 @@ export const BATCH_MASTER: Record<string, BatchConfig> = {
   oldCarsDeleteAndCreate: {
     id: 'oldCarsDeleteAndCreate',
     name: '古物 Rawデータ取り込み',
-    schedule: '0 22 * * *',
+    schedule: '0 23 * * *',
     description: '/api/cron/execute/oldCarsDeleteAndCreate',
     purpose: '',
     app: 'ucar',
@@ -112,7 +112,7 @@ export const BATCH_MASTER: Record<string, BatchConfig> = {
   zaikoDeleteAndCreate: {
     id: 'zaikoDeleteAndCreate',
     name: '在庫 Rawデータ取り込み',
-    schedule: '0 22 * * *',
+    schedule: '0 23 * * *',
     description: '/api/cron/execute/zaikoDeleteAndCreate',
     purpose: '',
     app: 'ucar',
@@ -123,7 +123,7 @@ export const BATCH_MASTER: Record<string, BatchConfig> = {
   aisateiDeleteAndCreate: {
     id: 'aisateiDeleteAndCreate',
     name: 'AI査定 Rawデータ取り込み',
-    schedule: '0 22 * * *',
+    schedule: '0 23 * * *',
     description: '/api/cron/execute/aisateiDeleteAndCreate',
     purpose: '',
     app: 'ucar',
@@ -139,7 +139,7 @@ export const BATCH_MASTER: Record<string, BatchConfig> = {
   upassDeleteAndCreate: {
     id: 'upassDeleteAndCreate',
     name: 'U-PASS Rawデータ取り込み',
-    schedule: '0 22 * * *',
+    schedule: '0 23 * * *',
     description: '/api/cron/execute/upassDeleteAndCreate',
     purpose: '',
     app: 'ucar',
@@ -155,7 +155,7 @@ export const BATCH_MASTER: Record<string, BatchConfig> = {
   juchuShitadoriDbDeleteAndCreate: {
     id: 'juchuShitadoriDbDeleteAndCreate',
     name: '受注下取りDB Rawデータ取り込み',
-    schedule: '0 22 * * *',
+    schedule: '0 23 * * *',
     description: '/api/cron/execute/juchuShitadoriDbDeleteAndCreate',
     purpose: '',
     app: 'ucar',
