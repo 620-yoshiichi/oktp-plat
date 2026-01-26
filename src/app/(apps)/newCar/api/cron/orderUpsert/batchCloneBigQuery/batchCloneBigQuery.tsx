@@ -240,7 +240,7 @@ export const batchCloneBigQuery = async () => {
                   transactionQueryList: (batch ?? []),
                 })
 
-                console.log({ transactionResult })  //logs
+                console.log({ transactionResult })
               } catch (error) {
                 const errorMessage = error instanceof Error ? error.message : String(error)
                 console.error(`バッチ処理エラー (offset: ${offset}, batchSize: ${batch.length}):`, {

@@ -10,6 +10,7 @@ import { basePath } from '@cm/lib/methods/common'
 export const requestDeliberySS = async ({ sateiID, type }) => {
   const ucar = await UcarCL.fetcher.getUcarDataBySateiId(sateiID)
 
+
   const NOTICE = type === `配送手配` ? UCAR_GOOGLE_CONSTANTS.hikitoriNotice : UCAR_GOOGLE_CONSTANTS.cancelNotice
 
   const { SS_URL, SH_NAME, parentFolderIds } = NOTICE
@@ -27,7 +28,8 @@ export const requestDeliberySS = async ({ sateiID, type }) => {
     notation
   } = new UcarCL(ucar)
 
-  const { plate, modelName, modelYear,
+  const {
+    plate, modelName, modelYear,
     chassisNumber,
     exteriorColor
 

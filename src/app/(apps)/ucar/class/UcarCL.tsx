@@ -25,6 +25,7 @@ import { IconBtn } from '@cm/components/styles/common-components/IconBtn'
 import { Alert } from '@cm/components/styles/common-components/Alert'
 import { R_Stack } from '@cm/components/styles/common-components/common-components'
 import { globalIds } from 'src/non-common/searchParamStr'
+import { UcarProcessCl } from '@app/(apps)/ucar/class/UcarProcessCl'
 
 export type UpassStandardType = UPASS & {
   MyUpassTree: UpassFamilyTree & {
@@ -161,7 +162,7 @@ export class UcarCL {
       DD_SIIRE: this.data?.OldCars_Base?.DD_SIIRE, //仕入日
       KI_SIIREKA: this.data?.OldCars_Base?.KI_SIIREKA, //仕入価格
       DD_URIAGE: this.data?.OldCars_Base?.DD_URIAGE, //売上日
-      CD_TENJTENP: this.data?.OldCars_Base?.ZAIKO_Base?.CD_TENJTENP ?? '', //在庫店舗
+      CD_ZAIKOTEN: this.data?.OldCars_Base?.ZAIKO_Base?.CD_ZAIKOTEN ?? '', //在庫店舗
       MJ_ZAIKOST: this.data?.OldCars_Base?.ZAIKO_Base?.MJ_ZAIKOST ?? '', //展示店舗
       KI_HANKAKA: this.data?.OldCars_Base?.KI_HANKAKA ?? 0,
       //売上金額
@@ -184,6 +185,8 @@ export class UcarCL {
 
     const nenshiki = UPASS.modelYear ? new Date().getFullYear() - Number(UPASS?.modelYear) : ''
 
+
+
     return {
       sateiID: UPASS.sateiID,
 
@@ -202,7 +205,7 @@ export class UcarCL {
       width: UPASS.width ? UPASS.dataSource === 'aisatei' ? Number(UPASS.width) / 10 : Number(UPASS.width) : '',
       height: UPASS.height ? UPASS.dataSource === 'aisatei' ? Number(UPASS.height) / 10 : Number(UPASS.height) : '',
 
-      commonType: UPASS.commonType || tmpUcarData.tmpCommonType || '',
+      // commonType: UPASS.commonType || tmpUcarData.tmpCommonType || '',
       engineType: UPASS.engineType || '',
       vehicleHistory: UPASS.vehicleHistory || '',
       capacityMin: UPASS.capacityMin || '',
@@ -218,59 +221,28 @@ export class UcarCL {
       assessmentdatetime: UPASS.assessmentdatetime,
       assessmentprice: UPASS.assessmentPrice,
       pickupScheduledDate: UPASS.pickupScheduledDate,
+
+      displacement: UPASS.displacement || '',
+      driveType: UPASS.driveType || '',
     }
   }
   get notation() {
     return UcarCL.getNotationFromUpassModel(this.data.UPASS ?? {}, this.data)
-    const UPASS = (UcarCL.getLatestUPASS(this.data.UPASS ?? {})) as UPASS
-    const plate = [
-      UPASS.landAffairsName,
-      UPASS.registrationClassNumber,
-      UPASS.registrationKana,
-      UPASS.registrationSerialNumber,
-    ].join('') || [
-      this.data.tmpLandAffairsName,
-      this.data.tmpRegistrationClassNumber,
-      this.data.tmpRegistrationKana,
-      this.data.tmpPlate
-    ].join('')
+  }
 
-    const nenshiki = UPASS.modelYear ? new Date().getFullYear() - Number(UPASS?.modelYear) : ''
+  get latestProcess() {
 
-    return {
-      sateiID: this.data.sateiID,
-      storeName: this.data?.Store?.name,
-      staffName: this.data?.User?.name,
-      nenshiki: nenshiki || this.data.tmpModelYear,
-      plate,
-      grade: UPASS.grade || this.data.tmpGrade || '',
-      customerName: UPASS.customerName,
-      modelName: UPASS.modelName || this.data.tmpModelName || '',
-      modelYear: (UPASS.modelYear || this.data.tmpModelYear || '').replace('発売モデル', ''),
-      exteriorColor: UPASS.exteriorColor || this.data.tmpColor || '',
-      type: UPASS.type || this.data.tmpType || '',
-      chassisNumber: UPASS.chassisNumber || this.data.tmpChassisNumber || '',
-      length: UPASS.length || '',
-      width: UPASS.width || '',
-      height: UPASS.height || '',
+    const hit = this.data.UcarProcess.filter(process => {
+      return true
+      return UcarProcessCl.CODE.byCode(process.processCode)?.list?.includes('main')
+    }).sort((a, b) => {
+      if (!a.date || !b.date) {
+        return 0
+      }
+      return new Date(b.date as Date).getTime() - new Date(a.date as Date).getTime()
+    })?.[0]
 
-      commonType: UPASS.commonType || this.data.tmpCommonType || '',
-      engineType: UPASS.engineType || '',
-      vehicleHistory: UPASS.vehicleHistory || '',
-      capacityMin: UPASS.capacityMin || '',
-      capacityMax: UPASS.capacityMax || '',
-      maxLoad: UPASS.maxLoad || '',
-      weight: UPASS.weight || '',
-      frameNumber: UPASS.chassisNumber || this.data.tmpFrameNumber || '',
-      brandName: UPASS.brandName || this.data.tmpBrandName || '',
-      registrationClassNumber: UPASS.registrationClassNumber || this.data.tmpRegistrationClassNumber || '',
-      registrationKana: UPASS.registrationKana || this.data.tmpRegistrationKana || '',
-      registrationSerialNumber: UPASS.registrationSerialNumber || this.data.tmpPlate || '',
-
-      assessmentdatetime: UPASS.assessmentdatetime,
-      assessmentprice: UPASS.assessmentPrice,
-      pickupScheduledDate: UPASS.pickupScheduledDate,
-    }
+    return hit
   }
 
   get builder() {

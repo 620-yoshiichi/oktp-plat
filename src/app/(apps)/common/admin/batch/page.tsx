@@ -58,7 +58,9 @@ export default function Page() {
   // 実行中のバッチIDと進捗メッセージを管理
   const [runningBatches, setRunningBatches] = useState<Record<string, string>>({})
 
-  const batch: { common: BatchConfig[], ucar: BatchConfig[], newCar: BatchConfig[], qrbp: BatchConfig[] } = { common: [], ucar: [], newCar: [], qrbp: [] }
+  const batch: {
+    [key: string]: BatchConfig[]
+  } = {}
 
   Object.keys(BATCH_MASTER).forEach(key => {
     const item = BATCH_MASTER[key]
@@ -74,7 +76,7 @@ export default function Page() {
       app: item.app,
       effectOn: item.effectOn,
       schedule: item.schedule,
-      tableName: item.tableName,
+
       prismaArgs: item.prismaArgs,
       handler: item.handler,
     })
@@ -407,24 +409,7 @@ export default function Page() {
 
 
 
-  // [
-  //   {
-  //     label: '共通',
-  //     component: <div>{renderBatchTable(batch.common, '共通')}</div>,
-  //   },
-  //   {
-  //     label: 'Ucar',
-  //     component: <div>{renderBatchTable(batch.ucar, 'Ucar', ucarCount)}</div>,
-  //   },
-  //   {
-  //     label: 'NewCar',
-  //     component: <div>{renderBatchTable(batch.newCar, 'NewCar')}</div>,
-  //   },
-  //   {
-  //     label: 'QRBP',
-  //     component: <div>{renderBatchTable(batch.qrbp, 'QRBP')}</div>,
-  //   },
-  // ]
+
 
   // モーダル内の履歴データを取得
   const selectedBatchId = open?.batchId

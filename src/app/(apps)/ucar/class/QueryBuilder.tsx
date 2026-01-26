@@ -35,6 +35,7 @@ export class QueryBuilder {
           },
         },
 
+
         TmpRentalStore: {},
         DestinationStore: {},
         UPASS: upass,
@@ -167,8 +168,8 @@ const ucarOmmit = {
   Mission_name: true,
   Capacity: true,
   Door_name: true,
-  Displacement: true,
-  Driving: true,
+  // Displacement: true,
+  // Driving: true,
   Vehicle_length: true,
   Vehicle_width: true,
   Vehicle_height: true,

@@ -51,12 +51,11 @@ export const UCAR_CONSTANTS: {
           form: { register: { required: `必須です` } },
           label: `引取先拠点`,
           forSelect: {
-
             optionsOrOptionFetcher: (stores ?? [])
               .sort((a, b) => {
                 return a.code - b.code
               })
-              ?.map(s => s.name),
+              ?.map(s => `【${s.code}】${s.name}`),
           },
         },
         {

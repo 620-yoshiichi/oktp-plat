@@ -123,19 +123,17 @@ export const ProcessApplicationForm = ({ columns, stores, UcarData, useGlobalPro
         {/* 工程登録 */}
         <Card>
           <SameProcessAlert registerdProcess={registerdProcess} processCode={processCode}>
-            <C_Stack className="items-center">
-              <ProcessRegistrationForm
-                ProcessRegisterForm={ProcessRegisterForm}
-                latestFormData={latestFormData}
-                ProcessCodeItem={ProcessCodeItem}
-                UcarData={UcarData}
-                session={session}
-                toggleLoad={toggleLoad}
-                setopenClearnUp={setopenClearnUp}
-                disabled={!prerequisitesMet}
-                formRef={processFormRef}
-              />
-            </C_Stack>
+            <ProcessRegistrationForm
+              ProcessRegisterForm={ProcessRegisterForm}
+              latestFormData={latestFormData}
+              ProcessCodeItem={ProcessCodeItem}
+              UcarData={UcarData}
+              session={session}
+              toggleLoad={toggleLoad}
+              setopenClearnUp={setopenClearnUp}
+              disabled={!prerequisitesMet}
+              formRef={processFormRef}
+            />
           </SameProcessAlert>
         </Card>
       </C_Stack>

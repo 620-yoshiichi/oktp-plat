@@ -1,4 +1,4 @@
-import TopPage from '@cm/components/layout/Navigation/TopPage'
+import { CenterScreen } from '@cm/components/styles/common-components/common-components'
 
 
 
@@ -6,8 +6,8 @@ import React from 'react'
 
 export default async function Page(props) {
   return (
-    <div>
-      <TopPage />
-    </div>
+    <CenterScreen>
+      メニューバーから機能を選択して下さい
+    </CenterScreen>
   )
 }

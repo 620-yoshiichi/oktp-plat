@@ -582,6 +582,7 @@ export type OldCars_BaseWhereUniqueInput = Prisma.AtLeast<{
   id?: number
   APPINDEX?: string
   NO_SIRETYUM_NO_SYARYOU_DD_SIIRE?: Prisma.OldCars_BaseNO_SIRETYUMNO_SYARYOUDD_SIIRECompoundUniqueInput
+  NO_SIRETYUM_NO_SYARYOU_NO_SYADAIBA?: Prisma.OldCars_BaseNO_SIRETYUMNO_SYARYOUNO_SYADAIBACompoundUniqueInput
   AND?: Prisma.OldCars_BaseWhereInput | Prisma.OldCars_BaseWhereInput[]
   OR?: Prisma.OldCars_BaseWhereInput[]
   NOT?: Prisma.OldCars_BaseWhereInput | Prisma.OldCars_BaseWhereInput[]
@@ -629,7 +630,7 @@ export type OldCars_BaseWhereUniqueInput = Prisma.AtLeast<{
   Number98?: Prisma.XOR<Prisma.Number98NullableScalarRelationFilter, Prisma.Number98WhereInput> | null
   Ucar?: Prisma.XOR<Prisma.UcarNullableScalarRelationFilter, Prisma.UcarWhereInput> | null
   ZAIKO_Base?: Prisma.XOR<Prisma.ZAIKO_BaseNullableScalarRelationFilter, Prisma.ZAIKO_BaseWhereInput> | null
-}, "APPINDEX" | "id" | "APPINDEX" | "NO_SIRETYUM_NO_SYARYOU_DD_SIIRE">
+}, "APPINDEX" | "id" | "APPINDEX" | "NO_SIRETYUM_NO_SYARYOU_DD_SIIRE" | "NO_SIRETYUM_NO_SYARYOU_NO_SYADAIBA">
 
 export type OldCars_BaseOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -1062,6 +1063,12 @@ export type OldCars_BaseNO_SIRETYUMNO_SYARYOUDD_SIIRECompoundUniqueInput = {
   NO_SIRETYUM: string
   NO_SYARYOU: string
   DD_SIIRE: Date | string
+}
+
+export type OldCars_BaseNO_SIRETYUMNO_SYARYOUNO_SYADAIBACompoundUniqueInput = {
+  NO_SIRETYUM: string
+  NO_SYARYOU: string
+  NO_SYADAIBA: string
 }
 
 export type OldCars_BaseCountOrderByAggregateInput = {

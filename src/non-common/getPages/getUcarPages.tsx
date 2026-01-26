@@ -26,7 +26,7 @@ export const getUcarPages = (props: PageGetterType) => {
         },
         {
           tabId: 'ucar',
-          label: '車両一覧',
+          label: 'QRシート発行一覧',
           link: {
             query: { displayColumns: '下取書類,商品化' },
           },
@@ -39,12 +39,11 @@ export const getUcarPages = (props: PageGetterType) => {
           ROOT: [rootPath],
         },
         {
-          tabId: 'create-process',
-          label: '工程登録',
-          hide: true,
+          tabId: 'search',
+          label: '商品予定車検索',
           ROOT: [rootPath],
-          exclusiveTo: isUcarMember,
         },
+
       ],
     },
 

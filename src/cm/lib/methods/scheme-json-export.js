@@ -4071,6 +4071,11 @@
           "NO_SIRETYUM",
           "NO_SYARYOU",
           "DD_SIIRE"
+        ],
+        [
+          "NO_SIRETYUM",
+          "NO_SYARYOU",
+          "NO_SYADAIBA"
         ]
       ],
       "uniqueIndexes": [
@@ -4080,6 +4085,14 @@
             "NO_SIRETYUM",
             "NO_SYARYOU",
             "DD_SIIRE"
+          ]
+        },
+        {
+          "name": null,
+          "fields": [
+            "NO_SIRETYUM",
+            "NO_SYARYOU",
+            "NO_SYADAIBA"
           ]
         }
       ],
@@ -4438,7 +4451,7 @@
           "isRequired": false,
           "isUnique": false,
           "isId": false,
-          "isReadOnly": false,
+          "isReadOnly": true,
           "hasDefaultValue": false,
           "type": "String",
           "nativeType": null,
@@ -4592,7 +4605,7 @@
           "isRequired": false,
           "isUnique": false,
           "isId": false,
-          "isReadOnly": true,
+          "isReadOnly": false,
           "hasDefaultValue": false,
           "type": "DateTime",
           "nativeType": null,
@@ -4614,12 +4627,12 @@
           "relationFromFields": [
             "NO_SIRETYUM",
             "NO_SYARYOU",
-            "DD_SIIRE"
+            "NO_SYADAIBA"
           ],
           "relationToFields": [
             "NO_SIRETYUM",
             "NO_SYARYOU",
-            "DD_SIIRE"
+            "NO_SYADAIBA"
           ],
           "isGenerated": false,
           "isUpdatedAt": false
@@ -4630,12 +4643,12 @@
         [
           "NO_SIRETYUM",
           "NO_SYARYOU",
-          "DD_KEIRIKEI"
+          "NO_SYADAIBA"
         ],
         [
           "NO_SIRETYUM",
           "NO_SYARYOU",
-          "DD_SIIRE"
+          "DD_KEIRIKEI"
         ]
       ],
       "uniqueIndexes": [
@@ -4644,7 +4657,7 @@
           "fields": [
             "NO_SIRETYUM",
             "NO_SYARYOU",
-            "DD_KEIRIKEI"
+            "NO_SYADAIBA"
           ]
         },
         {
@@ -4652,7 +4665,7 @@
           "fields": [
             "NO_SIRETYUM",
             "NO_SYARYOU",
-            "DD_SIIRE"
+            "DD_KEIRIKEI"
           ]
         }
       ],
@@ -22430,6 +22443,22 @@
       ]
     },
     {
+      "model": "OldCars_Base",
+      "type": "unique",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "NO_SIRETYUM"
+        },
+        {
+          "name": "NO_SYARYOU"
+        },
+        {
+          "name": "NO_SYADAIBA"
+        }
+      ]
+    },
+    {
       "model": "ZAIKO_Base",
       "type": "id",
       "isDefinedOnField": true,
@@ -22517,7 +22546,7 @@
           "name": "NO_SYARYOU"
         },
         {
-          "name": "DD_KEIRIKEI"
+          "name": "NO_SYADAIBA"
         }
       ]
     },
@@ -22533,7 +22562,7 @@
           "name": "NO_SYARYOU"
         },
         {
-          "name": "DD_SIIRE"
+          "name": "DD_KEIRIKEI"
         }
       ]
     },

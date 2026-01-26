@@ -124,6 +124,7 @@ model OldCars_Base {
   ZAIKO_Base ZAIKO_Base?
 
   @@unique([NO_SIRETYUM, NO_SYARYOU, DD_SIIRE])
+  @@unique([NO_SIRETYUM, NO_SYARYOU, NO_SYADAIBA])
   @@index([NO_SYARYOU])
 }
 
@@ -165,10 +166,10 @@ model ZAIKO_Base {
   DT_SAISINUP   String?
   DD_SIIRE      DateTime?
 
-  OldCars_Base OldCars_Base? @relation(fields: [NO_SIRETYUM, NO_SYARYOU, DD_SIIRE], references: [NO_SIRETYUM, NO_SYARYOU, DD_SIIRE])
+  OldCars_Base OldCars_Base? @relation(fields: [NO_SIRETYUM, NO_SYARYOU, NO_SYADAIBA], references: [NO_SIRETYUM, NO_SYARYOU, NO_SYADAIBA])
 
+  @@unique([NO_SIRETYUM, NO_SYARYOU, NO_SYADAIBA])
   @@unique([NO_SIRETYUM, NO_SYARYOU, DD_KEIRIKEI])
-  @@unique([NO_SIRETYUM, NO_SYARYOU, DD_SIIRE])
   @@index([NO_SYARYOU])
   @@index([CD_ZAIKOTEN])
   @@index([NO_SIRETYUM, NO_SYARYOU, DD_SIIRE])

@@ -1,13 +1,12 @@
 'use client'
 
-import {ucarData} from '@app/(apps)/ucar/class/UcarCL'
-import {upassCols} from '@app/(apps)/ucar/files/upass/upass-columns'
+import { ucarData } from '@app/(apps)/ucar/class/UcarCL'
+import { upassCols } from '@app/(apps)/ucar/files/upass/upass-columns'
 
-import {R_Stack} from '@cm/components/styles/common-components/common-components'
+import { R_Stack } from '@cm/components/styles/common-components/common-components'
 
 import AutoGridContainer from '@cm/components/utils/AutoGridContainer'
 
-import useWindowSize from '@cm/hooks/useWindowSize'
 
 // export const WhenCreatingNewCar = ({ucar, router}) => {
 //   return (
@@ -19,38 +18,16 @@ import useWindowSize from '@cm/hooks/useWindowSize'
 //   )
 // }
 
-export const AiSateiDataDisplay = (props: {ucar: ucarData; cols?: any[]; wrapperWidth?: number}) => {
-  const {width} = useWindowSize()
-  const {
-    ucar,
+export const AiSateiDataDisplay = (props: { ucar: ucarData; cols?: any[]; wrapperWidth?: number }) => {
+  const { ucar, } = props
 
-    wrapperWidth = Math.min(width ?? 0 / 2, 1000),
-  } = props
 
-  // const targetCols = sateiColOrigin.filter(obj => {
-  //   const hit = cols === undefined ? true : cols?.includes(obj.id)
-
-  //   return hit
-  // })
 
   const fields = upassCols.filter(col => col.showIn?.qrCreate)
-  // [
-  //   {id: 'sateiID', label: '査定ID', type: 'text', form: {}},
-  //   {id: 'brandName', label: 'ブランド名', type: 'text', form: {}},
-  //   {id: 'grade', label: 'グレード名', type: 'text', form: {}},
-  //   {id: 'type', label: '型式', type: 'text', form: {}},
-  //   {id: 'commonType', label: '通称型式', type: 'text', form: {}},
-  //   {id: 'transmissionType', label: 'ミッション名称', type: 'text', form: {}},
-  //   {id: 'frameNumber', label: 'フレーム番号', type: 'text', form: {}},
-  //   // {id: 'mission_name', label: 'ミッション名', type: 'text', form: {}},
-  //   // {id: 'modelName', label: '車種名', type: 'text', form: {}},
-  //   // {id: 'Barracks', label: '車台番号', type: 'text', form: {}},
-  //   // {id: 'Model_year', label: 'モデル年式', type: 'text', form: {}},
-  // ]
 
   return (
     <div className={`p-2 `}>
-      <AutoGridContainer {...{maxCols: {xl: 1}, className: 'max-w-[1200px] gap-4 gap-y-8'}}>
+      <AutoGridContainer {...{ maxCols: { xl: 1 }, className: 'max-w-[1200px] gap-4 gap-y-8' }}>
         {fields.map(field => {
           const value = ucar?.UPASS?.[field.en] ?? 'データがありません'
           return (

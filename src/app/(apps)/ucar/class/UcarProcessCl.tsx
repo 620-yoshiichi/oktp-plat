@@ -77,12 +77,17 @@ export class UcarProcessCode extends Code<UcarProcessCodeObjectArgs> {
 }
 
 export class UcarProcessCl {
+  // 工程カラーパレット
+  // 営業フェーズ（CS）: グレー → グリーン系（進捗に応じて濃く）
+  // 加修フェーズ（CR）: シアン → ブルー → インディゴ系（段階的に進行）
+  // 完了フェーズ: オレンジ系
+  // サブ工程（PS/OP）: ニュートラル系
   static CODE = new UcarProcessCode({
     STORE_QR_ISSUE: {
       code: 'CS01',
       bqFieldName: 'datetime_0',
       label: 'QR発行',
-      color: '#ececec',
+      color: '#9E9E9E', // グレー（開始前）
       type: '営業',
       list: [`main`],
     },
@@ -90,7 +95,7 @@ export class UcarProcessCl {
       code: 'CS02',
       bqFieldName: 'datetime_1',
       label: '入庫',
-      color: '#00802f',
+      color: '#66BB6A', // ライトグリーン
       type: '営業',
       list: [`main`],
       postHandler: {
@@ -129,7 +134,7 @@ export class UcarProcessCl {
       code: 'CS03',
       bqFieldName: 'datetime_2',
       label: '店長検収',
-      color: '#54b222',
+      color: '#43A047', // グリーン
       type: '店長',
       list: [`main`],
       postHandler: {
@@ -144,7 +149,7 @@ export class UcarProcessCl {
       code: 'CR01',
       bqFieldName: '',
       label: '配送票受領',
-      color: '#62f7ff',
+      color: '#26C6DA', // シアン（加修開始）
       type: '加修',
       list: [`main`],
     },
@@ -153,7 +158,7 @@ export class UcarProcessCl {
       code: 'CR02',
       bqFieldName: 'datetime_4',
       label: 'CR着',
-      color: '#62f7ff',
+      color: '#00ACC1', // ダークシアン
       type: '加修',
       list: [`main`],
     },
@@ -162,7 +167,7 @@ export class UcarProcessCl {
       code: 'CR03',
       bqFieldName: 'datetime_6',
       label: '検収',
-      color: '#007a80',
+      color: '#0097A7', // ティール
       type: '加修',
       list: [`main`],
     },
@@ -170,7 +175,7 @@ export class UcarProcessCl {
       code: 'CR04',
       bqFieldName: 'datetime_7',
       label: '加修開始',
-      color: '#805e00',
+      color: '#42A5F5', // ライトブルー
       type: '加修',
       list: [`main`],
     },
@@ -178,7 +183,7 @@ export class UcarProcessCl {
       code: 'CR05',
       bqFieldName: 'datetime_9',
       label: 'まるくり',
-      color: '#005380',
+      color: '#1E88E5', // ブルー
       type: '加修',
       list: [`main`],
     },
@@ -186,7 +191,7 @@ export class UcarProcessCl {
       code: 'CR06',
       bqFieldName: 'datetime_11',
       label: '検査',
-      color: '#110080',
+      color: '#1976D2', // ダークブルー
       type: '加修',
       list: [`main`],
     },
@@ -194,7 +199,7 @@ export class UcarProcessCl {
       code: 'CR07',
       bqFieldName: 'datetime_12',
       label: '写真',
-      color: '#c7c41e',
+      color: '#5C6BC0', // インディゴ
       type: '加修',
       list: [`main`],
     },
@@ -202,7 +207,7 @@ export class UcarProcessCl {
       code: 'CR08',
       bqFieldName: 'datetime_13',
       label: 'GAZOO',
-      color: '#c5bc09',
+      color: '#7E57C2', // ディープパープル
       type: '加修',
       list: [`main`],
     },
@@ -210,7 +215,7 @@ export class UcarProcessCl {
       code: 'CR09',
       bqFieldName: 'datetime_14',
       label: '商品車受取',
-      color: '#c54509',
+      color: '#FF7043', // ディープオレンジ（完了）
       type: '店長',
       list: [`main`],
     },
@@ -219,7 +224,7 @@ export class UcarProcessCl {
       code: 'PS01',
       bqFieldName: '',
       label: '書類送付',
-      color: '#54b222',
+      color: '#8D6E63', // ブラウン（サブ工程）
       type: '店長',
       list: [`sub`],
     },
@@ -227,7 +232,7 @@ export class UcarProcessCl {
       code: 'OP01',
       bqFieldName: '',
       label: '配送停止',
-      color: '#686868',
+      color: '#78909C', // ブルーグレー（特殊操作）
       type: '店長',
       list: [`sub`],
       postHandler: {
@@ -242,7 +247,7 @@ export class UcarProcessCl {
       code: 'OP02',
       bqFieldName: '',
       label: '現地処理',
-      color: '#686868',
+      color: '#607D8B', // ダークブルーグレー（特殊操作）
       type: '店長',
       list: [`sub`],
       postHandler: {

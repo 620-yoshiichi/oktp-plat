@@ -514,8 +514,8 @@ export type ZAIKO_BaseOrderByWithRelationInput = {
 export type ZAIKO_BaseWhereUniqueInput = Prisma.AtLeast<{
   id?: number
   APPINDEX?: string
+  NO_SIRETYUM_NO_SYARYOU_NO_SYADAIBA?: Prisma.ZAIKO_BaseNO_SIRETYUMNO_SYARYOUNO_SYADAIBACompoundUniqueInput
   NO_SIRETYUM_NO_SYARYOU_DD_KEIRIKEI?: Prisma.ZAIKO_BaseNO_SIRETYUMNO_SYARYOUDD_KEIRIKEICompoundUniqueInput
-  NO_SIRETYUM_NO_SYARYOU_DD_SIIRE?: Prisma.ZAIKO_BaseNO_SIRETYUMNO_SYARYOUDD_SIIRECompoundUniqueInput
   AND?: Prisma.ZAIKO_BaseWhereInput | Prisma.ZAIKO_BaseWhereInput[]
   OR?: Prisma.ZAIKO_BaseWhereInput[]
   NOT?: Prisma.ZAIKO_BaseWhereInput | Prisma.ZAIKO_BaseWhereInput[]
@@ -554,7 +554,7 @@ export type ZAIKO_BaseWhereUniqueInput = Prisma.AtLeast<{
   DT_SAISINUP?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
   DD_SIIRE?: Prisma.DateTimeNullableFilter<"ZAIKO_Base"> | Date | string | null
   OldCars_Base?: Prisma.XOR<Prisma.OldCars_BaseNullableScalarRelationFilter, Prisma.OldCars_BaseWhereInput> | null
-}, "APPINDEX" | "id" | "APPINDEX" | "NO_SIRETYUM_NO_SYARYOU_DD_KEIRIKEI" | "NO_SIRETYUM_NO_SYARYOU_DD_SIIRE">
+}, "APPINDEX" | "id" | "APPINDEX" | "NO_SIRETYUM_NO_SYARYOU_NO_SYADAIBA" | "NO_SIRETYUM_NO_SYARYOU_DD_KEIRIKEI">
 
 export type ZAIKO_BaseOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -665,7 +665,6 @@ export type ZAIKO_BaseCreateInput = {
   KI_TENTOHYJ?: string | null
   CD_ZAIKSYYS?: string | null
   KB_SYASYHAN?: string | null
-  NO_SYADAIBA?: string | null
   KI_SIIREKA?: string | null
   KN_KEI?: string | null
   MJ_ZAIKOST?: string | null
@@ -676,6 +675,7 @@ export type ZAIKO_BaseCreateInput = {
   MJ_21SYASYS?: string | null
   MJ_SIJYOKBM?: string | null
   DT_SAISINUP?: string | null
+  DD_SIIRE?: Date | string | null
   OldCars_Base?: Prisma.OldCars_BaseCreateNestedOneWithoutZAIKO_BaseInput
 }
 
@@ -740,7 +740,6 @@ export type ZAIKO_BaseUpdateInput = {
   KI_TENTOHYJ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   CD_ZAIKSYYS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   KB_SYASYHAN?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  NO_SYADAIBA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   KI_SIIREKA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   KN_KEI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   MJ_ZAIKOST?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -751,6 +750,7 @@ export type ZAIKO_BaseUpdateInput = {
   MJ_21SYASYS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   MJ_SIJYOKBM?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   DT_SAISINUP?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  DD_SIIRE?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   OldCars_Base?: Prisma.OldCars_BaseUpdateOneWithoutZAIKO_BaseNestedInput
 }
 
@@ -854,7 +854,6 @@ export type ZAIKO_BaseUpdateManyMutationInput = {
   KI_TENTOHYJ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   CD_ZAIKSYYS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   KB_SYASYHAN?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  NO_SYADAIBA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   KI_SIIREKA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   KN_KEI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   MJ_ZAIKOST?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -865,6 +864,7 @@ export type ZAIKO_BaseUpdateManyMutationInput = {
   MJ_21SYASYS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   MJ_SIJYOKBM?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   DT_SAISINUP?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  DD_SIIRE?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ZAIKO_BaseUncheckedUpdateManyInput = {
@@ -911,16 +911,16 @@ export type ZAIKO_BaseNullableScalarRelationFilter = {
   isNot?: Prisma.ZAIKO_BaseWhereInput | null
 }
 
+export type ZAIKO_BaseNO_SIRETYUMNO_SYARYOUNO_SYADAIBACompoundUniqueInput = {
+  NO_SIRETYUM: string
+  NO_SYARYOU: string
+  NO_SYADAIBA: string
+}
+
 export type ZAIKO_BaseNO_SIRETYUMNO_SYARYOUDD_KEIRIKEICompoundUniqueInput = {
   NO_SIRETYUM: string
   NO_SYARYOU: string
   DD_KEIRIKEI: Date | string
-}
-
-export type ZAIKO_BaseNO_SIRETYUMNO_SYARYOUDD_SIIRECompoundUniqueInput = {
-  NO_SIRETYUM: string
-  NO_SYARYOU: string
-  DD_SIIRE: Date | string
 }
 
 export type ZAIKO_BaseCountOrderByAggregateInput = {
@@ -1105,7 +1105,6 @@ export type ZAIKO_BaseCreateWithoutOldCars_BaseInput = {
   KI_TENTOHYJ?: string | null
   CD_ZAIKSYYS?: string | null
   KB_SYASYHAN?: string | null
-  NO_SYADAIBA?: string | null
   KI_SIIREKA?: string | null
   KN_KEI?: string | null
   MJ_ZAIKOST?: string | null
@@ -1116,6 +1115,7 @@ export type ZAIKO_BaseCreateWithoutOldCars_BaseInput = {
   MJ_21SYASYS?: string | null
   MJ_SIJYOKBM?: string | null
   DT_SAISINUP?: string | null
+  DD_SIIRE?: Date | string | null
 }
 
 export type ZAIKO_BaseUncheckedCreateWithoutOldCars_BaseInput = {
@@ -1141,7 +1141,6 @@ export type ZAIKO_BaseUncheckedCreateWithoutOldCars_BaseInput = {
   KI_TENTOHYJ?: string | null
   CD_ZAIKSYYS?: string | null
   KB_SYASYHAN?: string | null
-  NO_SYADAIBA?: string | null
   KI_SIIREKA?: string | null
   KN_KEI?: string | null
   MJ_ZAIKOST?: string | null
@@ -1152,6 +1151,7 @@ export type ZAIKO_BaseUncheckedCreateWithoutOldCars_BaseInput = {
   MJ_21SYASYS?: string | null
   MJ_SIJYOKBM?: string | null
   DT_SAISINUP?: string | null
+  DD_SIIRE?: Date | string | null
 }
 
 export type ZAIKO_BaseCreateOrConnectWithoutOldCars_BaseInput = {
@@ -1192,7 +1192,6 @@ export type ZAIKO_BaseUpdateWithoutOldCars_BaseInput = {
   KI_TENTOHYJ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   CD_ZAIKSYYS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   KB_SYASYHAN?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  NO_SYADAIBA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   KI_SIIREKA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   KN_KEI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   MJ_ZAIKOST?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1203,6 +1202,7 @@ export type ZAIKO_BaseUpdateWithoutOldCars_BaseInput = {
   MJ_21SYASYS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   MJ_SIJYOKBM?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   DT_SAISINUP?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  DD_SIIRE?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ZAIKO_BaseUncheckedUpdateWithoutOldCars_BaseInput = {
@@ -1228,7 +1228,6 @@ export type ZAIKO_BaseUncheckedUpdateWithoutOldCars_BaseInput = {
   KI_TENTOHYJ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   CD_ZAIKSYYS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   KB_SYASYHAN?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  NO_SYADAIBA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   KI_SIIREKA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   KN_KEI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   MJ_ZAIKOST?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1239,6 +1238,7 @@ export type ZAIKO_BaseUncheckedUpdateWithoutOldCars_BaseInput = {
   MJ_21SYASYS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   MJ_SIJYOKBM?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   DT_SAISINUP?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  DD_SIIRE?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
