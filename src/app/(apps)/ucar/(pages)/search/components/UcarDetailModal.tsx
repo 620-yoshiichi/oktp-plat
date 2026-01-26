@@ -5,6 +5,7 @@ import ShadModal from '@shadcn/ui/Organisms/ShadModal'
 import { Button } from '@cm/components/styles/common-components/Button'
 import type { UcarSearchResult } from '../types'
 import { formatDate } from '@cm/class/Days/date-utils/formatters'
+import { UcarProcessCl } from '@app/(apps)/ucar/class/UcarProcessCl'
 
 type UcarDetailModalProps = {
   isOpen: boolean
@@ -121,48 +122,29 @@ export default function UcarDetailModal({
           <InfoRow label="駆動方式" value={upass?.driveType} />
         </dl>
 
-        {/* 査定情報 */}
-        {upass && (
-          <>
-            <SectionHeader title="査定情報" />
-            <dl className="space-y-0">
-              <InfoRow
-                label="査定日"
-                value={upass.assessmentdatetime ? formatDate(new Date(upass.assessmentdatetime)) : null}
-              />
-              <InfoRow
-                label="査定価格"
-                value={
-                  upass.assessmentPrice
-                    ? `¥${Number(upass.assessmentPrice).toLocaleString()}`
-                    : null
-                }
-              />
-            </dl>
-          </>
-        )}
+
 
         {/* 工程履歴 */}
         {ucar.UcarProcess && ucar.UcarProcess.length > 0 && (
           <>
             <SectionHeader title="工程履歴" />
             <div className="space-y-2">
-              {ucar.UcarProcess.map((process, index) => (
-                <div
+              {ucar.UcarProcess.map((process, index) => {
+                return <div
                   key={process.id}
                   className={`
-                    flex items-center justify-between px-3 py-2 rounded-md
-                    ${index === 0 ? 'bg-emerald-50 border border-emerald-200' : 'bg-gray-50'}
-                  `}
+                  flex items-center justify-between px-3 py-2 rounded-md
+                  ${index === 0 ? 'bg-emerald-50 border border-emerald-200' : 'bg-gray-50'}
+                `}
                 >
                   <div className="flex items-center gap-3">
                     <span
                       className={`
-                        px-2 py-1 text-xs font-medium rounded
-                        ${index === 0 ? 'bg-emerald-600 text-white' : 'bg-gray-200 text-gray-700'}
-                      `}
+                      px-2 py-1 text-xs font-medium rounded
+                      ${index === 0 ? 'bg-emerald-600 text-white' : 'bg-gray-200 text-gray-700'}
+                    `}
                     >
-                      {process.processCode}
+                      {UcarProcessCl.CODE.byCode(process.processCode ?? '')?.label || '-'}
                     </span>
                     <span className="text-sm text-gray-600">
                       {process.User?.name || '-'}
@@ -172,18 +154,12 @@ export default function UcarDetailModal({
                     {process.date ? formatDate(new Date(process.date)) : '-'}
                   </span>
                 </div>
-              ))}
+              })}
             </div>
           </>
         )}
 
-        {/* 書類関連 */}
-        <SectionHeader title="書類関連" />
-        <dl className="space-y-0">
-          <InfoRow label="名変日" value={ucar.meihenBi ? formatDate(new Date(ucar.meihenBi)) : null} />
-          <InfoRow label="抹消日" value={ucar.masshoBi ? formatDate(new Date(ucar.masshoBi)) : null} />
-          <InfoRow label="二次登録日" value={ucar.secondMeihenbi ? formatDate(new Date(ucar.secondMeihenbi)) : null} />
-        </dl>
+
 
         {/* 備考 */}
         {ucar.remarks && (

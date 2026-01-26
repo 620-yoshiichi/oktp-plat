@@ -18,29 +18,37 @@ const THRESHOLD_DATE = toUtc(new Date(`2025-01-01`))
 
 export const UCAR_CONSTANTS: {
   shiireGroupUserCode: number
-  commonQuery: Prisma.UcarWhereInput
+  getCommonQuery: (props: { active?: true | undefined }) => Prisma.UcarWhereInput
   columns: any
 } = {
   shiireGroupUserCode: 99999931,
-  commonQuery: {
-    OR: [
-      // { DD_SIIRE: null },
-      {
-        AND: [
+  getCommonQuery: (props: { active?: true | undefined }) => {
+
+    // if (props.active === undefined) {
+    //   return {}
+    // }
 
 
-          {
-            OR: [
-              { OldCars_Base: { KI_HANKAKA: '0' } }, //まだ売り上げが立っていないもの
-              { createdAt: { gte: THRESHOLD_DATE } }, //作成日が2025-01-01以降のもの
-            ],
-          },
+    const result = {
+      OR: [
+        // { DD_SIIRE: null },
+        {
+          AND: [
+            {
+              OR: [
+                { OldCars_Base: { KI_HANKAKA: '0' } }, //まだ売り上げが立っていないもの
+                { createdAt: { gte: THRESHOLD_DATE } }, //作成日が2025-01-01以降のもの
+              ],
+            },
+            { active: true },
 
-          { active: true },
-        ],
-      }
-    ]
+          ],
+        }
+      ].filter(Boolean)
+    }
 
+    console.log(result)  //logs
+    return result
   },
 
   columns: {

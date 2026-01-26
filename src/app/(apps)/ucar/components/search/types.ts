@@ -68,6 +68,7 @@ export const URL_PARAM_KEYS: Record<keyof UcarSearchValues, string> = {
 export type StoreOption = {
   id: number
   name: string
+  code: number
 }
 
 /**

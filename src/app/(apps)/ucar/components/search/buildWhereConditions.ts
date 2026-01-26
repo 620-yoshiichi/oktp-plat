@@ -1,5 +1,6 @@
 import type {Prisma} from '@prisma/generated/prisma/client'
 import type {UcarSearchValues} from './types'
+import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 
 // 軽自動車の排気量上限（660cc）
 const KEI_DISPLACEMENT_MAX = '660'
@@ -57,7 +58,7 @@ function buildBrandCondition(brand: string): Prisma.UcarWhereInput {
  * @param values 検索値（部分的な値も可）
  * @returns Prisma.UcarWhereInput の配列（ANDで結合して使用）
  */
-export function buildWhereConditions(values: Partial<UcarSearchValues>): Prisma.UcarWhereInput[] {
+export async function buildWhereConditions(values: Partial<UcarSearchValues>): Promise<Prisma.UcarWhereInput[]> {
   const whereConditions: Prisma.UcarWhereInput[] = []
 
   // キーワード検索（半角スペースで区切った複数ワードをAND検索）
@@ -113,12 +114,16 @@ export function buildWhereConditions(values: Partial<UcarSearchValues>): Prisma.
   // なので、CD_ZAIKOTEN または destinationStoreId のどちらかにマッチするようにする
   if (values.destinationStoreId && values.destinationStoreId !== '') {
     const storeId = parseInt(values.destinationStoreId, 10)
+    const {result: store} = await doStandardPrisma('store', 'findUnique', {
+      where: {id: storeId},
+    })
+
     whereConditions.push({
       OR: [
         {
           OldCars_Base: {
             ZAIKO_Base: {
-              CD_ZAIKOTEN: String(storeId),
+              CD_ZAIKOTEN: String(store?.code ?? ''),
             },
           },
         },

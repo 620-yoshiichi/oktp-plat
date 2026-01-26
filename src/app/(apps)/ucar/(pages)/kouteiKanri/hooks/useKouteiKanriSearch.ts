@@ -41,7 +41,6 @@ export function useKouteiKanriSearch(): UseKouteiKanriSearchReturn {
 
     try {
       const response = await searchKouteiKanri(params)
-      console.log({response}) //logs
 
       if (response.success && response.result) {
         setResults(response.result)

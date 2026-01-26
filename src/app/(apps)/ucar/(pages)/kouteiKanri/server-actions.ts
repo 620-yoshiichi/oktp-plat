@@ -42,13 +42,9 @@ export async function searchKouteiKanri(params: KouteiKanriSearchParams): Promis
 
     // 基本条件
     const whereConditions: Prisma.UcarWhereInput[] = [
-      {
-        daihatsuReserve: null,
-        OldCars_Base: {
-          ZAIKO_Base: {isNot: null},
-        },
-      },
-      ...buildWhereConditions(searchValues),
+      //
+      {daihatsuReserve: null},
+      ...(await buildWhereConditions(searchValues)),
     ]
 
     // 最新工程でフィルタ

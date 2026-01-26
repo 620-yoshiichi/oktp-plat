@@ -45,14 +45,14 @@ export async function searchUcars(params: UcarSearchParams): Promise<UcarSearchR
     // 共通関数で検索条件を構築
     const whereConditions: Prisma.UcarWhereInput[] = [
       {daihatsuReserve: null},
-      ...buildWhereConditions({
+      ...(await buildWhereConditions({
         keyword,
         brandName,
         driveType,
         isKei,
         includeSold,
         destinationStoreId,
-      }),
+      })),
     ]
 
     // 最新工程でフィルタ（非同期処理が必要なため別途処理）
@@ -183,6 +183,7 @@ export async function getStoreList(): Promise<StoreListResponse> {
       select: {
         id: true,
         name: true,
+        code: true,
       },
       orderBy: {sortOrder: 'asc'},
     })

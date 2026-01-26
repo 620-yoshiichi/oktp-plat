@@ -57,6 +57,7 @@ export type UpassData = {
 export type StoreData = {
   id: number
   name: string
+  code: number
 }
 
 // UcarProcessの型
