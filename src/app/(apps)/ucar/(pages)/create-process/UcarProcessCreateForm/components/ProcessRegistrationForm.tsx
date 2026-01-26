@@ -33,7 +33,7 @@ export const ProcessRegistrationForm = ({
   formRef,
 }: Props) => {
   return (
-    <div ref={formRef} >
+    <div ref={formRef} className={cn(disabled ? 'pointer-events-none opacity-50' : '')}>
       <div>
         <Text color="red">工程を登録してください。</Text>
         <ProcessRegisterForm
