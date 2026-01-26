@@ -1,33 +1,33 @@
 'use server'
 
-import {superTrim} from '@cm/lib/methods/common'
+import { superTrim } from '@cm/lib/methods/common'
 import prisma from 'src/lib/prisma'
 
-import {availableNumberWhere, number98Select} from '@app/(apps)/ucar/(lib)/num98/num98Constants'
-import {Prisma} from '@prisma/generated/prisma/client'
+import { availableNumberWhere, number98Select } from '@app/(apps)/ucar/(lib)/num98/num98Constants'
+import { Prisma } from '@prisma/generated/prisma/client'
 
 export type getAvailable98NumbersReturn = Awaited<ReturnType<typeof getAvailable98Numbers>>
 export type number98Item = Awaited<ReturnType<typeof getAvailable98Numbers>>['available98Numbers'][number]
 
-export const getAvailable98Numbers = async (props: {take?: number; additionalWhere?: Prisma.Number98WhereInput}) => {
-  const {take = 10, additionalWhere = {}} = props
+export const getAvailable98Numbers = async (props: { take?: number; additionalWhere?: Prisma.Number98WhereInput }) => {
+  const { take = 10, additionalWhere = {} } = props
   const lastnNmber98History = await prisma.number98IssueHistory.findFirst({
-    orderBy: [{createdAt: `desc`}],
+    orderBy: [{ createdAt: `desc` }],
     take: 1,
   })
 
   let nextNumber98
   if (lastnNmber98History?.number) {
     const nextNumber98Result = await prisma.number98.findFirst({
-      where: {number: {gt: lastnNmber98History.number}},
-      orderBy: [{sortNumber: `asc`}],
+      where: { number: { gt: lastnNmber98History.number } },
+      orderBy: [{ sortNumber: `asc` }],
       take: 1,
     })
 
     nextNumber98 = nextNumber98Result?.number
   } else {
     const firstNumber98Result = await prisma.number98.findFirst({
-      orderBy: [{sortNumber: `asc`}],
+      orderBy: [{ sortNumber: `asc` }],
       take: 1,
     })
 
@@ -39,13 +39,13 @@ export const getAvailable98Numbers = async (props: {take?: number; additionalWhe
     where: {
       AND: [
         // 利用中の98番号を除外
-        {...availableNumberWhere},
-        {sortNumber: {gte: Number(superTrim(nextNumber98))}},
+        { ...availableNumberWhere },
+        { sortNumber: { gte: Number(superTrim(nextNumber98)) } },
         additionalWhere,
       ],
     },
 
-    orderBy: [{sortNumber: `asc`}],
+    orderBy: [{ sortNumber: `asc` }],
     take,
   })
 
@@ -56,13 +56,13 @@ export const getAvailable98Numbers = async (props: {take?: number; additionalWhe
       where: {
         AND: [
           // 利用中の98番号を除外
-          {...availableNumberWhere},
-          {sortNumber: {lte: Number(superTrim(nextNumber98))}},
+          { ...availableNumberWhere },
+          { sortNumber: { lte: Number(superTrim(nextNumber98)) } },
           additionalWhere,
         ],
       },
       take,
-      orderBy: [{sortNumber: `asc`}],
+      orderBy: [{ sortNumber: `asc` }],
     })
     available98Numbers = [...availablePreviousNumbers, ...available98Numbers]
   }
@@ -73,8 +73,8 @@ export const getAvailable98Numbers = async (props: {take?: number; additionalWhe
   }
 }
 
-export const getNonAvailable98Numbers = async (props: {take?: number}) => {
-  const {take = 10} = props
+export const getNonAvailable98Numbers = async (props: { take?: number }) => {
+  const { take = 10 } = props
   const nonAvailable98Numbers = await prisma.number98.findMany({
     select: number98Select,
     where: {
@@ -82,5 +82,5 @@ export const getNonAvailable98Numbers = async (props: {take?: number}) => {
     },
     take,
   })
-  return {nonAvailable98Numbers}
+  return { nonAvailable98Numbers }
 }

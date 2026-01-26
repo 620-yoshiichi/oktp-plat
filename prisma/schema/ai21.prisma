@@ -128,6 +128,22 @@ model OldCars_Base {
   @@index([NO_SYARYOU])
 }
 
+model Number98 {
+  id         Int       @id @default(autoincrement())
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime? @updatedAt
+  active     Boolean   @default(true)
+  sortOrder  Float     @default(0)
+  number     String    @unique
+  sortNumber Int?
+  occupied   Boolean?  @default(false)
+
+  Ucar         Ucar[]
+  OldCars_Base OldCars_Base[]
+
+  ZAIKO_Base ZAIKO_Base[]
+}
+
 model ZAIKO_Base {
   id            Int       @unique @default(autoincrement())
   sortOrder     Float     @default(0)
@@ -165,6 +181,8 @@ model ZAIKO_Base {
   MJ_SIJYOKBM   String?
   DT_SAISINUP   String?
   DD_SIIRE      DateTime?
+
+  Number98 Number98? @relation(fields: [NO_SYARYOU], references: [number])
 
   OldCars_Base OldCars_Base? @relation(fields: [NO_SIRETYUM, NO_SYARYOU, NO_SYADAIBA], references: [NO_SIRETYUM, NO_SYARYOU, NO_SYADAIBA])
 

@@ -1219,11 +1219,6 @@ export type OldCars_BaseSumOrderByAggregateInput = {
   sortOrder?: Prisma.SortOrder
 }
 
-export type OldCars_BaseNullableScalarRelationFilter = {
-  is?: Prisma.OldCars_BaseWhereInput | null
-  isNot?: Prisma.OldCars_BaseWhereInput | null
-}
-
 export type OldCars_BaseListRelationFilter = {
   every?: Prisma.OldCars_BaseWhereInput
   some?: Prisma.OldCars_BaseWhereInput
@@ -1234,36 +1229,9 @@ export type OldCars_BaseOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type OldCars_BaseCreateNestedOneWithoutZAIKO_BaseInput = {
-  create?: Prisma.XOR<Prisma.OldCars_BaseCreateWithoutZAIKO_BaseInput, Prisma.OldCars_BaseUncheckedCreateWithoutZAIKO_BaseInput>
-  connectOrCreate?: Prisma.OldCars_BaseCreateOrConnectWithoutZAIKO_BaseInput
-  connect?: Prisma.OldCars_BaseWhereUniqueInput
-}
-
-export type OldCars_BaseUpdateOneWithoutZAIKO_BaseNestedInput = {
-  create?: Prisma.XOR<Prisma.OldCars_BaseCreateWithoutZAIKO_BaseInput, Prisma.OldCars_BaseUncheckedCreateWithoutZAIKO_BaseInput>
-  connectOrCreate?: Prisma.OldCars_BaseCreateOrConnectWithoutZAIKO_BaseInput
-  upsert?: Prisma.OldCars_BaseUpsertWithoutZAIKO_BaseInput
-  disconnect?: Prisma.OldCars_BaseWhereInput | boolean
-  delete?: Prisma.OldCars_BaseWhereInput | boolean
-  connect?: Prisma.OldCars_BaseWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.OldCars_BaseUpdateToOneWithWhereWithoutZAIKO_BaseInput, Prisma.OldCars_BaseUpdateWithoutZAIKO_BaseInput>, Prisma.OldCars_BaseUncheckedUpdateWithoutZAIKO_BaseInput>
-}
-
-export type OldCars_BaseCreateNestedOneWithoutUcarInput = {
-  create?: Prisma.XOR<Prisma.OldCars_BaseCreateWithoutUcarInput, Prisma.OldCars_BaseUncheckedCreateWithoutUcarInput>
-  connectOrCreate?: Prisma.OldCars_BaseCreateOrConnectWithoutUcarInput
-  connect?: Prisma.OldCars_BaseWhereUniqueInput
-}
-
-export type OldCars_BaseUpdateOneWithoutUcarNestedInput = {
-  create?: Prisma.XOR<Prisma.OldCars_BaseCreateWithoutUcarInput, Prisma.OldCars_BaseUncheckedCreateWithoutUcarInput>
-  connectOrCreate?: Prisma.OldCars_BaseCreateOrConnectWithoutUcarInput
-  upsert?: Prisma.OldCars_BaseUpsertWithoutUcarInput
-  disconnect?: Prisma.OldCars_BaseWhereInput | boolean
-  delete?: Prisma.OldCars_BaseWhereInput | boolean
-  connect?: Prisma.OldCars_BaseWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.OldCars_BaseUpdateToOneWithWhereWithoutUcarInput, Prisma.OldCars_BaseUpdateWithoutUcarInput>, Prisma.OldCars_BaseUncheckedUpdateWithoutUcarInput>
+export type OldCars_BaseNullableScalarRelationFilter = {
+  is?: Prisma.OldCars_BaseWhereInput | null
+  isNot?: Prisma.OldCars_BaseWhereInput | null
 }
 
 export type OldCars_BaseCreateNestedManyWithoutNumber98Input = {
@@ -1306,6 +1274,207 @@ export type OldCars_BaseUncheckedUpdateManyWithoutNumber98NestedInput = {
   update?: Prisma.OldCars_BaseUpdateWithWhereUniqueWithoutNumber98Input | Prisma.OldCars_BaseUpdateWithWhereUniqueWithoutNumber98Input[]
   updateMany?: Prisma.OldCars_BaseUpdateManyWithWhereWithoutNumber98Input | Prisma.OldCars_BaseUpdateManyWithWhereWithoutNumber98Input[]
   deleteMany?: Prisma.OldCars_BaseScalarWhereInput | Prisma.OldCars_BaseScalarWhereInput[]
+}
+
+export type OldCars_BaseCreateNestedOneWithoutZAIKO_BaseInput = {
+  create?: Prisma.XOR<Prisma.OldCars_BaseCreateWithoutZAIKO_BaseInput, Prisma.OldCars_BaseUncheckedCreateWithoutZAIKO_BaseInput>
+  connectOrCreate?: Prisma.OldCars_BaseCreateOrConnectWithoutZAIKO_BaseInput
+  connect?: Prisma.OldCars_BaseWhereUniqueInput
+}
+
+export type OldCars_BaseUpdateOneWithoutZAIKO_BaseNestedInput = {
+  create?: Prisma.XOR<Prisma.OldCars_BaseCreateWithoutZAIKO_BaseInput, Prisma.OldCars_BaseUncheckedCreateWithoutZAIKO_BaseInput>
+  connectOrCreate?: Prisma.OldCars_BaseCreateOrConnectWithoutZAIKO_BaseInput
+  upsert?: Prisma.OldCars_BaseUpsertWithoutZAIKO_BaseInput
+  disconnect?: Prisma.OldCars_BaseWhereInput | boolean
+  delete?: Prisma.OldCars_BaseWhereInput | boolean
+  connect?: Prisma.OldCars_BaseWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OldCars_BaseUpdateToOneWithWhereWithoutZAIKO_BaseInput, Prisma.OldCars_BaseUpdateWithoutZAIKO_BaseInput>, Prisma.OldCars_BaseUncheckedUpdateWithoutZAIKO_BaseInput>
+}
+
+export type OldCars_BaseCreateNestedOneWithoutUcarInput = {
+  create?: Prisma.XOR<Prisma.OldCars_BaseCreateWithoutUcarInput, Prisma.OldCars_BaseUncheckedCreateWithoutUcarInput>
+  connectOrCreate?: Prisma.OldCars_BaseCreateOrConnectWithoutUcarInput
+  connect?: Prisma.OldCars_BaseWhereUniqueInput
+}
+
+export type OldCars_BaseUpdateOneWithoutUcarNestedInput = {
+  create?: Prisma.XOR<Prisma.OldCars_BaseCreateWithoutUcarInput, Prisma.OldCars_BaseUncheckedCreateWithoutUcarInput>
+  connectOrCreate?: Prisma.OldCars_BaseCreateOrConnectWithoutUcarInput
+  upsert?: Prisma.OldCars_BaseUpsertWithoutUcarInput
+  disconnect?: Prisma.OldCars_BaseWhereInput | boolean
+  delete?: Prisma.OldCars_BaseWhereInput | boolean
+  connect?: Prisma.OldCars_BaseWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OldCars_BaseUpdateToOneWithWhereWithoutUcarInput, Prisma.OldCars_BaseUpdateWithoutUcarInput>, Prisma.OldCars_BaseUncheckedUpdateWithoutUcarInput>
+}
+
+export type OldCars_BaseCreateWithoutNumber98Input = {
+  id?: number
+  sortOrder?: number
+  APPINDEX: string
+  CD_21SYAMEI?: string | null
+  MJ_SYAMEI?: string | null
+  CD_HANSTAFF?: string | null
+  CD_HANTENPO?: string | null
+  NO_SIRETYUM?: string | null
+  MJ_SIRENORI?: string | null
+  KB_SIRETOSY?: string | null
+  CD_SIRETOGY?: string | null
+  NO_SIRETOSE?: string | null
+  NO_HANJTRIK?: string | null
+  KB_HANTOSY?: string | null
+  CD_HANTOGY?: string | null
+  NO_HANTOSE?: string | null
+  CD_SITASTAF?: string | null
+  DD_SIIRE?: Date | string | null
+  DD_SIREBD?: string | null
+  SU_SYODOTOR?: string | null
+  NO_FRAME?: string | null
+  KI_SIIREKA?: string | null
+  KI_HANKAKA?: string | null
+  KB_SIIRE?: string | null
+  KB_SIHARAI?: string | null
+  KB_URIAGE?: string | null
+  NO_CYUMON?: string | null
+  NO_CYUMONED?: string | null
+  NO_SYADAIBA?: string | null
+  DT_SAISINUP?: string | null
+  MJ_KATASIKI?: string | null
+  NU_SOUKOUKM?: string | null
+  CD_SIRETENP?: string | null
+  KJ_SIRESAKI?: string | null
+  KB_UC1JTORO?: string | null
+  DD_URIAGE?: Date | string | null
+  DD_1JTOROKU?: Date | string | null
+  DD_2JTOROKU?: Date | string | null
+  DD_SYKNMANR?: Date | string | null
+  DD_SITASYUK?: Date | string | null
+  DD_NOSYA?: Date | string | null
+  MJ_SITADOTE?: string | null
+  Ucar?: Prisma.UcarCreateNestedOneWithoutOldCars_BaseInput
+  ZAIKO_Base?: Prisma.ZAIKO_BaseCreateNestedOneWithoutOldCars_BaseInput
+}
+
+export type OldCars_BaseUncheckedCreateWithoutNumber98Input = {
+  id?: number
+  sortOrder?: number
+  APPINDEX: string
+  CD_21SYAMEI?: string | null
+  MJ_SYAMEI?: string | null
+  CD_HANSTAFF?: string | null
+  CD_HANTENPO?: string | null
+  NO_SIRETYUM?: string | null
+  MJ_SIRENORI?: string | null
+  KB_SIRETOSY?: string | null
+  CD_SIRETOGY?: string | null
+  NO_SIRETOSE?: string | null
+  NO_HANJTRIK?: string | null
+  KB_HANTOSY?: string | null
+  CD_HANTOGY?: string | null
+  NO_HANTOSE?: string | null
+  CD_SITASTAF?: string | null
+  DD_SIIRE?: Date | string | null
+  DD_SIREBD?: string | null
+  SU_SYODOTOR?: string | null
+  NO_FRAME?: string | null
+  KI_SIIREKA?: string | null
+  KI_HANKAKA?: string | null
+  KB_SIIRE?: string | null
+  KB_SIHARAI?: string | null
+  KB_URIAGE?: string | null
+  NO_CYUMON?: string | null
+  NO_CYUMONED?: string | null
+  NO_SYADAIBA?: string | null
+  DT_SAISINUP?: string | null
+  MJ_KATASIKI?: string | null
+  NU_SOUKOUKM?: string | null
+  CD_SIRETENP?: string | null
+  KJ_SIRESAKI?: string | null
+  KB_UC1JTORO?: string | null
+  DD_URIAGE?: Date | string | null
+  DD_1JTOROKU?: Date | string | null
+  DD_2JTOROKU?: Date | string | null
+  DD_SYKNMANR?: Date | string | null
+  DD_SITASYUK?: Date | string | null
+  DD_NOSYA?: Date | string | null
+  MJ_SITADOTE?: string | null
+  Ucar?: Prisma.UcarUncheckedCreateNestedOneWithoutOldCars_BaseInput
+  ZAIKO_Base?: Prisma.ZAIKO_BaseUncheckedCreateNestedOneWithoutOldCars_BaseInput
+}
+
+export type OldCars_BaseCreateOrConnectWithoutNumber98Input = {
+  where: Prisma.OldCars_BaseWhereUniqueInput
+  create: Prisma.XOR<Prisma.OldCars_BaseCreateWithoutNumber98Input, Prisma.OldCars_BaseUncheckedCreateWithoutNumber98Input>
+}
+
+export type OldCars_BaseCreateManyNumber98InputEnvelope = {
+  data: Prisma.OldCars_BaseCreateManyNumber98Input | Prisma.OldCars_BaseCreateManyNumber98Input[]
+  skipDuplicates?: boolean
+}
+
+export type OldCars_BaseUpsertWithWhereUniqueWithoutNumber98Input = {
+  where: Prisma.OldCars_BaseWhereUniqueInput
+  update: Prisma.XOR<Prisma.OldCars_BaseUpdateWithoutNumber98Input, Prisma.OldCars_BaseUncheckedUpdateWithoutNumber98Input>
+  create: Prisma.XOR<Prisma.OldCars_BaseCreateWithoutNumber98Input, Prisma.OldCars_BaseUncheckedCreateWithoutNumber98Input>
+}
+
+export type OldCars_BaseUpdateWithWhereUniqueWithoutNumber98Input = {
+  where: Prisma.OldCars_BaseWhereUniqueInput
+  data: Prisma.XOR<Prisma.OldCars_BaseUpdateWithoutNumber98Input, Prisma.OldCars_BaseUncheckedUpdateWithoutNumber98Input>
+}
+
+export type OldCars_BaseUpdateManyWithWhereWithoutNumber98Input = {
+  where: Prisma.OldCars_BaseScalarWhereInput
+  data: Prisma.XOR<Prisma.OldCars_BaseUpdateManyMutationInput, Prisma.OldCars_BaseUncheckedUpdateManyWithoutNumber98Input>
+}
+
+export type OldCars_BaseScalarWhereInput = {
+  AND?: Prisma.OldCars_BaseScalarWhereInput | Prisma.OldCars_BaseScalarWhereInput[]
+  OR?: Prisma.OldCars_BaseScalarWhereInput[]
+  NOT?: Prisma.OldCars_BaseScalarWhereInput | Prisma.OldCars_BaseScalarWhereInput[]
+  id?: Prisma.IntFilter<"OldCars_Base"> | number
+  sortOrder?: Prisma.FloatFilter<"OldCars_Base"> | number
+  APPINDEX?: Prisma.StringFilter<"OldCars_Base"> | string
+  CD_21SYAMEI?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  MJ_SYAMEI?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  CD_HANSTAFF?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  CD_HANTENPO?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  NO_SIRETYUM?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  MJ_SIRENORI?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  KB_SIRETOSY?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  CD_SIRETOGY?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  NO_SIRETOSE?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  NO_HANJTRIK?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  KB_HANTOSY?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  CD_HANTOGY?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  NO_HANTOSE?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  CD_SITASTAF?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  DD_SIIRE?: Prisma.DateTimeNullableFilter<"OldCars_Base"> | Date | string | null
+  DD_SIREBD?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  SU_SYODOTOR?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  NO_FRAME?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  KI_SIIREKA?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  KI_HANKAKA?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  KB_SIIRE?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  KB_SIHARAI?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  KB_URIAGE?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  NO_CYUMON?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  NO_CYUMONED?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  NO_SYARYOU?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  NO_SYADAIBA?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  DT_SAISINUP?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  MJ_KATASIKI?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  NU_SOUKOUKM?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  CD_SIRETENP?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  KJ_SIRESAKI?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  KB_UC1JTORO?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
+  DD_URIAGE?: Prisma.DateTimeNullableFilter<"OldCars_Base"> | Date | string | null
+  DD_1JTOROKU?: Prisma.DateTimeNullableFilter<"OldCars_Base"> | Date | string | null
+  DD_2JTOROKU?: Prisma.DateTimeNullableFilter<"OldCars_Base"> | Date | string | null
+  DD_SYKNMANR?: Prisma.DateTimeNullableFilter<"OldCars_Base"> | Date | string | null
+  DD_SITASYUK?: Prisma.DateTimeNullableFilter<"OldCars_Base"> | Date | string | null
+  DD_NOSYA?: Prisma.DateTimeNullableFilter<"OldCars_Base"> | Date | string | null
+  MJ_SITADOTE?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
 }
 
 export type OldCars_BaseCreateWithoutZAIKO_BaseInput = {
@@ -1712,175 +1881,6 @@ export type OldCars_BaseUncheckedUpdateWithoutUcarInput = {
   DD_NOSYA?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   MJ_SITADOTE?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ZAIKO_Base?: Prisma.ZAIKO_BaseUncheckedUpdateOneWithoutOldCars_BaseNestedInput
-}
-
-export type OldCars_BaseCreateWithoutNumber98Input = {
-  id?: number
-  sortOrder?: number
-  APPINDEX: string
-  CD_21SYAMEI?: string | null
-  MJ_SYAMEI?: string | null
-  CD_HANSTAFF?: string | null
-  CD_HANTENPO?: string | null
-  NO_SIRETYUM?: string | null
-  MJ_SIRENORI?: string | null
-  KB_SIRETOSY?: string | null
-  CD_SIRETOGY?: string | null
-  NO_SIRETOSE?: string | null
-  NO_HANJTRIK?: string | null
-  KB_HANTOSY?: string | null
-  CD_HANTOGY?: string | null
-  NO_HANTOSE?: string | null
-  CD_SITASTAF?: string | null
-  DD_SIIRE?: Date | string | null
-  DD_SIREBD?: string | null
-  SU_SYODOTOR?: string | null
-  NO_FRAME?: string | null
-  KI_SIIREKA?: string | null
-  KI_HANKAKA?: string | null
-  KB_SIIRE?: string | null
-  KB_SIHARAI?: string | null
-  KB_URIAGE?: string | null
-  NO_CYUMON?: string | null
-  NO_CYUMONED?: string | null
-  NO_SYADAIBA?: string | null
-  DT_SAISINUP?: string | null
-  MJ_KATASIKI?: string | null
-  NU_SOUKOUKM?: string | null
-  CD_SIRETENP?: string | null
-  KJ_SIRESAKI?: string | null
-  KB_UC1JTORO?: string | null
-  DD_URIAGE?: Date | string | null
-  DD_1JTOROKU?: Date | string | null
-  DD_2JTOROKU?: Date | string | null
-  DD_SYKNMANR?: Date | string | null
-  DD_SITASYUK?: Date | string | null
-  DD_NOSYA?: Date | string | null
-  MJ_SITADOTE?: string | null
-  Ucar?: Prisma.UcarCreateNestedOneWithoutOldCars_BaseInput
-  ZAIKO_Base?: Prisma.ZAIKO_BaseCreateNestedOneWithoutOldCars_BaseInput
-}
-
-export type OldCars_BaseUncheckedCreateWithoutNumber98Input = {
-  id?: number
-  sortOrder?: number
-  APPINDEX: string
-  CD_21SYAMEI?: string | null
-  MJ_SYAMEI?: string | null
-  CD_HANSTAFF?: string | null
-  CD_HANTENPO?: string | null
-  NO_SIRETYUM?: string | null
-  MJ_SIRENORI?: string | null
-  KB_SIRETOSY?: string | null
-  CD_SIRETOGY?: string | null
-  NO_SIRETOSE?: string | null
-  NO_HANJTRIK?: string | null
-  KB_HANTOSY?: string | null
-  CD_HANTOGY?: string | null
-  NO_HANTOSE?: string | null
-  CD_SITASTAF?: string | null
-  DD_SIIRE?: Date | string | null
-  DD_SIREBD?: string | null
-  SU_SYODOTOR?: string | null
-  NO_FRAME?: string | null
-  KI_SIIREKA?: string | null
-  KI_HANKAKA?: string | null
-  KB_SIIRE?: string | null
-  KB_SIHARAI?: string | null
-  KB_URIAGE?: string | null
-  NO_CYUMON?: string | null
-  NO_CYUMONED?: string | null
-  NO_SYADAIBA?: string | null
-  DT_SAISINUP?: string | null
-  MJ_KATASIKI?: string | null
-  NU_SOUKOUKM?: string | null
-  CD_SIRETENP?: string | null
-  KJ_SIRESAKI?: string | null
-  KB_UC1JTORO?: string | null
-  DD_URIAGE?: Date | string | null
-  DD_1JTOROKU?: Date | string | null
-  DD_2JTOROKU?: Date | string | null
-  DD_SYKNMANR?: Date | string | null
-  DD_SITASYUK?: Date | string | null
-  DD_NOSYA?: Date | string | null
-  MJ_SITADOTE?: string | null
-  Ucar?: Prisma.UcarUncheckedCreateNestedOneWithoutOldCars_BaseInput
-  ZAIKO_Base?: Prisma.ZAIKO_BaseUncheckedCreateNestedOneWithoutOldCars_BaseInput
-}
-
-export type OldCars_BaseCreateOrConnectWithoutNumber98Input = {
-  where: Prisma.OldCars_BaseWhereUniqueInput
-  create: Prisma.XOR<Prisma.OldCars_BaseCreateWithoutNumber98Input, Prisma.OldCars_BaseUncheckedCreateWithoutNumber98Input>
-}
-
-export type OldCars_BaseCreateManyNumber98InputEnvelope = {
-  data: Prisma.OldCars_BaseCreateManyNumber98Input | Prisma.OldCars_BaseCreateManyNumber98Input[]
-  skipDuplicates?: boolean
-}
-
-export type OldCars_BaseUpsertWithWhereUniqueWithoutNumber98Input = {
-  where: Prisma.OldCars_BaseWhereUniqueInput
-  update: Prisma.XOR<Prisma.OldCars_BaseUpdateWithoutNumber98Input, Prisma.OldCars_BaseUncheckedUpdateWithoutNumber98Input>
-  create: Prisma.XOR<Prisma.OldCars_BaseCreateWithoutNumber98Input, Prisma.OldCars_BaseUncheckedCreateWithoutNumber98Input>
-}
-
-export type OldCars_BaseUpdateWithWhereUniqueWithoutNumber98Input = {
-  where: Prisma.OldCars_BaseWhereUniqueInput
-  data: Prisma.XOR<Prisma.OldCars_BaseUpdateWithoutNumber98Input, Prisma.OldCars_BaseUncheckedUpdateWithoutNumber98Input>
-}
-
-export type OldCars_BaseUpdateManyWithWhereWithoutNumber98Input = {
-  where: Prisma.OldCars_BaseScalarWhereInput
-  data: Prisma.XOR<Prisma.OldCars_BaseUpdateManyMutationInput, Prisma.OldCars_BaseUncheckedUpdateManyWithoutNumber98Input>
-}
-
-export type OldCars_BaseScalarWhereInput = {
-  AND?: Prisma.OldCars_BaseScalarWhereInput | Prisma.OldCars_BaseScalarWhereInput[]
-  OR?: Prisma.OldCars_BaseScalarWhereInput[]
-  NOT?: Prisma.OldCars_BaseScalarWhereInput | Prisma.OldCars_BaseScalarWhereInput[]
-  id?: Prisma.IntFilter<"OldCars_Base"> | number
-  sortOrder?: Prisma.FloatFilter<"OldCars_Base"> | number
-  APPINDEX?: Prisma.StringFilter<"OldCars_Base"> | string
-  CD_21SYAMEI?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  MJ_SYAMEI?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  CD_HANSTAFF?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  CD_HANTENPO?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  NO_SIRETYUM?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  MJ_SIRENORI?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  KB_SIRETOSY?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  CD_SIRETOGY?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  NO_SIRETOSE?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  NO_HANJTRIK?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  KB_HANTOSY?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  CD_HANTOGY?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  NO_HANTOSE?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  CD_SITASTAF?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  DD_SIIRE?: Prisma.DateTimeNullableFilter<"OldCars_Base"> | Date | string | null
-  DD_SIREBD?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  SU_SYODOTOR?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  NO_FRAME?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  KI_SIIREKA?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  KI_HANKAKA?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  KB_SIIRE?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  KB_SIHARAI?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  KB_URIAGE?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  NO_CYUMON?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  NO_CYUMONED?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  NO_SYARYOU?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  NO_SYADAIBA?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  DT_SAISINUP?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  MJ_KATASIKI?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  NU_SOUKOUKM?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  CD_SIRETENP?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  KJ_SIRESAKI?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  KB_UC1JTORO?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
-  DD_URIAGE?: Prisma.DateTimeNullableFilter<"OldCars_Base"> | Date | string | null
-  DD_1JTOROKU?: Prisma.DateTimeNullableFilter<"OldCars_Base"> | Date | string | null
-  DD_2JTOROKU?: Prisma.DateTimeNullableFilter<"OldCars_Base"> | Date | string | null
-  DD_SYKNMANR?: Prisma.DateTimeNullableFilter<"OldCars_Base"> | Date | string | null
-  DD_SITASYUK?: Prisma.DateTimeNullableFilter<"OldCars_Base"> | Date | string | null
-  DD_NOSYA?: Prisma.DateTimeNullableFilter<"OldCars_Base"> | Date | string | null
-  MJ_SITADOTE?: Prisma.StringNullableFilter<"OldCars_Base"> | string | null
 }
 
 export type OldCars_BaseCreateManyNumber98Input = {

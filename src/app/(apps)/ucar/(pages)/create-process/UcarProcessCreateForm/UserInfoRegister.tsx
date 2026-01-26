@@ -150,7 +150,7 @@ export const taxCustomerInfoCols = new Fields([
   ...new Fields([
     //
     { id: `taxCustomerName`, label: `お客様`, form: { ...defaultRegister } },
-    { id: `upperCarregisteredAt`, label: `購入車登録日`, type: `date`, form: {} },
+    { id: `upperCarregisteredAt`, label: `購入車登録日`, type: `date`, form: { descriptionNoteAfter: `※買取、先入庫は入力不要` } },
   ]).buildFormGroup({ groupName: `基本情報` }).plain,
 
   ...new Fields([

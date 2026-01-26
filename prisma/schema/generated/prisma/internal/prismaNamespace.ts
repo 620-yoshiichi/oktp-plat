@@ -396,6 +396,7 @@ export const ModelName = {
   CrUser: 'CrUser',
   JuchuShitadoriDb: 'JuchuShitadoriDb',
   OldCars_Base: 'OldCars_Base',
+  Number98: 'Number98',
   ZAIKO_Base: 'ZAIKO_Base',
   UpassFamilyTree: 'UpassFamilyTree',
   UPASS: 'UPASS',
@@ -441,7 +442,6 @@ export const ModelName = {
   InsuranceInfo: 'InsuranceInfo',
   ExtraInfo: 'ExtraInfo',
   Ucar: 'Ucar',
-  Number98: 'Number98',
   Number98IssueHistory: 'Number98IssueHistory',
   AppliedUcarGarageSlot: 'AppliedUcarGarageSlot',
   UcarGarageSlotMaster: 'UcarGarageSlotMaster',
@@ -466,7 +466,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "car" | "userProcessConfirmation" | "notes" | "damageNameMaster" | "noteNameMaster" | "bpSummary" | "processNameMaster" | "process" | "releaseNotes" | "crUser" | "juchuShitadoriDb" | "oldCars_Base" | "zAIKO_Base" | "upassFamilyTree" | "uPASS" | "qR_Prosess" | "deliverSchedule" | "area" | "loadingVehicle" | "slot" | "newCar" | "orderSwitchingHisotory" | "desiredTorokuDate" | "newCarLeadTime" | "crInspectionHistory" | "seisanYoteiHistory" | "userProgressAggregationTable" | "progressAggregationTable" | "progressAggregationTableRecord" | "furiateStatusOnApprovement" | "carTransferHistory" | "tenpoTsuikoShinseiHeader" | "tenpoTsuikoShinseiDetail" | "tenpoTsuikoData" | "store" | "user" | "googleAccessToken" | "roleMaster" | "userRole" | "calendar" | "chainMethodLock" | "cronExecutionLog" | "rentaStore" | "rentaDeal" | "rentaDailyReport" | "rentaCustomer" | "rentaReference" | "refFrom" | "refTo" | "purpose" | "purposeMaster" | "outcome" | "outcomeMaster" | "alternateInfo" | "insuranceInfo" | "extraInfo" | "ucar" | "number98" | "number98IssueHistory" | "appliedUcarGarageSlot" | "ucarGarageSlotMaster" | "ucarGarageLocationMaster" | "bankMaster" | "bankBranchMaster" | "ucarProcess" | "ucarPaperWorkNotes" | "ucarRequest"
+    modelProps: "car" | "userProcessConfirmation" | "notes" | "damageNameMaster" | "noteNameMaster" | "bpSummary" | "processNameMaster" | "process" | "releaseNotes" | "crUser" | "juchuShitadoriDb" | "oldCars_Base" | "number98" | "zAIKO_Base" | "upassFamilyTree" | "uPASS" | "qR_Prosess" | "deliverSchedule" | "area" | "loadingVehicle" | "slot" | "newCar" | "orderSwitchingHisotory" | "desiredTorokuDate" | "newCarLeadTime" | "crInspectionHistory" | "seisanYoteiHistory" | "userProgressAggregationTable" | "progressAggregationTable" | "progressAggregationTableRecord" | "furiateStatusOnApprovement" | "carTransferHistory" | "tenpoTsuikoShinseiHeader" | "tenpoTsuikoShinseiDetail" | "tenpoTsuikoData" | "store" | "user" | "googleAccessToken" | "roleMaster" | "userRole" | "calendar" | "chainMethodLock" | "cronExecutionLog" | "rentaStore" | "rentaDeal" | "rentaDailyReport" | "rentaCustomer" | "rentaReference" | "refFrom" | "refTo" | "purpose" | "purposeMaster" | "outcome" | "outcomeMaster" | "alternateInfo" | "insuranceInfo" | "extraInfo" | "ucar" | "number98IssueHistory" | "appliedUcarGarageSlot" | "ucarGarageSlotMaster" | "ucarGarageLocationMaster" | "bankMaster" | "bankBranchMaster" | "ucarProcess" | "ucarPaperWorkNotes" | "ucarRequest"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1355,6 +1355,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.OldCars_BaseCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.OldCars_BaseCountAggregateOutputType> | number
+        }
+      }
+    }
+    Number98: {
+      payload: Prisma.$Number98Payload<ExtArgs>
+      fields: Prisma.Number98FieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.Number98FindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Number98Payload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.Number98FindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Number98Payload>
+        }
+        findFirst: {
+          args: Prisma.Number98FindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Number98Payload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.Number98FindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Number98Payload>
+        }
+        findMany: {
+          args: Prisma.Number98FindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Number98Payload>[]
+        }
+        create: {
+          args: Prisma.Number98CreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Number98Payload>
+        }
+        createMany: {
+          args: Prisma.Number98CreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.Number98CreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Number98Payload>[]
+        }
+        delete: {
+          args: Prisma.Number98DeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Number98Payload>
+        }
+        update: {
+          args: Prisma.Number98UpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Number98Payload>
+        }
+        deleteMany: {
+          args: Prisma.Number98DeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.Number98UpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.Number98UpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Number98Payload>[]
+        }
+        upsert: {
+          args: Prisma.Number98UpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Number98Payload>
+        }
+        aggregate: {
+          args: Prisma.Number98AggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateNumber98>
+        }
+        groupBy: {
+          args: Prisma.Number98GroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Number98GroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.Number98CountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Number98CountAggregateOutputType> | number
         }
       }
     }
@@ -4688,80 +4762,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    Number98: {
-      payload: Prisma.$Number98Payload<ExtArgs>
-      fields: Prisma.Number98FieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.Number98FindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$Number98Payload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.Number98FindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$Number98Payload>
-        }
-        findFirst: {
-          args: Prisma.Number98FindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$Number98Payload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.Number98FindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$Number98Payload>
-        }
-        findMany: {
-          args: Prisma.Number98FindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$Number98Payload>[]
-        }
-        create: {
-          args: Prisma.Number98CreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$Number98Payload>
-        }
-        createMany: {
-          args: Prisma.Number98CreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.Number98CreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$Number98Payload>[]
-        }
-        delete: {
-          args: Prisma.Number98DeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$Number98Payload>
-        }
-        update: {
-          args: Prisma.Number98UpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$Number98Payload>
-        }
-        deleteMany: {
-          args: Prisma.Number98DeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.Number98UpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.Number98UpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$Number98Payload>[]
-        }
-        upsert: {
-          args: Prisma.Number98UpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$Number98Payload>
-        }
-        aggregate: {
-          args: Prisma.Number98AggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateNumber98>
-        }
-        groupBy: {
-          args: Prisma.Number98GroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.Number98GroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.Number98CountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.Number98CountAggregateOutputType> | number
-        }
-      }
-    }
     Number98IssueHistory: {
       payload: Prisma.$Number98IssueHistoryPayload<ExtArgs>
       fields: Prisma.Number98IssueHistoryFieldRefs
@@ -5768,6 +5768,20 @@ export const OldCars_BaseScalarFieldEnum = {
 } as const
 
 export type OldCars_BaseScalarFieldEnum = (typeof OldCars_BaseScalarFieldEnum)[keyof typeof OldCars_BaseScalarFieldEnum]
+
+
+export const Number98ScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  active: 'active',
+  sortOrder: 'sortOrder',
+  number: 'number',
+  sortNumber: 'sortNumber',
+  occupied: 'occupied'
+} as const
+
+export type Number98ScalarFieldEnum = (typeof Number98ScalarFieldEnum)[keyof typeof Number98ScalarFieldEnum]
 
 
 export const ZAIKO_BaseScalarFieldEnum = {
@@ -6892,20 +6906,6 @@ export const UcarScalarFieldEnum = {
 export type UcarScalarFieldEnum = (typeof UcarScalarFieldEnum)[keyof typeof UcarScalarFieldEnum]
 
 
-export const Number98ScalarFieldEnum = {
-  id: 'id',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  active: 'active',
-  sortOrder: 'sortOrder',
-  number: 'number',
-  sortNumber: 'sortNumber',
-  occupied: 'occupied'
-} as const
-
-export type Number98ScalarFieldEnum = (typeof Number98ScalarFieldEnum)[keyof typeof Number98ScalarFieldEnum]
-
-
 export const Number98IssueHistoryScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
@@ -7243,6 +7243,7 @@ export type GlobalOmitConfig = {
   crUser?: Prisma.CrUserOmit
   juchuShitadoriDb?: Prisma.JuchuShitadoriDbOmit
   oldCars_Base?: Prisma.OldCars_BaseOmit
+  number98?: Prisma.Number98Omit
   zAIKO_Base?: Prisma.ZAIKO_BaseOmit
   upassFamilyTree?: Prisma.UpassFamilyTreeOmit
   uPASS?: Prisma.UPASSOmit
@@ -7288,7 +7289,6 @@ export type GlobalOmitConfig = {
   insuranceInfo?: Prisma.InsuranceInfoOmit
   extraInfo?: Prisma.ExtraInfoOmit
   ucar?: Prisma.UcarOmit
-  number98?: Prisma.Number98Omit
   number98IssueHistory?: Prisma.Number98IssueHistoryOmit
   appliedUcarGarageSlot?: Prisma.AppliedUcarGarageSlotOmit
   ucarGarageSlotMaster?: Prisma.UcarGarageSlotMasterOmit

@@ -1,19 +1,19 @@
 'use client'
-import {Fields} from '@cm/class/Fields/Fields'
+import { Fields } from '@cm/class/Fields/Fields'
 
-import {Button} from '@cm/components/styles/common-components/Button'
+import { Button } from '@cm/components/styles/common-components/Button'
 
-import {R_Stack} from '@cm/components/styles/common-components/common-components'
+import { R_Stack } from '@cm/components/styles/common-components/common-components'
 
 import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
 
-import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 
-import {useCallback} from 'react'
-import {isDev} from '@cm/lib/methods/common'
-import {UcarCL} from '@app/(apps)/ucar/class/UcarCL'
+import { useCallback } from 'react'
+import { isDev } from '@cm/lib/methods/common'
+import { UcarCL } from '@app/(apps)/ucar/class/UcarCL'
 
-export const useDataSearchForm = ({sateiID, setsateiID}: {sateiID: string; setsateiID: (sateiID: string) => void}) => {
+export const useDataSearchForm = ({ sateiID, setsateiID }: { sateiID: string; setsateiID: (sateiID: string) => void }) => {
   const columns = Fields.transposeColumns([
     {
       id: 'sateiID',
@@ -24,7 +24,7 @@ export const useDataSearchForm = ({sateiID, setsateiID}: {sateiID: string; setsa
       },
     },
   ])
-  const {BasicForm, latestFormData, formRef} = useBasicFormProps({
+  const { BasicForm, latestFormData, formRef } = useBasicFormProps({
     columns,
     values: {},
   })
@@ -36,33 +36,33 @@ export const useDataSearchForm = ({sateiID, setsateiID}: {sateiID: string; setsa
           alignMode="row"
           latestFormData={latestFormData}
           onSubmit={async data => {
-            const {result: foundInDb} = await doStandardPrisma('ucar', 'findUnique', {
-              where: {sateiID: String(data.sateiID)},
-              include: {UPASS: {}},
+            const { result: foundInDb } = await doStandardPrisma('ucar', 'findUnique', {
+              where: { sateiID: String(data.sateiID) },
+              include: { UPASS: {} },
             })
 
             if (foundInDb) {
               setsateiID(data.sateiID)
 
-              return {foundInDb}
+              return { foundInDb }
             } else {
-              const {result: foundInUpass} = await doStandardPrisma('uPASS', 'findUnique', {
-                where: {sateiID: String(data.sateiID)},
+              const { result: foundInUpass } = await doStandardPrisma('uPASS', 'findUnique', {
+                where: { sateiID: String(data.sateiID) },
               })
 
               if (foundInUpass) {
                 setsateiID(data.sateiID)
-                return {foundInUpass}
+                return { foundInUpass }
               } else {
                 // UPASSにデータがない場合、Ucarデータは作成せず、入力フォームで入力してもらう
                 setsateiID(data.sateiID)
-                return {foundInUpass: null}
+                return { foundInUpass: null }
               }
 
               // return {rows}
             }
           }}
-          {...{ControlOptions: {ControlStyle: {width: 200}}}}
+          {...{ ControlOptions: { ControlStyle: { width: 200 } } }}
         >
           <Button>検索</Button>
         </BasicForm>

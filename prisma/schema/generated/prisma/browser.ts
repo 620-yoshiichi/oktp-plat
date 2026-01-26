@@ -78,6 +78,11 @@ export type JuchuShitadoriDb = Prisma.JuchuShitadoriDbModel
  */
 export type OldCars_Base = Prisma.OldCars_BaseModel
 /**
+ * Model Number98
+ * 
+ */
+export type Number98 = Prisma.Number98Model
+/**
  * Model ZAIKO_Base
  * 
  */
@@ -302,11 +307,6 @@ export type ExtraInfo = Prisma.ExtraInfoModel
  * 
  */
 export type Ucar = Prisma.UcarModel
-/**
- * Model Number98
- * 
- */
-export type Number98 = Prisma.Number98Model
 /**
  * Model Number98IssueHistory
  * 

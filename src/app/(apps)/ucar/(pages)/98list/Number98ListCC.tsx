@@ -1,32 +1,32 @@
 'use client'
-import React, {useState} from 'react'
-import {C_Stack, R_Stack} from '@cm/components/styles/common-components/common-components'
+import React, { useState } from 'react'
+import { C_Stack, R_Stack } from '@cm/components/styles/common-components/common-components'
 
-import {CsvTable} from '@cm/components/styles/common-components/CsvTable/CsvTable'
+import { CsvTable } from '@cm/components/styles/common-components/CsvTable/CsvTable'
 
 import ShadModal from '@cm/shadcn/ui/Organisms/ShadModal'
-import {number98Item} from '@app/(apps)/ucar/(lib)/num98/getAvailable98Numbers'
-import {formatDate} from '@cm/class/Days/date-utils/formatters'
-import {NumHandler} from '@cm/class/NumHandler'
+import { number98Item } from '@app/(apps)/ucar/(lib)/num98/getAvailable98Numbers'
+import { formatDate } from '@cm/class/Days/date-utils/formatters'
+import { NumHandler } from '@cm/class/NumHandler'
 import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
-import {Fields} from '@cm/class/Fields/Fields'
-import {Button} from '@cm/components/styles/common-components/Button'
+import { Fields } from '@cm/class/Fields/Fields'
+import { Button } from '@cm/components/styles/common-components/Button'
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
-import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
-import {number98Select} from '@app/(apps)/ucar/(lib)/num98/num98Constants'
+import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+import { number98Select } from '@app/(apps)/ucar/(lib)/num98/num98Constants'
 
 const SearchForm = () => {
   const [number98List, setnumber98List] = useState<number98Item[]>([])
-  const {addQuery, query} = useGlobal()
-  const {BasicForm, latestFormData} = useBasicFormProps({
+  const { addQuery, query } = useGlobal()
+  const { BasicForm, latestFormData } = useBasicFormProps({
     columns: new Fields([
       //
-      {id: `number98`, label: `98番号`, form: {defaultValue: query.number98}, type: 'text'},
+      { id: `number98`, label: `98番号`, form: { defaultValue: query.number98 }, type: 'text' },
     ]).transposeColumns(),
   })
 
   return (
-    <ShadModal {...{Trigger: <Button>98番号検索</Button>}}>
+    <ShadModal {...{ Trigger: <Button>98番号検索</Button> }}>
       <BasicForm
         {...{
           latestFormData,
@@ -36,10 +36,10 @@ const SearchForm = () => {
               return
             }
 
-            const {result} = await doStandardPrisma(`number98`, `findMany`, {
+            const { result } = await doStandardPrisma(`number98`, `findMany`, {
               select: number98Select,
               where: {
-                number: {contains: data.number98},
+                number: { contains: data.number98 },
               },
             })
             if (result) {
@@ -51,7 +51,7 @@ const SearchForm = () => {
         <Button>検索</Button>
       </BasicForm>
 
-      {number98List.length > 0 && <Num98Table {...{number98List}} />}
+      {number98List.length > 0 && <Num98Table {...{ number98List }} />}
     </ShadModal>
   )
 }
@@ -79,11 +79,11 @@ export default function Number98ListCC({
             <R_Stack className={`gap-10`}>
               <div>
                 利用可能な番号(最大50件):
-                <Num98Table {...{number98List: available98Numbers}} />
+                <Num98Table {...{ number98List: available98Numbers }} />
               </div>
               <div>
                 利用不可な番号(最大50件):
-                <Num98Table {...{number98List: nonAvailable98Numbers}} />
+                <Num98Table {...{ number98List: nonAvailable98Numbers }} />
               </div>
             </R_Stack>
           </div>
@@ -95,7 +95,7 @@ export default function Number98ListCC({
   )
 }
 
-const Num98Table = ({number98List}: {number98List: number98Item[]}) => {
+const Num98Table = ({ number98List }: { number98List: number98Item[] }) => {
   return CsvTable({
     records: number98List.map(item => {
       const ucarCount = item.Ucar.length
@@ -107,7 +107,7 @@ const Num98Table = ({number98List}: {number98List: number98Item[]}) => {
         className: hasSomeNonPricedOldCars ? `[&_td]:!bg-red-100` : ``,
         csvTableRow: [
           //
-          {label: 'number', cellValue: item.number},
+          { label: 'number', cellValue: item.number },
           {
             label: 'Ucar',
             cellValue: (
@@ -115,10 +115,10 @@ const Num98Table = ({number98List}: {number98List: number98Item[]}) => {
                 {CsvTable({
                   records: item.Ucar.map(ucar => {
                     return {
-                      csvTableRow: [{label: 'sateiID', cellValue: ucar.sateiID}],
+                      csvTableRow: [{ label: 'sateiID', cellValue: ucar.sateiID }],
                     }
                   }),
-                }).WithWrapper({className: `max-h-[70vh] min-w-[500px]`})}
+                }).WithWrapper({ className: `max-h-[70vh] min-w-[500px]` })}
               </ShadModal>
             ),
           },
@@ -133,14 +133,14 @@ const Num98Table = ({number98List}: {number98List: number98Item[]}) => {
 
                       return {
                         csvTableRow: [
-                          {label: 'NO_SIRETYUM', cellValue: oldCarsBase.NO_SIRETYUM ?? ''},
-                          {label: 'NO_SYARYOU', cellValue: oldCarsBase.NO_SYARYOU ?? ''},
-                          {label: 'DD_SIIRE', cellValue: formatDate(oldCarsBase.DD_SIIRE ?? '', 'YYYY/MM/DD')},
-                          {label: '売上金額', cellValue: NumHandler.WithUnit(kobutsuPrice, '円') ?? ''},
+                          { label: 'NO_SIRETYUM', cellValue: oldCarsBase.NO_SIRETYUM ?? '' },
+                          { label: 'NO_SYARYOU', cellValue: oldCarsBase.NO_SYARYOU ?? '' },
+                          { label: 'DD_SIIRE', cellValue: formatDate(oldCarsBase.DD_SIIRE ?? '', 'YYYY/MM/DD') },
+                          { label: '売上金額', cellValue: NumHandler.WithUnit(kobutsuPrice, '円') ?? '' },
                         ],
                       }
                     }),
-                  }).WithWrapper({className: `max-h-[70vh] min-w-[500px]`})}
+                  }).WithWrapper({ className: `max-h-[70vh] min-w-[500px]` })}
                 </div>
               </ShadModal>
             ),
@@ -148,5 +148,5 @@ const Num98Table = ({number98List}: {number98List: number98Item[]}) => {
         ],
       }
     }),
-  }).WithWrapper({className: ``})
+  }).WithWrapper({ className: `` })
 }

@@ -468,6 +468,7 @@ export type ZAIKO_BaseWhereInput = {
   MJ_SIJYOKBM?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
   DT_SAISINUP?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
   DD_SIIRE?: Prisma.DateTimeNullableFilter<"ZAIKO_Base"> | Date | string | null
+  Number98?: Prisma.XOR<Prisma.Number98NullableScalarRelationFilter, Prisma.Number98WhereInput> | null
   OldCars_Base?: Prisma.XOR<Prisma.OldCars_BaseNullableScalarRelationFilter, Prisma.OldCars_BaseWhereInput> | null
 }
 
@@ -508,6 +509,7 @@ export type ZAIKO_BaseOrderByWithRelationInput = {
   MJ_SIJYOKBM?: Prisma.SortOrderInput | Prisma.SortOrder
   DT_SAISINUP?: Prisma.SortOrderInput | Prisma.SortOrder
   DD_SIIRE?: Prisma.SortOrderInput | Prisma.SortOrder
+  Number98?: Prisma.Number98OrderByWithRelationInput
   OldCars_Base?: Prisma.OldCars_BaseOrderByWithRelationInput
 }
 
@@ -553,6 +555,7 @@ export type ZAIKO_BaseWhereUniqueInput = Prisma.AtLeast<{
   MJ_SIJYOKBM?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
   DT_SAISINUP?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
   DD_SIIRE?: Prisma.DateTimeNullableFilter<"ZAIKO_Base"> | Date | string | null
+  Number98?: Prisma.XOR<Prisma.Number98NullableScalarRelationFilter, Prisma.Number98WhereInput> | null
   OldCars_Base?: Prisma.XOR<Prisma.OldCars_BaseNullableScalarRelationFilter, Prisma.OldCars_BaseWhereInput> | null
 }, "APPINDEX" | "id" | "APPINDEX" | "NO_SIRETYUM_NO_SYARYOU_NO_SYADAIBA" | "NO_SIRETYUM_NO_SYARYOU_DD_KEIRIKEI">
 
@@ -676,6 +679,7 @@ export type ZAIKO_BaseCreateInput = {
   MJ_SIJYOKBM?: string | null
   DT_SAISINUP?: string | null
   DD_SIIRE?: Date | string | null
+  Number98?: Prisma.Number98CreateNestedOneWithoutZAIKO_BaseInput
   OldCars_Base?: Prisma.OldCars_BaseCreateNestedOneWithoutZAIKO_BaseInput
 }
 
@@ -751,6 +755,7 @@ export type ZAIKO_BaseUpdateInput = {
   MJ_SIJYOKBM?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   DT_SAISINUP?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   DD_SIIRE?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Number98?: Prisma.Number98UpdateOneWithoutZAIKO_BaseNestedInput
   OldCars_Base?: Prisma.OldCars_BaseUpdateOneWithoutZAIKO_BaseNestedInput
 }
 
@@ -909,6 +914,16 @@ export type ZAIKO_BaseUncheckedUpdateManyInput = {
 export type ZAIKO_BaseNullableScalarRelationFilter = {
   is?: Prisma.ZAIKO_BaseWhereInput | null
   isNot?: Prisma.ZAIKO_BaseWhereInput | null
+}
+
+export type ZAIKO_BaseListRelationFilter = {
+  every?: Prisma.ZAIKO_BaseWhereInput
+  some?: Prisma.ZAIKO_BaseWhereInput
+  none?: Prisma.ZAIKO_BaseWhereInput
+}
+
+export type ZAIKO_BaseOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type ZAIKO_BaseNO_SIRETYUMNO_SYARYOUNO_SYADAIBACompoundUniqueInput = {
@@ -1082,6 +1097,48 @@ export type ZAIKO_BaseUncheckedUpdateOneWithoutOldCars_BaseNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ZAIKO_BaseUpdateToOneWithWhereWithoutOldCars_BaseInput, Prisma.ZAIKO_BaseUpdateWithoutOldCars_BaseInput>, Prisma.ZAIKO_BaseUncheckedUpdateWithoutOldCars_BaseInput>
 }
 
+export type ZAIKO_BaseCreateNestedManyWithoutNumber98Input = {
+  create?: Prisma.XOR<Prisma.ZAIKO_BaseCreateWithoutNumber98Input, Prisma.ZAIKO_BaseUncheckedCreateWithoutNumber98Input> | Prisma.ZAIKO_BaseCreateWithoutNumber98Input[] | Prisma.ZAIKO_BaseUncheckedCreateWithoutNumber98Input[]
+  connectOrCreate?: Prisma.ZAIKO_BaseCreateOrConnectWithoutNumber98Input | Prisma.ZAIKO_BaseCreateOrConnectWithoutNumber98Input[]
+  createMany?: Prisma.ZAIKO_BaseCreateManyNumber98InputEnvelope
+  connect?: Prisma.ZAIKO_BaseWhereUniqueInput | Prisma.ZAIKO_BaseWhereUniqueInput[]
+}
+
+export type ZAIKO_BaseUncheckedCreateNestedManyWithoutNumber98Input = {
+  create?: Prisma.XOR<Prisma.ZAIKO_BaseCreateWithoutNumber98Input, Prisma.ZAIKO_BaseUncheckedCreateWithoutNumber98Input> | Prisma.ZAIKO_BaseCreateWithoutNumber98Input[] | Prisma.ZAIKO_BaseUncheckedCreateWithoutNumber98Input[]
+  connectOrCreate?: Prisma.ZAIKO_BaseCreateOrConnectWithoutNumber98Input | Prisma.ZAIKO_BaseCreateOrConnectWithoutNumber98Input[]
+  createMany?: Prisma.ZAIKO_BaseCreateManyNumber98InputEnvelope
+  connect?: Prisma.ZAIKO_BaseWhereUniqueInput | Prisma.ZAIKO_BaseWhereUniqueInput[]
+}
+
+export type ZAIKO_BaseUpdateManyWithoutNumber98NestedInput = {
+  create?: Prisma.XOR<Prisma.ZAIKO_BaseCreateWithoutNumber98Input, Prisma.ZAIKO_BaseUncheckedCreateWithoutNumber98Input> | Prisma.ZAIKO_BaseCreateWithoutNumber98Input[] | Prisma.ZAIKO_BaseUncheckedCreateWithoutNumber98Input[]
+  connectOrCreate?: Prisma.ZAIKO_BaseCreateOrConnectWithoutNumber98Input | Prisma.ZAIKO_BaseCreateOrConnectWithoutNumber98Input[]
+  upsert?: Prisma.ZAIKO_BaseUpsertWithWhereUniqueWithoutNumber98Input | Prisma.ZAIKO_BaseUpsertWithWhereUniqueWithoutNumber98Input[]
+  createMany?: Prisma.ZAIKO_BaseCreateManyNumber98InputEnvelope
+  set?: Prisma.ZAIKO_BaseWhereUniqueInput | Prisma.ZAIKO_BaseWhereUniqueInput[]
+  disconnect?: Prisma.ZAIKO_BaseWhereUniqueInput | Prisma.ZAIKO_BaseWhereUniqueInput[]
+  delete?: Prisma.ZAIKO_BaseWhereUniqueInput | Prisma.ZAIKO_BaseWhereUniqueInput[]
+  connect?: Prisma.ZAIKO_BaseWhereUniqueInput | Prisma.ZAIKO_BaseWhereUniqueInput[]
+  update?: Prisma.ZAIKO_BaseUpdateWithWhereUniqueWithoutNumber98Input | Prisma.ZAIKO_BaseUpdateWithWhereUniqueWithoutNumber98Input[]
+  updateMany?: Prisma.ZAIKO_BaseUpdateManyWithWhereWithoutNumber98Input | Prisma.ZAIKO_BaseUpdateManyWithWhereWithoutNumber98Input[]
+  deleteMany?: Prisma.ZAIKO_BaseScalarWhereInput | Prisma.ZAIKO_BaseScalarWhereInput[]
+}
+
+export type ZAIKO_BaseUncheckedUpdateManyWithoutNumber98NestedInput = {
+  create?: Prisma.XOR<Prisma.ZAIKO_BaseCreateWithoutNumber98Input, Prisma.ZAIKO_BaseUncheckedCreateWithoutNumber98Input> | Prisma.ZAIKO_BaseCreateWithoutNumber98Input[] | Prisma.ZAIKO_BaseUncheckedCreateWithoutNumber98Input[]
+  connectOrCreate?: Prisma.ZAIKO_BaseCreateOrConnectWithoutNumber98Input | Prisma.ZAIKO_BaseCreateOrConnectWithoutNumber98Input[]
+  upsert?: Prisma.ZAIKO_BaseUpsertWithWhereUniqueWithoutNumber98Input | Prisma.ZAIKO_BaseUpsertWithWhereUniqueWithoutNumber98Input[]
+  createMany?: Prisma.ZAIKO_BaseCreateManyNumber98InputEnvelope
+  set?: Prisma.ZAIKO_BaseWhereUniqueInput | Prisma.ZAIKO_BaseWhereUniqueInput[]
+  disconnect?: Prisma.ZAIKO_BaseWhereUniqueInput | Prisma.ZAIKO_BaseWhereUniqueInput[]
+  delete?: Prisma.ZAIKO_BaseWhereUniqueInput | Prisma.ZAIKO_BaseWhereUniqueInput[]
+  connect?: Prisma.ZAIKO_BaseWhereUniqueInput | Prisma.ZAIKO_BaseWhereUniqueInput[]
+  update?: Prisma.ZAIKO_BaseUpdateWithWhereUniqueWithoutNumber98Input | Prisma.ZAIKO_BaseUpdateWithWhereUniqueWithoutNumber98Input[]
+  updateMany?: Prisma.ZAIKO_BaseUpdateManyWithWhereWithoutNumber98Input | Prisma.ZAIKO_BaseUpdateManyWithWhereWithoutNumber98Input[]
+  deleteMany?: Prisma.ZAIKO_BaseScalarWhereInput | Prisma.ZAIKO_BaseScalarWhereInput[]
+}
+
 export type ZAIKO_BaseCreateWithoutOldCars_BaseInput = {
   id?: number
   sortOrder?: number
@@ -1116,6 +1173,7 @@ export type ZAIKO_BaseCreateWithoutOldCars_BaseInput = {
   MJ_SIJYOKBM?: string | null
   DT_SAISINUP?: string | null
   DD_SIIRE?: Date | string | null
+  Number98?: Prisma.Number98CreateNestedOneWithoutZAIKO_BaseInput
 }
 
 export type ZAIKO_BaseUncheckedCreateWithoutOldCars_BaseInput = {
@@ -1203,6 +1261,7 @@ export type ZAIKO_BaseUpdateWithoutOldCars_BaseInput = {
   MJ_SIJYOKBM?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   DT_SAISINUP?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   DD_SIIRE?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Number98?: Prisma.Number98UpdateOneWithoutZAIKO_BaseNestedInput
 }
 
 export type ZAIKO_BaseUncheckedUpdateWithoutOldCars_BaseInput = {
@@ -1228,6 +1287,299 @@ export type ZAIKO_BaseUncheckedUpdateWithoutOldCars_BaseInput = {
   KI_TENTOHYJ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   CD_ZAIKSYYS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   KB_SYASYHAN?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  KI_SIIREKA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  KN_KEI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  MJ_ZAIKOST?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  CD_ZAIKOTEN?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  NO_CYUMON?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  KB_URIAGE?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  CD_HANSTAFF?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  MJ_21SYASYS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  MJ_SIJYOKBM?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  DT_SAISINUP?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  DD_SIIRE?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type ZAIKO_BaseCreateWithoutNumber98Input = {
+  id?: number
+  sortOrder?: number
+  APPINDEX: string
+  APPINDEX_FKEY: string
+  KB_SIIRE?: string | null
+  DD_KEIRIKEI?: Date | string | null
+  MJ_SIRENORI?: string | null
+  KB_SIRETOSY?: string | null
+  CD_SIRETOGY?: string | null
+  NO_SIRETOSE?: string | null
+  MJ_SIRESAKI?: string | null
+  CD_SITADOTE?: string | null
+  CD_SITASTAF?: string | null
+  CD_SIRETENP?: string | null
+  MJ_FURUSYAM?: string | null
+  NO_KATASIKI?: string | null
+  NO_FRAME?: string | null
+  CD_TENJTENP?: string | null
+  KI_HNBSIJIK?: string | null
+  KI_TENTOHYJ?: string | null
+  CD_ZAIKSYYS?: string | null
+  KB_SYASYHAN?: string | null
+  KI_SIIREKA?: string | null
+  KN_KEI?: string | null
+  MJ_ZAIKOST?: string | null
+  CD_ZAIKOTEN?: string | null
+  NO_CYUMON?: string | null
+  KB_URIAGE?: string | null
+  CD_HANSTAFF?: string | null
+  MJ_21SYASYS?: string | null
+  MJ_SIJYOKBM?: string | null
+  DT_SAISINUP?: string | null
+  DD_SIIRE?: Date | string | null
+  OldCars_Base?: Prisma.OldCars_BaseCreateNestedOneWithoutZAIKO_BaseInput
+}
+
+export type ZAIKO_BaseUncheckedCreateWithoutNumber98Input = {
+  id?: number
+  sortOrder?: number
+  APPINDEX: string
+  APPINDEX_FKEY: string
+  KB_SIIRE?: string | null
+  DD_KEIRIKEI?: Date | string | null
+  NO_SIRETYUM?: string | null
+  MJ_SIRENORI?: string | null
+  KB_SIRETOSY?: string | null
+  CD_SIRETOGY?: string | null
+  NO_SIRETOSE?: string | null
+  MJ_SIRESAKI?: string | null
+  CD_SITADOTE?: string | null
+  CD_SITASTAF?: string | null
+  CD_SIRETENP?: string | null
+  MJ_FURUSYAM?: string | null
+  NO_KATASIKI?: string | null
+  NO_FRAME?: string | null
+  CD_TENJTENP?: string | null
+  KI_HNBSIJIK?: string | null
+  KI_TENTOHYJ?: string | null
+  CD_ZAIKSYYS?: string | null
+  KB_SYASYHAN?: string | null
+  NO_SYADAIBA?: string | null
+  KI_SIIREKA?: string | null
+  KN_KEI?: string | null
+  MJ_ZAIKOST?: string | null
+  CD_ZAIKOTEN?: string | null
+  NO_CYUMON?: string | null
+  KB_URIAGE?: string | null
+  CD_HANSTAFF?: string | null
+  MJ_21SYASYS?: string | null
+  MJ_SIJYOKBM?: string | null
+  DT_SAISINUP?: string | null
+  DD_SIIRE?: Date | string | null
+}
+
+export type ZAIKO_BaseCreateOrConnectWithoutNumber98Input = {
+  where: Prisma.ZAIKO_BaseWhereUniqueInput
+  create: Prisma.XOR<Prisma.ZAIKO_BaseCreateWithoutNumber98Input, Prisma.ZAIKO_BaseUncheckedCreateWithoutNumber98Input>
+}
+
+export type ZAIKO_BaseCreateManyNumber98InputEnvelope = {
+  data: Prisma.ZAIKO_BaseCreateManyNumber98Input | Prisma.ZAIKO_BaseCreateManyNumber98Input[]
+  skipDuplicates?: boolean
+}
+
+export type ZAIKO_BaseUpsertWithWhereUniqueWithoutNumber98Input = {
+  where: Prisma.ZAIKO_BaseWhereUniqueInput
+  update: Prisma.XOR<Prisma.ZAIKO_BaseUpdateWithoutNumber98Input, Prisma.ZAIKO_BaseUncheckedUpdateWithoutNumber98Input>
+  create: Prisma.XOR<Prisma.ZAIKO_BaseCreateWithoutNumber98Input, Prisma.ZAIKO_BaseUncheckedCreateWithoutNumber98Input>
+}
+
+export type ZAIKO_BaseUpdateWithWhereUniqueWithoutNumber98Input = {
+  where: Prisma.ZAIKO_BaseWhereUniqueInput
+  data: Prisma.XOR<Prisma.ZAIKO_BaseUpdateWithoutNumber98Input, Prisma.ZAIKO_BaseUncheckedUpdateWithoutNumber98Input>
+}
+
+export type ZAIKO_BaseUpdateManyWithWhereWithoutNumber98Input = {
+  where: Prisma.ZAIKO_BaseScalarWhereInput
+  data: Prisma.XOR<Prisma.ZAIKO_BaseUpdateManyMutationInput, Prisma.ZAIKO_BaseUncheckedUpdateManyWithoutNumber98Input>
+}
+
+export type ZAIKO_BaseScalarWhereInput = {
+  AND?: Prisma.ZAIKO_BaseScalarWhereInput | Prisma.ZAIKO_BaseScalarWhereInput[]
+  OR?: Prisma.ZAIKO_BaseScalarWhereInput[]
+  NOT?: Prisma.ZAIKO_BaseScalarWhereInput | Prisma.ZAIKO_BaseScalarWhereInput[]
+  id?: Prisma.IntFilter<"ZAIKO_Base"> | number
+  sortOrder?: Prisma.FloatFilter<"ZAIKO_Base"> | number
+  APPINDEX?: Prisma.StringFilter<"ZAIKO_Base"> | string
+  APPINDEX_FKEY?: Prisma.StringFilter<"ZAIKO_Base"> | string
+  NO_SYARYOU?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
+  KB_SIIRE?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
+  DD_KEIRIKEI?: Prisma.DateTimeNullableFilter<"ZAIKO_Base"> | Date | string | null
+  NO_SIRETYUM?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
+  MJ_SIRENORI?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
+  KB_SIRETOSY?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
+  CD_SIRETOGY?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
+  NO_SIRETOSE?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
+  MJ_SIRESAKI?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
+  CD_SITADOTE?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
+  CD_SITASTAF?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
+  CD_SIRETENP?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
+  MJ_FURUSYAM?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
+  NO_KATASIKI?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
+  NO_FRAME?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
+  CD_TENJTENP?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
+  KI_HNBSIJIK?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
+  KI_TENTOHYJ?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
+  CD_ZAIKSYYS?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
+  KB_SYASYHAN?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
+  NO_SYADAIBA?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
+  KI_SIIREKA?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
+  KN_KEI?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
+  MJ_ZAIKOST?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
+  CD_ZAIKOTEN?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
+  NO_CYUMON?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
+  KB_URIAGE?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
+  CD_HANSTAFF?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
+  MJ_21SYASYS?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
+  MJ_SIJYOKBM?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
+  DT_SAISINUP?: Prisma.StringNullableFilter<"ZAIKO_Base"> | string | null
+  DD_SIIRE?: Prisma.DateTimeNullableFilter<"ZAIKO_Base"> | Date | string | null
+}
+
+export type ZAIKO_BaseCreateManyNumber98Input = {
+  id?: number
+  sortOrder?: number
+  APPINDEX: string
+  APPINDEX_FKEY: string
+  KB_SIIRE?: string | null
+  DD_KEIRIKEI?: Date | string | null
+  NO_SIRETYUM?: string | null
+  MJ_SIRENORI?: string | null
+  KB_SIRETOSY?: string | null
+  CD_SIRETOGY?: string | null
+  NO_SIRETOSE?: string | null
+  MJ_SIRESAKI?: string | null
+  CD_SITADOTE?: string | null
+  CD_SITASTAF?: string | null
+  CD_SIRETENP?: string | null
+  MJ_FURUSYAM?: string | null
+  NO_KATASIKI?: string | null
+  NO_FRAME?: string | null
+  CD_TENJTENP?: string | null
+  KI_HNBSIJIK?: string | null
+  KI_TENTOHYJ?: string | null
+  CD_ZAIKSYYS?: string | null
+  KB_SYASYHAN?: string | null
+  NO_SYADAIBA?: string | null
+  KI_SIIREKA?: string | null
+  KN_KEI?: string | null
+  MJ_ZAIKOST?: string | null
+  CD_ZAIKOTEN?: string | null
+  NO_CYUMON?: string | null
+  KB_URIAGE?: string | null
+  CD_HANSTAFF?: string | null
+  MJ_21SYASYS?: string | null
+  MJ_SIJYOKBM?: string | null
+  DT_SAISINUP?: string | null
+  DD_SIIRE?: Date | string | null
+}
+
+export type ZAIKO_BaseUpdateWithoutNumber98Input = {
+  sortOrder?: Prisma.FloatFieldUpdateOperationsInput | number
+  APPINDEX?: Prisma.StringFieldUpdateOperationsInput | string
+  APPINDEX_FKEY?: Prisma.StringFieldUpdateOperationsInput | string
+  KB_SIIRE?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  DD_KEIRIKEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  MJ_SIRENORI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  KB_SIRETOSY?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  CD_SIRETOGY?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  NO_SIRETOSE?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  MJ_SIRESAKI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  CD_SITADOTE?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  CD_SITASTAF?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  CD_SIRETENP?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  MJ_FURUSYAM?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  NO_KATASIKI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  NO_FRAME?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  CD_TENJTENP?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  KI_HNBSIJIK?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  KI_TENTOHYJ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  CD_ZAIKSYYS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  KB_SYASYHAN?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  KI_SIIREKA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  KN_KEI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  MJ_ZAIKOST?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  CD_ZAIKOTEN?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  NO_CYUMON?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  KB_URIAGE?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  CD_HANSTAFF?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  MJ_21SYASYS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  MJ_SIJYOKBM?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  DT_SAISINUP?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  DD_SIIRE?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  OldCars_Base?: Prisma.OldCars_BaseUpdateOneWithoutZAIKO_BaseNestedInput
+}
+
+export type ZAIKO_BaseUncheckedUpdateWithoutNumber98Input = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  sortOrder?: Prisma.FloatFieldUpdateOperationsInput | number
+  APPINDEX?: Prisma.StringFieldUpdateOperationsInput | string
+  APPINDEX_FKEY?: Prisma.StringFieldUpdateOperationsInput | string
+  KB_SIIRE?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  DD_KEIRIKEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  NO_SIRETYUM?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  MJ_SIRENORI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  KB_SIRETOSY?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  CD_SIRETOGY?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  NO_SIRETOSE?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  MJ_SIRESAKI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  CD_SITADOTE?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  CD_SITASTAF?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  CD_SIRETENP?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  MJ_FURUSYAM?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  NO_KATASIKI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  NO_FRAME?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  CD_TENJTENP?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  KI_HNBSIJIK?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  KI_TENTOHYJ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  CD_ZAIKSYYS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  KB_SYASYHAN?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  NO_SYADAIBA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  KI_SIIREKA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  KN_KEI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  MJ_ZAIKOST?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  CD_ZAIKOTEN?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  NO_CYUMON?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  KB_URIAGE?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  CD_HANSTAFF?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  MJ_21SYASYS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  MJ_SIJYOKBM?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  DT_SAISINUP?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  DD_SIIRE?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type ZAIKO_BaseUncheckedUpdateManyWithoutNumber98Input = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  sortOrder?: Prisma.FloatFieldUpdateOperationsInput | number
+  APPINDEX?: Prisma.StringFieldUpdateOperationsInput | string
+  APPINDEX_FKEY?: Prisma.StringFieldUpdateOperationsInput | string
+  KB_SIIRE?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  DD_KEIRIKEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  NO_SIRETYUM?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  MJ_SIRENORI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  KB_SIRETOSY?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  CD_SIRETOGY?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  NO_SIRETOSE?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  MJ_SIRESAKI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  CD_SITADOTE?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  CD_SITASTAF?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  CD_SIRETENP?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  MJ_FURUSYAM?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  NO_KATASIKI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  NO_FRAME?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  CD_TENJTENP?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  KI_HNBSIJIK?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  KI_TENTOHYJ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  CD_ZAIKSYYS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  KB_SYASYHAN?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  NO_SYADAIBA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   KI_SIIREKA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   KN_KEI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   MJ_ZAIKOST?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1280,6 +1632,7 @@ export type ZAIKO_BaseSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   MJ_SIJYOKBM?: boolean
   DT_SAISINUP?: boolean
   DD_SIIRE?: boolean
+  Number98?: boolean | Prisma.ZAIKO_Base$Number98Args<ExtArgs>
   OldCars_Base?: boolean | Prisma.ZAIKO_Base$OldCars_BaseArgs<ExtArgs>
 }, ExtArgs["result"]["zAIKO_Base"]>
 
@@ -1320,6 +1673,7 @@ export type ZAIKO_BaseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   MJ_SIJYOKBM?: boolean
   DT_SAISINUP?: boolean
   DD_SIIRE?: boolean
+  Number98?: boolean | Prisma.ZAIKO_Base$Number98Args<ExtArgs>
   OldCars_Base?: boolean | Prisma.ZAIKO_Base$OldCars_BaseArgs<ExtArgs>
 }, ExtArgs["result"]["zAIKO_Base"]>
 
@@ -1360,6 +1714,7 @@ export type ZAIKO_BaseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   MJ_SIJYOKBM?: boolean
   DT_SAISINUP?: boolean
   DD_SIIRE?: boolean
+  Number98?: boolean | Prisma.ZAIKO_Base$Number98Args<ExtArgs>
   OldCars_Base?: boolean | Prisma.ZAIKO_Base$OldCars_BaseArgs<ExtArgs>
 }, ExtArgs["result"]["zAIKO_Base"]>
 
@@ -1404,18 +1759,22 @@ export type ZAIKO_BaseSelectScalar = {
 
 export type ZAIKO_BaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sortOrder" | "APPINDEX" | "APPINDEX_FKEY" | "NO_SYARYOU" | "KB_SIIRE" | "DD_KEIRIKEI" | "NO_SIRETYUM" | "MJ_SIRENORI" | "KB_SIRETOSY" | "CD_SIRETOGY" | "NO_SIRETOSE" | "MJ_SIRESAKI" | "CD_SITADOTE" | "CD_SITASTAF" | "CD_SIRETENP" | "MJ_FURUSYAM" | "NO_KATASIKI" | "NO_FRAME" | "CD_TENJTENP" | "KI_HNBSIJIK" | "KI_TENTOHYJ" | "CD_ZAIKSYYS" | "KB_SYASYHAN" | "NO_SYADAIBA" | "KI_SIIREKA" | "KN_KEI" | "MJ_ZAIKOST" | "CD_ZAIKOTEN" | "NO_CYUMON" | "KB_URIAGE" | "CD_HANSTAFF" | "MJ_21SYASYS" | "MJ_SIJYOKBM" | "DT_SAISINUP" | "DD_SIIRE", ExtArgs["result"]["zAIKO_Base"]>
 export type ZAIKO_BaseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Number98?: boolean | Prisma.ZAIKO_Base$Number98Args<ExtArgs>
   OldCars_Base?: boolean | Prisma.ZAIKO_Base$OldCars_BaseArgs<ExtArgs>
 }
 export type ZAIKO_BaseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Number98?: boolean | Prisma.ZAIKO_Base$Number98Args<ExtArgs>
   OldCars_Base?: boolean | Prisma.ZAIKO_Base$OldCars_BaseArgs<ExtArgs>
 }
 export type ZAIKO_BaseIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Number98?: boolean | Prisma.ZAIKO_Base$Number98Args<ExtArgs>
   OldCars_Base?: boolean | Prisma.ZAIKO_Base$OldCars_BaseArgs<ExtArgs>
 }
 
 export type $ZAIKO_BasePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ZAIKO_Base"
   objects: {
+    Number98: Prisma.$Number98Payload<ExtArgs> | null
     OldCars_Base: Prisma.$OldCars_BasePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1849,6 +2208,7 @@ readonly fields: ZAIKO_BaseFieldRefs;
  */
 export interface Prisma__ZAIKO_BaseClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  Number98<T extends Prisma.ZAIKO_Base$Number98Args<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ZAIKO_Base$Number98Args<ExtArgs>>): Prisma.Prisma__Number98Client<runtime.Types.Result.GetResult<Prisma.$Number98Payload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   OldCars_Base<T extends Prisma.ZAIKO_Base$OldCars_BaseArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ZAIKO_Base$OldCars_BaseArgs<ExtArgs>>): Prisma.Prisma__OldCars_BaseClient<runtime.Types.Result.GetResult<Prisma.$OldCars_BasePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2308,6 +2668,25 @@ export type ZAIKO_BaseDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * Limit how many ZAIKO_Bases to delete.
    */
   limit?: number
+}
+
+/**
+ * ZAIKO_Base.Number98
+ */
+export type ZAIKO_Base$Number98Args<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Number98
+   */
+  select?: Prisma.Number98Select<ExtArgs> | null
+  /**
+   * Omit specific fields from the Number98
+   */
+  omit?: Prisma.Number98Omit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.Number98Include<ExtArgs> | null
+  where?: Prisma.Number98WhereInput
 }
 
 /**

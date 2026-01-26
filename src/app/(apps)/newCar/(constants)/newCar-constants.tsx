@@ -18,8 +18,8 @@ const STATUS_COLORS = [
 ]
 
 const CAR_TRANSFER_HISTORY_LOCATIONS = [
-  { value: `倉敷`, color: '#258516' },
-  { value: `本店`, color: '#9e1515' },
+  // { value: `倉敷`, color: '#258516' },
+  // { value: `本店`, color: '#9e1515' },
   { value: `水島`, color: '#258516' },
   { value: `今保`, color: '#9e1515' },
   { value: `販売店舗`, color: '' },

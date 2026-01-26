@@ -63,6 +63,7 @@ export const ModelName = {
   CrUser: 'CrUser',
   JuchuShitadoriDb: 'JuchuShitadoriDb',
   OldCars_Base: 'OldCars_Base',
+  Number98: 'Number98',
   ZAIKO_Base: 'ZAIKO_Base',
   UpassFamilyTree: 'UpassFamilyTree',
   UPASS: 'UPASS',
@@ -108,7 +109,6 @@ export const ModelName = {
   InsuranceInfo: 'InsuranceInfo',
   ExtraInfo: 'ExtraInfo',
   Ucar: 'Ucar',
-  Number98: 'Number98',
   Number98IssueHistory: 'Number98IssueHistory',
   AppliedUcarGarageSlot: 'AppliedUcarGarageSlot',
   UcarGarageSlotMaster: 'UcarGarageSlotMaster',
@@ -437,6 +437,20 @@ export const OldCars_BaseScalarFieldEnum = {
 } as const
 
 export type OldCars_BaseScalarFieldEnum = (typeof OldCars_BaseScalarFieldEnum)[keyof typeof OldCars_BaseScalarFieldEnum]
+
+
+export const Number98ScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  active: 'active',
+  sortOrder: 'sortOrder',
+  number: 'number',
+  sortNumber: 'sortNumber',
+  occupied: 'occupied'
+} as const
+
+export type Number98ScalarFieldEnum = (typeof Number98ScalarFieldEnum)[keyof typeof Number98ScalarFieldEnum]
 
 
 export const ZAIKO_BaseScalarFieldEnum = {
@@ -1559,20 +1573,6 @@ export const UcarScalarFieldEnum = {
 } as const
 
 export type UcarScalarFieldEnum = (typeof UcarScalarFieldEnum)[keyof typeof UcarScalarFieldEnum]
-
-
-export const Number98ScalarFieldEnum = {
-  id: 'id',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  active: 'active',
-  sortOrder: 'sortOrder',
-  number: 'number',
-  sortNumber: 'sortNumber',
-  occupied: 'occupied'
-} as const
-
-export type Number98ScalarFieldEnum = (typeof Number98ScalarFieldEnum)[keyof typeof Number98ScalarFieldEnum]
 
 
 export const Number98IssueHistoryScalarFieldEnum = {

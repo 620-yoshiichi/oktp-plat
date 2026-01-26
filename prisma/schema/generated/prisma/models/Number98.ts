@@ -250,6 +250,7 @@ export type Number98WhereInput = {
   occupied?: Prisma.BoolNullableFilter<"Number98"> | boolean | null
   Ucar?: Prisma.UcarListRelationFilter
   OldCars_Base?: Prisma.OldCars_BaseListRelationFilter
+  ZAIKO_Base?: Prisma.ZAIKO_BaseListRelationFilter
 }
 
 export type Number98OrderByWithRelationInput = {
@@ -263,6 +264,7 @@ export type Number98OrderByWithRelationInput = {
   occupied?: Prisma.SortOrderInput | Prisma.SortOrder
   Ucar?: Prisma.UcarOrderByRelationAggregateInput
   OldCars_Base?: Prisma.OldCars_BaseOrderByRelationAggregateInput
+  ZAIKO_Base?: Prisma.ZAIKO_BaseOrderByRelationAggregateInput
 }
 
 export type Number98WhereUniqueInput = Prisma.AtLeast<{
@@ -279,6 +281,7 @@ export type Number98WhereUniqueInput = Prisma.AtLeast<{
   occupied?: Prisma.BoolNullableFilter<"Number98"> | boolean | null
   Ucar?: Prisma.UcarListRelationFilter
   OldCars_Base?: Prisma.OldCars_BaseListRelationFilter
+  ZAIKO_Base?: Prisma.ZAIKO_BaseListRelationFilter
 }, "id" | "number">
 
 export type Number98OrderByWithAggregationInput = {
@@ -321,6 +324,7 @@ export type Number98CreateInput = {
   occupied?: boolean | null
   Ucar?: Prisma.UcarCreateNestedManyWithoutNumber98Input
   OldCars_Base?: Prisma.OldCars_BaseCreateNestedManyWithoutNumber98Input
+  ZAIKO_Base?: Prisma.ZAIKO_BaseCreateNestedManyWithoutNumber98Input
 }
 
 export type Number98UncheckedCreateInput = {
@@ -334,6 +338,7 @@ export type Number98UncheckedCreateInput = {
   occupied?: boolean | null
   Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutNumber98Input
   OldCars_Base?: Prisma.OldCars_BaseUncheckedCreateNestedManyWithoutNumber98Input
+  ZAIKO_Base?: Prisma.ZAIKO_BaseUncheckedCreateNestedManyWithoutNumber98Input
 }
 
 export type Number98UpdateInput = {
@@ -346,6 +351,7 @@ export type Number98UpdateInput = {
   occupied?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   Ucar?: Prisma.UcarUpdateManyWithoutNumber98NestedInput
   OldCars_Base?: Prisma.OldCars_BaseUpdateManyWithoutNumber98NestedInput
+  ZAIKO_Base?: Prisma.ZAIKO_BaseUpdateManyWithoutNumber98NestedInput
 }
 
 export type Number98UncheckedUpdateInput = {
@@ -359,6 +365,7 @@ export type Number98UncheckedUpdateInput = {
   occupied?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   Ucar?: Prisma.UcarUncheckedUpdateManyWithoutNumber98NestedInput
   OldCars_Base?: Prisma.OldCars_BaseUncheckedUpdateManyWithoutNumber98NestedInput
+  ZAIKO_Base?: Prisma.ZAIKO_BaseUncheckedUpdateManyWithoutNumber98NestedInput
 }
 
 export type Number98CreateManyInput = {
@@ -459,6 +466,22 @@ export type Number98UpdateOneWithoutOldCars_BaseNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.Number98UpdateToOneWithWhereWithoutOldCars_BaseInput, Prisma.Number98UpdateWithoutOldCars_BaseInput>, Prisma.Number98UncheckedUpdateWithoutOldCars_BaseInput>
 }
 
+export type Number98CreateNestedOneWithoutZAIKO_BaseInput = {
+  create?: Prisma.XOR<Prisma.Number98CreateWithoutZAIKO_BaseInput, Prisma.Number98UncheckedCreateWithoutZAIKO_BaseInput>
+  connectOrCreate?: Prisma.Number98CreateOrConnectWithoutZAIKO_BaseInput
+  connect?: Prisma.Number98WhereUniqueInput
+}
+
+export type Number98UpdateOneWithoutZAIKO_BaseNestedInput = {
+  create?: Prisma.XOR<Prisma.Number98CreateWithoutZAIKO_BaseInput, Prisma.Number98UncheckedCreateWithoutZAIKO_BaseInput>
+  connectOrCreate?: Prisma.Number98CreateOrConnectWithoutZAIKO_BaseInput
+  upsert?: Prisma.Number98UpsertWithoutZAIKO_BaseInput
+  disconnect?: Prisma.Number98WhereInput | boolean
+  delete?: Prisma.Number98WhereInput | boolean
+  connect?: Prisma.Number98WhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.Number98UpdateToOneWithWhereWithoutZAIKO_BaseInput, Prisma.Number98UpdateWithoutZAIKO_BaseInput>, Prisma.Number98UncheckedUpdateWithoutZAIKO_BaseInput>
+}
+
 export type Number98CreateNestedOneWithoutUcarInput = {
   create?: Prisma.XOR<Prisma.Number98CreateWithoutUcarInput, Prisma.Number98UncheckedCreateWithoutUcarInput>
   connectOrCreate?: Prisma.Number98CreateOrConnectWithoutUcarInput
@@ -484,6 +507,7 @@ export type Number98CreateWithoutOldCars_BaseInput = {
   sortNumber?: number | null
   occupied?: boolean | null
   Ucar?: Prisma.UcarCreateNestedManyWithoutNumber98Input
+  ZAIKO_Base?: Prisma.ZAIKO_BaseCreateNestedManyWithoutNumber98Input
 }
 
 export type Number98UncheckedCreateWithoutOldCars_BaseInput = {
@@ -496,6 +520,7 @@ export type Number98UncheckedCreateWithoutOldCars_BaseInput = {
   sortNumber?: number | null
   occupied?: boolean | null
   Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutNumber98Input
+  ZAIKO_Base?: Prisma.ZAIKO_BaseUncheckedCreateNestedManyWithoutNumber98Input
 }
 
 export type Number98CreateOrConnectWithoutOldCars_BaseInput = {
@@ -523,6 +548,7 @@ export type Number98UpdateWithoutOldCars_BaseInput = {
   sortNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   occupied?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   Ucar?: Prisma.UcarUpdateManyWithoutNumber98NestedInput
+  ZAIKO_Base?: Prisma.ZAIKO_BaseUpdateManyWithoutNumber98NestedInput
 }
 
 export type Number98UncheckedUpdateWithoutOldCars_BaseInput = {
@@ -535,6 +561,73 @@ export type Number98UncheckedUpdateWithoutOldCars_BaseInput = {
   sortNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   occupied?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   Ucar?: Prisma.UcarUncheckedUpdateManyWithoutNumber98NestedInput
+  ZAIKO_Base?: Prisma.ZAIKO_BaseUncheckedUpdateManyWithoutNumber98NestedInput
+}
+
+export type Number98CreateWithoutZAIKO_BaseInput = {
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  active?: boolean
+  sortOrder?: number
+  number: string
+  sortNumber?: number | null
+  occupied?: boolean | null
+  Ucar?: Prisma.UcarCreateNestedManyWithoutNumber98Input
+  OldCars_Base?: Prisma.OldCars_BaseCreateNestedManyWithoutNumber98Input
+}
+
+export type Number98UncheckedCreateWithoutZAIKO_BaseInput = {
+  id?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  active?: boolean
+  sortOrder?: number
+  number: string
+  sortNumber?: number | null
+  occupied?: boolean | null
+  Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutNumber98Input
+  OldCars_Base?: Prisma.OldCars_BaseUncheckedCreateNestedManyWithoutNumber98Input
+}
+
+export type Number98CreateOrConnectWithoutZAIKO_BaseInput = {
+  where: Prisma.Number98WhereUniqueInput
+  create: Prisma.XOR<Prisma.Number98CreateWithoutZAIKO_BaseInput, Prisma.Number98UncheckedCreateWithoutZAIKO_BaseInput>
+}
+
+export type Number98UpsertWithoutZAIKO_BaseInput = {
+  update: Prisma.XOR<Prisma.Number98UpdateWithoutZAIKO_BaseInput, Prisma.Number98UncheckedUpdateWithoutZAIKO_BaseInput>
+  create: Prisma.XOR<Prisma.Number98CreateWithoutZAIKO_BaseInput, Prisma.Number98UncheckedCreateWithoutZAIKO_BaseInput>
+  where?: Prisma.Number98WhereInput
+}
+
+export type Number98UpdateToOneWithWhereWithoutZAIKO_BaseInput = {
+  where?: Prisma.Number98WhereInput
+  data: Prisma.XOR<Prisma.Number98UpdateWithoutZAIKO_BaseInput, Prisma.Number98UncheckedUpdateWithoutZAIKO_BaseInput>
+}
+
+export type Number98UpdateWithoutZAIKO_BaseInput = {
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.FloatFieldUpdateOperationsInput | number
+  number?: Prisma.StringFieldUpdateOperationsInput | string
+  sortNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  occupied?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  Ucar?: Prisma.UcarUpdateManyWithoutNumber98NestedInput
+  OldCars_Base?: Prisma.OldCars_BaseUpdateManyWithoutNumber98NestedInput
+}
+
+export type Number98UncheckedUpdateWithoutZAIKO_BaseInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.FloatFieldUpdateOperationsInput | number
+  number?: Prisma.StringFieldUpdateOperationsInput | string
+  sortNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  occupied?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  Ucar?: Prisma.UcarUncheckedUpdateManyWithoutNumber98NestedInput
+  OldCars_Base?: Prisma.OldCars_BaseUncheckedUpdateManyWithoutNumber98NestedInput
 }
 
 export type Number98CreateWithoutUcarInput = {
@@ -546,6 +639,7 @@ export type Number98CreateWithoutUcarInput = {
   sortNumber?: number | null
   occupied?: boolean | null
   OldCars_Base?: Prisma.OldCars_BaseCreateNestedManyWithoutNumber98Input
+  ZAIKO_Base?: Prisma.ZAIKO_BaseCreateNestedManyWithoutNumber98Input
 }
 
 export type Number98UncheckedCreateWithoutUcarInput = {
@@ -558,6 +652,7 @@ export type Number98UncheckedCreateWithoutUcarInput = {
   sortNumber?: number | null
   occupied?: boolean | null
   OldCars_Base?: Prisma.OldCars_BaseUncheckedCreateNestedManyWithoutNumber98Input
+  ZAIKO_Base?: Prisma.ZAIKO_BaseUncheckedCreateNestedManyWithoutNumber98Input
 }
 
 export type Number98CreateOrConnectWithoutUcarInput = {
@@ -585,6 +680,7 @@ export type Number98UpdateWithoutUcarInput = {
   sortNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   occupied?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   OldCars_Base?: Prisma.OldCars_BaseUpdateManyWithoutNumber98NestedInput
+  ZAIKO_Base?: Prisma.ZAIKO_BaseUpdateManyWithoutNumber98NestedInput
 }
 
 export type Number98UncheckedUpdateWithoutUcarInput = {
@@ -597,6 +693,7 @@ export type Number98UncheckedUpdateWithoutUcarInput = {
   sortNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   occupied?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   OldCars_Base?: Prisma.OldCars_BaseUncheckedUpdateManyWithoutNumber98NestedInput
+  ZAIKO_Base?: Prisma.ZAIKO_BaseUncheckedUpdateManyWithoutNumber98NestedInput
 }
 
 
@@ -607,11 +704,13 @@ export type Number98UncheckedUpdateWithoutUcarInput = {
 export type Number98CountOutputType = {
   Ucar: number
   OldCars_Base: number
+  ZAIKO_Base: number
 }
 
 export type Number98CountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Ucar?: boolean | Number98CountOutputTypeCountUcarArgs
   OldCars_Base?: boolean | Number98CountOutputTypeCountOldCars_BaseArgs
+  ZAIKO_Base?: boolean | Number98CountOutputTypeCountZAIKO_BaseArgs
 }
 
 /**
@@ -638,6 +737,13 @@ export type Number98CountOutputTypeCountOldCars_BaseArgs<ExtArgs extends runtime
   where?: Prisma.OldCars_BaseWhereInput
 }
 
+/**
+ * Number98CountOutputType without action
+ */
+export type Number98CountOutputTypeCountZAIKO_BaseArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ZAIKO_BaseWhereInput
+}
+
 
 export type Number98Select<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -650,6 +756,7 @@ export type Number98Select<ExtArgs extends runtime.Types.Extensions.InternalArgs
   occupied?: boolean
   Ucar?: boolean | Prisma.Number98$UcarArgs<ExtArgs>
   OldCars_Base?: boolean | Prisma.Number98$OldCars_BaseArgs<ExtArgs>
+  ZAIKO_Base?: boolean | Prisma.Number98$ZAIKO_BaseArgs<ExtArgs>
   _count?: boolean | Prisma.Number98CountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["number98"]>
 
@@ -690,6 +797,7 @@ export type Number98Omit<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 export type Number98Include<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Ucar?: boolean | Prisma.Number98$UcarArgs<ExtArgs>
   OldCars_Base?: boolean | Prisma.Number98$OldCars_BaseArgs<ExtArgs>
+  ZAIKO_Base?: boolean | Prisma.Number98$ZAIKO_BaseArgs<ExtArgs>
   _count?: boolean | Prisma.Number98CountOutputTypeDefaultArgs<ExtArgs>
 }
 export type Number98IncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -700,6 +808,7 @@ export type $Number98Payload<ExtArgs extends runtime.Types.Extensions.InternalAr
   objects: {
     Ucar: Prisma.$UcarPayload<ExtArgs>[]
     OldCars_Base: Prisma.$OldCars_BasePayload<ExtArgs>[]
+    ZAIKO_Base: Prisma.$ZAIKO_BasePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1106,6 +1215,7 @@ export interface Prisma__Number98Client<T, Null = never, ExtArgs extends runtime
   readonly [Symbol.toStringTag]: "PrismaPromise"
   Ucar<T extends Prisma.Number98$UcarArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Number98$UcarArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UcarPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   OldCars_Base<T extends Prisma.Number98$OldCars_BaseArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Number98$OldCars_BaseArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OldCars_BasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  ZAIKO_Base<T extends Prisma.Number98$ZAIKO_BaseArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Number98$ZAIKO_BaseArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ZAIKO_BasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1576,6 +1686,30 @@ export type Number98$OldCars_BaseArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.OldCars_BaseScalarFieldEnum | Prisma.OldCars_BaseScalarFieldEnum[]
+}
+
+/**
+ * Number98.ZAIKO_Base
+ */
+export type Number98$ZAIKO_BaseArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ZAIKO_Base
+   */
+  select?: Prisma.ZAIKO_BaseSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ZAIKO_Base
+   */
+  omit?: Prisma.ZAIKO_BaseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ZAIKO_BaseInclude<ExtArgs> | null
+  where?: Prisma.ZAIKO_BaseWhereInput
+  orderBy?: Prisma.ZAIKO_BaseOrderByWithRelationInput | Prisma.ZAIKO_BaseOrderByWithRelationInput[]
+  cursor?: Prisma.ZAIKO_BaseWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ZAIKO_BaseScalarFieldEnum | Prisma.ZAIKO_BaseScalarFieldEnum[]
 }
 
 /**

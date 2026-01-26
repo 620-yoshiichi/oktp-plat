@@ -20,13 +20,13 @@ export const getUcarPages = (props: PageGetterType) => {
       children: [
         {
           tabId: 'createQr',
-          label: 'QR発行',
+          label: 'QR発行/再発行',
           ROOT: [rootPath],
           exclusiveTo: isUcarMember,
         },
         {
           tabId: 'ucar',
-          label: 'QRシート発行一覧',
+          label: 'QRシート発行履歴',
           link: {
             query: { displayColumns: '下取書類,商品化' },
           },
