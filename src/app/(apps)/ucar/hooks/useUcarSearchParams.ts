@@ -1,13 +1,11 @@
 'use client'
 
-import { useCallback, useMemo } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
-import type { Prisma } from '@prisma/generated/prisma/client'
-import {
-  type UcarSearchValues,
-  URL_PARAM_KEYS,
-} from '../components/search/types'
-import { buildWhereConditions } from '../components/search/buildWhereConditions'
+import {useCallback, useMemo} from 'react'
+import {useRouter, useSearchParams} from 'next/navigation'
+import type {Prisma} from '@prisma/generated/prisma/client'
+import {type UcarSearchValues, URL_PARAM_KEYS} from '../components/search/types'
+import {buildWhereConditions} from '../components/search/buildWhereConditions'
+import useSWR from 'swr'
 
 /**
  * フックの戻り値型
@@ -71,15 +69,14 @@ export function useUcarSearchParams(): UseUcarSearchParamsReturn {
     }
   }, [searchParams])
 
-  // WHERE条件を生成
-  const whereConditions = useMemo<Prisma.UcarWhereInput[]>(() => {
-    return buildWhereConditions(values)
-  }, [values])
+  const {data: whereConditions = []} = useSWR<Prisma.UcarWhereInput[]>(['useUcarSearchParams', values], async () => {
+    return await buildWhereConditions(values)
+  })
 
   // URLパラメータ文字列を生成
   const buildSearchUrl = useCallback(
     (newValues?: Partial<UcarSearchValues>): string => {
-      const mergedValues = newValues ? { ...values, ...newValues } : values
+      const mergedValues = newValues ? {...values, ...newValues} : values
       const params = new URLSearchParams()
 
       // 各フィールドの値をURLパラメータに設定
@@ -108,9 +105,9 @@ export function useUcarSearchParams(): UseUcarSearchParamsReturn {
     (field: keyof UcarSearchValues, value: string | boolean) => {
       // この実装ではURLベースの状態管理のため、
       // 直接URLを更新する形で実装
-      const newValues = { ...values, [field]: value }
+      const newValues = {...values, [field]: value}
       const url = buildSearchUrl(newValues)
-      router.push(url, { scroll: false })
+      router.push(url, {scroll: false})
     },
     [values, buildSearchUrl, router]
   )
@@ -119,14 +116,14 @@ export function useUcarSearchParams(): UseUcarSearchParamsReturn {
   const search = useCallback(
     (newValues?: Partial<UcarSearchValues>) => {
       const url = buildSearchUrl(newValues)
-      router.push(url, { scroll: false })
+      router.push(url, {scroll: false})
     },
     [buildSearchUrl, router]
   )
 
   // リセット
   const reset = useCallback(() => {
-    router.push(window.location.pathname, { scroll: false })
+    router.push(window.location.pathname, {scroll: false})
   }, [router])
 
   return {
@@ -134,10 +131,10 @@ export function useUcarSearchParams(): UseUcarSearchParamsReturn {
     setField,
     search,
     reset,
-    whereConditions,
+    whereConditions: whereConditions ?? [],
     buildSearchUrl,
   }
 }
 
 // サーバーコンポーネント用関数は別ファイルから再エクスポート
-export { getSearchValuesFromParams } from '../components/search/getSearchValuesFromParams'
+export {getSearchValuesFromParams} from '../components/search/getSearchValuesFromParams'
