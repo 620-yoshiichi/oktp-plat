@@ -1,11 +1,11 @@
 'use client'
-import { useState, useEffect } from 'react'
-import { UcarProcessCl } from '@app/(apps)/ucar/class/UcarProcessCl'
+import {useState, useEffect} from 'react'
+import {UcarProcessCl} from '@app/(apps)/ucar/class/UcarProcessCl'
 
 /**
  * プロセスタイプに応じた前提条件のチェックと管理を行う
  */
-export const useProcessPrerequisites = ({ processCode, UcarData }) => {
+export const useProcessPrerequisites = ({processCode, UcarData}) => {
   const ProcessCodeItem = UcarProcessCl.CODE.byCode(processCode)
   const isCrChakuProcess = ProcessCodeItem?.code === UcarProcessCl.CODE.raw.CR_CHAKU.code
   const isPaperSendProcess = ProcessCodeItem?.code === UcarProcessCl.CODE.raw.STORE_SHORUI_SOUHU.code
@@ -52,7 +52,13 @@ export const useProcessPrerequisites = ({ processCode, UcarData }) => {
   }, [UcarData.destination, isCrChakuProcess])
 
   // 前提条件が満たされているか
-  const prerequisitesMet = taxRefundSelected && customerInfoRegistered && DestinationRegistered
+  let prerequisitesMet = true
+  if (isPaperSendProcess) {
+    prerequisitesMet = taxRefundSelected && customerInfoRegistered && DestinationRegistered
+  }
+  if (isCrChakuProcess) {
+    prerequisitesMet = DestinationRegistered
+  }
 
   return {
     isCrChakuProcess,
