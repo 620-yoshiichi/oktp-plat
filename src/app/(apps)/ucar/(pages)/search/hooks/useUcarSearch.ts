@@ -37,7 +37,7 @@ export type UseUcarSearchReturn = {
   isDetailLoading: boolean
 
   // マスターデータ
-  storeList: {id: number; name: string}[]
+  storeList: {id: number; name: string; code: number}[]
 }
 
 export function useUcarSearch(): UseUcarSearchReturn {
