@@ -7,7 +7,6 @@ import {
   yuchoShitenNoCol,
   bankMasterCol,
 } from '@app/(apps)/ucar/(pages)/create-process/UcarProcessCreateForm/UserInfoRegister'
-import Coloring from '@cm/lib/methods/Coloring'
 import InlineTaxCalucrator from '@app/(apps)/ucar/class/ColBuilder/lib/ucar/ucarCols-lib/InlineTaxCalucrator'
 import { Button } from '@cm/components/styles/common-components/Button'
 

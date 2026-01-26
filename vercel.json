@@ -23,7 +23,7 @@
   },
   {
    "path": "/api/cron/execute/aisateiDeleteAndCreate",
-   "schedule": "0 23 * * *"
+   "schedule": "15 23 * * *"
   },
   {
    "path": "/api/cron/execute/fetchSeisanYoteiDiff",
@@ -31,7 +31,7 @@
   },
   {
    "path": "/api/cron/execute/juchuShitadoriDbDeleteAndCreate",
-   "schedule": "0 23 * * *"
+   "schedule": "25 23 * * *"
   },
   {
    "path": "/api/cron/execute/notifySeisanYoteiDiff",
@@ -51,11 +51,11 @@
   },
   {
    "path": "/api/cron/execute/upassDeleteAndCreate",
-   "schedule": "0 23 * * *"
+   "schedule": "20 23 * * *"
   },
   {
    "path": "/api/cron/execute/zaikoDeleteAndCreate",
-   "schedule": "0 23 * * *"
+   "schedule": "10 23 * * *"
   }
  ]
 }

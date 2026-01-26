@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState, useRef } from 'react'
-import { basePath, isDev } from '@cm/lib/methods/common'
+import { basePath } from '@cm/lib/methods/common'
 import QRCode from 'qrcode'
 import { C_Stack, R_Stack } from '@cm/components/styles/common-components/common-components'
 import { HREF } from '@cm/lib/methods/urls'
@@ -417,11 +417,16 @@ const Page2 = ({ ucar, srcDataUrlObject }) => {
           <div>
             {srcDataUrlObject
               .filter(d => d.sheetNumber === 2)
-              .map(({ key, qrCode, src, label }) => (
-                <div key={key} className="qr-code-item ">
-                  <Link href={src} className={isDev ? 't-link' : ''}>
-                    <div className="qr-label">{label}</div>
-                  </Link>
+              .map(({ key, qrCode, src, label, target }) => (
+                <div key={key} className="qr-code-item w-fit mx-auto">
+                  <R_Stack className={`w-full mb-1 justify-between`}>
+                    <Link className={`font-bold text-base`} href={src} target="_blank">
+                      <div>{label}</div>
+                    </Link>
+
+                    <span className="text-sm font-bold text-gray-800 bg-yellow-100 px-2 py-0.5 rounded block">({target})</span>
+                  </R_Stack>
+
                   <img src={qrCode} alt={label} className="qr-image " />
                 </div>
               ))}
