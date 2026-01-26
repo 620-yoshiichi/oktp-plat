@@ -141,7 +141,7 @@ export const batchCloneBigQuery = async () => {
       }
 
       // レコードの変換処理
-      const recordsParsedDate = records
+      const recordsParsedDate = (records ?? [])
         .map(obj => {
           try {
             // 日付パース処理
@@ -236,9 +236,11 @@ export const batchCloneBigQuery = async () => {
 
 
               try {
-                const result = await doTransaction({
-                  transactionQueryList: batch,
+                const transactionResult = await doTransaction({
+                  transactionQueryList: (batch ?? []),
                 })
+
+                console.log({ transactionResult })  //logs
               } catch (error) {
                 const errorMessage = error instanceof Error ? error.message : String(error)
                 console.error(`バッチ処理エラー (offset: ${offset}, batchSize: ${batch.length}):`, {
@@ -250,8 +252,7 @@ export const batchCloneBigQuery = async () => {
               }
             },
             options: {
-              batchSize: BATCH_SIZE,
-              retries: 1, // リトライ回数を増加
+              batchSize: BATCH_SIZE, retries: 1, // リトライ回数を増加
             },
           })
         } catch (error) {

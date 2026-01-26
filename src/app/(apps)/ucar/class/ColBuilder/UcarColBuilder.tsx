@@ -78,7 +78,8 @@ export const ucarColBuilder = (props: columnGetterType) => {
         disabled: true,
         defaultValue: session?.id,
       },
-      forSelect: {},
+      forSelect: {
+      },
     },
 
     //
@@ -143,22 +144,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
             ],
           }
         },
-        // optionsOrOptionFetcher: [
-        //   currentNumber98
-        //     ? {
-        //         value: currentNumber98,
-        //         label: currentNumber98,
-        //       }
-        //     : undefined,
 
-        //   ...getAvailable98NumbersReturn?.available98Numbers.map(d => {
-        //     const str = String(d.sortNumber)
-        //     return {
-        //       value: d.number,
-        //       label: d.sortNumber,
-        //     }
-        //   }),
-        // ].filter(d => Boolean),
       },
     },
     {

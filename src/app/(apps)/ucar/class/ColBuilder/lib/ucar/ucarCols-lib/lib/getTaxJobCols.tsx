@@ -74,14 +74,7 @@ export const getTaxJobCols = ({ isChukoshaGroup }: { isChukoshaGroup?: boolean }
       forSelect: {
         codeMaster: UCAR_CODE.TAX_EXCEPTION,
       },
-      format: (value, row) => {
-        const codeItem = UCAR_CODE.TAX_EXCEPTION.byCode(row.exception)
-        return (
-          <Coloring mode="bg" color={codeItem?.color}>
-            {codeItem?.label}
-          </Coloring>
-        )
-      },
+
     },
     { id: `paymentNoticeRecievedAt`, label: `納付書受領`, form: {}, type: `date` },
     { id: `isPayed`, label: `納付済み`, form: {}, type: `boolean` },

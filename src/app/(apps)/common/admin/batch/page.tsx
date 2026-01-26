@@ -10,7 +10,7 @@ import { cl } from '@cm/lib/methods/common'
 import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 import { PrismaModelNames } from '@cm/types/prisma-types'
 import { toast } from 'react-toastify'
-import { BATCH_MASTER, BatchConfig } from 'src/non-common/cron/batchMaster'
+import { BATCH_MASTER, BatchConfig, BatchCountArgs } from 'src/non-common/cron/batchMaster'
 import useSWR from 'swr'
 import { fetchAlt } from '@cm/lib/http/fetch-client'
 import { basePath } from '@cm/lib/methods/common'
@@ -102,23 +102,30 @@ export default function Page() {
   )
 
 
-  // Ucarアプリのデータ件数取得
-  const ucarKey = JSON.stringify(batch.ucar)
-  const { data: ucarCount, mutate: mutateUcarCount } = useSWR(ucarKey, async () => {
+  // 全バッチのデータ件数を取得（prismaArgsが設定されているもののみ）
+  const allBatches = Object.values(batch).flat()
+  const batchCountKey = JSON.stringify(allBatches.map(b => ({ id: b.id, prismaArgs: b.prismaArgs })))
+  const { data: batchCounts, mutate: mutateBatchCounts } = useSWR(batchCountKey, async () => {
     const countList = await Promise.all(
-      batch.ucar.map(async action => {
-        if (action.tableName) {
-          const args = action.prismaArgs as any
-
-          const res = await doStandardPrisma(action.tableName as PrismaModelNames, 'count', args as never)
-          return {
-            name: action.name,
-            count: res.result,
+      allBatches.map(async action => {
+        const prismaArgs = action.prismaArgs as BatchCountArgs | undefined
+        if (prismaArgs?.model) {
+          try {
+            const args = prismaArgs.where ? { where: prismaArgs.where } : undefined
+            const res = await doStandardPrisma(prismaArgs.model as PrismaModelNames, 'count', args as never)
+            return {
+              id: action.id,
+              count: res.result,
+            }
+          } catch (error) {
+            console.error(`Failed to get count for ${action.name}:`, error)
+            return undefined
           }
         }
+        return undefined
       })
     )
-    return Object.fromEntries(countList.filter(d => d !== undefined).map(d => [d.name, d.count]))
+    return Object.fromEntries(countList.filter(d => d !== undefined).map(d => [d.id, d.count]))
   })
 
   const { paddingTd, borderCerlls } = CssString.table
@@ -156,7 +163,7 @@ export default function Page() {
     return checkDate.toDateString() === today.toDateString()
   }
 
-  const renderTable = (actions: BatchConfig[], title: string, counts?: Record<string, number>) => {
+  const renderTable = (actions: BatchConfig[], title: string) => {
     const hasEffectOn = actions.some(action => action.effectOn)
 
     return (
@@ -176,7 +183,7 @@ export default function Page() {
             </thead>
             <tbody className={``}>
               {actions.map((action, idx) => {
-                const count = counts?.[action.name]
+                const count = batchCounts?.[action.id]
                 const logData = batchLogs?.[action.id]
                 const latestLog = logData?.latest as CronExecutionLog | null
 
@@ -230,8 +237,8 @@ export default function Page() {
                           // ログデータを再取得
                           mutateBatchLogs()
                           // データカウントを再取得
-                          if (action.app === 'ucar' && action.tableName) {
-                            mutateUcarCount()
+                          if (action.prismaArgs?.model) {
+                            mutateBatchCounts()
                           }
                         }
                       }
@@ -247,8 +254,8 @@ export default function Page() {
                       // ログデータを再取得（完了したかもしれないので）
                       mutateBatchLogs()
                       // データカウントを再取得
-                      if (action.app === 'ucar' && action.tableName) {
-                        mutateUcarCount()
+                      if (action.prismaArgs?.model) {
+                        mutateBatchCounts()
                       }
                     }
                   } catch (error: any) {
@@ -365,7 +372,7 @@ export default function Page() {
     )
   }
 
-  const renderBatchTable = (actions: BatchConfig[], appName: string, counts?: Record<string, number>) => {
+  const renderBatchTable = (actions: BatchConfig[], appName: string) => {
     const batchActions = actions.filter(action => action.effectOn === 'batch')
     const clickActions = actions.filter(action => action.effectOn === 'click' || !action.effectOn)
 
@@ -373,14 +380,14 @@ export default function Page() {
       <C_Stack className={` gap-10`}>
         {batchActions.length > 0 && (
           <div>
-            {renderTable(batchActions, 'バッチ実行処理', counts)}
+            {renderTable(batchActions, 'バッチ実行処理')}
             <small>*自動で実行される</small>
           </div>
         )}
 
         {clickActions.length > 0 && (
           <div>
-            {renderTable(clickActions, 'クリック実行処理', counts)}
+            {renderTable(clickActions, 'クリック実行処理')}
             <small>*初回のみ手動で実行</small>
           </div>
         )}
@@ -393,7 +400,7 @@ export default function Page() {
     if (actions.length > 0) {
       return {
         label: key,
-        component: <div>{renderBatchTable(actions, key, ucarCount)}</div>,
+        component: <div>{renderBatchTable(actions, key)}</div>,
       }
     }
   }).filter(Boolean) as tabComponent[]

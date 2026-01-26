@@ -24,6 +24,14 @@ import {
 import {executeDisactivateUnnecessaryUcar} from 'src/non-common/cron/handlers/executeDisactivateUnnecessaryUcar'
 
 /**
+ * Prisma件数取得用の引数型定義
+ */
+export type BatchCountArgs = {
+  model: string // Prismaモデル名
+  where?: Record<string, any> // where条件（オプション）
+}
+
+/**
  * バッチ設定の型定義
  */
 export type BatchConfig = {
@@ -36,8 +44,8 @@ export type BatchConfig = {
   effectOn: 'batch' | 'click' // 実行種別
   handler?: () => Promise<any> // 実行関数（effectOnが'batch'の場合必須）
   onClick?: {name: string; main: () => Promise<any>} // クリック実行関数（UI用）
-  tableName?: string // テーブル名（カウント表示用）
-  prismaArgs?: any // Prisma引数（カウント表示用）
+  tableName?: string // テーブル名（カウント表示用） - 後方互換性のため残す
+  prismaArgs?: BatchCountArgs // 件数取得用のPrisma引数（model必須、whereはオプション）
 }
 
 /**
@@ -108,22 +116,28 @@ export const BATCH_MASTER: Record<string, BatchConfig> = {
     effectOn: 'batch',
     handler: executeOldCarsDeleteAndCreate,
     tableName: 'oldCars_Base',
+    prismaArgs: {
+      model: 'oldCars_Base',
+    },
   },
   zaikoDeleteAndCreate: {
     id: 'zaikoDeleteAndCreate',
     name: '在庫 Rawデータ取り込み',
-    schedule: '0 23 * * *',
+    schedule: '10 23 * * *',
     description: '/api/cron/execute/zaikoDeleteAndCreate',
     purpose: '',
     app: 'ucar',
     effectOn: 'batch',
     handler: executeZaikoDeleteAndCreate,
     tableName: 'zAIKO_Base',
+    prismaArgs: {
+      model: 'zAIKO_Base',
+    },
   },
   aisateiDeleteAndCreate: {
     id: 'aisateiDeleteAndCreate',
     name: 'AI査定 Rawデータ取り込み',
-    schedule: '0 23 * * *',
+    schedule: '15 23 * * *',
     description: '/api/cron/execute/aisateiDeleteAndCreate',
     purpose: '',
     app: 'ucar',
@@ -131,6 +145,7 @@ export const BATCH_MASTER: Record<string, BatchConfig> = {
     handler: executeAisateiDeleteAndCreate,
     tableName: 'uPASS',
     prismaArgs: {
+      model: 'uPASS',
       where: {
         dataSource: 'aisatei',
       },
@@ -139,7 +154,7 @@ export const BATCH_MASTER: Record<string, BatchConfig> = {
   upassDeleteAndCreate: {
     id: 'upassDeleteAndCreate',
     name: 'U-PASS Rawデータ取り込み',
-    schedule: '0 23 * * *',
+    schedule: '20 23 * * *',
     description: '/api/cron/execute/upassDeleteAndCreate',
     purpose: '',
     app: 'ucar',
@@ -147,6 +162,7 @@ export const BATCH_MASTER: Record<string, BatchConfig> = {
     handler: executeUpassDeleteAndCreate,
     tableName: 'uPASS',
     prismaArgs: {
+      model: 'uPASS',
       where: {
         dataSource: 'upass',
       },
@@ -155,13 +171,16 @@ export const BATCH_MASTER: Record<string, BatchConfig> = {
   juchuShitadoriDbDeleteAndCreate: {
     id: 'juchuShitadoriDbDeleteAndCreate',
     name: '受注下取りDB Rawデータ取り込み',
-    schedule: '0 23 * * *',
+    schedule: '25 23 * * *',
     description: '/api/cron/execute/juchuShitadoriDbDeleteAndCreate',
     purpose: '',
     app: 'ucar',
     effectOn: 'batch',
     handler: executeJuchuShitadoriDbDeleteAndCreate,
     tableName: 'juchuShitadoriDb',
+    prismaArgs: {
+      model: 'juchuShitadoriDb',
+    },
   },
 
   num98: {
@@ -173,6 +192,9 @@ export const BATCH_MASTER: Record<string, BatchConfig> = {
     effectOn: 'click',
     handler: executeNum98,
     tableName: 'number98',
+    prismaArgs: {
+      model: 'number98',
+    },
   },
   ucarProcessDeleteAndCreate: {
     id: 'ucarProcessDeleteAndCreate',
@@ -184,6 +206,7 @@ export const BATCH_MASTER: Record<string, BatchConfig> = {
     handler: executeUcarProcessDeleteAndCreate,
     tableName: 'ucar',
     prismaArgs: {
+      model: 'ucar',
       where: {
         dataSource: 'BIG_QUERY_QR_PROCESS', // UCAR_CODEは後で解決
       },
@@ -198,6 +221,9 @@ export const BATCH_MASTER: Record<string, BatchConfig> = {
     effectOn: 'click',
     handler: executeQrPaper,
     tableName: 'ucar',
+    prismaArgs: {
+      model: 'ucar',
+    },
   },
   tenchoShoruiSakusei: {
     id: 'tenchoShoruiSakusei',
@@ -208,6 +234,9 @@ export const BATCH_MASTER: Record<string, BatchConfig> = {
     effectOn: 'click',
     handler: executeTenchoShoruiSakusei,
     tableName: 'ucar',
+    prismaArgs: {
+      model: 'ucar',
+    },
   },
   shiwake: {
     id: 'shiwake',
@@ -218,6 +247,9 @@ export const BATCH_MASTER: Record<string, BatchConfig> = {
     effectOn: 'click',
     handler: executeShiwake,
     tableName: 'ucar',
+    prismaArgs: {
+      model: 'ucar',
+    },
   },
   tax: {
     id: 'tax',
@@ -228,6 +260,9 @@ export const BATCH_MASTER: Record<string, BatchConfig> = {
     effectOn: 'click',
     handler: executeTax,
     tableName: 'ucar',
+    prismaArgs: {
+      model: 'ucar',
+    },
   },
   garage: {
     id: 'garage',
@@ -238,6 +273,9 @@ export const BATCH_MASTER: Record<string, BatchConfig> = {
     effectOn: 'click',
     handler: executeGarage,
     tableName: 'AppliedUcarGarageSlot',
+    prismaArgs: {
+      model: 'AppliedUcarGarageSlot',
+    },
   },
   linkOldCars: {
     id: 'linkOldCars',
@@ -249,6 +287,9 @@ export const BATCH_MASTER: Record<string, BatchConfig> = {
     effectOn: 'click',
     handler: executeLinkOldCars,
     tableName: 'ucar',
+    prismaArgs: {
+      model: 'ucar',
+    },
   },
   disactivateUnnecessaryUcar: {
     id: 'disactivateUnnecessaryUcar',
@@ -259,6 +300,9 @@ export const BATCH_MASTER: Record<string, BatchConfig> = {
     effectOn: 'click',
     handler: executeDisactivateUnnecessaryUcar,
     tableName: 'ucar',
+    prismaArgs: {
+      model: 'ucar',
+    },
   },
 
   // ============ common アプリ ============
@@ -280,6 +324,9 @@ export const BATCH_MASTER: Record<string, BatchConfig> = {
     effectOn: 'click',
     handler: executeBankMaster,
     tableName: 'BankMaster',
+    prismaArgs: {
+      model: 'BankMaster',
+    },
   },
 
   // ============ qrbp アプリ ============
