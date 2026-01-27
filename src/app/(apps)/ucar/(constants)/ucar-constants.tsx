@@ -47,7 +47,7 @@ export const UCAR_CONSTANTS: {
       ].filter(Boolean)
     }
 
-    console.log(result)  //logs
+
     return result
   },
 
