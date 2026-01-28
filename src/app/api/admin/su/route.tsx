@@ -1,6 +1,6 @@
-import {isDev} from '@cm/lib/methods/common'
+import { isDev } from '@cm/lib/methods/common'
 import prisma from 'src/lib/prisma'
-import {NextResponse} from 'next/server'
+import { NextResponse } from 'next/server'
 
 export const POST = async () => {
   const data = {
@@ -12,7 +12,6 @@ export const POST = async () => {
     password: 'admin12345',
     type: 'マネージャー',
     role: '管理者',
-    storeId: 8,
     rentaStoreId: 5,
   }
   if (isDev) {

@@ -143,7 +143,7 @@ export const getGaragePdfFormData = async (
     岡山: {
       locationName: `okayama`,
       address: `岡山県岡山市南区古新田1233-2`,
-      garageNumber: ' No.',
+      garageNumber: '',
       to: `岡山南 警察署長`,
     },
     倉敷: {
