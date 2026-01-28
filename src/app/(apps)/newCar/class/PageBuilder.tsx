@@ -1,48 +1,48 @@
 'use client'
 
-import {ColBuilder} from '@app/(apps)/newCar/class/Colbuilder/ColBuilder'
+import { ColBuilder } from '@app/(apps)/newCar/class/Colbuilder/ColBuilder'
 import DesiredTorokuDateChildCreator from '@app/(apps)/newCar/(parts)/DesiredTorokuDate/DesiredTorokuDateChildCreator'
 
-import {roleMaster} from '@cm/class/builders/PageBuilderVariables'
-import {Fields} from '@cm/class/Fields/Fields'
+import { roleMaster } from '@cm/class/builders/PageBuilderVariables'
+import { Fields } from '@cm/class/Fields/Fields'
 
 import ChildCreator from '@cm/components/DataLogic/RTs/ChildCreator/ChildCreator'
 
 import MyForm from '@cm/components/DataLogic/TFs/MyForm/MyForm'
 
-import {C_Stack, R_Stack} from '@cm/components/styles/common-components/common-components'
-import {Paper, Wrapper} from '@cm/components/styles/common-components/paper'
-import {LabelValue} from '@cm/components/styles/common-components/ParameterCard'
+import { C_Stack, R_Stack } from '@cm/components/styles/common-components/common-components'
+import { Paper, Wrapper } from '@cm/components/styles/common-components/paper'
+import { LabelValue } from '@cm/components/styles/common-components/ParameterCard'
 import Accordion from '@cm/components/utils/Accordions/Accordion'
 import useDoStandardPrisma from '@cm/hooks/useDoStandardPrisma'
-import {DetailPagePropType} from '@cm/types/types'
-import {Alert} from '@cm/components/styles/common-components/Alert'
+import { DetailPagePropType } from '@cm/types/types'
+import { Alert } from '@cm/components/styles/common-components/Alert'
 import useSWR from 'swr'
 
-import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
-import {Button} from '@cm/components/styles/common-components/Button'
-import {fieldNameKeyValueMapping} from '@app/(apps)/newCar/class/ProgressReport/(lib)/getWheres'
-import {get_progressReportQ_additionalWhere} from '@app/(apps)/newCar/(pages)/[dataModelName]/get_progressReportQ_additionalWhere'
-import {usetorokuDateApplicationModal} from '@app/(apps)/newCar/templateHooks/usetorokuDateApplicationModal'
+import { IconBtn } from '@cm/components/styles/common-components/IconBtn'
+import { Button } from '@cm/components/styles/common-components/Button'
+import { fieldNameKeyValueMapping } from '@app/(apps)/newCar/class/ProgressReport/(lib)/getWheres'
+import { get_progressReportQ_additionalWhere } from '@app/(apps)/newCar/(pages)/[dataModelName]/get_progressReportQ_additionalWhere'
+import { usetorokuDateApplicationModal } from '@app/(apps)/newCar/templateHooks/usetorokuDateApplicationModal'
 import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
-import {defaultRegister} from '@cm/class/builders/ColBuilderVariables'
-import {CommonGlobalIdSelector} from '@app/oktpCommon/CommonGlobalIdSelector'
-import {formatDate} from '@cm/class/Days/date-utils/formatters'
+import { defaultRegister } from '@cm/class/builders/ColBuilderVariables'
+import { CommonGlobalIdSelector } from '@app/oktpCommon/CommonGlobalIdSelector'
+import { formatDate } from '@cm/class/Days/date-utils/formatters'
 
 export class PageBuilder {
   static desiredTorokuDate = {
     form: (props: DetailPagePropType) => {
-      const {setGMF_OPEN: settorokuDateApplicationFormOpen} = usetorokuDateApplicationModal()
-      const {useGlobalProps} = props
+      const { setGMF_OPEN: settorokuDateApplicationFormOpen } = usetorokuDateApplicationModal()
+      const { useGlobalProps } = props
       const newCarId = props?.formData?.newCarId
-      const History = ({newCarId}) => {
-        const {data: newCar = {}} = useDoStandardPrisma(`newCar`, `findUnique`, {
-          where: {id: newCarId},
+      const History = ({ newCarId }) => {
+        const { data: newCar = {} } = useDoStandardPrisma(`newCar`, `findUnique`, {
+          where: { id: newCarId },
           include: {
             DesiredTorokuDate: {},
           },
         })
-        const styling = {styles: {wrapper: {width: 400}, label: {width: 80}}}
+        const styling = { styles: { wrapper: { width: 400 }, label: { width: 80 } } }
         return (
           <C_Stack>
             <section>
@@ -100,14 +100,14 @@ export class PageBuilder {
         <div>
           <R_Stack className={` items-start`}>
             {!!newCarId && (
-              <Accordion {...{label: `過去の申請履歴`, defaultOpen: true, closable: false}}>
+              <Accordion {...{ label: `過去の申請履歴`, defaultOpen: true, closable: false }}>
                 <Paper>
-                  <History {...{newCarId}} />
+                  <History {...{ newCarId }} />
                 </Paper>
               </Accordion>
             )}
 
-            <Accordion {...{label: `申請状況`, defaultOpen: true, closable: false}}>
+            <Accordion {...{ label: `申請状況`, defaultOpen: true, closable: false }}>
               <Paper>
                 <MyForm {...props} />
               </Paper>
@@ -120,16 +120,16 @@ export class PageBuilder {
   static roleMaster = roleMaster
   static newCar = {
     top: (props: DetailPagePropType) => {
-      const {toggleLoad, addQuery, query, accessScopes} = props.useGlobalProps
+      const { toggleLoad, addQuery, query, accessScopes } = props.useGlobalProps
       const newCarWhere = accessScopes().getNewCarProps().newCarWhere
 
       const ProgressReportQ = () => {
         if (query[`progressReportQ`]) {
-          const {data} = useSWR(`/`, async () => {
-            return await get_progressReportQ_additionalWhere({query, newCarWhere})
+          const { data } = useSWR(`/`, async () => {
+            return await get_progressReportQ_additionalWhere({ query, newCarWhere })
           })
 
-          const {month, theCondition, fieldName} = data ?? {}
+          const { month, theCondition, fieldName } = data ?? {}
 
           const [timing, type] = String(fieldNameKeyValueMapping[fieldName]).split(`_`)
 
@@ -137,7 +137,7 @@ export class PageBuilder {
             <R_Stack>
               <Button
                 {...{
-                  onClick: () => addQuery({progressReportQ: undefined}),
+                  onClick: () => addQuery({ progressReportQ: undefined }),
                   color: `red`,
                 }}
               >
@@ -172,7 +172,7 @@ export class PageBuilder {
             <R_Stack>
               <Button
                 {...{
-                  onClick: () => addQuery({mikomiS: undefined}),
+                  onClick: () => addQuery({ mikomiS: undefined }),
                   color: `red`,
                 }}
               >
@@ -196,7 +196,7 @@ export class PageBuilder {
       }
 
       const Swither = () => {
-        const {BasicForm, latestFormData} = useBasicFormProps({
+        const { BasicForm, latestFormData } = useBasicFormProps({
           onFormItemBlur: props => {
             addQuery(props.newlatestFormData)
           },
@@ -206,32 +206,35 @@ export class PageBuilder {
             {
               id: `showNosya`,
               label: `納車済`,
-              form: {defaultValue: false},
+              form: { defaultValue: false },
               type: `boolean`,
             },
             {
               id: `orderBy`,
               label: `並び替え`,
-              form: {...defaultRegister},
+              form: { ...defaultRegister },
               forSelect: {
                 optionsOrOptionFetcher: [
-                  {value: 'NO_CYUMON', label: '注文番号'},
-                  {value: 'DD_JUCYU', label: '受注日'},
-                  {value: 'CUSTOM_DD_SEISANYOTEI', label: '生産予定日'},
-                  {value: 'DD_FR', label: '振当日'},
-                  {value: 'DD_TOUROKU', label: '登録日'},
-                  {value: 'DD_NOSYA', label: '納車日'},
+                  { value: 'NO_CYUMON', label: '注文番号' },
+                  { value: 'DD_JUCYU', label: '受注日' },
+                  { value: 'CUSTOM_DD_SEISANYOTEI', label: '生産予定日' },
+                  { value: 'DD_FR', label: '振当日' },
+                  { value: 'DD_TOUROKU', label: '登録日' },
+                  { value: 'DD_NOSYA', label: '納車日' },
+                  { value: 'm1_toroku_prediction', label: '見込み（登録見込み月順）' },
+                  { value: 'lastApprovedDesiredTorokuDate', label: '登録申請順' },
+                  { value: 'DD_KIBONOKI_nullsFirst', label: '希望納期順' },
                 ],
               },
             },
             {
               id: `orderDirection`,
               label: `並び順`,
-              form: {...defaultRegister},
+              form: { ...defaultRegister },
               forSelect: {
                 optionsOrOptionFetcher: [
-                  {value: 'asc', label: '過去から（昇順）'},
-                  {value: 'desc', label: '最新から（降順）'},
+                  { value: 'asc', label: '過去から（昇順）' },
+                  { value: 'desc', label: '最新から（降順）' },
                 ],
               },
             },
@@ -239,7 +242,7 @@ export class PageBuilder {
         })
         return (
           <>
-            <BasicForm {...{latestFormData, alignMode: `row`}} />
+            <BasicForm {...{ latestFormData, alignMode: `row` }} />
           </>
         )
       }
@@ -265,29 +268,29 @@ export class PageBuilder {
       )
     },
     form: (props: DetailPagePropType) => {
-      const {useGlobalProps} = props
+      const { useGlobalProps } = props
       return (
         <div>
           <R_Stack className={` items-start`}>
-            <Accordion {...{label: `注文情報`, defaultOpen: true, closable: false}}>
+            <Accordion {...{ label: `注文情報`, defaultOpen: true, closable: false }}>
               <Paper>
                 <MyForm {...props} />
               </Paper>
             </Accordion>
-            <Accordion {...{label: `登録希望日申請`, defaultOpen: true, closable: false}}>
+            <Accordion {...{ label: `登録希望日申請`, defaultOpen: true, closable: false }}>
               <Paper>
                 <ChildCreator
                   {...{
                     ParentData: props?.formData ?? {},
-                    models: {parent: `newCar`, children: `desiredTorokuDate`},
-                    columns: ColBuilder.desiredTorokuDate({useGlobalProps}),
+                    models: { parent: `newCar`, children: `desiredTorokuDate` },
+                    columns: ColBuilder.desiredTorokuDate({ useGlobalProps }),
                     useGlobalProps,
                     myTable: {
                       delete: false,
                       update: false,
                     },
                     additional: {
-                      orderBy: [{id: `desc`}],
+                      orderBy: [{ id: `desc` }],
                     },
                   }}
                 />

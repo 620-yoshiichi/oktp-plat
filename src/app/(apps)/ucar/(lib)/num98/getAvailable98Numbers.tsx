@@ -1,39 +1,25 @@
 'use server'
 
-import { superTrim } from '@cm/lib/methods/common'
+import {superTrim} from '@cm/lib/methods/common'
 import prisma from 'src/lib/prisma'
 
-import { availableNumberWhere, number98Select } from '@app/(apps)/ucar/(lib)/num98/num98Constants'
-import { Prisma } from '@prisma/generated/prisma/client'
+import {
+  availableNumberWhere,
+  number98Select,
+  getLastNumber98History,
+  findNextAvailableNumber98,
+} from '@app/(apps)/ucar/(lib)/num98/num98Constants'
+import {Prisma} from '@prisma/generated/prisma/client'
 
 export type getAvailable98NumbersReturn = Awaited<ReturnType<typeof getAvailable98Numbers>>
 export type number98Item = Awaited<ReturnType<typeof getAvailable98Numbers>>['available98Numbers'][number]
 
-export const getAvailable98Numbers = async (props: { take?: number; additionalWhere?: Prisma.Number98WhereInput }) => {
-  const { take = 10, additionalWhere = {} } = props
-  const lastnNmber98History = await prisma.number98IssueHistory.findFirst({
-    orderBy: [{ createdAt: `desc` }],
-    take: 1,
-  })
+export const getAvailable98Numbers = async (props: {take?: number; additionalWhere?: Prisma.Number98WhereInput}) => {
+  const {take = 10, additionalWhere = {}} = props
 
-  let nextNumber98
-  if (lastnNmber98History?.number) {
-    const nextNumber98Result = await prisma.number98.findFirst({
-      where: { number: { gt: lastnNmber98History.number } },
-      orderBy: [{ sortNumber: `asc` }],
-      take: 1,
-    })
-
-    nextNumber98 = nextNumber98Result?.number
-
-  } else {
-    const firstNumber98Result = await prisma.number98.findFirst({
-      orderBy: [{ sortNumber: `asc` }],
-      take: 1,
-    })
-
-    nextNumber98 = firstNumber98Result?.number
-  }
+  // 共通関数で次の利用可能な番号を取得
+  const lastHistory = await getLastNumber98History()
+  const nextNumber98 = await findNextAvailableNumber98(lastHistory?.number)
 
   const available98ProceedingNumbers = await prisma.number98.findMany({
     select: number98Select,

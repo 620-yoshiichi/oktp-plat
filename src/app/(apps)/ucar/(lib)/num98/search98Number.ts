@@ -1,30 +1,12 @@
 'use server'
 
 import prisma from 'src/lib/prisma'
-import {Prisma} from '@prisma/generated/prisma/client'
-
-/**
- * 98番号を正規化する
- * 例: "9800083", "98-00083", "98 00083", "00083" → "98 00083"
- */
-function normalizeNumber98(input: string): string {
-  // 数字のみ抽出
-  const digitsOnly = input.replace(/\D/g, '')
-
-  // 空の場合はそのまま返す
-  if (!digitsOnly) return input.trim()
-
-  // "98"で始まる場合は除去
-  let numberPart = digitsOnly
-  if (digitsOnly.startsWith('98') && digitsOnly.length > 2) {
-    numberPart = digitsOnly.slice(2)
-  }
-
-  // 5桁にゼロパディング
-  const paddedNumber = numberPart.padStart(5, '0')
-
-  return `98 ${paddedNumber}`
-}
+import {
+  availableNumberWhere,
+  normalizeNumber98,
+  getLastNumber98History,
+  findNextAvailableNumber98,
+} from '@app/(apps)/ucar/(lib)/num98/num98Constants'
 
 /**
  * 利用不可理由の型
@@ -91,38 +73,6 @@ export type Search98NumberResult = {
     MJ_ZAIKOST: string | null
     CD_ZAIKOTEN: string | null
   }[]
-}
-
-/**
- * 利用可能な98番号の条件（num98Constants.tsと同じ条件）
- * - occupied: false
- * - Ucarに紐づいていないか、紐づいているUcarの98番号に価格未設定のOldCars_Baseがない
- * - 自身に紐づくOldCars_Baseがすべて値付け済み(KI_HANKAKA != '0')
- * - ZAIKO_Baseに紐づいていない
- */
-const availableNumberWhere: Prisma.Number98WhereInput = {
-  AND: [
-    {occupied: false},
-    {
-      Ucar: {
-        none: {
-          id: {gt: 0},
-          Number98: {
-            OldCars_Base: {some: {KI_HANKAKA: '0'}},
-          },
-        },
-      },
-    },
-    {
-      OldCars_Base: {
-        every: {KI_HANKAKA: {not: '0'}},
-      },
-    },
-    // ZAIKO_Baseに紐づいていないこと
-    {
-      ZAIKO_Base: {none: {}},
-    },
-  ],
 }
 
 /**
@@ -340,4 +290,51 @@ export async function search98NumberList(
     ucarCount: r._count.Ucar,
     oldCarsCount: r._count.OldCars_Base,
   }))
+}
+
+/**
+ * 次の利用可能な98番号を取得する
+ */
+export async function getNextNumber98(): Promise<{nextNumber98: string | null; lastIssuedNumber: string | null}> {
+  const lastHistory = await getLastNumber98History()
+  const nextNumber98 = await findNextAvailableNumber98(lastHistory?.number)
+
+  return {
+    nextNumber98,
+    lastIssuedNumber: lastHistory?.number ?? null,
+  }
+}
+
+/**
+ * 最後に使用した98番号を設定する
+ */
+export async function setLastUsedNumber98(lastUsedNumber: string): Promise<{success: boolean; message: string; nextNumber98?: string}> {
+  const normalizedNumber = normalizeNumber98(lastUsedNumber)
+
+  // 対象の98番号が存在するか確認
+  const targetNum98 = await prisma.number98.findUnique({
+    where: {number: normalizedNumber},
+    select: {number: true},
+  })
+
+  if (!targetNum98) {
+    return {success: false, message: `98番号「${normalizedNumber}」は存在しません`}
+  }
+
+  // トランザクションで履歴を更新
+  await prisma.$transaction(async tx => {
+    await tx.number98IssueHistory.deleteMany({})
+    await tx.number98IssueHistory.create({
+      data: {number: normalizedNumber},
+    })
+  })
+
+  // 次の利用可能な番号を取得
+  const nextNumber98 = await findNextAvailableNumber98(normalizedNumber)
+
+  return {
+    success: true,
+    message: `最後に使用した98番号を「${normalizedNumber}」に設定しました`,
+    nextNumber98: nextNumber98 ?? undefined,
+  }
 }

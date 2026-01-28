@@ -1,13 +1,13 @@
-import {COLORS, LT_CRITERIA} from '@app/(apps)/newCar/class/LeadTime'
+import { COLORS, LT_CRITERIA } from '@app/(apps)/newCar/class/LeadTime'
 
-import {Days} from '@cm/class/Days/Days'
-import {toUtc} from '@cm/class/Days/date-utils/calculations'
-import {formatDate} from '@cm/class/Days/date-utils/formatters'
+import { Days } from '@cm/class/Days/Days'
+import { toUtc } from '@cm/class/Days/date-utils/calculations'
+import { formatDate } from '@cm/class/Days/date-utils/formatters'
 
-import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 
-import {CrInspectionHistory, DesiredTorokuDate, NewCar} from '@prisma/generated/prisma/client'
-import {differenceInDays} from 'date-fns'
+import { CrInspectionHistory, DesiredTorokuDate, NewCar } from '@prisma/generated/prisma/client'
+import { differenceInDays } from 'date-fns'
 
 export class NewCarClass {
   car: NewCar & {
@@ -78,7 +78,7 @@ export class NewCarClass {
     },
 
     //承認履歴から最後を取得
-    getLatestDesiredTorokuDate: (props?: {approvedOnly?: boolean}) => {
+    getLatestDesiredTorokuDate: (props?: { approvedOnly?: boolean }) => {
       const sorted = [...this?.car?.DesiredTorokuDate.filter(d => d.status !== `キャンセル`)]
 
       if (sorted && sorted.length > 0) {
@@ -97,7 +97,7 @@ export class NewCarClass {
   status = {
     getTorokuMikomiStatus: newCar => {
       const thisMonthStart = Days.month.getMonthDatum(new Date()).firstDayOfMonth
-      const {m1_toroku_prediction, DD_TOUROKU, lastApprovedDesiredTorokuDate} = newCar
+      const { m1_toroku_prediction, DD_TOUROKU, lastApprovedDesiredTorokuDate } = newCar
       const input = m1_toroku_prediction
       const required = newCar.m1Alert && !(DD_TOUROKU || lastApprovedDesiredTorokuDate)
       const overdue = input && input.getTime() < thisMonthStart.getTime()
@@ -105,37 +105,37 @@ export class NewCarClass {
       if (input) {
         if (overdue) {
           if (newCar.DD_TOUROKU) {
-            return {color: `green`, label: `登録済${formatDate(DD_TOUROKU, 'short')}`}
+            return { color: `green`, label: `登録済${formatDate(DD_TOUROKU, 'short')}` }
           } else {
-            return {color: `yellow`, label: formatDate(input, '.YY年M月') + '(遅れ)'}
+            return { color: `yellow`, label: formatDate(input, '.YY年M月') + '(遅れ)' }
           }
         } else {
-          return {color: `green`, label: formatDate(input, 'YY年M月')}
+          return { color: `green`, label: formatDate(input, 'YY年M月') }
         }
       }
 
       if (required) {
-        return {color: `red`, label: `未入力`}
+        return { color: `red`, label: `未入力` }
       }
-      return {color: `gray`, label: `未入力`}
+      return { color: `gray`, label: `未入力` }
     },
     getTorokuApplicationStatus: () => {
-      const {lastApprovedDesiredTorokuDate, DD_TOUROKU} = this.car
+      const { lastApprovedDesiredTorokuDate, DD_TOUROKU } = this.car
       const latestTorokuDate = this.torokuMethods.getLatestDesiredTorokuDate()
 
-      const status = {color: `gray`, label: `未申請`}
+      const status = { color: `gray`, label: `未申請` }
       if (this.car.DD_TOUROKU) {
         status.color = `green`
-        status.label = `登録済${formatDate(DD_TOUROKU as Date, 'M/D(ddd)')}`
+        status.label = `登録済 ${formatDate(DD_TOUROKU as Date, '.YY/M/D(ddd)')}`
       } else if (latestTorokuDate && latestTorokuDate.status === `承認`) {
         status.color = `green`
-        status.label = `承認:` + formatDate(lastApprovedDesiredTorokuDate as Date, 'M/D(ddd)')
+        status.label = `承認 ` + formatDate(lastApprovedDesiredTorokuDate as Date, '.YY/M/D(ddd)')
       } else if (latestTorokuDate && !latestTorokuDate.status) {
         status.color = `sub`
-        status.label = `申請中${formatDate(latestTorokuDate.date, `M/D(ddd)`)}`
+        status.label = `申請中 ${formatDate(latestTorokuDate.date, `.YY/M/D(ddd)`)}`
       } else if (latestTorokuDate && latestTorokuDate.status === `却下`) {
         status.color = `red`
-        status.label = `却下(要再申請)${formatDate(latestTorokuDate.date, `M/D(ddd)`)}`
+        status.label = `却下(要再申請) ${formatDate(latestTorokuDate.date, `.YY/M/D(ddd)`)}`
       } else if (this.car.DD_FR) {
         if (this.car.torokuApplicationRequired) {
           status.color = `red`
@@ -151,8 +151,8 @@ export class NewCarClass {
 
       return status
     },
-    getHaisouStatus: ({newCar}) => {
-      const status = {color: `gray`, label: `未入力`}
+    getHaisouStatus: ({ newCar }) => {
+      const status = { color: `gray`, label: `未入力` }
       const newCarCl = new NewCarClass(newCar)
 
       const Delivery = newCarCl.deliveryMethods.deliveryInputRequired()
@@ -212,8 +212,8 @@ export const NewCarAppTest = false
 export const getHolidays = async () => {
   return await (
     await doStandardPrisma(`calendar`, `findMany`, {
-      select: {date: true},
-      where: {cr: true},
+      select: { date: true },
+      where: { cr: true },
     })
   ).result.map(d => d.date)
 }
