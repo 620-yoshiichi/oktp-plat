@@ -85,6 +85,7 @@ export const getUcarPages = (props: PageGetterType) => {
           ROOT: [rootPath],
           exclusiveTo: isHQ || isChukoshaGroup || admin,
         },
+        { tabId: `98list`, label: `98番号チェック` },
       ],
     },
     {
@@ -107,7 +108,7 @@ export const getUcarPages = (props: PageGetterType) => {
       children: [
         { tabId: 'ucarProcess', label: '作業記録', link: {} },
         { tabId: 'bankMaster', label: '銀行', link: {} },
-        { tabId: `98list`, label: `98番号と売上` },
+
         { tabId: `ucarGarageLocationMaster`, label: '車庫一覧', children: [] },
       ],
     },

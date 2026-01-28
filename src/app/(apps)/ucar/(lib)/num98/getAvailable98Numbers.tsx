@@ -25,6 +25,7 @@ export const getAvailable98Numbers = async (props: { take?: number; additionalWh
     })
 
     nextNumber98 = nextNumber98Result?.number
+
   } else {
     const firstNumber98Result = await prisma.number98.findFirst({
       orderBy: [{ sortNumber: `asc` }],
