@@ -1,17 +1,17 @@
-import {PrismaModelNames} from '@cm/types/prisma-types'
-import {DetailPagePropType} from '@cm/types/types'
-import {useEffect, useState, useMemo} from 'react'
-import {Prisma, RoleMaster, User, UserRole} from '@prisma/generated/prisma/client'
+import { PrismaModelNames } from '@cm/types/prisma-types'
+import { DetailPagePropType } from '@cm/types/types'
+import { useEffect, useState, useMemo } from 'react'
+import { Prisma, RoleMaster, User, UserRole } from '@prisma/generated/prisma/client'
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
-import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
-import {surroundings} from '@cm/components/DataLogic/types/customParams-types'
-import {anyObject} from '@cm/types/utility-types'
-import { Filter, ChevronLeft, ChevronRight} from 'lucide-react'
-import { C_Stack} from '@cm/components/styles/common-components/common-components'
-import {Fields} from '@cm/class/Fields/Fields'
+import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+import { surroundings } from '@cm/components/DataLogic/types/customParams-types'
+import { anyObject } from '@cm/types/utility-types'
+import { Filter, ChevronLeft, ChevronRight } from 'lucide-react'
+import { C_Stack } from '@cm/components/styles/common-components/common-components'
+import { Fields } from '@cm/class/Fields/Fields'
 import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
-import {Button} from '@cm/components/styles/common-components/Button'
-import {CsvTable} from '@cm/components/styles/common-components/CsvTable/CsvTable'
+import { Button } from '@cm/components/styles/common-components/Button'
+import { CsvTable } from '@cm/components/styles/common-components/CsvTable/CsvTable'
 
 export type PageBuidlerClassType = {
   [key in PrismaModelNames]: surroundings
@@ -28,26 +28,25 @@ export type DataModelBuilder = {
 
 export const roleMaster: DataModelBuilder = {
   right: props => {
-    return <RoleAllocationTable {...{PageBuilderExtraProps: props.PageBuilderExtraProps}} />
+    return <RoleAllocationTable {...{ PageBuilderExtraProps: props.PageBuilderExtraProps }} />
   },
 }
 
-const RoleAllocationTable = ({PageBuilderExtraProps}) => {
-  const {rootPath, query, addQuery} = useGlobal()
-  type user = User & {UserRole: UserRole[]}
+const RoleAllocationTable = ({ PageBuilderExtraProps }) => {
+  const { rootPath, query, addQuery } = useGlobal()
+  type user = User & { UserRole: UserRole[] }
   const [users, setusers] = useState<user[]>([])
   const [roles, setroles] = useState<RoleMaster[]>([])
   const itemsPerPage = 50
 
   // queryから値を取得（デフォルト値付き）
-  const searchTerm = query?.roleSearchTerm || ''
   const selectedRoleFilter = query?.roleFilter || 'all'
   const selectedUserId = query?.userId ? Number(query.userId) : null
   const selectedStoreId = query?.storeId ? Number(query.storeId) : null
   const currentPage = query?.page ? Number(query.page) : 1
 
   // 店舗・ユーザーの絞り込みフォーム
-  const {BasicForm, latestFormData} = useBasicFormProps({
+  const { BasicForm, latestFormData } = useBasicFormProps({
     formData: {
       storeId: selectedStoreId ? String(selectedStoreId) : '',
       userId: selectedUserId ? String(selectedUserId) : '',
@@ -72,22 +71,26 @@ const RoleAllocationTable = ({PageBuilderExtraProps}) => {
     // 共通マスタページの場合は全アプリのユーザーを取得
     const whereCondition: Prisma.UserFindManyArgs['where'] =
       rootPath === 'common'
-        ? PageBuilderExtraProps?.where || {
-            apps: {hasSome: ['newCar', 'ucar', 'QRBP']},
-          }
-        : {...PageBuilderExtraProps?.where, apps: {has: rootPath}}
+        ? PageBuilderExtraProps?.where
+        : { ...PageBuilderExtraProps?.where, apps: { has: rootPath } }
 
-    const {result: users = []} = await doStandardPrisma(`user`, `findMany`, {
+    const { result: users = [] } = await doStandardPrisma(`user`, `findMany`, {
       where: whereCondition,
-      include: {UserRole: {include: {RoleMaster: {}}}},
-      orderBy: [{code: `asc`}, {sortOrder: `asc`}, {name: `asc`}],
+      include: {
+        Store: { select: { id: true, name: true } },
+        UserRole: { include: { RoleMaster: {} } }
+      },
+      orderBy: [{ code: `asc` }, { sortOrder: `asc` }, { name: `asc` }],
     })
+
+
+
 
     setusers(users)
   }
 
   const fetchRoles = async () => {
-    const {result: roles = []} = await doStandardPrisma(`roleMaster`, `findMany`, {})
+    const { result: roles = [] } = await doStandardPrisma(`roleMaster`, `findMany`, {})
     setroles(roles)
   }
 
@@ -109,23 +112,16 @@ const RoleAllocationTable = ({PageBuilderExtraProps}) => {
         return false
       }
 
-      // 検索条件でフィルタ
-      const matchesSearch =
-        user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        String(user.code ?? '')
-          ?.toLowerCase()
-          .includes(searchTerm.toLowerCase())
-
       // 権限フィルタ
       if (selectedRoleFilter === 'all') {
-        return matchesSearch
+        return true
       } else if (selectedRoleFilter === 'no-role') {
-        return matchesSearch && user.UserRole.length === 0
+        return user.UserRole.length === 0
       } else {
-        return matchesSearch && user.UserRole.some(ur => ur.roleMasterId === Number(selectedRoleFilter))
+        return user.UserRole.some(ur => ur.roleMasterId === Number(selectedRoleFilter))
       }
     })
-  }, [users, searchTerm, selectedRoleFilter, selectedUserId, selectedStoreId])
+  }, [users, selectedRoleFilter, selectedUserId, selectedStoreId])
 
   // ページネーション計算
   const totalPages = Math.ceil(filteredUsers.length / itemsPerPage)
@@ -134,6 +130,8 @@ const RoleAllocationTable = ({PageBuilderExtraProps}) => {
   const paginatedUsers = useMemo(() => {
     return filteredUsers.slice(startIndex, endIndex)
   }, [filteredUsers, startIndex, endIndex])
+
+
 
   // 検索・フィルタ変更時にページを1にリセットするヘルパー
   // const updateQuery = (updates: any, resetPage: boolean = false) => {
@@ -162,17 +160,7 @@ const RoleAllocationTable = ({PageBuilderExtraProps}) => {
     }
   }
 
-  // 検索・フィルタ変更ハンドラー
-  const handleSearchChange = (value: string) => {
-    const newQuery: any = {}
-    if (value) {
-      newQuery.searchTerm = value
-    } else {
-      newQuery.searchTerm = null
-    }
-    addQuery(newQuery)
-  }
-
+  // フィルタ変更ハンドラー
   const handleRoleFilterChange = (value: string) => {
     const newQuery: any = {}
     if (value !== 'all') {
@@ -180,6 +168,8 @@ const RoleAllocationTable = ({PageBuilderExtraProps}) => {
     } else {
       newQuery.roleFilter = null
     }
+    // ページをリセット
+    newQuery.page = null
     addQuery(newQuery)
   }
 
@@ -198,17 +188,20 @@ const RoleAllocationTable = ({PageBuilderExtraProps}) => {
               alignMode: `row`,
               latestFormData,
               onSubmit: async data => {
-                const newQuery: any = {}
-                if (data.storeId) {
-                  newQuery.storeId = String(data.storeId)
-                } else {
-                  newQuery.storeId = null
+                const newQuery: any = {
+                  page: null,
+                  ...data,
                 }
-                if (data.userId) {
-                  newQuery.userId = String(data.userId)
-                } else {
-                  newQuery.userId = null
-                }
+                // if (data.storeId) {
+                //   newQuery.storeId = String(data.storeId)
+                // } else {
+                //   newQuery.storeId = null
+                // }
+                // if (data.userId) {
+                //   newQuery.userId = String(data.userId)
+                // } else {
+                //   newQuery.userId = null
+                // }
                 addQuery(newQuery)
               },
             }}
@@ -224,6 +217,30 @@ const RoleAllocationTable = ({PageBuilderExtraProps}) => {
             </div>
             <div className="flex flex-wrap gap-3">
               <div className={`grid grid-cols-8 gap-2`}>
+                {/* すべてのユーザー */}
+                <label className="flex items-center space-x-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="roleFilter"
+                    value="all"
+                    checked={selectedRoleFilter === 'all'}
+                    onChange={e => handleRoleFilterChange(e.target.value)}
+                    className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                  />
+                  <span className="text-xs text-gray-700 font-semibold">すべて</span>
+                </label>
+                {/* 役割なしユーザー */}
+                <label className="flex items-center space-x-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="roleFilter"
+                    value="no-role"
+                    checked={selectedRoleFilter === 'no-role'}
+                    onChange={e => handleRoleFilterChange(e.target.value)}
+                    className="w-4 h-4 text-orange-600 border-gray-300 focus:ring-orange-500"
+                  />
+                  <span className="text-xs text-orange-700 font-semibold">役割なし</span>
+                </label>
                 {roles.map(role => (
                   <label key={role.id} className="flex items-center space-x-2 cursor-pointer">
                     <input
@@ -256,13 +273,13 @@ const RoleAllocationTable = ({PageBuilderExtraProps}) => {
           {CsvTable({
             records: paginatedUsers.map(u => ({
               csvTableRow: [
-                {cellValue: String(u.code), label: 'コード', style: {fontSize: 12}},
-                {cellValue: u.name, label: 'ユーザー', style: {fontSize: 12}},
+                { cellValue: String(u.code), label: 'コード', style: { fontSize: 12 } },
+                { cellValue: u.name, label: 'ユーザー', style: { fontSize: 12 } },
                 ...roles.map(r => {
                   const userRole = u.UserRole.find(ur => ur.roleMasterId === r.id)
                   const hasRole = !!userRole
                   return {
-                    style: {width: 70, fontSize: 12},
+                    style: { width: 70, fontSize: 12 },
                     cellValue: (
                       <div className="flex justify-center">
                         <label className="relative inline-flex items-center cursor-pointer">
@@ -278,15 +295,15 @@ const RoleAllocationTable = ({PageBuilderExtraProps}) => {
                                 if (!confirm(`${u.name}に${r.name}を割り当てますか？`)) return
 
                                 await doStandardPrisma(`userRole`, `upsert`, {
-                                  where: {userId_roleMasterId_unique},
-                                  create: {userId: u.id, roleMasterId: r.id},
-                                  update: {userId: u.id, roleMasterId: r.id},
+                                  where: { userId_roleMasterId_unique },
+                                  create: { userId: u.id, roleMasterId: r.id },
+                                  update: { userId: u.id, roleMasterId: r.id },
                                 })
                                 await fetchUsers()
                               } else {
                                 if (!confirm(`${u.name}から${r.name}を割り当て解除しますか？`)) return
                                 await doStandardPrisma(`userRole`, `delete`, {
-                                  where: {userId_roleMasterId_unique},
+                                  where: { userId_roleMasterId_unique },
                                 })
                                 await fetchUsers()
                               }
@@ -332,10 +349,9 @@ const RoleAllocationTable = ({PageBuilderExtraProps}) => {
                 disabled={currentPage === 1}
                 className={`
                   flex items-center space-x-1 px-3 py-1 rounded-lg transition-all duration-200
-                  ${
-                    currentPage === 1
-                      ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                      : 'bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700'
+                  ${currentPage === 1
+                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                    : 'bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700'
                   }
                 `}
               >
@@ -344,7 +360,7 @@ const RoleAllocationTable = ({PageBuilderExtraProps}) => {
               </button>
 
               <div className="flex items-center space-x-1">
-                {Array.from({length: totalPages}, (_, i) => i + 1)
+                {Array.from({ length: totalPages }, (_, i) => i + 1)
                   .filter(page => {
                     // 最初のページ、最後のページ、現在のページ、その前後のページを表示
                     return page === 1 || page === totalPages || (page >= currentPage - 1 && page <= currentPage + 1)
@@ -359,10 +375,9 @@ const RoleAllocationTable = ({PageBuilderExtraProps}) => {
                           onClick={() => handlePageChange(page)}
                           className={`
                             w-10 rounded-lg transition-all duration-200 font-medium
-                            ${
-                              currentPage === page
-                                ? 'bg-blue-500 text-white shadow-md'
-                                : 'bg-white text-gray-700 border border-gray-300 hover:bg-blue-50 hover:border-blue-300'
+                            ${currentPage === page
+                              ? 'bg-blue-500 text-white shadow-md'
+                              : 'bg-white text-gray-700 border border-gray-300 hover:bg-blue-50 hover:border-blue-300'
                             }
                           `}
                         >
@@ -378,10 +393,9 @@ const RoleAllocationTable = ({PageBuilderExtraProps}) => {
                 disabled={currentPage === totalPages}
                 className={`
                   flex items-center space-x-1 px-3 py-1 rounded-lg transition-all duration-200
-                  ${
-                    currentPage === totalPages
-                      ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                      : 'bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700'
+                  ${currentPage === totalPages
+                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                    : 'bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700'
                   }
                 `}
               >
