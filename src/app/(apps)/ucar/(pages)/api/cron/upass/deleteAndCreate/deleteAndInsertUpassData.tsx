@@ -1,46 +1,46 @@
-import {upassCols} from '@app/(apps)/ucar/files/upass/upass-columns'
-import {toUtc} from '@cm/class/Days/date-utils/calculations'
-import {formatDate} from '@cm/class/Days/date-utils/formatters'
-import {sql} from '@cm/class/SqlBuilder/SqlBuilder'
-import {doTransaction} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
-import {useRawSql} from '@cm/class/SqlBuilder/useRawSql'
-import {bigQuery__select} from '@app/api/google/big-query/bigQueryApi'
+import { upassCols } from '@app/(apps)/ucar/files/upass/upass-columns'
+import { toUtc } from '@cm/class/Days/date-utils/calculations'
+import { formatDate } from '@cm/class/Days/date-utils/formatters'
+import { sql } from '@cm/class/SqlBuilder/SqlBuilder'
+import { doTransaction } from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
+import { useRawSql } from '@cm/class/SqlBuilder/useRawSql'
+import { bigQuery__select } from '@app/api/google/big-query/bigQueryApi'
 
 // CSV行をパースする関数（クォートや改行を適切に処理）
-const parseCSVLine = (line: string): string[] => {
-  const result: string[] = []
-  let current = ''
-  let inQuotes = false
-  let i = 0
+// const parseCSVLine = (line: string): string[] => {
+//   const result: string[] = []
+//   let current = ''
+//   let inQuotes = false
+//   let i = 0
 
-  while (i < line.length) {
-    const char = line[i]
-    const nextChar = line[i + 1]
+//   while (i < line.length) {
+//     const char = line[i]
+//     const nextChar = line[i + 1]
 
-    if (char === '"') {
-      if (inQuotes && nextChar === '"') {
-        // エスケープされたダブルクォート（""）
-        current += '"'
-        i += 2
-      } else {
-        // クォートの開始または終了
-        inQuotes = !inQuotes
-        i++
-      }
-    } else if (char === ',' && !inQuotes) {
-      // クォート外のカンマ（区切り文字）
-      result.push(current)
-      current = ''
-      i++
-    } else {
-      current += char
-      i++
-    }
-  }
+//     if (char === '"') {
+//       if (inQuotes && nextChar === '"') {
+//         // エスケープされたダブルクォート（""）
+//         current += '"'
+//         i += 2
+//       } else {
+//         // クォートの開始または終了
+//         inQuotes = !inQuotes
+//         i++
+//       }
+//     } else if (char === ',' && !inQuotes) {
+//       // クォート外のカンマ（区切り文字）
+//       result.push(current)
+//       current = ''
+//       i++
+//     } else {
+//       current += char
+//       i++
+//     }
+//   }
 
-  result.push(current)
-  return result
-}
+//   result.push(current)
+//   return result
+// }
 
 export const deleteAndInsertUpassData = async () => {
   const body = await bigQuery__select({
@@ -73,7 +73,7 @@ export const deleteAndInsertUpassData = async () => {
   })
 
   const dataSource = 'upass'
-  await useRawSql({sql: sql`delete from "UPASS" where "dataSource" = '${dataSource}' `})
+  await useRawSql({ sql: sql`delete from "UPASS" where "dataSource" = '${dataSource}' ` })
 
   const created = await doTransaction({
     transactionQueryList: necessaryDataList.map(item => {
