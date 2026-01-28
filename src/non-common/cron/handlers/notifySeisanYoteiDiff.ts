@@ -1,7 +1,7 @@
 'use server'
 import {formatDate} from '@cm/class/Days/date-utils/formatters'
 import {getMidnight} from '@cm/class/Days/date-utils/calculations'
-import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+
 import {knockEmailApi} from '@cm/lib/methods/knockEmailApi'
 import prisma from 'src/lib/prisma'
 import {addDays} from 'date-fns'
@@ -60,7 +60,7 @@ export const executeNotifySeisanYoteiDiff = async () => {
     }
 
     if (doUpdate) {
-      const {result: storeManagerList} = await doStandardPrisma(`user`, `findMany`, {
+      const storeManagerList = await prisma.user.findMany({
         where: {
           storeId: NewCar?.storeId,
           UserRole: {
@@ -73,7 +73,7 @@ export const executeNotifySeisanYoteiDiff = async () => {
         },
       })
       const mailToSales = [NewCar?.User?.email, ...storeManagerList.map(d => d.email)].filter(d => d)
-      const to = [...mailToSales]
+      const to = (mailToSales ?? []) as string[]
 
       const email_res = await knockEmailApi({
         to: to,

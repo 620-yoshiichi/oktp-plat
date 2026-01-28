@@ -11,6 +11,7 @@ export const executeOrderUpsert = async () => {
     console.time(`orderRouteBatch`)
 
     const cloneBigQueryResult = await batchCloneBigQuery()
+
     if (cloneBigQueryResult.success === false) {
       const errorDetails = cloneBigQueryResult.error
         ? ` (エラー詳細: ${cloneBigQueryResult.error.name} - ${cloneBigQueryResult.error.message} )`
