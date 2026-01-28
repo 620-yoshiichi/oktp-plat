@@ -186,6 +186,11 @@ export const forcedUsers: ForcedUser[] = [
     userRoles: ['中古車G'],
   }, //島田さん
   {
+    code: 827634,
+    apps: [`ucar`],
+    userRoles: ['中古車G'],
+  }, //多賀さん
+  {
     code: 817400,
     apps: [`ucar`],
     userRoles: ['中古車G'],
