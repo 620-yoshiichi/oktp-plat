@@ -1,16 +1,34 @@
-import { getAvailable98Numbers, getNonAvailable98Numbers } from '@app/(apps)/ucar/(lib)/num98/getAvailable98Numbers'
-import Number98ListCC from '@app/(apps)/ucar/(pages)/98list/Number98ListCC'
+import Number98SearchPage from '@app/(apps)/ucar/(pages)/98list/Number98SearchPage'
+import { search98Number, search98NumberList, type Search98NumberResult } from '@app/(apps)/ucar/(lib)/num98/search98Number'
 
-export default async function Page({ params, searchParams: query }) {
-  const { nextNumber98, available98Numbers } = await getAvailable98Numbers({ take: 50 })
-  const { nonAvailable98Numbers } = await getNonAvailable98Numbers({ take: 50 })
+type Props = {
+  searchParams: Promise<{ q?: string }>
+}
+
+export default async function Page({ searchParams }: Props) {
+  const { q: searchQuery } = await searchParams
+
+  // 検索クエリがある場合のみデータを取得
+  let searchResult: Search98NumberResult | null = null
+  let searchList: Awaited<ReturnType<typeof search98NumberList>> = []
+
+  if (searchQuery && searchQuery.trim()) {
+
+
+    // 完全一致で詳細検索
+    searchResult = await search98Number(searchQuery)
+    // 部分一致でリスト検索
+    searchList = await search98NumberList(searchQuery, { take: 100 })
+
+
+  }
 
   return (
-    <Number98ListCC
+    <Number98SearchPage
       {...{
-        nextNumber98,
-        available98Numbers,
-        nonAvailable98Numbers,
+        initialQuery: searchQuery ?? '',
+        searchResult,
+        searchList,
       }}
     />
   )

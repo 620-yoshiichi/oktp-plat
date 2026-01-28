@@ -15,8 +15,8 @@ import {toUtc} from '@cm/class/Days/date-utils/calculations'
 export const executeZaikoDeleteAndCreate = async () => {
   let body = await bigQuery__select({
     datasetId: 'OrdersDB',
-    tableId: 'ZAIKO_Base',
-    sqlString: sql`SELECT * FROM okayamatoyopet.OrdersDB.ZAIKO_Base`,
+    tableId: 'ZAIKO_Base_tmp',
+    sqlString: sql`SELECT * FROM okayamatoyopet.OrdersDB.ZAIKO_Base_tmp`,
   })
 
   body = body.map(item => {

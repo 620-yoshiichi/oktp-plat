@@ -19,6 +19,12 @@ export const availableNumberWhere: Prisma.Number98WhereInput = {
         every: {KI_HANKAKA: {not: '0'}},
       },
     },
+    // ZAIKO_Baseに紐づいていないこと
+    {
+      ZAIKO_Base: {
+        none: {},
+      },
+    },
   ],
 }
 
