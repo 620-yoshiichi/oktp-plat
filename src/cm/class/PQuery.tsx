@@ -196,9 +196,10 @@ export class P_Query {
     //OrderBy の構築（効率化）===
     const orderBy = [...(additional?.orderBy ?? []), ...defaultOrderByArray]
     if (mergedQuery?.orderBy) {
-      // _nullsFirst サフィックスのチェック
-      const isNullsFirst = mergedQuery.orderBy.endsWith('_nullsFirst')
-      const actualFieldName = isNullsFirst ? mergedQuery.orderBy.replace('_nullsFirst', '') : mergedQuery.orderBy
+      // _nullsFirst サフィックスのチェック（昇順でnullが先頭、降順でnullが最後になる）
+      const hasNullsFirstSuffix = mergedQuery.orderBy.endsWith('_nullsFirst')
+      const actualFieldName = hasNullsFirstSuffix ? mergedQuery.orderBy.replace('_nullsFirst', '') : mergedQuery.orderBy
+      const direction = mergedQuery.orderDirection || 'asc'
 
       // 動的ソートの追加
       const schema = getDMMFModel(StrHandler.capitalizeFirstLetter(dataModelName))
@@ -206,13 +207,16 @@ export class P_Query {
       if (col) {
         if (col.isRequired) {
           orderBy.unshift({
-            [actualFieldName]: mergedQuery.orderDirection || 'asc',
+            [actualFieldName]: direction,
           })
         } else {
+          // _nullsFirst サフィックスがある場合：昇順ならnull先頭、降順ならnull最後
+          // それ以外の場合：常にnull最後
+          const nullsPosition = hasNullsFirstSuffix ? (direction === 'asc' ? 'first' : 'last') : 'last'
           orderBy.unshift({
             [actualFieldName]: {
-              sort: mergedQuery.orderDirection || 'asc',
-              nulls: isNullsFirst ? 'first' : 'last',
+              sort: direction,
+              nulls: nullsPosition,
             },
           })
         }
