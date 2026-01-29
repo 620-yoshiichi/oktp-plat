@@ -1,21 +1,21 @@
-import {PageBuilder} from '@app/(apps)/newCar/class/PageBuilder'
-import {ColBuilder} from '@app/(apps)/newCar/class/Colbuilder/ColBuilder'
-import {QueryBuilder} from '@app/(apps)/newCar/class/QueryBuilder'
-import {ViewParamBuilder} from '@app/(apps)/newCar/class/ViewParamBuilder'
+import { PageBuilder } from '@app/(apps)/newCar/class/PageBuilder'
+import { ColBuilder } from '@app/(apps)/newCar/class/Colbuilder/ColBuilder'
+import { QueryBuilder } from '@app/(apps)/newCar/class/QueryBuilder'
+import { ViewParamBuilder } from '@app/(apps)/newCar/class/ViewParamBuilder'
 
-import {newCarWhereArgs} from '@app/(apps)/newCar/class/NewCarPredictionTable/MikomiTable/constants'
+import { newCarWhereArgs } from '@app/(apps)/newCar/class/NewCarPredictionTable/MikomiTable/constants'
 
-import {get_mikomiS_additionalWhere} from '@app/(apps)/newCar/(pages)/[dataModelName]/get_mikomiS_additionalWhere'
-import {get_progressReportQ_additionalWhere} from '@app/(apps)/newCar/(pages)/[dataModelName]/get_progressReportQ_additionalWhere'
-import {NEW_CAR_CONST} from '@app/(apps)/newCar/(constants)/newCar-constants'
-import {getScopes} from 'src/non-common/scope-lib/getScopes'
-import {findPredicate, getMonthBoundaries} from '@app/(apps)/newCar/(lib)/statistics/conditionRegistry'
+import { get_mikomiS_additionalWhere } from '@app/(apps)/newCar/(pages)/[dataModelName]/get_mikomiS_additionalWhere'
+import { get_progressReportQ_additionalWhere } from '@app/(apps)/newCar/(pages)/[dataModelName]/get_progressReportQ_additionalWhere'
+import { NEW_CAR_CONST } from '@app/(apps)/newCar/(constants)/newCar-constants'
+import { getScopes } from 'src/non-common/scope-lib/getScopes'
+import { findPredicate, getMonthBoundaries } from '@app/(apps)/newCar/(lib)/statistics/conditionRegistry'
 
-import {addHours} from 'date-fns'
-import {setCustomParams} from '@cm/components/DataLogic/helpers/SetCustomParams'
-import {getMasterPageCommonConfig} from '@cm/components/DataLogic/helpers/getMasterPageCommonConfig'
-import {Days} from '@cm/class/Days/Days'
-import {toUtc} from '@cm/class/Days/date-utils/calculations'
+import { addHours } from 'date-fns'
+import { setCustomParams } from '@cm/components/DataLogic/helpers/SetCustomParams'
+import { getMasterPageCommonConfig } from '@cm/components/DataLogic/helpers/getMasterPageCommonConfig'
+import { Days } from '@cm/class/Days/Days'
+import { toUtc } from '@cm/class/Days/date-utils/calculations'
 
 export default async function DynamicMasterPage(props) {
   return getMasterPageCommonConfig({
@@ -28,9 +28,9 @@ export default async function DynamicMasterPage(props) {
   })
 }
 
-const parameters = async (props: {params; query; session; scopes: ReturnType<typeof getScopes>}) => {
-  const {params, query, scopes} = props
-  const {newCarWhere} = scopes.getNewCarProps()
+const parameters = async (props: { params; query; session; scopes: ReturnType<typeof getScopes> }) => {
+  const { params, query, scopes } = props
+  const { newCarWhere } = scopes.getNewCarProps()
 
   //---------------個別設定-------------
   const customParams = await setCustomParams({
@@ -40,7 +40,7 @@ const parameters = async (props: {params; query; session; scopes: ReturnType<typ
         modelNames: [`roleMaster`],
         setParams: async () => {
           return {
-            PageBuilderExtraProps: {where: {apps: {has: `newCar`}}},
+            PageBuilderExtraProps: { where: { apps: { has: `newCar` } } },
             myTable: {
               delete: scopes.admin ? {} : false,
               create: scopes.admin ? {} : false,
@@ -53,7 +53,7 @@ const parameters = async (props: {params; query; session; scopes: ReturnType<typ
         modelNames: [`store`],
         setParams: async () => {
           return {
-            myTable: {drag: {}},
+            myTable: { drag: {} },
           }
         },
       },
@@ -61,7 +61,7 @@ const parameters = async (props: {params; query; session; scopes: ReturnType<typ
         modelNames: [`user`],
         setParams: async () => {
           return {
-            additional: {where: {apps: {has: `newCar`}}},
+            additional: { where: { apps: { has: `newCar` } } },
           }
         },
       },
@@ -74,18 +74,21 @@ const parameters = async (props: {params; query; session; scopes: ReturnType<typ
               {
                 ...NEW_CAR_CONST.NEW_CAR.WHERE.COMMON_WHERE,
               },
-              {...newCarWhere},
+              { ...newCarWhere },
 
               //納車済みを表示するかしないか
-              {DD_NOSYA: query.showNosya ? undefined : null},
+              { DD_NOSYA: query.showNosya ? undefined : null },
             ],
           }
 
+
+
+
           if (query.filterKey) {
-            const {filterKey} = query
+            const { filterKey } = query
             const predicate = findPredicate(filterKey)
             if (predicate) {
-              const {firstDay, nextFirstDay} = getMonthBoundaries(new Date(query.month))
+              const { firstDay, nextFirstDay } = getMonthBoundaries(new Date(query.month))
 
               const baseMonth = addHours(Days.month.getMonthDatum(new Date(query.month)).firstDayOfMonth, 9)
 
@@ -103,7 +106,7 @@ const parameters = async (props: {params; query; session; scopes: ReturnType<typ
                 AND: [
                   //
                   where,
-                  {storeId},
+                  { storeId },
                   predicate.getWhere(pargs),
                 ],
               }
@@ -111,7 +114,7 @@ const parameters = async (props: {params; query; session; scopes: ReturnType<typ
           } else {
             //見込み早見表の店舗別表示
             if (query[`mikomiS`]) {
-              const {additionalWhere} = await get_mikomiS_additionalWhere({query})
+              const { additionalWhere } = await get_mikomiS_additionalWhere({ query })
 
               const addiotionalAND = (additionalWhere?.AND ?? []) as newCarWhereArgs[]
               where = {
@@ -125,12 +128,14 @@ const parameters = async (props: {params; query; session; scopes: ReturnType<typ
 
             //進捗表の店舗別表示
             if (query[`progressReportQ`]) {
-              const {theCondition} = await get_progressReportQ_additionalWhere({query, newCarWhere})
+              const { theCondition } = await get_progressReportQ_additionalWhere({ query, newCarWhere })
 
-              const additionalWhere = {...theCondition}
-              where = {AND: [where, {...additionalWhere}]}
+              const additionalWhere = { ...theCondition }
+              where = { AND: [where, { ...additionalWhere }] }
             }
           }
+
+
 
           return {
             easySearchExtraProps: {
@@ -141,13 +146,13 @@ const parameters = async (props: {params; query; session; scopes: ReturnType<typ
               delete: false,
               create: false,
               update: false,
-              pagination: {countPerPage: 10},
-              style: {maxWidth: 1300},
+              pagination: { countPerPage: 10 },
+              style: { maxWidth: 1300 },
             },
 
             additional: {
               where,
-              orderBy: [{User: {code: 'asc'}}],
+              orderBy: [{ User: { code: 'asc' } }],
             },
           }
         },

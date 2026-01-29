@@ -32,7 +32,7 @@ const COMMON_WHERE_CORE = isNewCommonWhereApplied
   ? {
     OR: [{ DD_TOUROKU: { gte: new Date(`2025-03-01`) } }, { DD_TOUROKU: null }],
     NOT: {
-      NO_CYUMON: { contains: '98' },
+      NO_CYUMON: { startsWith: '98' },
       DD_JUCYU: { lt: new Date(`2021-01-01`) },
     },
 
@@ -40,7 +40,7 @@ const COMMON_WHERE_CORE = isNewCommonWhereApplied
   }
   : {
     NOT: {
-      NO_CYUMON: { contains: '98' },
+      NO_CYUMON: { startsWith: '98' },
       DD_JUCYU: { lt: new Date(`2021-01-01`) },
     },
 

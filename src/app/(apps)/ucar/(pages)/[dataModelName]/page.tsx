@@ -89,6 +89,8 @@ const parameters = async ({ params, query, session, scopes }) => {
 
           ].filter(Boolean)
 
+
+
           return {
             editType: { type: `modal` },
             additional: {

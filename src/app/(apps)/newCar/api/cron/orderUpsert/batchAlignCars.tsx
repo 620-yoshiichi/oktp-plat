@@ -7,7 +7,6 @@ import { newCarChainMethod } from '@app/(apps)/newCar/class/NewCarClass/newCarCh
 import { Days } from '@cm/class/Days/Days'
 import { toUtc } from '@cm/class/Days/date-utils/calculations'
 
-import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 import { processBatchWithRetry } from '@cm/lib/server-actions/common-server-actions/processBatchWithRetry'
 
 import { Prisma } from '@prisma/generated/prisma/client'
@@ -46,18 +45,24 @@ export const batchAlignCars = async () => {
 
 const createOneYearCalendar = async () => {
   const { firstDateOfYear, lastDateOfYear } = Days.year.getYearDatum(toUtc(new Date()).getFullYear())
-  const { result: calendars } = await doStandardPrisma(`calendar`, `findMany`, {
-    where: { date: { gte: addDays(firstDateOfYear, -1), lte: addMonths(lastDateOfYear, 1) } },
+  const calendars = await prisma.calendar.findMany({
+    where: {
+      date: {
+        gte: addDays(firstDateOfYear, -1),
+        lte: addMonths(lastDateOfYear, 1),
+      },
+    },
   })
 
   await Promise.all(
     calendars.map(async data => {
       const { date, sharyobu, cr } = data
-      await doStandardPrisma(`calendar`, `upsert`, {
+      await prisma.calendar.upsert({
         where: { date },
         create: { date, sharyobu: sharyobu ?? false, cr: cr ?? false },
         update: { date, sharyobu: sharyobu ?? false, cr: cr ?? false },
-      })
+      },
+      )
     })
   )
 }
