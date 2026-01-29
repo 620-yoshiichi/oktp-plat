@@ -120,6 +120,7 @@ export const upassCols: upassColumn[] = [
     category: 'CAR_INFO',
     showIn: {
       ucarMainTable: {label: '車体番号'},
+      qrCreate: {label: 'フレーム番号'},
     },
   },
   {
@@ -127,9 +128,7 @@ export const upassCols: upassColumn[] = [
     en: 'frameNumber',
     sampleData: '4002743',
     category: 'CAR_INFO',
-    showIn: {
-      qrCreate: {label: 'フレーム番号'},
-    },
+    showIn: {},
   },
   {
     jp: '店舗査定_ブランド名称',

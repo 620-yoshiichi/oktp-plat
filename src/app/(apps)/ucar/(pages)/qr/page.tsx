@@ -52,3 +52,5 @@ const QrPage = async props => {
   )
 }
 export default QrPage
+
+

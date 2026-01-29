@@ -320,6 +320,11 @@ const Page1 = ({ ucar, srcDataUrlObject }) => {
 // ページ2: 手書き情報 + 車両情報 + QRコード（1個） + チェックリスト
 const Page2 = ({ ucar, srcDataUrlObject }) => {
   const ucarInst = new UcarCL(ucar)
+
+  // QR発行プロセス（STORE_QR_ISSUE）のUser名を取得
+  const { STORE_QR_ISSUE } = UcarProcessCl.CODE.raw
+  const qrIssueProcess = ucar.UcarProcess?.find(process => process?.processCode === STORE_QR_ISSUE.code)
+  const qrIssueUserName = qrIssueProcess?.User?.name ?? ''
   const notation = ucarInst.notation
   const checklist = [
     { group: '下取り関係', label: '自賠責証明', type: 'checkbox' },
@@ -378,7 +383,7 @@ const Page2 = ({ ucar, srcDataUrlObject }) => {
                     </tr>
                     <tr>
                       <td className="label-cell">中古車No</td>
-                      <td className="writable-cell">{/* 枠だけ設置 */}</td>
+                      <td className="writable-cell">{ucar.number98}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -392,7 +397,7 @@ const Page2 = ({ ucar, srcDataUrlObject }) => {
                     </tr>
                     <tr>
                       <td className="label-cell">スタッフ</td>
-                      <td className="writable-cell">{ucar?.UPASS?.assessmentStaffName}</td>
+                      <td className="writable-cell">{qrIssueUserName}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -400,7 +405,7 @@ const Page2 = ({ ucar, srcDataUrlObject }) => {
                   <tbody>
                     <tr>
                       <td className="label-cell">区分</td>
-                      <td className="writable-cell">{'---'}</td>
+                      <td className="writable-cell">{UCAR_CODE.SHITADORI_KBN.byCode(ucar.shitadoriKbn)?.label ?? '---'}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -511,6 +516,8 @@ const CarInfoTable = ({ ucar }) => {
             {cols.map((col, j) => {
               // 値の取得優先順位: ucar[col.en] > ucar.UPASS[col.en] > ucar[tmpフィールド]
               let value = col?.format ? col.format(ucar) : (ucar[col.en] ?? ucar?.UPASS?.[col.en])
+
+              console.log(col.en, value)  //logs
               if (!value) {
                 const tmpFieldName = getTmpFieldName(col.en)
                 if (tmpFieldName) {

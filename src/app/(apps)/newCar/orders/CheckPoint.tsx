@@ -13,8 +13,6 @@ import { cl } from '@cm/lib/methods/common'
 import React from 'react'
 import { ChatBubbleBottomCenterTextIcon } from '@heroicons/react/20/solid'
 
-import { atomTypes } from '@cm/hooks/useJotai'
-import { useGlobalModalForm } from '@cm/components/utils/modal/useGlobalModalForm'
 import { IconBtn } from '@cm/components/styles/common-components/IconBtn'
 import useCheckPointGMF from '@app/(apps)/newCar/templateHooks/useCheckPointGMF'
 

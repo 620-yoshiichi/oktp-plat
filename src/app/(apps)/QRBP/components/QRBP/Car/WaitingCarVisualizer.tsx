@@ -5,7 +5,7 @@ import { ChartBarIcon } from '@heroicons/react/20/solid'
 
 import { Alert } from '@cm/components/styles/common-components/Alert'
 import { CircledIcon, IconBtn } from '@cm/components/styles/common-components/IconBtn'
-import { atomTypes, useJotaiByKey } from '@cm/hooks/useJotai'
+import { useJotaiByKey } from '@cm/hooks/useJotai'
 import ShadModal from '@cm/shadcn/ui/Organisms/ShadModal'
 import { TitleDescription } from '@cm/components/utils/Notation'
 import { CsvTable } from '@cm/components/styles/common-components/CsvTable/CsvTable'

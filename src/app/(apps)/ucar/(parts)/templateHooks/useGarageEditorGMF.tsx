@@ -2,7 +2,6 @@ import { C_Stack, FitMargin, R_Stack } from '@cm/components/styles/common-compon
 import { useGlobalModalForm } from '@cm/components/utils/modal/useGlobalModalForm'
 import useLoader from '@cm/hooks/globalHooks/useLoader'
 import useDoStandardPrisma from '@cm/hooks/useDoStandardPrisma'
-import { atomTypes } from '@cm/hooks/useJotai'
 import React, { useState } from 'react'
 
 import BasicTabs from '@cm/components/utils/tabs/BasicTabs'

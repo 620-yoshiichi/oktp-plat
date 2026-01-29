@@ -38,6 +38,7 @@ export const sateiTableCompartionCols: sateiTableCompartionCol[] = [
     bqKeys: { proto: `Barracks`, upass: 'chassisNumber' },
     type: `string`,
   },
+
   {
     label: `Mission_name`,
     bqKeys: { proto: `Mission_name`, upass: 'transmissionType' },

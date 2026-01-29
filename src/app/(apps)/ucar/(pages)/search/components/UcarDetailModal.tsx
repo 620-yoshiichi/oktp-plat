@@ -100,7 +100,7 @@ export default function UcarDetailModal({
           <InfoRow label="通称型式" value={upass?.type || ucar.tmpType} />
           <InfoRow label="年式" value={upass?.modelYear || ucar.tmpModelYear} />
           <InfoRow label="車体番号" value={upass?.chassisNumber || ucar.tmpChassisNumber} />
-          <InfoRow label="フレーム番号" value={upass?.frameNumber || ucar.tmpFrameNumber} />
+
           <InfoRow label="ナンバー" value={formatPlate(ucar)} />
         </dl>
 
