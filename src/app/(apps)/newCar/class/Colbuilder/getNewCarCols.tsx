@@ -103,7 +103,7 @@ export const getNewCarCols = (props: columnGetterType) => {
           if (isStoreManager || isHQ) {
             return (
               <div
-                onClick={() => stuffSwitcherGMF.setGMF_OPEN({ newCar: row })}
+                onClick={() => stuffSwitcherGMF.setGMF_OPEN({ newCar: row, close: () => { } })}
                 className={`t-link ${switched ? `text-error-main` : ''}`}
               >
                 <span>{row.User.name}</span>

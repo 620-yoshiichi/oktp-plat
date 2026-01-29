@@ -18,7 +18,6 @@ import { UCAR_CODE } from '@app/(apps)/ucar/class/UCAR_CODE'
 import { UCAR_CONSTANTS } from '@app/(apps)/ucar/(constants)/ucar-constants'
 import { initServerComopnent } from 'src/non-common/serverSideFunction'
 import { obj__cleanObject } from '@cm/class/ObjHandler/transformers'
-import { UpassFamilyTreeScalarFieldEnum } from '@prisma/generated/prisma/internal/prismaNamespace'
 
 export const ucarEasySearchBuilderAtom = async (props: easySearchType) => {
   const { session, scopes } = await initServerComopnent({ query: props.query })

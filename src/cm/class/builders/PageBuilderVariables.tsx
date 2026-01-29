@@ -12,6 +12,9 @@ import { Fields } from '@cm/class/Fields/Fields'
 import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
 import { Button } from '@cm/components/styles/common-components/Button'
 import { CsvTable } from '@cm/components/styles/common-components/CsvTable/CsvTable'
+import TableForm from '@cm/components/DataLogic/TFs/PropAdjustor/components/TableForm'
+import { ClientPropsType2 } from '@cm/components/DataLogic/TFs/PropAdjustor/types/propAdjustor-types'
+import { Card } from '@cm/shadcn/ui/card'
 
 export type PageBuidlerClassType = {
   [key in PrismaModelNames]: surroundings
@@ -27,12 +30,72 @@ export type DataModelBuilder = {
 }
 
 export const roleMaster: DataModelBuilder = {
-  right: props => {
-    return <RoleAllocationTable {...{ PageBuilderExtraProps: props.PageBuilderExtraProps }} />
+  table: props => {
+    return <Card className="border">
+      <C_Stack>
+        <div >
+          <h2 className="text-xl font-bold  ">ユーザー権限一覧</h2>
+        </div>
+        <TableForm {...props as unknown as ClientPropsType2} />
+
+      </C_Stack>
+    </Card>
+
   },
+
+  right: props => {
+    return <Card>
+      <div >
+        <h2 className="text-xl font-bold  ">割当表</h2>
+      </div>
+
+      <RoleAllocationTable
+        {...{
+          PageBuilderExtraProps: props.PageBuilderExtraProps,
+          // 動的検索フィールド定義（例: 店舗、ユーザー）
+          searchFields: [
+            {
+              id: `storeId`,
+              label: `店舗`,
+              forSelect: {},
+              userFilterKey: `storeId`, // User.storeId でフィルタ
+            },
+            {
+              id: `userId`,
+              label: `ユーザー`,
+              forSelect: { modelName: `user` },
+              userFilterKey: `id`, // User.id でフィルタ
+            },
+          ],
+        }}
+      />
+    </Card>
+  },
+
+
 }
 
-const RoleAllocationTable = ({ PageBuilderExtraProps }) => {
+/**
+ * 動的検索フィールドの型定義
+ */
+export type SearchFieldConfig = {
+  /** フィールドID (クエリパラメータ名として使用) */
+  id: string
+  /** フィールドラベル */
+  label: string
+  /** forSelectの設定 */
+  forSelect?: anyObject
+  /** Userモデルのどのプロパティでフィルタするか */
+  userFilterKey: string
+}
+
+type RoleAllocationTableProps = {
+  PageBuilderExtraProps?: anyObject
+  /** 動的検索フィールドの定義配列 */
+  searchFields?: SearchFieldConfig[]
+}
+
+const RoleAllocationTable = ({ PageBuilderExtraProps, searchFields = [] }: RoleAllocationTableProps) => {
   const { rootPath, query, addQuery } = useGlobal()
   type user = User & { UserRole: UserRole[] }
   const [users, setusers] = useState<user[]>([])
@@ -41,30 +104,41 @@ const RoleAllocationTable = ({ PageBuilderExtraProps }) => {
 
   // queryから値を取得（デフォルト値付き）
   const selectedRoleFilter = query?.roleFilter || 'all'
-  const selectedUserId = query?.userId ? Number(query.userId) : null
-  const selectedStoreId = query?.storeId ? Number(query.storeId) : null
   const currentPage = query?.page ? Number(query.page) : 1
+
+  // 動的フィールドのクエリ値を取得
+  const searchFieldValues = useMemo(() => {
+    return Object.fromEntries(
+      searchFields.map(field => [
+        field.id,
+        query?.[field.id] ? (field.userFilterKey === 'id' ? Number(query[field.id]) : query[field.id]) : null,
+      ])
+    )
+  }, [query, searchFields])
+
+  // 動的検索フィールドからフォームのデフォルト値を生成
+  const formDefaultValues = useMemo(() => {
+    return Object.fromEntries(
+      searchFields.map(field => [field.id, searchFieldValues[field.id] ? String(searchFieldValues[field.id]) : ''])
+    )
+  }, [searchFields, searchFieldValues])
+
+  // 動的検索フィールドからカラム定義を生成
+  const searchColumns = useMemo(() => {
+    return new Fields(
+      searchFields.map(field => ({
+        id: field.id,
+        label: field.label,
+        forSelect: field.forSelect || {},
+        form: {},
+      }))
+    ).transposeColumns()
+  }, [searchFields])
 
   // 店舗・ユーザーの絞り込みフォーム
   const { BasicForm, latestFormData } = useBasicFormProps({
-    formData: {
-      storeId: selectedStoreId ? String(selectedStoreId) : '',
-      userId: selectedUserId ? String(selectedUserId) : '',
-    },
-    columns: new Fields([
-      {
-        id: `storeId`,
-        label: `店舗`,
-        forSelect: {},
-        form: {},
-      },
-      {
-        id: `user`,
-        label: `ユーザー`,
-        forSelect: {},
-        form: {},
-      },
-    ]).transposeColumns(),
+    formData: formDefaultValues,
+    columns: searchColumns,
   })
 
   const fetchUsers = async () => {
@@ -102,14 +176,16 @@ const RoleAllocationTable = ({ PageBuilderExtraProps }) => {
   // フィルタリングされたユーザーリスト（useMemoで最適化）
   const filteredUsers = useMemo(() => {
     return users.filter(user => {
-      // 店舗IDフィルタ
-      if (selectedStoreId && user.storeId !== selectedStoreId) {
-        return false
-      }
-
-      // ユーザーIDフィルタ
-      if (selectedUserId && user.id !== selectedUserId) {
-        return false
+      // 動的検索フィールドによるフィルタリング
+      for (const field of searchFields) {
+        const filterValue = searchFieldValues[field.id]
+        if (filterValue !== null && filterValue !== undefined) {
+          // userFilterKeyに対応するユーザープロパティでフィルタ
+          const userValue = user[field.userFilterKey]
+          if (userValue !== filterValue) {
+            return false
+          }
+        }
       }
 
       // 権限フィルタ
@@ -121,7 +197,7 @@ const RoleAllocationTable = ({ PageBuilderExtraProps }) => {
         return user.UserRole.some(ur => ur.roleMasterId === Number(selectedRoleFilter))
       }
     })
-  }, [users, selectedRoleFilter, selectedUserId, selectedStoreId])
+  }, [users, selectedRoleFilter, searchFields, searchFieldValues])
 
   // ページネーション計算
   const totalPages = Math.ceil(filteredUsers.length / itemsPerPage)
@@ -174,40 +250,30 @@ const RoleAllocationTable = ({ PageBuilderExtraProps }) => {
   }
 
   return (
-    <div className=" border  rounded from-slate-50 to-white">
+    <>
       <C_Stack>
-        <div className=" bg-[#F3F4F6] p-2 ">
-          <h2 className="text-xl font-bold  ">ユーザー権限割当表</h2>
-        </div>
 
         {/* 検索・フィルタエリア */}
         <div className="space-y-4 p-2 ">
-          {/* 店舗、ユーザーの絞り込みフォームフィルタ */}
-          <BasicForm
-            {...{
-              alignMode: `row`,
-              latestFormData,
-              onSubmit: async data => {
-                const newQuery: any = {
-                  page: null,
-                  ...data,
-                }
-                // if (data.storeId) {
-                //   newQuery.storeId = String(data.storeId)
-                // } else {
-                //   newQuery.storeId = null
-                // }
-                // if (data.userId) {
-                //   newQuery.userId = String(data.userId)
-                // } else {
-                //   newQuery.userId = null
-                // }
-                addQuery(newQuery)
-              },
-            }}
-          >
-            <Button>確定</Button>
-          </BasicForm>
+          {/* 動的検索フィールドのフォーム */}
+          {searchFields.length > 0 && (
+            <BasicForm
+              {...{
+                alignMode: `row`,
+                latestFormData,
+                onSubmit: async data => {
+                  const newQuery: any = { page: null }
+                  // 動的フィールドの値をクエリに設定
+                  searchFields.forEach(field => {
+                    newQuery[field.id] = data[field.id] || null
+                  })
+                  addQuery(newQuery)
+                },
+              }}
+            >
+              <Button>確定</Button>
+            </BasicForm>
+          )}
 
           {/* 権限フィルタ */}
           <div className="space-y-2">
@@ -406,6 +472,6 @@ const RoleAllocationTable = ({ PageBuilderExtraProps }) => {
           )}
         </div>
       </C_Stack>
-    </div>
+    </>
   )
 }

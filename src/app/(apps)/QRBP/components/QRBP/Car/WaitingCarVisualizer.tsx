@@ -1,23 +1,23 @@
 import React from 'react'
-import {C_Stack, Padding, R_Stack} from '@cm/components/styles/common-components/common-components'
+import { C_Stack, Padding, R_Stack } from '@cm/components/styles/common-components/common-components'
 
-import {ChartBarIcon} from '@heroicons/react/20/solid'
+import { ChartBarIcon } from '@heroicons/react/20/solid'
 
-import {Alert} from '@cm/components/styles/common-components/Alert'
-import {CircledIcon, IconBtn} from '@cm/components/styles/common-components/IconBtn'
-import {atomTypes, useJotaiByKey} from '@cm/hooks/useJotai'
+import { Alert } from '@cm/components/styles/common-components/Alert'
+import { CircledIcon, IconBtn } from '@cm/components/styles/common-components/IconBtn'
+import { atomTypes, useJotaiByKey } from '@cm/hooks/useJotai'
 import ShadModal from '@cm/shadcn/ui/Organisms/ShadModal'
-import {TitleDescription} from '@cm/components/utils/Notation'
-import {CsvTable} from '@cm/components/styles/common-components/CsvTable/CsvTable'
+import { TitleDescription } from '@cm/components/utils/Notation'
+import { CsvTable } from '@cm/components/styles/common-components/CsvTable/CsvTable'
 const minBarCount = 6
 
-const WaitingCarVisualizer = React.memo((props: {waitingListObject: any}) => {
-  const {waitingListObject} = props
+const WaitingCarVisualizer = React.memo((props: { waitingListObject: any }) => {
+  const { waitingListObject } = props
 
-  const [isOpen, setisOpen] = useJotaiByKey<atomTypes[`waitingCarVisualizerOpen`]>(`waitingCarVisualizerOpen`, true)
+  const [isOpen, setisOpen] = useJotaiByKey<any>(`waitingCarVisualizerOpen`, true)
   // const [isOpen, setisOpen] = useState(true)
 
-  const {groupedByDamage = [], damages = []} = waitingListObject
+  const { groupedByDamage = [], damages = [] } = waitingListObject
 
   const CapacityCahrt = () => {
     const periodsInDate = 25
@@ -60,7 +60,7 @@ const WaitingCarVisualizer = React.memo((props: {waitingListObject: any}) => {
 
           {CsvTable({
             records: dataSourceArr.map(source => {
-              const {key, capacityPerDay} = source
+              const { key, capacityPerDay } = source
               const damage = damages.find(d => {
                 return d?.name === key
               })
@@ -79,11 +79,11 @@ const WaitingCarVisualizer = React.memo((props: {waitingListObject: any}) => {
                 csvTableRow: [
                   {
                     label: 'ダメージ',
-                    cellValue: <IconBtn {...{vivid: true, color: damage.color}}>{damage.name}</IconBtn>,
+                    cellValue: <IconBtn {...{ vivid: true, color: damage.color }}>{damage.name}</IconBtn>,
                   },
-                  {label: '作業中台数', cellValue: data.realcount + '台'},
-                  {label: '納期目安', cellValue: data.count + '日後'},
-                  {label: '許容量', cellValue: source.capacityPerDay + '台/日'},
+                  { label: '作業中台数', cellValue: data.realcount + '台' },
+                  { label: '納期目安', cellValue: data.count + '日後' },
+                  { label: '許容量', cellValue: source.capacityPerDay + '台/日' },
                 ],
               }
             }),

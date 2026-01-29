@@ -60,3 +60,5 @@ export const executeBankMaster = async () => {
   const res = await fetchAlt(`${basePath}/ucar/api/seeder/bank`, {}, {method: 'POST'})
   return res
 }
+
+export {executeUcarProcessUpsert} from './ucarProcessUpsert'

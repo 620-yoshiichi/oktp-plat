@@ -50,6 +50,10 @@
    "schedule": "0 22-23,0-10 * * *"
   },
   {
+   "path": "/api/cron/execute/ucarProcessUpsert",
+   "schedule": "30 23 * * *"
+  },
+  {
    "path": "/api/cron/execute/upassDeleteAndCreate",
    "schedule": "20 23 * * *"
   },

@@ -1,11 +1,12 @@
 import DesiredTorokuDateChildCreator from '@app/(apps)/newCar/(parts)/DesiredTorokuDate/DesiredTorokuDateChildCreator'
-import {useGlobalModalForm} from '@cm/components/utils/modal/useGlobalModalForm'
-import {atomTypes} from '@cm/hooks/useJotai'
+import { useGlobalModalForm } from '@cm/components/utils/modal/useGlobalModalForm'
+import { torokuDateApplicationForm } from '@app/(apps)/newCar/(parts)/DesiredTorokuDate/DesiredTorokuDateRegister'
+
 
 export const usetorokuDateApplicationModal = () => {
-  return useGlobalModalForm<atomTypes[`torokuDateApplicationForm`]>(`torokuDateApplicationForm`, null, {
+  return useGlobalModalForm<torokuDateApplicationForm>(`torokuDateApplicationForm`, null, {
     mainJsx: props => {
-      const {newCar} = props.GMF_OPEN
+      const { newCar } = props.GMF_OPEN
       return (
         <DesiredTorokuDateChildCreator
           {...{

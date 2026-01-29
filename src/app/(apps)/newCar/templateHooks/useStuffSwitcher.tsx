@@ -1,29 +1,33 @@
-import {atomTypes} from '@cm/hooks/useJotai'
-import {useGlobalModalForm} from '@cm/components/utils/modal/useGlobalModalForm'
+import { atomTypes } from '@cm/hooks/useJotai'
+import { useGlobalModalForm } from '@cm/components/utils/modal/useGlobalModalForm'
 
+export type stuffSwitcherGMF = {
+  newCar: any
+  close: () => void
+}
 export default function useStuffSwitcher() {
-  return useGlobalModalForm<atomTypes[`stuffSwitcherGMF`]>(`stuffSwitcherGMF`, null, {
+  return useGlobalModalForm<stuffSwitcherGMF>(`stuffSwitcherGMF`, null, {
     mainJsx: props => {
-      const {newCar} = props?.GMF_OPEN
-      return <StuffSwitcher {...{newCar, close: props.close}} />
+      const { newCar } = props?.GMF_OPEN
+      return <StuffSwitcher {...{ newCar, close: props.close }} />
     },
   })
 }
 
-import {userForselectConfig} from '@app/(apps)/newCar/(constants)/forSelectConfig'
-import {Fields} from '@cm/class/Fields/Fields'
-import {Button} from '@cm/components/styles/common-components/Button'
+import { userForselectConfig } from '@app/(apps)/newCar/(constants)/forSelectConfig'
+import { Fields } from '@cm/class/Fields/Fields'
+import { Button } from '@cm/components/styles/common-components/Button'
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 
 import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
-import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
-import {toastByResult} from '@cm/lib/ui/notifications'
-import {Prisma} from '@prisma/generated/prisma/client'
+import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+import { toastByResult } from '@cm/lib/ui/notifications'
+import { NewCar, Prisma } from '@prisma/generated/prisma/client'
 import React from 'react'
 
-export function StuffSwitcher(props: {newCar; close}) {
-  const {router} = useGlobal()
-  const {BasicForm, latestFormData} = useBasicFormProps({
+export function StuffSwitcher(props: { newCar; close }) {
+  const { router } = useGlobal()
+  const { BasicForm, latestFormData } = useBasicFormProps({
     columns: new Fields([
       {
         id: `userId`,
@@ -35,7 +39,7 @@ export function StuffSwitcher(props: {newCar; close}) {
         },
       },
     ]).transposeColumns(),
-    formData: {userId: props.newCar.userId},
+    formData: { userId: props.newCar.userId },
   })
 
   const onSubmit = async data => {
@@ -47,9 +51,9 @@ export function StuffSwitcher(props: {newCar; close}) {
         data: {
           OrderSwitchingHisotory: {
             upsert: {
-              where: {id: props.newCar.orderSwitchingHisotoryId ?? 0},
-              create: {userId: data.userId},
-              update: {userId: data.userId},
+              where: { id: props.newCar.orderSwitchingHisotoryId ?? 0 },
+              create: { userId: data.userId },
+              update: { userId: data.userId },
             },
           },
         },
@@ -59,8 +63,8 @@ export function StuffSwitcher(props: {newCar; close}) {
     } else {
       const args: Prisma.OrderSwitchingHisotoryCreateArgs = {
         data: {
-          User: {connect: {id: data.userId}},
-          NewCar: {connect: {id: props.newCar.id}},
+          User: { connect: { id: data.userId } },
+          NewCar: { connect: { id: props.newCar.id } },
         },
       }
       const res = await doStandardPrisma(`orderSwitchingHisotory`, `create`, {
@@ -70,8 +74,8 @@ export function StuffSwitcher(props: {newCar; close}) {
     }
 
     await doStandardPrisma(`newCar`, `update`, {
-      where: {id: props.newCar.id},
-      data: {userId: data.userId},
+      where: { id: props.newCar.id },
+      data: { userId: data.userId },
     })
 
     router.refresh()

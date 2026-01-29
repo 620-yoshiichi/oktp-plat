@@ -1,24 +1,29 @@
-import {checkPoint} from '@app/(apps)/newCar/(constants)/checkpoints/checkpoints'
+import { checkPoint } from '@app/(apps)/newCar/(constants)/checkpoints/checkpoints'
 
-import {Fields} from '@cm/class/Fields/Fields'
+import { Fields } from '@cm/class/Fields/Fields'
 
-import {Button} from '@cm/components/styles/common-components/Button'
-import {C_Stack, R_Stack} from '@cm/components/styles/common-components/common-components'
-import {MarkDownDisplay} from '@cm/components/utils/texts/MarkdownDisplay'
+import { Button } from '@cm/components/styles/common-components/Button'
+import { C_Stack, R_Stack } from '@cm/components/styles/common-components/common-components'
+import { MarkDownDisplay } from '@cm/components/utils/texts/MarkdownDisplay'
 
 import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
-import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
-import {toastByResult} from '@cm/lib/ui/notifications'
+import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+import { toastByResult } from '@cm/lib/ui/notifications'
+import { NewCar } from '@prisma/generated/prisma/client'
+import { UseRecordsReturn } from '@cm/components/DataLogic/TFs/PropAdjustor/hooks/useRecords/useRecords'
 
-import React from 'react'
 
-import {atomTypes} from '@cm/hooks/useJotai'
-import {useGlobalModalForm} from '@cm/components/utils/modal/useGlobalModalForm'
 
+import { useGlobalModalForm } from '@cm/components/utils/modal/useGlobalModalForm'
+type checkPointModalGMF = {
+  cp: checkPoint
+  newCar: NewCar
+  UseRecordsReturn: UseRecordsReturn
+}
 export default function useCheckPointGMF() {
-  const checkPointModalGMF = useGlobalModalForm<atomTypes[`checkPointModalGMF`]>(`checkPointModalGMF`, null, {
+  const checkPointModalGMF = useGlobalModalForm<checkPointModalGMF>(`checkPointModalGMF`, null, {
     mainJsx: props => {
-      const {cp, newCar, UseRecordsReturn} = props?.GMF_OPEN
+      const { cp, newCar, UseRecordsReturn } = props?.GMF_OPEN
       return (
         <CkecnPointForm
           {...{
@@ -35,14 +40,14 @@ export default function useCheckPointGMF() {
   return checkPointModalGMF
 }
 
-export const CkecnPointForm = ({cp, newCar, setopen, UseRecordsReturn}) => {
-  const {label, actionName, description, getColumns} = cp as checkPoint
+export const CkecnPointForm = ({ cp, newCar, setopen, UseRecordsReturn }) => {
+  const { label, actionName, description, getColumns } = cp as checkPoint
 
-  const columns = new Fields(getColumns({newCar})).transposeColumns()
+  const columns = new Fields(getColumns({ newCar })).transposeColumns()
 
   const currentValue = Object.fromEntries(columns.flat().map(d => [d.id, newCar[d.id]]))
 
-  const {BasicForm, latestFormData} = useBasicFormProps({columns, formData: currentValue})
+  const { BasicForm, latestFormData } = useBasicFormProps({ columns, formData: currentValue })
 
   const onSubmit = async data => {
     const initialInputKeys = Object.keys(newCar).filter(d => d.includes(`initial_`))
@@ -58,7 +63,7 @@ export const CkecnPointForm = ({cp, newCar, setopen, UseRecordsReturn}) => {
     const payload = Object.fromEntries(Object.keys(data).map(k => [k, data[k]]))
 
     const res = await doStandardPrisma(`newCar`, `update`, {
-      where: {id: newCar.id},
+      where: { id: newCar.id },
       data: {
         ...payload,
         ...initialInputPayload,
@@ -74,13 +79,13 @@ export const CkecnPointForm = ({cp, newCar, setopen, UseRecordsReturn}) => {
     // })
 
     await UseRecordsReturn?.refreshSingleRecord({
-      findUniqueWhereArgs: {id: newCar.id},
+      findUniqueWhereArgs: { id: newCar.id },
     })
   }
 
   const width = 700
   return (
-    <C_Stack className={`gap-1`} style={{width: width}}>
+    <C_Stack className={`gap-1`} style={{ width: width }}>
       <R_Stack>
         <div>{label}</div>
         <span className={`font-bold`}>{actionName}</span>
@@ -96,7 +101,7 @@ export const CkecnPointForm = ({cp, newCar, setopen, UseRecordsReturn}) => {
           latestFormData={latestFormData}
           onSubmit={onSubmit}
           {...{
-            ControlOptions: {ControlStyle: {width: 500}},
+            ControlOptions: { ControlStyle: { width: 500 } },
           }}
         >
           <Button>報告</Button>

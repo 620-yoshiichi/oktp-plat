@@ -1,25 +1,26 @@
-import {actionStatusMaster, checkPoint} from '@app/(apps)/newCar/(constants)/checkpoints/checkpoints'
+import { actionStatusMaster, checkPoint } from '@app/(apps)/newCar/(constants)/checkpoints/checkpoints'
 
-import {UseRecordsReturn} from '@cm/components/DataLogic/TFs/PropAdjustor/hooks/useRecords/useRecords'
+import { UseRecordsReturn } from '@cm/components/DataLogic/TFs/PropAdjustor/hooks/useRecords/useRecords'
 
-import {Alert} from '@cm/components/styles/common-components/Alert'
-import {C_Stack, R_Stack} from '@cm/components/styles/common-components/common-components'
-import {Paper} from '@cm/components/styles/common-components/paper'
-import {LabelValue} from '@cm/components/styles/common-components/ParameterCard'
+import { Alert } from '@cm/components/styles/common-components/Alert'
+import { C_Stack, R_Stack } from '@cm/components/styles/common-components/common-components'
+import { Paper } from '@cm/components/styles/common-components/paper'
+import { LabelValue } from '@cm/components/styles/common-components/ParameterCard'
 import MyPopover from '@cm/components/utils/popover/MyPopover'
 
-import {cl} from '@cm/lib/methods/common'
+import { cl } from '@cm/lib/methods/common'
 
 import React from 'react'
-import {ChatBubbleBottomCenterTextIcon} from '@heroicons/react/20/solid'
+import { ChatBubbleBottomCenterTextIcon } from '@heroicons/react/20/solid'
 
-import {atomTypes} from '@cm/hooks/useJotai'
-import {useGlobalModalForm} from '@cm/components/utils/modal/useGlobalModalForm'
-import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
+import { atomTypes } from '@cm/hooks/useJotai'
+import { useGlobalModalForm } from '@cm/components/utils/modal/useGlobalModalForm'
+import { IconBtn } from '@cm/components/styles/common-components/IconBtn'
+import useCheckPointGMF from '@app/(apps)/newCar/templateHooks/useCheckPointGMF'
 
-export const CheckPoint = (props: {newCar; cp: checkPoint; UseRecordsReturn: UseRecordsReturn}) => {
-  const checkPointModalGMF = useGlobalModalForm<atomTypes[`checkPointModalGMF`]>(`checkPointModalGMF`, null, {})
-  const {newCar} = props
+export const CheckPoint = (props: { newCar; cp: checkPoint; UseRecordsReturn: UseRecordsReturn }) => {
+  const checkPointModalGMF = useCheckPointGMF()
+  const { newCar } = props
   const cp = props.cp as checkPoint
 
   // const [open, setopen] = useState<any>(null)
@@ -27,11 +28,11 @@ export const CheckPoint = (props: {newCar; cp: checkPoint; UseRecordsReturn: Use
   const Btn = () => {
     const statusLabel = newCar[cp.alertKey]
 
-    const {color} = actionStatusMaster.find(d => d.label === statusLabel) ?? {}
-    const remarks = cp.getRemarks?.({newCar}) as any[]
+    const { color } = actionStatusMaster.find(d => d.label === statusLabel) ?? {}
+    const remarks = cp.getRemarks?.({ newCar }) as any[]
 
     const styling = {
-      classes: {wrapper: `w-full   items-start`, label: `w-[120px]`, value: `w-[350px]`},
+      classes: { wrapper: `w-full   items-start`, label: `w-[120px]`, value: `w-[350px]` },
     }
 
     const required = actionStatusMaster.find(d => d.label === statusLabel && d.required === true)
@@ -62,7 +63,7 @@ export const CheckPoint = (props: {newCar; cp: checkPoint; UseRecordsReturn: Use
               </IconBtn>
               <section>
                 {remarks?.length > 0 && (
-                  <MyPopover {...{button: <ChatBubbleBottomCenterTextIcon className={`h-5 `} />}}>
+                  <MyPopover {...{ button: <ChatBubbleBottomCenterTextIcon className={`h-5 `} /> }}>
                     <Paper>
                       {remarks?.map((string, i) => {
                         return <div key={i}>{string}</div>
@@ -92,7 +93,7 @@ export const CheckPoint = (props: {newCar; cp: checkPoint; UseRecordsReturn: Use
                 ),
               }}
             />
-            <LabelValue {...{styling, label: `点灯条件`, value: cp.conditions.alert}} />
+            <LabelValue {...{ styling, label: `点灯条件`, value: cp.conditions.alert }} />
 
             <LabelValue
               {...{
@@ -108,7 +109,7 @@ export const CheckPoint = (props: {newCar; cp: checkPoint; UseRecordsReturn: Use
 
     return (
       <R_Stack className={`gap-1 border-b border-dashed py-1 `}>
-        <MyPopover {...{button: <PopOverBtn />}}>
+        <MyPopover {...{ button: <PopOverBtn /> }}>
           <PopOverContent />
         </MyPopover>
       </R_Stack>

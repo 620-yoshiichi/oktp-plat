@@ -20,6 +20,7 @@ import {
   executeKaonaviBatch,
   executeActivateBpSpread,
   executeBankMaster,
+  executeUcarProcessUpsert,
 } from './handlers/clickActionHandlers'
 import {executeDisactivateUnnecessaryUcar} from 'src/non-common/cron/handlers/executeDisactivateUnnecessaryUcar'
 
@@ -249,6 +250,22 @@ export const BATCH_MASTER: Record<string, BatchConfig> = {
     // tableName: 'ucar',
     prismaArgs: {
       model: 'ucar',
+    },
+  },
+  ucarProcessUpsert: {
+    id: 'ucarProcessUpsert',
+    name: 'UcarProcess BigQuery同期',
+    schedule: '30 23 * * *',
+    description: '/api/cron/execute/ucarProcessUpsert',
+    purpose: 'BigQueryのUcarProcessデータを取得し、DBに登録されていないものをアップサートする',
+    app: 'ucar',
+    effectOn: 'batch',
+    handler: executeUcarProcessUpsert,
+    prismaArgs: {
+      model: 'UcarProcess',
+      where: {
+        dataSource: 'BIG_QUERY_QR_PROCESS',
+      },
     },
   },
 

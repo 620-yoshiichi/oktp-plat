@@ -16,7 +16,7 @@ import { HREF } from '@cm/lib/methods/urls'
 import { useRouter } from 'next/navigation'
 import { TextRed, TextGreen } from '@cm/components/styles/common-components/Alert'
 import { toUtc } from '@cm/class/Days/date-utils/calculations'
-import { useEffect, useEffectEvent } from 'react'
+import { useEffect } from 'react'
 
 export const DataInitiationForm = ({ stores, ucar, toggleLoad, session, sateiID_Input, hasUpassData }) => {
   const { addQuery, query, accessScopes } = useGlobal()

@@ -1,24 +1,33 @@
-import {C_Stack, FitMargin, R_Stack} from '@cm/components/styles/common-components/common-components'
-import {useGlobalModalForm} from '@cm/components/utils/modal/useGlobalModalForm'
+import { C_Stack, FitMargin, R_Stack } from '@cm/components/styles/common-components/common-components'
+import { useGlobalModalForm } from '@cm/components/utils/modal/useGlobalModalForm'
 import useLoader from '@cm/hooks/globalHooks/useLoader'
 import useDoStandardPrisma from '@cm/hooks/useDoStandardPrisma'
-import {atomTypes} from '@cm/hooks/useJotai'
-import React, {useState} from 'react'
+import { atomTypes } from '@cm/hooks/useJotai'
+import React, { useState } from 'react'
 
 import BasicTabs from '@cm/components/utils/tabs/BasicTabs'
 
-import SlotHistoryChecker, {generatePDF, getGaragePdfFormData} from '@app/(apps)/ucar/(pages)/garage/SlotHistoryChecker'
+import SlotHistoryChecker, { generatePDF, getGaragePdfFormData } from '@app/(apps)/ucar/(pages)/garage/SlotHistoryChecker'
 
-import {Button} from '@cm/components/styles/common-components/Button'
+import { Button } from '@cm/components/styles/common-components/Button'
 import ShadModal from '@cm/shadcn/ui/Organisms/ShadModal'
-import {Alert, TextBlue} from '@cm/components/styles/common-components/Alert'
+import { Alert, TextBlue } from '@cm/components/styles/common-components/Alert'
 import GarageSlotMap from '@app/(apps)/ucar/(parts)/Garage/GarageSlotMap'
-import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
-import {UcarCL} from '@app/(apps)/ucar/class/UcarCL'
-import {toast} from 'react-toastify'
+import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+import { UcarCL } from '@app/(apps)/ucar/class/UcarCL'
+import { toast } from 'react-toastify'
+import { AppliedUcarGarageSlot, Ucar, UcarGarageLocationMaster, UcarGarageSlotMaster } from '@prisma/generated/prisma/client'
 
+export type showGarageRegister = {
+  ucarId: number
+  garageSlot: UcarGarageSlotMaster
+  ucar: Ucar
+  usedByCurrentCar: AppliedUcarGarageSlot
+  UcarGarageLocationMaster: UcarGarageLocationMaster
+
+}
 export default function useGarageEditorGMF() {
-  return useGlobalModalForm<atomTypes[`showGarageRegister`]>(`showGarageRegister`, null, {
+  return useGlobalModalForm<showGarageRegister>(`showGarageRegister`, null, {
     mainJsx: props => {
       return (
         <div>
@@ -35,11 +44,11 @@ export default function useGarageEditorGMF() {
   })
 }
 
-export const GarageRegister = ({ucarId}) => {
-  const [garageHistoryModal, setgarageHistoryModal] = useState<null | {ucarGarageSlotMasterId: number}>(null)
+export const GarageRegister = ({ ucarId }) => {
+  const [garageHistoryModal, setgarageHistoryModal] = useState<null | { ucarGarageSlotMasterId: number }>(null)
 
-  const {data: GarageLocation = []} = useDoStandardPrisma(`ucarGarageLocationMaster`, `findMany`, {
-    include: {UcarGarageSlotMaster: {orderBy: [{garageNumber: 'asc'}]}},
+  const { data: GarageLocation = [] } = useDoStandardPrisma(`ucarGarageLocationMaster`, `findMany`, {
+    include: { UcarGarageSlotMaster: { orderBy: [{ garageNumber: 'asc' }] } },
   })
 
   const {
@@ -47,7 +56,7 @@ export const GarageRegister = ({ucarId}) => {
     mutate: mutateUcarFormDataBase,
     isValidating,
   } = useDoStandardPrisma(`ucar`, `findUnique`, {
-    where: {id: ucarId},
+    where: { id: ucarId },
     include: {
       User: {},
       Store: {},
@@ -57,7 +66,7 @@ export const GarageRegister = ({ucarId}) => {
         include: {
           Ucar: {
             include: {
-              OldCars_Base: {select: {KI_HANKAKA: true}},
+              OldCars_Base: { select: { KI_HANKAKA: true } },
             },
           },
           UcarGarageSlotMaster: {
@@ -70,7 +79,7 @@ export const GarageRegister = ({ucarId}) => {
     },
   })
 
-  const {toggleLoad} = useLoader()
+  const { toggleLoad } = useLoader()
   const usedByCurrentCar = ucarFormDataBase?.AppliedUcarGarageSlot
 
   const CarInfo = () => {
@@ -114,7 +123,7 @@ export const GarageRegister = ({ucarId}) => {
                       if (!confirm('登録を削除しますか？名抹処理日も削除されます')) return
                       await toggleLoad(async () => {
                         await doStandardPrisma(`appliedUcarGarageSlot`, `delete`, {
-                          where: {id: usedByCurrentCar.id},
+                          where: { id: usedByCurrentCar.id },
                         })
 
                         mutateUcarFormDataBase()

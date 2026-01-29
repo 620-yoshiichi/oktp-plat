@@ -1,19 +1,27 @@
 'use client'
-import {PaymentStatusButton} from '@app/(apps)/newCar/(parts)/DesiredTorokuDate/PaymentStatusButton'
-import {NewCarClass} from '@app/(apps)/newCar/class/NewCarClass/NewCarClass'
+import { PaymentStatusButton } from '@app/(apps)/newCar/(parts)/DesiredTorokuDate/PaymentStatusButton'
+import { NewCarClass } from '@app/(apps)/newCar/class/NewCarClass/NewCarClass'
 
-import {colorVariants} from '@cm/lib/methods/colorVariants'
-import {C_Stack, R_Stack} from '@cm/components/styles/common-components/common-components'
-import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
-import {useJotaiByKey, atomTypes} from '@cm/hooks/useJotai'
-import {twMerge} from 'tailwind-merge'
+import { colorVariants } from '@cm/lib/methods/colorVariants'
+import { C_Stack, R_Stack } from '@cm/components/styles/common-components/common-components'
+import { IconBtn } from '@cm/components/styles/common-components/IconBtn'
+import { useJotaiByKey } from '@cm/hooks/useJotai'
+import { twMerge } from 'tailwind-merge'
+import { NewCar } from '@prisma/generated/prisma/client'
 
+export type torokuMikomiApplicationForm = {
+  newCar: NewCar
+}
+
+export type torokuDateApplicationForm = {
+  newCar: NewCar
+}
 export const btnClass = `rounded   py-0.5 px-0.5 text-xs `
-export const DesiredTorokuDateRegister = ({newCar, isHQ}) => {
+export const DesiredTorokuDateRegister = ({ newCar, isHQ }) => {
   const newCarCl = new NewCarClass(newCar)
 
   const TorokuMikomiButton = () => {
-    const [torokuMikomiApplicationForm, settorokuMikomiApplicationForm] = useJotaiByKey<atomTypes[`torokuMikomiApplicationForm`]>(
+    const [torokuMikomiApplicationForm, settorokuMikomiApplicationForm] = useJotaiByKey<torokuMikomiApplicationForm>(
       `torokuMikomiApplicationForm`,
       null
     )
@@ -25,7 +33,7 @@ export const DesiredTorokuDateRegister = ({newCar, isHQ}) => {
         {status.label && (
           <IconBtn
             color={status.color as colorVariants}
-            onClick={() => settorokuMikomiApplicationForm({newCar})}
+            onClick={() => settorokuMikomiApplicationForm({ newCar })}
             className={twMerge(btnClass, ' onHover')}
           >
             {status.label}
@@ -36,9 +44,7 @@ export const DesiredTorokuDateRegister = ({newCar, isHQ}) => {
   }
 
   const TorokuRegisterButton = () => {
-    const [torokuDateApplicationFormOpen, settorokuDateApplicationFormOpen] = useJotaiByKey<
-      atomTypes[`torokuDateApplicationForm`]
-    >(`torokuDateApplicationForm`, null)
+    const [torokuDateApplicationFormOpen, settorokuDateApplicationFormOpen] = useJotaiByKey<torokuDateApplicationForm>(`torokuDateApplicationForm`, null)
     const status = newCarCl.status.getTorokuApplicationStatus()
     return (
       <>
@@ -46,7 +52,7 @@ export const DesiredTorokuDateRegister = ({newCar, isHQ}) => {
         {status.label && (
           <IconBtn
             color={status.color as colorVariants}
-            onClick={() => settorokuDateApplicationFormOpen({newCar})}
+            onClick={() => settorokuDateApplicationFormOpen({ newCar })}
             className={twMerge(btnClass, ' onHover')}
           >
             {status.label}
@@ -56,7 +62,7 @@ export const DesiredTorokuDateRegister = ({newCar, isHQ}) => {
     )
   }
   const HaisouStatusButton = () => {
-    const status = newCarCl.status.getHaisouStatus({newCar})
+    const status = newCarCl.status.getHaisouStatus({ newCar })
     return (
       <>
         <small className={` text-xs`}>配送</small>
@@ -73,7 +79,7 @@ export const DesiredTorokuDateRegister = ({newCar, isHQ}) => {
     )
   }
 
-  const Wrapper = ({children}) => {
+  const Wrapper = ({ children }) => {
     return <R_Stack className={` w-full items-center  justify-between gap-0 border-b border-dashed py-0.5`}>{children}</R_Stack>
   }
 
@@ -91,7 +97,7 @@ export const DesiredTorokuDateRegister = ({newCar, isHQ}) => {
         </Wrapper>
         <Wrapper>
           <small className={` text-xs`}>入金状況</small>
-          <PaymentStatusButton {...{newCar, isHQ}} />
+          <PaymentStatusButton {...{ newCar, isHQ }} />
         </Wrapper>
       </C_Stack>
     </div>

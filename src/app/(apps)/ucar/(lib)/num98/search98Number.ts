@@ -2,7 +2,6 @@
 
 import prisma from 'src/lib/prisma'
 import {
-  availableNumberWhere,
   normalizeNumber98,
   getLastNumber98History,
   findNextAvailableNumber98,
