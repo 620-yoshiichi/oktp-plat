@@ -117,6 +117,26 @@ const parameters = async ({ params, query, session, scopes }) => {
           }
         },
       },
+      {
+        modelNames: [`bankMaster`],
+        setParams: async () => {
+          return {
+            additional: {
+              orderBy: [{ code: 'asc' }],
+              include: {
+                BankBranchMaster: {
+                  orderBy: { code: 'asc' },
+                },
+              },
+            },
+            myTable: {
+              create: false,
+              delete: false,
+              update: false,
+            },
+          }
+        },
+      },
     ],
   })
   return customParams

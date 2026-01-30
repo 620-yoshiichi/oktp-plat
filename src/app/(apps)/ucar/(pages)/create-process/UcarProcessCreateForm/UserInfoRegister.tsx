@@ -161,7 +161,13 @@ export const taxCustomerInfoCols = new Fields([
   ]).buildFormGroup({ groupName: `口座情報①` }).plain,
 
   ...new Fields([
-    { id: `accountType`, label: `口座種類`, form: { ...defaultRegister } },
+    {
+      id: `accountType`, label: `口座種類`, form: { ...defaultRegister },
+      forSelect: {
+        optionsOrOptionFetcher: ['普通', '当座', '総合', '貯蓄預金'
+        ]
+      }
+    },
     { id: `accountNumber`, label: `口座番号`, form: { descriptionNoteAfter: `ゆうちょは「通帳番号」を記入`, ...defaultRegister } },
     { id: `accountNameKana`, label: `名義（カナ）`, form: { ...defaultRegister } },
   ]).buildFormGroup({ groupName: `口座情報②` }).plain,
