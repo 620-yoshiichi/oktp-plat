@@ -40,6 +40,7 @@ const QrCreatePageCC = () => {
   })
 
   const { upassData, isLastSateiId, AlertComponent } = data ?? {}
+  console.log(upassData)  //logs
 
   const { sateiID_Input, DataSearchForm } = useDataSearchForm({
 
