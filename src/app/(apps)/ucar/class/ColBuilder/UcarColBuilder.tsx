@@ -104,6 +104,14 @@ export const ucarColBuilder = (props: columnGetterType) => {
                   return { success: false, message: '98番号の更新をキャンセルしました' }
                 }
               }
+
+              const { available98Numbers } = await getAvailable98Numbers({ take: 50 })
+              const inAvailable = available98Numbers.some(d => d.number === newNumber98)
+              if (!inAvailable) {
+                return { success: false, message: '98番号が利用可能な範囲内にありません' }
+              }
+
+
               return { success: true, message: '' }
             },
             finalizeUpdate: async ({ res, formData }) => {

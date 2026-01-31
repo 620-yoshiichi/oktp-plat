@@ -228,6 +228,7 @@ export type Number98IssueHistoryWhereInput = {
   active?: Prisma.BoolFilter<"Number98IssueHistory"> | boolean
   sortOrder?: Prisma.FloatFilter<"Number98IssueHistory"> | number
   number?: Prisma.StringFilter<"Number98IssueHistory"> | string
+  Ucar?: Prisma.UcarListRelationFilter
 }
 
 export type Number98IssueHistoryOrderByWithRelationInput = {
@@ -237,6 +238,7 @@ export type Number98IssueHistoryOrderByWithRelationInput = {
   active?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   number?: Prisma.SortOrder
+  Ucar?: Prisma.UcarOrderByRelationAggregateInput
 }
 
 export type Number98IssueHistoryWhereUniqueInput = Prisma.AtLeast<{
@@ -249,6 +251,7 @@ export type Number98IssueHistoryWhereUniqueInput = Prisma.AtLeast<{
   active?: Prisma.BoolFilter<"Number98IssueHistory"> | boolean
   sortOrder?: Prisma.FloatFilter<"Number98IssueHistory"> | number
   number?: Prisma.StringFilter<"Number98IssueHistory"> | string
+  Ucar?: Prisma.UcarListRelationFilter
 }, "id">
 
 export type Number98IssueHistoryOrderByWithAggregationInput = {
@@ -283,6 +286,7 @@ export type Number98IssueHistoryCreateInput = {
   active?: boolean
   sortOrder?: number
   number: string
+  Ucar?: Prisma.UcarCreateNestedManyWithoutNumber98IssueHistoryInput
 }
 
 export type Number98IssueHistoryUncheckedCreateInput = {
@@ -292,6 +296,7 @@ export type Number98IssueHistoryUncheckedCreateInput = {
   active?: boolean
   sortOrder?: number
   number: string
+  Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutNumber98IssueHistoryInput
 }
 
 export type Number98IssueHistoryUpdateInput = {
@@ -300,6 +305,7 @@ export type Number98IssueHistoryUpdateInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.FloatFieldUpdateOperationsInput | number
   number?: Prisma.StringFieldUpdateOperationsInput | string
+  Ucar?: Prisma.UcarUpdateManyWithoutNumber98IssueHistoryNestedInput
 }
 
 export type Number98IssueHistoryUncheckedUpdateInput = {
@@ -309,6 +315,7 @@ export type Number98IssueHistoryUncheckedUpdateInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.FloatFieldUpdateOperationsInput | number
   number?: Prisma.StringFieldUpdateOperationsInput | string
+  Ucar?: Prisma.UcarUncheckedUpdateManyWithoutNumber98IssueHistoryNestedInput
 }
 
 export type Number98IssueHistoryCreateManyInput = {
@@ -335,6 +342,11 @@ export type Number98IssueHistoryUncheckedUpdateManyInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.FloatFieldUpdateOperationsInput | number
   number?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type Number98IssueHistoryNullableScalarRelationFilter = {
+  is?: Prisma.Number98IssueHistoryWhereInput | null
+  isNot?: Prisma.Number98IssueHistoryWhereInput | null
 }
 
 export type Number98IssueHistoryCountOrderByAggregateInput = {
@@ -374,6 +386,101 @@ export type Number98IssueHistorySumOrderByAggregateInput = {
   sortOrder?: Prisma.SortOrder
 }
 
+export type Number98IssueHistoryCreateNestedOneWithoutUcarInput = {
+  create?: Prisma.XOR<Prisma.Number98IssueHistoryCreateWithoutUcarInput, Prisma.Number98IssueHistoryUncheckedCreateWithoutUcarInput>
+  connectOrCreate?: Prisma.Number98IssueHistoryCreateOrConnectWithoutUcarInput
+  connect?: Prisma.Number98IssueHistoryWhereUniqueInput
+}
+
+export type Number98IssueHistoryUpdateOneWithoutUcarNestedInput = {
+  create?: Prisma.XOR<Prisma.Number98IssueHistoryCreateWithoutUcarInput, Prisma.Number98IssueHistoryUncheckedCreateWithoutUcarInput>
+  connectOrCreate?: Prisma.Number98IssueHistoryCreateOrConnectWithoutUcarInput
+  upsert?: Prisma.Number98IssueHistoryUpsertWithoutUcarInput
+  disconnect?: Prisma.Number98IssueHistoryWhereInput | boolean
+  delete?: Prisma.Number98IssueHistoryWhereInput | boolean
+  connect?: Prisma.Number98IssueHistoryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.Number98IssueHistoryUpdateToOneWithWhereWithoutUcarInput, Prisma.Number98IssueHistoryUpdateWithoutUcarInput>, Prisma.Number98IssueHistoryUncheckedUpdateWithoutUcarInput>
+}
+
+export type Number98IssueHistoryCreateWithoutUcarInput = {
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  active?: boolean
+  sortOrder?: number
+  number: string
+}
+
+export type Number98IssueHistoryUncheckedCreateWithoutUcarInput = {
+  id?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  active?: boolean
+  sortOrder?: number
+  number: string
+}
+
+export type Number98IssueHistoryCreateOrConnectWithoutUcarInput = {
+  where: Prisma.Number98IssueHistoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.Number98IssueHistoryCreateWithoutUcarInput, Prisma.Number98IssueHistoryUncheckedCreateWithoutUcarInput>
+}
+
+export type Number98IssueHistoryUpsertWithoutUcarInput = {
+  update: Prisma.XOR<Prisma.Number98IssueHistoryUpdateWithoutUcarInput, Prisma.Number98IssueHistoryUncheckedUpdateWithoutUcarInput>
+  create: Prisma.XOR<Prisma.Number98IssueHistoryCreateWithoutUcarInput, Prisma.Number98IssueHistoryUncheckedCreateWithoutUcarInput>
+  where?: Prisma.Number98IssueHistoryWhereInput
+}
+
+export type Number98IssueHistoryUpdateToOneWithWhereWithoutUcarInput = {
+  where?: Prisma.Number98IssueHistoryWhereInput
+  data: Prisma.XOR<Prisma.Number98IssueHistoryUpdateWithoutUcarInput, Prisma.Number98IssueHistoryUncheckedUpdateWithoutUcarInput>
+}
+
+export type Number98IssueHistoryUpdateWithoutUcarInput = {
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.FloatFieldUpdateOperationsInput | number
+  number?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type Number98IssueHistoryUncheckedUpdateWithoutUcarInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.FloatFieldUpdateOperationsInput | number
+  number?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+
+/**
+ * Count Type Number98IssueHistoryCountOutputType
+ */
+
+export type Number98IssueHistoryCountOutputType = {
+  Ucar: number
+}
+
+export type Number98IssueHistoryCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Ucar?: boolean | Number98IssueHistoryCountOutputTypeCountUcarArgs
+}
+
+/**
+ * Number98IssueHistoryCountOutputType without action
+ */
+export type Number98IssueHistoryCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Number98IssueHistoryCountOutputType
+   */
+  select?: Prisma.Number98IssueHistoryCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * Number98IssueHistoryCountOutputType without action
+ */
+export type Number98IssueHistoryCountOutputTypeCountUcarArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UcarWhereInput
+}
 
 
 export type Number98IssueHistorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -383,6 +490,8 @@ export type Number98IssueHistorySelect<ExtArgs extends runtime.Types.Extensions.
   active?: boolean
   sortOrder?: boolean
   number?: boolean
+  Ucar?: boolean | Prisma.Number98IssueHistory$UcarArgs<ExtArgs>
+  _count?: boolean | Prisma.Number98IssueHistoryCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["number98IssueHistory"]>
 
 export type Number98IssueHistorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -413,10 +522,18 @@ export type Number98IssueHistorySelectScalar = {
 }
 
 export type Number98IssueHistoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "active" | "sortOrder" | "number", ExtArgs["result"]["number98IssueHistory"]>
+export type Number98IssueHistoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Ucar?: boolean | Prisma.Number98IssueHistory$UcarArgs<ExtArgs>
+  _count?: boolean | Prisma.Number98IssueHistoryCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type Number98IssueHistoryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type Number98IssueHistoryIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $Number98IssueHistoryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Number98IssueHistory"
-  objects: {}
+  objects: {
+    Ucar: Prisma.$UcarPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     createdAt: Date
@@ -818,6 +935,7 @@ readonly fields: Number98IssueHistoryFieldRefs;
  */
 export interface Prisma__Number98IssueHistoryClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  Ucar<T extends Prisma.Number98IssueHistory$UcarArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Number98IssueHistory$UcarArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UcarPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -870,6 +988,10 @@ export type Number98IssueHistoryFindUniqueArgs<ExtArgs extends runtime.Types.Ext
    */
   omit?: Prisma.Number98IssueHistoryOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.Number98IssueHistoryInclude<ExtArgs> | null
+  /**
    * Filter, which Number98IssueHistory to fetch.
    */
   where: Prisma.Number98IssueHistoryWhereUniqueInput
@@ -888,6 +1010,10 @@ export type Number98IssueHistoryFindUniqueOrThrowArgs<ExtArgs extends runtime.Ty
    */
   omit?: Prisma.Number98IssueHistoryOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.Number98IssueHistoryInclude<ExtArgs> | null
+  /**
    * Filter, which Number98IssueHistory to fetch.
    */
   where: Prisma.Number98IssueHistoryWhereUniqueInput
@@ -905,6 +1031,10 @@ export type Number98IssueHistoryFindFirstArgs<ExtArgs extends runtime.Types.Exte
    * Omit specific fields from the Number98IssueHistory
    */
   omit?: Prisma.Number98IssueHistoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.Number98IssueHistoryInclude<ExtArgs> | null
   /**
    * Filter, which Number98IssueHistory to fetch.
    */
@@ -954,6 +1084,10 @@ export type Number98IssueHistoryFindFirstOrThrowArgs<ExtArgs extends runtime.Typ
    */
   omit?: Prisma.Number98IssueHistoryOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.Number98IssueHistoryInclude<ExtArgs> | null
+  /**
    * Filter, which Number98IssueHistory to fetch.
    */
   where?: Prisma.Number98IssueHistoryWhereInput
@@ -1002,6 +1136,10 @@ export type Number98IssueHistoryFindManyArgs<ExtArgs extends runtime.Types.Exten
    */
   omit?: Prisma.Number98IssueHistoryOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.Number98IssueHistoryInclude<ExtArgs> | null
+  /**
    * Filter, which Number98IssueHistories to fetch.
    */
   where?: Prisma.Number98IssueHistoryWhereInput
@@ -1044,6 +1182,10 @@ export type Number98IssueHistoryCreateArgs<ExtArgs extends runtime.Types.Extensi
    * Omit specific fields from the Number98IssueHistory
    */
   omit?: Prisma.Number98IssueHistoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.Number98IssueHistoryInclude<ExtArgs> | null
   /**
    * The data needed to create a Number98IssueHistory.
    */
@@ -1092,6 +1234,10 @@ export type Number98IssueHistoryUpdateArgs<ExtArgs extends runtime.Types.Extensi
    * Omit specific fields from the Number98IssueHistory
    */
   omit?: Prisma.Number98IssueHistoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.Number98IssueHistoryInclude<ExtArgs> | null
   /**
    * The data needed to update a Number98IssueHistory.
    */
@@ -1159,6 +1305,10 @@ export type Number98IssueHistoryUpsertArgs<ExtArgs extends runtime.Types.Extensi
    */
   omit?: Prisma.Number98IssueHistoryOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.Number98IssueHistoryInclude<ExtArgs> | null
+  /**
    * The filter to search for the Number98IssueHistory to update in case it exists.
    */
   where: Prisma.Number98IssueHistoryWhereUniqueInput
@@ -1185,6 +1335,10 @@ export type Number98IssueHistoryDeleteArgs<ExtArgs extends runtime.Types.Extensi
    */
   omit?: Prisma.Number98IssueHistoryOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.Number98IssueHistoryInclude<ExtArgs> | null
+  /**
    * Filter which Number98IssueHistory to delete.
    */
   where: Prisma.Number98IssueHistoryWhereUniqueInput
@@ -1205,6 +1359,30 @@ export type Number98IssueHistoryDeleteManyArgs<ExtArgs extends runtime.Types.Ext
 }
 
 /**
+ * Number98IssueHistory.Ucar
+ */
+export type Number98IssueHistory$UcarArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Ucar
+   */
+  select?: Prisma.UcarSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Ucar
+   */
+  omit?: Prisma.UcarOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UcarInclude<ExtArgs> | null
+  where?: Prisma.UcarWhereInput
+  orderBy?: Prisma.UcarOrderByWithRelationInput | Prisma.UcarOrderByWithRelationInput[]
+  cursor?: Prisma.UcarWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UcarScalarFieldEnum | Prisma.UcarScalarFieldEnum[]
+}
+
+/**
  * Number98IssueHistory without action
  */
 export type Number98IssueHistoryDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1216,4 +1394,8 @@ export type Number98IssueHistoryDefaultArgs<ExtArgs extends runtime.Types.Extens
    * Omit specific fields from the Number98IssueHistory
    */
   omit?: Prisma.Number98IssueHistoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.Number98IssueHistoryInclude<ExtArgs> | null
 }

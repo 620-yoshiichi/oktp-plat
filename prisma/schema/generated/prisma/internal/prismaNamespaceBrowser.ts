@@ -1569,7 +1569,8 @@ export const UcarScalarFieldEnum = {
   userId: 'userId',
   storeId: 'storeId',
   tmpRentalStoreId: 'tmpRentalStoreId',
-  newCarId: 'newCarId'
+  newCarId: 'newCarId',
+  number98IssueHistoryId: 'number98IssueHistoryId'
 } as const
 
 export type UcarScalarFieldEnum = (typeof UcarScalarFieldEnum)[keyof typeof UcarScalarFieldEnum]

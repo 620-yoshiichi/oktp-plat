@@ -20183,6 +20183,41 @@
           ],
           "isGenerated": false,
           "isUpdatedAt": false
+        },
+        {
+          "name": "number98IssueHistory",
+          "kind": "object",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "Number98IssueHistory",
+          "nativeType": null,
+          "relationName": "Number98IssueHistoryToUcar",
+          "relationFromFields": [
+            "number98IssueHistoryId"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "number98IssueHistoryId",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": true,
+          "hasDefaultValue": false,
+          "type": "Int",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
         }
       ],
       "primaryKey": null,
@@ -20301,6 +20336,23 @@
           "hasDefaultValue": false,
           "type": "String",
           "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "Ucar",
+          "kind": "object",
+          "isList": true,
+          "isRequired": true,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "Ucar",
+          "nativeType": null,
+          "relationName": "Number98IssueHistoryToUcar",
+          "relationFromFields": [],
+          "relationToFields": [],
           "isGenerated": false,
           "isUpdatedAt": false
         }
@@ -24405,6 +24457,16 @@
       "fields": [
         {
           "name": "id"
+        }
+      ]
+    },
+    {
+      "model": "Number98IssueHistory",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "number"
         }
       ]
     },

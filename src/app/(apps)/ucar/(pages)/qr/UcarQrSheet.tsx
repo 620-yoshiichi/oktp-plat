@@ -517,7 +517,7 @@ const CarInfoTable = ({ ucar }) => {
               // 値の取得優先順位: ucar[col.en] > ucar.UPASS[col.en] > ucar[tmpフィールド]
               let value = col?.format ? col.format(ucar) : (ucar[col.en] ?? ucar?.UPASS?.[col.en])
 
-              console.log(col.en, value)  //logs
+
               if (!value) {
                 const tmpFieldName = getTmpFieldName(col.en)
                 if (tmpFieldName) {

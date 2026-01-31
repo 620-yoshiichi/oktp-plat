@@ -58,7 +58,7 @@ const parameters = async ({ params, query, session, scopes }) => {
         modelNames: ['ucar'],
         setParams: async () => {
           const { session, scopes } = await initServerComopnent({ query })
-          const { isHQ, isStoreManager, isSales, carWhere } = scopes.getUcarProps()
+          const { isHQ, isStoreManager, isSales, isChukoshaGroup, carWhere } = scopes.getUcarProps()
 
           const [stores, getAvailable98NumbersReturn] = await Promise.all([
             (await doStandardPrisma(`store`, `findMany`, { orderBy: { name: 'asc' }, where: ucarWhere.ucarStores }))?.result,
@@ -89,6 +89,17 @@ const parameters = async ({ params, query, session, scopes }) => {
 
           ].filter(Boolean)
 
+          let orderBy: Prisma.UcarOrderByWithRelationInput[] = [{ createdAt: 'desc' }]
+
+          if (isChukoshaGroup) {
+            orderBy = [
+              //
+              { DD_SIIRE: { sort: 'desc', nulls: 'last' } },
+              { number98: { sort: 'desc', nulls: 'last' } },
+              ...orderBy
+            ]
+          }
+
 
 
           return {
@@ -96,7 +107,7 @@ const parameters = async ({ params, query, session, scopes }) => {
             additional: {
               select: ucarQuery.select as any,
               omit: ucarQuery.omit as any,
-              orderBy: [{ createdAt: 'desc' }],
+              orderBy: orderBy,
               where: { AND: whereAND },
             },
             easySearchExtraProps,
