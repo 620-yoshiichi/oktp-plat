@@ -4,10 +4,10 @@ import { NewCarClass } from '@app/(apps)/newCar/class/NewCarClass/NewCarClass'
 
 import { colorVariants } from '@cm/lib/methods/colorVariants'
 import { C_Stack, R_Stack } from '@cm/components/styles/common-components/common-components'
-import { IconBtn } from '@cm/components/styles/common-components/IconBtn'
 import { useJotaiByKey } from '@cm/hooks/useJotai'
 import { twMerge } from 'tailwind-merge'
 import { NewCar } from '@prisma/generated/prisma/client'
+import Coloring from '@cm/lib/methods/Coloring'
 
 export type torokuMikomiApplicationForm = {
   newCar: NewCar
@@ -31,13 +31,14 @@ export const DesiredTorokuDateRegister = ({ newCar, isHQ }) => {
       <>
         <small className={` text-xs`}>見込み</small>
         {status.label && (
-          <IconBtn
+          <Coloring
+            mode='bg'
             color={status.color as colorVariants}
             onClick={() => settorokuMikomiApplicationForm({ newCar })}
             className={twMerge(btnClass, ' onHover')}
           >
             {status.label}
-          </IconBtn>
+          </Coloring>
         )}
       </>
     )
@@ -50,13 +51,14 @@ export const DesiredTorokuDateRegister = ({ newCar, isHQ }) => {
       <>
         <small className={` text-xs`}>登録申請</small>
         {status.label && (
-          <IconBtn
+          <Coloring
+            mode='bg'
             color={status.color as colorVariants}
             onClick={() => settorokuDateApplicationFormOpen({ newCar })}
-            className={twMerge(btnClass, ' onHover')}
+            className={twMerge(btnClass, ' onHover text-[11px]!')}
           >
             {status.label}
-          </IconBtn>
+          </Coloring>
         )}
       </>
     )
@@ -67,13 +69,13 @@ export const DesiredTorokuDateRegister = ({ newCar, isHQ }) => {
       <>
         <small className={` text-xs`}>配送</small>
         {status.label && (
-          <IconBtn
+          <Coloring mode='text'
             onClick={() => alert(`ai21で入力を完了してください。翌日のバッチ処理で、本アプリに反映されます。`)}
             color={status.color as colorVariants}
-            className={twMerge(btnClass, ' ')}
+            className={twMerge(btnClass, 'text-[11px]!')}
           >
             {status.label}
-          </IconBtn>
+          </Coloring>
         )}
       </>
     )

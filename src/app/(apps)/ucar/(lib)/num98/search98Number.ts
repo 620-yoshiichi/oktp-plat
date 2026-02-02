@@ -473,17 +473,17 @@ export async function unifiedSearch(query: string, options?: SearchOptions): Pro
       whereCondition = {sateiID: {contains: trimmedQuery.toUpperCase()}}
       break
     case 'number98':
-      // 98番号で検索（正規化して部分一致）
-      const normalizedNumber = normalizeNumber98(trimmedQuery)
-      whereCondition = {number98: {contains: normalizedNumber.replace(/\s/g, '')}}
+      {
+        // 98番号で検索（正規化して部分一致）
+        const normalizedNumber = normalizeNumber98(trimmedQuery)
+        whereCondition = {number98: {contains: normalizedNumber.replace(/\s/g, '')}}
+      }
+
       break
     case 'chassisNumber':
       // 車体番号で検索（tmpChassisNumber または plate で部分一致）
       whereCondition = {
-        OR: [
-          {tmpChassisNumber: {contains: trimmedQuery}},
-          {plate: {contains: trimmedQuery}},
-        ],
+        OR: [{tmpChassisNumber: {contains: trimmedQuery}}, {plate: {contains: trimmedQuery}}],
       }
       break
     default:

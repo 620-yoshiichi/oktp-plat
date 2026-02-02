@@ -468,7 +468,7 @@ export const getNewCarCols = (props: columnGetterType) => {
       { id: `DD_NOSYA`, label: `納車日`, type: `date` },
     ])
       .setNormalTd()
-      .customAttributes(() => ({ sort: {}, search: {} }))
+
       .showSummaryInTd({ hideUndefinedValue: false, labelWidthPx: 70, wrapperWidthPx: 170 }).plain,
   ]).transposeColumns()
 }

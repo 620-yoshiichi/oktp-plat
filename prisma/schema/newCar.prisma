@@ -1,60 +1,61 @@
 model NewCar {
-  id                            Int       @id @default(autoincrement())
-  createdAt                     DateTime  @default(now())
-  sortOrder                     Float     @default(0)
-  storeId                       Int
-  updatedAt                     DateTime? @updatedAt
-  APPINDEX                      String    @unique
-  CD_HANSTAFF                   String?
-  CD_NCSYAMEI                   String?
-  CD_TENPO                      String?
-  DD_CENTTYAB                   DateTime?
-  DD_CENTYOB                    DateTime?
-  DD_FR                         DateTime?
-  DD_HAISKIBO                   DateTime?
-  DD_HAISOU                     DateTime?
-  DD_HAISOYOT                   DateTime?
-  DD_HONBSYOK                   DateTime?
-  DD_JUCYU                      DateTime?
-  DD_JUCYUKE                    DateTime?
-  DD_KIBONOKI                   DateTime?
-  DD_MAKERSYU                   DateTime?
-  DD_NOSYA                      DateTime?
-  DD_SYOUNIN1                   DateTime?
-  DD_SYOUNIN2                   DateTime?
-  DD_SYOUNIN3                   DateTime?
-  DD_TENPSYOK                   DateTime?
-  DD_TOROKIBO                   DateTime?
-  DD_TOTYAKUY                   DateTime?
-  DD_TOUROKU                    DateTime?
-  DD_URIKZUMI                   DateTime?
-  KJ_KAINMEI1                   String?
-  KJ_KURUMAME                   String?
-  KJ_MEIGIME1                   String?
-  MJ_HANTENKT                   String?
-  NO_CYUMON                     String?
-  NO_FRAME                      String?
-  m0Status                      String?
-  m0_deadline_nousya            DateTime?
-  m0_remarks                    String?
-  m1Status                      String?
-  m1_deadline_money             DateTime?
-  m1_deadline_paper             DateTime?
-  m1_remarks                    String?
-  m2Status                      String?
-  m2_date                       DateTime?
-  m2_remarks                    String?
-  userId                        Int
-  m1Alert                       DateTime?
-  m2Alert                       DateTime?
-  lastApprovedDesiredTorokuDate DateTime?
-  m2_check1                     Boolean?
-  m2_check2                     Boolean?
-  m1_toroku_prediction          DateTime?
-  initial_m0_deadline_nousya    DateTime?
-  initial_m1_deadline_money     DateTime?
-  initial_m1_deadline_paper     DateTime?
-  initial_m1_toroku_prediction  DateTime?
+  id                                     Int       @id @default(autoincrement())
+  createdAt                              DateTime  @default(now())
+  sortOrder                              Float     @default(0)
+  storeId                                Int
+  updatedAt                              DateTime? @updatedAt
+  APPINDEX                               String    @unique
+  CD_HANSTAFF                            String?
+  CD_NCSYAMEI                            String?
+  CD_TENPO                               String?
+  DD_CENTTYAB                            DateTime?
+  DD_CENTYOB                             DateTime?
+  DD_FR                                  DateTime?
+  DD_HAISKIBO                            DateTime?
+  DD_HAISOU                              DateTime?
+  DD_HAISOYOT                            DateTime?
+  DD_HONBSYOK                            DateTime?
+  DD_JUCYU                               DateTime?
+  DD_JUCYUKE                             DateTime?
+  DD_KIBONOKI                            DateTime?
+  DD_MAKERSYU                            DateTime?
+  DD_NOSYA                               DateTime?
+  DD_SYOUNIN1                            DateTime?
+  DD_SYOUNIN2                            DateTime?
+  DD_SYOUNIN3                            DateTime?
+  DD_TENPSYOK                            DateTime?
+  DD_TOROKIBO                            DateTime?
+  DD_TOTYAKUY                            DateTime?
+  DD_TOUROKU                             DateTime?
+  DD_URIKZUMI                            DateTime?
+  KJ_KAINMEI1                            String?
+  KJ_KURUMAME                            String?
+  KJ_MEIGIME1                            String?
+  MJ_HANTENKT                            String?
+  NO_CYUMON                              String?
+  NO_FRAME                               String?
+  m0Status                               String?
+  m0_deadline_nousya                     DateTime?
+  m0_remarks                             String?
+  m1Status                               String?
+  m1_deadline_money                      DateTime?
+  m1_deadline_paper                      DateTime?
+  m1_remarks                             String?
+  m2Status                               String?
+  m2_date                                DateTime?
+  m2_remarks                             String?
+  userId                                 Int
+  m1Alert                                DateTime?
+  m2Alert                                DateTime?
+  lastApprovedDesiredTorokuDate          DateTime?
+  lastApprovedDesiredTorokuDate__pending DateTime?
+  m2_check1                              Boolean?
+  m2_check2                              Boolean?
+  m1_toroku_prediction                   DateTime?
+  initial_m0_deadline_nousya             DateTime?
+  initial_m1_deadline_money              DateTime?
+  initial_m1_deadline_paper              DateTime?
+  initial_m1_toroku_prediction           DateTime?
 
   DD_KARINOKI                     DateTime?
   DD_SAGTYYO                      DateTime?

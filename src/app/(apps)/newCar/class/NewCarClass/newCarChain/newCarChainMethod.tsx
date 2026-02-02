@@ -18,6 +18,15 @@ WITH
     LIMIT 1
 ),
 
+-- 最新の申請中の登録希望日（却下・キャンセル以外）
+"SQ_SAISHIN_PENDING" AS (
+    SELECT d."date" AS "date", d."status"
+    FROM "DesiredTorokuDate" d
+    WHERE d."newCarId" = ${carId}
+      AND (d."status" IS NULL OR (d."status" <> '却下' AND d."status" <> 'キャンセル'))
+    ORDER BY d."createdAt" DESC
+    LIMIT 1
+),
 
 "SQ_WorkingDays" AS (
     SELECT
@@ -185,6 +194,7 @@ SET
 "DD_LATEST_HAISOU" = (SELECT "DD_LATEST_HAISOU" FROM "SQ_haisou_tooEarly_Criteria"),
 
  "lastApprovedDesiredTorokuDate" = (SELECT "date" FROM "SQ_SAISHIN_SYONIN"),
+ "lastApprovedDesiredTorokuDate__pending" = (SELECT "date" FROM "SQ_SAISHIN_PENDING"),
 
  "earliestHaisouDate" =(SELECT "earliestHaisouDate" FROM "SQ_haisou_tooEarly_Criteria"),
  --"haisou_tooEarly" = (SELECT "haisou_tooEarly" FROM "SQ_haisou_tooEarly_Criteria"),
@@ -221,6 +231,7 @@ RETURNING
 "DD_HAISOYOT",
 "DD_HAISKIBO"
 "lastApprovedDesiredTorokuDate",
+"lastApprovedDesiredTorokuDate__pending",
 "NO_CYUMON",
 (SELECT "haisou_tooEarly" FROM "SQ_haisou_tooEarly_Criteria") AS FOO
 

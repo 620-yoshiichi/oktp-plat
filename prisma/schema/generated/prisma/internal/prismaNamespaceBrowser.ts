@@ -844,6 +844,7 @@ export const NewCarScalarFieldEnum = {
   m1Alert: 'm1Alert',
   m2Alert: 'm2Alert',
   lastApprovedDesiredTorokuDate: 'lastApprovedDesiredTorokuDate',
+  lastApprovedDesiredTorokuDate__pending: 'lastApprovedDesiredTorokuDate__pending',
   m2_check1: 'm2_check1',
   m2_check2: 'm2_check2',
   m1_toroku_prediction: 'm1_toroku_prediction',

@@ -50,7 +50,7 @@ export const CheckPoint = (props: { newCar; cp: checkPoint; UseRecordsReturn: Us
             <R_Stack>
               <IconBtn
                 {...{
-                  // vivid={false}
+                  size: 'sm',
                   color,
                   onClick,
 

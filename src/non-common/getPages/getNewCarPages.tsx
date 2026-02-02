@@ -51,10 +51,10 @@ export const getNewCarPages = (props: PageGetterType) => {
           label: '注残管理',
           ...commons,
           link: {
-            query: {
-              orderBy: 'DD_FR',
-              orderDirection: 'desc',
-            },
+            // query: {
+            //   orderBy: 'DD_FR',
+            //   orderDirection: 'desc',
+            // },
           },
         },
 

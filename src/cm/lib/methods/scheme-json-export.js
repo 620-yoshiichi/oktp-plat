@@ -9642,6 +9642,20 @@
           "isUpdatedAt": false
         },
         {
+          "name": "lastApprovedDesiredTorokuDate__pending",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "DateTime",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
           "name": "m2_check1",
           "kind": "scalar",
           "isList": false,

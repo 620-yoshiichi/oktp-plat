@@ -112,6 +112,7 @@ export type NewCarMinAggregateOutputType = {
   m1Alert: Date | null
   m2Alert: Date | null
   lastApprovedDesiredTorokuDate: Date | null
+  lastApprovedDesiredTorokuDate__pending: Date | null
   m2_check1: boolean | null
   m2_check2: boolean | null
   m1_toroku_prediction: Date | null
@@ -216,6 +217,7 @@ export type NewCarMaxAggregateOutputType = {
   m1Alert: Date | null
   m2Alert: Date | null
   lastApprovedDesiredTorokuDate: Date | null
+  lastApprovedDesiredTorokuDate__pending: Date | null
   m2_check1: boolean | null
   m2_check2: boolean | null
   m1_toroku_prediction: Date | null
@@ -320,6 +322,7 @@ export type NewCarCountAggregateOutputType = {
   m1Alert: number
   m2Alert: number
   lastApprovedDesiredTorokuDate: number
+  lastApprovedDesiredTorokuDate__pending: number
   m2_check1: number
   m2_check2: number
   m1_toroku_prediction: number
@@ -462,6 +465,7 @@ export type NewCarMinAggregateInputType = {
   m1Alert?: true
   m2Alert?: true
   lastApprovedDesiredTorokuDate?: true
+  lastApprovedDesiredTorokuDate__pending?: true
   m2_check1?: true
   m2_check2?: true
   m1_toroku_prediction?: true
@@ -566,6 +570,7 @@ export type NewCarMaxAggregateInputType = {
   m1Alert?: true
   m2Alert?: true
   lastApprovedDesiredTorokuDate?: true
+  lastApprovedDesiredTorokuDate__pending?: true
   m2_check1?: true
   m2_check2?: true
   m1_toroku_prediction?: true
@@ -670,6 +675,7 @@ export type NewCarCountAggregateInputType = {
   m1Alert?: true
   m2Alert?: true
   lastApprovedDesiredTorokuDate?: true
+  lastApprovedDesiredTorokuDate__pending?: true
   m2_check1?: true
   m2_check2?: true
   m1_toroku_prediction?: true
@@ -861,6 +867,7 @@ export type NewCarGroupByOutputType = {
   m1Alert: Date | null
   m2Alert: Date | null
   lastApprovedDesiredTorokuDate: Date | null
+  lastApprovedDesiredTorokuDate__pending: Date | null
   m2_check1: boolean | null
   m2_check2: boolean | null
   m1_toroku_prediction: Date | null
@@ -988,6 +995,7 @@ export type NewCarWhereInput = {
   m1Alert?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
   m2Alert?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
   m2_check1?: Prisma.BoolNullableFilter<"NewCar"> | boolean | null
   m2_check2?: Prisma.BoolNullableFilter<"NewCar"> | boolean | null
   m1_toroku_prediction?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
@@ -1106,6 +1114,7 @@ export type NewCarOrderByWithRelationInput = {
   m1Alert?: Prisma.SortOrderInput | Prisma.SortOrder
   m2Alert?: Prisma.SortOrderInput | Prisma.SortOrder
   lastApprovedDesiredTorokuDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastApprovedDesiredTorokuDate__pending?: Prisma.SortOrderInput | Prisma.SortOrder
   m2_check1?: Prisma.SortOrderInput | Prisma.SortOrder
   m2_check2?: Prisma.SortOrderInput | Prisma.SortOrder
   m1_toroku_prediction?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -1228,6 +1237,7 @@ export type NewCarWhereUniqueInput = Prisma.AtLeast<{
   m1Alert?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
   m2Alert?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
   m2_check1?: Prisma.BoolNullableFilter<"NewCar"> | boolean | null
   m2_check2?: Prisma.BoolNullableFilter<"NewCar"> | boolean | null
   m1_toroku_prediction?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
@@ -1345,6 +1355,7 @@ export type NewCarOrderByWithAggregationInput = {
   m1Alert?: Prisma.SortOrderInput | Prisma.SortOrder
   m2Alert?: Prisma.SortOrderInput | Prisma.SortOrder
   lastApprovedDesiredTorokuDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastApprovedDesiredTorokuDate__pending?: Prisma.SortOrderInput | Prisma.SortOrder
   m2_check1?: Prisma.SortOrderInput | Prisma.SortOrder
   m2_check2?: Prisma.SortOrderInput | Prisma.SortOrder
   m1_toroku_prediction?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -1457,6 +1468,7 @@ export type NewCarScalarWhereWithAggregatesInput = {
   m1Alert?: Prisma.DateTimeNullableWithAggregatesFilter<"NewCar"> | Date | string | null
   m2Alert?: Prisma.DateTimeNullableWithAggregatesFilter<"NewCar"> | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.DateTimeNullableWithAggregatesFilter<"NewCar"> | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.DateTimeNullableWithAggregatesFilter<"NewCar"> | Date | string | null
   m2_check1?: Prisma.BoolNullableWithAggregatesFilter<"NewCar"> | boolean | null
   m2_check2?: Prisma.BoolNullableWithAggregatesFilter<"NewCar"> | boolean | null
   m1_toroku_prediction?: Prisma.DateTimeNullableWithAggregatesFilter<"NewCar"> | Date | string | null
@@ -1558,6 +1570,7 @@ export type NewCarCreateInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -1675,6 +1688,7 @@ export type NewCarUncheckedCreateInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -1787,6 +1801,7 @@ export type NewCarUpdateInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1904,6 +1919,7 @@ export type NewCarUncheckedUpdateInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2019,6 +2035,7 @@ export type NewCarCreateManyInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -2120,6 +2137,7 @@ export type NewCarUpdateManyMutationInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2223,6 +2241,7 @@ export type NewCarUncheckedUpdateManyInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2332,6 +2351,7 @@ export type NewCarCountOrderByAggregateInput = {
   m1Alert?: Prisma.SortOrder
   m2Alert?: Prisma.SortOrder
   lastApprovedDesiredTorokuDate?: Prisma.SortOrder
+  lastApprovedDesiredTorokuDate__pending?: Prisma.SortOrder
   m2_check1?: Prisma.SortOrder
   m2_check2?: Prisma.SortOrder
   m1_toroku_prediction?: Prisma.SortOrder
@@ -2454,6 +2474,7 @@ export type NewCarMaxOrderByAggregateInput = {
   m1Alert?: Prisma.SortOrder
   m2Alert?: Prisma.SortOrder
   lastApprovedDesiredTorokuDate?: Prisma.SortOrder
+  lastApprovedDesiredTorokuDate__pending?: Prisma.SortOrder
   m2_check1?: Prisma.SortOrder
   m2_check2?: Prisma.SortOrder
   m1_toroku_prediction?: Prisma.SortOrder
@@ -2558,6 +2579,7 @@ export type NewCarMinOrderByAggregateInput = {
   m1Alert?: Prisma.SortOrder
   m2Alert?: Prisma.SortOrder
   lastApprovedDesiredTorokuDate?: Prisma.SortOrder
+  lastApprovedDesiredTorokuDate__pending?: Prisma.SortOrder
   m2_check1?: Prisma.SortOrder
   m2_check2?: Prisma.SortOrder
   m1_toroku_prediction?: Prisma.SortOrder
@@ -2970,6 +2992,7 @@ export type NewCarCreateWithoutJuchuShitadoriDbInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -3086,6 +3109,7 @@ export type NewCarUncheckedCreateWithoutJuchuShitadoriDbInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -3213,6 +3237,7 @@ export type NewCarUpdateWithoutJuchuShitadoriDbInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3329,6 +3354,7 @@ export type NewCarUncheckedUpdateWithoutJuchuShitadoriDbInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3440,6 +3466,7 @@ export type NewCarCreateWithoutSlotInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -3556,6 +3583,7 @@ export type NewCarUncheckedCreateWithoutSlotInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -3683,6 +3711,7 @@ export type NewCarUpdateWithoutSlotInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3799,6 +3828,7 @@ export type NewCarUncheckedUpdateWithoutSlotInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3910,6 +3940,7 @@ export type NewCarCreateWithoutOrderSwitchingHisotoryInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -4026,6 +4057,7 @@ export type NewCarUncheckedCreateWithoutOrderSwitchingHisotoryInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -4153,6 +4185,7 @@ export type NewCarUpdateWithoutOrderSwitchingHisotoryInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4269,6 +4302,7 @@ export type NewCarUncheckedUpdateWithoutOrderSwitchingHisotoryInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4380,6 +4414,7 @@ export type NewCarCreateWithoutDesiredTorokuDateInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -4496,6 +4531,7 @@ export type NewCarUncheckedCreateWithoutDesiredTorokuDateInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -4623,6 +4659,7 @@ export type NewCarUpdateWithoutDesiredTorokuDateInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4739,6 +4776,7 @@ export type NewCarUncheckedUpdateWithoutDesiredTorokuDateInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4850,6 +4888,7 @@ export type NewCarCreateWithoutNewCarLeadTimeInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -4966,6 +5005,7 @@ export type NewCarUncheckedCreateWithoutNewCarLeadTimeInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -5093,6 +5133,7 @@ export type NewCarUpdateWithoutNewCarLeadTimeInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5209,6 +5250,7 @@ export type NewCarUncheckedUpdateWithoutNewCarLeadTimeInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5320,6 +5362,7 @@ export type NewCarCreateWithoutCrInspectionHistoryInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -5436,6 +5479,7 @@ export type NewCarUncheckedCreateWithoutCrInspectionHistoryInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -5563,6 +5607,7 @@ export type NewCarUpdateWithoutCrInspectionHistoryInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5679,6 +5724,7 @@ export type NewCarUncheckedUpdateWithoutCrInspectionHistoryInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5790,6 +5836,7 @@ export type NewCarCreateWithoutSeisanYoteiHistoryInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -5906,6 +5953,7 @@ export type NewCarUncheckedCreateWithoutSeisanYoteiHistoryInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -6033,6 +6081,7 @@ export type NewCarUpdateWithoutSeisanYoteiHistoryInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6149,6 +6198,7 @@ export type NewCarUncheckedUpdateWithoutSeisanYoteiHistoryInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6260,6 +6310,7 @@ export type NewCarCreateWithoutFuriateStatusOnApprovementInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -6376,6 +6427,7 @@ export type NewCarUncheckedCreateWithoutFuriateStatusOnApprovementInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -6503,6 +6555,7 @@ export type NewCarUpdateWithoutFuriateStatusOnApprovementInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6619,6 +6672,7 @@ export type NewCarUncheckedUpdateWithoutFuriateStatusOnApprovementInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6730,6 +6784,7 @@ export type NewCarCreateWithoutCarTransferHistoryInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -6846,6 +6901,7 @@ export type NewCarUncheckedCreateWithoutCarTransferHistoryInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -6973,6 +7029,7 @@ export type NewCarUpdateWithoutCarTransferHistoryInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7089,6 +7146,7 @@ export type NewCarUncheckedUpdateWithoutCarTransferHistoryInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7200,6 +7258,7 @@ export type NewCarCreateWithoutTenpoTsuikoShinseiHeaderInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -7316,6 +7375,7 @@ export type NewCarUncheckedCreateWithoutTenpoTsuikoShinseiHeaderInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -7443,6 +7503,7 @@ export type NewCarUpdateWithoutTenpoTsuikoShinseiHeaderInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7559,6 +7620,7 @@ export type NewCarUncheckedUpdateWithoutTenpoTsuikoShinseiHeaderInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7670,6 +7732,7 @@ export type NewCarCreateWithoutTenpoTsuikoDataInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -7786,6 +7849,7 @@ export type NewCarUncheckedCreateWithoutTenpoTsuikoDataInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -7913,6 +7977,7 @@ export type NewCarUpdateWithoutTenpoTsuikoDataInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8029,6 +8094,7 @@ export type NewCarUncheckedUpdateWithoutTenpoTsuikoDataInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8140,6 +8206,7 @@ export type NewCarCreateWithoutStoreInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -8255,6 +8322,7 @@ export type NewCarUncheckedCreateWithoutStoreInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -8399,6 +8467,7 @@ export type NewCarScalarWhereInput = {
   m1Alert?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
   m2Alert?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
   m2_check1?: Prisma.BoolNullableFilter<"NewCar"> | boolean | null
   m2_check2?: Prisma.BoolNullableFilter<"NewCar"> | boolean | null
   m1_toroku_prediction?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
@@ -8500,6 +8569,7 @@ export type NewCarCreateWithoutUserInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -8615,6 +8685,7 @@ export type NewCarUncheckedCreateWithoutUserInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -8753,6 +8824,7 @@ export type NewCarCreateWithoutUcarInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -8869,6 +8941,7 @@ export type NewCarUncheckedCreateWithoutUcarInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -8996,6 +9069,7 @@ export type NewCarUpdateWithoutUcarInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -9112,6 +9186,7 @@ export type NewCarUncheckedUpdateWithoutUcarInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -9225,6 +9300,7 @@ export type NewCarCreateManyStoreInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -9326,6 +9402,7 @@ export type NewCarUpdateWithoutStoreInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -9441,6 +9518,7 @@ export type NewCarUncheckedUpdateWithoutStoreInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -9555,6 +9633,7 @@ export type NewCarUncheckedUpdateManyWithoutStoreInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -9658,6 +9737,7 @@ export type NewCarCreateManyUserInput = {
   m1Alert?: Date | string | null
   m2Alert?: Date | string | null
   lastApprovedDesiredTorokuDate?: Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Date | string | null
   m2_check1?: boolean | null
   m2_check2?: boolean | null
   m1_toroku_prediction?: Date | string | null
@@ -9759,6 +9839,7 @@ export type NewCarUpdateWithoutUserInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -9874,6 +9955,7 @@ export type NewCarUncheckedUpdateWithoutUserInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -9988,6 +10070,7 @@ export type NewCarUncheckedUpdateManyWithoutUserInput = {
   m1Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2Alert?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastApprovedDesiredTorokuDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastApprovedDesiredTorokuDate__pending?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   m2_check1?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m2_check2?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   m1_toroku_prediction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -10204,6 +10287,7 @@ export type NewCarSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   m1Alert?: boolean
   m2Alert?: boolean
   lastApprovedDesiredTorokuDate?: boolean
+  lastApprovedDesiredTorokuDate__pending?: boolean
   m2_check1?: boolean
   m2_check2?: boolean
   m1_toroku_prediction?: boolean
@@ -10323,6 +10407,7 @@ export type NewCarSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   m1Alert?: boolean
   m2Alert?: boolean
   lastApprovedDesiredTorokuDate?: boolean
+  lastApprovedDesiredTorokuDate__pending?: boolean
   m2_check1?: boolean
   m2_check2?: boolean
   m1_toroku_prediction?: boolean
@@ -10430,6 +10515,7 @@ export type NewCarSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   m1Alert?: boolean
   m2Alert?: boolean
   lastApprovedDesiredTorokuDate?: boolean
+  lastApprovedDesiredTorokuDate__pending?: boolean
   m2_check1?: boolean
   m2_check2?: boolean
   m1_toroku_prediction?: boolean
@@ -10537,6 +10623,7 @@ export type NewCarSelectScalar = {
   m1Alert?: boolean
   m2Alert?: boolean
   lastApprovedDesiredTorokuDate?: boolean
+  lastApprovedDesiredTorokuDate__pending?: boolean
   m2_check1?: boolean
   m2_check2?: boolean
   m1_toroku_prediction?: boolean
@@ -10591,7 +10678,7 @@ export type NewCarSelectScalar = {
   orderSwitchingHisotoryId?: boolean
 }
 
-export type NewCarOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "sortOrder" | "storeId" | "updatedAt" | "APPINDEX" | "CD_HANSTAFF" | "CD_NCSYAMEI" | "CD_TENPO" | "DD_CENTTYAB" | "DD_CENTYOB" | "DD_FR" | "DD_HAISKIBO" | "DD_HAISOU" | "DD_HAISOYOT" | "DD_HONBSYOK" | "DD_JUCYU" | "DD_JUCYUKE" | "DD_KIBONOKI" | "DD_MAKERSYU" | "DD_NOSYA" | "DD_SYOUNIN1" | "DD_SYOUNIN2" | "DD_SYOUNIN3" | "DD_TENPSYOK" | "DD_TOROKIBO" | "DD_TOTYAKUY" | "DD_TOUROKU" | "DD_URIKZUMI" | "KJ_KAINMEI1" | "KJ_KURUMAME" | "KJ_MEIGIME1" | "MJ_HANTENKT" | "NO_CYUMON" | "NO_FRAME" | "m0Status" | "m0_deadline_nousya" | "m0_remarks" | "m1Status" | "m1_deadline_money" | "m1_deadline_paper" | "m1_remarks" | "m2Status" | "m2_date" | "m2_remarks" | "userId" | "m1Alert" | "m2Alert" | "lastApprovedDesiredTorokuDate" | "m2_check1" | "m2_check2" | "m1_toroku_prediction" | "initial_m0_deadline_nousya" | "initial_m1_deadline_money" | "initial_m1_deadline_paper" | "initial_m1_toroku_prediction" | "DD_KARINOKI" | "DD_SAGTYYO" | "KB_OSSSIN" | "MJ_OSSTSNST" | "KI_BETSIHAK" | "KI_MAEUNYUK" | "KI_NYURUIKE" | "KI_SHRIGK" | "KI_SITANYKG" | "crOperationRemarks" | "haisou_tooEarly" | "torokuApplicationRequired" | "DD_CENTSYUB" | "DD_GENSYNYK" | "KI_SITADORI" | "KI_SITZAN" | "DD_TORIKESI" | "DD_MAX_UPDATE" | "earliestHaisouDate" | "DD_LATEST_HAISOU" | "DD_HAISYYO" | "DD_KANSEI" | "DD_KRHURI" | "KB_DAIHYNAI" | "TM_TOTUTMKE" | "CUSTOM_DD_SEISANYOTEI" | "CUSTOM_FR_DATE" | "CUSTOM_FR_KARI_NOTATION" | "CUSTOM_FR_NOTATION_TYPE" | "CUSTOM_FR_PREFIX" | "CUSTOM_FR_SUFFIX" | "CUSTOM_KB_GYOCYOK" | "CUSTOM_KB_SEIBETU" | "CUSTOM_SEISANYOTEI" | "CUSTOM_ZAIKO_KB_NOTATION" | "CUSTOM_paymentCheck" | "CUSTOM_paymentCheckCustomerType" | "CUSTOM_NET_SHITADORI_PRICE" | "KB_ZAIKOJYO" | "isDaikoNosya" | "sateiNyukobiAlert" | "shitadoriAlertCount" | "ossSpreadsheetUrl" | "transferType" | "orderSwitchingHisotoryId", ExtArgs["result"]["newCar"]>
+export type NewCarOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "sortOrder" | "storeId" | "updatedAt" | "APPINDEX" | "CD_HANSTAFF" | "CD_NCSYAMEI" | "CD_TENPO" | "DD_CENTTYAB" | "DD_CENTYOB" | "DD_FR" | "DD_HAISKIBO" | "DD_HAISOU" | "DD_HAISOYOT" | "DD_HONBSYOK" | "DD_JUCYU" | "DD_JUCYUKE" | "DD_KIBONOKI" | "DD_MAKERSYU" | "DD_NOSYA" | "DD_SYOUNIN1" | "DD_SYOUNIN2" | "DD_SYOUNIN3" | "DD_TENPSYOK" | "DD_TOROKIBO" | "DD_TOTYAKUY" | "DD_TOUROKU" | "DD_URIKZUMI" | "KJ_KAINMEI1" | "KJ_KURUMAME" | "KJ_MEIGIME1" | "MJ_HANTENKT" | "NO_CYUMON" | "NO_FRAME" | "m0Status" | "m0_deadline_nousya" | "m0_remarks" | "m1Status" | "m1_deadline_money" | "m1_deadline_paper" | "m1_remarks" | "m2Status" | "m2_date" | "m2_remarks" | "userId" | "m1Alert" | "m2Alert" | "lastApprovedDesiredTorokuDate" | "lastApprovedDesiredTorokuDate__pending" | "m2_check1" | "m2_check2" | "m1_toroku_prediction" | "initial_m0_deadline_nousya" | "initial_m1_deadline_money" | "initial_m1_deadline_paper" | "initial_m1_toroku_prediction" | "DD_KARINOKI" | "DD_SAGTYYO" | "KB_OSSSIN" | "MJ_OSSTSNST" | "KI_BETSIHAK" | "KI_MAEUNYUK" | "KI_NYURUIKE" | "KI_SHRIGK" | "KI_SITANYKG" | "crOperationRemarks" | "haisou_tooEarly" | "torokuApplicationRequired" | "DD_CENTSYUB" | "DD_GENSYNYK" | "KI_SITADORI" | "KI_SITZAN" | "DD_TORIKESI" | "DD_MAX_UPDATE" | "earliestHaisouDate" | "DD_LATEST_HAISOU" | "DD_HAISYYO" | "DD_KANSEI" | "DD_KRHURI" | "KB_DAIHYNAI" | "TM_TOTUTMKE" | "CUSTOM_DD_SEISANYOTEI" | "CUSTOM_FR_DATE" | "CUSTOM_FR_KARI_NOTATION" | "CUSTOM_FR_NOTATION_TYPE" | "CUSTOM_FR_PREFIX" | "CUSTOM_FR_SUFFIX" | "CUSTOM_KB_GYOCYOK" | "CUSTOM_KB_SEIBETU" | "CUSTOM_SEISANYOTEI" | "CUSTOM_ZAIKO_KB_NOTATION" | "CUSTOM_paymentCheck" | "CUSTOM_paymentCheckCustomerType" | "CUSTOM_NET_SHITADORI_PRICE" | "KB_ZAIKOJYO" | "isDaikoNosya" | "sateiNyukobiAlert" | "shitadoriAlertCount" | "ossSpreadsheetUrl" | "transferType" | "orderSwitchingHisotoryId", ExtArgs["result"]["newCar"]>
 export type NewCarInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   CrInspectionHistory?: boolean | Prisma.NewCar$CrInspectionHistoryArgs<ExtArgs>
   DesiredTorokuDate?: boolean | Prisma.NewCar$DesiredTorokuDateArgs<ExtArgs>
@@ -10688,6 +10775,7 @@ export type $NewCarPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     m1Alert: Date | null
     m2Alert: Date | null
     lastApprovedDesiredTorokuDate: Date | null
+    lastApprovedDesiredTorokuDate__pending: Date | null
     m2_check1: boolean | null
     m2_check2: boolean | null
     m1_toroku_prediction: Date | null
@@ -11226,6 +11314,7 @@ export interface NewCarFieldRefs {
   readonly m1Alert: Prisma.FieldRef<"NewCar", 'DateTime'>
   readonly m2Alert: Prisma.FieldRef<"NewCar", 'DateTime'>
   readonly lastApprovedDesiredTorokuDate: Prisma.FieldRef<"NewCar", 'DateTime'>
+  readonly lastApprovedDesiredTorokuDate__pending: Prisma.FieldRef<"NewCar", 'DateTime'>
   readonly m2_check1: Prisma.FieldRef<"NewCar", 'Boolean'>
   readonly m2_check2: Prisma.FieldRef<"NewCar", 'Boolean'>
   readonly m1_toroku_prediction: Prisma.FieldRef<"NewCar", 'DateTime'>

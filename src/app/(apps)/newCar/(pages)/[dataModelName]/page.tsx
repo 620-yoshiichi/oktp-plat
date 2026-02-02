@@ -16,6 +16,8 @@ import { setCustomParams } from '@cm/components/DataLogic/helpers/SetCustomParam
 import { getMasterPageCommonConfig } from '@cm/components/DataLogic/helpers/getMasterPageCommonConfig'
 import { Days } from '@cm/class/Days/Days'
 import { toUtc } from '@cm/class/Days/date-utils/calculations'
+import { Prisma } from '@prisma/generated/prisma/client'
+
 
 export default async function DynamicMasterPage(props) {
   return getMasterPageCommonConfig({
@@ -135,6 +137,42 @@ const parameters = async (props: { params; query; session; scopes: ReturnType<ty
             }
           }
 
+          let orderBy: Prisma.NewCarOrderByWithRelationInput[] = [
+
+          ]
+
+
+          const orderByCol = (query.orderBy ?? '').replace('sort__', '') || 'DD_FR'
+          const orderDirection = query.orderDirection ?? 'desc'
+          const nullsPosition = orderDirection === 'asc' ? 'first' : 'last'
+          if (orderByCol === 'lastApprovedDesiredTorokuDate') {
+            orderBy = [
+              ...orderBy,
+              {
+                lastApprovedDesiredTorokuDate__pending: {
+                  sort: orderDirection, nulls: nullsPosition
+                }
+              },
+              {
+                lastApprovedDesiredTorokuDate: {
+                  sort: orderDirection, nulls: nullsPosition
+                }
+              },
+              {
+                DD_TOUROKU: {
+                  sort: orderDirection, nulls: nullsPosition
+                }
+              }
+            ]
+          } else {
+            orderBy.push({ [orderByCol]: { sort: orderDirection, nulls: nullsPosition } })
+          }
+
+          orderBy = [...orderBy, { User: { code: 'asc' } }]
+
+
+
+
 
 
           return {
@@ -146,13 +184,13 @@ const parameters = async (props: { params; query; session; scopes: ReturnType<ty
               delete: false,
               create: false,
               update: false,
-              pagination: { countPerPage: 10 },
+              pagination: { countPerPage: 50 },
               style: { maxWidth: 1300 },
             },
 
             additional: {
               where,
-              orderBy: [{ User: { code: 'asc' } }],
+              orderBy
             },
           }
         },

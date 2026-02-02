@@ -200,7 +200,11 @@ export class PageBuilder {
           onFormItemBlur: props => {
             addQuery(props.newlatestFormData)
           },
-          formData: query,
+          formData: {
+            orderBy: `sort__DD_FR`,
+            orderDirection: `desc`,
+            ...query
+          },
           columns: new Fields([
             //
             {
@@ -215,15 +219,16 @@ export class PageBuilder {
               form: { ...defaultRegister },
               forSelect: {
                 optionsOrOptionFetcher: [
-                  { value: 'NO_CYUMON', label: '注文番号' },
-                  { value: 'DD_JUCYU', label: '受注日' },
-                  { value: 'CUSTOM_DD_SEISANYOTEI', label: '生産予定日' },
-                  { value: 'DD_FR', label: '振当日' },
-                  { value: 'DD_TOUROKU', label: '登録日' },
-                  { value: 'DD_NOSYA', label: '納車日' },
-                  { value: 'm1_toroku_prediction', label: '見込み（登録見込み月順）' },
-                  { value: 'lastApprovedDesiredTorokuDate', label: '登録申請順' },
-                  { value: 'DD_KIBONOKI_nullsFirst', label: '希望納期順' },
+                  { value: 'sort__NO_CYUMON', label: '注文番号' },
+                  { value: 'sort__DD_JUCYU', label: '受注日' },
+                  { value: 'sort__CUSTOM_DD_SEISANYOTEI', label: '生産予定日' },
+                  { value: 'sort__DD_FR', label: '振当日' },
+                  { value: 'sort__DD_TOUROKU', label: '登録日' },
+                  { value: 'sort__DD_NOSYA', label: '納車日' },
+                  { value: 'sort__m1_toroku_prediction', label: '見込み（登録見込み月順）' },
+                  { value: 'sort__lastApprovedDesiredTorokuDate', label: '登録申請順' },
+
+                  { value: 'sort__DD_KIBONOKI', label: '希望納期順' },
                 ],
               },
             },

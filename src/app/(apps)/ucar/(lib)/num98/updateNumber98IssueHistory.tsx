@@ -31,11 +31,7 @@ export const updateNumber98IssueHistory = async (props: UpdateNumber98IssueHisto
   const isLast98Number = last98Number?.number === newNumber98
 
 
-  console.log({
-    isLast98Number,
-    last98Number: last98Number?.number,
-    newNumber98
-  })  //logs
+
 
   if (isLast98Number) {
     // 最後の番号だったら履歴を削除

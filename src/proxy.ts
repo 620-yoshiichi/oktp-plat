@@ -104,13 +104,7 @@ export const rootPaths: RootPathConfig[] = [
     paths: [
       {
         // /ucar や /ucar/ucar は通さないようホワイトリストで明示していない
-        matcher: getFreePathsMatcher('ucar', [
-          '/sateiIdConverter',
-          '/admin/InstantQr',
-          // ホワイトリストとしてトップ（/）やucar直下（/ucar）は通さない
-          // '/': コメントアウト・未追加
-          // '/ucar': コメントアウト・未追加
-        ]),
+        matcher: getFreePathsMatcher('ucar', ['/sateiIdConverter', '/admin/InstantQr']),
         ...pathValidation,
       },
     ],

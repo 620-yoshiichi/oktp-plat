@@ -105,7 +105,7 @@ export class NewCarClass {
       if (input) {
         if (overdue) {
           if (newCar.DD_TOUROKU) {
-            return { color: `green`, label: `登録済${formatDate(DD_TOUROKU, 'short')}` }
+            return { color: `gray`, label: `登録済${formatDate(DD_TOUROKU, 'short')}` }
           } else {
             return { color: `yellow`, label: formatDate(input, '.YY年M月') + '(遅れ)' }
           }
@@ -125,7 +125,7 @@ export class NewCarClass {
 
       const status = { color: `gray`, label: `未申請` }
       if (this.car.DD_TOUROKU) {
-        status.color = `green`
+        status.color = `gray`
         status.label = `登録済 ${formatDate(DD_TOUROKU as Date, '.YY/M/D(ddd)')}`
       } else if (latestTorokuDate && latestTorokuDate.status === `承認`) {
         status.color = `green`
