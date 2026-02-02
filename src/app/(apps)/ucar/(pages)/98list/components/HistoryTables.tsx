@@ -45,17 +45,35 @@ export function PartialMatchList({
   }).WithWrapper({ className: 'max-h-[300px] ' })
 }
 
+/** Ucar履歴の型 */
+type UcarHistoryItem = {
+  id: number
+  sateiID: string
+  createdAt: Date
+  number98: string | null
+  NO_SIRETYUM: string | null
+  DD_SIIRE: Date | null
+  plate: string | null
+  destination: string | null
+  tmpChassisNumber?: string | null
+}
+
 /** Ucar履歴テーブル */
-export function UcarHistoryTable({ ucarHistory }: { ucarHistory: Search98NumberResult['ucarHistory'] }) {
+export function UcarHistoryTable({ ucarHistory }: { ucarHistory: UcarHistoryItem[] }) {
   if (ucarHistory.length === 0) {
     return <p className="text-gray-500 text-sm">データなし</p>
   }
+
+  // 車体番号カラムを表示するかどうか（データがあれば表示）
+  const hasChassis = ucarHistory.some((u) => u.tmpChassisNumber)
 
   return CsvTable({
     records: ucarHistory.map((ucar) => ({
       csvTableRow: [
         { label: '査定ID', cellValue: ucar.sateiID },
+        { label: '98番号', cellValue: ucar.number98 ?? '-' },
         { label: 'プレート', cellValue: ucar.plate ?? '-' },
+        ...(hasChassis ? [{ label: '車体番号', cellValue: ucar.tmpChassisNumber ?? '-' }] : []),
         { label: '行先', cellValue: ucar.destination ?? '-' },
         { label: '仕入伝票', cellValue: ucar.NO_SIRETYUM ?? '-' },
         { label: '仕入日', cellValue: ucar.DD_SIIRE ? formatDate(ucar.DD_SIIRE, 'YYYY/MM/DD') : '-' },

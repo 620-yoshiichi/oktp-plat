@@ -89,9 +89,11 @@ const parameters = async ({ params, query, session, scopes }) => {
 
           ].filter(Boolean)
 
+          // 並び順の設定（クエリパラメータで切り替え可能）
+          const sortOrder = query.__search__sortOrder ?? 'default'
           let orderBy: Prisma.UcarOrderByWithRelationInput[] = [{ createdAt: 'desc' }]
 
-          if (isChukoshaGroup) {
+          if (sortOrder === 'siireDate') {
             orderBy = [
               //
               { DD_SIIRE: { sort: 'desc', nulls: 'last' } },

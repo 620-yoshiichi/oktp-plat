@@ -1,16 +1,16 @@
 'use client'
 
-import {C_Stack} from '@cm/components/styles/common-components/common-components'
-import {DetailPagePropType} from '@cm/types/types'
+import { C_Stack } from '@cm/components/styles/common-components/common-components'
+import { DetailPagePropType } from '@cm/types/types'
 
-import {ColBuilder} from '@app/(apps)/ucar/class/ColBuilder/ColBuilder'
+import { ColBuilder } from '@app/(apps)/ucar/class/ColBuilder/ColBuilder'
 import ChildCreator from '@cm/components/DataLogic/RTs/ChildCreator/ChildCreator'
 
-import {CommonGlobalIdSelector} from '@app/oktpCommon/CommonGlobalIdSelector'
-import {roleMaster} from '@cm/class/builders/PageBuilderVariables'
+import { CommonGlobalIdSelector } from '@app/oktpCommon/CommonGlobalIdSelector'
+import { roleMaster } from '@cm/class/builders/PageBuilderVariables'
 import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
-import {Fields} from '@cm/class/Fields/Fields'
-import {Button} from '@cm/components/styles/common-components/Button'
+import { Fields } from '@cm/class/Fields/Fields'
+import { Button } from '@cm/components/styles/common-components/Button'
 
 export class PageBuilder {
   static roleMaster = roleMaster
@@ -36,11 +36,11 @@ export class PageBuilder {
                 myTable: {
                   delete: false,
                   create: false,
-                  style: {maxHeight: undefined},
+                  style: { maxHeight: undefined },
                 },
-                models: {parent: `ucarGarageLocationMaster`, children: `ucarGarageSlotMaster`},
+                models: { parent: `ucarGarageLocationMaster`, children: `ucarGarageSlotMaster` },
                 additional: {
-                  orderBy: [{garageNumber: 'asc'}],
+                  orderBy: [{ garageNumber: 'asc' }],
                   include: {
                     UcarGarageLocationMaster: {},
                     AppliedUcarGarageSlot: {
@@ -48,7 +48,7 @@ export class PageBuilder {
                         Ucar: {
                           include: {
                             OldCars_Base: {
-                              select: {KI_HANKAKA: true},
+                              select: { KI_HANKAKA: true },
                             },
                           },
                         },
@@ -69,32 +69,47 @@ export class PageBuilder {
   }
   static ucar = {
     top: (props: DetailPagePropType) => {
-      const {query, addQuery} = props.useGlobalProps
-      const {BasicForm, latestFormData} = useBasicFormProps({
+      const { query, addQuery } = props.useGlobalProps
+      const { BasicForm, latestFormData } = useBasicFormProps({
         columns: new Fields([
           //
           {
             id: `__search__sateiID`,
             label: `査定ID`,
-            inputProps: {placeholder: ''},
+            inputProps: { placeholder: '' },
             form: {
               defaultValue: query.__search__sateiID,
-              style: {width: 190},
+              style: { width: 190 },
             },
           },
           {
             id: `__search__number98`,
             label: `98番号`,
-            inputProps: {placeholder: '5桁の番号'},
-            form: {defaultValue: query.__search__number98},
+            inputProps: { placeholder: '5桁の番号' },
+            form: { defaultValue: query.__search__number98 },
           },
           {
             id: `__search__chassisNumber`,
             label: `車体番号`,
-            inputProps: {placeholder: 'XXXXX-XXXXXX'},
+            inputProps: { placeholder: 'XXXXX-XXXXXX' },
             form: {
               defaultValue: query.__search__chassisNumber,
-              style: {width: 190},
+              style: { width: 190 },
+            },
+          },
+          {
+            id: `__search__sortOrder`,
+            label: `並び順`,
+            type: 'select',
+            forSelect: {
+              optionsOrOptionFetcher: [
+                { value: 'default', label: 'デフォルト' },
+                { value: 'siireDate', label: '仕入日順' },
+              ],
+            },
+            form: {
+              defaultValue: query.__search__sortOrder ?? 'default',
+              style: { width: 120 },
             },
           },
         ]).transposeColumns(),
@@ -108,12 +123,14 @@ export class PageBuilder {
               ControlStyle: {
                 width: 120,
                 fontSize: 12,
-                height: 24,
+                margin: 'auto 0',
+                padding: '0 10px',
+                height: 30,
               },
             },
             onSubmit: async data => {
-              const {__search__sateiID, __search__number98, __search__chassisNumber} = data
-              addQuery({__search__sateiID, __search__number98, __search__chassisNumber})
+              // const {__search__sateiID, __search__number98, __search__chassisNumber} = data
+              addQuery(data)
             },
           }}
         >

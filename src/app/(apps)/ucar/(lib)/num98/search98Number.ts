@@ -71,9 +71,21 @@ export type Search98NumberResult = {
 }
 
 /**
+ * ソート順のオプション
+ */
+export type SortOrder = 'default' | 'siireDate'
+
+/**
+ * 検索オプション
+ */
+export type SearchOptions = {
+  sortOrder?: SortOrder
+}
+
+/**
  * 98番号を検索し、関連データと利用可否を返す
  */
-export async function search98Number(searchNumber: string): Promise<Search98NumberResult> {
+export async function search98Number(searchNumber: string, options?: SearchOptions): Promise<Search98NumberResult> {
   if (!searchNumber || searchNumber.trim() === '') {
     return {
       number98: null,
@@ -172,6 +184,12 @@ export async function search98Number(searchNumber: string): Promise<Search98Numb
   // 利用可能かどうかは、すべての条件がmatchedでないこと
   const isAvailable = unavailableReasons.every(r => !r.matched)
 
+  // ソート順の設定
+  const sortOrder = options?.sortOrder ?? 'default'
+  const ucarOrderBy = sortOrder === 'siireDate' ? {DD_SIIRE: 'desc' as const} : {createdAt: 'desc' as const}
+  const oldCarsOrderBy = sortOrder === 'siireDate' ? {DD_SIIRE: 'desc' as const} : {DD_SIIRE: 'desc' as const}
+  const zaikoOrderBy = sortOrder === 'siireDate' ? {DD_SIIRE: 'desc' as const} : {DD_SIIRE: 'desc' as const}
+
   // 関連データを取得
   const [ucarHistory, oldCarsHistory, zaikoHistory] = await Promise.all([
     // Ucar履歴
@@ -187,7 +205,7 @@ export async function search98Number(searchNumber: string): Promise<Search98Numb
         plate: true,
         destination: true,
       },
-      orderBy: {createdAt: 'desc'},
+      orderBy: ucarOrderBy,
     }),
     // OldCars_Base履歴
     prisma.oldCars_Base.findMany({
@@ -205,7 +223,7 @@ export async function search98Number(searchNumber: string): Promise<Search98Numb
         NO_SYADAIBA: true,
         KB_URIAGE: true,
       },
-      orderBy: {DD_SIIRE: 'desc'},
+      orderBy: oldCarsOrderBy,
     }),
     // ZAIKO_Base履歴
     prisma.zAIKO_Base.findMany({
@@ -220,7 +238,7 @@ export async function search98Number(searchNumber: string): Promise<Search98Numb
         MJ_ZAIKOST: true,
         CD_ZAIKOTEN: true,
       },
-      orderBy: {DD_SIIRE: 'desc'},
+      orderBy: zaikoOrderBy,
     }),
   ])
 
@@ -371,4 +389,135 @@ export async function getUcar98AssignmentHistory(take: number = 30) {
     orderBy: {updatedAt: 'desc'},
     take,
   })
+}
+
+/**
+ * 統合検索結果の型（査定ID・98番号・車体番号で検索）
+ */
+export type UnifiedSearchResult = {
+  /** 検索タイプ */
+  searchType: 'sateiID' | 'number98' | 'chassisNumber' | 'unknown'
+  /** 検索クエリ */
+  query: string
+  /** Ucar履歴 */
+  ucarHistory: {
+    id: number
+    sateiID: string
+    createdAt: Date
+    number98: string | null
+    NO_SIRETYUM: string | null
+    DD_SIIRE: Date | null
+    plate: string | null
+    destination: string | null
+    tmpChassisNumber: string | null
+  }[]
+}
+
+/**
+ * 検索クエリのタイプを判定する
+ */
+function detectSearchType(query: string): 'sateiID' | 'number98' | 'chassisNumber' | 'unknown' {
+  const trimmed = query.trim()
+
+  // 査定ID形式: U + 数字 または U-数字 形式
+  if (/^U[-_]?\d+/i.test(trimmed)) {
+    return 'sateiID'
+  }
+
+  // 98番号形式: 98で始まる または 98- で始まる
+  if (/^98[-\s]?\d+/i.test(trimmed)) {
+    return 'number98'
+  }
+
+  // 数字のみの場合（98番号または車体番号の可能性）
+  const digitsOnly = trimmed.replace(/\D/g, '')
+  if (digitsOnly.length > 0) {
+    // 98で始まる場合は98番号
+    if (digitsOnly.startsWith('98')) {
+      return 'number98'
+    }
+    // それ以外は車体番号と判定
+    return 'chassisNumber'
+  }
+
+  // アルファベットが含まれる場合は車体番号（フレーム番号）の可能性
+  if (/^[A-Z0-9-]+$/i.test(trimmed) && trimmed.length >= 5) {
+    return 'chassisNumber'
+  }
+
+  return 'unknown'
+}
+
+/**
+ * 統合検索: 査定ID・98番号・車体番号で検索
+ */
+export async function unifiedSearch(query: string, options?: SearchOptions): Promise<UnifiedSearchResult> {
+  if (!query || query.trim() === '') {
+    return {
+      searchType: 'unknown',
+      query: '',
+      ucarHistory: [],
+    }
+  }
+
+  const trimmedQuery = query.trim()
+  const searchType = detectSearchType(trimmedQuery)
+  const sortOrder = options?.sortOrder ?? 'default'
+  const orderBy = sortOrder === 'siireDate' ? {DD_SIIRE: 'desc' as const} : {createdAt: 'desc' as const}
+
+  let whereCondition: any = {}
+
+  switch (searchType) {
+    case 'sateiID':
+      // 査定IDで検索（部分一致）
+      whereCondition = {sateiID: {contains: trimmedQuery.toUpperCase()}}
+      break
+    case 'number98':
+      // 98番号で検索（正規化して部分一致）
+      const normalizedNumber = normalizeNumber98(trimmedQuery)
+      whereCondition = {number98: {contains: normalizedNumber.replace(/\s/g, '')}}
+      break
+    case 'chassisNumber':
+      // 車体番号で検索（tmpChassisNumber または plate で部分一致）
+      whereCondition = {
+        OR: [
+          {tmpChassisNumber: {contains: trimmedQuery}},
+          {plate: {contains: trimmedQuery}},
+        ],
+      }
+      break
+    default:
+      // キーワード検索（すべてのフィールドで部分一致）
+      whereCondition = {
+        OR: [
+          {sateiID: {contains: trimmedQuery}},
+          {number98: {contains: trimmedQuery}},
+          {tmpChassisNumber: {contains: trimmedQuery}},
+          {plate: {contains: trimmedQuery}},
+        ],
+      }
+  }
+
+  const ucarHistory = await prisma.ucar.findMany({
+    where: whereCondition,
+    select: {
+      id: true,
+      sateiID: true,
+      createdAt: true,
+      number98: true,
+      NO_SIRETYUM: true,
+      DD_SIIRE: true,
+      plate: true,
+      destination: true,
+      tmpChassisNumber: true,
+    },
+    orderBy,
+    take: 100,
+  })
+
+  return {
+    searchType,
+    query: trimmedQuery,
+    ucarHistory,
+  }
 }

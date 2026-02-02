@@ -6,17 +6,21 @@ import {
   getNextNumber98,
   getNumber98IssueHistory,
   getUcar98AssignmentHistory,
+  unifiedSearch,
   type Search98NumberResult,
+  type SortOrder,
+  type UnifiedSearchResult,
 } from '@app/(apps)/ucar/(lib)/num98/search98Number'
 import BasicTabs from '@cm/components/utils/tabs/BasicTabs'
 import { C_Stack } from '@cm/components/styles/common-components/common-components'
 
 type Props = {
-  searchParams: Promise<{ q?: string }>
+  searchParams: Promise<{ q?: string; sort?: SortOrder }>
 }
 
 export default async function Page({ searchParams }: Props) {
-  const { q: searchQuery } = await searchParams
+  const { q: searchQuery, sort } = await searchParams
+  const sortOrder: SortOrder = sort === 'siireDate' ? 'siireDate' : 'default'
 
   // 次の98番号情報を取得
   const nextNumber98Info = await getNextNumber98()
@@ -30,12 +34,16 @@ export default async function Page({ searchParams }: Props) {
   // 検索クエリがある場合のみデータを取得
   let searchResult: Search98NumberResult | null = null
   let searchList: Awaited<ReturnType<typeof search98NumberList>> = []
+  let unifiedSearchResult: UnifiedSearchResult | null = null
 
   if (searchQuery && searchQuery.trim()) {
-    // 完全一致で詳細検索
-    searchResult = await search98Number(searchQuery)
-    // 部分一致でリスト検索
-    searchList = await search98NumberList(searchQuery, { take: 100 })
+    // 統合検索を実行
+    unifiedSearchResult = await unifiedSearch(searchQuery, { sortOrder })
+    // 98番号検索も実行（98番号形式の場合）
+    if (unifiedSearchResult.searchType === 'number98') {
+      searchResult = await search98Number(searchQuery, { sortOrder })
+      searchList = await search98NumberList(searchQuery, { take: 100 })
+    }
   }
 
   return <div className={`p-4 mx-auto max-w-[1000px]`}>
@@ -64,7 +72,9 @@ export default async function Page({ searchParams }: Props) {
             <Number98SearchPage
               {...{
                 initialQuery: searchQuery ?? '',
+                initialSortOrder: sortOrder,
                 searchResult,
+                unifiedSearchResult,
                 searchList,
                 nextNumber98Info,
                 issueHistory,
