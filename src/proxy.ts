@@ -2,7 +2,7 @@
 import {getToken} from 'next-auth/jwt'
 import {NextRequest, NextResponse} from 'next/server'
 import type {JWT} from 'next-auth/jwt'
-import { HREF } from '@cm/lib/methods/urls'
+import {HREF} from '@cm/lib/methods/urls'
 
 /**
  * セッション検証関数の型定義
@@ -47,20 +47,36 @@ type RootPathConfig = {
  * 認証が必要なパスのマッチャーを生成（除外パス以外にマッチさせる）
  * @param rootPath - ルートパス名（例: 'ucar'）
  * @param pathArray - 認証不要なパスの配列（例: ['/sateiIdConverter']）
+ *                    空文字 '' を含めるとルートパス自体（/rootPath, /rootPath/）も認証不要になる
  * @returns 正規表現パターン文字列
  */
 const getFreePathsMatcher = (rootPath: string, pathArray: string[]): string => {
-  const defaultFreePaths = [`/.*api`, `/seeder`]
-  const allFreePaths = [...defaultFreePaths, ...pathArray]
+  if (rootPath.includes('/')) {
+    throw new Error('rootPath cannot contain slash (/)')
+  }
+  // デフォルトで認証不要なパス（先頭スラッシュなし）
+  const defaultFreePaths = [`.*api`, `seeder`]
 
-  // 1. 特殊文字（/）をエスケープし、完全一致またはディレクトリ区切りとして機能させる
-  // 2. (?!(?:path1|path2)(?:/|$)) で、除外パス（およびその配下）にマッチしないことを確認
-  // 3. (?:/.*)? で、ルート直下およびサブディレクトリすべてを網羅
+  // 空文字を検出してフラグを立て、正規表現パターンからは除外
+  // （空文字を含めると || が生成され、全パスがマッチしてしまう）
+  const excludeRootPath = pathArray.includes('')
+
+  // パスから先頭のスラッシュを除去（正規表現で /rootPath/ の後にマッチさせるため）
+  const validPaths = pathArray.filter(p => p !== '' && p.length > 0).map(p => (p.startsWith('/') ? p.slice(1) : p))
+
+  const allFreePaths = [...defaultFreePaths, ...validPaths]
   const excludedPathsPattern = allFreePaths.join('|')
-  const result = `^/${rootPath}(?!(?:${excludedPathsPattern})(?:/|$))(?:/.*)?$`
 
-  return result
+  if (excludeRootPath) {
+    // ルートパス自体を認証不要にする場合
+    // /rootPath, /rootPath/ はマッチしない、/rootPath/xxx は除外パスでなければマッチ
+    return `^/${rootPath}/(?!(?:${excludedPathsPattern})(?:/|$)).+$`
+  }
+
+  // 従来の動作: ルートパス含めて認証が必要（除外パス以外すべてマッチ）
+  return `^/${rootPath}(?:/(?!(?:${excludedPathsPattern})(?:/|$)).*)?$`
 }
+
 export const rootPaths: RootPathConfig[] = [
   {
     rootPath: 'common',
@@ -72,8 +88,7 @@ export const rootPaths: RootPathConfig[] = [
   },
   {
     rootPath: 'QRBP',
-    paths: [{matcher: getFreePathsMatcher(`QRBP`, ['', `/engineer`, `/process/history`]), ...pathValidation,},
-    ],
+    paths: [{matcher: getFreePathsMatcher(`QRBP`, ['', `/engineer`, `/process/history`]), ...pathValidation}],
   },
   {
     rootPath: 'shinren',
@@ -106,20 +121,15 @@ export const rootPaths: RootPathConfig[] = [
  * 認証が必要なパスへのアクセスを検証し、未認証の場合はリダイレクト
  */
 export async function proxy(req: NextRequest): Promise<NextResponse> {
-
-
   try {
     // NextAuthからセッショントークンを取得
     const session: JWT | null = await getToken({req})
 
-
-
-    const {pathname, origin,searchParams} = req.nextUrl
-    const query= {}
+    const {pathname, origin, searchParams} = req.nextUrl
+    const query = {}
     searchParams.forEach((value, key) => {
       query[key] = value
     })
-
 
     // 対象となるルートパスを検索
     const targetPathConfig = rootPaths.find(config => {
@@ -148,7 +158,7 @@ export async function proxy(req: NextRequest): Promise<NextResponse> {
       const isValid = matchedPathConfig?.isValid(session)
       // マッチしたパスで認証が必要な場合、セッションを検証
       if (matchedPathConfig && !isValid) {
-        const callBackUrl =  encodeURIComponent(HREF(`${pathname}`, query, query))
+        const callBackUrl = encodeURIComponent(HREF(`${pathname}`, query, query))
         const redirectUrl = matchedPathConfig.redirect(origin, callBackUrl)
 
         return NextResponse.redirect(new URL(redirectUrl, req.url))
