@@ -38,7 +38,8 @@ export const useDataSearchForm = ({ sateiID, setsateiID }: { sateiID: string; se
           latestFormData={latestFormData}
           onSubmit={async data => {
             if (String(data.sateiID).startsWith('T')) {
-              return { error: '「T」で始まる値は使用できません。AI査定またはUPASSの査定番号を入力してください。' }
+              alert('「T」で始まる値は使用できません。AI査定またはUPASSの査定番号を入力してください。')
+              return
             }
             const { result: foundInDb } = await doStandardPrisma('ucar', 'findUnique', {
               where: { sateiID: String(data.sateiID) },

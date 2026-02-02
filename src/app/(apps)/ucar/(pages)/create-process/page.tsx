@@ -1,7 +1,7 @@
 import UcarProcessInputter from '@app/(apps)/ucar/(pages)/create-process/UcarProcessInputter'
 import { UcarCL } from '@app/(apps)/ucar/class/UcarCL'
 import { Alert } from '@cm/components/styles/common-components/Alert'
-import { Center, CenterScreen } from '@cm/components/styles/common-components/common-components'
+import { CenterScreen } from '@cm/components/styles/common-components/common-components'
 
 
 
