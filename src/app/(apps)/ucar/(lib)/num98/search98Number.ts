@@ -1,11 +1,7 @@
 'use server'
 
 import prisma from 'src/lib/prisma'
-import {
-  normalizeNumber98,
-  getLastNumber98History,
-  findNextAvailableNumber98,
-} from '@app/(apps)/ucar/(lib)/num98/num98Constants'
+import {normalizeNumber98, getLastNumber98History, findNextAvailableNumber98} from '@app/(apps)/ucar/(lib)/num98/num98Constants'
 
 /**
  * 利用不可理由の型
@@ -307,7 +303,9 @@ export async function getNextNumber98(): Promise<{nextNumber98: string | null; l
 /**
  * 最後に使用した98番号を設定する
  */
-export async function setLastUsedNumber98(lastUsedNumber: string): Promise<{success: boolean; message: string; nextNumber98?: string}> {
+export async function setLastUsedNumber98(
+  lastUsedNumber: string
+): Promise<{success: boolean; message: string; nextNumber98?: string}> {
   const normalizedNumber = normalizeNumber98(lastUsedNumber)
 
   // 対象の98番号が存在するか確認
@@ -336,4 +334,41 @@ export async function setLastUsedNumber98(lastUsedNumber: string): Promise<{succ
     message: `最後に使用した98番号を「${normalizedNumber}」に設定しました`,
     nextNumber98: nextNumber98 ?? undefined,
   }
+}
+
+/**
+ * 最新の98番号発行履歴を取得する
+ */
+export async function getNumber98IssueHistory(take: number = 30) {
+  return prisma.number98IssueHistory.findMany({
+    orderBy: {createdAt: 'desc'},
+    take,
+    include: {
+      Number98: {
+        include: {
+          Ucar: {
+            orderBy: {DD_SIIRE: 'desc'},
+          },
+        },
+      },
+    },
+  })
+}
+
+/**
+ * 最新のUcar 98番号付与履歴を取得する
+ */
+export async function getUcar98AssignmentHistory(take: number = 30) {
+  return prisma.ucar.findMany({
+    where: {number98: {not: null}},
+    select: {
+      sateiID: true,
+      number98: true,
+      updatedAt: true,
+      plate: true,
+      destination: true,
+    },
+    orderBy: {updatedAt: 'desc'},
+    take,
+  })
 }

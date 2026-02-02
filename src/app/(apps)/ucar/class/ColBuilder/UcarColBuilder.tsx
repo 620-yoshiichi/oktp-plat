@@ -78,8 +78,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
         disabled: true,
         defaultValue: session?.id,
       },
-      forSelect: {
-      },
+      forSelect: {},
     },
 
     //

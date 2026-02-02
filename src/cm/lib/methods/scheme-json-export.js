@@ -4276,6 +4276,23 @@
           "relationToFields": [],
           "isGenerated": false,
           "isUpdatedAt": false
+        },
+        {
+          "name": "Number98IssueHistory",
+          "kind": "object",
+          "isList": true,
+          "isRequired": true,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "Number98IssueHistory",
+          "nativeType": null,
+          "relationName": "Number98ToNumber98IssueHistory",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isGenerated": false,
+          "isUpdatedAt": false
         }
       ],
       "primaryKey": null,
@@ -20183,41 +20200,6 @@
           ],
           "isGenerated": false,
           "isUpdatedAt": false
-        },
-        {
-          "name": "number98IssueHistory",
-          "kind": "object",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "Number98IssueHistory",
-          "nativeType": null,
-          "relationName": "Number98IssueHistoryToUcar",
-          "relationFromFields": [
-            "number98IssueHistoryId"
-          ],
-          "relationToFields": [
-            "id"
-          ],
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "number98IssueHistoryId",
-          "kind": "scalar",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": true,
-          "hasDefaultValue": false,
-          "type": "Int",
-          "nativeType": null,
-          "isGenerated": false,
-          "isUpdatedAt": false
         }
       ],
       "primaryKey": null,
@@ -20332,7 +20314,7 @@
           "isRequired": true,
           "isUnique": false,
           "isId": false,
-          "isReadOnly": false,
+          "isReadOnly": true,
           "hasDefaultValue": false,
           "type": "String",
           "nativeType": null,
@@ -20340,19 +20322,23 @@
           "isUpdatedAt": false
         },
         {
-          "name": "Ucar",
+          "name": "Number98",
           "kind": "object",
-          "isList": true,
-          "isRequired": true,
+          "isList": false,
+          "isRequired": false,
           "isUnique": false,
           "isId": false,
           "isReadOnly": false,
           "hasDefaultValue": false,
-          "type": "Ucar",
+          "type": "Number98",
           "nativeType": null,
-          "relationName": "Number98IssueHistoryToUcar",
-          "relationFromFields": [],
-          "relationToFields": [],
+          "relationName": "Number98ToNumber98IssueHistory",
+          "relationFromFields": [
+            "number"
+          ],
+          "relationToFields": [
+            "number"
+          ],
           "isGenerated": false,
           "isUpdatedAt": false
         }
@@ -24431,16 +24417,6 @@
         },
         {
           "name": "DD_SIIRE"
-        }
-      ]
-    },
-    {
-      "model": "Ucar",
-      "type": "normal",
-      "isDefinedOnField": false,
-      "fields": [
-        {
-          "name": "number98IssueHistoryId"
         }
       ]
     },

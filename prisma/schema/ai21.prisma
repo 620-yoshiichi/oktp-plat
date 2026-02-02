@@ -142,6 +142,8 @@ model Number98 {
   OldCars_Base OldCars_Base[]
 
   ZAIKO_Base ZAIKO_Base[]
+
+  Number98IssueHistory Number98IssueHistory[]
 }
 
 model ZAIKO_Base {

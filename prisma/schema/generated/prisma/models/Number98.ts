@@ -251,6 +251,7 @@ export type Number98WhereInput = {
   Ucar?: Prisma.UcarListRelationFilter
   OldCars_Base?: Prisma.OldCars_BaseListRelationFilter
   ZAIKO_Base?: Prisma.ZAIKO_BaseListRelationFilter
+  Number98IssueHistory?: Prisma.Number98IssueHistoryListRelationFilter
 }
 
 export type Number98OrderByWithRelationInput = {
@@ -265,6 +266,7 @@ export type Number98OrderByWithRelationInput = {
   Ucar?: Prisma.UcarOrderByRelationAggregateInput
   OldCars_Base?: Prisma.OldCars_BaseOrderByRelationAggregateInput
   ZAIKO_Base?: Prisma.ZAIKO_BaseOrderByRelationAggregateInput
+  Number98IssueHistory?: Prisma.Number98IssueHistoryOrderByRelationAggregateInput
 }
 
 export type Number98WhereUniqueInput = Prisma.AtLeast<{
@@ -282,6 +284,7 @@ export type Number98WhereUniqueInput = Prisma.AtLeast<{
   Ucar?: Prisma.UcarListRelationFilter
   OldCars_Base?: Prisma.OldCars_BaseListRelationFilter
   ZAIKO_Base?: Prisma.ZAIKO_BaseListRelationFilter
+  Number98IssueHistory?: Prisma.Number98IssueHistoryListRelationFilter
 }, "id" | "number">
 
 export type Number98OrderByWithAggregationInput = {
@@ -325,6 +328,7 @@ export type Number98CreateInput = {
   Ucar?: Prisma.UcarCreateNestedManyWithoutNumber98Input
   OldCars_Base?: Prisma.OldCars_BaseCreateNestedManyWithoutNumber98Input
   ZAIKO_Base?: Prisma.ZAIKO_BaseCreateNestedManyWithoutNumber98Input
+  Number98IssueHistory?: Prisma.Number98IssueHistoryCreateNestedManyWithoutNumber98Input
 }
 
 export type Number98UncheckedCreateInput = {
@@ -339,6 +343,7 @@ export type Number98UncheckedCreateInput = {
   Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutNumber98Input
   OldCars_Base?: Prisma.OldCars_BaseUncheckedCreateNestedManyWithoutNumber98Input
   ZAIKO_Base?: Prisma.ZAIKO_BaseUncheckedCreateNestedManyWithoutNumber98Input
+  Number98IssueHistory?: Prisma.Number98IssueHistoryUncheckedCreateNestedManyWithoutNumber98Input
 }
 
 export type Number98UpdateInput = {
@@ -352,6 +357,7 @@ export type Number98UpdateInput = {
   Ucar?: Prisma.UcarUpdateManyWithoutNumber98NestedInput
   OldCars_Base?: Prisma.OldCars_BaseUpdateManyWithoutNumber98NestedInput
   ZAIKO_Base?: Prisma.ZAIKO_BaseUpdateManyWithoutNumber98NestedInput
+  Number98IssueHistory?: Prisma.Number98IssueHistoryUpdateManyWithoutNumber98NestedInput
 }
 
 export type Number98UncheckedUpdateInput = {
@@ -366,6 +372,7 @@ export type Number98UncheckedUpdateInput = {
   Ucar?: Prisma.UcarUncheckedUpdateManyWithoutNumber98NestedInput
   OldCars_Base?: Prisma.OldCars_BaseUncheckedUpdateManyWithoutNumber98NestedInput
   ZAIKO_Base?: Prisma.ZAIKO_BaseUncheckedUpdateManyWithoutNumber98NestedInput
+  Number98IssueHistory?: Prisma.Number98IssueHistoryUncheckedUpdateManyWithoutNumber98NestedInput
 }
 
 export type Number98CreateManyInput = {
@@ -498,6 +505,22 @@ export type Number98UpdateOneWithoutUcarNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.Number98UpdateToOneWithWhereWithoutUcarInput, Prisma.Number98UpdateWithoutUcarInput>, Prisma.Number98UncheckedUpdateWithoutUcarInput>
 }
 
+export type Number98CreateNestedOneWithoutNumber98IssueHistoryInput = {
+  create?: Prisma.XOR<Prisma.Number98CreateWithoutNumber98IssueHistoryInput, Prisma.Number98UncheckedCreateWithoutNumber98IssueHistoryInput>
+  connectOrCreate?: Prisma.Number98CreateOrConnectWithoutNumber98IssueHistoryInput
+  connect?: Prisma.Number98WhereUniqueInput
+}
+
+export type Number98UpdateOneWithoutNumber98IssueHistoryNestedInput = {
+  create?: Prisma.XOR<Prisma.Number98CreateWithoutNumber98IssueHistoryInput, Prisma.Number98UncheckedCreateWithoutNumber98IssueHistoryInput>
+  connectOrCreate?: Prisma.Number98CreateOrConnectWithoutNumber98IssueHistoryInput
+  upsert?: Prisma.Number98UpsertWithoutNumber98IssueHistoryInput
+  disconnect?: Prisma.Number98WhereInput | boolean
+  delete?: Prisma.Number98WhereInput | boolean
+  connect?: Prisma.Number98WhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.Number98UpdateToOneWithWhereWithoutNumber98IssueHistoryInput, Prisma.Number98UpdateWithoutNumber98IssueHistoryInput>, Prisma.Number98UncheckedUpdateWithoutNumber98IssueHistoryInput>
+}
+
 export type Number98CreateWithoutOldCars_BaseInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -508,6 +531,7 @@ export type Number98CreateWithoutOldCars_BaseInput = {
   occupied?: boolean | null
   Ucar?: Prisma.UcarCreateNestedManyWithoutNumber98Input
   ZAIKO_Base?: Prisma.ZAIKO_BaseCreateNestedManyWithoutNumber98Input
+  Number98IssueHistory?: Prisma.Number98IssueHistoryCreateNestedManyWithoutNumber98Input
 }
 
 export type Number98UncheckedCreateWithoutOldCars_BaseInput = {
@@ -521,6 +545,7 @@ export type Number98UncheckedCreateWithoutOldCars_BaseInput = {
   occupied?: boolean | null
   Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutNumber98Input
   ZAIKO_Base?: Prisma.ZAIKO_BaseUncheckedCreateNestedManyWithoutNumber98Input
+  Number98IssueHistory?: Prisma.Number98IssueHistoryUncheckedCreateNestedManyWithoutNumber98Input
 }
 
 export type Number98CreateOrConnectWithoutOldCars_BaseInput = {
@@ -549,6 +574,7 @@ export type Number98UpdateWithoutOldCars_BaseInput = {
   occupied?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   Ucar?: Prisma.UcarUpdateManyWithoutNumber98NestedInput
   ZAIKO_Base?: Prisma.ZAIKO_BaseUpdateManyWithoutNumber98NestedInput
+  Number98IssueHistory?: Prisma.Number98IssueHistoryUpdateManyWithoutNumber98NestedInput
 }
 
 export type Number98UncheckedUpdateWithoutOldCars_BaseInput = {
@@ -562,6 +588,7 @@ export type Number98UncheckedUpdateWithoutOldCars_BaseInput = {
   occupied?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   Ucar?: Prisma.UcarUncheckedUpdateManyWithoutNumber98NestedInput
   ZAIKO_Base?: Prisma.ZAIKO_BaseUncheckedUpdateManyWithoutNumber98NestedInput
+  Number98IssueHistory?: Prisma.Number98IssueHistoryUncheckedUpdateManyWithoutNumber98NestedInput
 }
 
 export type Number98CreateWithoutZAIKO_BaseInput = {
@@ -574,6 +601,7 @@ export type Number98CreateWithoutZAIKO_BaseInput = {
   occupied?: boolean | null
   Ucar?: Prisma.UcarCreateNestedManyWithoutNumber98Input
   OldCars_Base?: Prisma.OldCars_BaseCreateNestedManyWithoutNumber98Input
+  Number98IssueHistory?: Prisma.Number98IssueHistoryCreateNestedManyWithoutNumber98Input
 }
 
 export type Number98UncheckedCreateWithoutZAIKO_BaseInput = {
@@ -587,6 +615,7 @@ export type Number98UncheckedCreateWithoutZAIKO_BaseInput = {
   occupied?: boolean | null
   Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutNumber98Input
   OldCars_Base?: Prisma.OldCars_BaseUncheckedCreateNestedManyWithoutNumber98Input
+  Number98IssueHistory?: Prisma.Number98IssueHistoryUncheckedCreateNestedManyWithoutNumber98Input
 }
 
 export type Number98CreateOrConnectWithoutZAIKO_BaseInput = {
@@ -615,6 +644,7 @@ export type Number98UpdateWithoutZAIKO_BaseInput = {
   occupied?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   Ucar?: Prisma.UcarUpdateManyWithoutNumber98NestedInput
   OldCars_Base?: Prisma.OldCars_BaseUpdateManyWithoutNumber98NestedInput
+  Number98IssueHistory?: Prisma.Number98IssueHistoryUpdateManyWithoutNumber98NestedInput
 }
 
 export type Number98UncheckedUpdateWithoutZAIKO_BaseInput = {
@@ -628,6 +658,7 @@ export type Number98UncheckedUpdateWithoutZAIKO_BaseInput = {
   occupied?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   Ucar?: Prisma.UcarUncheckedUpdateManyWithoutNumber98NestedInput
   OldCars_Base?: Prisma.OldCars_BaseUncheckedUpdateManyWithoutNumber98NestedInput
+  Number98IssueHistory?: Prisma.Number98IssueHistoryUncheckedUpdateManyWithoutNumber98NestedInput
 }
 
 export type Number98CreateWithoutUcarInput = {
@@ -640,6 +671,7 @@ export type Number98CreateWithoutUcarInput = {
   occupied?: boolean | null
   OldCars_Base?: Prisma.OldCars_BaseCreateNestedManyWithoutNumber98Input
   ZAIKO_Base?: Prisma.ZAIKO_BaseCreateNestedManyWithoutNumber98Input
+  Number98IssueHistory?: Prisma.Number98IssueHistoryCreateNestedManyWithoutNumber98Input
 }
 
 export type Number98UncheckedCreateWithoutUcarInput = {
@@ -653,6 +685,7 @@ export type Number98UncheckedCreateWithoutUcarInput = {
   occupied?: boolean | null
   OldCars_Base?: Prisma.OldCars_BaseUncheckedCreateNestedManyWithoutNumber98Input
   ZAIKO_Base?: Prisma.ZAIKO_BaseUncheckedCreateNestedManyWithoutNumber98Input
+  Number98IssueHistory?: Prisma.Number98IssueHistoryUncheckedCreateNestedManyWithoutNumber98Input
 }
 
 export type Number98CreateOrConnectWithoutUcarInput = {
@@ -681,6 +714,7 @@ export type Number98UpdateWithoutUcarInput = {
   occupied?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   OldCars_Base?: Prisma.OldCars_BaseUpdateManyWithoutNumber98NestedInput
   ZAIKO_Base?: Prisma.ZAIKO_BaseUpdateManyWithoutNumber98NestedInput
+  Number98IssueHistory?: Prisma.Number98IssueHistoryUpdateManyWithoutNumber98NestedInput
 }
 
 export type Number98UncheckedUpdateWithoutUcarInput = {
@@ -694,6 +728,77 @@ export type Number98UncheckedUpdateWithoutUcarInput = {
   occupied?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   OldCars_Base?: Prisma.OldCars_BaseUncheckedUpdateManyWithoutNumber98NestedInput
   ZAIKO_Base?: Prisma.ZAIKO_BaseUncheckedUpdateManyWithoutNumber98NestedInput
+  Number98IssueHistory?: Prisma.Number98IssueHistoryUncheckedUpdateManyWithoutNumber98NestedInput
+}
+
+export type Number98CreateWithoutNumber98IssueHistoryInput = {
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  active?: boolean
+  sortOrder?: number
+  number: string
+  sortNumber?: number | null
+  occupied?: boolean | null
+  Ucar?: Prisma.UcarCreateNestedManyWithoutNumber98Input
+  OldCars_Base?: Prisma.OldCars_BaseCreateNestedManyWithoutNumber98Input
+  ZAIKO_Base?: Prisma.ZAIKO_BaseCreateNestedManyWithoutNumber98Input
+}
+
+export type Number98UncheckedCreateWithoutNumber98IssueHistoryInput = {
+  id?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  active?: boolean
+  sortOrder?: number
+  number: string
+  sortNumber?: number | null
+  occupied?: boolean | null
+  Ucar?: Prisma.UcarUncheckedCreateNestedManyWithoutNumber98Input
+  OldCars_Base?: Prisma.OldCars_BaseUncheckedCreateNestedManyWithoutNumber98Input
+  ZAIKO_Base?: Prisma.ZAIKO_BaseUncheckedCreateNestedManyWithoutNumber98Input
+}
+
+export type Number98CreateOrConnectWithoutNumber98IssueHistoryInput = {
+  where: Prisma.Number98WhereUniqueInput
+  create: Prisma.XOR<Prisma.Number98CreateWithoutNumber98IssueHistoryInput, Prisma.Number98UncheckedCreateWithoutNumber98IssueHistoryInput>
+}
+
+export type Number98UpsertWithoutNumber98IssueHistoryInput = {
+  update: Prisma.XOR<Prisma.Number98UpdateWithoutNumber98IssueHistoryInput, Prisma.Number98UncheckedUpdateWithoutNumber98IssueHistoryInput>
+  create: Prisma.XOR<Prisma.Number98CreateWithoutNumber98IssueHistoryInput, Prisma.Number98UncheckedCreateWithoutNumber98IssueHistoryInput>
+  where?: Prisma.Number98WhereInput
+}
+
+export type Number98UpdateToOneWithWhereWithoutNumber98IssueHistoryInput = {
+  where?: Prisma.Number98WhereInput
+  data: Prisma.XOR<Prisma.Number98UpdateWithoutNumber98IssueHistoryInput, Prisma.Number98UncheckedUpdateWithoutNumber98IssueHistoryInput>
+}
+
+export type Number98UpdateWithoutNumber98IssueHistoryInput = {
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.FloatFieldUpdateOperationsInput | number
+  number?: Prisma.StringFieldUpdateOperationsInput | string
+  sortNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  occupied?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  Ucar?: Prisma.UcarUpdateManyWithoutNumber98NestedInput
+  OldCars_Base?: Prisma.OldCars_BaseUpdateManyWithoutNumber98NestedInput
+  ZAIKO_Base?: Prisma.ZAIKO_BaseUpdateManyWithoutNumber98NestedInput
+}
+
+export type Number98UncheckedUpdateWithoutNumber98IssueHistoryInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.FloatFieldUpdateOperationsInput | number
+  number?: Prisma.StringFieldUpdateOperationsInput | string
+  sortNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  occupied?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  Ucar?: Prisma.UcarUncheckedUpdateManyWithoutNumber98NestedInput
+  OldCars_Base?: Prisma.OldCars_BaseUncheckedUpdateManyWithoutNumber98NestedInput
+  ZAIKO_Base?: Prisma.ZAIKO_BaseUncheckedUpdateManyWithoutNumber98NestedInput
 }
 
 
@@ -705,12 +810,14 @@ export type Number98CountOutputType = {
   Ucar: number
   OldCars_Base: number
   ZAIKO_Base: number
+  Number98IssueHistory: number
 }
 
 export type Number98CountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Ucar?: boolean | Number98CountOutputTypeCountUcarArgs
   OldCars_Base?: boolean | Number98CountOutputTypeCountOldCars_BaseArgs
   ZAIKO_Base?: boolean | Number98CountOutputTypeCountZAIKO_BaseArgs
+  Number98IssueHistory?: boolean | Number98CountOutputTypeCountNumber98IssueHistoryArgs
 }
 
 /**
@@ -744,6 +851,13 @@ export type Number98CountOutputTypeCountZAIKO_BaseArgs<ExtArgs extends runtime.T
   where?: Prisma.ZAIKO_BaseWhereInput
 }
 
+/**
+ * Number98CountOutputType without action
+ */
+export type Number98CountOutputTypeCountNumber98IssueHistoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.Number98IssueHistoryWhereInput
+}
+
 
 export type Number98Select<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -757,6 +871,7 @@ export type Number98Select<ExtArgs extends runtime.Types.Extensions.InternalArgs
   Ucar?: boolean | Prisma.Number98$UcarArgs<ExtArgs>
   OldCars_Base?: boolean | Prisma.Number98$OldCars_BaseArgs<ExtArgs>
   ZAIKO_Base?: boolean | Prisma.Number98$ZAIKO_BaseArgs<ExtArgs>
+  Number98IssueHistory?: boolean | Prisma.Number98$Number98IssueHistoryArgs<ExtArgs>
   _count?: boolean | Prisma.Number98CountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["number98"]>
 
@@ -798,6 +913,7 @@ export type Number98Include<ExtArgs extends runtime.Types.Extensions.InternalArg
   Ucar?: boolean | Prisma.Number98$UcarArgs<ExtArgs>
   OldCars_Base?: boolean | Prisma.Number98$OldCars_BaseArgs<ExtArgs>
   ZAIKO_Base?: boolean | Prisma.Number98$ZAIKO_BaseArgs<ExtArgs>
+  Number98IssueHistory?: boolean | Prisma.Number98$Number98IssueHistoryArgs<ExtArgs>
   _count?: boolean | Prisma.Number98CountOutputTypeDefaultArgs<ExtArgs>
 }
 export type Number98IncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -809,6 +925,7 @@ export type $Number98Payload<ExtArgs extends runtime.Types.Extensions.InternalAr
     Ucar: Prisma.$UcarPayload<ExtArgs>[]
     OldCars_Base: Prisma.$OldCars_BasePayload<ExtArgs>[]
     ZAIKO_Base: Prisma.$ZAIKO_BasePayload<ExtArgs>[]
+    Number98IssueHistory: Prisma.$Number98IssueHistoryPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1216,6 +1333,7 @@ export interface Prisma__Number98Client<T, Null = never, ExtArgs extends runtime
   Ucar<T extends Prisma.Number98$UcarArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Number98$UcarArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UcarPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   OldCars_Base<T extends Prisma.Number98$OldCars_BaseArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Number98$OldCars_BaseArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OldCars_BasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   ZAIKO_Base<T extends Prisma.Number98$ZAIKO_BaseArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Number98$ZAIKO_BaseArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ZAIKO_BasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  Number98IssueHistory<T extends Prisma.Number98$Number98IssueHistoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Number98$Number98IssueHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$Number98IssueHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1710,6 +1828,30 @@ export type Number98$ZAIKO_BaseArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.ZAIKO_BaseScalarFieldEnum | Prisma.ZAIKO_BaseScalarFieldEnum[]
+}
+
+/**
+ * Number98.Number98IssueHistory
+ */
+export type Number98$Number98IssueHistoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Number98IssueHistory
+   */
+  select?: Prisma.Number98IssueHistorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Number98IssueHistory
+   */
+  omit?: Prisma.Number98IssueHistoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.Number98IssueHistoryInclude<ExtArgs> | null
+  where?: Prisma.Number98IssueHistoryWhereInput
+  orderBy?: Prisma.Number98IssueHistoryOrderByWithRelationInput | Prisma.Number98IssueHistoryOrderByWithRelationInput[]
+  cursor?: Prisma.Number98IssueHistoryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Number98IssueHistoryScalarFieldEnum | Prisma.Number98IssueHistoryScalarFieldEnum[]
 }
 
 /**

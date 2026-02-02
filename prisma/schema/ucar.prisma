@@ -135,9 +135,7 @@ model Ucar {
 
   UPASS UPASS? @relation(fields: [sateiID], references: [sateiID], onDelete: Cascade)
 
-  OldCars_Base           OldCars_Base?         @relation(fields: [NO_SIRETYUM, number98, DD_SIIRE], references: [NO_SIRETYUM, NO_SYARYOU, DD_SIIRE])
-  number98IssueHistory   Number98IssueHistory? @relation(fields: [number98IssueHistoryId], references: [id])
-  number98IssueHistoryId Int?
+  OldCars_Base OldCars_Base? @relation(fields: [NO_SIRETYUM, number98, DD_SIIRE], references: [NO_SIRETYUM, NO_SYARYOU, DD_SIIRE])
 
   @@unique([NO_SIRETYUM, number98, DD_SIIRE])
   @@index([bankBranchMasterId])
@@ -156,7 +154,6 @@ model Ucar {
   @@index([processLastUpdatedAt])
   @@index([arrivedAt])
   @@index([NO_SIRETYUM, number98, DD_SIIRE])
-  @@index([number98IssueHistoryId])
 }
 
 model Number98IssueHistory {
@@ -166,9 +163,8 @@ model Number98IssueHistory {
   active    Boolean   @default(true)
   sortOrder Float     @default(0)
 
-  number String
-
-  Ucar Ucar[]
+  number   String
+  Number98 Number98? @relation(fields: [number], references: [number])
 
   @@index([number])
 }
