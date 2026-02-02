@@ -47,3 +47,14 @@ const isByCronJob = async () => {
 
   return byCronJob
 }
+
+
+export const isCron = async ({ req }) => {
+  const host = req.headers.get('x-forwarded-host') ?? req.headers.get('host')
+  const accessFromApp = basePath?.includes(host ?? '')
+  const byCronJob = req.headers.get('Authorization') === `Bearer ${process.env.CRON_SECRET}`
+  if (accessFromApp || byCronJob) return true
+
+  console.log(`cron job unauthorized`)
+  return false
+}

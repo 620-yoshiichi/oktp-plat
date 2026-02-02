@@ -4,14 +4,15 @@ import {sql} from '@cm/class/SqlBuilder/SqlBuilder'
 import prisma from 'src/lib/prisma'
 
 import {NextRequest, NextResponse} from 'next/server'
-import {isCron} from 'src/non-common/serverSideFunction'
+
 import {processBatchWithRetry} from '@cm/lib/server-actions/common-server-actions/processBatchWithRetry'
 import {BQ_parser} from '@app/api/google/big-query/bigQueryParser'
-import { ObjectMap} from '@cm/lib/methods/common'
+import {ObjectMap} from '@cm/lib/methods/common'
 import {Prisma} from '@prisma/generated/prisma/client'
 import {UcarProcessCl} from '@app/(apps)/ucar/class/UcarProcessCl'
 import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
 import {UCAR_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-constants'
+import {isCron} from '@app/api/prisma/isAllowed'
 
 // kobutsu = 古物台帳
 // 古物台帳のデータを同期するためのAPI
@@ -32,7 +33,7 @@ export const GET = async (req: NextRequest) => {
   const sqlString = sql`
   SELECT * FROM okayamatoyopet.Ucar_QR.QR_Prosess
   where email_0 not like '%ichiya%'  AND email_0 not like '%mutsuo%'
-  -- limit 1000 offset ${offset* 1000}
+  -- limit 1000 offset ${offset * 1000}
   `
 
   // if (!isDev) {
@@ -100,8 +101,6 @@ export const GET = async (req: NextRequest) => {
             console.log(`userId is not found: ${sateiId}`)
             return
           }
-
-
 
           const ucarCreatedAt = BQ_parser.parseDate(rest['datetime_0']) ?? earliestDatetime
           const restKeys = Object.keys(rest)
@@ -177,8 +176,6 @@ export const GET = async (req: NextRequest) => {
             where: {sateiID: sateiId},
             data: {processLastUpdatedAt: processLastUpdatedAt},
           })
-
-
         }
       }
     },

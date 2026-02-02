@@ -24436,6 +24436,16 @@
     },
     {
       "model": "Ucar",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "number98IssueHistoryId"
+        }
+      ]
+    },
+    {
+      "model": "Ucar",
       "type": "unique",
       "isDefinedOnField": false,
       "fields": [
