@@ -5334,7 +5334,7 @@
           "isUpdatedAt": false
         },
         {
-          "name": "firstRegistrationDate",
+          "name": "firstRegistrationYear",
           "kind": "scalar",
           "isList": false,
           "isRequired": false,

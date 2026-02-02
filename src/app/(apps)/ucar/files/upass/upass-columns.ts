@@ -96,7 +96,7 @@ export const upassCols: upassColumn[] = [
   //年式・車台番号・車両情報
   {
     jp: '店舗査定_初度登録年月',
-    en: 'firstRegistrationDate',
+    en: 'firstRegistrationYear',
     sampleData: '202210',
     category: 'CAR_INFO',
   },

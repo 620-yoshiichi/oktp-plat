@@ -21,6 +21,7 @@ export const useDataSearchForm = ({ sateiID, setsateiID }: { sateiID: string; se
       type: 'text',
       form: {
         defaultValue: sateiID ?? (isDev ? UcarCL.testSateiID : ''),
+
       },
     },
   ])
@@ -36,6 +37,9 @@ export const useDataSearchForm = ({ sateiID, setsateiID }: { sateiID: string; se
           alignMode="row"
           latestFormData={latestFormData}
           onSubmit={async data => {
+            if (String(data.sateiID).startsWith('T')) {
+              return { error: '「T」で始まる値は使用できません。AI査定またはUPASSの査定番号を入力してください。' }
+            }
             const { result: foundInDb } = await doStandardPrisma('ucar', 'findUnique', {
               where: { sateiID: String(data.sateiID) },
               include: { UPASS: {} },

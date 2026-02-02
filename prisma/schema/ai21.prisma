@@ -235,7 +235,7 @@ model UPASS {
   registrationKana                    String?
   registrationSerialNumber            String?
   registrationDate                    DateTime?
-  firstRegistrationDate               String?
+  firstRegistrationYear               String?
   modelYear                           String?
   modelYearType                       String?
   chassisNumber                       String?

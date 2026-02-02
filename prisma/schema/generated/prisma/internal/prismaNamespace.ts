@@ -5855,7 +5855,7 @@ export const UPASSScalarFieldEnum = {
   registrationKana: 'registrationKana',
   registrationSerialNumber: 'registrationSerialNumber',
   registrationDate: 'registrationDate',
-  firstRegistrationDate: 'firstRegistrationDate',
+  firstRegistrationYear: 'firstRegistrationYear',
   modelYear: 'modelYear',
   modelYearType: 'modelYearType',
   chassisNumber: 'chassisNumber',

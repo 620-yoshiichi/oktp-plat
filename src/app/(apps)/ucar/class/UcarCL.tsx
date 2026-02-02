@@ -26,6 +26,8 @@ import { Alert } from '@cm/components/styles/common-components/Alert'
 import { R_Stack } from '@cm/components/styles/common-components/common-components'
 import { globalIds } from 'src/non-common/searchParamStr'
 import { UcarProcessCl } from '@app/(apps)/ucar/class/UcarProcessCl'
+import { toUtc } from '@cm/class/Days/date-utils/calculations'
+import { formatDate } from '@cm/class/Days/date-utils/formatters'
 
 export type UpassStandardType = UPASS & {
   MyUpassTree: UpassFamilyTree & {
@@ -183,7 +185,19 @@ export class UcarCL {
       tmpUcarData.tmpPlate
     ].join('')
 
-    const nenshiki = UPASS.modelYear ? new Date().getFullYear() - Number(UPASS?.modelYear) : ''
+    let nenshiki
+    if (UPASS.firstRegistrationYear) {
+      if (UPASS.dataSource === 'aisatei') {
+
+        nenshiki = toUtc(new Date(UPASS.firstRegistrationYear))
+      } else {
+        const year = String(UPASS.firstRegistrationYear).slice(0, 4)
+        const month = String(UPASS.firstRegistrationYear).slice(4, 6)
+        nenshiki = new Date(Number(year), Number(month) - 1, 1)
+      }
+      nenshiki = formatDate(nenshiki, 'YYYY年M月')
+    }
+
 
 
 

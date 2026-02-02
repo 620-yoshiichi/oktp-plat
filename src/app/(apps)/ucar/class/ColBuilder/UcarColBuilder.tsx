@@ -242,6 +242,8 @@ export const ucarColBuilder = (props: columnGetterType) => {
       form: { hidden: true },
       format: (value, row) => {
         const inst = new UcarCL(row as unknown as ucarData)
+
+        console.log(inst.notation.nenshiki)  //logs
         return [inst.notation.brandName, inst.notation.modelName].join(' ')
       },
     },

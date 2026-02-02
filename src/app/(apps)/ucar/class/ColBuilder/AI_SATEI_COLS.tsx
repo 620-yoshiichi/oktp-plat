@@ -123,6 +123,11 @@ export const sateiTableCompartionCols: sateiTableCompartionCol[] = [
     type: 'string',
     bqKeys: { proto: 'Driving', upass: 'driveType' },
   },
+  {
+    label: '初度登録年',
+    type: 'string',
+    bqKeys: { proto: 'First_registration_year_1', upass: 'firstRegistrationYear' },
+  },
 ]
 
 export const sateiColOrigin: colType[] = [

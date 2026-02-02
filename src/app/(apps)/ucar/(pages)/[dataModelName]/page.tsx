@@ -77,6 +77,7 @@ const parameters = async ({ params, query, session, scopes }) => {
 
 
 
+
           const whereAND: Prisma.UcarWhereInput[] = [
             //
             carWhere,
@@ -88,6 +89,7 @@ const parameters = async ({ params, query, session, scopes }) => {
             ...additionalWhere
 
           ].filter(Boolean)
+
 
           // 並び順の設定（クエリパラメータで切り替え可能）
           const sortOrder = query.__search__sortOrder ?? 'default'

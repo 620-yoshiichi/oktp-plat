@@ -55,7 +55,7 @@ export type UPASSMinAggregateOutputType = {
   registrationKana: string | null
   registrationSerialNumber: string | null
   registrationDate: Date | null
-  firstRegistrationDate: string | null
+  firstRegistrationYear: string | null
   modelYear: string | null
   modelYearType: string | null
   chassisNumber: string | null
@@ -260,7 +260,7 @@ export type UPASSMaxAggregateOutputType = {
   registrationKana: string | null
   registrationSerialNumber: string | null
   registrationDate: Date | null
-  firstRegistrationDate: string | null
+  firstRegistrationYear: string | null
   modelYear: string | null
   modelYearType: string | null
   chassisNumber: string | null
@@ -465,7 +465,7 @@ export type UPASSCountAggregateOutputType = {
   registrationKana: number
   registrationSerialNumber: number
   registrationDate: number
-  firstRegistrationDate: number
+  firstRegistrationYear: number
   modelYear: number
   modelYearType: number
   chassisNumber: number
@@ -682,7 +682,7 @@ export type UPASSMinAggregateInputType = {
   registrationKana?: true
   registrationSerialNumber?: true
   registrationDate?: true
-  firstRegistrationDate?: true
+  firstRegistrationYear?: true
   modelYear?: true
   modelYearType?: true
   chassisNumber?: true
@@ -887,7 +887,7 @@ export type UPASSMaxAggregateInputType = {
   registrationKana?: true
   registrationSerialNumber?: true
   registrationDate?: true
-  firstRegistrationDate?: true
+  firstRegistrationYear?: true
   modelYear?: true
   modelYearType?: true
   chassisNumber?: true
@@ -1092,7 +1092,7 @@ export type UPASSCountAggregateInputType = {
   registrationKana?: true
   registrationSerialNumber?: true
   registrationDate?: true
-  firstRegistrationDate?: true
+  firstRegistrationYear?: true
   modelYear?: true
   modelYearType?: true
   chassisNumber?: true
@@ -1384,7 +1384,7 @@ export type UPASSGroupByOutputType = {
   registrationKana: string | null
   registrationSerialNumber: string | null
   registrationDate: Date | null
-  firstRegistrationDate: string | null
+  firstRegistrationYear: string | null
   modelYear: string | null
   modelYearType: string | null
   chassisNumber: string | null
@@ -1612,7 +1612,7 @@ export type UPASSWhereInput = {
   registrationKana?: Prisma.StringNullableFilter<"UPASS"> | string | null
   registrationSerialNumber?: Prisma.StringNullableFilter<"UPASS"> | string | null
   registrationDate?: Prisma.DateTimeNullableFilter<"UPASS"> | Date | string | null
-  firstRegistrationDate?: Prisma.StringNullableFilter<"UPASS"> | string | null
+  firstRegistrationYear?: Prisma.StringNullableFilter<"UPASS"> | string | null
   modelYear?: Prisma.StringNullableFilter<"UPASS"> | string | null
   modelYearType?: Prisma.StringNullableFilter<"UPASS"> | string | null
   chassisNumber?: Prisma.StringNullableFilter<"UPASS"> | string | null
@@ -1821,7 +1821,7 @@ export type UPASSOrderByWithRelationInput = {
   registrationKana?: Prisma.SortOrderInput | Prisma.SortOrder
   registrationSerialNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   registrationDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  firstRegistrationDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  firstRegistrationYear?: Prisma.SortOrderInput | Prisma.SortOrder
   modelYear?: Prisma.SortOrderInput | Prisma.SortOrder
   modelYearType?: Prisma.SortOrderInput | Prisma.SortOrder
   chassisNumber?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -2033,7 +2033,7 @@ export type UPASSWhereUniqueInput = Prisma.AtLeast<{
   registrationKana?: Prisma.StringNullableFilter<"UPASS"> | string | null
   registrationSerialNumber?: Prisma.StringNullableFilter<"UPASS"> | string | null
   registrationDate?: Prisma.DateTimeNullableFilter<"UPASS"> | Date | string | null
-  firstRegistrationDate?: Prisma.StringNullableFilter<"UPASS"> | string | null
+  firstRegistrationYear?: Prisma.StringNullableFilter<"UPASS"> | string | null
   modelYear?: Prisma.StringNullableFilter<"UPASS"> | string | null
   modelYearType?: Prisma.StringNullableFilter<"UPASS"> | string | null
   chassisNumber?: Prisma.StringNullableFilter<"UPASS"> | string | null
@@ -2242,7 +2242,7 @@ export type UPASSOrderByWithAggregationInput = {
   registrationKana?: Prisma.SortOrderInput | Prisma.SortOrder
   registrationSerialNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   registrationDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  firstRegistrationDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  firstRegistrationYear?: Prisma.SortOrderInput | Prisma.SortOrder
   modelYear?: Prisma.SortOrderInput | Prisma.SortOrder
   modelYearType?: Prisma.SortOrderInput | Prisma.SortOrder
   chassisNumber?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -2455,7 +2455,7 @@ export type UPASSScalarWhereWithAggregatesInput = {
   registrationKana?: Prisma.StringNullableWithAggregatesFilter<"UPASS"> | string | null
   registrationSerialNumber?: Prisma.StringNullableWithAggregatesFilter<"UPASS"> | string | null
   registrationDate?: Prisma.DateTimeNullableWithAggregatesFilter<"UPASS"> | Date | string | null
-  firstRegistrationDate?: Prisma.StringNullableWithAggregatesFilter<"UPASS"> | string | null
+  firstRegistrationYear?: Prisma.StringNullableWithAggregatesFilter<"UPASS"> | string | null
   modelYear?: Prisma.StringNullableWithAggregatesFilter<"UPASS"> | string | null
   modelYearType?: Prisma.StringNullableWithAggregatesFilter<"UPASS"> | string | null
   chassisNumber?: Prisma.StringNullableWithAggregatesFilter<"UPASS"> | string | null
@@ -2660,7 +2660,7 @@ export type UPASSCreateInput = {
   registrationKana?: string | null
   registrationSerialNumber?: string | null
   registrationDate?: Date | string | null
-  firstRegistrationDate?: string | null
+  firstRegistrationYear?: string | null
   modelYear?: string | null
   modelYearType?: string | null
   chassisNumber?: string | null
@@ -2869,7 +2869,7 @@ export type UPASSUncheckedCreateInput = {
   registrationKana?: string | null
   registrationSerialNumber?: string | null
   registrationDate?: Date | string | null
-  firstRegistrationDate?: string | null
+  firstRegistrationYear?: string | null
   modelYear?: string | null
   modelYearType?: string | null
   chassisNumber?: string | null
@@ -3077,7 +3077,7 @@ export type UPASSUpdateInput = {
   registrationKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registrationSerialNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  firstRegistrationDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstRegistrationYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   modelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   modelYearType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3286,7 +3286,7 @@ export type UPASSUncheckedUpdateInput = {
   registrationKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registrationSerialNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  firstRegistrationDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstRegistrationYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   modelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   modelYearType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3495,7 +3495,7 @@ export type UPASSCreateManyInput = {
   registrationKana?: string | null
   registrationSerialNumber?: string | null
   registrationDate?: Date | string | null
-  firstRegistrationDate?: string | null
+  firstRegistrationYear?: string | null
   modelYear?: string | null
   modelYearType?: string | null
   chassisNumber?: string | null
@@ -3699,7 +3699,7 @@ export type UPASSUpdateManyMutationInput = {
   registrationKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registrationSerialNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  firstRegistrationDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstRegistrationYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   modelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   modelYearType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3904,7 +3904,7 @@ export type UPASSUncheckedUpdateManyInput = {
   registrationKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registrationSerialNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  firstRegistrationDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstRegistrationYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   modelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   modelYearType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4119,7 +4119,7 @@ export type UPASSCountOrderByAggregateInput = {
   registrationKana?: Prisma.SortOrder
   registrationSerialNumber?: Prisma.SortOrder
   registrationDate?: Prisma.SortOrder
-  firstRegistrationDate?: Prisma.SortOrder
+  firstRegistrationYear?: Prisma.SortOrder
   modelYear?: Prisma.SortOrder
   modelYearType?: Prisma.SortOrder
   chassisNumber?: Prisma.SortOrder
@@ -4329,7 +4329,7 @@ export type UPASSMaxOrderByAggregateInput = {
   registrationKana?: Prisma.SortOrder
   registrationSerialNumber?: Prisma.SortOrder
   registrationDate?: Prisma.SortOrder
-  firstRegistrationDate?: Prisma.SortOrder
+  firstRegistrationYear?: Prisma.SortOrder
   modelYear?: Prisma.SortOrder
   modelYearType?: Prisma.SortOrder
   chassisNumber?: Prisma.SortOrder
@@ -4534,7 +4534,7 @@ export type UPASSMinOrderByAggregateInput = {
   registrationKana?: Prisma.SortOrder
   registrationSerialNumber?: Prisma.SortOrder
   registrationDate?: Prisma.SortOrder
-  firstRegistrationDate?: Prisma.SortOrder
+  firstRegistrationYear?: Prisma.SortOrder
   modelYear?: Prisma.SortOrder
   modelYearType?: Prisma.SortOrder
   chassisNumber?: Prisma.SortOrder
@@ -4804,7 +4804,7 @@ export type UPASSCreateWithoutJuchuShitadoriDbInput = {
   registrationKana?: string | null
   registrationSerialNumber?: string | null
   registrationDate?: Date | string | null
-  firstRegistrationDate?: string | null
+  firstRegistrationYear?: string | null
   modelYear?: string | null
   modelYearType?: string | null
   chassisNumber?: string | null
@@ -5012,7 +5012,7 @@ export type UPASSUncheckedCreateWithoutJuchuShitadoriDbInput = {
   registrationKana?: string | null
   registrationSerialNumber?: string | null
   registrationDate?: Date | string | null
-  firstRegistrationDate?: string | null
+  firstRegistrationYear?: string | null
   modelYear?: string | null
   modelYearType?: string | null
   chassisNumber?: string | null
@@ -5235,7 +5235,7 @@ export type UPASSUpdateWithoutJuchuShitadoriDbInput = {
   registrationKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registrationSerialNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  firstRegistrationDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstRegistrationYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   modelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   modelYearType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5443,7 +5443,7 @@ export type UPASSUncheckedUpdateWithoutJuchuShitadoriDbInput = {
   registrationKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registrationSerialNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  firstRegistrationDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstRegistrationYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   modelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   modelYearType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5651,7 +5651,7 @@ export type UPASSCreateWithoutMyUpassTreeInput = {
   registrationKana?: string | null
   registrationSerialNumber?: string | null
   registrationDate?: Date | string | null
-  firstRegistrationDate?: string | null
+  firstRegistrationYear?: string | null
   modelYear?: string | null
   modelYearType?: string | null
   chassisNumber?: string | null
@@ -5859,7 +5859,7 @@ export type UPASSUncheckedCreateWithoutMyUpassTreeInput = {
   registrationKana?: string | null
   registrationSerialNumber?: string | null
   registrationDate?: Date | string | null
-  firstRegistrationDate?: string | null
+  firstRegistrationYear?: string | null
   modelYear?: string | null
   modelYearType?: string | null
   chassisNumber?: string | null
@@ -6072,7 +6072,7 @@ export type UPASSCreateWithoutRootUpassInput = {
   registrationKana?: string | null
   registrationSerialNumber?: string | null
   registrationDate?: Date | string | null
-  firstRegistrationDate?: string | null
+  firstRegistrationYear?: string | null
   modelYear?: string | null
   modelYearType?: string | null
   chassisNumber?: string | null
@@ -6280,7 +6280,7 @@ export type UPASSUncheckedCreateWithoutRootUpassInput = {
   registrationKana?: string | null
   registrationSerialNumber?: string | null
   registrationDate?: Date | string | null
-  firstRegistrationDate?: string | null
+  firstRegistrationYear?: string | null
   modelYear?: string | null
   modelYearType?: string | null
   chassisNumber?: string | null
@@ -6503,7 +6503,7 @@ export type UPASSUpdateWithoutMyUpassTreeInput = {
   registrationKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registrationSerialNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  firstRegistrationDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstRegistrationYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   modelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   modelYearType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6711,7 +6711,7 @@ export type UPASSUncheckedUpdateWithoutMyUpassTreeInput = {
   registrationKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registrationSerialNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  firstRegistrationDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstRegistrationYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   modelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   modelYearType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6929,7 +6929,7 @@ export type UPASSUpdateWithoutRootUpassInput = {
   registrationKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registrationSerialNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  firstRegistrationDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstRegistrationYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   modelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   modelYearType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7137,7 +7137,7 @@ export type UPASSUncheckedUpdateWithoutRootUpassInput = {
   registrationKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registrationSerialNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  firstRegistrationDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstRegistrationYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   modelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   modelYearType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7345,7 +7345,7 @@ export type UPASSCreateWithoutUcarInput = {
   registrationKana?: string | null
   registrationSerialNumber?: string | null
   registrationDate?: Date | string | null
-  firstRegistrationDate?: string | null
+  firstRegistrationYear?: string | null
   modelYear?: string | null
   modelYearType?: string | null
   chassisNumber?: string | null
@@ -7553,7 +7553,7 @@ export type UPASSUncheckedCreateWithoutUcarInput = {
   registrationKana?: string | null
   registrationSerialNumber?: string | null
   registrationDate?: Date | string | null
-  firstRegistrationDate?: string | null
+  firstRegistrationYear?: string | null
   modelYear?: string | null
   modelYearType?: string | null
   chassisNumber?: string | null
@@ -7776,7 +7776,7 @@ export type UPASSUpdateWithoutUcarInput = {
   registrationKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registrationSerialNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  firstRegistrationDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstRegistrationYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   modelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   modelYearType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7984,7 +7984,7 @@ export type UPASSUncheckedUpdateWithoutUcarInput = {
   registrationKana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registrationSerialNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  firstRegistrationDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstRegistrationYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   modelYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   modelYearType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chassisNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8232,7 +8232,7 @@ export type UPASSSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   registrationKana?: boolean
   registrationSerialNumber?: boolean
   registrationDate?: boolean
-  firstRegistrationDate?: boolean
+  firstRegistrationYear?: boolean
   modelYear?: boolean
   modelYearType?: boolean
   chassisNumber?: boolean
@@ -8442,7 +8442,7 @@ export type UPASSSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   registrationKana?: boolean
   registrationSerialNumber?: boolean
   registrationDate?: boolean
-  firstRegistrationDate?: boolean
+  firstRegistrationYear?: boolean
   modelYear?: boolean
   modelYearType?: boolean
   chassisNumber?: boolean
@@ -8647,7 +8647,7 @@ export type UPASSSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   registrationKana?: boolean
   registrationSerialNumber?: boolean
   registrationDate?: boolean
-  firstRegistrationDate?: boolean
+  firstRegistrationYear?: boolean
   modelYear?: boolean
   modelYearType?: boolean
   chassisNumber?: boolean
@@ -8852,7 +8852,7 @@ export type UPASSSelectScalar = {
   registrationKana?: boolean
   registrationSerialNumber?: boolean
   registrationDate?: boolean
-  firstRegistrationDate?: boolean
+  firstRegistrationYear?: boolean
   modelYear?: boolean
   modelYearType?: boolean
   chassisNumber?: boolean
@@ -9038,7 +9038,7 @@ export type UPASSSelectScalar = {
   cpoCategory?: boolean
 }
 
-export type UPASSOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "dataSource" | "shitadoriRelationAssessmentNumber" | "sortOrder" | "sateiID" | "dealerName" | "dealerCode" | "assessmentMode" | "assessmentMode2" | "status" | "valuationType" | "valuationNumber" | "palAssessmentNumber" | "landAffairsName" | "registrationClassNumber" | "registrationKana" | "registrationSerialNumber" | "registrationDate" | "firstRegistrationDate" | "modelYear" | "modelYearType" | "chassisNumber" | "frameNumber" | "brandName" | "modelName" | "ai21ModelCode" | "grade" | "type" | "commonType" | "engineType" | "vehicleHistory" | "capacityMin" | "capacityMax" | "maxLoad" | "weight" | "grossWeight" | "length" | "width" | "height" | "displacement" | "fuelName" | "typeDesignationNumber" | "categoryNumber" | "ownerName" | "userName" | "useOwnershipSameFlag" | "ai21CustomerCode" | "customerName" | "customerKanaSurname" | "customerKanaName" | "inspectionExpiryDate" | "odometerDisplayValue" | "newCarWarranty" | "maintenanceManual" | "instructionManual" | "periodicInspectionRecord" | "unexpiredLiabilityAmount" | "liabilityInsuranceStartDate" | "liabilityInsuranceEndDate" | "unexpiredTaxAmount" | "recyclingCertificate" | "recyclingCertificateNumber" | "shredderDustFee" | "airbagFee" | "freonFee" | "infoManagementFee" | "recyclingDeposit" | "importCategory" | "bodyType" | "driveType" | "transmissionType" | "steering" | "doorType" | "coldWeatherSpec" | "exteriorColor" | "colorCode" | "colorName" | "interiorColor" | "repairHistory" | "mileageKm" | "meterReplacement" | "totalMileage" | "importVehicle" | "modelYearDetail" | "sunroofMoonroof" | "frontAc" | "rearAc" | "powerSteering" | "powerWindow" | "abs" | "electricSlideDoor" | "seatMaterial" | "airbagFeeDetail" | "carNaviDa" | "tv" | "rearMonitor" | "backMonitor" | "cd" | "dvd" | "mediaPlayer" | "rearEntertainment" | "markLevinson" | "aeroSpoiler" | "aluminumWheel" | "cruiseControl" | "skidControl" | "immobilizer" | "powerSeat" | "fullFlat" | "benchSeat" | "threeRowSeat" | "walkThrough" | "lowDown" | "headlamp" | "keylessEntry" | "remoteStarter" | "etc" | "oneOwner" | "testDrive" | "activeStabilizer" | "collisionAvoidance" | "pedalMisstep" | "laneDeparture" | "advancedLight" | "blindSpotMonitor" | "panoramicViewMonitor" | "driveRecorder" | "idling" | "outlet" | "additionalEquipment1" | "additionalEquipment2" | "additionalEquipment3" | "additionalEquipment4" | "additionalEquipment5" | "evFlag" | "reFlag" | "ac" | "navi" | "tv2" | "leather" | "sr" | "aluminum" | "assessmentdatetime" | "tradeInPurchaseCategory" | "pickupScheduledDate" | "requestingName" | "requestingCode" | "assessmentname" | "assessmentcode" | "assessmentStaffName" | "assessmentStaffCode" | "salesname" | "salescode" | "salesStaffName" | "salesStaffCode" | "plannedPurchaseVehicle" | "residualValueInstallmentFinalDate" | "residualValueInstallmentFinalAmount" | "urgencyStatus" | "valuationContactNotes" | "valuationRequestDatetime" | "comprehensiveEvaluationScore" | "assessmentAdjustmentPointsTotal" | "newCarPriceExcludingTax" | "assessmentPrice" | "adjustmentAmountTotal" | "adjustmentAmount1" | "adjustmentAmount1Notes" | "adjustmentAmount2" | "adjustmentAmount2Notes" | "adjustmentAmount3" | "adjustmentAmount3Notes" | "adjustmentAmount4" | "adjustmentAmount5" | "approvedPrice" | "assessmentResponsePrice" | "inventoryAssessmentResponsePrice" | "assessmentError" | "valuationNotesMemo" | "salesPriceMemo" | "salesStaffContactNotes" | "valuationName" | "valuationcode" | "valuationStoreName" | "valuationEmployeeCode" | "inspectionname" | "inspectioncode" | "pricingStoreName" | "pricecode" | "inspectioName" | "inspectionNameCode" | "pricingPersonName" | "pricingPersonCode" | "valuationResponsedatetime" | "valuationStarttime" | "valuationEndtime" | "valuationRequiredtime" | "priceConfirmationdatetime" | "inventoryAssessmentConfirmationdate" | "previousValuationnumber" | "previousAssessmentnumber" | "cpoCategory", ExtArgs["result"]["uPASS"]>
+export type UPASSOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "dataSource" | "shitadoriRelationAssessmentNumber" | "sortOrder" | "sateiID" | "dealerName" | "dealerCode" | "assessmentMode" | "assessmentMode2" | "status" | "valuationType" | "valuationNumber" | "palAssessmentNumber" | "landAffairsName" | "registrationClassNumber" | "registrationKana" | "registrationSerialNumber" | "registrationDate" | "firstRegistrationYear" | "modelYear" | "modelYearType" | "chassisNumber" | "frameNumber" | "brandName" | "modelName" | "ai21ModelCode" | "grade" | "type" | "commonType" | "engineType" | "vehicleHistory" | "capacityMin" | "capacityMax" | "maxLoad" | "weight" | "grossWeight" | "length" | "width" | "height" | "displacement" | "fuelName" | "typeDesignationNumber" | "categoryNumber" | "ownerName" | "userName" | "useOwnershipSameFlag" | "ai21CustomerCode" | "customerName" | "customerKanaSurname" | "customerKanaName" | "inspectionExpiryDate" | "odometerDisplayValue" | "newCarWarranty" | "maintenanceManual" | "instructionManual" | "periodicInspectionRecord" | "unexpiredLiabilityAmount" | "liabilityInsuranceStartDate" | "liabilityInsuranceEndDate" | "unexpiredTaxAmount" | "recyclingCertificate" | "recyclingCertificateNumber" | "shredderDustFee" | "airbagFee" | "freonFee" | "infoManagementFee" | "recyclingDeposit" | "importCategory" | "bodyType" | "driveType" | "transmissionType" | "steering" | "doorType" | "coldWeatherSpec" | "exteriorColor" | "colorCode" | "colorName" | "interiorColor" | "repairHistory" | "mileageKm" | "meterReplacement" | "totalMileage" | "importVehicle" | "modelYearDetail" | "sunroofMoonroof" | "frontAc" | "rearAc" | "powerSteering" | "powerWindow" | "abs" | "electricSlideDoor" | "seatMaterial" | "airbagFeeDetail" | "carNaviDa" | "tv" | "rearMonitor" | "backMonitor" | "cd" | "dvd" | "mediaPlayer" | "rearEntertainment" | "markLevinson" | "aeroSpoiler" | "aluminumWheel" | "cruiseControl" | "skidControl" | "immobilizer" | "powerSeat" | "fullFlat" | "benchSeat" | "threeRowSeat" | "walkThrough" | "lowDown" | "headlamp" | "keylessEntry" | "remoteStarter" | "etc" | "oneOwner" | "testDrive" | "activeStabilizer" | "collisionAvoidance" | "pedalMisstep" | "laneDeparture" | "advancedLight" | "blindSpotMonitor" | "panoramicViewMonitor" | "driveRecorder" | "idling" | "outlet" | "additionalEquipment1" | "additionalEquipment2" | "additionalEquipment3" | "additionalEquipment4" | "additionalEquipment5" | "evFlag" | "reFlag" | "ac" | "navi" | "tv2" | "leather" | "sr" | "aluminum" | "assessmentdatetime" | "tradeInPurchaseCategory" | "pickupScheduledDate" | "requestingName" | "requestingCode" | "assessmentname" | "assessmentcode" | "assessmentStaffName" | "assessmentStaffCode" | "salesname" | "salescode" | "salesStaffName" | "salesStaffCode" | "plannedPurchaseVehicle" | "residualValueInstallmentFinalDate" | "residualValueInstallmentFinalAmount" | "urgencyStatus" | "valuationContactNotes" | "valuationRequestDatetime" | "comprehensiveEvaluationScore" | "assessmentAdjustmentPointsTotal" | "newCarPriceExcludingTax" | "assessmentPrice" | "adjustmentAmountTotal" | "adjustmentAmount1" | "adjustmentAmount1Notes" | "adjustmentAmount2" | "adjustmentAmount2Notes" | "adjustmentAmount3" | "adjustmentAmount3Notes" | "adjustmentAmount4" | "adjustmentAmount5" | "approvedPrice" | "assessmentResponsePrice" | "inventoryAssessmentResponsePrice" | "assessmentError" | "valuationNotesMemo" | "salesPriceMemo" | "salesStaffContactNotes" | "valuationName" | "valuationcode" | "valuationStoreName" | "valuationEmployeeCode" | "inspectionname" | "inspectioncode" | "pricingStoreName" | "pricecode" | "inspectioName" | "inspectionNameCode" | "pricingPersonName" | "pricingPersonCode" | "valuationResponsedatetime" | "valuationStarttime" | "valuationEndtime" | "valuationRequiredtime" | "priceConfirmationdatetime" | "inventoryAssessmentConfirmationdate" | "previousValuationnumber" | "previousAssessmentnumber" | "cpoCategory", ExtArgs["result"]["uPASS"]>
 export type UPASSInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   MyUpassTree?: boolean | Prisma.UPASS$MyUpassTreeArgs<ExtArgs>
   RootUpass?: boolean | Prisma.UPASS$RootUpassArgs<ExtArgs>
@@ -9076,7 +9076,7 @@ export type $UPASSPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     registrationKana: string | null
     registrationSerialNumber: string | null
     registrationDate: Date | null
-    firstRegistrationDate: string | null
+    firstRegistrationYear: string | null
     modelYear: string | null
     modelYearType: string | null
     chassisNumber: string | null
@@ -9705,7 +9705,7 @@ export interface UPASSFieldRefs {
   readonly registrationKana: Prisma.FieldRef<"UPASS", 'String'>
   readonly registrationSerialNumber: Prisma.FieldRef<"UPASS", 'String'>
   readonly registrationDate: Prisma.FieldRef<"UPASS", 'DateTime'>
-  readonly firstRegistrationDate: Prisma.FieldRef<"UPASS", 'String'>
+  readonly firstRegistrationYear: Prisma.FieldRef<"UPASS", 'String'>
   readonly modelYear: Prisma.FieldRef<"UPASS", 'String'>
   readonly modelYearType: Prisma.FieldRef<"UPASS", 'String'>
   readonly chassisNumber: Prisma.FieldRef<"UPASS", 'String'>

@@ -25,11 +25,12 @@ export const requestDeliberySS = async ({ sateiID, type }) => {
   const URL_CR_CHAKU = getProcessEnterPass(CR_CHAKU.code)
 
   const {
-    notation
+    notation,
+
   } = new UcarCL(ucar)
 
   const {
-    plate, modelName, modelYear,
+    plate, modelName, nenshiki,
     chassisNumber,
     exteriorColor
 
@@ -48,7 +49,7 @@ export const requestDeliberySS = async ({ sateiID, type }) => {
       chassisNumber,
       exteriorColor,
       ucar.remarks ?? '',
-      modelYear
+      nenshiki
     ]
 
     const urls = [URL_CR_HAISO_JURYO, URL_GENTI_SHORI, URL_CR_CHAKU]
