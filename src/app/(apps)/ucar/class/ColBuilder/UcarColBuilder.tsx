@@ -430,7 +430,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
                       <Coloring color='green' mode='text' className={`text-xs! underline cursor-pointer`}>復活</Coloring>
                   }</div>
 
-                <div>
+                {/* <div>
                   <Coloring color='gray' mode='text' className={`text-xs! underline cursor-pointer`}
                     onClick={async () => {
                       if (confirm('このデータを完全に削除しますか？工程データ、書類管理、税金管理情報なども含めて削除されます。')) {
@@ -446,7 +446,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
                     }
                     }
                   >削除</Coloring>
-                </div>
+                </div> */}
               </R_Stack>
             )}
 
