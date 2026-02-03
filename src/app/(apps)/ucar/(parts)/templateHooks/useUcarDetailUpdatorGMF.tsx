@@ -1,8 +1,8 @@
-import {useGlobalModalForm} from '@cm/components/utils/modal/useGlobalModalForm'
+import { useGlobalModalForm } from '@cm/components/utils/modal/useGlobalModalForm'
 import React from 'react'
 
 import UcrDetailUpdater from '@app/(apps)/ucar/(parts)/Ucar/UcrDetailUpdater'
-import {getAvailable98NumbersReturn} from '@app/(apps)/ucar/(lib)/num98/getAvailable98Numbers'
+import { getAvailable98NumbersReturn } from '@app/(apps)/ucar/(lib)/num98/number98-actions'
 
 
 export default function useUcarDetailUpdatorGMF() {

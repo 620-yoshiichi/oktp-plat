@@ -2,15 +2,15 @@
 
 import EditModeSelector from '@app/(apps)/ucar/class/DetailPage/ucar/EditModeSelector'
 
-import {C_Stack, R_Stack} from '@cm/components/styles/common-components/common-components'
-import {DocumentDuplicateIcon} from '@heroicons/react/20/solid'
-import {toast} from 'react-toastify'
+import { C_Stack, R_Stack } from '@cm/components/styles/common-components/common-components'
+import { DocumentDuplicateIcon } from '@heroicons/react/20/solid'
+import { toast } from 'react-toastify'
 
-import {Alert} from '@cm/components/styles/common-components/Alert'
-import {getAvailable98NumbersReturn} from '@app/(apps)/ucar/(lib)/num98/getAvailable98Numbers'
-import {Button} from '@cm/components/styles/common-components/Button'
+import { Alert } from '@cm/components/styles/common-components/Alert'
+import { getAvailable98NumbersReturn } from '@app/(apps)/ucar/(lib)/num98/number98-actions'
+import { Button } from '@cm/components/styles/common-components/Button'
 import useUcarDetailUpdatorGMF from '@app/(apps)/ucar/(parts)/templateHooks/useUcarDetailUpdatorGMF'
-import {UseRecordsReturn} from '@cm/components/DataLogic/TFs/PropAdjustor/hooks/useRecords/useRecords'
+import { UseRecordsReturn } from '@cm/components/DataLogic/TFs/PropAdjustor/hooks/useRecords/useRecords'
 
 export const UcarTop = ({
   useRecordsReturn,
@@ -30,7 +30,7 @@ export const UcarTop = ({
       <R_Stack
         onClick={e => {
           navigator.clipboard.writeText(String(nextNumber98 ?? ''))
-          toast.success('コピーしました', {autoClose: 1000})
+          toast.success('コピーしました', { autoClose: 1000 })
         }}
       >
         <span>次98: </span>

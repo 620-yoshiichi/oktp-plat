@@ -44,6 +44,7 @@ const Selector = ({ number98, sateiID, close }) => {
     <div>
       {CsvTable({
         records: data.map(item => {
+
           return {
             csvTableRow: [
               //
@@ -52,6 +53,7 @@ const Selector = ({ number98, sateiID, close }) => {
               { label: '仕入時注文番号', cellValue: item.NO_SIRETYUM },
               { label: '車台番号', cellValue: item.NO_SYADAIBA },
               { label: '車名', cellValue: item.MJ_SYAMEI },
+              { label: '売上', cellValue: item.KI_HANKAKA },
               {
                 label: '他のQR車両と連携済',
                 cellValue: item?.Ucar?.id ? '○' : '×',

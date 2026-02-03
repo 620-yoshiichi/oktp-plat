@@ -7,7 +7,7 @@ import { initServerComopnent } from 'src/non-common/serverSideFunction'
 
 import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 import { ucarWhere } from '@app/(apps)/ucar/(constants)/ucarWhere'
-import { getAvailable98Numbers } from '@app/(apps)/ucar/(lib)/num98/getAvailable98Numbers'
+import { getAvailable98Numbers } from '@app/(apps)/ucar/(lib)/num98/number98-actions'
 import { getMasterPageCommonConfig } from '@cm/components/DataLogic/helpers/getMasterPageCommonConfig'
 import { setCustomParams } from '@cm/components/DataLogic/helpers/SetCustomParams'
 import { Prisma } from '@prisma/generated/prisma/client'
@@ -62,8 +62,11 @@ const parameters = async ({ params, query, session, scopes }) => {
 
           const [stores, getAvailable98NumbersReturn] = await Promise.all([
             (await doStandardPrisma(`store`, `findMany`, { orderBy: { name: 'asc' }, where: ucarWhere.ucarStores }))?.result,
-            await getAvailable98Numbers({ take: 20 }),
+
+            await getAvailable98Numbers({ take: 5000 }),
           ])
+
+
 
           const easySearchExtraProps = { stores }
 
@@ -71,24 +74,24 @@ const parameters = async ({ params, query, session, scopes }) => {
             query.__search__sateiID && { sateiID: { contains: query.__search__sateiID } }, //検索時
             query.__search__number98 && { number98: { contains: query.__search__number98 } }, //検索時,
             query.__search__chassisNumber && { UPASS: { chassisNumber: { contains: query.__search__chassisNumber } } }, //検索時,
-          ]
-
-          const showDisActived = !!(query.__search__sateiID || query.__search__number98 || query.__search__chassisNumber)
-
-
-
-
-          const whereAND: Prisma.UcarWhereInput[] = [
-            //
-            carWhere,
-            {
-              ...UCAR_CONSTANTS.getCommonQuery({
-                active: showDisActived ? undefined : true,
-              })
-            },
-            ...additionalWhere
-
           ].filter(Boolean)
+
+          const showDisActived = additionalWhere.length > 0
+
+
+
+
+          let whereAND: Prisma.UcarWhereInput[] = [carWhere]
+
+          if (additionalWhere.length > 0) {
+            whereAND = [...whereAND, ...additionalWhere].filter(Boolean)
+          } else {
+            whereAND = [
+              ...whereAND,
+              { ...UCAR_CONSTANTS.getCommonQuery({ active: showDisActived ? undefined : true, }) },
+              ...additionalWhere
+            ].filter(Boolean)
+          }
 
 
           // 並び順の設定（クエリパラメータで切り替え可能）

@@ -17,7 +17,7 @@ import { TrActionIconClassName } from '@cm/components/DataLogic/TFs/MyTable/hook
 import useUcarDetailUpdatorGMF from '@app/(apps)/ucar/(parts)/templateHooks/useUcarDetailUpdatorGMF'
 import useUcarRequestGMF from '@app/(apps)/ucar/(parts)/templateHooks/useUcarRequestGMF'
 import { Absolute, C_Stack, R_Stack } from '@cm/components/styles/common-components/common-components'
-import { PencilIcon, TrashIcon } from 'lucide-react'
+import { CheckIcon, PencilIcon, TrashIcon } from 'lucide-react'
 
 import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 import { updateNumber98IssueHistory } from '@app/(apps)/ucar/(lib)/num98/updateNumber98IssueHistory'
@@ -30,7 +30,10 @@ import { IconBtn } from '@cm/components/styles/common-components/IconBtn'
 import ShadModal from '@cm/shadcn/ui/Organisms/ShadModal'
 import { defaultRegister } from '@cm/class/builders/ColBuilderVariables'
 import { GoogleSheet_Append } from '@app/api/google/actions/sheetAPI'
-import { getAvailable98Numbers } from '../../(lib)/num98/getAvailable98Numbers'
+import { getAvailable98Numbers, inThisNumber98Available } from '../../(lib)/num98/number98-actions'
+import Coloring from '@cm/lib/methods/Coloring'
+import { availableNumberWhere } from '@app/(apps)/ucar/(lib)/num98/num98Constants'
+import { NumHandler } from '@cm/class/NumHandler'
 
 export const UCAR_TABLE_ROW_HEIGHT = 120
 
@@ -93,8 +96,12 @@ export const ucarColBuilder = (props: columnGetterType) => {
         editable: {
           upsertController: {
             validateUpdate: async ({ latestFormData, formData }) => {
+
               const prevNumber98 = formData?.number98
               const newNumber98 = latestFormData?.number98
+              if (!newNumber98) {
+                return { success: true, message: '98番号が空です' }
+              }
               const numberChanged = prevNumber98 !== newNumber98
 
               if (numberChanged) {
@@ -104,9 +111,9 @@ export const ucarColBuilder = (props: columnGetterType) => {
                 }
               }
 
-              const { available98Numbers } = await getAvailable98Numbers({ take: 50 })
-              const inAvailable = available98Numbers.some(d => d.number === newNumber98)
-              if (!inAvailable) {
+              const isAvailable = await inThisNumber98Available(newNumber98)
+
+              if (!isAvailable) {
                 return { success: false, message: '98番号が利用可能な範囲内にありません' }
               }
 
@@ -114,7 +121,10 @@ export const ucarColBuilder = (props: columnGetterType) => {
               return { success: true, message: '' }
             },
             finalizeUpdate: async ({ res, formData }) => {
-              if (res.success) {
+              if (!res.result?.number98) {
+                alert('98番号の設定が解除されました。')
+              }
+              if (res.success && res.result?.number98) {
                 await updateNumber98IssueHistory({
                   prevNumber98: formData?.number98,
                   newNumber98: res.result?.number98,
@@ -131,6 +141,9 @@ export const ucarColBuilder = (props: columnGetterType) => {
             number: 'text',
             sortNumber: 'number',
           },
+          where: {
+            ...availableNumberWhere
+          }
         },
         optionsOrOptionFetcher: async ({ searchInput }) => {
           const getAvailable98NumbersReturn = await getAvailable98Numbers({
@@ -192,7 +205,6 @@ export const ucarColBuilder = (props: columnGetterType) => {
     {
       id: 'destinationStoreId',
       label: '配布店舗',
-
       format: (value, row) => {
         return row.DestinationStore?.name
       },
@@ -203,6 +215,16 @@ export const ucarColBuilder = (props: columnGetterType) => {
           orderBy: [{ code: 'asc' }],
         },
       },
+    },
+    {
+      id: 'OldCars_Base.KI_HANKAKA',
+      label: '販売価格',
+      format: (value, row) => {
+
+        return NumHandler.toPrice(row?.OldCars_Base?.KI_HANKAKA)
+      },
+      form: { hidden: true }
+
     },
   ])
 
@@ -243,7 +265,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
       format: (value, row) => {
         const inst = new UcarCL(row as unknown as ucarData)
 
-        console.log(inst.notation.nenshiki)  //logs
+
         return [inst.notation.brandName, inst.notation.modelName].join(' ')
       },
     },
@@ -315,26 +337,27 @@ export const ucarColBuilder = (props: columnGetterType) => {
           } else {
             return undefined
           }
-          // if (!row.UPASS) {
-          //   return UCAR_CODE.Alert.byCode('UP_ASS_NOT_FOUND')?.color
-          // } else if (!row.OldCars_Base?.APPINDEX) {
-          //   return UCAR_CODE.Alert.byCode('APPINDEX_NOT_FOUND')?.color
-          // }
+
         },
       },
       format: (value, row) => {
         const href = HREF(`/ucar/qr`, { sateiID: row.sateiID }, useGlobalProps.query)
 
-        const alertList = UCAR_CODE.Alert.array.filter(item => item.checkAlert?.(row as unknown as ucarData))
+        const ucarProps = useGlobalProps.accessScopes().getUcarProps()
+        const alertList = UCAR_CODE.Alert.array.filter(item => item.checkAlert?.(row as unknown as ucarData, ucarProps))
+
+
+
+
 
         return (
-          <C_Stack className={`gap-4 `}>
+          <C_Stack className={`gap-4  items-center justify-between h-[180px]`}>
             <T_LINK href={href} target={`_blank`} className={` text-inherit no-underline relative`}>
-              <DocumentIcon className={cl(TrActionIconClassName, 'h-6 w-6 text-yellow-500')} />
-              <Absolute className={`text-[10px] w-[20px] left-[14px]! font-bold text-black`}>QR</Absolute>
+              <DocumentIcon className={cl(TrActionIconClassName, 'h-7 w-7 text-yellow-500')} />
+              <Absolute className={`text-[10px] w-[20px] left-[16px]! font-bold text-black`}>QR</Absolute>
             </T_LINK>
 
-            <PencilIcon
+            {/* <PencilIcon
               onClick={() =>
                 GMF_UcrDetailUpdater.setGMF_OPEN({
                   sateiID: row.sateiID,
@@ -343,26 +366,8 @@ export const ucarColBuilder = (props: columnGetterType) => {
                 })
               }
               className={cl(TrActionIconClassName, 'h-5 w-5 text-blue-500')}
-            />
-            {(isChukoshaGroup || isDev) && (
-              <TrashIcon
-                onClick={async () => {
-                  if (confirm('不要なデータとして非表示にしますか？')) {
-                    useGlobalProps.toggleLoad(async () => {
-                      const res = await GoogleSheet_Append({
-                        spreadsheetId:
-                          'https://docs.google.com/spreadsheets/d/1a_4Rh4lbqimejsClcm2keXiqzWUe5qFAiX5LfUlW6lI/edit?gid=363856092#gid=363856092',
-                        range: '不要査定ID登録!A1:A',
-                        values: [[row.sateiID]] as string[][],
-                      })
+            /> */}
 
-                      await doStandardPrisma('ucar', 'update', { where: { id: row.id }, data: { active: false } })
-                    })
-                  }
-                }}
-                className={cl(TrActionIconClassName, 'h-5 w-5 text-red-500')}
-              />
-            )}
 
             {/* 申請ボタン（店長・副店長のみ） */}
             {/* {isStoreManager && (
@@ -379,35 +384,74 @@ export const ucarColBuilder = (props: columnGetterType) => {
               />
             )} */}
 
-            {alertList.length > 0 && (
-              <ShadModal
-                Trigger={
-                  <div className={`bg-yellow-300 p-1 rounded-full`}>
-                    <InformationCircleIcon className={`h-5 w-5 text-red-600 animate-pulse`} />
-                  </div>
-                }
-              >
-                <C_Stack className={`gap-4 text-xs`}>
-                  {alertList.map(item => {
-                    const color = item.color
+            {alertList.map((item, i) => {
+              const color = item.color
 
-                    const Trigger = item.Trigger
 
-                    return (
-                      <R_Stack key={item.code}>
-                        <div className={`max-w-[320px]`}>
-                          <IconBtn color={color} key={item.code}>
-                            {item.label}
-                          </IconBtn>
-                        </div>
+              const Trigger = item.Trigger
 
-                        {Trigger && <Trigger {...{ row: row as unknown as ucarData }} />}
-                      </R_Stack>
-                    )
-                  })}
-                </C_Stack>
-              </ShadModal>
+              return (
+                <div key={item.code} >
+                  <ShadModal
+
+                    Trigger={<Coloring color='yellow' size='sm' className={`text-xs! leading-3.5! `}>{item.shortLabel}</Coloring>}>
+                    <R_Stack key={item.code}>
+                      <div className={`max-w-[320px]`}>
+                        <IconBtn color={color} key={item.code}>
+                          {item.label}
+                        </IconBtn>
+                      </div>
+
+                      {Trigger && <Trigger {...{ row: row as unknown as ucarData }} />}
+                    </R_Stack>
+                  </ShadModal>
+                </div>
+              )
+            })}
+
+
+            {(isChukoshaGroup || isDev) && (
+              <R_Stack className={`gap-1`}>
+                <div
+                  onClick={async () => {
+                    if (confirm('不要なデータとして非表示にしますか？')) {
+                      useGlobalProps.toggleLoad(async () => {
+                        await doStandardPrisma('ucar', 'update', {
+                          where: { id: row.id }, data: {
+                            active: row.active ? false : true
+                          }
+                        })
+                      })
+                    }
+                  }}
+                >{
+                    row.active ?
+                      <Coloring color='red' mode='text' className={`text-xs! underline cursor-pointer`} >非表示</Coloring> :
+                      <Coloring color='green' mode='text' className={`text-xs! underline cursor-pointer`}>復活</Coloring>
+                  }</div>
+
+                <div>
+                  <Coloring color='gray' mode='text' className={`text-xs! underline cursor-pointer`}
+                    onClick={async () => {
+                      if (confirm('このデータを完全に削除しますか？工程データ、書類管理、税金管理情報なども含めて削除されます。')) {
+                        if (confirm('本当に削除しますか？この操作は元に戻せません。')) {
+                          useGlobalProps.toggleLoad(async () => {
+                            await doStandardPrisma('ucar', 'delete', {
+                              where: { id: row.id },
+                            })
+                          })
+
+                        }
+                      }
+                    }
+                    }
+                  >削除</Coloring>
+                </div>
+              </R_Stack>
             )}
+
+
+
           </C_Stack>
         )
       },

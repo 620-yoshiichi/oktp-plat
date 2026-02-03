@@ -1,17 +1,20 @@
-import {Code} from '@cm/class/Code'
-import {ucarData} from './UcarCL'
+import { Code } from '@cm/class/Code'
+import { ucarData } from './UcarCL'
 
-import {Number98CandidateSelectorSwitch} from '@app/(apps)/ucar/(parts)/templateHooks/useNumber98CandidateSelectorGMF'
-import {JSX} from 'react'
+import { Number98CandidateSelectorSwitch } from '@app/(apps)/ucar/(parts)/templateHooks/useNumber98CandidateSelectorGMF'
+import { JSX } from 'react'
+import { useGlobalPropType } from '@cm/hooks/globalHooks/useGlobalOrigin'
+import { UcarScopeType } from 'src/non-common/scope-lib/getScopes'
 
 type codeAtom = {
   [key: string]: {
     code: string
     label: any
+    shortLabel?: JSX.Element
     color?: string
     requireChumonNo?: boolean
-    checkAlert?: (ucar: ucarData) => boolean
-    Trigger?: (props: {row: ucarData}) => JSX.Element
+    checkAlert?: (ucar: ucarData, ucarProps: UcarScopeType) => boolean
+    Trigger?: (props: { row: ucarData }) => JSX.Element
   }
 }
 
@@ -23,17 +26,17 @@ export class UcarAlertCode extends Code<codeAtom> {
 
 export class UCAR_CODE {
   static UCAR_DATA_SOURCE = new Code({
-    BIG_QUERY_QR_PROCESS: {code: '01', label: 'BigQuery QR処理'},
-    QRPAPER_UPDATE: {code: '02', label: 'QRPAPERから更新'},
-    QRPAPER_DAIHATSU: {code: '03', label: 'QRPAPER_新古予約枠'},
-    QRPAPER_CREATE: {code: '04', label: 'QRPAPER_から新規作成'},
+    BIG_QUERY_QR_PROCESS: { code: '01', label: 'BigQuery QR処理' },
+    QRPAPER_UPDATE: { code: '02', label: 'QRPAPERから更新' },
+    QRPAPER_DAIHATSU: { code: '03', label: 'QRPAPER_新古予約枠' },
+    QRPAPER_CREATE: { code: '04', label: 'QRPAPER_から新規作成' },
     TENCHO_SHORUI_KENSHU_HISTORY: {
       code: '05',
       label: '店長書類研修履歴かｓら新規作成',
     },
-    SHIWAKE: {code: '06', label: '仕分け結果から新規作成'},
-    TAX: {code: '07', label: '税金から新規作成'},
-    GARAGE: {code: '08', label: '車庫証明申請から新規作成'},
+    SHIWAKE: { code: '06', label: '仕分け結果から新規作成' },
+    TAX: { code: '07', label: '税金から新規作成' },
+    GARAGE: { code: '08', label: '車庫証明申請から新規作成' },
   })
 
   static DISPLAY_COLUMNS = new Code({
@@ -308,9 +311,12 @@ export class UCAR_CODE {
   static Alert = new UcarAlertCode({
     UP_ASS_NOT_FOUND: {
       code: '01',
-      label: 'UPASSデータとの連携ができていません。査定番号が間違っているか、当日査定である可能性があります。',
+      label: '【営業店要対応】UPASSデータとの連携ができていません。査定番号が間違っているか、当日査定である可能性があります。',
+      shortLabel: <div >
+        査定連携<br />エラー
+      </div>,
       color: '#ffe5e5',
-      checkAlert: (ucar: ucarData) => {
+      checkAlert: (ucar: ucarData, ucarProps: UcarScopeType) => {
         return !ucar.daihatsuReserve && !ucar.UPASS
       },
     },
@@ -318,14 +324,17 @@ export class UCAR_CODE {
       code: '02',
       label: (
         <div>
-          古物台帳との連携ができていません。「98番号」「仕入日」「仕入れ時注文No（ない場合は空欄）を正確に入力してください。」
+          【中古車G要対応】古物台帳との連携ができていません。「98番号」「仕入日」「仕入れ時注文No（ない場合は空欄）を正確に入力してください。」
         </div>
       ),
+      shortLabel: <div >
+        98連携<br />エラー
+      </div>,
       color: '#fff8dc',
-      checkAlert: (ucar: ucarData) => {
-        return !!(ucar?.number98 && !ucar.OldCars_Base)
+      checkAlert: (ucar: ucarData, ucarProps: UcarScopeType) => {
+        return !!(ucar?.number98 && !ucar.OldCars_Base) && ucarProps.isChukoshaGroup
       },
-      Trigger: (props: {row: ucarData}) => (
+      Trigger: (props: { row: ucarData }) => (
         <Number98CandidateSelectorSwitch
           {...{
             number98: props.row.number98,

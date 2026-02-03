@@ -36,6 +36,7 @@ export class QueryBuilder {
         },
 
 
+
         TmpRentalStore: {},
         DestinationStore: {},
         UPASS: upass,

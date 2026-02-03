@@ -48,6 +48,18 @@ type oktpUserTypes = {
 }
 
 type getScopeOptionsProps = { query?: anyObject; roles?: any[] }
+
+export type UcarScopeType = {
+  carWhere: carWhereType
+  userId?: any
+  storeId?: any
+  isUcarMember?: boolean
+  isHQ?: boolean
+  isStoreManager?: boolean
+  isSales?: boolean
+  isChukoshaGroup?: boolean
+  isInSalesDepartment?: boolean
+}
 export const getScopes = (session: session, options?: getScopeOptionsProps) => {
   const { query, roles } = options ?? {}
 
@@ -56,17 +68,7 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
 
   const { admin, getGlobalUserId } = judgeIsAdmin(session, query)
 
-  type UcarScopeType = {
-    carWhere: carWhereType
-    userId?: any
-    storeId?: any
-    isUcarMember?: boolean
-    isHQ?: boolean
-    isStoreManager?: boolean
-    isSales?: boolean
-    isChukoshaGroup?: boolean
-    isInSalesDepartment?: boolean
-  }
+
 
   const getNewCarProps = () => {
     const userId = !admin ? session?.id : Number(query?.[globalIds.globalUserId] ?? session?.id ?? 0)

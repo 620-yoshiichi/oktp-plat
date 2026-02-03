@@ -46,6 +46,8 @@ export default async function Page({ searchParams }: Props) {
     }
   }
 
+
+
   return <div className={`p-4 mx-auto max-w-[1000px]`}>
     <BasicTabs   {...{
 

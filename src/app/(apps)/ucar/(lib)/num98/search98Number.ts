@@ -1,7 +1,9 @@
 'use server'
 
 import prisma from 'src/lib/prisma'
-import {normalizeNumber98, getLastNumber98History, findNextAvailableNumber98} from '@app/(apps)/ucar/(lib)/num98/num98Constants'
+import {normalizeNumber98} from '@app/(apps)/ucar/(lib)/num98/number98-actions'
+import {getLastNumber98History, findNextAvailableNumber98} from '@app/(apps)/ucar/(lib)/num98/number98-actions'
+import {availableNumberWhereAtomObj} from '@app/(apps)/ucar/(lib)/num98/num98Constants'
 
 /**
  * 利用不可理由の型
@@ -98,7 +100,7 @@ export async function search98Number(searchNumber: string, options?: SearchOptio
   }
 
   // 入力を正規化（例: "9800083" → "98 00083"）
-  const normalizedNumber = normalizeNumber98(searchNumber)
+  const normalizedNumber = await normalizeNumber98(searchNumber)
 
   // 98番号を検索（完全一致）
   const number98 = await prisma.number98.findUnique({
@@ -125,61 +127,61 @@ export async function search98Number(searchNumber: string, options?: SearchOptio
   }
 
   // すべての条件を並列でチェック
-  const [hasZaiko, nonPricedOldCars, ucarWithNonPricedOldCars] = await Promise.all([
-    // ZAIKO_Baseに紐づいているかチェック
-    prisma.zAIKO_Base.findFirst({
-      where: {NO_SYARYOU: normalizedNumber},
-      select: {id: true, MJ_FURUSYAM: true},
-    }),
-    // OldCars_Baseに価格未設定があるかチェック
-    prisma.oldCars_Base.findMany({
-      where: {
-        NO_SYARYOU: normalizedNumber,
-        KI_HANKAKA: '0',
-      },
-      select: {id: true, NO_SIRETYUM: true, MJ_SYAMEI: true},
-    }),
-    // Ucarに紐づく98番号に価格未設定のOldCars_Baseがあるかチェック
-    prisma.ucar.findMany({
-      where: {
-        number98: normalizedNumber,
-        Number98: {
-          OldCars_Base: {some: {KI_HANKAKA: '0'}},
-        },
-      },
-      select: {sateiID: true},
-    }),
-  ])
+  const checkSourceResults =
+    (await Promise.all(
+      Object.values(availableNumberWhereAtomObj).map(async atom => {
+        return {
+          ...atom,
+          count: await prisma[atom.model].count({
+            where: {
+              AND: [
+                //
+                {number: normalizedNumber},
+                {...atom.CONDITION},
+              ],
+            },
+          }),
+        }
+      })
+    )) ??
+    ([] as {
+      label: string
+      count: number
+    }[])
 
   // 条件チェック結果を構築
-  const unavailableReasons: UnavailableReason[] = [
-    {
-      condition: '占有フラグ',
-      detail: number98.occupied ? 'ONになっています' : 'OFF（OK）',
-      matched: !!number98.occupied,
-    },
-    {
-      condition: '在庫データ(ZAIKO_Base)',
-      detail: hasZaiko ? `紐づいています（${hasZaiko.MJ_FURUSYAM ?? '車名不明'}）` : '紐づきなし（OK）',
-      matched: !!hasZaiko,
-    },
-    {
-      condition: '古物データ売上金額',
-      detail:
-        nonPricedOldCars.length > 0
-          ? `未設定(0)が${nonPricedOldCars.length}件あります（${nonPricedOldCars.map(o => o.NO_SIRETYUM || o.MJ_SYAMEI || 'ID:' + o.id).join(', ')}）`
-          : 'すべて設定済み（OK）',
-      matched: nonPricedOldCars.length > 0,
-    },
-    {
-      condition: 'Ucar経由の古物データ',
-      detail:
-        ucarWithNonPricedOldCars.length > 0
-          ? `売上金額未設定の古物に紐づくUcarがあります（${ucarWithNonPricedOldCars.map(u => u.sateiID).join(', ')}）`
-          : '問題なし（OK）',
-      matched: ucarWithNonPricedOldCars.length > 0,
-    },
-  ]
+  const unavailableReasons: UnavailableReason[] = checkSourceResults.map(result => ({
+    condition: result.label,
+    detail: result.count > 0 ? 'NG' : 'OK',
+    matched: result.count === 0,
+  }))
+
+  // {
+  //   condition: '占有フラグ',
+  //   detail: number98.occupied ? 'ONになっています' : 'OFF（OK）',
+  //   matched: !!number98.occupied,
+  // },
+  // {
+  //   condition: '在庫データ(ZAIKO_Base)',
+  //   detail: hasZaiko ? `紐づいています（${hasZaiko.MJ_FURUSYAM ?? '車名不明'}）` : '紐づきなし（OK）',
+  //   matched: !!hasZaiko,
+  // },
+  // {
+  //   condition: '古物データ売上金額',
+  //   detail:
+  //     nonPricedOldCars.length > 0
+  //       ? `未設定(0)が${nonPricedOldCars.length}件あります（${nonPricedOldCars.map(o => o.NO_SIRETYUM || o.MJ_SYAMEI || 'ID:' + o.id).join(', ')}）`
+  //       : 'すべて設定済み（OK）',
+  //   matched: nonPricedOldCars.length > 0,
+  // },
+  // {
+  //   condition: 'Ucar経由の古物データ',
+  //   detail:
+  //     ucarWithNonPricedOldCars.length > 0
+  //       ? `売上金額未設定のUcarデータに紐づています。（${ucarWithNonPricedOldCars.map(u => u.sateiID).join(', ')}）`
+  //       : '問題なし（OK）',
+  //   matched: ucarWithNonPricedOldCars.length > 0,
+  // },
 
   // 利用可能かどうかは、すべての条件がmatchedでないこと
   const isAvailable = unavailableReasons.every(r => !r.matched)
@@ -324,7 +326,7 @@ export async function getNextNumber98(): Promise<{nextNumber98: string | null; l
 export async function setLastUsedNumber98(
   lastUsedNumber: string
 ): Promise<{success: boolean; message: string; nextNumber98?: string}> {
-  const normalizedNumber = normalizeNumber98(lastUsedNumber)
+  const normalizedNumber = await normalizeNumber98(lastUsedNumber)
 
   // 対象の98番号が存在するか確認
   const targetNum98 = await prisma.number98.findUnique({
@@ -475,7 +477,7 @@ export async function unifiedSearch(query: string, options?: SearchOptions): Pro
     case 'number98':
       {
         // 98番号で検索（正規化して部分一致）
-        const normalizedNumber = normalizeNumber98(trimmedQuery)
+        const normalizedNumber = await normalizeNumber98(trimmedQuery)
         whereCondition = {number98: {contains: normalizedNumber.replace(/\s/g, '')}}
       }
 

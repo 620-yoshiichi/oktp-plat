@@ -97,6 +97,7 @@ export function OldCarsHistoryTable({ oldCarsHistory }: { oldCarsHistory: Search
       return {
         className: isPriceZero ? '[&_td]:!bg-red-100' : '',
         csvTableRow: [
+          { label: '98番号', cellValue: oldCar.NO_SYARYOU ?? '-' },
           { label: '仕入伝票', cellValue: oldCar.NO_SIRETYUM ?? '-' },
           { label: '車名', cellValue: oldCar.MJ_SYAMEI ?? '-' },
           { label: '車台番号', cellValue: oldCar.NO_SYADAIBA ?? '-' },
