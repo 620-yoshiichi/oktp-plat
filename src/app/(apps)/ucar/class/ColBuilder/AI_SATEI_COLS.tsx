@@ -126,7 +126,7 @@ export const sateiTableCompartionCols: sateiTableCompartionCol[] = [
   {
     label: '初度登録年',
     type: 'string',
-    bqKeys: { proto: 'First_registration_year_1', upass: 'firstRegistrationYear' },
+    bqKeys: { proto: 'Initial_registration_date', upass: 'firstRegistrationYear' },
   },
 ]
 

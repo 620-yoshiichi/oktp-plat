@@ -188,15 +188,18 @@ export class UcarCL {
     let nenshiki
     if (UPASS.firstRegistrationYear) {
       if (UPASS.dataSource === 'aisatei') {
-
         nenshiki = toUtc(new Date(UPASS.firstRegistrationYear))
+
       } else {
         const year = String(UPASS.firstRegistrationYear).slice(0, 4)
         const month = String(UPASS.firstRegistrationYear).slice(4, 6)
         nenshiki = new Date(Number(year), Number(month) - 1, 1)
+
       }
       nenshiki = formatDate(nenshiki, 'YYYY年M月')
     }
+
+
 
 
 
