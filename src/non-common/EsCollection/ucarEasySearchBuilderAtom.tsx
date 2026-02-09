@@ -57,6 +57,8 @@ export const ucarEasySearchBuilderAtom = async (props: easySearchType) => {
   }
 
 
+
+
   // ===========滞留========
   const pending__retendedOnStuff: EsObj = {
     label: 'スタッフ',
@@ -199,6 +201,7 @@ export const ucarEasySearchBuilderAtom = async (props: easySearchType) => {
       AND: [
         //
         commonWhere,
+        { arrivedAt: { not: null } },
         { processedAs: null },
       ],
     },
@@ -212,11 +215,30 @@ export const ucarEasySearchBuilderAtom = async (props: easySearchType) => {
       AND: [
         //
         commonWhere,
+        { arrivedAt: { not: null } },
         { processedAs: UCAR_CODE.PROCESSED_AS.raw.MEIGIHENKO.code },
         { meihenBi: null },
       ],
     },
   }
+
+
+
+  const destination__massho_not_done: EsObj = {
+    label: '抹消[未]',
+    notify: true,
+    description: '抹消が決定しているが、まだ完了していない',
+    CONDITION: {
+      AND: [
+        //
+        commonWhere,
+        { arrivedAt: { not: null } },
+        { processedAs: UCAR_CODE.PROCESSED_AS.raw.MASSESHO.code },
+        { masshoBi: null },
+      ],
+    },
+  }
+
 
   const shiwake__undecided: EsObj = {
     label: '仕分け未定',
@@ -225,7 +247,9 @@ export const ucarEasySearchBuilderAtom = async (props: easySearchType) => {
     CONDITION: {
       AND: [
         //
+
         commonWhere,
+        { arrivedAt: { not: null } },
         { destination: null },
       ],
     },
@@ -238,21 +262,8 @@ export const ucarEasySearchBuilderAtom = async (props: easySearchType) => {
       AND: [
         //
         commonWhere,
+        { arrivedAt: { not: null } },
         { destination: { not: null } },
-      ],
-    },
-  }
-
-  const destination__massho_not_done: EsObj = {
-    label: '抹消[未]',
-    notify: true,
-    description: '抹消が決定しているが、まだ完了していない',
-    CONDITION: {
-      AND: [
-        //
-        commonWhere,
-        { processedAs: UCAR_CODE.PROCESSED_AS.raw.MASSESHO.code },
-        { masshoBi: null },
       ],
     },
   }
@@ -264,6 +275,7 @@ export const ucarEasySearchBuilderAtom = async (props: easySearchType) => {
       AND: [
         //
         commonWhere,
+        { arrivedAt: { not: null } },
         { processedAs: UCAR_CODE.PROCESSED_AS.raw.MEIGIHENKO.code },
         { meihenBi: { not: null } },
       ],
@@ -277,6 +289,7 @@ export const ucarEasySearchBuilderAtom = async (props: easySearchType) => {
       AND: [
         //
         commonWhere,
+        { arrivedAt: { not: null } },
         { processedAs: UCAR_CODE.PROCESSED_AS.raw.MASSESHO.code },
         { masshoBi: { not: null } },
       ],
@@ -290,6 +303,7 @@ export const ucarEasySearchBuilderAtom = async (props: easySearchType) => {
       AND: [
         //
         commonWhere,
+        { arrivedAt: { not: null } },
         { AppliedUcarGarageSlot: { isNot: null } },
       ],
     },
