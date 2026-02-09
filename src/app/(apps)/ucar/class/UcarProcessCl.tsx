@@ -1,12 +1,12 @@
-import {OKTP_CONSTANTS} from '@app/oktpCommon/constants'
-import {formatDate} from '@cm/class/Days/date-utils/formatters'
-import {knockEmailApi} from '@cm/lib/methods/knockEmailApi'
-import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
-import {Code, codeItemCore} from '@cm/class/Code'
-import {Prisma} from '@prisma/generated/prisma/client'
-import {requestDeliberySS} from '@app/(apps)/ucar/class/lib/postHandler/ requestDeliberySS'
-import {UcarCL} from '@app/(apps)/ucar/class/UcarCL'
-import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
+import { OKTP_CONSTANTS } from '@app/oktpCommon/constants'
+import { formatDate } from '@cm/class/Days/date-utils/formatters'
+import { knockEmailApi } from '@cm/lib/methods/knockEmailApi'
+import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+import { Code, codeItemCore } from '@cm/class/Code'
+import { Prisma } from '@prisma/generated/prisma/client'
+import { requestDeliberySS } from '@app/(apps)/ucar/class/lib/postHandler/ requestDeliberySS'
+import { UcarCL } from '@app/(apps)/ucar/class/UcarCL'
+import { UCAR_CODE } from '@app/(apps)/ucar/class/UCAR_CODE'
 export type shortcutNameStr =
   | 'STORE_QR_ISSUE'
   | 'STORE_NYUKO'
@@ -59,16 +59,40 @@ type bigQueryFieldName =
 
 export type postHandlerProps = {
   buildConfirmMsg?: () => string
-  main: (props: {tx: Prisma.TransactionClient; sateiID: string; session; processCode: string}) => Promise<void>
+  main: (props: { tx: Prisma.TransactionClient; sateiID: string; session; processCode: string }) => Promise<void>
   buildCompleteMessage?: () => string
+}
+
+/** ダッシュボード集計用の車両データ型 */
+export type UcarWithProcess = {
+  sateiID: string
+  processes: { processCode: string; date: Date | null }[]
+  /** 仕分け区分コード（UCAR_CODE.SHIWAKE のコード値） */
+  destination?: string
+  /** 98番号 */
+  number98?: string
+  /** QRシート発行日時 */
+  qrIssuedAt?: Date
+  /** Ucarレコード作成日時 */
+  createdAt?: Date
+  /** レンタル除外フラグ（trueならQRシート総数から除外） */
+  isRental?: boolean
 }
 
 type UcarProcessCodeItem = codeItemCore & {
   bqFieldName?: string
   postHandler?: postHandlerProps
   list: string[]
+  /** 次工程のキー名（メインフローの順序定義用） */
+  nextProcessKey?: shortcutNameStr
+  /** ダッシュボード上の表示名（例: '拠点滞留'） */
+  dashboardLabel?: string
+  /** 滞留判定のカスタム関数（未定義時はデフォルト判定を使用） */
+  calcRetention?: (car: UcarWithProcess) => boolean
+  /** LT計算のカスタム関数（未定義時はデフォルト計算を使用。日数を返す） */
+  calcLT?: (car: UcarWithProcess) => number | null
 }
-type UcarProcessCodeObjectArgs = {[key: string]: UcarProcessCodeItem}
+type UcarProcessCodeObjectArgs = { [key: string]: UcarProcessCodeItem }
 
 export class UcarProcessCode extends Code<UcarProcessCodeObjectArgs> {
   constructor(master: UcarProcessCodeObjectArgs) {
@@ -77,6 +101,50 @@ export class UcarProcessCode extends Code<UcarProcessCodeObjectArgs> {
 }
 
 export class UcarProcessCl {
+  /** メインフローの工程順序（ダッシュボード集計用） */
+  static MAIN_FLOW_ORDER: string[] = [
+    'STORE_QR_ISSUE',
+    'STORE_NYUKO',
+    'STORE_TENCHO_KENSHU',
+    'CR_CHAKU',
+    'CR_KENSHU',
+    'CR_KASHU_KAISHI',
+    'CR_MARUKURI',
+    'CR_KENSA',
+    'CR_SHASHIN',
+    'CR_GAZOO',
+    'CR_HAISO',
+  ]
+
+  /**
+   * ダッシュボード表示用の工程一覧を取得
+   * （dashboardLabel が設定されている工程のみ。CR_HAISO は最終工程なので含まない場合あり）
+   */
+  static getDashboardProcesses() {
+    return UcarProcessCl.MAIN_FLOW_ORDER.map(key => {
+      const item = UcarProcessCl.CODE.raw[key]
+      return {
+        key,
+        code: item.code,
+        label: item.label,
+        dashboardLabel: item.dashboardLabel ?? item.label,
+        color: item.color,
+        nextProcessKey: item.nextProcessKey,
+        calcRetention: item.calcRetention,
+        calcLT: item.calcLT,
+      }
+    })
+  }
+
+  /**
+   * 指定キーより後の工程キー一覧を返す
+   */
+  static getSubsequentKeys(processKey: string): string[] {
+    const idx = UcarProcessCl.MAIN_FLOW_ORDER.indexOf(processKey)
+    if (idx === -1) return []
+    return UcarProcessCl.MAIN_FLOW_ORDER.slice(idx + 1)
+  }
+
   // 工程カラーパレット
   // 営業フェーズ（CS）: グレー → グリーン系（進捗に応じて濃く）
   // 加修フェーズ（CR）: シアン → ブルー → インディゴ系（段階的に進行）
@@ -90,6 +158,8 @@ export class UcarProcessCl {
       color: '#9E9E9E', // グレー（開始前）
       type: '営業',
       list: [`main`],
+      nextProcessKey: 'STORE_NYUKO',
+      dashboardLabel: 'QR発行',
     },
     STORE_NYUKO: {
       code: 'CS02',
@@ -98,13 +168,15 @@ export class UcarProcessCl {
       color: '#66BB6A', // ライトグリーン
       type: '営業',
       list: [`main`],
+      nextProcessKey: 'STORE_TENCHO_KENSHU',
+      dashboardLabel: '拠点滞留',
       postHandler: {
         buildConfirmMsg: () => 'スタッフ入庫検収を行い、店長へメールを送付します。',
         buildCompleteMessage: () => 'スタッフ入庫検収を行い、店長へメールを送付しました。',
         main: async props => {
-          const {tx, sateiID, session, processCode} = props
+          const { tx, sateiID, session, processCode } = props
 
-          const {result: storeLeaders} = await doStandardPrisma(`user`, `findMany`, {
+          const { result: storeLeaders } = await doStandardPrisma(`user`, `findMany`, {
             where: {
               storeId: session?.storeId,
               ...OKTP_CONSTANTS.where.storeManagerWhere,
@@ -125,8 +197,8 @@ export class UcarProcessCl {
               .map(v => `[${v}]`)
               .join(' ')
 
-          const emailObject = {to, subject, text: subject}
-          await knockEmailApi({...emailObject})
+          const emailObject = { to, subject, text: subject }
+          await knockEmailApi({ ...emailObject })
         },
       },
     },
@@ -137,10 +209,12 @@ export class UcarProcessCl {
       color: '#43A047', // グリーン
       type: '店長',
       list: [`main`],
+      nextProcessKey: 'CR_CHAKU',
+      dashboardLabel: 'CR配送待ち',
       postHandler: {
         buildConfirmMsg: () => 'CRへ配送手配が実施されます。',
         main: async props => {
-          const res = await requestDeliberySS({type: `配送手配`, sateiID: props.sateiID})
+          const res = await requestDeliberySS({ type: `配送手配`, sateiID: props.sateiID })
         },
         buildCompleteMessage: () => 'CRへ配送手配が実施されました。',
       },
@@ -161,6 +235,8 @@ export class UcarProcessCl {
       color: '#00ACC1', // ダークシアン
       type: '加修',
       list: [`main`],
+      nextProcessKey: 'CR_KENSHU',
+      dashboardLabel: '受入待ち',
     },
 
     CR_KENSHU: {
@@ -170,6 +246,8 @@ export class UcarProcessCl {
       color: '#0097A7', // ティール
       type: '加修',
       list: [`main`],
+      nextProcessKey: 'CR_KASHU_KAISHI',
+      dashboardLabel: '検収待ち',
     },
     CR_KASHU_KAISHI: {
       code: 'CR04',
@@ -178,6 +256,8 @@ export class UcarProcessCl {
       color: '#42A5F5', // ライトブルー
       type: '加修',
       list: [`main`],
+      nextProcessKey: 'CR_MARUKURI',
+      dashboardLabel: '加修中',
     },
     CR_MARUKURI: {
       code: 'CR05',
@@ -186,6 +266,8 @@ export class UcarProcessCl {
       color: '#1E88E5', // ブルー
       type: '加修',
       list: [`main`],
+      nextProcessKey: 'CR_KENSA',
+      dashboardLabel: 'まるクリ',
     },
     CR_KENSA: {
       code: 'CR06',
@@ -194,6 +276,8 @@ export class UcarProcessCl {
       color: '#1976D2', // ダークブルー
       type: '加修',
       list: [`main`],
+      nextProcessKey: 'CR_SHASHIN',
+      dashboardLabel: '検査待ち',
     },
     CR_SHASHIN: {
       code: 'CR07',
@@ -202,6 +286,8 @@ export class UcarProcessCl {
       color: '#5C6BC0', // インディゴ
       type: '加修',
       list: [`main`],
+      nextProcessKey: 'CR_GAZOO',
+      dashboardLabel: '写真撮影',
     },
     CR_GAZOO: {
       code: 'CR08',
@@ -210,6 +296,8 @@ export class UcarProcessCl {
       color: '#7E57C2', // ディープパープル
       type: '加修',
       list: [`main`],
+      nextProcessKey: 'CR_HAISO',
+      dashboardLabel: 'GAZOO',
     },
     CR_HAISO: {
       code: 'CR09',
@@ -218,6 +306,7 @@ export class UcarProcessCl {
       color: '#FF7043', // ディープオレンジ（完了）
       type: '店長',
       list: [`main`],
+      dashboardLabel: '拠点配送',
     },
 
     STORE_SHORUI_SOUHU: {
@@ -238,7 +327,7 @@ export class UcarProcessCl {
       postHandler: {
         buildConfirmMsg: () => 'CRへ配送キャンセルが実施されます。',
         main: async props => {
-          const res = await requestDeliberySS({type: `配送停止`, sateiID: props.sateiID})
+          const res = await requestDeliberySS({ type: `配送停止`, sateiID: props.sateiID })
         },
         buildCompleteMessage: () => 'CRへ配送キャンセルが実施されました。',
       },
@@ -253,7 +342,7 @@ export class UcarProcessCl {
       postHandler: {
         buildConfirmMsg: () => '拠点長へ現地処理を申請しますか？',
         main: async props => {
-          const {tenchoList} = await UcarCL.fetcher.getTenchoListBySateiId(props.sateiID)
+          const { tenchoList } = await UcarCL.fetcher.getTenchoListBySateiId(props.sateiID)
           const ucarInst = new UcarCL(await UcarCL.fetcher.getUcarDataBySateiId(props.sateiID))
           const emailObject = {
             to: tenchoList.map(t => t.email),
@@ -265,11 +354,11 @@ export class UcarProcessCl {
               ucarInst.builder.email.carInfoText,
             ].join('\n'),
           }
-          await knockEmailApi({...emailObject})
+          await knockEmailApi({ ...emailObject })
 
           // スクラップでの仕分登録を自動実施
           await doStandardPrisma('ucar', 'update', {
-            where: {sateiID: props.sateiID},
+            where: { sateiID: props.sateiID },
             data: {
               destination: UCAR_CODE.SHIWAKE.raw.SCRAP.code,
             },

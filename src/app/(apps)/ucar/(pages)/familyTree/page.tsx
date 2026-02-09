@@ -1,9 +1,9 @@
 'use client'
-import {formatDate} from '@cm/class/Days/date-utils/formatters'
-import {C_Stack, R_Stack} from '@cm/components/styles/common-components/common-components'
-import React, {useState, useMemo} from 'react'
+import { formatDate } from '@cm/class/Days/date-utils/formatters'
+import { C_Stack, R_Stack } from '@cm/components/styles/common-components/common-components'
+import React, { useState, useMemo } from 'react'
 import useSWR from 'swr'
-import {fetchRawSql} from '@cm/class/Fields/lib/methods'
+import { fetchRawSql } from '@cm/class/Fields/lib/methods'
 
 type TreeNode = {
   sateiID: string
@@ -43,7 +43,7 @@ const calcPriceDiff = (price1: string | null, price2: string | null): number | n
 }
 
 // 差分表示コンポーネント
-const DiffDisplay = ({prevNode, nextNode}: {prevNode: TreeNode; nextNode: TreeNode}) => {
+const DiffDisplay = ({ prevNode, nextNode }: { prevNode: TreeNode; nextNode: TreeNode }) => {
   const daysDiff = calcDaysDiff(prevNode.assessmentdatetime, nextNode.assessmentdatetime)
   const priceDiff = calcPriceDiff(prevNode.assessmentPrice, nextNode.assessmentPrice)
   const pickupDiff = calcDaysDiff(prevNode.pickupScheduledDate, nextNode.pickupScheduledDate)
@@ -120,7 +120,7 @@ const NodeWithTooltip = ({
 }
 
 // 樹形図の行コンポーネント
-const TreeRow = ({rootSateiID, nodes}: {rootSateiID: string; nodes: TreeNode[]}) => {
+const TreeRow = ({ rootSateiID, nodes }: { rootSateiID: string; nodes: TreeNode[] }) => {
   const [isExpanded, setIsExpanded] = useState(false)
 
   const sortedNodes = useMemo(() => {
@@ -256,7 +256,7 @@ export default function FamilyTreePage() {
   const [searchQuery, setSearchQuery] = useState('')
 
   // 全ツリーデータを取得（UPASSテーブルとJOINして追加情報取得）
-  const {data: allTreeData, isLoading} = useSWR('upassFamilyTree-all-v3', async () => {
+  const { data: allTreeData, isLoading } = useSWR('upassFamilyTree-all-v3', async () => {
     const sql = `
       SELECT
         uft."rootSateiID",
@@ -272,7 +272,7 @@ export default function FamilyTreePage() {
       LEFT JOIN "UPASS" u ON uft."sateiID" = u."sateiID"
       ORDER BY uft."rootSateiID", u."assessmentdatetime" ASC NULLS LAST
     `
-    const result = await fetchRawSql({sql})
+    const result = await fetchRawSql({ sql })
     return result.rows ?? []
   })
 

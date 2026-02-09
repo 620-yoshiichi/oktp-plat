@@ -24,10 +24,6 @@ export const UCAR_CONSTANTS: {
   shiireGroupUserCode: 99999931,
   getCommonQuery: (props: { active?: true | undefined }) => {
 
-    // if (props.active === undefined) {
-    //   return {}
-    // }
-
 
     const result = {
       OR: [

@@ -81,17 +81,22 @@ const parameters = async ({ params, query, session, scopes }) => {
 
 
 
-          let whereAND: Prisma.UcarWhereInput[] = [carWhere]
+          let whereAND: Prisma.UcarWhereInput[] = []
 
           if (additionalWhere.length > 0) {
-            whereAND = [...whereAND, ...additionalWhere].filter(Boolean)
+            whereAND = [
+              //
+              carWhere, ...additionalWhere].filter(Boolean)
           } else {
             whereAND = [
-              ...whereAND,
+              //
+              carWhere,
               { ...UCAR_CONSTANTS.getCommonQuery({ active: showDisActived ? undefined : true, }) },
               ...additionalWhere
             ].filter(Boolean)
           }
+
+          console.log(whereAND)//////logs
 
 
           // 並び順の設定（クエリパラメータで切り替え可能）
