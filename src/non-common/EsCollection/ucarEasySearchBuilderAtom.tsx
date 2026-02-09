@@ -170,6 +170,7 @@ export const ucarEasySearchBuilderAtom = async (props: easySearchType) => {
   const number98__pending: EsObj = {
     label: '98途中',
     description: '98番号は付与されているが、仕入処理が未完了',
+    notify: true,
     CONDITION: {
       AND: [
         //
@@ -185,7 +186,6 @@ export const ucarEasySearchBuilderAtom = async (props: easySearchType) => {
     CONDITION: {
       AND: [
         //
-
         { number98: '' },
       ],
     },
@@ -427,29 +427,29 @@ export const ucarEasySearchBuilderAtom = async (props: easySearchType) => {
     },
   }
 
-  // ===========売上店舗別========
-  const Ex_SoldStore = {
-    ...Object.fromEntries(
-      stores.map(store => {
-        const key = `stored_${store.code}`
-        const value = {
-          label: shorten(store.name.replace(`CHU BASE`, `CB`), 4, '.'),
-          description: '未販売に限ります',
-          CONDITION: {
-            CD_ZAIKOTEN: store.code.toString(),
-            ...unsold,
-          },
-        }
-        return [key, value]
-      })
-    ),
+  // // ===========売上店舗別========
+  // const Ex_SoldStore = {
+  //   ...Object.fromEntries(
+  //     stores.map(store => {
+  //       const key = `stored_${store.code}`
+  //       const value = {
+  //         label: shorten(store.name.replace(`CHU BASE`, `CB`), 4, '.'),
+  //         description: '未販売に限ります',
+  //         CONDITION: {
+  //           CD_ZAIKOTEN: store.code.toString(),
+  //           ...unsold,
+  //         },
+  //       }
+  //       return [key, value]
+  //     })
+  //   ),
 
-    sold: {
-      label: '売上済み',
-      description: '売上が確定している車両',
-      CONDITION: { ...sold },
-    },
-  }
+  //   sold: {
+  //     label: '売上済み',
+  //     description: '売上が確定している車両',
+  //     CONDITION: { ...sold },
+  //   },
+  // }
 
 
   const atoms = obj__cleanObject({
@@ -515,7 +515,7 @@ export const ucarEasySearchBuilderAtom = async (props: easySearchType) => {
     {
       exclusiveGroup: ExGroup[`number98`],
       name: `98番号付与状況`,
-      additionalProps: { defaultOpen: false },
+      additionalProps: { defaultOpen: true },
     },
     {
       exclusiveGroup: ExGroup[`shiwake`],
