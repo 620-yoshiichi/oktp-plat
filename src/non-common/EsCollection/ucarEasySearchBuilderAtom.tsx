@@ -52,6 +52,10 @@ export const ucarEasySearchBuilderAtom = async (props: easySearchType) => {
   const tenchoQrChecked = {
     processCode: processMasterRaw.STORE_TENCHO_KENSHU.code,
   }
+  const CRprocessChecned = {
+    processCode: { in: UcarProcessCl.CODE.array.filter(p => p.list.includes('CR')).map(p => p.code) }
+  }
+
 
   // ===========滞留========
   const pending__retendedOnStuff: EsObj = {
@@ -64,6 +68,7 @@ export const ucarEasySearchBuilderAtom = async (props: easySearchType) => {
         commonWhere,
         { UcarProcess: { none: tenchoQrChecked } }, //店長が未チェック、
         { UcarProcess: { none: stuffQrChecked } }, //かつスタッフが未チェック
+        { UcarProcess: { none: CRprocessChecned } }, //かつ店長が未チェック
       ],
     },
   }
@@ -78,6 +83,7 @@ export const ucarEasySearchBuilderAtom = async (props: easySearchType) => {
         commonWhere,
         { UcarProcess: { some: stuffQrChecked } }, //スタッフがチェック済み
         { UcarProcess: { none: tenchoQrChecked } }, //かつ店長が未チェック
+        { UcarProcess: { none: CRprocessChecned } }, //かつ店長が未チェック
       ],
     },
   }

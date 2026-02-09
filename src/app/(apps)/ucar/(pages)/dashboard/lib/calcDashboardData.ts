@@ -74,6 +74,10 @@ function buildProcessDateMap(car: UcarWithProcess): Map<string, Date> {
       map.set(p.processCode, p.date)
     }
   }
+  // 販売日（code='SALES'）は DD_URIAGE から取得
+  if (car.DD_URIAGE) {
+    map.set('SALES', car.DD_URIAGE)
+  }
   return map
 }
 

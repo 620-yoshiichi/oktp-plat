@@ -16,9 +16,10 @@ import useModal from '@cm/components/utils/modal/useModal'
 // ヘルパー
 // ============================================================
 
-/** 当月1日の YYYY-MM-DD */
-function thisMonthStart(): string {
+/** 3ヶ月前の1日の YYYY-MM-DD */
+function threeMonthsAgoStart(): string {
   const d = new Date()
+  d.setMonth(d.getMonth() - 3)
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-01`
 }
 
@@ -43,9 +44,9 @@ export default function DashboardPage() {
     return raw ? Number(raw) : new Date().getFullYear()
   }, [searchParams])
 
-  // --- 期間フィルタ（LTグラフ用） ---
+  // --- 期間フィルタ（LTグラフ用、デフォルト: 過去3ヶ月前〜当月末） ---
   const ltPeriodStart = useMemo(() => {
-    return searchParams?.get('ltStart') ?? thisMonthStart()
+    return searchParams?.get('ltStart') ?? threeMonthsAgoStart()
   }, [searchParams])
 
   const ltPeriodEnd = useMemo(() => {
@@ -138,7 +139,7 @@ export default function DashboardPage() {
   }, [dashboardData])
 
   return (
-    <div className="p-4 mx-auto max-w-[1600px]">
+    <div className="p-4 mx-auto max-w-[1800px]">
       {/* ヘッダー */}
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-xl font-bold">QRプロジェクト リードタイム概況</h1>
@@ -175,9 +176,12 @@ export default function DashboardPage() {
       {!isLoading && dashboardData && (
         <>
           <div className="flex gap-4">
-            <div className="flex-3 min-w-0">
+            <div className="flex-2 flex flex-col gap-4 min-w-[850px]">
               <ProcessSummaryTable data={dashboardData} year={year} />
+              <OtherMetricsTable data={dashboardData} year={year} />
             </div>
+
+
 
             <div className="flex-2 flex flex-col gap-4 min-w-[380px]">
               <div className="border rounded-lg p-4 bg-white shadow-sm">
@@ -207,7 +211,7 @@ export default function DashboardPage() {
                     className="text-xs text-blue-600 hover:text-blue-800 underline"
                     onClick={() => updateQuery({ ltStart: undefined, ltEnd: undefined })}
                   >
-                    当月
+                    直近3ヶ月
                   </button>
                 </div>
 
@@ -222,9 +226,7 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          <div className="mt-4">
-            <OtherMetricsTable data={dashboardData} year={year} />
-          </div>
+
         </>
       )}
 

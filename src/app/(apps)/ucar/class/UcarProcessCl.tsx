@@ -21,6 +21,7 @@ export type shortcutNameStr =
   | 'CR_SHASHIN'
   | 'CR_GAZOO'
   | 'CR_HAISO'
+  | 'SALES_DATE'
   | 'STORE_SHORUI_SOUHU'
   | 'STORE_DELIVERY_STOP'
   | 'CR_GENCHI_SHORI_YOSEI'
@@ -38,6 +39,7 @@ export type processNameStr =
   | '写真'
   | 'GAZOO'
   | '商品車受取'
+  | '販売日'
   | '書類送付'
   | '配送停止'
   | '現地処理'
@@ -77,6 +79,8 @@ export type UcarWithProcess = {
   createdAt?: Date
   /** レンタル除外フラグ（trueならQRシート総数から除外） */
   isRental?: boolean
+  /** OldCars_Base売上日（拠点配送の滞留判定用） */
+  DD_URIAGE?: Date
 }
 
 type UcarProcessCodeItem = codeItemCore & {
@@ -101,7 +105,7 @@ export class UcarProcessCode extends Code<UcarProcessCodeObjectArgs> {
 }
 
 export class UcarProcessCl {
-  /** メインフローの工程順序（ダッシュボード集計用） */
+  /** メインフローの工程順序（ダッシュボード集計用。販売日は含まない） */
   static MAIN_FLOW_ORDER: string[] = [
     'STORE_QR_ISSUE',
     'STORE_NYUKO',
@@ -159,7 +163,7 @@ export class UcarProcessCl {
       type: '営業',
       list: [`main`],
       nextProcessKey: 'STORE_NYUKO',
-      dashboardLabel: 'QR発行',
+      // dashboardLabel: 'QR発行',
     },
     STORE_NYUKO: {
       code: 'CS02',
@@ -169,7 +173,7 @@ export class UcarProcessCl {
       type: '営業',
       list: [`main`],
       nextProcessKey: 'STORE_TENCHO_KENSHU',
-      dashboardLabel: '拠点滞留',
+      // dashboardLabel: '拠点滞留',
       postHandler: {
         buildConfirmMsg: () => 'スタッフ入庫検収を行い、店長へメールを送付します。',
         buildCompleteMessage: () => 'スタッフ入庫検収を行い、店長へメールを送付しました。',
@@ -210,7 +214,7 @@ export class UcarProcessCl {
       type: '店長',
       list: [`main`],
       nextProcessKey: 'CR_CHAKU',
-      dashboardLabel: 'CR配送待ち',
+      // dashboardLabel: 'CR配送滞留',
       postHandler: {
         buildConfirmMsg: () => 'CRへ配送手配が実施されます。',
         main: async props => {
@@ -225,7 +229,7 @@ export class UcarProcessCl {
       label: '配送票受領',
       color: '#26C6DA', // シアン（加修開始）
       type: '加修',
-      list: [`main`],
+      list: [`main`, 'CR'],
     },
 
     CR_CHAKU: {
@@ -234,9 +238,9 @@ export class UcarProcessCl {
       label: 'CR着',
       color: '#00ACC1', // ダークシアン
       type: '加修',
-      list: [`main`],
+      list: [`main`, 'CR'],
       nextProcessKey: 'CR_KENSHU',
-      dashboardLabel: '受入待ち',
+      // dashboardLabel: 'CR着滞留',
     },
 
     CR_KENSHU: {
@@ -245,9 +249,9 @@ export class UcarProcessCl {
       label: '検収',
       color: '#0097A7', // ティール
       type: '加修',
-      list: [`main`],
+      list: [`main`, 'CR'],
       nextProcessKey: 'CR_KASHU_KAISHI',
-      dashboardLabel: '検収待ち',
+      // dashboardLabel: '検収滞留',
     },
     CR_KASHU_KAISHI: {
       code: 'CR04',
@@ -255,9 +259,9 @@ export class UcarProcessCl {
       label: '加修開始',
       color: '#42A5F5', // ライトブルー
       type: '加修',
-      list: [`main`],
+      list: [`main`, 'CR'],
       nextProcessKey: 'CR_MARUKURI',
-      dashboardLabel: '加修中',
+      // dashboardLabel: '加修中',
     },
     CR_MARUKURI: {
       code: 'CR05',
@@ -265,9 +269,9 @@ export class UcarProcessCl {
       label: 'まるくり',
       color: '#1E88E5', // ブルー
       type: '加修',
-      list: [`main`],
+      list: [`main`, 'CR'],
       nextProcessKey: 'CR_KENSA',
-      dashboardLabel: 'まるクリ',
+      // dashboardLabel: 'まるクリ',
     },
     CR_KENSA: {
       code: 'CR06',
@@ -275,9 +279,9 @@ export class UcarProcessCl {
       label: '検査',
       color: '#1976D2', // ダークブルー
       type: '加修',
-      list: [`main`],
+      list: [`main`, 'CR'],
       nextProcessKey: 'CR_SHASHIN',
-      dashboardLabel: '検査待ち',
+      // dashboardLabel: '検査滞留',
     },
     CR_SHASHIN: {
       code: 'CR07',
@@ -285,9 +289,9 @@ export class UcarProcessCl {
       label: '写真',
       color: '#5C6BC0', // インディゴ
       type: '加修',
-      list: [`main`],
+      list: [`main`, 'CR'],
       nextProcessKey: 'CR_GAZOO',
-      dashboardLabel: '写真撮影',
+      // dashboardLabel: '写真撮影',
     },
     CR_GAZOO: {
       code: 'CR08',
@@ -295,9 +299,9 @@ export class UcarProcessCl {
       label: 'GAZOO',
       color: '#7E57C2', // ディープパープル
       type: '加修',
-      list: [`main`],
+      list: [`main`, 'CR'],
       nextProcessKey: 'CR_HAISO',
-      dashboardLabel: 'GAZOO',
+      // dashboardLabel: 'GAZOO',
     },
     CR_HAISO: {
       code: 'CR09',
@@ -305,8 +309,34 @@ export class UcarProcessCl {
       label: '商品車受取',
       color: '#FF7043', // ディープオレンジ（完了）
       type: '店長',
-      list: [`main`],
+      list: [`main`, 'CR'],
       dashboardLabel: '拠点配送',
+      /**
+       * 拠点配送のカスタム滞留判定:
+       * CR09（商品車受取）が完了しているが、DD_URIAGE（販売日）がない場合を「滞留」とみなす。
+       * DD_URIAGEがある場合は完全に販売完了したため滞留ではない。
+       *
+       * CR_HAISO は最終集計工程。nextProcessKey はないが、UcarProcessTable の表示列には
+       * SALES_DATE が追加されるため、CR09→販売日のLTは自動計算される。
+       */
+      calcRetention: (car: UcarWithProcess) => {
+        // CR09の完了日を確認
+        const hasCR09 = car.processes.some(p => p.processCode === 'CR09' && p.date)
+        if (!hasCR09) return false
+
+        // DD_URIAGEがない場合は滞留
+        return !car.DD_URIAGE
+      },
+    },
+
+    SALES_DATE: {
+      code: 'SALES',
+      bqFieldName: '',
+      label: '販売日',
+      color: '#4CAF50', // グリーン（最終完了）
+      type: '営業',
+      list: [], // 集計対象外、表示専用
+      dashboardLabel: '販売完了',
     },
 
     STORE_SHORUI_SOUHU: {

@@ -1,7 +1,7 @@
 'use client'
 
-import {useMemo} from 'react'
-import {DashboardResult} from '../lib/calcDashboardData'
+import { useMemo } from 'react'
+import { DashboardResult } from '../lib/calcDashboardData'
 
 type Props = {
   data: DashboardResult
@@ -34,8 +34,8 @@ function fmtPercent(n: number | null | undefined): string {
   return `${n}%`
 }
 
-export function OtherMetricsTable({data, year}: Props) {
-  const {retailRatio, retailRatioTotal, shiwakeBreakdown, shiwakeGrandTotal, shiwakeGrandMonthly, number98Stats} = data
+export function OtherMetricsTable({ data, year }: Props) {
+  const { retailRatio, retailRatioTotal, shiwakeBreakdown, shiwakeGrandTotal, shiwakeGrandMonthly, number98Stats } = data
 
   // 指定年の月のみ表示
   const yyPrefix = String(year).slice(-2)
@@ -63,11 +63,12 @@ export function OtherMetricsTable({data, year}: Props) {
             </th>
             <th className="border px-2 py-1.5 text-left w-[130px]" rowSpan={2} />
             <th className="border px-2 py-1.5 text-center w-[55px] bg-yellow-200 font-bold" rowSpan={2}>
-              全期間
+              全期
             </th>
             {months.map(m => (
               <th key={m} className="border px-2 py-1.5 text-center w-[50px] bg-yellow-100">
-                {m}
+                {m.split('-')[0]}年<br />
+                {Number(m.split('-')[1])}月
               </th>
             ))}
           </tr>
@@ -104,11 +105,7 @@ export function OtherMetricsTable({data, year}: Props) {
           <tr className="bg-gray-50">
             <td className="border px-2 py-1.5 font-medium bg-gray-200" rowSpan={shiwakeBreakdown.length + 2}>
               <div className="text-center leading-tight">
-                QRシート
-                <br />
-                総数
-                <br />
-                <span className="text-[10px] text-gray-500">(レンタ除く)</span>
+                QR総数
               </div>
             </td>
           </tr>
@@ -117,7 +114,7 @@ export function OtherMetricsTable({data, year}: Props) {
           {shiwakeBreakdown.map(sw => (
             <tr key={sw.key}>
               <td className="border px-2 py-1.5 font-medium" style={{ borderLeft: `3px solid ${sw.color}` }}>
-                {sw.label}
+                <div className={`w-8 truncate`}>{sw.label}</div>
               </td>
               <td className="border px-2 py-1.5 text-center font-bold">{fmtCount(sw.total)}</td>
               {months.map(m => (

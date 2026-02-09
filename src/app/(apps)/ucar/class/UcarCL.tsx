@@ -166,7 +166,7 @@ export class UcarCL {
       DD_URIAGE: this.data?.OldCars_Base?.DD_URIAGE, //売上日
       CD_ZAIKOTEN: this.data?.OldCars_Base?.ZAIKO_Base?.CD_ZAIKOTEN ?? '', //在庫店舗
       MJ_ZAIKOST: this.data?.OldCars_Base?.ZAIKO_Base?.MJ_ZAIKOST ?? '', //展示店舗
-      KI_HANKAKA: this.data?.OldCars_Base?.KI_HANKAKA ?? 0,
+      KI_HANKAKA: Number(this.data?.OldCars_Base?.KI_HANKAKA) ?? 0,
       //売上金額
     }
   }
@@ -199,6 +199,12 @@ export class UcarCL {
       nenshiki = formatDate(nenshiki, 'YYYY年M月')
     }
 
+    const length = UPASS.length ? UPASS.dataSource === 'aisatei' ? Number(UPASS.length) / 10 : Number(UPASS.length) : ''
+    const width = UPASS.width ? UPASS.dataSource === 'aisatei' ? Number(UPASS.width) / 10 : Number(UPASS.width) : ''
+    const height = UPASS.height ? UPASS.dataSource === 'aisatei' ? Number(UPASS.height) / 10 : Number(UPASS.height) : ''
+
+    console.log(UPASS.length)  //logs length, width, height
+
 
 
 
@@ -218,9 +224,9 @@ export class UcarCL {
       exteriorColor: UPASS.exteriorColor || tmpUcarData.tmpColor || '',
       type: UPASS.type || tmpUcarData.tmpType || '',
       chassisNumber: UPASS.chassisNumber || tmpUcarData.tmpChassisNumber || '',
-      length: UPASS.length ? UPASS.dataSource === 'aisatei' ? Number(UPASS.length) / 10 : Number(UPASS.length) : '',
-      width: UPASS.width ? UPASS.dataSource === 'aisatei' ? Number(UPASS.width) / 10 : Number(UPASS.width) : '',
-      height: UPASS.height ? UPASS.dataSource === 'aisatei' ? Number(UPASS.height) / 10 : Number(UPASS.height) : '',
+      length,
+      width,
+      height,
 
       // commonType: UPASS.commonType || tmpUcarData.tmpCommonType || '',
       engineType: UPASS.engineType || '',

@@ -84,7 +84,7 @@ const Header = React.memo<HeaderProps>(({ adminContext }) => {
             {renderAdditionalHeaders}
             {process.env.NEXT_PUBLIC_IS_STAGING && (
               <div className="text-red-500 font-bold text-lg">
-                <p>テスト環境です。業務利用NG。</p>
+                <p>テスト環境。業務利用NG。</p>
               </div>
             )}
           </R_Stack>

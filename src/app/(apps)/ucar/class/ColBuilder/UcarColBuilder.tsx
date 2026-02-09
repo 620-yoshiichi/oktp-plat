@@ -217,7 +217,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
       },
     },
     {
-      id: 'OldCars_Base.KI_HANKAKA',
+      id: 'hanbaikakaku',
       label: '販売価格',
       format: (value, row) => {
 

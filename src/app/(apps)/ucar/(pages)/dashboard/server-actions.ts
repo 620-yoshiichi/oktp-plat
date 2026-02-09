@@ -33,6 +33,9 @@ const UCAR_SELECT = {
     select: {processCode: true, date: true},
     orderBy: {date: 'asc'} as const,
   },
+  OldCars_Base: {
+    select: {DD_URIAGE: true},
+  },
 } satisfies Prisma.UcarSelect
 
 /** 共通の基本 WHERE 条件 */
@@ -65,6 +68,7 @@ type PrismaCarResult = {
   qrIssuedAt: Date
   tmpRentalStoreId: number | null
   UcarProcess: {processCode: string; date: Date | null}[]
+  OldCars_Base: {DD_URIAGE: Date | null} | null
 }
 
 function toUcarWithProcess(car: PrismaCarResult): UcarWithProcess {
@@ -79,6 +83,7 @@ function toUcarWithProcess(car: PrismaCarResult): UcarWithProcess {
     qrIssuedAt: car.qrIssuedAt,
     createdAt: car.createdAt,
     isRental: car.tmpRentalStoreId != null,
+    DD_URIAGE: car.OldCars_Base?.DD_URIAGE ?? undefined,
   }
 }
 

@@ -107,7 +107,16 @@ export function ProcessSummaryTable({ data, year }: Props) {
                     }
                   >
                     <span className="inline-block w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: proc.color }} />
-                    <span className="truncate group-hover:underline">{proc.dashboardLabel}</span>
+
+                    {/* Popoverで工程の説明を表示 */}
+                    <div className="relative group/popover">
+                      <span className="truncate group-hover:underline">{proc.dashboardLabel}</span>
+
+                      <div className="hidden group-hover/popover:block absolute left-full top-1/2 mt-1 z-10 bg-white border border-gray-300 rounded shadow-lg p-2 text-xs text-gray-700 min-w-[200px] max-w-xs whitespace-pre-line">
+                        【{proc.dashboardLabel}】を実施後、次の工程が登録されていないものです。
+                      </div>
+
+                    </div>
                   </button>
                 </td>
 
