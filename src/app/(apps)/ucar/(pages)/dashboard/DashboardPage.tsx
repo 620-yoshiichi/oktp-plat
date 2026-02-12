@@ -177,8 +177,15 @@ export default function DashboardPage() {
         <>
           <div className="flex gap-4">
             <div className="flex-2 flex flex-col gap-4 min-w-[850px]">
-              <ProcessSummaryTable data={dashboardData} year={year} />
-              <OtherMetricsTable data={dashboardData} year={year} />
+
+              <div>
+                現在の滞留台数
+                <ProcessSummaryTable data={dashboardData} year={year} /></div>
+
+              <div>
+                工程別平均LT
+                <OtherMetricsTable data={dashboardData} year={year} />
+              </div>
             </div>
 
 

@@ -203,7 +203,7 @@ export class UcarCL {
     const width = UPASS.width ? UPASS.dataSource === 'aisatei' ? Number(UPASS.width) / 10 : Number(UPASS.width) : ''
     const height = UPASS.height ? UPASS.dataSource === 'aisatei' ? Number(UPASS.height) / 10 : Number(UPASS.height) : ''
 
-    console.log(UPASS.length)  //logs length, width, height
+
 
 
 

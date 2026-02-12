@@ -43,9 +43,19 @@ const Selector = ({ number98, sateiID, close }) => {
   return (
     <div>
       {CsvTable({
-        records: data.map(item => {
+        records: data.sort((a, b) => {
+          return a.DD_SIIRE.getTime() - b.DD_SIIRE.getTime()
+        }).map(item => {
+
+
+
+          const linkedToOtherCar = item?.Ucar?.sateiID && item?.Ucar?.sateiID !== sateiID
+
+          const thisCarInLinked = item?.Ucar?.sateiID && (item?.Ucar?.sateiID === sateiID)
+
 
           return {
+            className: `${linkedToOtherCar ? 'bg-gray-100' : thisCarInLinked ? 'bg-green-300' : ''}`,
             csvTableRow: [
               //
               { label: '98番号', cellValue: item.NO_SYARYOU },
@@ -55,15 +65,26 @@ const Selector = ({ number98, sateiID, close }) => {
               { label: '車名', cellValue: item.MJ_SYAMEI },
               { label: '売上', cellValue: item.KI_HANKAKA },
               {
-                label: '他のQR車両と連携済',
-                cellValue: item?.Ucar?.id ? '○' : '×',
-                className: `text-center ${item?.Ucar?.id ? 'text-green-500' : 'text-red-500'}`,
+                label: '連携先査定ID',
+                cellValue: <div>
+
+
+                  {thisCarInLinked ? `自車連携【${sateiID}】` : ''}
+                  {linkedToOtherCar ? `他車連携【${item?.Ucar?.sateiID}】` : ''}
+
+
+                </div>,
+                className: `text-center `,
               },
               {
                 label: '選択',
                 cellValue: (
                   <Button
                     onClick={async () => {
+                      if (linkedToOtherCar) {
+                        alert('他の車両紐との紐付けを解除してから、連携してください。')
+                        return
+                      }
                       const data = {
                         number98: item.NO_SYARYOU,
                         NO_SIRETYUM: item.NO_SIRETYUM,
@@ -95,7 +116,7 @@ export const Number98CandidateSelectorSwitch = ({ number98, sateiID }) => {
   const GMF_Number98CandidateSelector = useNumber98CandidateSelectorGMF()
   return (
     <div>
-      <Button onClick={() => GMF_Number98CandidateSelector.setGMF_OPEN({ number98, sateiID })}>候補検索</Button>
+      <Button size='xs' onClick={() => GMF_Number98CandidateSelector.setGMF_OPEN({ number98, sateiID })}>98連携</Button>
     </div>
   )
 }

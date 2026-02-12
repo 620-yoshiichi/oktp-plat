@@ -328,20 +328,21 @@ export class UCAR_CODE {
         </div>
       ),
       shortLabel: <div >
+
         98連携<br />エラー
       </div>,
       color: '#fff8dc',
       checkAlert: (ucar: ucarData, ucarProps: UcarScopeType) => {
         return !!(ucar?.number98 && !ucar.OldCars_Base) && ucarProps.isChukoshaGroup
       },
-      Trigger: (props: { row: ucarData }) => (
-        <Number98CandidateSelectorSwitch
-          {...{
-            number98: props.row.number98,
-            sateiID: props.row.sateiID,
-          }}
-        />
-      ),
+      // Trigger: (props: { row: ucarData }) => (
+      //   <Number98CandidateSelectorSwitch
+      //     {...{
+      //       number98: props.row.number98,
+      //       sateiID: props.row.sateiID,
+      //     }}
+      //   />
+      // ),
     },
   })
 }

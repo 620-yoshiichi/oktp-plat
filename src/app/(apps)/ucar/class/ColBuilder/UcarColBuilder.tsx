@@ -7,7 +7,7 @@ import { IsActiveDisplay } from '@app/(apps)/ucar/(lib)/isActiveDisplays'
 import { upassCols } from '@app/(apps)/ucar/files/upass/upass-columns'
 
 import ProcessSummary from '@app/(apps)/ucar/(pages)/paperProcess/Summay/parts/ProcessSummary'
-import { absSize, cl, isDev } from '@cm/lib/methods/common'
+import { absSize, cl, isDev, superTrim } from '@cm/lib/methods/common'
 import { UcarProcessCl } from '../UcarProcessCl'
 import { getPaperManagementCols } from '@app/(apps)/ucar/class/ColBuilder/lib/ucar/ucarCols-lib/lib/getPaperManagementCols/getPaperManagementCols'
 import { DocumentIcon, InformationCircleIcon } from '@heroicons/react/20/solid'
@@ -34,6 +34,8 @@ import { getAvailable98Numbers, inThisNumber98Available } from '../../(lib)/num9
 import Coloring from '@cm/lib/methods/Coloring'
 import { availableNumberWhere } from '@app/(apps)/ucar/(lib)/num98/num98Constants'
 import { NumHandler } from '@cm/class/NumHandler'
+import { Number98CandidateSelectorSwitch } from '@app/(apps)/ucar/(parts)/templateHooks/useNumber98CandidateSelectorGMF'
+import { Prisma } from '@prisma/generated/prisma/client'
 
 export const UCAR_TABLE_ROW_HEIGHT = 120
 
@@ -114,7 +116,9 @@ export const ucarColBuilder = (props: columnGetterType) => {
               const isAvailable = await inThisNumber98Available(newNumber98)
 
               if (!isAvailable) {
-                return { success: false, message: '98番号が利用可能な範囲内にありません' }
+                if (!confirm('98番号が利用可能な範囲内にありません。強制的に更新しますか？')) {
+                  return { success: false, message: '98番号の更新をキャンセルしました' }
+                }
               }
 
 
@@ -135,16 +139,14 @@ export const ucarColBuilder = (props: columnGetterType) => {
         },
       },
       forSelect: {
-        config: {
-          select: {
-            id: 'number',
-            number: 'text',
-            sortNumber: 'number',
-          },
-          where: {
-            ...availableNumberWhere
-          }
-        },
+        // config: {
+        //   select: {
+        //     id: 'number',
+        //     number: 'text',
+        //     sortNumber: 'number',
+        //   },
+        //   where: { ...availableNumberWhere }
+        // },
         optionsOrOptionFetcher: async ({ searchInput }) => {
           const getAvailable98NumbersReturn = await getAvailable98Numbers({
             additionalWhere: {
@@ -153,18 +155,101 @@ export const ucarColBuilder = (props: columnGetterType) => {
               },
             },
           })
-          return {
-            optionObjArr: [
-              ...getAvailable98NumbersReturn?.available98Numbers.map(d => {
-                return {
-                  value: d.number,
-                  label: String(d.sortNumber) ?? '',
-                }
-              }),
-            ],
-          }
-        },
 
+          const commonProps = {
+            orderBy: [{ sortNumber: 'asc' }] as Prisma.Number98OrderByWithRelationInput[],
+            take: 30,
+          }
+          const nextNumber98 = getAvailable98NumbersReturn?.nextNumber98
+          const numbers = {
+            next: {
+
+              unused: await doStandardPrisma('number98', 'findMany', {
+                where: {
+                  AND: [
+                    { sortNumber: { gte: Number(superTrim(nextNumber98)) }, },
+                    { number: { contains: searchInput ?? '', } },
+                    availableNumberWhere
+                  ]
+                },
+                ...commonProps,
+              }),
+              used: await doStandardPrisma('number98', 'findMany', {
+                where: {
+                  AND: [
+                    { sortNumber: { gte: Number(superTrim(nextNumber98)) }, },
+                    { number: { contains: searchInput ?? '', } },
+                    { NOT: availableNumberWhere }
+                  ]
+                },
+                ...commonProps
+              }),
+            },
+            previous: {
+
+              unused: await doStandardPrisma('number98', 'findMany', {
+                where: {
+                  AND: [
+                    { sortNumber: { lte: Number(superTrim(nextNumber98)) }, },
+                    { number: { contains: searchInput ?? '', } },
+                    availableNumberWhere
+                  ]
+                },
+                ...commonProps
+              }),
+              used: await doStandardPrisma('number98', 'findMany', {
+                where: {
+                  AND: [
+                    { sortNumber: { lte: Number(superTrim(nextNumber98)) }, },
+                    { number: { contains: searchInput ?? '', } },
+                    { NOT: availableNumberWhere }
+                  ]
+                },
+                ...commonProps
+              }),
+
+            }
+          }
+
+
+          const merged = [
+            ...numbers.next.unused.result.map(d => {
+              return {
+                value: d.number,
+                label: `${d.number} (未使用)`,
+                color: 'gray'
+              }
+            }),
+            ...numbers.previous.unused.result.map(d => {
+              return {
+                value: d.number,
+                label: `${d.number} (未使用)`,
+                color: 'gray'
+              }
+            }),
+            ...numbers.next.used.result.map(d => {
+              return {
+                value: d.number,
+                label: `${d.number} (使用中)`,
+                color: '#FFCDD2'
+              }
+            }),
+            ...numbers.previous.used.result.map(d => {
+              return {
+                value: d.number,
+                label: `${d.number} (使用中)`,
+                color: '#FFCDD2'
+              }
+            }),
+          ]
+
+
+
+
+          return {
+            optionObjArr: merged,
+          }
+        }
       },
     },
     {
@@ -384,6 +469,16 @@ export const ucarColBuilder = (props: columnGetterType) => {
               />
             )} */}
 
+
+
+            {ucarProps.isChukoshaGroup && (
+              <Number98CandidateSelectorSwitch
+                {...{
+                  number98: row.number98,
+                  sateiID: row.sateiID,
+                }}
+              />
+            )}
             {alertList.map((item, i) => {
               const color = item.color
 
