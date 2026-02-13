@@ -235,6 +235,14 @@ export const ucarEasySearchBuilderAtom = async (props: easySearchType) => {
         { arrivedAt: { not: null } },
         { processedAs: UCAR_CODE.PROCESSED_AS.raw.MASSESHO.code },
         { masshoBi: null },
+        {
+          OR: [
+            { inspectionAlternate: null },
+            { inspectionAlternate: { notIn: [UCAR_CODE.INSPECTION_ALTERNATE.raw.MASSHOZUMI.code] } }
+          ]
+
+        }
+
       ],
     },
   }
