@@ -6,16 +6,16 @@ import React from 'react'
 //   loading: () => <></>,
 // })
 
-import {ColBuilder} from '@app/(apps)/QRBP/class/ColBuilder'
-import {PageBuilder} from '@app/(apps)/QRBP/class/PageBuilder'
+import { ColBuilder } from '@app/(apps)/QRBP/class/ColBuilder'
+import { PageBuilder } from '@app/(apps)/QRBP/class/PageBuilder'
 
 import FavButton from '@app/(apps)/QRBP/components/QRBP/forCr/FavButton'
 
 import useMyNavigation from '@cm/hooks/globalHooks/useMyNavigation'
 import useRecords from '@cm/components/DataLogic/TFs/PropAdjustor/hooks/useRecords/useRecords'
-import {useSearchHandler} from '@cm/components/DataLogic/TFs/MyTable/components/SearchHandler/useSearchHandler/useSearchHandler'
+import { useSearchHandler } from '@cm/components/DataLogic/TFs/MyTable/components/SearchHandler/useSearchHandler/useSearchHandler'
 import TableForm from '@cm/components/DataLogic/TFs/PropAdjustor/components/TableForm'
-import {useParams} from 'next/navigation'
+import { useParams } from 'next/navigation'
 import useInitFormState from '@cm/hooks/useInitFormState'
 import CarProcessChildCreator from '@app/(apps)/QRBP/components/QRBP/forCr/CarProcessChildCreator'
 
@@ -27,22 +27,22 @@ export default function ProcessInputer({
   useGlobalProps,
 }) {
   const params = useParams() as any
-  const myTable = {create: false, delete: false, style: {maxHeight: '90vh'}}
+  const myTable = { create: false, delete: false, style: { maxHeight: '85vh' } }
   const dataModelName = `car`
 
   // const {prismaData: prismaCars} = usePrismaDataSwr({dataModelName: `car`, prismaDataExtractionQuery})
-  const {records, setrecords, mutateRecords, deleteRecord, totalCount} = useRecords({
+  const { records, setrecords, mutateRecords, deleteRecord, totalCount } = useRecords({
     dataModelName,
     serverFetchProps,
     initialModelRecords,
   })
 
-  const columns = ColBuilder.carListForEngineer({useGlobalProps})
-  const {formData, setformData} = useInitFormState(null, records, false, 'car')
+  const columns = ColBuilder.carListForEngineer({ useGlobalProps })
+  const { formData, setformData } = useInitFormState(null, records, false, 'car')
 
-  const {query} = useMyNavigation()
+  const { query } = useMyNavigation()
 
-  const {SearchedItemListMemo} = useSearchHandler({
+  const { SearchedItemListMemo } = useSearchHandler({
     columns,
     dataModelName,
     useGlobalProps,
@@ -64,7 +64,7 @@ export default function ProcessInputer({
           setformData,
           columns,
 
-          myForm: {alignMode: 'console'},
+          myForm: { alignMode: 'console' },
           myTable: {
             ...myTable,
             customActions: () => {
@@ -74,11 +74,11 @@ export default function ProcessInputer({
 
             AdditionalActionButtonObject: {
               favBtn: props => {
-                return <FavButton {...{car: props?.record, useGlobalProps, userId: Number(query.userId)}} />
+                return <FavButton {...{ car: props?.record, useGlobalProps, userId: Number(query.userId) }} />
               },
             },
           },
-          editType: {type: 'modal'},
+          editType: { type: 'modal' },
           EditForm: CarProcessChildCreator,
           useGlobalProps,
         }}

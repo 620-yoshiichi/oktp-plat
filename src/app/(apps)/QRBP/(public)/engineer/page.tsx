@@ -1,31 +1,31 @@
-import {P_Query} from '@cm/class/PQuery'
+import { P_Query } from '@cm/class/PQuery'
 import Base from './Base'
-import {initServerComopnent} from 'src/non-common/serverSideFunction'
+import { initServerComopnent } from 'src/non-common/serverSideFunction'
 
-import {QueryBuilder} from '@app/(apps)/QRBP/class/QueryBuilder'
+import { QueryBuilder } from '@app/(apps)/QRBP/class/QueryBuilder'
 
-import {addDays} from 'date-fns'
-import {getWhereQuery} from '@cm/lib/methods/redirect-method'
+import { addDays } from 'date-fns'
+import { getWhereQuery } from '@cm/lib/methods/redirect-method'
 
-import {HREF} from '@cm/lib/methods/urls'
+import { HREF } from '@cm/lib/methods/urls'
 import Redirector from '@cm/components/utils/Redirector'
-import {prismaDataExtractionQueryType} from '@cm/components/DataLogic/TFs/Server/Conf'
+import { prismaDataExtractionQueryType } from '@cm/components/DataLogic/TFs/Server/Conf'
 
-import {QrbpEasySearchBuilder} from 'src/non-common/EsCollection/QRBP_EasySearchBuilder'
-import {getInitModelRecordsProps, serverFetchProps} from '@cm/components/DataLogic/TFs/Server/fetchers/getInitModelRecordsProps'
+import { QrbpEasySearchBuilder } from 'src/non-common/EsCollection/QRBP_EasySearchBuilder'
+import { getInitModelRecordsProps, serverFetchProps } from '@cm/components/DataLogic/TFs/Server/fetchers/getInitModelRecordsProps'
 
 export default async function Page(props) {
   const params = await props.params
   let query = await props.searchParams
-  const {session} = await initServerComopnent({query})
+  const { session } = await initServerComopnent({ query })
 
   // const EasySearch = QueryBuilder.EasySearch({session, query})
 
-  query = {...query, isRepairAllowed: true}
+  query = { ...query, isRepairAllowed: true }
   const today = new Date()
-  const defaultQuery = {from: today}
+  const defaultQuery = { from: today }
 
-  const {redirectPath, whereQuery: dateWhere} = await getWhereQuery({
+  const { redirectPath, whereQuery: dateWhere } = await getWhereQuery({
     defaultQuery,
     query,
     whereQueryConverter: whereQuery => ({
@@ -55,7 +55,7 @@ export default async function Page(props) {
 
   const userId = Number(query.userId)
 
-  const {page, take, skip} = P_Query.getPaginationPropsByQuery({
+  const { page, take, skip } = P_Query.getPaginationPropsByQuery({
     query,
     tableId: undefined,
     countPerPage: undefined,
@@ -70,17 +70,17 @@ export default async function Page(props) {
 
   const favMode = query?.favorite === 'true' && userId
 
-  const isRepairAllowedCondition = await (await (await QrbpEasySearchBuilder()).car({session, query})).isRepairAllowed?.CONDITION
+  const isRepairAllowedCondition = await (await (await QrbpEasySearchBuilder()).car({ session, query })).isRepairAllowed?.CONDITION
 
   const prismaDataExtractionQueryCar: prismaDataExtractionQueryType = {
     include: QueryBuilder.getInclude({
       session,
       query,
-      QueryBuilderExtraProps: {isRepairAllowedWhereQuery: isRepairAllowedCondition},
+      QueryBuilderExtraProps: { isRepairAllowedWhereQuery: isRepairAllowedCondition },
     }).car.include,
     ...flexQueryForCar,
     where: {
-      ...(favMode ? {favoredByUserIds: {has: userId ?? 0}} : undefined),
+      ...(favMode ? { favoredByUserIds: { has: userId ?? 0 } } : undefined),
       AND: [...flexQueryForCar.AND],
     },
   }
@@ -94,14 +94,14 @@ export default async function Page(props) {
     dataModelName: 'car',
     additional: {
       where: {
-        ...(favMode ? {favoredByUserIds: {has: userId ?? 0}} : undefined),
+        ...(favMode ? { favoredByUserIds: { has: userId ?? 0 } } : undefined),
         AND: [...flexQueryForCar.AND],
       },
     },
     include: QueryBuilder.getInclude({
       session,
       query,
-      QueryBuilderExtraProps: {isRepairAllowedWhereQuery: isRepairAllowedCondition},
+      QueryBuilderExtraProps: { isRepairAllowedWhereQuery: isRepairAllowedCondition },
     }).car.include,
     session,
     myTable: undefined,
@@ -121,9 +121,10 @@ export default async function Page(props) {
         maxWidth: '95vw',
         margin: 'auto',
         padding: 5,
+
       }}
     >
-      <Base {...{serverFetchProps, initialModelRecords, prismaDataExtractionQueryCar}} />
+      <Base {...{ serverFetchProps, initialModelRecords, prismaDataExtractionQueryCar }} />
     </div>
   )
 }

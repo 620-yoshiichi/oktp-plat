@@ -238,6 +238,7 @@ export const useMyTableLogic = (props: MyTableLogicProps) => {
   const sectionStyle = {
     maxWidth: '90%',
     zIndex: Z_INDEX.thead,
+    margin: `auto`,
   }
 
   const { isInfiniteScrollMode, setInfiniteScrollMode, hasMore } = infiniteScrollData

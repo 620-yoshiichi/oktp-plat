@@ -37,7 +37,7 @@ export const MyTableControls = React.memo<MyTableControlsProps>(
     // myTable,
   }) => {
     return (
-      <section style={sectionStyle}>
+      <section style={sectionStyle} >
         <div className={cl('rounded-sm bg-white/70', 'mx-auto w-fit px-1.5 py-1')}>
           <C_Stack className="items-start">
             {SearchedItemListMemo && <div>{SearchedItemListMemo}</div>}
