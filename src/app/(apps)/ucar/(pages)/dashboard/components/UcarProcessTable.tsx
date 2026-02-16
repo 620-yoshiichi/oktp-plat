@@ -84,17 +84,17 @@ export function UcarProcessTable({ cars, isLoading, options = {} }: UcarProcessT
   return CsvTable({
     records: cars.map(car => {
       // processMapを拡張: 販売日（code='SALES'）は ai21.DD_URIAGE から取得
-      const extendedProcessMap: Record<string, string | null> = {...car.processMap}
+      const extendedProcessMap: Record<string, string | null> = { ...car.processMap }
       if (car.ai21.DD_URIAGE) {
         extendedProcessMap['SALES'] = car.ai21.DD_URIAGE.toISOString()
       }
 
       // 完了済み工程の配列（順序通り）
-      const completedProcesses: {code: string; date: Date}[] = []
+      const completedProcesses: { code: string; date: Date }[] = []
       for (const proc of ALL_PROCESSES) {
         const dateIso = extendedProcessMap[proc.code]
         if (dateIso) {
-          completedProcesses.push({code: proc.code, date: new Date(dateIso)})
+          completedProcesses.push({ code: proc.code, date: new Date(dateIso) })
         }
       }
 
@@ -127,7 +127,7 @@ export function UcarProcessTable({ cars, isLoading, options = {} }: UcarProcessT
                 {car.sateiID}
               </Link>
             ),
-            style: { minWidth: 100 },
+            style: { minWidth: 100, zIndex: 100 },
           },
 
           // --- 車種・グレード ---
@@ -229,6 +229,6 @@ export function UcarProcessTable({ cars, isLoading, options = {} }: UcarProcessT
       }
     }),
   }).WithWrapper({
-    className: cn('[&_th]:!p-0', '[&_td]:!py-0.5', '[&_td]:text-xs', '[&_td]:align-middle'),
+    className: cn('[&_th]:!p-0', '[&_td]:!py-0.5', '[&_td]:text-xs', '[&_td]:align-middle', ` max-w-[85vw]`),
   })
 }

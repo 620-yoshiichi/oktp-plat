@@ -83,18 +83,72 @@ export type UcarWithProcess = {
   DD_URIAGE?: Date
 }
 
+// ============================================================
+// ダッシュボード集計ヘルパー
+// ============================================================
+
+/** 車両の工程日時をprocessCodeで引ける Map に変換 */
+export function buildProcessDateMap(car: UcarWithProcess): Map<string, Date> {
+  const map = new Map<string, Date>()
+  for (const p of car.processes) {
+    if (p.date) {
+      map.set(p.processCode, p.date)
+    }
+  }
+  if (car.DD_URIAGE) {
+    map.set('SALES', car.DD_URIAGE)
+  }
+  return map
+}
+
+/** メインフローの工程コード順序（MAIN_FLOW_ORDER に対応） */
+const MAIN_FLOW_CODES = ['CS01', 'CS02', 'CS03', 'CR02', 'CR03', 'CR04', 'CR05', 'CR06', 'CR07', 'CR08', 'CR09']
+
+
+/**
+ * デフォルト滞留判定のファクトリ関数
+ * 自工程が完了済 & 後続工程がすべて未完了 → 滞留
+ */
+const makeDefaultRetention = (selfCode: string): (car: UcarWithProcess) => boolean => {
+
+
+  /** 指定コードより後の工程コード一覧を返す */
+  const makeSubsequentCodes = (selfCode: string): string[] => {
+    const idx = MAIN_FLOW_CODES.indexOf(selfCode)
+    if (idx === -1) return []
+    return MAIN_FLOW_CODES.slice(idx + 1)
+  }
+
+  const subsequentCodes = makeSubsequentCodes(selfCode)
+  return (car) => {
+    const dateMap = buildProcessDateMap(car)
+    if (!dateMap.has(selfCode)) return false
+    return subsequentCodes.every(code => !dateMap.has(code))
+  }
+}
+
+// ============================================================
+// ダッシュボード専用プロパティ型
+// ============================================================
+
+/** ダッシュボード集計・表示用プロパティ */
+export type DashboardProp = {
+  /** ダッシュボード上の表示名（未設定時は label を使用） */
+  label?: string
+  /** 滞留判定基準の説明文（carに依存しない静的な文字列） */
+  retentionDescription?: string
+  /** 滞留判定関数 */
+  calcRetention?: (car: UcarWithProcess) => boolean
+  /** LT計算関数（日数を返す。未定義時はデフォルト計算を使用） */
+  calcLT?: (car: UcarWithProcess) => number | null
+}
+
 type UcarProcessCodeItem = codeItemCore & {
   bqFieldName?: string
   postHandler?: postHandlerProps
   list: string[]
-  /** 次工程のキー名（メインフローの順序定義用） */
-  nextProcessKey?: shortcutNameStr
-  /** ダッシュボード上の表示名（例: '拠点滞留'） */
-  dashboardLabel?: string
-  /** 滞留判定のカスタム関数（未定義時はデフォルト判定を使用） */
-  calcRetention?: (car: UcarWithProcess) => boolean
-  /** LT計算のカスタム関数（未定義時はデフォルト計算を使用。日数を返す） */
-  calcLT?: (car: UcarWithProcess) => number | null
+  /** ダッシュボード集計・表示用プロパティ */
+  dashboardProp?: DashboardProp
 }
 type UcarProcessCodeObjectArgs = { [key: string]: UcarProcessCodeItem }
 
@@ -122,20 +176,20 @@ export class UcarProcessCl {
 
   /**
    * ダッシュボード表示用の工程一覧を取得
-   * （dashboardLabel が設定されている工程のみ。CR_HAISO は最終工程なので含まない場合あり）
    */
   static getDashboardProcesses() {
     return UcarProcessCl.MAIN_FLOW_ORDER.map(key => {
       const item = UcarProcessCl.CODE.raw[key]
+      const dp = item.dashboardProp
       return {
         key,
         code: item.code,
         label: item.label,
-        dashboardLabel: item.dashboardLabel ?? item.label,
+        dashboardLabel: dp?.label ?? item.label,
         color: item.color,
-        nextProcessKey: item.nextProcessKey,
-        calcRetention: item.calcRetention,
-        calcLT: item.calcLT,
+        retentionDescription: dp?.retentionDescription ?? '',
+        calcRetention: dp?.calcRetention,
+        calcLT: dp?.calcLT,
       }
     })
   }
@@ -162,8 +216,10 @@ export class UcarProcessCl {
       color: '#9E9E9E', // グレー（開始前）
       type: '営業',
       list: [`main`],
-      nextProcessKey: 'STORE_NYUKO',
-      // dashboardLabel: 'QR発行',
+      dashboardProp: {
+        retentionDescription: '【QR発行】を実施後、【入庫】が登録されていないものです。',
+        calcRetention: makeDefaultRetention('CS01'),
+      },
     },
     STORE_NYUKO: {
       code: 'CS02',
@@ -172,8 +228,10 @@ export class UcarProcessCl {
       color: '#66BB6A', // ライトグリーン
       type: '営業',
       list: [`main`],
-      nextProcessKey: 'STORE_TENCHO_KENSHU',
-      // dashboardLabel: '拠点滞留',
+      dashboardProp: {
+        retentionDescription: '【入庫】を実施後、【店長検収】が登録されていないものです。',
+        calcRetention: makeDefaultRetention('CS02'),
+      },
       postHandler: {
         buildConfirmMsg: () => 'スタッフ入庫検収を行い、店長へメールを送付します。',
         buildCompleteMessage: () => 'スタッフ入庫検収を行い、店長へメールを送付しました。',
@@ -213,8 +271,10 @@ export class UcarProcessCl {
       color: '#43A047', // グリーン
       type: '店長',
       list: [`main`],
-      nextProcessKey: 'CR_CHAKU',
-      // dashboardLabel: 'CR配送滞留',
+      dashboardProp: {
+        retentionDescription: '【店長検収】を実施後、【CR着】が登録されていないものです。',
+        calcRetention: makeDefaultRetention('CS03'),
+      },
       postHandler: {
         buildConfirmMsg: () => 'CRへ配送手配が実施されます。',
         main: async props => {
@@ -239,8 +299,10 @@ export class UcarProcessCl {
       color: '#00ACC1', // ダークシアン
       type: '加修',
       list: [`main`, 'CR'],
-      nextProcessKey: 'CR_KENSHU',
-      // dashboardLabel: 'CR着滞留',
+      dashboardProp: {
+        retentionDescription: '【CR着】を実施後、【検収】が登録されていないものです。',
+        calcRetention: makeDefaultRetention('CR02'),
+      },
     },
 
     CR_KENSHU: {
@@ -250,8 +312,10 @@ export class UcarProcessCl {
       color: '#0097A7', // ティール
       type: '加修',
       list: [`main`, 'CR'],
-      nextProcessKey: 'CR_KASHU_KAISHI',
-      // dashboardLabel: '検収滞留',
+      dashboardProp: {
+        retentionDescription: '【検収】を実施後、【加修開始】が登録されていないものです。',
+        calcRetention: makeDefaultRetention('CR03'),
+      },
     },
     CR_KASHU_KAISHI: {
       code: 'CR04',
@@ -260,8 +324,10 @@ export class UcarProcessCl {
       color: '#42A5F5', // ライトブルー
       type: '加修',
       list: [`main`, 'CR'],
-      nextProcessKey: 'CR_MARUKURI',
-      // dashboardLabel: '加修中',
+      dashboardProp: {
+        retentionDescription: '【加修開始】を実施後、【まるくり】が登録されていないものです。',
+        calcRetention: makeDefaultRetention('CR04'),
+      },
     },
     CR_MARUKURI: {
       code: 'CR05',
@@ -270,8 +336,10 @@ export class UcarProcessCl {
       color: '#1E88E5', // ブルー
       type: '加修',
       list: [`main`, 'CR'],
-      nextProcessKey: 'CR_KENSA',
-      // dashboardLabel: 'まるクリ',
+      dashboardProp: {
+        retentionDescription: '【まるくり】を実施後、【検査】が登録されていないものです。',
+        calcRetention: makeDefaultRetention('CR05'),
+      },
     },
     CR_KENSA: {
       code: 'CR06',
@@ -280,8 +348,10 @@ export class UcarProcessCl {
       color: '#1976D2', // ダークブルー
       type: '加修',
       list: [`main`, 'CR'],
-      nextProcessKey: 'CR_SHASHIN',
-      // dashboardLabel: '検査滞留',
+      dashboardProp: {
+        retentionDescription: '【検査】を実施後、【写真】が登録されていないものです。',
+        calcRetention: makeDefaultRetention('CR06'),
+      },
     },
     CR_SHASHIN: {
       code: 'CR07',
@@ -290,8 +360,10 @@ export class UcarProcessCl {
       color: '#5C6BC0', // インディゴ
       type: '加修',
       list: [`main`, 'CR'],
-      nextProcessKey: 'CR_GAZOO',
-      // dashboardLabel: '写真撮影',
+      dashboardProp: {
+        retentionDescription: '【写真】を実施後、【GAZOO】が登録されていないものです。',
+        calcRetention: makeDefaultRetention('CR07'),
+      },
     },
     CR_GAZOO: {
       code: 'CR08',
@@ -300,8 +372,10 @@ export class UcarProcessCl {
       color: '#7E57C2', // ディープパープル
       type: '加修',
       list: [`main`, 'CR'],
-      nextProcessKey: 'CR_HAISO',
-      // dashboardLabel: 'GAZOO',
+      dashboardProp: {
+        retentionDescription: '【GAZOO】を実施後、【商品車受取】が登録されていないものです。',
+        calcRetention: makeDefaultRetention('CR08'),
+      },
     },
     CR_HAISO: {
       code: 'CR09',
@@ -310,22 +384,14 @@ export class UcarProcessCl {
       color: '#FF7043', // ディープオレンジ（完了）
       type: '店長',
       list: [`main`, 'CR'],
-      dashboardLabel: '拠点配送',
-      /**
-       * 拠点配送のカスタム滞留判定:
-       * CR09（商品車受取）が完了しているが、DD_URIAGE（販売日）がない場合を「滞留」とみなす。
-       * DD_URIAGEがある場合は完全に販売完了したため滞留ではない。
-       *
-       * CR_HAISO は最終集計工程。nextProcessKey はないが、UcarProcessTable の表示列には
-       * SALES_DATE が追加されるため、CR09→販売日のLTは自動計算される。
-       */
-      calcRetention: (car: UcarWithProcess) => {
-        // CR09の完了日を確認
-        const hasCR09 = car.processes.some(p => p.processCode === 'CR09' && p.date)
-        if (!hasCR09) return false
-
-        // DD_URIAGEがない場合は滞留
-        return !car.DD_URIAGE
+      dashboardProp: {
+        label: '拠点配送',
+        retentionDescription: '【商品車受取】を実施後、販売日が登録されていないものです。',
+        calcRetention: (car: UcarWithProcess) => {
+          const hasCR09 = car.processes.some(p => p.processCode === 'CR09' && p.date)
+          if (!hasCR09) return false
+          return !car.DD_URIAGE
+        },
       },
     },
 
@@ -336,7 +402,9 @@ export class UcarProcessCl {
       color: '#4CAF50', // グリーン（最終完了）
       type: '営業',
       list: [], // 集計対象外、表示専用
-      dashboardLabel: '販売完了',
+      dashboardProp: {
+        label: '販売完了',
+      },
     },
 
     STORE_SHORUI_SOUHU: {

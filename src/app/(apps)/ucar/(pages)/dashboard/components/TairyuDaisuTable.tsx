@@ -71,17 +71,7 @@ export function TairyuDaisuTable({ data, year }: Props) {
 
   // --- 工程ラベルセル ---
   const ProcessLabel = ({ proc }: { proc: (typeof processes)[0] }) => {
-
-
-
-    const nextProcessKey = UcarProcessCl.CODE.raw[proc.processKey]?.nextProcessKey
-    const nextProcess = nextProcessKey ? UcarProcessCl.CODE.raw[nextProcessKey] : null
-
-
-
-
-
-
+    const retentionDesc = UcarProcessCl.CODE.raw[proc.processKey]?.dashboardProp?.retentionDescription
 
 
     return <td className="border px-2 py-1 font-medium" style={{ borderLeft: `4px solid ${proc.color}` }}>
@@ -98,9 +88,11 @@ export function TairyuDaisuTable({ data, year }: Props) {
         <span className="inline-block w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: proc.color }} />
         <div className="relative group/popover">
           <span className="truncate group-hover:underline">{proc.dashboardLabel}</span>
-          <div className="hidden group-hover/popover:block absolute -left-8 top-1/2 mt-1 z-10 bg-white border border-gray-300 rounded shadow-lg p-2 text-xs text-gray-700 min-w-[170px] max-w-xs whitespace-pre-line">
-            【{proc.dashboardLabel}】を実施後、【{nextProcess?.label}】が登録されていないものです。
-          </div>
+          {retentionDesc && (
+            <div className="hidden group-hover/popover:block absolute -left-8 top-1/2 mt-1 z-10 bg-white border border-gray-300 rounded shadow-lg p-2 text-xs text-gray-700 min-w-[170px] max-w-xs whitespace-pre-line">
+              {retentionDesc}
+            </div>
+          )}
         </div>
       </button>
     </td>

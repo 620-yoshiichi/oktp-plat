@@ -14,6 +14,8 @@ import useModal from '@cm/components/utils/modal/useModal'
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 import { Card } from '@cm/shadcn/ui/card'
 import { C_Stack, R_Stack } from '@cm/components/styles/common-components/common-components'
+import { Alert } from '@cm/components/styles/common-components/Alert'
+
 
 // ============================================================
 // ヘルパー
@@ -164,6 +166,10 @@ export default function DashboardPage() {
         )}
       </div>
 
+      <Alert color='yellow'>
+        ・LT / 滞留の算出対象車両は、本QRシステム上で「小売 / CPO / オンライン販売」として仕分けられたものです。<br />
+        ・「その他指標」に関しては、全車両（卸 / スクラップ含む）で算出されます。
+      </Alert>
 
 
       {error && <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md mb-4">{error}</div>}
@@ -179,6 +185,7 @@ export default function DashboardPage() {
 
       {!isLoading && dashboardData && (
         <>
+
           <C_Stack className={`gap-4`} >
             <R_Stack className={` items-stretch`}>
               <Card className={`w-[850px]`}>

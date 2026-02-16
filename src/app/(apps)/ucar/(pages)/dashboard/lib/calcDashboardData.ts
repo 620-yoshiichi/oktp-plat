@@ -1,4 +1,4 @@
-import {UcarProcessCl, UcarWithProcess} from '@app/(apps)/ucar/class/UcarProcessCl'
+import {UcarProcessCl, UcarWithProcess, buildProcessDateMap} from '@app/(apps)/ucar/class/UcarProcessCl'
 import {formatDate} from '@cm/class/Days/date-utils/formatters'
 
 // ============================================================
@@ -66,33 +66,6 @@ export type DashboardResult = {
 // ヘルパー
 // ============================================================
 
-/** 車両の工程日時をprocessCodeで引ける Map に変換 */
-function buildProcessDateMap(car: UcarWithProcess): Map<string, Date> {
-  const map = new Map<string, Date>()
-  for (const p of car.processes) {
-    if (p.date) {
-      map.set(p.processCode, p.date)
-    }
-  }
-  // 販売日（code='SALES'）は DD_URIAGE から取得
-  if (car.DD_URIAGE) {
-    map.set('SALES', car.DD_URIAGE)
-  }
-  return map
-}
-
-/** processCode → processKey のマッピングを作成 */
-function buildCodeToKeyMap(): Map<string, string> {
-  const map = new Map<string, string>()
-  for (const key of UcarProcessCl.MAIN_FLOW_ORDER) {
-    const item = UcarProcessCl.CODE.raw[key]
-    if (item?.code) {
-      map.set(item.code, key)
-    }
-  }
-  return map
-}
-
 /** 2つのDateの差を日数で返す */
 function diffDays(from: Date, to: Date): number {
   const ms = to.getTime() - from.getTime()
@@ -105,33 +78,6 @@ function toMonthKey(d: Date): string {
 }
 
 // ============================================================
-// デフォルトの滞留判定
-// ============================================================
-
-/**
- * デフォルトの滞留判定:
- * 自工程が完了しており、かつ、自工程以降のすべての後続工程がいずれも未完了であれば「滞留中」
- */
-function defaultCalcRetention(processKey: string, car: UcarWithProcess, codeToKey: Map<string, string>): boolean {
-  const item = UcarProcessCl.CODE.raw[processKey]
-  if (!item) return false
-
-  const dateMap = buildProcessDateMap(car)
-  const selfCompleted = dateMap.has(item.code)
-  if (!selfCompleted) return false
-
-  const subsequentKeys = UcarProcessCl.getSubsequentKeys(processKey)
-  for (const sk of subsequentKeys) {
-    const skItem = UcarProcessCl.CODE.raw[sk]
-    if (skItem?.code && dateMap.has(skItem.code)) {
-      return false
-    }
-  }
-
-  return true
-}
-
-// ============================================================
 // デフォルトのLT計算
 // ============================================================
 
@@ -141,7 +87,7 @@ function defaultCalcRetention(processKey: string, car: UcarWithProcess, codeToKe
  * スキップ対応: 直接の次工程が未実施でも、それ以降で最初に実施された工程との間をLTとする。
  * まだ後続工程がない場合は null。
  */
-function defaultCalcLT(processKey: string, car: UcarWithProcess, codeToKey: Map<string, string>): number | null {
+function defaultCalcLT(processKey: string, car: UcarWithProcess): number | null {
   const item = UcarProcessCl.CODE.raw[processKey]
   if (!item) return null
 
@@ -178,7 +124,6 @@ function defaultCalcLT(processKey: string, car: UcarWithProcess, codeToKey: Map<
  * @param allCars  全車両（フィルタなし） → その他指標（仕分け別台数・小売割合・98番号集計）に使用
  */
 export function calcDashboardData(cars: UcarWithProcess[], allCars: UcarWithProcess[]): DashboardResult {
-  const codeToKey = buildCodeToKeyMap()
   const dashboardProcesses = UcarProcessCl.getDashboardProcesses()
   const monthSet = new Set<string>()
 
@@ -207,14 +152,14 @@ export function calcDashboardData(cars: UcarWithProcess[], allCars: UcarWithProc
       const acc = ltAccumulator[proc.key]
 
       // --- 滞留判定（フィルタなし・全車両対象） ---
-      const isRetained = proc.calcRetention ? proc.calcRetention(car) : defaultCalcRetention(proc.key, car, codeToKey)
+      const isRetained = proc.calcRetention?.(car) ?? false
 
       if (isRetained) {
         acc.retentionCount++
       }
 
       // --- LT計算（QRシート発行月でグルーピング） ---
-      const lt = proc.calcLT ? proc.calcLT(car) : defaultCalcLT(proc.key, car, codeToKey)
+      const lt = proc.calcLT ? proc.calcLT(car) : defaultCalcLT(proc.key, car)
 
       if (lt !== null && lt >= 0) {
         acc.all.push(lt)
@@ -395,7 +340,6 @@ export function calcDashboardData(cars: UcarWithProcess[], allCars: UcarWithProc
  * @param periodEnd   期間終了（含む）
  */
 export function calcPeriodLT(cars: UcarWithProcess[]): PeriodLTSummary[] {
-  const codeToKey = buildCodeToKeyMap()
   const dashboardProcesses = UcarProcessCl.getDashboardProcesses()
 
   // Prisma側で createdAt フィルタ済みの車両を受け取る前提
@@ -403,7 +347,7 @@ export function calcPeriodLT(cars: UcarWithProcess[]): PeriodLTSummary[] {
     const lts: number[] = []
 
     for (const car of cars) {
-      const lt = proc.calcLT ? proc.calcLT(car) : defaultCalcLT(proc.key, car, codeToKey)
+      const lt = proc.calcLT ? proc.calcLT(car) : defaultCalcLT(proc.key, car)
       if (lt !== null && lt >= 0) {
         lts.push(lt)
       }
