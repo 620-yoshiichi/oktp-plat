@@ -4,13 +4,16 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { DashboardResult, PeriodLTSummary } from './lib/calcDashboardData'
 import { fetchDashboardData, fetchPeriodLT } from './server-actions'
-import { ProcessSummaryTable } from './components/ProcessSummaryTable'
-import { CurrentCountPieChart } from './components/CurrentCountPieChart'
+import { TairyuDaisuTable } from './components/TairyuDaisuTable'
+import { TairyuPieChart } from './components/TairyuPieChart'
 import { LeadTimeBarChart } from './components/LeadTimeBarChart'
 import { OtherMetricsTable } from './components/OtherMetricsTable'
 import { LTProcessDetailModal } from './components/LTProcessDetailModal'
 import { UcarProcessCl } from '@app/(apps)/ucar/class/UcarProcessCl'
 import useModal from '@cm/components/utils/modal/useModal'
+import useGlobal from '@cm/hooks/globalHooks/useGlobal'
+import { Card } from '@cm/shadcn/ui/card'
+import { C_Stack, R_Stack } from '@cm/components/styles/common-components/common-components'
 
 // ============================================================
 // ヘルパー
@@ -38,20 +41,14 @@ export default function DashboardPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
 
+  const { query } = useGlobal()
+
   // --- 年フィルタ（テーブル用） ---
-  const year = useMemo(() => {
-    const raw = searchParams?.get('year')
-    return raw ? Number(raw) : new Date().getFullYear()
-  }, [searchParams])
+  const year = query.year ? Number(query.year) : new Date().getFullYear()
 
   // --- 期間フィルタ（LTグラフ用、デフォルト: 過去3ヶ月前〜当月末） ---
-  const ltPeriodStart = useMemo(() => {
-    return searchParams?.get('ltStart') ?? threeMonthsAgoStart()
-  }, [searchParams])
-
-  const ltPeriodEnd = useMemo(() => {
-    return searchParams?.get('ltEnd') ?? thisMonthEnd()
-  }, [searchParams])
+  const ltPeriodStart = query.ltStart ?? threeMonthsAgoStart()
+  const ltPeriodEnd = query.ltEnd ?? thisMonthEnd()
 
   // --- クエリ更新 ---
   const updateQuery = useCallback(
@@ -105,6 +102,9 @@ export default function DashboardPage() {
     })
   }, [ltPeriodStart, ltPeriodEnd])
 
+
+  console.log(dashboardData)  //logs
+
   // --- LTモーダル（useModal使用） ---
   const ltModal = useModal<{
     processKey: string
@@ -144,6 +144,8 @@ export default function DashboardPage() {
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-xl font-bold">QRプロジェクト リードタイム概況</h1>
 
+
+
         {availableYears.length > 0 && (
           <div className="flex items-center gap-2 text-sm">
             <label className="font-medium text-gray-600">表示年</label>
@@ -162,6 +164,8 @@ export default function DashboardPage() {
         )}
       </div>
 
+
+
       {error && <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md mb-4">{error}</div>}
 
       {isLoading && (
@@ -175,63 +179,69 @@ export default function DashboardPage() {
 
       {!isLoading && dashboardData && (
         <>
-          <div className="flex gap-4">
-            <div className="flex-2 flex flex-col gap-4 min-w-[850px]">
+          <C_Stack className={`gap-4`} >
+            <R_Stack className={` items-stretch`}>
+              <Card className={`w-[850px]`}>
 
-              <div>
-                現在の滞留台数
-                <ProcessSummaryTable data={dashboardData} year={year} /></div>
+                <div><TairyuDaisuTable data={dashboardData} year={year} /></div>
+              </Card>
 
-              <div>
+              <Card className={`w-[450px]`}>
+                <div>現在台数別グラフ</div>
+                <div><TairyuPieChart data={dashboardData} /></div>
+              </Card>
+
+
+            </R_Stack>
+
+
+
+            <R_Stack className={` items-stretch`}>
+
+              <Card className={`w-[850px]`}>
                 工程別平均LT
-                <OtherMetricsTable data={dashboardData} year={year} />
-              </div>
-            </div>
+                <div><OtherMetricsTable data={dashboardData} year={year} /></div>
+              </Card>
 
 
-
-            <div className="flex-2 flex flex-col gap-4 min-w-[380px]">
-              <div className="border rounded-lg p-4 bg-white shadow-sm">
-                <h3 className="text-sm font-semibold mb-2 text-center">現在台数別グラフ</h3>
-                <CurrentCountPieChart data={dashboardData} />
-              </div>
-
-              <div className="border rounded-lg p-4 bg-white shadow-sm">
-                <h3 className="text-sm font-semibold mb-2 text-center">LTグラフ</h3>
-                <div className="flex items-center justify-center gap-2 text-xs mb-3">
-                  <label className="text-gray-500">開始</label>
-                  <input
-                    type="date"
-                    className="border rounded px-1.5 py-0.5 text-xs bg-white"
-                    value={ltPeriodStart}
-                    onChange={e => updateQuery({ ltStart: e.target.value || undefined })}
-                  />
-                  <span className="text-gray-400">〜</span>
-                  <label className="text-gray-500">終了</label>
-                  <input
-                    type="date"
-                    className="border rounded px-1.5 py-0.5 text-xs bg-white"
-                    value={ltPeriodEnd}
-                    onChange={e => updateQuery({ ltEnd: e.target.value || undefined })}
-                  />
-                  <button
-                    className="text-xs text-blue-600 hover:text-blue-800 underline"
-                    onClick={() => updateQuery({ ltStart: undefined, ltEnd: undefined })}
-                  >
-                    直近3ヶ月
-                  </button>
-                </div>
-
-                {isLTLoading ? (
-                  <div className="flex items-center justify-center py-8">
-                    <div className="w-5 h-5 border-2 border-blue-200 border-t-blue-600 rounded-full animate-spin" />
+              <Card className={`w-[450px]`}>
+                <div>LTグラフ</div>
+                <div>
+                  <div className="flex items-center justify-center gap-2 text-xs mb-3">
+                    <label className="text-gray-500">開始</label>
+                    <input
+                      type="date"
+                      className="border rounded px-1.5 py-0.5 text-xs bg-white"
+                      value={ltPeriodStart}
+                      onChange={e => updateQuery({ ltStart: e.target.value || undefined })}
+                    />
+                    <span className="text-gray-400">〜</span>
+                    <label className="text-gray-500">終了</label>
+                    <input
+                      type="date"
+                      className="border rounded px-1.5 py-0.5 text-xs bg-white"
+                      value={ltPeriodEnd}
+                      onChange={e => updateQuery({ ltEnd: e.target.value || undefined })}
+                    />
+                    <button
+                      className="text-xs text-blue-600 hover:text-blue-800 underline"
+                      onClick={() => updateQuery({ ltStart: undefined, ltEnd: undefined })}
+                    >
+                      直近3ヶ月
+                    </button>
                   </div>
-                ) : (
-                  <LeadTimeBarChart data={periodLTData ?? []} onBarClick={handleLTBarClick} />
-                )}
-              </div>
-            </div>
-          </div>
+
+                  {isLTLoading ? (
+                    <div className="flex items-center justify-center py-8">
+                      <div className="w-5 h-5 border-2 border-blue-200 border-t-blue-600 rounded-full animate-spin" />
+                    </div>
+                  ) : (
+                    <LeadTimeBarChart data={periodLTData ?? []} onBarClick={handleLTBarClick} />
+                  )}
+                </div>
+              </Card>
+            </R_Stack>
+          </C_Stack>
 
 
         </>

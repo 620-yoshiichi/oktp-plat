@@ -37,18 +37,15 @@ function fmtPercent(n: number | null | undefined): string {
 export function OtherMetricsTable({ data, year }: Props) {
   const { retailRatio, retailRatioTotal, shiwakeBreakdown, shiwakeGrandTotal, shiwakeGrandMonthly, number98Stats } = data
 
-  // 指定年の月のみ表示
+  // 指定年の1〜12月を全て表示（データがない月も含む）
   const yyPrefix = String(year).slice(-2)
   const months = useMemo(() => {
     const all: string[] = []
     for (let m = 1; m <= 12; m++) {
-      const mk = `${yyPrefix}-${String(m).padStart(2, '0')}`
-      if (data.months.includes(mk)) {
-        all.push(mk)
-      }
+      all.push(`${yyPrefix}-${String(m).padStart(2, '0')}`)
     }
     return all
-  }, [data.months, yyPrefix])
+  }, [yyPrefix])
 
   return (
     <div className="border rounded-lg bg-white shadow-sm overflow-x-auto">

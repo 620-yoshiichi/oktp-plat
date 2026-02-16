@@ -17,7 +17,12 @@ import {QueryBuilder} from '@app/(apps)/ucar/class/QueryBuilder'
 /** 小売系の仕分け条件（工程LT・滞留・グラフの対象） */
 const KOURI_KEI_WHERE: Prisma.UcarWhereInput = {
   destination: {
-    in: [UCAR_CODE.SHIWAKE.raw.KOURI.code, UCAR_CODE.SHIWAKE.raw.CPO.code, UCAR_CODE.SHIWAKE.raw.ONLINE.code],
+    in: [
+      //
+      UCAR_CODE.SHIWAKE.raw.KOURI.code,
+      UCAR_CODE.SHIWAKE.raw.CPO.code,
+      UCAR_CODE.SHIWAKE.raw.ONLINE.code,
+    ],
   },
 }
 
@@ -116,6 +121,7 @@ export async function fetchDashboardData(): Promise<FetchDashboardResponse> {
         where: {AND: [...baseWhere(), KOURI_KEI_WHERE].filter(Boolean)},
         select: UCAR_SELECT,
       }),
+
       // 全件（その他指標用）
       prisma.ucar.findMany({
         where: {AND: [...baseWhere()].filter(Boolean)},

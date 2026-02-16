@@ -23,7 +23,7 @@ function renderCustomizedLabel({ cx, cy, midAngle, innerRadius, outerRadius, val
   )
 }
 
-export function CurrentCountPieChart({ data }: Props) {
+export function TairyuPieChart({ data }: Props) {
   const chartData = data.processes
     .filter(p => p.currentCount > 0)
     .map(p => ({
