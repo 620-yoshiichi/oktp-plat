@@ -13,6 +13,7 @@ type session = any
 type QRBPScopeType = {
   crLeader: boolean
   cr: boolean
+  engineer: boolean
   store: boolean
   isStoreManager: boolean
   isQrbpMember: boolean
@@ -207,6 +208,10 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
       [`拠点アドバイザ`],
       (roles ?? []).map(d => d.name)
     )
+    const engineer = !!arr__findCommonValues(
+      [`CRエンジニア`],
+      (roles ?? []).map(d => d.name)
+    )
     const crLeader = !!arr__findCommonValues(
       [`BP課長`],
       (roles ?? []).map(d => d.name)
@@ -216,6 +221,7 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
       admin,
       crLeader,
       cr,
+      engineer,
       store,
       isStoreManager,
     }

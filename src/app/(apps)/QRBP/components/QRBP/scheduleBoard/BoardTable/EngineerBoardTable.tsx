@@ -5,23 +5,21 @@ import {formatDate} from '@cm/class/Days/date-utils/formatters'
 import {cl} from '@cm/lib/methods/common'
 import {getColorStyles} from '@cm/lib/methods/colors'
 
-import DateColumn from '@app/(apps)/QRBP/components/QRBP/scheduleBoard/BoardTable/DateColumn'
+import EngineerDateColumn from '@app/(apps)/QRBP/components/QRBP/scheduleBoard/BoardTable/EngineerDateColumn'
 
 import Droppable from '@cm/components/DnD/Droppable'
 import {Z_INDEX} from '@cm/lib/constants/constants'
-import {BP_Car} from '@app/(apps)/QRBP/class/BP_Car'
 
-const BoardTable = (props: any) => {
-  const {targetDays, selectedCar, Damages, cars_groupedBy_Damage_Date, activeCars, setcarOnModal, lastTouchedCarId, setlastTouchedCarId} =
-    props
+const EngineerBoardTable = (props: any) => {
+  const {targetDays, Damages, cars_groupedBy_Damage_Date, setcarOnModal, lastTouchedCarId, setlastTouchedCarId} = props
   const dateThClass = `bg-gray-300 text-xs px-0`
-  const unscheduledClass = `w-20  `
+  const unscheduledClass = `w-20`
   const theadStickyStyle: CSSProperties = {position: 'sticky', zIndex: Z_INDEX.thead}
 
   const left = 200
 
   return (
-    <div className={`table-wrapper  max-h-[75vh] overflow-auto [&_td]:border [&_th]:border`} id="board">
+    <div className={`table-wrapper max-h-[75vh] overflow-auto [&_td]:border [&_th]:border`} id="engineer-board">
       <table>
         <thead>
           <tr>
@@ -30,7 +28,7 @@ const BoardTable = (props: any) => {
                 #
               </th>
               {targetDays.map((day, d) => {
-                const dateId = `date-${formatDate(day)}`
+                const dateId = `eng-date-${formatDate(day)}`
                 return (
                   <th
                     id={dateId}
@@ -53,12 +51,6 @@ const BoardTable = (props: any) => {
           {Damages?.map((damage, d) => {
             const carsOnDamage = cars_groupedBy_Damage_Date?.[damage.id]
 
-            const inProgressCount = (activeCars ?? []).filter(car => {
-              if (car.damageNameMasterId !== damage.id) return false
-              const bpCar = new BP_Car(car)
-              return bpCar.findProcessByName('着工指示') && !bpCar.findProcessByName('作業完了')
-            }).length
-
             const carCounts = targetDays.map(day => {
               const cars = carsOnDamage?.[formatDate(day)]
               return cars?.length ?? 0
@@ -72,8 +64,8 @@ const BoardTable = (props: any) => {
             }
 
             return (
-              <tr key={d} className={` min-h-[100px]`}>
-                <th style={{...theadStickyStyle, left: 0, zIndex: 9999}} className={cl(unscheduledClass, ` !p-0`)}>
+              <tr key={d} className={`min-h-[100px]`}>
+                <th style={{...theadStickyStyle, left: 0, zIndex: 9999}} className={cl(unscheduledClass, `p-0!`)}>
                   <Droppable
                     {...{
                       id: `${damage.id}_${'unscheduled'}`,
@@ -89,15 +81,8 @@ const BoardTable = (props: any) => {
                         ...getColorStyles(damage.color),
                       }}
                     >
-                      <div className={`px-2`}>
-                        {damage.name}
-                        {inProgressCount > 0 && (
-                          <span className={`ml-1 rounded bg-orange-500 px-1 py-0.5 text-[10px] font-bold text-white`}>
-                            作業中:{inProgressCount}
-                          </span>
-                        )}
-                      </div>
-                      <DateColumn
+                      <div className={`px-2`}>{damage.name}</div>
+                      <EngineerDateColumn
                         key={d}
                         {...{
                           colId: 'unscheduled',
@@ -110,8 +95,6 @@ const BoardTable = (props: any) => {
                     </div>
                   </Droppable>
                 </th>
-
-                {/* dates */}
 
                 {targetDays.map((day, d) => {
                   const cars = carsOnDamage?.[formatDate(day)]
@@ -127,7 +110,7 @@ const BoardTable = (props: any) => {
                           },
                         }}
                       >
-                        <DateColumn
+                        <EngineerDateColumn
                           {...{
                             colId: formatDate(day),
                             cars,
@@ -149,4 +132,4 @@ const BoardTable = (props: any) => {
   )
 }
 
-export default BoardTable
+export default EngineerBoardTable

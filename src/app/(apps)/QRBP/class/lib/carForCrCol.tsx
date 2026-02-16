@@ -371,16 +371,16 @@ export const carForCr = (props: columnGetterType) => {
           sort: {},
           search: {},
         },
-        {
-          id: 'scheduledAt',
-          label: '予定',
-          type: 'date',
-          format: (value, row) => {
-            return <ScheduleDisplay {...{car: row, type: 'cr'}} />
-          },
-
-          form: {},
+      {
+        id: 'scheduledAt',
+        label: '予定',
+        type: 'date',
+        format: (value, row) => {
+          return <ScheduleDisplay {...{car: row, type: 'cr'}} />
         },
+
+        form: {},
+      },
         {
           id: 'crScheduledAt',
           label: 'ボード予定',

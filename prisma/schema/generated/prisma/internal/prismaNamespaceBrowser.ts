@@ -166,6 +166,7 @@ export const CarScalarFieldEnum = {
   damageNameMasterId: 'damageNameMasterId',
   orderNumber: 'orderNumber',
   crScheduledAt: 'crScheduledAt',
+  engineerScheduledAt: 'engineerScheduledAt',
   representativeCarBpNumber: 'representativeCarBpNumber',
   favoredByUserIds: 'favoredByUserIds',
   prePermission: 'prePermission',

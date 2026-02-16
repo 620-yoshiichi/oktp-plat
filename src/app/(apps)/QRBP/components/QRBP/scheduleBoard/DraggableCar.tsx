@@ -10,42 +10,49 @@ import {NumHandler} from '@cm/class/NumHandler'
 import Coloring from '@cm/lib/methods/Coloring'
 import {cn} from '@cm/shadcn/lib/utils'
 
+const BOARD_STATUS_COLORS = {
+  受付: '#B0B0B0',
+  作業中: '#F5A623',
+  外注作業: '#E05252',
+  作業完了: '#A364C7',
+} as const
+
+const getBoardStatus = (car: any, bpCar: BP_Car) => {
+  const doneProcessNames = ['最終チェック', '洗車', '作業完了']
+  const hasDoneProcess = doneProcessNames.some(name => bpCar.findProcessByName(name))
+  if (hasDoneProcess) return '作業完了'
+
+  const lastProcess = bpCar.getLastProcess()
+  if (lastProcess?.ProcessNameMaster?.name === '外注') return '外注作業'
+
+  const hasStart = bpCar.findProcessByName('着工指示')
+  if (hasStart) return '作業中'
+
+  return '受付'
+}
+
 const DraggableCar = ({car, setcarOnModal, lastTouchedCarId, setlastTouchedCarId}) => {
   const id = `${car?.id}_${car.damageNameMasterId}_${formatDate(car.crScheduledAt, 'iso')}`
   const diff = new BP_Car(car).calcScheduledDiff()
-  const Car_Class = new BP_Car(car)
 
-  // 拠点受取ができていて、今日以前のものは半透明のスタイルを当てる
+  const Car_Class = new BP_Car(car)
 
   const isPast = new Date(car.crScheduledAt) < new Date()
 
-  const lastProcess = Car_Class.getLastProcess()
-
-  const isStoreAccepted = lastProcess?.ProcessNameMaster?.name === '拠点受取'
+  const isStoreAccepted = Car_Class.findProcessByName('拠点受取')
+  const boardStatus = getBoardStatus(car, Car_Class)
+  const shouldFade = (isPast && !!isStoreAccepted) || boardStatus === '作業完了'
 
   const value = shorten(superTrim(car?.customerName), 10, '..')
-  const isLastTouched = lastTouchedCarId === car.id
 
   const carProps = {
-    bgColor: lastProcess?.ProcessNameMaster?.color,
+    bgColor: BOARD_STATUS_COLORS[boardStatus],
     style: {
-      opacity: isPast && isStoreAccepted ? 0.4 : 1,
-      // ...(car.moved
-      //   ? {
-      //       border: '2px solid black',
-      //       scale: '120%',
-      //       opacity: 1,
-      //     }
-      //   : {}),
-      // ...(isLastTouched
-      //   ? {
-      //       border: '2px solid black',
-      //       color: 'red',
-      //       opacity: 1,
-      //     }
-      //   : undefined),
+      opacity: shouldFade ? 0.3 : 1,
     },
   }
+
+
 
   return (
     <div className={`relative flex flex-nowrap items-center  text-sm`}>
@@ -74,6 +81,8 @@ const DraggableCar = ({car, setcarOnModal, lastTouchedCarId, setlastTouchedCarId
               </IconBtn>
             </div>
           </Center>
+
+
 
           {diff !== 0 && (
             <Coloring size="sm" color={diff > 0 ? 'red' : 'green'}>

@@ -1,14 +1,14 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { DashboardResult, PeriodLTSummary } from './lib/calcDashboardData'
-import { fetchDashboardData, fetchPeriodLT } from './server-actions'
+import { useDashboardData } from './hooks/useDashboardData'
 import { TairyuDaisuTable } from './components/TairyuDaisuTable'
 import { TairyuPieChart } from './components/TairyuPieChart'
 import { LeadTimeBarChart } from './components/LeadTimeBarChart'
 import { OtherMetricsTable } from './components/OtherMetricsTable'
 import { LTProcessDetailModal } from './components/LTProcessDetailModal'
+import { PeriodSelector } from './components/PeriodSelector'
 import { UcarProcessCl } from '@app/(apps)/ucar/class/UcarProcessCl'
 import useModal from '@cm/components/utils/modal/useModal'
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
@@ -69,45 +69,9 @@ export default function DashboardPage() {
     [router, searchParams]
   )
 
-  // --- メインデータ取得（1回のみ） ---
-  const [dashboardData, setDashboardData] = useState<DashboardResult | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    setIsLoading(true)
-    setError(null)
-    fetchDashboardData().then(res => {
-      if (res.success && res.result) {
-        setDashboardData(res.result)
-      } else {
-        setError(res.message ?? 'データの取得に失敗しました')
-      }
-      setIsLoading(false)
-    })
-  }, [])
-
-
-
-  // --- 期間別LTデータ取得（期間変更時に再取得） ---
-  const [periodLTData, setPeriodLTData] = useState<PeriodLTSummary[] | null>(null)
-  const [isLTLoading, setIsLTLoading] = useState(true)
-
-  useEffect(() => {
-    setIsLTLoading(true)
-    fetchPeriodLT({
-      periodStart: ltPeriodStart,
-      periodEnd: ltPeriodEnd,
-    }).then(res => {
-      if (res.success && res.result) {
-        setPeriodLTData(res.result)
-      }
-      setIsLTLoading(false)
-    })
-  }, [ltPeriodStart, ltPeriodEnd])
-
-
-
+  // --- データ取得 ---
+  const { dashboardData, isLoading, error, periodLTData, isLTLoading } =
+    useDashboardData(ltPeriodStart, ltPeriodEnd)
 
   // --- LTモーダル（useModal使用） ---
   const ltModal = useModal<{
@@ -142,13 +106,18 @@ export default function DashboardPage() {
     return Array.from(yrs).sort((a, b) => b - a)
   }, [dashboardData])
 
+  // --- 期間セレクタのコールバック ---
+  const handleChangePeriod = useCallback(
+    (start: string | undefined, end: string | undefined) => {
+      updateQuery({ ltStart: start, ltEnd: end })
+    },
+    [updateQuery]
+  )
+
   return (
     <div className="p-4 mx-auto max-w-[1800px]">
       {/* ヘッダー */}
-      <div className="flex items-center justify-between mb-4">
-        <h1 className="text-xl font-bold">QRプロジェクト リードタイム概況</h1>
-
-
+      <div className="flex items-start justify-between mb-4">
 
         {availableYears.length > 0 && (
           <div className="flex items-center gap-2 text-sm">
@@ -166,13 +135,12 @@ export default function DashboardPage() {
             </select>
           </div>
         )}
+
+        <Alert color='yellow'>
+          ・LT / 滞留の算出対象車両は、本QRシステム上で「小売 / CPO / オンライン販売」として仕分けられたものです。<br />
+          ・「その他指標」に関しては、全車両（卸 / スクラップ含む）で算出されます。
+        </Alert>
       </div>
-
-      <Alert color='yellow'>
-        ・LT / 滞留の算出対象車両は、本QRシステム上で「小売 / CPO / オンライン販売」として仕分けられたものです。<br />
-        ・「その他指標」に関しては、全車両（卸 / スクラップ含む）で算出されます。
-      </Alert>
-
 
       {error && <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md mb-4">{error}</div>}
 
@@ -187,11 +155,9 @@ export default function DashboardPage() {
 
       {!isLoading && dashboardData && (
         <>
-
           <C_Stack className={`gap-4`} >
             <R_Stack className={` items-stretch`}>
               <Card className={`w-[900px]`}>
-
                 <div><TairyuDaisuTable data={dashboardData} year={year} /></div>
               </Card>
 
@@ -199,46 +165,24 @@ export default function DashboardPage() {
                 <div>現在台数別グラフ</div>
                 <div><TairyuPieChart data={dashboardData} /></div>
               </Card>
-
-
             </R_Stack>
 
-
-
             <R_Stack className={` items-stretch`}>
-
               <Card className={`w-[900px]`}>
                 工程別平均LT
                 <div><OtherMetricsTable data={dashboardData} year={year} /></div>
               </Card>
 
-
               <Card className={`w-[400px]`}>
                 <div>LTグラフ</div>
                 <div>
-                  <div className="flex items-center justify-center gap-2 text-xs mb-3">
-                    <label className="text-gray-500">開始</label>
-                    <input
-                      type="date"
-                      className="border rounded px-1.5 py-0.5 text-xs bg-white"
-                      value={ltPeriodStart}
-                      onChange={e => updateQuery({ ltStart: e.target.value || undefined })}
-                    />
-                    <span className="text-gray-400">〜</span>
-                    <label className="text-gray-500">終了</label>
-                    <input
-                      type="date"
-                      className="border rounded px-1.5 py-0.5 text-xs bg-white"
-                      value={ltPeriodEnd}
-                      onChange={e => updateQuery({ ltEnd: e.target.value || undefined })}
-                    />
-                    <button
-                      className="text-xs text-blue-600 hover:text-blue-800 underline"
-                      onClick={() => updateQuery({ ltStart: undefined, ltEnd: undefined })}
-                    >
-                      直近3ヶ月
-                    </button>
-                  </div>
+                  <PeriodSelector
+                    periodStart={ltPeriodStart}
+                    periodEnd={ltPeriodEnd}
+                    onChangePeriod={handleChangePeriod}
+                    resetButtonLabel="直近3ヶ月"
+                    className="flex items-center justify-center gap-2 text-xs mb-3"
+                  />
 
                   {isLTLoading ? (
                     <div className="flex items-center justify-center py-8">
@@ -251,8 +195,6 @@ export default function DashboardPage() {
               </Card>
             </R_Stack>
           </C_Stack>
-
-
         </>
       )}
 

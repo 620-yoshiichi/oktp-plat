@@ -90,6 +90,7 @@ export type CarMinAggregateOutputType = {
   damageNameMasterId: number | null
   orderNumber: string | null
   crScheduledAt: Date | null
+  engineerScheduledAt: Date | null
   representativeCarBpNumber: string | null
   prePermission: boolean | null
   preStart: boolean | null
@@ -128,6 +129,7 @@ export type CarMaxAggregateOutputType = {
   damageNameMasterId: number | null
   orderNumber: string | null
   crScheduledAt: Date | null
+  engineerScheduledAt: Date | null
   representativeCarBpNumber: string | null
   prePermission: boolean | null
   preStart: boolean | null
@@ -166,6 +168,7 @@ export type CarCountAggregateOutputType = {
   damageNameMasterId: number
   orderNumber: number
   crScheduledAt: number
+  engineerScheduledAt: number
   representativeCarBpNumber: number
   favoredByUserIds: number
   prePermission: number
@@ -241,6 +244,7 @@ export type CarMinAggregateInputType = {
   damageNameMasterId?: true
   orderNumber?: true
   crScheduledAt?: true
+  engineerScheduledAt?: true
   representativeCarBpNumber?: true
   prePermission?: true
   preStart?: true
@@ -279,6 +283,7 @@ export type CarMaxAggregateInputType = {
   damageNameMasterId?: true
   orderNumber?: true
   crScheduledAt?: true
+  engineerScheduledAt?: true
   representativeCarBpNumber?: true
   prePermission?: true
   preStart?: true
@@ -317,6 +322,7 @@ export type CarCountAggregateInputType = {
   damageNameMasterId?: true
   orderNumber?: true
   crScheduledAt?: true
+  engineerScheduledAt?: true
   representativeCarBpNumber?: true
   favoredByUserIds?: true
   prePermission?: true
@@ -443,6 +449,7 @@ export type CarGroupByOutputType = {
   damageNameMasterId: number | null
   orderNumber: string | null
   crScheduledAt: Date | null
+  engineerScheduledAt: Date | null
   representativeCarBpNumber: string | null
   favoredByUserIds: number[]
   prePermission: boolean | null
@@ -505,6 +512,7 @@ export type CarWhereInput = {
   damageNameMasterId?: Prisma.IntNullableFilter<"Car"> | number | null
   orderNumber?: Prisma.StringNullableFilter<"Car"> | string | null
   crScheduledAt?: Prisma.DateTimeNullableFilter<"Car"> | Date | string | null
+  engineerScheduledAt?: Prisma.DateTimeNullableFilter<"Car"> | Date | string | null
   representativeCarBpNumber?: Prisma.StringNullableFilter<"Car"> | string | null
   favoredByUserIds?: Prisma.IntNullableListFilter<"Car">
   prePermission?: Prisma.BoolNullableFilter<"Car"> | boolean | null
@@ -551,6 +559,7 @@ export type CarOrderByWithRelationInput = {
   damageNameMasterId?: Prisma.SortOrderInput | Prisma.SortOrder
   orderNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   crScheduledAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  engineerScheduledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   representativeCarBpNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   favoredByUserIds?: Prisma.SortOrder
   prePermission?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -601,6 +610,7 @@ export type CarWhereUniqueInput = Prisma.AtLeast<{
   damageNameMasterId?: Prisma.IntNullableFilter<"Car"> | number | null
   orderNumber?: Prisma.StringNullableFilter<"Car"> | string | null
   crScheduledAt?: Prisma.DateTimeNullableFilter<"Car"> | Date | string | null
+  engineerScheduledAt?: Prisma.DateTimeNullableFilter<"Car"> | Date | string | null
   representativeCarBpNumber?: Prisma.StringNullableFilter<"Car"> | string | null
   favoredByUserIds?: Prisma.IntNullableListFilter<"Car">
   prePermission?: Prisma.BoolNullableFilter<"Car"> | boolean | null
@@ -646,6 +656,7 @@ export type CarOrderByWithAggregationInput = {
   damageNameMasterId?: Prisma.SortOrderInput | Prisma.SortOrder
   orderNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   crScheduledAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  engineerScheduledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   representativeCarBpNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   favoredByUserIds?: Prisma.SortOrder
   prePermission?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -693,6 +704,7 @@ export type CarScalarWhereWithAggregatesInput = {
   damageNameMasterId?: Prisma.IntNullableWithAggregatesFilter<"Car"> | number | null
   orderNumber?: Prisma.StringNullableWithAggregatesFilter<"Car"> | string | null
   crScheduledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Car"> | Date | string | null
+  engineerScheduledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Car"> | Date | string | null
   representativeCarBpNumber?: Prisma.StringNullableWithAggregatesFilter<"Car"> | string | null
   favoredByUserIds?: Prisma.IntNullableListFilter<"Car">
   prePermission?: Prisma.BoolNullableWithAggregatesFilter<"Car"> | boolean | null
@@ -728,6 +740,7 @@ export type CarCreateInput = {
   crUserId?: number | null
   orderNumber?: string | null
   crScheduledAt?: Date | string | null
+  engineerScheduledAt?: Date | string | null
   representativeCarBpNumber?: string | null
   favoredByUserIds?: Prisma.CarCreatefavoredByUserIdsInput | number[]
   prePermission?: boolean | null
@@ -774,6 +787,7 @@ export type CarUncheckedCreateInput = {
   damageNameMasterId?: number | null
   orderNumber?: string | null
   crScheduledAt?: Date | string | null
+  engineerScheduledAt?: Date | string | null
   representativeCarBpNumber?: string | null
   favoredByUserIds?: Prisma.CarCreatefavoredByUserIdsInput | number[]
   prePermission?: boolean | null
@@ -813,6 +827,7 @@ export type CarUpdateInput = {
   crUserId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   crScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineerScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   representativeCarBpNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   favoredByUserIds?: Prisma.CarUpdatefavoredByUserIdsInput | number[]
   prePermission?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -859,6 +874,7 @@ export type CarUncheckedUpdateInput = {
   damageNameMasterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   crScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineerScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   representativeCarBpNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   favoredByUserIds?: Prisma.CarUpdatefavoredByUserIdsInput | number[]
   prePermission?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -902,6 +918,7 @@ export type CarCreateManyInput = {
   damageNameMasterId?: number | null
   orderNumber?: string | null
   crScheduledAt?: Date | string | null
+  engineerScheduledAt?: Date | string | null
   representativeCarBpNumber?: string | null
   favoredByUserIds?: Prisma.CarCreatefavoredByUserIdsInput | number[]
   prePermission?: boolean | null
@@ -937,6 +954,7 @@ export type CarUpdateManyMutationInput = {
   crUserId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   crScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineerScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   representativeCarBpNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   favoredByUserIds?: Prisma.CarUpdatefavoredByUserIdsInput | number[]
   prePermission?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -976,6 +994,7 @@ export type CarUncheckedUpdateManyInput = {
   damageNameMasterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   crScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineerScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   representativeCarBpNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   favoredByUserIds?: Prisma.CarUpdatefavoredByUserIdsInput | number[]
   prePermission?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1023,6 +1042,7 @@ export type CarCountOrderByAggregateInput = {
   damageNameMasterId?: Prisma.SortOrder
   orderNumber?: Prisma.SortOrder
   crScheduledAt?: Prisma.SortOrder
+  engineerScheduledAt?: Prisma.SortOrder
   representativeCarBpNumber?: Prisma.SortOrder
   favoredByUserIds?: Prisma.SortOrder
   prePermission?: Prisma.SortOrder
@@ -1079,6 +1099,7 @@ export type CarMaxOrderByAggregateInput = {
   damageNameMasterId?: Prisma.SortOrder
   orderNumber?: Prisma.SortOrder
   crScheduledAt?: Prisma.SortOrder
+  engineerScheduledAt?: Prisma.SortOrder
   representativeCarBpNumber?: Prisma.SortOrder
   prePermission?: Prisma.SortOrder
   preStart?: Prisma.SortOrder
@@ -1117,6 +1138,7 @@ export type CarMinOrderByAggregateInput = {
   damageNameMasterId?: Prisma.SortOrder
   orderNumber?: Prisma.SortOrder
   crScheduledAt?: Prisma.SortOrder
+  engineerScheduledAt?: Prisma.SortOrder
   representativeCarBpNumber?: Prisma.SortOrder
   prePermission?: Prisma.SortOrder
   preStart?: Prisma.SortOrder
@@ -1433,6 +1455,7 @@ export type CarCreateWithoutNotesInput = {
   crUserId?: number | null
   orderNumber?: string | null
   crScheduledAt?: Date | string | null
+  engineerScheduledAt?: Date | string | null
   representativeCarBpNumber?: string | null
   favoredByUserIds?: Prisma.CarCreatefavoredByUserIdsInput | number[]
   prePermission?: boolean | null
@@ -1478,6 +1501,7 @@ export type CarUncheckedCreateWithoutNotesInput = {
   damageNameMasterId?: number | null
   orderNumber?: string | null
   crScheduledAt?: Date | string | null
+  engineerScheduledAt?: Date | string | null
   representativeCarBpNumber?: string | null
   favoredByUserIds?: Prisma.CarCreatefavoredByUserIdsInput | number[]
   prePermission?: boolean | null
@@ -1532,6 +1556,7 @@ export type CarUpdateWithoutNotesInput = {
   crUserId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   crScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineerScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   representativeCarBpNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   favoredByUserIds?: Prisma.CarUpdatefavoredByUserIdsInput | number[]
   prePermission?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1577,6 +1602,7 @@ export type CarUncheckedUpdateWithoutNotesInput = {
   damageNameMasterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   crScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineerScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   representativeCarBpNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   favoredByUserIds?: Prisma.CarUpdatefavoredByUserIdsInput | number[]
   prePermission?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1615,6 +1641,7 @@ export type CarCreateWithoutDamageNameMasterInput = {
   crUserId?: number | null
   orderNumber?: string | null
   crScheduledAt?: Date | string | null
+  engineerScheduledAt?: Date | string | null
   representativeCarBpNumber?: string | null
   favoredByUserIds?: Prisma.CarCreatefavoredByUserIdsInput | number[]
   prePermission?: boolean | null
@@ -1659,6 +1686,7 @@ export type CarUncheckedCreateWithoutDamageNameMasterInput = {
   storeId?: number | null
   orderNumber?: string | null
   crScheduledAt?: Date | string | null
+  engineerScheduledAt?: Date | string | null
   representativeCarBpNumber?: string | null
   favoredByUserIds?: Prisma.CarCreatefavoredByUserIdsInput | number[]
   prePermission?: boolean | null
@@ -1731,6 +1759,7 @@ export type CarScalarWhereInput = {
   damageNameMasterId?: Prisma.IntNullableFilter<"Car"> | number | null
   orderNumber?: Prisma.StringNullableFilter<"Car"> | string | null
   crScheduledAt?: Prisma.DateTimeNullableFilter<"Car"> | Date | string | null
+  engineerScheduledAt?: Prisma.DateTimeNullableFilter<"Car"> | Date | string | null
   representativeCarBpNumber?: Prisma.StringNullableFilter<"Car"> | string | null
   favoredByUserIds?: Prisma.IntNullableListFilter<"Car">
   prePermission?: Prisma.BoolNullableFilter<"Car"> | boolean | null
@@ -1766,6 +1795,7 @@ export type CarCreateWithoutProcessInput = {
   crUserId?: number | null
   orderNumber?: string | null
   crScheduledAt?: Date | string | null
+  engineerScheduledAt?: Date | string | null
   representativeCarBpNumber?: string | null
   favoredByUserIds?: Prisma.CarCreatefavoredByUserIdsInput | number[]
   prePermission?: boolean | null
@@ -1811,6 +1841,7 @@ export type CarUncheckedCreateWithoutProcessInput = {
   damageNameMasterId?: number | null
   orderNumber?: string | null
   crScheduledAt?: Date | string | null
+  engineerScheduledAt?: Date | string | null
   representativeCarBpNumber?: string | null
   favoredByUserIds?: Prisma.CarCreatefavoredByUserIdsInput | number[]
   prePermission?: boolean | null
@@ -1865,6 +1896,7 @@ export type CarUpdateWithoutProcessInput = {
   crUserId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   crScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineerScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   representativeCarBpNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   favoredByUserIds?: Prisma.CarUpdatefavoredByUserIdsInput | number[]
   prePermission?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1910,6 +1942,7 @@ export type CarUncheckedUpdateWithoutProcessInput = {
   damageNameMasterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   crScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineerScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   representativeCarBpNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   favoredByUserIds?: Prisma.CarUpdatefavoredByUserIdsInput | number[]
   prePermission?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1948,6 +1981,7 @@ export type CarCreateWithoutCrUserInput = {
   crUserId?: number | null
   orderNumber?: string | null
   crScheduledAt?: Date | string | null
+  engineerScheduledAt?: Date | string | null
   representativeCarBpNumber?: string | null
   favoredByUserIds?: Prisma.CarCreatefavoredByUserIdsInput | number[]
   prePermission?: boolean | null
@@ -1993,6 +2027,7 @@ export type CarUncheckedCreateWithoutCrUserInput = {
   damageNameMasterId?: number | null
   orderNumber?: string | null
   crScheduledAt?: Date | string | null
+  engineerScheduledAt?: Date | string | null
   representativeCarBpNumber?: string | null
   favoredByUserIds?: Prisma.CarCreatefavoredByUserIdsInput | number[]
   prePermission?: boolean | null
@@ -2047,6 +2082,7 @@ export type CarUpdateWithoutCrUserInput = {
   crUserId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   crScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineerScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   representativeCarBpNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   favoredByUserIds?: Prisma.CarUpdatefavoredByUserIdsInput | number[]
   prePermission?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2092,6 +2128,7 @@ export type CarUncheckedUpdateWithoutCrUserInput = {
   damageNameMasterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   crScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineerScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   representativeCarBpNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   favoredByUserIds?: Prisma.CarUpdatefavoredByUserIdsInput | number[]
   prePermission?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2130,6 +2167,7 @@ export type CarCreateWithoutSlotInput = {
   crUserId?: number | null
   orderNumber?: string | null
   crScheduledAt?: Date | string | null
+  engineerScheduledAt?: Date | string | null
   representativeCarBpNumber?: string | null
   favoredByUserIds?: Prisma.CarCreatefavoredByUserIdsInput | number[]
   prePermission?: boolean | null
@@ -2175,6 +2213,7 @@ export type CarUncheckedCreateWithoutSlotInput = {
   damageNameMasterId?: number | null
   orderNumber?: string | null
   crScheduledAt?: Date | string | null
+  engineerScheduledAt?: Date | string | null
   representativeCarBpNumber?: string | null
   favoredByUserIds?: Prisma.CarCreatefavoredByUserIdsInput | number[]
   prePermission?: boolean | null
@@ -2229,6 +2268,7 @@ export type CarUpdateWithoutSlotInput = {
   crUserId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   crScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineerScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   representativeCarBpNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   favoredByUserIds?: Prisma.CarUpdatefavoredByUserIdsInput | number[]
   prePermission?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2274,6 +2314,7 @@ export type CarUncheckedUpdateWithoutSlotInput = {
   damageNameMasterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   crScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineerScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   representativeCarBpNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   favoredByUserIds?: Prisma.CarUpdatefavoredByUserIdsInput | number[]
   prePermission?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2312,6 +2353,7 @@ export type CarCreateWithoutStoreInput = {
   crUserId?: number | null
   orderNumber?: string | null
   crScheduledAt?: Date | string | null
+  engineerScheduledAt?: Date | string | null
   representativeCarBpNumber?: string | null
   favoredByUserIds?: Prisma.CarCreatefavoredByUserIdsInput | number[]
   prePermission?: boolean | null
@@ -2356,6 +2398,7 @@ export type CarUncheckedCreateWithoutStoreInput = {
   damageNameMasterId?: number | null
   orderNumber?: string | null
   crScheduledAt?: Date | string | null
+  engineerScheduledAt?: Date | string | null
   representativeCarBpNumber?: string | null
   favoredByUserIds?: Prisma.CarCreatefavoredByUserIdsInput | number[]
   prePermission?: boolean | null
@@ -2421,6 +2464,7 @@ export type CarCreateWithoutUserInput = {
   crUserId?: number | null
   orderNumber?: string | null
   crScheduledAt?: Date | string | null
+  engineerScheduledAt?: Date | string | null
   representativeCarBpNumber?: string | null
   favoredByUserIds?: Prisma.CarCreatefavoredByUserIdsInput | number[]
   prePermission?: boolean | null
@@ -2465,6 +2509,7 @@ export type CarUncheckedCreateWithoutUserInput = {
   damageNameMasterId?: number | null
   orderNumber?: string | null
   crScheduledAt?: Date | string | null
+  engineerScheduledAt?: Date | string | null
   representativeCarBpNumber?: string | null
   favoredByUserIds?: Prisma.CarCreatefavoredByUserIdsInput | number[]
   prePermission?: boolean | null
@@ -2533,6 +2578,7 @@ export type CarCreateManyDamageNameMasterInput = {
   storeId?: number | null
   orderNumber?: string | null
   crScheduledAt?: Date | string | null
+  engineerScheduledAt?: Date | string | null
   representativeCarBpNumber?: string | null
   favoredByUserIds?: Prisma.CarCreatefavoredByUserIdsInput | number[]
   prePermission?: boolean | null
@@ -2568,6 +2614,7 @@ export type CarUpdateWithoutDamageNameMasterInput = {
   crUserId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   crScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineerScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   representativeCarBpNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   favoredByUserIds?: Prisma.CarUpdatefavoredByUserIdsInput | number[]
   prePermission?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2612,6 +2659,7 @@ export type CarUncheckedUpdateWithoutDamageNameMasterInput = {
   storeId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   crScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineerScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   representativeCarBpNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   favoredByUserIds?: Prisma.CarUpdatefavoredByUserIdsInput | number[]
   prePermission?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2654,6 +2702,7 @@ export type CarUncheckedUpdateManyWithoutDamageNameMasterInput = {
   storeId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   crScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineerScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   representativeCarBpNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   favoredByUserIds?: Prisma.CarUpdatefavoredByUserIdsInput | number[]
   prePermission?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2692,6 +2741,7 @@ export type CarCreateManyStoreInput = {
   damageNameMasterId?: number | null
   orderNumber?: string | null
   crScheduledAt?: Date | string | null
+  engineerScheduledAt?: Date | string | null
   representativeCarBpNumber?: string | null
   favoredByUserIds?: Prisma.CarCreatefavoredByUserIdsInput | number[]
   prePermission?: boolean | null
@@ -2727,6 +2777,7 @@ export type CarUpdateWithoutStoreInput = {
   crUserId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   crScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineerScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   representativeCarBpNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   favoredByUserIds?: Prisma.CarUpdatefavoredByUserIdsInput | number[]
   prePermission?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2771,6 +2822,7 @@ export type CarUncheckedUpdateWithoutStoreInput = {
   damageNameMasterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   crScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineerScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   representativeCarBpNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   favoredByUserIds?: Prisma.CarUpdatefavoredByUserIdsInput | number[]
   prePermission?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2813,6 +2865,7 @@ export type CarUncheckedUpdateManyWithoutStoreInput = {
   damageNameMasterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   crScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineerScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   representativeCarBpNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   favoredByUserIds?: Prisma.CarUpdatefavoredByUserIdsInput | number[]
   prePermission?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2851,6 +2904,7 @@ export type CarCreateManyUserInput = {
   damageNameMasterId?: number | null
   orderNumber?: string | null
   crScheduledAt?: Date | string | null
+  engineerScheduledAt?: Date | string | null
   representativeCarBpNumber?: string | null
   favoredByUserIds?: Prisma.CarCreatefavoredByUserIdsInput | number[]
   prePermission?: boolean | null
@@ -2886,6 +2940,7 @@ export type CarUpdateWithoutUserInput = {
   crUserId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   crScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineerScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   representativeCarBpNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   favoredByUserIds?: Prisma.CarUpdatefavoredByUserIdsInput | number[]
   prePermission?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2930,6 +2985,7 @@ export type CarUncheckedUpdateWithoutUserInput = {
   damageNameMasterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   crScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineerScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   representativeCarBpNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   favoredByUserIds?: Prisma.CarUpdatefavoredByUserIdsInput | number[]
   prePermission?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -2972,6 +3028,7 @@ export type CarUncheckedUpdateManyWithoutUserInput = {
   damageNameMasterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   crScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineerScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   representativeCarBpNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   favoredByUserIds?: Prisma.CarUpdatefavoredByUserIdsInput | number[]
   prePermission?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -3060,6 +3117,7 @@ export type CarSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
   damageNameMasterId?: boolean
   orderNumber?: boolean
   crScheduledAt?: boolean
+  engineerScheduledAt?: boolean
   representativeCarBpNumber?: boolean
   favoredByUserIds?: boolean
   prePermission?: boolean
@@ -3107,6 +3165,7 @@ export type CarSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extension
   damageNameMasterId?: boolean
   orderNumber?: boolean
   crScheduledAt?: boolean
+  engineerScheduledAt?: boolean
   representativeCarBpNumber?: boolean
   favoredByUserIds?: boolean
   prePermission?: boolean
@@ -3149,6 +3208,7 @@ export type CarSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extension
   damageNameMasterId?: boolean
   orderNumber?: boolean
   crScheduledAt?: boolean
+  engineerScheduledAt?: boolean
   representativeCarBpNumber?: boolean
   favoredByUserIds?: boolean
   prePermission?: boolean
@@ -3191,6 +3251,7 @@ export type CarSelectScalar = {
   damageNameMasterId?: boolean
   orderNumber?: boolean
   crScheduledAt?: boolean
+  engineerScheduledAt?: boolean
   representativeCarBpNumber?: boolean
   favoredByUserIds?: boolean
   prePermission?: boolean
@@ -3200,7 +3261,7 @@ export type CarSelectScalar = {
   complexKey?: boolean
 }
 
-export type CarOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "processLastUpdatedAt" | "active" | "sortOrder" | "bpNumber" | "orderedAt" | "orderCategory" | "estimate" | "orderStatusCategory" | "customerName" | "carName" | "plate" | "frame" | "katashiki" | "managementCode" | "initDate" | "currentEstimate" | "scheduledAt" | "insuranceType" | "insuranceCompany" | "agreedPrice" | "userId" | "crUserId" | "storeId" | "damageNameMasterId" | "orderNumber" | "crScheduledAt" | "representativeCarBpNumber" | "favoredByUserIds" | "prePermission" | "preStart" | "carType" | "advancePayment" | "complexKey", ExtArgs["result"]["car"]>
+export type CarOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "processLastUpdatedAt" | "active" | "sortOrder" | "bpNumber" | "orderedAt" | "orderCategory" | "estimate" | "orderStatusCategory" | "customerName" | "carName" | "plate" | "frame" | "katashiki" | "managementCode" | "initDate" | "currentEstimate" | "scheduledAt" | "insuranceType" | "insuranceCompany" | "agreedPrice" | "userId" | "crUserId" | "storeId" | "damageNameMasterId" | "orderNumber" | "crScheduledAt" | "engineerScheduledAt" | "representativeCarBpNumber" | "favoredByUserIds" | "prePermission" | "preStart" | "carType" | "advancePayment" | "complexKey", ExtArgs["result"]["car"]>
 export type CarInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   DamageNameMaster?: boolean | Prisma.Car$DamageNameMasterArgs<ExtArgs>
   Store?: boolean | Prisma.Car$StoreArgs<ExtArgs>
@@ -3263,6 +3324,7 @@ export type $CarPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     damageNameMasterId: number | null
     orderNumber: string | null
     crScheduledAt: Date | null
+    engineerScheduledAt: Date | null
     representativeCarBpNumber: string | null
     favoredByUserIds: number[]
     prePermission: boolean | null
@@ -3729,6 +3791,7 @@ export interface CarFieldRefs {
   readonly damageNameMasterId: Prisma.FieldRef<"Car", 'Int'>
   readonly orderNumber: Prisma.FieldRef<"Car", 'String'>
   readonly crScheduledAt: Prisma.FieldRef<"Car", 'DateTime'>
+  readonly engineerScheduledAt: Prisma.FieldRef<"Car", 'DateTime'>
   readonly representativeCarBpNumber: Prisma.FieldRef<"Car", 'String'>
   readonly favoredByUserIds: Prisma.FieldRef<"Car", 'Int[]'>
   readonly prePermission: Prisma.FieldRef<"Car", 'Boolean'>

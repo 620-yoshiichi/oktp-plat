@@ -259,7 +259,7 @@ export async function fetchProcessRetentionCars(processKey: string): Promise<Fet
       },
       include: QueryBuilder.getInclude({}).ucar.include,
       orderBy: {qrIssuedAt: 'desc'},
-      take: 500,
+      take: 200,
     })
 
     const result: RetentionCarDetail[] = cars.map(car => {

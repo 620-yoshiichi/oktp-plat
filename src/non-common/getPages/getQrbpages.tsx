@@ -54,6 +54,11 @@ export const getQrbpPages = (props: PageGetterType) => {
           ],
         },
         {
+          tabId: 'engineerScheduled',
+          label: 'エンジニアボード',
+          exclusiveTo: QRBP?.cr || QRBP?.engineer,
+        },
+        {
           tabId: 'forStore',
           label: '拠点用リスト',
           exclusiveTo: QRBP?.store || newCar.isStoreManager,

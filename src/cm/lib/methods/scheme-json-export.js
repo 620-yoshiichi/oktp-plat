@@ -424,6 +424,20 @@
           "isUpdatedAt": false
         },
         {
+          "name": "engineerScheduledAt",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "DateTime",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
           "name": "representativeCarBpNumber",
           "kind": "scalar",
           "isList": false,
@@ -22066,6 +22080,16 @@
       "fields": [
         {
           "name": "crScheduledAt"
+        }
+      ]
+    },
+    {
+      "model": "Car",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "engineerScheduledAt"
         }
       ]
     },

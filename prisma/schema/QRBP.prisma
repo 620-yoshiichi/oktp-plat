@@ -28,6 +28,7 @@ model Car {
   damageNameMasterId        Int?
   orderNumber               String?
   crScheduledAt             DateTime?
+  engineerScheduledAt       DateTime?
   representativeCarBpNumber String?
   favoredByUserIds          Int[]
   prePermission             Boolean?
@@ -47,6 +48,7 @@ model Car {
   @@index([storeId])
   @@index([scheduledAt])
   @@index([crScheduledAt])
+  @@index([engineerScheduledAt])
   @@index([damageNameMasterId])
   // Phase 2: パフォーマンスインデックス
   @@index([active])
