@@ -81,13 +81,15 @@ export function UcarProcessTable({ cars, isLoading, options = {} }: UcarProcessT
     )
   }
 
+
+
   return CsvTable({
-    records: cars.map(car => {
+    records: cars.map((car, i) => {
       // processMapを拡張: 販売日（code='SALES'）は ai21.DD_URIAGE から取得
       const extendedProcessMap: Record<string, string | null> = { ...car.processMap }
-      if (car.ai21.DD_URIAGE) {
-        extendedProcessMap['SALES'] = car.ai21.DD_URIAGE.toISOString()
-      }
+      // if (car.ai21.DD_URIAGE) {
+      //   extendedProcessMap['SALES'] = car.ai21.DD_URIAGE.toISOString()
+      // }
 
       // 完了済み工程の配列（順序通り）
       const completedProcesses: { code: string; date: Date }[] = []
@@ -103,14 +105,21 @@ export function UcarProcessTable({ cars, isLoading, options = {} }: UcarProcessT
       for (let i = 0; i < completedProcesses.length - 1; i++) {
         const from = completedProcesses[i]
         const to = completedProcesses[i + 1]
+        if (from.code === 'CR08') {
+          console.log(formatDate(from.date, 'YY/MM/DD'), formatDate(to.date, 'YY/MM/DD'))
+        }
         ltMap[from.code] = calcDaysDiff(from.date, to.date)
       }
 
       // 最新完了工程
       const lastProcessCode = completedProcesses[completedProcesses.length - 1]?.code
 
+
+
+
       return {
         csvTableRow: [
+          { label: '連番', cellValue: i + 1 },
           // --- 査定ID ---
           {
             label: '査定ID',
@@ -184,10 +193,19 @@ export function UcarProcessTable({ cars, isLoading, options = {} }: UcarProcessT
             const isCurrentProcess = proc.code === lastProcessCode
             const isFocusProcess = proc.code === options.focusProcessCode
             const isToday = dateIso && options.highlightToday && Days.validate.isSameDate(new Date(dateIso), new Date())
+
+
             const lt = ltMap[proc.code]
 
+
+
+
+
             return {
-              label: <div>{proc.label}</div>,
+              label: <div>{proc.label}
+                <br />
+                {proc.code}
+              </div>,
               cellValue: dateIso ? (
                 <div className="relative">
                   <div>{formatDate(new Date(dateIso), 'YY/MM/DD(ddd)')}</div>
@@ -197,7 +215,7 @@ export function UcarProcessTable({ cars, isLoading, options = {} }: UcarProcessT
                   {options.showLTBadge && lt !== null && lt !== undefined && lt > 0.1 && (
                     <div className={cn(
                       getBackGroundColor(lt),
-                      "absolute center-y -right-4 z-10  text-white text-[9px] font-bold rounded-full px-1 flex items-center justify-center shadow",)}>
+                      "absolute center-y -right-5 z-10  text-white text-[9px] font-bold rounded-full px-1 flex items-center justify-center shadow",)}>
                       +{lt.toFixed(1)}
                     </div>
                   )}
@@ -225,10 +243,11 @@ export function UcarProcessTable({ cars, isLoading, options = {} }: UcarProcessT
               className: cn('text-center align-middle'),
             }
           }),
+
         ],
       }
     }),
   }).WithWrapper({
-    className: cn('[&_th]:!p-0', '[&_td]:!py-0.5', '[&_td]:text-xs', '[&_td]:align-middle', ` max-w-[85vw]`),
+    className: cn('[&_th]:!p-0', '[&_td]:!py-0.5', '[&_td]:text-xs', '[&_td]:align-middle', ` max-w-[85vw] max-h-[65vh]! `),
   })
 }

@@ -45,7 +45,12 @@ const UCAR_SELECT = {
 
 /** 共通の基本 WHERE 条件 */
 function baseWhere(): Prisma.UcarWhereInput[] {
-  return [UCAR_CONSTANTS.getCommonQuery({}), {daihatsuReserve: null}]
+  return [
+    //
+    {UPASS: {isNot: null}},
+    UCAR_CONSTANTS.getCommonQuery({}),
+    {daihatsuReserve: null},
+  ]
 }
 
 /**
@@ -118,13 +123,17 @@ export async function fetchDashboardData(): Promise<FetchDashboardResponse> {
     const [carsKouriKei, carsAll] = await Promise.all([
       // 小売系のみ（工程LT・滞留用）
       prisma.ucar.findMany({
-        where: {AND: [...baseWhere(), KOURI_KEI_WHERE].filter(Boolean)},
+        where: {
+          AND: [...baseWhere(), KOURI_KEI_WHERE].filter(Boolean),
+        },
         select: UCAR_SELECT,
       }),
 
       // 全件（その他指標用）
       prisma.ucar.findMany({
-        where: {AND: [...baseWhere()].filter(Boolean)},
+        where: {
+          AND: [...baseWhere()].filter(Boolean),
+        },
         select: UCAR_SELECT,
       }),
     ])
@@ -175,10 +184,6 @@ export async function fetchPeriodLT(params: FetchPeriodLTParams): Promise<FetchP
       },
       select: UCAR_SELECT,
     })
-
-    console.log(
-      `[fetchPeriodLT] period: ${params.periodStart} ~ ${params.periodEnd} → UTC: ${periodStartUtc.toISOString()} ~ ${periodEndUtc.toISOString()}, cars: ${cars.length}件`
-    )
 
     const mapped = cars.map(car => toUcarWithProcess(car))
     const result = calcPeriodLT(mapped)
@@ -244,17 +249,17 @@ export async function fetchProcessRetentionCars(processKey: string): Promise<Fet
         AND: [
           ...baseWhere(),
           KOURI_KEI_WHERE,
+
           {UcarProcess: {some: {processCode: item.code}}},
-          ...(subsequentCodes.length > 0
-            ? subsequentCodes.map(code => ({
-                UcarProcess: {none: {processCode: code}},
-              }))
-            : []),
+
+          ...(subsequentCodes ?? []).map(code => ({
+            UcarProcess: {none: {processCode: code}},
+          })),
         ].filter(Boolean),
       },
       include: QueryBuilder.getInclude({}).ucar.include,
       orderBy: {qrIssuedAt: 'desc'},
-      take: 200,
+      take: 500,
     })
 
     const result: RetentionCarDetail[] = cars.map(car => {
@@ -326,12 +331,31 @@ export async function fetchLTProcessCars(params: FetchLTProcessCarsParams): Prom
       where: {
         AND: [
           ...baseWhere(),
+
           KOURI_KEI_WHERE,
-          {createdAt: {gte: periodStartUtc, lte: periodEndUtc}},
+          {
+            createdAt: {
+              gte: periodStartUtc,
+              lte: periodEndUtc,
+            },
+          },
           // 自工程が完了済み
-          {UcarProcess: {some: {processCode: item.code}}},
+          {
+            UcarProcess: {
+              some: {processCode: item.code},
+            },
+          },
           // いずれかの後続工程が完了済み（LTが計算可能）
-          ...(subsequentCodes.length > 0 ? [{UcarProcess: {some: {processCode: {in: subsequentCodes}}}}] : []),
+          ...(subsequentCodes.length > 0
+            ? [
+                //
+                {
+                  UcarProcess: {
+                    some: {processCode: {in: subsequentCodes}},
+                  },
+                },
+              ]
+            : []),
         ].filter(Boolean),
       },
       include: QueryBuilder.getInclude({}).ucar.include,

@@ -27,22 +27,25 @@ export function TairyuPieChart({ data }: Props) {
   const chartData = data.processes
     .filter(p => p.currentCount > 0)
     .map(p => ({
-      name: p.dashboardLabel,
+      name: p.dashboardLabel + ' 後',
       value: p.currentCount,
       color: p.color,
     }))
+
 
   if (chartData.length === 0) {
     return <div className="text-center text-gray-400 py-8">滞留データがありません</div>
   }
 
   return (
-    <ResponsiveContainer width="100%" height={300}>
-      <PieChart>
+    <ResponsiveContainer width="100%" height={350}>
+      <PieChart >
         <Pie
           data={chartData}
           cx="45%"
           cy="50%"
+          startAngle={90}
+          endAngle={-270}
           labelLine={false}
           label={renderCustomizedLabel}
           outerRadius={140}
@@ -54,11 +57,14 @@ export function TairyuPieChart({ data }: Props) {
             <Cell key={`cell-${index}`} fill={entry.color} />
           ))}
         </Pie>
+
         <Tooltip formatter={(value: number, name: string) => [`${value} 台`, name]} contentStyle={{ fontSize: 12 }} />
+
+
         <Legend
-          layout="vertical"
+          layout="horizontal"
           align="right"
-          verticalAlign="middle"
+          verticalAlign="bottom"
           iconType="circle"
           iconSize={10}
           wrapperStyle={{ fontSize: 12, paddingLeft: 8 }}

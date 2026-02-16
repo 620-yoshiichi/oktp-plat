@@ -1,8 +1,9 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { DashboardResult } from '../lib/calcDashboardData'
 import { ProcessDetailModal } from './ProcessDetailModal'
+import { LTProcessDetailModal } from './LTProcessDetailModal'
 import useModal from '@cm/components/utils/modal/useModal'
 import { UcarProcessCl } from '@app/(apps)/ucar/class/UcarProcessCl'
 
@@ -35,6 +36,17 @@ function calcYearAvgLT(monthlyLT: Record<string, number | null>, months: string[
   return vals.reduce((a, b) => a + b, 0) / vals.length
 }
 
+/** YY-MM形式の月キーから期間（YYYY-MM-DD）を算出 */
+function monthKeyToPeriod(monthKey: string): { start: string; end: string } {
+  const [yy, mm] = monthKey.split('-').map(Number)
+  const yyyy = yy < 50 ? 2000 + yy : 1900 + yy
+  const lastDay = new Date(yyyy, mm, 0).getDate()
+  return {
+    start: `${yyyy}-${String(mm).padStart(2, '0')}-01`,
+    end: `${yyyy}-${String(mm).padStart(2, '0')}-${String(lastDay).padStart(2, '0')}`,
+  }
+}
+
 export function TairyuDaisuTable({ data, year }: Props) {
   const { processes, totalCount, totalAvgLT } = data
 
@@ -42,12 +54,39 @@ export function TairyuDaisuTable({ data, year }: Props) {
 
 
 
-  // モーダル（useModal）
+
+
+
+
+  // モーダル（滞留台数テーブル用）
   const modal = useModal<{
     processKey: string
     dashboardLabel: string
     color: string
   }>()
+
+  // モーダル（LTセルクリック用）
+  const ltModal = useModal<{
+    processKey: string
+    dashboardLabel: string
+    color: string
+    periodStart: string
+    periodEnd: string
+  }>()
+
+  /** LTセルクリック時のハンドラ */
+  const handleLTCellClick = useCallback(
+    (proc: (typeof processes)[0], periodStart: string, periodEnd: string) => {
+      ltModal.handleOpen({
+        processKey: proc.processKey,
+        dashboardLabel: proc.dashboardLabel,
+        color: proc.color,
+        periodStart,
+        periodEnd,
+      })
+    },
+    [ltModal]
+  )
 
   // 指定年の YY プレフィックス
   const yyPrefix = String(year).slice(-2)
@@ -87,7 +126,7 @@ export function TairyuDaisuTable({ data, year }: Props) {
       >
         <span className="inline-block w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: proc.color }} />
         <div className="relative group/popover">
-          <span className="truncate group-hover:underline">{proc.dashboardLabel}</span>
+          <span className="truncate group-hover:underline">{proc.dashboardLabel} 後</span>
           {retentionDesc && (
             <div className="hidden group-hover/popover:block absolute -left-8 top-1/2 mt-1 z-10 bg-white border border-gray-300 rounded shadow-lg p-2 text-xs text-gray-700 min-w-[170px] max-w-xs whitespace-pre-line">
               {retentionDesc}
@@ -178,17 +217,35 @@ export function TairyuDaisuTable({ data, year }: Props) {
                       {/* <td className="border px-2 py-1 text-center bg-red-50 text-red-700 font-medium">
                         {proc.targetDays !== null ? proc.targetDays : '-'}
                       </td> */}
-                      <td className={`border px-2 py-1 text-center font-medium ${getLTBgColor(proc.avgLT)}`}>
+                      <td
+                        className={`border px-2 py-1 text-center font-medium ${getLTBgColor(proc.avgLT)} ${proc.avgLT != null ? 'cursor-pointer hover:opacity-70' : ''}`}
+                        onClick={() => proc.avgLT != null && handleLTCellClick(proc, '2000-01-01', '2099-12-31')}
+                      >
                         {fmtNum(proc.avgLT)}
                       </td>
-                      <td className={`border px-2 py-1 text-center font-bold ${getLTBgColor(yearAvg)}`}>
+                      <td
+                        className={`border px-2 py-1 text-center font-bold ${getLTBgColor(yearAvg)} ${yearAvg != null ? 'cursor-pointer hover:opacity-70' : ''}`}
+                        onClick={() => yearAvg != null && handleLTCellClick(proc, `${year}-01-01`, `${year}-12-31`)}
+                      >
                         {fmtNum(yearAvg)}
                       </td>
-                      {visibleMonths.map(m => (
-                        <td key={m} className={`border px-2 py-1 text-center ${getLTBgColor(proc.monthlyLT[m])}`}>
-                          {fmtNum(proc.monthlyLT[m])}
-                        </td>
-                      ))}
+                      {visibleMonths.map(m => {
+                        const val = proc.monthlyLT[m]
+                        const hasData = val != null && Number.isFinite(val)
+                        return (
+                          <td
+                            key={m}
+                            className={`border px-2 py-1 text-center ${getLTBgColor(val)} ${hasData ? 'cursor-pointer hover:opacity-70' : ''}`}
+                            onClick={() => {
+                              if (!hasData) return
+                              const period = monthKeyToPeriod(m)
+                              handleLTCellClick(proc, period.start, period.end)
+                            }}
+                          >
+                            {fmtNum(val)}
+                          </td>
+                        )
+                      })}
                     </tr>
                   )
                 })}
@@ -232,6 +289,27 @@ export function TairyuDaisuTable({ data, year }: Props) {
           />
         )}
       </modal.Modal>
+
+      {/* LTセルクリック用モーダル */}
+      <ltModal.Modal
+        style={{
+          maxWidth: '98vw',
+          maxHeight: '90vh',
+          width: '1600px',
+          overflow: 'hidden',
+        }}
+      >
+        {ltModal.open && (
+          <LTProcessDetailModal
+            processKey={ltModal.open.processKey}
+            dashboardLabel={ltModal.open.dashboardLabel}
+            color={ltModal.open.color}
+            periodStart={ltModal.open.periodStart}
+            periodEnd={ltModal.open.periodEnd}
+            onClose={ltModal.handleClose}
+          />
+        )}
+      </ltModal.Modal>
     </>
   )
 }

@@ -16,6 +16,8 @@ export function ProcessDetailModal({ processKey, dashboardLabel, color, onClose 
   const [cars, setCars] = useState<RetentionCarDetail[] | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
+
+
   useEffect(() => {
     setIsLoading(true)
     fetchProcessRetentionCars(processKey).then(res => {

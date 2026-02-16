@@ -95,14 +95,28 @@ export function buildProcessDateMap(car: UcarWithProcess): Map<string, Date> {
       map.set(p.processCode, p.date)
     }
   }
-  if (car.DD_URIAGE) {
-    map.set('SALES', car.DD_URIAGE)
-  }
+  // if (car.DD_URIAGE) {
+  //   map.set('SALES', car.DD_URIAGE)
+  // }
   return map
 }
 
 /** メインフローの工程コード順序（MAIN_FLOW_ORDER に対応） */
-const MAIN_FLOW_CODES = ['CS01', 'CS02', 'CS03', 'CR02', 'CR03', 'CR04', 'CR05', 'CR06', 'CR07', 'CR08', 'CR09']
+const MAIN_FLOW_CODES = [
+  //
+  'CS01',
+  'CS02',
+  'CS03',
+  'CR02',
+  'CR03',
+  'CR04',
+  'CR05',
+  'CR06',
+  'CR07',
+  'CR09', //GAZOOとHAISOは逆転させた
+  'CR08',
+  'CR10'
+]
 
 
 /**
@@ -112,6 +126,8 @@ const MAIN_FLOW_CODES = ['CS01', 'CS02', 'CS03', 'CR02', 'CR03', 'CR04', 'CR05',
 const makeDefaultRetention = (selfCode: string): (car: UcarWithProcess) => boolean => {
 
 
+
+
   /** 指定コードより後の工程コード一覧を返す */
   const makeSubsequentCodes = (selfCode: string): string[] => {
     const idx = MAIN_FLOW_CODES.indexOf(selfCode)
@@ -119,11 +135,25 @@ const makeDefaultRetention = (selfCode: string): (car: UcarWithProcess) => boole
     return MAIN_FLOW_CODES.slice(idx + 1)
   }
 
+
+
+
+
   const subsequentCodes = makeSubsequentCodes(selfCode)
+
+
+
   return (car) => {
     const dateMap = buildProcessDateMap(car)
+
+
+
     if (!dateMap.has(selfCode)) return false
-    return subsequentCodes.every(code => !dateMap.has(code))
+
+    const hit = subsequentCodes.every(code => !dateMap.has(code))
+
+
+    return hit
   }
 }
 
@@ -170,28 +200,33 @@ export class UcarProcessCl {
     'CR_MARUKURI',
     'CR_KENSA',
     'CR_SHASHIN',
+    'CR_HAISO', //GAZOOとHAISOは逆転させた
     'CR_GAZOO',
-    'CR_HAISO',
+    'AI_URIAGE',
   ]
 
   /**
-   * ダッシュボード表示用の工程一覧を取得
+   * ダッシュボード表示用の工程一覧を取得（dashboardProp が定義済みの工程のみ）
    */
   static getDashboardProcesses() {
-    return UcarProcessCl.MAIN_FLOW_ORDER.map(key => {
-      const item = UcarProcessCl.CODE.raw[key]
-      const dp = item.dashboardProp
-      return {
-        key,
-        code: item.code,
-        label: item.label,
-        dashboardLabel: dp?.label ?? item.label,
-        color: item.color,
-        retentionDescription: dp?.retentionDescription ?? '',
-        calcRetention: dp?.calcRetention,
-        calcLT: dp?.calcLT,
-      }
-    })
+    return UcarProcessCl.MAIN_FLOW_ORDER
+      .filter(key => UcarProcessCl.CODE.raw[key]?.dashboardProp != null)
+      .map(key => {
+        const item = UcarProcessCl.CODE.raw[key]
+        const dp = item.dashboardProp!
+
+
+        return {
+          key,
+          code: item.code,
+          label: item.label,
+          dashboardLabel: dp.label ?? item.label,
+          color: item.color,
+          retentionDescription: dp.retentionDescription ?? '',
+          calcRetention: dp.calcRetention,
+          calcLT: dp.calcLT,
+        }
+      })
   }
 
   /**
@@ -365,18 +400,7 @@ export class UcarProcessCl {
         calcRetention: makeDefaultRetention('CR07'),
       },
     },
-    CR_GAZOO: {
-      code: 'CR08',
-      bqFieldName: 'datetime_13',
-      label: 'GAZOO',
-      color: '#7E57C2', // ディープパープル
-      type: '加修',
-      list: [`main`, 'CR'],
-      dashboardProp: {
-        retentionDescription: '【GAZOO】を実施後、【商品車受取】が登録されていないものです。',
-        calcRetention: makeDefaultRetention('CR08'),
-      },
-    },
+
     CR_HAISO: {
       code: 'CR09',
       bqFieldName: 'datetime_14',
@@ -385,15 +409,44 @@ export class UcarProcessCl {
       type: '店長',
       list: [`main`, 'CR'],
       dashboardProp: {
-        label: '拠点配送',
-        retentionDescription: '【商品車受取】を実施後、販売日が登録されていないものです。',
-        calcRetention: (car: UcarWithProcess) => {
-          const hasCR09 = car.processes.some(p => p.processCode === 'CR09' && p.date)
-          if (!hasCR09) return false
-          return !car.DD_URIAGE
-        },
-      },
+        retentionDescription: '【商品車受取】を実施後、【GAZOO入力】が登録されていないものです。',
+        calcRetention: makeDefaultRetention('CR09'),
+      }
     },
+    CR_GAZOO: {
+      code: 'CR08',
+      bqFieldName: 'datetime_13',
+      label: 'GAZOO',
+      color: '#7E57C2', // ディープパープル
+      type: '加修',
+      list: [`main`, 'CR'],
+      // dashboardProp: {
+      //   retentionDescription: '【GAZOO入力】を実施後、【ai21】が登録されていないものです。',
+      //   calcRetention: makeDefaultRetention('CR08'),
+      // },
+    },
+
+
+
+
+    AI_URIAGE: {
+      code: 'CR10',
+      // bqFieldName: 'datetime_14',
+      label: 'ai21売上',
+      color: '#FF7043', // ディープオレンジ（完了）
+      list: [],
+      // dashboardProp: {
+      //   // label: '拠点配送',
+      //   retentionDescription: '【商品車受取】を実施後、販売日が登録されていないものです。',
+      //   calcRetention: (car: UcarWithProcess) => {
+
+      //     const hasCR09 = car.processes.some(p => p.processCode === 'CR09' && p.date)
+      //     if (!hasCR09) return false
+      //     return !car.DD_URIAGE
+      //   },
+      // },
+    },
+
 
     SALES_DATE: {
       code: 'SALES',

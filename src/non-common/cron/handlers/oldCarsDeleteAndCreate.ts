@@ -7,16 +7,22 @@ import {useRawSql} from '@cm/class/SqlBuilder/useRawSql'
 import {BQ_parser} from '@app/api/google/big-query/bigQueryParser'
 import {Days} from '@cm/class/Days/Days'
 import {toUtc} from '@cm/class/Days/date-utils/calculations'
+import {UCAR_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-constants'
+
+const shiireGroupUser = await prisma.user.findFirst({
+  where: {code: UCAR_CONSTANTS.shiireGroupUserCode},
+})
 
 /**
  * 古物台帳 Rawデータ取り込みバッチ
  * BigQueryから古物台帳データを同期する
  */
 export const executeOldCarsDeleteAndCreate = async () => {
-  let body = await bigQuery__select({
+  let body: any[] = []
+  body = await bigQuery__select({
     datasetId: 'OrdersDB',
     tableId: 'OldCars_Base',
-    sqlString: sql`SELECT * FROM okayamatoyopet.OrdersDB.OldCars_Base`,
+    sqlString: sql`SELECT * FROM okayamatoyopet.OrdersDB.OldCars_Base `,
   })
 
   body = body.map(item => {
@@ -44,5 +50,35 @@ export const executeOldCarsDeleteAndCreate = async () => {
     },
   })
 
-  return {success: true, message: '古物台帳データ取り込み完了', result: {count: body.length}}
+  const allUcars = await prisma.ucar.findMany({
+    include: {
+      UcarProcess: {
+        where: {processCode: 'CR10'},
+      },
+      OldCars_Base: {select: {DD_URIAGE: true}},
+    },
+  })
+
+  let count = 0
+  allUcars.forEach(async ucar => {
+    if (ucar && shiireGroupUser && ucar.UcarProcess.length === 0 && ucar.OldCars_Base?.DD_URIAGE) {
+      await prisma.ucarProcess.create({
+        data: {
+          sateiID: ucar.sateiID,
+          userId: shiireGroupUser.id,
+          processCode: 'CR10',
+          date: ucar.OldCars_Base?.DD_URIAGE,
+          dataSource: 'BIG_QUERY_OLD_CARS_BASE',
+        },
+      })
+
+      count++
+    }
+  })
+
+  return {
+    success: true,
+    message: '古物台帳データ取り込み完了',
+    result: {count: body.length},
+  }
 }

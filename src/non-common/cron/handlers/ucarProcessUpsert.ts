@@ -5,6 +5,7 @@ import {sql} from '@cm/class/SqlBuilder/SqlBuilder'
 import prisma from 'src/lib/prisma'
 import {processBatchWithRetry} from '@cm/lib/server-actions/common-server-actions/processBatchWithRetry'
 import {BQ_parser} from '@app/api/google/big-query/bigQueryParser'
+import {UCAR_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-constants'
 
 /**
  * UcarProcess アップサートバッチ
@@ -20,26 +21,22 @@ export const executeUcarProcessUpsert = async () => {
       sortOrder: item.code.includes('CS') ? 1 : item.code.includes('CR') ? 2 : 3, // ソート順を決定
     }))
 
-  // BigQueryからの取得カラムを構築
-  const bqFieldNames = processCodeMapping.map(p => p.bqFieldName)
-  const selectColumns = ['Assessment_ID', ...bqFieldNames].join(', ')
-
   // BigQueryからデータを取得
   const bqData = await bigQuery__select({
     datasetId: 'Ucar_QR',
     tableId: 'QR_Prosess',
     sqlString: sql`SELECT *
     FROM okayamatoyopet.Ucar_QR.QR_Prosess
-    WHERE max_update >= '2026-01-20 00:00:00'
+    WHERE max_update >= '2025-01-01 00:00:00'
     ORDER BY max_update DESC
-    LIMIT 1000`,
+    `,
   })
 
   // 現在のDBからUcarProcessデータを取得（既存データのチェック用）
   const existingProcesses = await prisma.ucarProcess.findMany({
-    where: {
-      dataSource: 'BIG_QUERY_QR_PROCESS',
-    },
+    // where: {
+    //   dataSource: 'BIG_QUERY_QR_PROCESS',
+    // },
     select: {
       sateiID: true,
       processCode: true,
@@ -51,12 +48,17 @@ export const executeUcarProcessUpsert = async () => {
   const existingSet = new Set(existingProcesses.map(p => `${p.sateiID}|${p.processCode}|${p.date?.toISOString()}`))
 
   // システムユーザーIDを取得（または固定値を使用）
-  const systemUser = await prisma.user.findFirst({
-    where: {
-      email: 'system@system.com',
-    },
+  const shiireGroupUser = await prisma.user.findFirst({
+    where: {code: UCAR_CONSTANTS.shiireGroupUserCode},
   })
-  const systemUserId = systemUser?.id ?? 1
+
+  if (!shiireGroupUser?.id) {
+    return {
+      success: false,
+      message: 'システムユーザーが存在しません',
+      result: null,
+    }
+  }
 
   // DBに対応するUcarが存在するsateiIDのセットを取得
   const existingUcars = await prisma.ucar.findMany({
@@ -88,12 +90,12 @@ export const executeUcarProcessUpsert = async () => {
 
       const date = BQ_parser.parseDate(rawDate)
 
-      const key = `${sateiID}|${mapping.processCode}|${date.toISOString()}`
+      // const key = `${sateiID}|${mapping.processCode}|${date.toISOString()}`
 
-      // 既存データと完全一致する場合はスキップ
-      if (existingSet.has(key)) {
-        return
-      }
+      // // 既存データと完全一致する場合はスキップ
+      // if (existingSet.has(key)) {
+      //   return
+      // }
 
       processesToUpsert.push({
         sateiID,
@@ -101,7 +103,7 @@ export const executeUcarProcessUpsert = async () => {
         date,
         dataSource: 'BIG_QUERY_QR_PROCESS',
         sortOrder: mapping.sortOrder,
-        userId: systemUserId,
+        userId: shiireGroupUser?.id,
       })
     })
   })
@@ -122,6 +124,7 @@ export const executeUcarProcessUpsert = async () => {
           },
           create: item,
           update: {
+            userId: shiireGroupUser?.id,
             dataSource: item.dataSource,
             sortOrder: item.sortOrder,
             updatedAt: new Date(),

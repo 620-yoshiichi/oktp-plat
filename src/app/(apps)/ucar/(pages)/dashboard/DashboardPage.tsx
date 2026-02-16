@@ -87,6 +87,8 @@ export default function DashboardPage() {
     })
   }, [])
 
+
+
   // --- 期間別LTデータ取得（期間変更時に再取得） ---
   const [periodLTData, setPeriodLTData] = useState<PeriodLTSummary[] | null>(null)
   const [isLTLoading, setIsLTLoading] = useState(true)
@@ -105,7 +107,7 @@ export default function DashboardPage() {
   }, [ltPeriodStart, ltPeriodEnd])
 
 
-  console.log(dashboardData)  //logs
+
 
   // --- LTモーダル（useModal使用） ---
   const ltModal = useModal<{
@@ -188,12 +190,12 @@ export default function DashboardPage() {
 
           <C_Stack className={`gap-4`} >
             <R_Stack className={` items-stretch`}>
-              <Card className={`w-[850px]`}>
+              <Card className={`w-[900px]`}>
 
                 <div><TairyuDaisuTable data={dashboardData} year={year} /></div>
               </Card>
 
-              <Card className={`w-[450px]`}>
+              <Card className={`w-[400px]`}>
                 <div>現在台数別グラフ</div>
                 <div><TairyuPieChart data={dashboardData} /></div>
               </Card>
@@ -205,13 +207,13 @@ export default function DashboardPage() {
 
             <R_Stack className={` items-stretch`}>
 
-              <Card className={`w-[850px]`}>
+              <Card className={`w-[900px]`}>
                 工程別平均LT
                 <div><OtherMetricsTable data={dashboardData} year={year} /></div>
               </Card>
 
 
-              <Card className={`w-[450px]`}>
+              <Card className={`w-[400px]`}>
                 <div>LTグラフ</div>
                 <div>
                   <div className="flex items-center justify-center gap-2 text-xs mb-3">
