@@ -12,7 +12,7 @@ import { BP_Car } from '@app/(apps)/QRBP/class/BP_Car'
 import { getColorStyles } from '@cm/lib/methods/colors'
 
 const BoardTable = (props: any) => {
-  const { targetDays, Damages, cars_groupedBy_Damage_Date, activeCars, setcarOnModal, lastTouchedCarId, setlastTouchedCarId } = props
+  const { targetDays, Damages, cars_groupedBy_Damage_Date, activeCars, setcarOnModal, lastTouchedCarId, setlastTouchedCarId, mode = 'cr' } = props
   const theadStickyStyle: CSSProperties = { position: 'sticky', zIndex: Z_INDEX.thead }
 
   const headerWidth = 160
@@ -126,6 +126,7 @@ const BoardTable = (props: any) => {
                           setcarOnModal,
                           lastTouchedCarId,
                           setlastTouchedCarId,
+                          mode,
                         }}
                       />
                     </div>
@@ -155,6 +156,7 @@ const BoardTable = (props: any) => {
                             setcarOnModal,
                             lastTouchedCarId,
                             setlastTouchedCarId,
+                            mode,
                           }}
                         />
                       </Droppable>

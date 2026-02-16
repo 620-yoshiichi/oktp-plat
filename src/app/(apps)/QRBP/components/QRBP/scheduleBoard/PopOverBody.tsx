@@ -1,32 +1,35 @@
 'use client'
 
-import { useGlobalPropType } from '@cm/hooks/globalHooks/useGlobal'
-import { formatDate } from '@cm/class/Days/date-utils/formatters'
+import {useTransition} from 'react'
+import {useGlobalPropType} from '@cm/hooks/globalHooks/useGlobal'
+import {formatDate} from '@cm/class/Days/date-utils/formatters'
 
-import { BP_Car } from '@app/(apps)/QRBP/class/BP_Car'
+import {BP_Car} from '@app/(apps)/QRBP/class/BP_Car'
 
 import CarDetailById from '@app/(apps)/QRBP/components/QRBP/forCr/CarDetailById'
-import { ColBuilder } from '@app/(apps)/QRBP/class/ColBuilder'
-import { Button } from '@cm/components/styles/common-components/Button'
+import {ColBuilder} from '@app/(apps)/QRBP/class/ColBuilder'
+import {Button} from '@cm/components/styles/common-components/Button'
 
 import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
-import { Fields } from '@cm/class/Fields/Fields'
-import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+import {Fields} from '@cm/class/Fields/Fields'
 
 import React from 'react'
 import useModal from '@cm/components/utils/modal/useModal'
-import { useParams } from 'next/navigation'
-import { knockEmailApi } from '@cm/lib/methods/knockEmailApi'
+import {useParams} from 'next/navigation'
+import {knockEmailApi} from '@cm/lib/methods/knockEmailApi'
 import ShadModal from '@cm/shadcn/ui/Organisms/ShadModal'
 import useRecords from '@cm/components/DataLogic/TFs/PropAdjustor/hooks/useRecords/useRecords'
+import {toast} from 'react-toastify'
+import {reflectScheduledAt} from './scheduleBoardActions'
 
 const PopOverBody = props => {
   const params = useParams() as any
-  const { open, handleClose, handleOpen, Modal } = useModal()
+  const {open, handleClose, handleOpen, Modal} = useModal()
   const useGlobalProps: useGlobalPropType = props.useGlobalProps
-  const { car, setcarOnModal, activeCars } = props
-  const { router, toggleLoad } = useGlobalProps
-  const { records, setrecords, mutateRecords, deleteRecord, totalCount } = useRecords({
+  const {car, setcarOnModal, activeCars, mode = 'cr'} = props
+  const {router, toggleLoad} = useGlobalProps
+  const [isPending, startTransition] = useTransition()
+  const {records, setrecords, mutateRecords, deleteRecord, totalCount} = useRecords({
     dataModelName: 'car',
     serverFetchProps: {
       DetailePageId: undefined,
@@ -55,7 +58,7 @@ const PopOverBody = props => {
 
   const reflectCrScheduled = async data => {
     const newDate = data.date
-    const { scheduledAt } = car
+    const {scheduledAt} = car
 
     const scheduledAtToStr = scheduledAt ? formatDate(scheduledAt) : '未設定'
     const newDateToStr = newDate ? formatDate(newDate) : undefined
@@ -66,23 +69,30 @@ const PopOverBody = props => {
     }
 
     if (confirm(`【${scheduledAtToStr}】 ➡︎ 【${newDateToStr}】へ更新します。よろしいですか？`)) {
-      const sendEmail = false
-      await toggleLoad(async () => {
-        await doStandardPrisma('car', 'update', {
-          where: { id: car?.id },
-          data: { scheduledAt: formatDate(newDate, 'iso') },
-        })
-        if (sendEmail) {
-          const subject = `BP予定変更通知`
-          const text = `下記の車両の予定が変更されました。
+      startTransition(async () => {
+        const isoDate = formatDate(newDate, 'iso')
+        if (!isoDate) return
+
+        const result = await reflectScheduledAt(car?.id, String(isoDate))
+
+        if (result.success) {
+          const sendEmail = false
+          if (sendEmail) {
+            const subject = `BP予定変更通知`
+            const text = `下記の車両の予定が変更されました。
 
 【 ${formatDate(car.scheduledAt)}  > > > ${formatDate(newDate)}】
 ${new BP_Car(car).getCarInfoForEmail()}`
-          const to = [car?.User?.email].filter(val => val)
-          await knockEmailApi({ subject, text, to })
+            const to = [car?.User?.email].filter(val => val)
+            await knockEmailApi({subject, text, to})
+          }
+          router.refresh()
+          toast.success('拠点予定を更新しました')
+          setcarOnModal(false)
+        } else {
+          toast.error(`更新に失敗しました: ${result.message}`)
         }
       })
-      setcarOnModal(false)
     }
   }
 
@@ -102,12 +112,19 @@ ${new BP_Car(car).getCarInfoForEmail()}`
   }
 
   const infoItems = [
-    { label: 'BP番号', value: car?.bpNumber },
-    { label: '車名', value: car?.carName },
-    { label: 'ナンバー', value: car?.plate },
-    { label: '顧客名', value: car?.customerName },
-    { label: 'CR予定', value: formatDate(car?.crScheduledAt) },
-    { label: '拠点予定', value: formatDate(car?.scheduledAt) },
+    {label: 'BP番号', value: car?.bpNumber},
+    {label: '車名', value: car?.carName},
+    {label: 'ナンバー', value: car?.plate},
+    {label: '顧客名', value: car?.customerName},
+    ...(mode === 'engineer'
+      ? [
+          {label: 'エンジニア予定', value: formatDate(car?.engineerScheduledAt) || '未設定'},
+          {label: 'CR予定', value: formatDate(car?.crScheduledAt)},
+        ]
+      : [
+          {label: 'CR予定', value: formatDate(car?.crScheduledAt)},
+          {label: '拠点予定', value: formatDate(car?.scheduledAt)},
+        ]),
   ]
 
   return (
@@ -160,7 +177,7 @@ ${new BP_Car(car).getCarInfoForEmail()}`
           >
             詳細を開く
           </button>
-          <DateReflector />
+          {mode === 'cr' && <DateReflector />}
         </div>
       </div>
 

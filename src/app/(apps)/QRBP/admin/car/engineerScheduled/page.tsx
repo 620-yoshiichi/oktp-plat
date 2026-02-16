@@ -1,5 +1,5 @@
 import {QueryBuilder} from '@app/(apps)/QRBP/class/QueryBuilder'
-import EngineerScheduleBoard from '@app/(apps)/QRBP/components/QRBP/scheduleBoard/EngineerScheduleBoard'
+import ScheduleBoard from '@app/(apps)/QRBP/components/QRBP/scheduleBoard/ScheduleBoard'
 
 import NewDateSwitcher from '@cm/components/utils/dates/DateSwitcher/NewDateSwitcher'
 import Redirector from '@cm/components/utils/Redirector'
@@ -36,19 +36,41 @@ const EngineerScheduledBoardPage = async props => {
     where: {
       name: {not: 'QR'},
     },
+    orderBy: {
+      sortOrder: 'desc',
+    },
   })
 
+  const STATUS_LEGEND = [
+    {label: '受付', color: '#B0B0B0'},
+    {label: '作業中', color: '#F5A623'},
+    {label: '外注', color: '#E05252'},
+    {label: '完了', color: '#A364C7'},
+  ]
+
   return (
-    <div className={`p-4`}>
-      <div className={`w-fit`}>
-        <h3>エンジニアスケジュールボード</h3>
-        <p className={`text-xs text-gray-500`}>※ このボードでの日付変更は、他のスケジュールボードには影響しません</p>
-        <div className={`w-fit`}>
+    <div className={`px-4 pt-3 pb-2 max-w-[95vw] mx-auto overflow-auto`}>
+      <div className={`mb-3 flex items-center justify-between gap-4`}>
+        <div className={`flex items-center gap-4`}>
+          <h2 className={`text-lg font-semibold text-gray-800`}>エンジニアスケジュールボード</h2>
           <NewDateSwitcher />
+        </div>
+        <div className={`flex items-center gap-3`}>
+          <span className={`text-xs text-gray-400`}>※ 日付変更は他のボードに影響しません</span>
+          {STATUS_LEGEND.map(s => (
+            <div key={s.label} className={`flex items-center gap-1.5`}>
+              <span className={`inline-block h-3 w-3 rounded-sm`} style={{backgroundColor: s.color}} />
+              <span className={`text-xs text-gray-500`}>{s.label}</span>
+            </div>
+          ))}
         </div>
       </div>
 
-      {query?.from && <EngineerScheduleBoard {...{targetCars, damageNameMaster, query}} />}
+      {query?.from && (
+        <div className={`max-h-[78vh] overflow-auto`}>
+          <ScheduleBoard {...{targetCars, damageNameMaster, query}} mode="engineer" />
+        </div>
+      )}
     </div>
   )
 }

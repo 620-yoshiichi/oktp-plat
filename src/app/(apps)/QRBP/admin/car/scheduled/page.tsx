@@ -22,6 +22,7 @@ const ScheduldBoadrPage = async props => {
 
   const { whereQuery, redirectPath } = await getWhereQuery({ query, defaultQuery })
 
+
   if (redirectPath) {
     return <Redirector redirectPath={redirectPath} />
   }
@@ -53,7 +54,7 @@ const ScheduldBoadrPage = async props => {
       <div className={`mb-3 flex items-center justify-between gap-4`}>
         <div className={`flex items-center gap-4`}>
           <h2 className={`text-lg font-semibold text-gray-800`}>スケジュールボード</h2>
-          <NewDateSwitcher />
+          <NewDateSwitcher selectPeriod />
         </div>
         <div className={`flex items-center gap-3`}>
           {STATUS_LEGEND.map(s => (
