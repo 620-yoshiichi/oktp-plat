@@ -1,14 +1,9 @@
-import {formatDate} from '@cm/class/Days/date-utils/formatters'
-import {BP_Car} from '@app/(apps)/QRBP/class/BP_Car'
-import {shorten, superTrim} from '@cm/lib/methods/common'
+import { formatDate } from '@cm/class/Days/date-utils/formatters'
+import { BP_Car } from '@app/(apps)/QRBP/class/BP_Car'
+import { shorten, superTrim } from '@cm/lib/methods/common'
 
 import Draggable from '@cm/components/DnD/Draggable'
-
-import {Center} from '@cm/components/styles/common-components/common-components'
-import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
-import {NumHandler} from '@cm/class/NumHandler'
-import Coloring from '@cm/lib/methods/Coloring'
-import {cn} from '@cm/shadcn/lib/utils'
+import { NumHandler } from '@cm/class/NumHandler'
 
 const BOARD_STATUS_COLORS = {
   受付: '#B0B0B0',
@@ -31,67 +26,48 @@ const getBoardStatus = (car: any, bpCar: BP_Car) => {
   return '受付'
 }
 
-const DraggableCar = ({car, setcarOnModal, lastTouchedCarId, setlastTouchedCarId}) => {
+const DraggableCar = ({ car, setcarOnModal, lastTouchedCarId, setlastTouchedCarId }) => {
   const id = `${car?.id}_${car.damageNameMasterId}_${formatDate(car.crScheduledAt, 'iso')}`
   const diff = new BP_Car(car).calcScheduledDiff()
-
   const Car_Class = new BP_Car(car)
 
   const isPast = new Date(car.crScheduledAt) < new Date()
-
   const isStoreAccepted = Car_Class.findProcessByName('拠点受取')
   const boardStatus = getBoardStatus(car, Car_Class)
   const shouldFade = (isPast && !!isStoreAccepted) || boardStatus === '作業完了'
 
-  const value = shorten(superTrim(car?.customerName), 10, '..')
-
-  const carProps = {
-    bgColor: BOARD_STATUS_COLORS[boardStatus],
-    style: {
-      opacity: shouldFade ? 0.3 : 1,
-    },
-  }
-
-
+  const customerName = shorten(superTrim(car?.customerName), 9, '..')
+  const statusColor = BOARD_STATUS_COLORS[boardStatus]
 
   return (
-    <div className={`relative flex flex-nowrap items-center  text-sm`}>
-      <Draggable
-        id={id}
-        data={car}
-        onClick={() => {
-          setcarOnModal(car)
-        }}
+    <Draggable
+      id={id}
+      data={car}
+      onClick={() => {
+        setcarOnModal(car)
+      }}
+    >
+      <div
+        className={`
+          w-[100px] rounded border-l-[3px] bg-white
+          shadow-[0_1px_3px_rgba(0,0,0,0.08)]
+          hover:shadow-[0_2px_8px_rgba(0,0,0,0.12)]
+          transition-shadow cursor-grab
+          px-1.5 py-1
+          ${shouldFade ? 'opacity-20 grayscale-40' : ''}
+          ${car.moved ? 'ring-2 ring-blue-400 ring-offset-1' : ''}
+        `}
+        style={{ borderLeftColor: statusColor }}
       >
-        <div className={`row-stack  flex-nowrap text-xs   `}>
-          <Center className={`h-[35px]   w-[90px]    `}>
-            <div className={cn(car.moved ? 'border-4  scale-120 animate-pulse   border-red-500' : '')}>
-              <IconBtn
-                color={carProps.bgColor}
-                style={{
-                  ...carProps.style,
-                  // color: getColorStyles(carProps.bgColor).color,
-                }}
-                className={`relative rounded w-[90px] text-[10px]! p-0.5! leading-3`}
-              >
-                <div className={`absolute-center -z-50 w-full overflow-hidden text-transparent`}>{car.plate}</div>
-                <div className={`text-[8px]`}>{car.bpNumber}</div>
-
-                <div>{value}</div>
-              </IconBtn>
-            </div>
-          </Center>
-
-
-
-          {diff !== 0 && (
-            <Coloring size="sm" color={diff > 0 ? 'red' : 'green'}>
-              ({NumHandler.addPlusMinus(diff)})
-            </Coloring>
-          )}
-        </div>
-      </Draggable>
-    </div>
+        <div className={`text-[9px] leading-none text-gray-400`}>{car.bpNumber}</div>
+        <div className={`mt-0.5 text-[11px] font-medium leading-tight text-gray-800 truncate`}>{customerName}</div>
+        {/* {diff !== 0 && (
+          <div className={`mt-0.5 text-[9px] leading-none ${diff > 0 ? 'text-red-500' : 'text-green-600'}`}>
+            {NumHandler.addPlusMinus(diff)}日
+          </div>
+        )} */}
+      </div>
+    </Draggable>
   )
 }
 

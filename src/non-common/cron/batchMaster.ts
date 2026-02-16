@@ -22,6 +22,7 @@ import {
   executeBankMaster,
   executeUcarProcessUpsert,
 } from './handlers/clickActionHandlers'
+
 import {executeDisactivateUnnecessaryUcar} from 'src/non-common/cron/handlers/executeDisactivateUnnecessaryUcar'
 
 /**
@@ -177,7 +178,6 @@ export const BATCH_MASTER: Record<string, BatchConfig> = {
   //     },
   //   },
   // },
-
   // qrPaper: {
   //   id: 'qrPaper',
   //   name: 'UcarPaperデータ作成',

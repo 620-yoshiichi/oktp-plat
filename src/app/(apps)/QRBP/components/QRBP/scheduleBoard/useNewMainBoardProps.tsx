@@ -1,22 +1,22 @@
 'use client'
-import {useState, useEffect} from 'react'
-import {toUtc} from '@cm/class/Days/date-utils/calculations'
-import {formatDate} from '@cm/class/Days/date-utils/formatters'
+import { useState, useEffect } from 'react'
+import { toUtc } from '@cm/class/Days/date-utils/calculations'
+import { formatDate } from '@cm/class/Days/date-utils/formatters'
 
-import {anyObject} from '@cm/types/utility-types'
+import { anyObject } from '@cm/types/utility-types'
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
-import {eachDayOfInterval} from 'date-fns'
-import {toast} from 'react-toastify'
+import { eachDayOfInterval } from 'date-fns'
+import { toast } from 'react-toastify'
 
-import {obj__initializeProperty} from '@cm/class/ObjHandler/transformers'
-import {DragEndEvent} from '@dnd-kit/core'
+import { obj__initializeProperty } from '@cm/class/ObjHandler/transformers'
+import { DragEndEvent } from '@dnd-kit/core'
 
-import {doTransaction} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
-import {transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
+import { doTransaction } from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
+import { transactionQuery } from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
 
 const useNewMainBoardProps = props => {
-  const {targetCars, damageNameMaster, query} = props
-  const {toggleLoad} = useGlobal()
+  const { targetCars, damageNameMaster, query } = props
+  const { toggleLoad } = useGlobal()
 
   const [lastTouchedCarId, setlastTouchedCarId] = useState<any>(null)
   const selectedCar: any = {}
@@ -33,7 +33,10 @@ const useNewMainBoardProps = props => {
     }
   })
 
-  const [carsOnBoard, setcarsOnBoard] = useState<any[]>(targetCars)
+  const [carsOnBoard, setcarsOnBoard] = useState<any[]>([])
+  useEffect(() => {
+    setcarsOnBoard(targetCars)
+  }, [targetCars])
 
   const [pickedCar, setpickedCar] = useState<any>(null)
   useEffect(() => {
@@ -51,7 +54,7 @@ const useNewMainBoardProps = props => {
   // クリックイベントを処理する関数
   // ドラッグ後の挙動;
   const handleDragEnd: (event: DragEndEvent) => void = (event: anyObject) => {
-    const {active, over} = event
+    const { active, over } = event
 
     const overId = over?.id
     const activeId = active.id
@@ -104,7 +107,7 @@ const useNewMainBoardProps = props => {
           model: 'car',
           method: 'update',
           queryObject: {
-            where: {id: car?.id},
+            where: { id: car?.id },
             data: {
               damageNameMasterId: car?.damageNameMasterId,
               crScheduledAt: car?.crScheduledAt ? formatDate(car?.crScheduledAt, 'iso') : null,
@@ -112,10 +115,11 @@ const useNewMainBoardProps = props => {
           },
         }
       })
-      const res = await doTransaction({transactionQueryList})
+      const res = await doTransaction({ transactionQueryList })
       return res
     })
     toast.success('スケジュールを更新しました')
+    setcarsOnBoard(targetCars)
   }
 
   const cars_groupedBy_Damage_Date: anyObject = create_cars_groupedBy_Damage_Date({
@@ -151,7 +155,7 @@ const useNewMainBoardProps = props => {
 export default useNewMainBoardProps
 
 export const create_cars_groupedBy_Damage_Date = (props: anyObject) => {
-  const {carsOnBoard} = props
+  const { carsOnBoard } = props
   const cars_groupedBy_Damage_Date: anyObject = {}
   carsOnBoard?.forEach(car => {
     const damageNameMasterId = car?.damageNameMasterId

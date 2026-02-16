@@ -1,20 +1,20 @@
 'use client'
-import {CSSProperties, Fragment} from 'react'
-import {Days} from '@cm/class/Days/Days'
-import {formatDate} from '@cm/class/Days/date-utils/formatters'
-import {cl} from '@cm/lib/methods/common'
-import {getColorStyles} from '@cm/lib/methods/colors'
+import { CSSProperties, Fragment } from 'react'
+import { Days } from '@cm/class/Days/Days'
+import { formatDate } from '@cm/class/Days/date-utils/formatters'
+import { cl } from '@cm/lib/methods/common'
+import { getColorStyles } from '@cm/lib/methods/colors'
 
 import EngineerDateColumn from '@app/(apps)/QRBP/components/QRBP/scheduleBoard/BoardTable/EngineerDateColumn'
 
 import Droppable from '@cm/components/DnD/Droppable'
-import {Z_INDEX} from '@cm/lib/constants/constants'
+import { Z_INDEX } from '@cm/lib/constants/constants'
 
 const EngineerBoardTable = (props: any) => {
-  const {targetDays, Damages, cars_groupedBy_Damage_Date, setcarOnModal, lastTouchedCarId, setlastTouchedCarId} = props
+  const { targetDays, Damages, cars_groupedBy_Damage_Date, setcarOnModal, lastTouchedCarId, setlastTouchedCarId } = props
   const dateThClass = `bg-gray-300 text-xs px-0`
   const unscheduledClass = `w-20`
-  const theadStickyStyle: CSSProperties = {position: 'sticky', zIndex: Z_INDEX.thead}
+  const theadStickyStyle: CSSProperties = { position: 'sticky', zIndex: Z_INDEX.thead }
 
   const left = 200
 
@@ -24,7 +24,7 @@ const EngineerBoardTable = (props: any) => {
         <thead>
           <tr>
             <Fragment>
-              <th style={{...theadStickyStyle, left: 0, zIndex: 99999}} className={cl(dateThClass, ``)}>
+              <th style={{ ...theadStickyStyle, left: 0, zIndex: 99999 }} className={cl(dateThClass, ``)}>
                 #
               </th>
               {targetDays.map((day, d) => {
@@ -65,7 +65,7 @@ const EngineerBoardTable = (props: any) => {
 
             return (
               <tr key={d} className={`min-h-[100px]`}>
-                <th style={{...theadStickyStyle, left: 0, zIndex: 9999}} className={cl(unscheduledClass, `p-0!`)}>
+                <th style={{ ...theadStickyStyle, left: 0, zIndex: 9999 }} className={cl(unscheduledClass, `p-0!`)}>
                   <Droppable
                     {...{
                       id: `${damage.id}_${'unscheduled'}`,
@@ -103,7 +103,7 @@ const EngineerBoardTable = (props: any) => {
                     <td key={d}>
                       <Droppable
                         {...{
-                          id: `${damage.id}_${day}`,
+                          id: `${damage.id}_${formatDate(day, 'iso')}`,
                           style: {
                             ...th_td_props,
                             ...Days.day.isHoliday(day)?.style,

@@ -121,16 +121,23 @@ export async function getTenpoTsuikoData(
   statusFilter?: 'all' | '未申請' | '申請中' | '承認完了' | '却下'
 ) {
   try {
-    const startDate = getMidnight(new Date(2025, 9, 1))
+    const startDate = getMidnight(new Date(2025, 10, 1))
+
+
+
+
 
     // 検索条件を構築
     const whereCondition: { AND: Prisma.NewCarWhereInput[] } = {
       AND: [
         //
+
         { DD_HAISKIBO: { gte: startDate } },
         { NO_CYUMON: { notIn: nonDisplayList } },
       ],
     }
+
+
 
     // 受注番号で検索する場合
     if (searchNoCyumon && searchNoCyumon.trim()) {
@@ -197,6 +204,8 @@ export async function getTenpoTsuikoData(
           break
       }
     }
+
+
 
     // 追工データがある車両を取得（車両ベース）
     const { result: carsWithTsuiko } = await doStandardPrisma('newCar', 'findMany', {

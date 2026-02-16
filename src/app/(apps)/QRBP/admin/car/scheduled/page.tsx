@@ -1,18 +1,18 @@
-import {QueryBuilder} from '@app/(apps)/QRBP/class/QueryBuilder'
+import { QueryBuilder } from '@app/(apps)/QRBP/class/QueryBuilder'
 import NewScheduleBoard from '@app/(apps)/QRBP/components/QRBP/scheduleBoard/NewScheduleBoard'
 
 import NewDateSwitcher from '@cm/components/utils/dates/DateSwitcher/NewDateSwitcher'
 import Redirector from '@cm/components/utils/Redirector'
 
-import {getWhereQuery} from '@cm/lib/methods/redirect-method'
-import {initServerComopnent} from 'src/non-common/serverSideFunction'
+import { getWhereQuery } from '@cm/lib/methods/redirect-method'
+import { initServerComopnent } from 'src/non-common/serverSideFunction'
 import prisma from 'src/lib/prisma'
 
-import {addDays} from 'date-fns'
+import { addDays } from 'date-fns'
 
 const ScheduldBoadrPage = async props => {
   const query = await props.searchParams
-  const {session} = await initServerComopnent({query})
+  const { session } = await initServerComopnent({ query })
   const today = new Date()
 
   const defaultQuery = {
@@ -20,34 +20,52 @@ const ScheduldBoadrPage = async props => {
     to: addDays(today, 30),
   }
 
-  const {whereQuery, redirectPath} = await getWhereQuery({query, defaultQuery})
+  const { whereQuery, redirectPath } = await getWhereQuery({ query, defaultQuery })
 
   if (redirectPath) {
     return <Redirector redirectPath={redirectPath} />
   }
 
   const targetCars = await prisma.car.findMany({
-    orderBy: [{bpNumber: 'asc'}],
-    where: {scheduledAt: {...whereQuery}},
-    include: {...QueryBuilder.getInclude({session, query}).car.include},
+    orderBy: [{ bpNumber: 'asc' }],
+    where: { scheduledAt: { ...whereQuery } },
+    include: { ...QueryBuilder.getInclude({ session, query }).car.include },
   })
 
   const damageNameMaster = await prisma.damageNameMaster.findMany({
     where: {
-      name: {not: 'QR'},
+      name: { not: 'QR' },
+    },
+    orderBy: {
+      sortOrder: 'desc',
     },
   })
 
+  const STATUS_LEGEND = [
+    { label: '受付', color: '#B0B0B0' },
+    { label: '作業中', color: '#F5A623' },
+    { label: '外注', color: '#E05252' },
+    { label: '完了', color: '#A364C7' },
+  ]
+
   return (
-    <div className={`p-4`}>
-      <div className={`w-fit`}>
-        <h3>過去10日のデータを表示しています。必要に応じて、開始日を変更してください</h3>
-        <div className={`w-fit`}>
+    <div className={`px-4 pt-3 pb-2 max-w-[95vw]  mx-auto  overflow-auto`}>
+      <div className={`mb-3 flex items-center justify-between gap-4`}>
+        <div className={`flex items-center gap-4`}>
+          <h2 className={`text-lg font-semibold text-gray-800`}>スケジュールボード</h2>
           <NewDateSwitcher />
+        </div>
+        <div className={`flex items-center gap-3`}>
+          {STATUS_LEGEND.map(s => (
+            <div key={s.label} className={`flex items-center gap-1.5`}>
+              <span className={`inline-block h-3 w-3 rounded-sm`} style={{ backgroundColor: s.color }} />
+              <span className={`text-xs text-gray-500`}>{s.label}</span>
+            </div>
+          ))}
         </div>
       </div>
 
-      {query?.from && <NewScheduleBoard {...{targetCars, damageNameMaster, query}} />}
+      {query?.from && <div className={`max-h-[78vh] overflow-auto`}><NewScheduleBoard {...{ targetCars, damageNameMaster, query }} /></div>}
     </div>
   )
 }

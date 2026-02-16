@@ -112,6 +112,7 @@ export default function TenpoTsuikoRenrakuPage() {
             <div className="text-sm font-medium text-gray-700 mb-2">ステータスでフィルター</div>
             <div className="flex flex-wrap gap-2">
               <IconBtn
+                active={statusFilter === 'all'}
                 onClick={() => updateStatusFilter('all')}
                 color="blue"
                 className={statusFilter === 'all' ? 'opacity-100' : 'opacity-30'}
@@ -119,6 +120,7 @@ export default function TenpoTsuikoRenrakuPage() {
                 全て
               </IconBtn>
               <IconBtn
+                active={statusFilter === '未申請'}
                 onClick={() => updateStatusFilter('未申請')}
                 color={getStatusColor('未申請')}
                 className={statusFilter === '未申請' ? 'opacity-100' : 'opacity-30'}
@@ -126,6 +128,7 @@ export default function TenpoTsuikoRenrakuPage() {
                 未申請
               </IconBtn>
               <IconBtn
+                active={statusFilter === '申請中'}
                 onClick={() => updateStatusFilter('申請中')}
                 color={getStatusColor('申請中')}
                 className={statusFilter === '申請中' ? 'opacity-100' : 'opacity-30'}
@@ -133,6 +136,7 @@ export default function TenpoTsuikoRenrakuPage() {
                 申請中
               </IconBtn>
               <IconBtn
+                active={statusFilter === '承認完了'}
                 onClick={() => updateStatusFilter('承認完了')}
                 color={getStatusColor('承認完了')}
                 className={statusFilter === '承認完了' ? 'opacity-100' : 'opacity-30'}
@@ -140,6 +144,7 @@ export default function TenpoTsuikoRenrakuPage() {
                 承認済み
               </IconBtn>
               <IconBtn
+                active={statusFilter === '却下'}
                 onClick={() => updateStatusFilter('却下')}
                 color={getStatusColor('却下')}
                 className={statusFilter === '却下' ? 'opacity-100' : 'opacity-30'}

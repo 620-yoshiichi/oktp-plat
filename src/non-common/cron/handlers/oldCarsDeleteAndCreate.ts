@@ -8,17 +8,17 @@ import {BQ_parser} from '@app/api/google/big-query/bigQueryParser'
 import {Days} from '@cm/class/Days/Days'
 import {toUtc} from '@cm/class/Days/date-utils/calculations'
 import {UCAR_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-constants'
-
-const shiireGroupUser = await prisma.user.findFirst({
-  where: {code: UCAR_CONSTANTS.shiireGroupUserCode},
-})
+import {anyObject} from '@cm/types/utility-types'
 
 /**
  * 古物台帳 Rawデータ取り込みバッチ
  * BigQueryから古物台帳データを同期する
  */
 export const executeOldCarsDeleteAndCreate = async () => {
-  let body: any[] = []
+  const shiireGroupUser = await prisma.user.findFirst({
+    where: {code: UCAR_CONSTANTS.shiireGroupUserCode},
+  })
+  let body: anyObject[] = []
   body = await bigQuery__select({
     datasetId: 'OrdersDB',
     tableId: 'OldCars_Base',

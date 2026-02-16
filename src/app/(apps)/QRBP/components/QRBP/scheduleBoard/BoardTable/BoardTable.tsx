@@ -1,51 +1,64 @@
 'use client'
-import {CSSProperties, Fragment} from 'react'
-import {Days} from '@cm/class/Days/Days'
-import {formatDate} from '@cm/class/Days/date-utils/formatters'
-import {cl} from '@cm/lib/methods/common'
-import {getColorStyles} from '@cm/lib/methods/colors'
+import { CSSProperties } from 'react'
+import { Days } from '@cm/class/Days/Days'
+import { formatDate } from '@cm/class/Days/date-utils/formatters'
+import { isToday } from 'date-fns'
 
 import DateColumn from '@app/(apps)/QRBP/components/QRBP/scheduleBoard/BoardTable/DateColumn'
 
 import Droppable from '@cm/components/DnD/Droppable'
-import {Z_INDEX} from '@cm/lib/constants/constants'
-import {BP_Car} from '@app/(apps)/QRBP/class/BP_Car'
+import { Z_INDEX } from '@cm/lib/constants/constants'
+import { BP_Car } from '@app/(apps)/QRBP/class/BP_Car'
+import { getColorStyles } from '@cm/lib/methods/colors'
 
 const BoardTable = (props: any) => {
-  const {targetDays, selectedCar, Damages, cars_groupedBy_Damage_Date, activeCars, setcarOnModal, lastTouchedCarId, setlastTouchedCarId} =
-    props
-  const dateThClass = `bg-gray-300 text-xs px-0`
-  const unscheduledClass = `w-20  `
-  const theadStickyStyle: CSSProperties = {position: 'sticky', zIndex: Z_INDEX.thead}
+  const { targetDays, Damages, cars_groupedBy_Damage_Date, activeCars, setcarOnModal, lastTouchedCarId, setlastTouchedCarId } = props
+  const theadStickyStyle: CSSProperties = { position: 'sticky', zIndex: Z_INDEX.thead }
 
-  const left = 200
+  const headerWidth = 160
+
+  const getDateHeaderClass = (day: Date) => {
+    if (isToday(day)) return 'bg-blue-50 text-blue-700 font-bold'
+    const holiday = Days.day.isHoliday(day)
+    if (holiday) return 'bg-red-50/40 text-red-400'
+    return 'bg-gray-100 text-gray-500'
+  }
 
   return (
-    <div className={`table-wrapper  max-h-[75vh] overflow-auto [&_td]:border [&_th]:border`} id="board">
-      <table>
+    <div className={`  rounded-lg border border-gray-300`} id="board">
+      <table className={`w-full border-collapse`}>
         <thead>
           <tr>
-            <Fragment>
-              <th style={{...theadStickyStyle, left: 0, zIndex: 99999}} className={cl(dateThClass, ``)}>
-                #
-              </th>
-              {targetDays.map((day, d) => {
-                const dateId = `date-${formatDate(day)}`
-                return (
-                  <th
-                    id={dateId}
-                    className={cl(dateThClass)}
-                    key={d}
-                    style={{
-                      ...Days.day.isHoliday(day)?.style,
-                      zIndex: 10,
-                    }}
-                  >
-                    {formatDate(day, 'MM-DD(ddd)')}
-                  </th>
-                )
-              })}
-            </Fragment>
+            <th
+              style={{ ...theadStickyStyle, left: 0, zIndex: 99999, width: headerWidth }}
+              className={`bg-gray-100 px-2 py-2 text-left text-[11px] font-medium text-gray-500 border-b-2 border-b-gray-400 border-r-2 border-r-gray-400`}
+            >
+              ダメージ区分
+            </th>
+            {targetDays.map((day, d) => {
+              const dateId = `date-${formatDate(day)}`
+              const today = isToday(day)
+              return (
+                <th
+                  id={dateId}
+                  key={d}
+                  className={`
+                    px-1 py-2 text-center text-[11px] font-medium whitespace-nowrap
+                    border-b-2 border-b-gray-400
+                    border-r border-r-gray-200
+                    ${getDateHeaderClass(day)}
+
+                    ${today ? 'border-b-blue-500!' : ''}
+                  `}
+                  style={{
+                    ...theadStickyStyle, zIndex: 10, minWidth: 110,
+
+                  }}
+                >
+                  {formatDate(day, 'MM/DD(ddd)')}
+                </th>
+              )
+            })}
           </tr>
         </thead>
 
@@ -64,36 +77,44 @@ const BoardTable = (props: any) => {
               return cars?.length ?? 0
             })
 
-            const heightElementHeight = Math.max(...carCounts, carsOnDamage?.['unscheduled']?.length ?? 0) * 45
+            const heightElementHeight = Math.max(...carCounts, carsOnDamage?.['unscheduled']?.length ?? 0) * 42
+            const isEvenRow = d % 2 === 0
+            const rowBg = isEvenRow ? 'bg-white' : 'bg-gray-50/40'
 
-            const th_td_props = {
-              minHeight: 200,
+            const cellStyle: CSSProperties = {
+              minHeight: 80,
               height: heightElementHeight,
             }
 
             return (
-              <tr key={d} className={` min-h-[100px]`}>
-                <th style={{...theadStickyStyle, left: 0, zIndex: 9999}} className={cl(unscheduledClass, ` !p-0`)}>
+              <tr key={d} className={`border-b-2  border-b-gray-400`}>
+                <th
+                  style={{
+                    ...theadStickyStyle, left: 0, zIndex: 9999, width: headerWidth,
+
+                  }}
+                  className={`p-0! align-top border-r-2 border-r-gray-400 bg-gray-100`}
+                >
                   <Droppable
                     {...{
                       id: `${damage.id}_${'unscheduled'}`,
-                      style: {
-                        ...th_td_props,
-                      },
+                      style: cellStyle,
                     }}
                   >
                     <div
+                      className={`h-full border-l-4`}
                       style={{
-                        width: left,
-                        height: '100%',
-                        ...getColorStyles(damage.color),
+                        width: headerWidth,
+                        borderLeftColor: damage.color || '#ccc',
                       }}
                     >
-                      <div className={`px-2`}>
-                        {damage.name}
+                      <div className={`flex items-center gap-1.5 px-2.5 py-2`}>
+                        <span className={`text-xs font-semibold text-gray-700`}>{damage.name}</span>
                         {inProgressCount > 0 && (
-                          <span className={`ml-1 rounded bg-orange-500 px-1 py-0.5 text-[10px] font-bold text-white`}>
-                            作業中:{inProgressCount}
+                          <span
+                            className={`inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-orange-100 px-1 text-[10px] font-bold text-orange-600`}
+                          >
+                            {inProgressCount}
                           </span>
                         )}
                       </div>
@@ -111,20 +132,20 @@ const BoardTable = (props: any) => {
                   </Droppable>
                 </th>
 
-                {/* dates */}
-
-                {targetDays.map((day, d) => {
+                {targetDays.map((day, di) => {
                   const cars = carsOnDamage?.[formatDate(day)]
+                  const today = isToday(day)
+                  const dayIso = formatDate(day, 'iso')
 
                   return (
-                    <td key={d}>
+                    <td
+                      key={di}
+                      className={`p-0 align-top border-r border-r-gray-200 ${rowBg} ${today ? 'bg-blue-50/30' : ''}`}
+                    >
                       <Droppable
                         {...{
-                          id: `${damage.id}_${day}`,
-                          style: {
-                            ...th_td_props,
-                            ...Days.day.isHoliday(day)?.style,
-                          },
+                          id: `${damage.id}_${dayIso}`,
+                          style: cellStyle,
                         }}
                       >
                         <DateColumn
