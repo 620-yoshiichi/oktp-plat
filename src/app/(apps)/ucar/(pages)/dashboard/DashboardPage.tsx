@@ -115,7 +115,7 @@ export default function DashboardPage() {
   )
 
   return (
-    <div className="p-4 mx-auto max-w-[1800px]">
+    <div className="p-4 mx-auto max-w-[1370px]">
       {/* ヘッダー */}
       <div className="flex items-start justify-between mb-4">
 
@@ -136,9 +136,12 @@ export default function DashboardPage() {
           </div>
         )}
 
-        <Alert color='yellow'>
+        <Alert color='yellow' className={`leaning-4 text-xs p-1`}>
+          ・集計上の「M月」は、「QRシートがその月に発行されたものの中での計算」であることを意味します。<br />
           ・LT / 滞留の算出対象車両は、本QRシステム上で「小売 / CPO / オンライン販売」として仕分けられたものです。<br />
-          ・「その他指標」に関しては、全車両（卸 / スクラップ含む）で算出されます。
+          ・「その他指標」に関しては、全車両（卸 / スクラップ含む）で算出されます。<br />
+          ・工程の区分の変更や、旧QRシステムの中で移行不可能なデータがあるため、旧集計ページとは数値にズレがあります。<br />
+          ・2026年2月以降のデータは全て新QRシステムで発行されたデータとなり、最も正確な数値・計算と言えます。
         </Alert>
       </div>
 
