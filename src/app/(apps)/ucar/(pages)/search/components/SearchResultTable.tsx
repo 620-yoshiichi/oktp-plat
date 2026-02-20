@@ -8,6 +8,8 @@ import { UcarCL } from '@app/(apps)/ucar/class/UcarCL'
 import { TextRed } from '@cm/components/styles/common-components/Alert'
 import useDoStandardPrisma from '@cm/hooks/useDoStandardPrisma'
 import { C_Stack } from '@cm/components/styles/common-components/common-components'
+import { NumHandler } from '@cm/class/NumHandler'
+import Coloring from '@cm/lib/methods/Coloring'
 
 type SearchResultTableProps = {
   results: UcarSearchResult[]
@@ -102,6 +104,9 @@ export default function SearchResultTable({
                 最新工程
               </th>
               <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                販売結果
+              </th>
+              <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                 配送先
               </th>
               <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
@@ -163,12 +168,20 @@ export default function SearchResultTable({
 
                   <td className="px-3 py-2 whitespace-nowrap text-sm text-gray-900">
                     <div>
-                      <span className="inline-flex px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded">
-                        {
-                          UcarProcessCl.CODE.byCode(latestProcess?.processCode ?? '')?.label || '-'}
-                      </span>
+                      <Coloring
+                        mode='text'
+                        color={UcarProcessCl.CODE.byCode(latestProcess?.processCode ?? '')?.color ?? 'blue'}
+                        className={`inline-flex text-[12px] p-0.5!  `}>
+
+                        {UcarProcessCl.CODE.byCode(latestProcess?.processCode ?? '')?.label || '-'}
+                      </Coloring>
                     </div>
                     <small>{latestProcess?.date ? formatDate(new Date(latestProcess.date)) : '-'}</small>
+                  </td>
+                  <td className="px-3 py-2 whitespace-nowrap text-sm text-gray-900">
+                    <small>{formatDate(ucarInst.ai21Data.DD_URIAGE, 'YY/MM/DD') || '-'}</small>
+                    <br />
+                    <small className={`text-blue-700`}>{NumHandler.toPrice(Number(ucarInst.ai21Data?.KI_HANKAKA ?? 0)) || '-'}</small>
                   </td>
                   <td className="px-3 py-2 whitespace-nowrap text-sm text-gray-900">
                     {storeName}

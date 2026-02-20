@@ -42,7 +42,7 @@ export type UseUcarSearchReturn = {
 
 export function useUcarSearch(): UseUcarSearchReturn {
   // URLパラメータ管理フックを使用
-  const {values, search: updateUrl, reset: resetUrl} = useUcarSearchParams()
+  const {values, search: updateUrl, reset: resetUrl, ensureUrlParams} = useUcarSearchParams()
 
   // ページ管理（URLパラメータに含めても良いが、シンプルにするためstateで管理）
   const [currentPage, setCurrentPage] = useState(1)
@@ -77,8 +77,10 @@ export function useUcarSearch(): UseUcarSearchReturn {
     brandName: values.brandName || '',
     driveType: values.driveType || '',
     latestProcessCode: values.latestProcessCode || '',
-    isKei: values.isKei || false,
-    includeSold: values.includeSold || false,
+    showRegular: values.showRegular ?? true,
+    showKei: values.showKei ?? true,
+    showSold: values.showSold || false,
+    showUnsold: values.showUnsold ?? true,
     destinationStoreId: values.destinationStoreId || '',
   }
 
@@ -94,8 +96,10 @@ export function useUcarSearch(): UseUcarSearchReturn {
           brandName: params.brandName || '',
           driveType: params.driveType || '',
           latestProcessCode: params.latestProcessCode || '',
-          isKei: params.isKei || false,
-          includeSold: params.includeSold || false,
+          showRegular: params.showRegular ?? true,
+          showKei: params.showKei ?? true,
+          showSold: params.showSold || false,
+          showUnsold: params.showUnsold ?? true,
           destinationStoreId: params.destinationStoreId || '',
           page,
           perPage,
@@ -150,6 +154,11 @@ export function useUcarSearch(): UseUcarSearchReturn {
     [values, executeSearch]
   )
 
+  // 初回マウント時にデフォルト値をURLにセット
+  useEffect(() => {
+    ensureUrlParams()
+  }, [ensureUrlParams])
+
   // URLパラメータが変更されたら検索実行
   useEffect(() => {
     const currentValuesStr = JSON.stringify(values)
@@ -159,8 +168,6 @@ export function useUcarSearch(): UseUcarSearchReturn {
       return
     }
     prevValuesRef.current = currentValuesStr
-
-    // 検索条件があれば検索実行
 
     setCurrentPage(1)
     startTransition(() => {

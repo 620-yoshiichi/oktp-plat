@@ -6,8 +6,10 @@ export type UcarSearchFormValues = {
   brandName: string
   driveType: string
   latestProcessCode: string
-  isKei: boolean
-  includeSold: boolean
+  showRegular: boolean
+  showKei: boolean
+  showSold: boolean
+  showUnsold: boolean
   destinationStoreId: string
 }
 
@@ -105,8 +107,10 @@ export const DEFAULT_SEARCH_FORM_VALUES: UcarSearchFormValues = {
   brandName: '',
   driveType: '',
   latestProcessCode: '',
-  isKei: false,
-  includeSold: false,
+  showRegular: true,
+  showKei: true,
+  showSold: false,
+  showUnsold: true,
   destinationStoreId: '',
 }
 

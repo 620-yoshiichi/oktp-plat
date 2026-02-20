@@ -15,8 +15,10 @@ export type UcarSearchValues = {
   destinationStoreId: string // 配送先店舗
 
   // チェックボックス
-  isKei: boolean // 軽四フィルター
-  includeSold: boolean // 売上済も表示
+  showRegular: boolean // 普通車を表示
+  showKei: boolean // 軽四を表示
+  showSold: boolean // 売上済を表示
+  showUnsold: boolean // 未販売を表示
 
   // UPASS関連（kouteiKanri用）
   modelName: string // 車名
@@ -36,8 +38,10 @@ export const DEFAULT_SEARCH_VALUES: UcarSearchValues = {
   driveType: '',
   latestProcessCode: '',
   destinationStoreId: '',
-  isKei: false,
-  includeSold: false,
+  showRegular: true,
+  showKei: true,
+  showSold: false,
+  showUnsold: true,
   modelName: '',
   color: '',
   frame: '',
@@ -54,8 +58,10 @@ export const URL_PARAM_KEYS: Record<keyof UcarSearchValues, string> = {
   driveType: 'driveType',
   latestProcessCode: 'latestProcessCode',
   destinationStoreId: 'destinationStoreId',
-  isKei: 'isKei',
-  includeSold: 'includeSold',
+  showRegular: 'showRegular',
+  showKei: 'showKei',
+  showSold: 'showSold',
+  showUnsold: 'showUnsold',
   modelName: 'searchModelName',
   color: 'searchColor',
   frame: 'searchFrame',

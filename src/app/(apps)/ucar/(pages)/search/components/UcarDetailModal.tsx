@@ -129,7 +129,13 @@ export default function UcarDetailModal({
           <>
             <SectionHeader title="工程履歴" />
             <div className="space-y-2">
-              {ucar.UcarProcess.map((process, index) => {
+              {ucar.UcarProcess.sort((a, b) => {
+
+                const bDateNub = new Date(b.date ?? '').getTime()
+                const aDateNub = new Date(a.date ?? '').getTime()
+                return - (bDateNub - aDateNub)
+
+              }).map((process, index) => {
                 return <div
                   key={process.id}
                   className={`

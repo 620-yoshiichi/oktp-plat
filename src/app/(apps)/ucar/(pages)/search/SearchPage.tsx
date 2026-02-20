@@ -59,8 +59,10 @@ export default function SearchPage() {
             latestProcessCode: true,
             destinationStoreId: true,
             driveType: true,
-            isKei: true,
-            includeSold: true,
+            showRegular: true,
+            showKei: true,
+            showUnsold: true,
+            showSold: true,
           }}
           storeList={storeList}
           isLoading={isLoading}

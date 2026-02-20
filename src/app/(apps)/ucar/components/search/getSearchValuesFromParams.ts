@@ -13,8 +13,10 @@ export function getSearchValuesFromParams(
     return typeof value === 'string' ? value : ''
   }
 
-  const getBoolValue = (field: keyof UcarSearchValues): boolean => {
-    return searchParams[URL_PARAM_KEYS[field]] === 'true'
+  const getBoolValue = (field: keyof UcarSearchValues, defaultValue = false): boolean => {
+    const raw = searchParams[URL_PARAM_KEYS[field]]
+    if (raw === undefined) return defaultValue
+    return raw === 'true'
   }
 
   return {
@@ -23,8 +25,10 @@ export function getSearchValuesFromParams(
     driveType: getValue('driveType'),
     latestProcessCode: getValue('latestProcessCode'),
     destinationStoreId: getValue('destinationStoreId'),
-    isKei: getBoolValue('isKei'),
-    includeSold: getBoolValue('includeSold'),
+    showRegular: getBoolValue('showRegular', true),
+    showKei: getBoolValue('showKei', true),
+    showSold: getBoolValue('showSold'),
+    showUnsold: getBoolValue('showUnsold', true),
     modelName: getValue('modelName'),
     color: getValue('color'),
     frame: getValue('frame'),

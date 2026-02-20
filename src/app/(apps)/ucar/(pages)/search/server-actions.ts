@@ -6,6 +6,7 @@ import type {UcarSearchParams, UcarSearchResponse, UcarDetailResponse, BrandList
 import {UcarCL} from '@app/(apps)/ucar/class/UcarCL'
 import {QueryBuilder} from '@app/(apps)/ucar/class/QueryBuilder'
 import {buildWhereConditions} from '@app/(apps)/ucar/components/search'
+import {UCAR_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-constants'
 
 /**
  * 最新工程でフィルタするためのsateiIDリストを取得
@@ -35,8 +36,10 @@ export async function searchUcars(params: UcarSearchParams): Promise<UcarSearchR
       brandName,
       driveType,
       latestProcessCode,
-      isKei,
-      includeSold,
+      showRegular,
+      showKei,
+      showSold,
+      showUnsold,
       destinationStoreId,
       page = 1,
       perPage = 20,
@@ -45,12 +48,15 @@ export async function searchUcars(params: UcarSearchParams): Promise<UcarSearchR
     // 共通関数で検索条件を構築
     const whereConditions: Prisma.UcarWhereInput[] = [
       {daihatsuReserve: null},
+      UCAR_CONSTANTS.getCommonQuery({active: true}),
       ...(await buildWhereConditions({
         keyword,
         brandName,
         driveType,
-        isKei,
-        includeSold,
+        showRegular,
+        showKei,
+        showSold,
+        showUnsold,
         destinationStoreId,
       })),
     ]

@@ -17,8 +17,10 @@ export type UcarSearchFormFields = {
   driveType?: boolean
   latestProcessCode?: boolean
   destinationStoreId?: boolean
-  isKei?: boolean
-  includeSold?: boolean
+  showRegular?: boolean
+  showKei?: boolean
+  showSold?: boolean
+  showUnsold?: boolean
   modelName?: boolean
   color?: boolean
   frame?: boolean
@@ -90,7 +92,7 @@ export function UcarSearchForm({
   useEffect(() => {
     setFormValues({
       ...DEFAULT_SEARCH_VALUES,
-      ...values,
+
     })
   }, [values])
 
@@ -220,24 +222,46 @@ export function UcarSearchForm({
       })
     }
 
-    if (fields.isKei) {
+    if (fields.showRegular) {
       columns.push({
-        id: 'isKei',
-        label: '軽四',
+        id: 'showRegular',
+        label: '普通車',
         type: 'boolean',
         form: {
-          defaultValue: formValues.isKei ?? false,
+          defaultValue: formValues.showRegular ?? true,
         },
       })
     }
 
-    if (fields.includeSold) {
+    if (fields.showKei) {
       columns.push({
-        id: 'includeSold',
-        label: '売上済も表示',
+        id: 'showKei',
+        label: '軽四',
         type: 'boolean',
         form: {
-          defaultValue: formValues.includeSold ?? false,
+          defaultValue: formValues.showKei ?? true,
+        },
+      })
+    }
+
+    if (fields.showSold) {
+      columns.push({
+        id: 'showSold',
+        label: '売上済',
+        type: 'boolean',
+        form: {
+          defaultValue: formValues.showSold ?? false,
+        },
+      })
+    }
+
+    if (fields.showUnsold) {
+      columns.push({
+        id: 'showUnsold',
+        label: '未販売',
+        type: 'boolean',
+        form: {
+          defaultValue: formValues.showUnsold ?? true,
         },
       })
     }
@@ -247,7 +271,10 @@ export function UcarSearchForm({
 
   const { BasicForm, latestFormData } = useBasicFormProps({
     columns: new Fields(fieldColumns).transposeColumns(),
+    formData: formValues,
+
   })
+
 
   const handleReset = () => {
     setFormValues(DEFAULT_SEARCH_VALUES)
@@ -277,8 +304,10 @@ export function UcarSearchForm({
           if (fields.driveType) searchValues.driveType = data.driveType || ''
           if (fields.latestProcessCode) searchValues.latestProcessCode = data.latestProcessCode || ''
           if (fields.destinationStoreId) searchValues.destinationStoreId = data.destinationStoreId || ''
-          if (fields.isKei) searchValues.isKei = Boolean(data.isKei)
-          if (fields.includeSold) searchValues.includeSold = Boolean(data.includeSold)
+          if (fields.showRegular) searchValues.showRegular = Boolean(data.showRegular)
+          if (fields.showKei) searchValues.showKei = Boolean(data.showKei)
+          if (fields.showSold) searchValues.showSold = Boolean(data.showSold)
+          if (fields.showUnsold) searchValues.showUnsold = Boolean(data.showUnsold)
 
           onSearch(searchValues)
         }}

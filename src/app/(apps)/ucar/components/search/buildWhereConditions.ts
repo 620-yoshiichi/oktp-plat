@@ -87,27 +87,52 @@ export async function buildWhereConditions(values: Partial<UcarSearchValues>): P
     })
   }
 
-  // 軽自動車フィルター（排気量660cc以下）
-  if (values.isKei) {
-    whereConditions.push({
-      UPASS: {
-        displacement: {equals: KEI_DISPLACEMENT_MAX},
-      },
-    })
-  }
+  // 普通車 / 軽四 フィルタ
+  const showRegular = values.showRegular ?? true
+  const showKei = values.showKei ?? true
 
-  // 売上済も表示しない場合
-  if (!values.includeSold) {
+  if (showRegular && !showKei) {
+    // 普通車のみ: 排気量が660cc以外 or UPASSなし
+    whereConditions.push({
+      OR: [{UPASS: {displacement: {not: KEI_DISPLACEMENT_MAX}}}, {UPASS: null}],
+    })
+  } else if (!showRegular && showKei) {
+    // 軽四のみ: 排気量660cc
+    whereConditions.push({
+      UPASS: {displacement: {equals: KEI_DISPLACEMENT_MAX}},
+    })
+  } else if (!showRegular && !showKei) {
+    // どちらも未選択 → 結果なし
+    whereConditions.push({sateiID: {equals: '__NONE__'}})
+  }
+  // 両方 true の場合は条件を追加しない（全件表示）
+
+  // 売上済 / 未販売 フィルタ
+  const showSold = values.showSold ?? false
+  const showUnsold = values.showUnsold ?? true
+
+  if (showSold && showUnsold) {
+    console.info('売り上げに関わらず表示')
+  } else if (showSold && !showUnsold) {
+    console.info('売上済のみ表示')
+    whereConditions.push({
+      OldCars_Base: {KI_HANKAKA: {gt: '0'}},
+    })
+  } else if (!showSold && showUnsold) {
+    // 未販売のみ: KI_HANKAKA !== '0'
     whereConditions.push({
       OR: [
-        {
-          OldCars_Base: {
-            KI_HANKAKA: {not: '0'},
-          },
-        },
+        //
+        {OldCars_Base: {KI_HANKAKA: '0'}},
+        {OldCars_Base: null},
       ],
     })
+  } else if (!showSold && !showUnsold) {
+    // どちらも未選択 → 結果なし
+    whereConditions.push({sateiID: {equals: '__NONE__'}})
+    console.info('どちらも未選択 → 結果なし')
   }
+  // 両方 true の場合は条件を追加しない（全件表示）
 
   // 配送先店舗フィルター
   // 表示ロジック: storeList.find(store => store.id === Number(zaikoBase?.CD_ZAIKOTEN ?? 0)) || DestinationStore

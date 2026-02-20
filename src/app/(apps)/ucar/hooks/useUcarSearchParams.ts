@@ -3,7 +3,7 @@
 import {useCallback, useMemo} from 'react'
 import {useRouter, useSearchParams} from 'next/navigation'
 import type {Prisma} from '@prisma/generated/prisma/client'
-import {type UcarSearchValues, URL_PARAM_KEYS} from '../components/search/types'
+import {type UcarSearchValues, URL_PARAM_KEYS, DEFAULT_SEARCH_VALUES} from '../components/search/types'
 import {buildWhereConditions} from '../components/search/buildWhereConditions'
 import useSWR from 'swr'
 
@@ -22,6 +22,9 @@ export type UseUcarSearchParamsReturn = {
 
   // リセット
   reset: () => void
+
+  // URLにboolean初期値が未セットの場合にセットする
+  ensureUrlParams: () => void
 
   // Prisma WHERE 条件
   whereConditions: Prisma.UcarWhereInput[]
@@ -50,8 +53,10 @@ export function useUcarSearchParams(): UseUcarSearchParamsReturn {
       return searchParams?.get(URL_PARAM_KEYS[field]) ?? ''
     }
 
-    const getBoolValue = (field: keyof UcarSearchValues): boolean => {
-      return searchParams?.get(URL_PARAM_KEYS[field]) === 'true'
+    const getBoolValue = (field: keyof UcarSearchValues, defaultValue = false): boolean => {
+      const raw = searchParams?.get(URL_PARAM_KEYS[field])
+      if (raw === null) return defaultValue
+      return raw === 'true'
     }
 
     return {
@@ -60,8 +65,10 @@ export function useUcarSearchParams(): UseUcarSearchParamsReturn {
       driveType: getValue('driveType'),
       latestProcessCode: getValue('latestProcessCode'),
       destinationStoreId: getValue('destinationStoreId'),
-      isKei: getBoolValue('isKei'),
-      includeSold: getBoolValue('includeSold'),
+      showRegular: getBoolValue('showRegular', true),
+      showKei: getBoolValue('showKei', true),
+      showSold: getBoolValue('showSold'),
+      showUnsold: getBoolValue('showUnsold', true),
       modelName: getValue('modelName'),
       color: getValue('color'),
       frame: getValue('frame'),
@@ -79,14 +86,11 @@ export function useUcarSearchParams(): UseUcarSearchParamsReturn {
       const mergedValues = newValues ? {...values, ...newValues} : values
       const params = new URLSearchParams()
 
-      // 各フィールドの値をURLパラメータに設定
       Object.entries(URL_PARAM_KEYS).forEach(([field, paramKey]) => {
         const value = mergedValues[field as keyof UcarSearchValues]
 
         if (typeof value === 'boolean') {
-          if (value) {
-            params.set(paramKey, 'true')
-          }
+          params.set(paramKey, String(value))
         } else if (typeof value === 'string' && value.trim() !== '') {
           params.set(paramKey, value.trim())
         }
@@ -121,16 +125,28 @@ export function useUcarSearchParams(): UseUcarSearchParamsReturn {
     [buildSearchUrl, router]
   )
 
+  // URLにboolean初期値が未セットの場合にセットする
+  const ensureUrlParams = useCallback(() => {
+    const url = buildSearchUrl(values)
+    const currentSearch = searchParams?.toString() ?? ''
+    const newSearch = url.replace('?', '')
+    if (currentSearch !== newSearch) {
+      router.replace(url, {scroll: false})
+    }
+  }, [buildSearchUrl, values, searchParams, router])
+
   // リセット
   const reset = useCallback(() => {
-    router.push(window.location.pathname, {scroll: false})
-  }, [router])
+    const url = buildSearchUrl(DEFAULT_SEARCH_VALUES)
+    router.push(url, {scroll: false})
+  }, [buildSearchUrl, router])
 
   return {
     values,
     setField,
     search,
     reset,
+    ensureUrlParams,
     whereConditions: whereConditions ?? [],
     buildSearchUrl,
   }
