@@ -275,6 +275,7 @@ export class UcarCL {
         `スタッフ名: ${this.notation.staffName ?? '-'}`,
         `査定ID: ${this.notation.sateiID ?? '-'}`,
         `車名: ${this.notation.modelName ?? '-'}`,
+        `No.プレート: ${this.notation.plate ?? '-'}`,
         `車台番号: ${this.notation.frameNumber ?? '-'}`,
         `お客様: ${this.data.taxCustomerName ?? '-'}`,
       ].join('\n'),

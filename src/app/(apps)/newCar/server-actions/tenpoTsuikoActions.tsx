@@ -131,7 +131,6 @@ export async function getTenpoTsuikoData(
     const whereCondition: { AND: Prisma.NewCarWhereInput[] } = {
       AND: [
         //
-
         { DD_HAISKIBO: { gte: startDate } },
         { NO_CYUMON: { notIn: nonDisplayList } },
       ],

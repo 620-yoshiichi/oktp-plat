@@ -73,7 +73,19 @@ const DraggableCar = ({car, setcarOnModal, lastTouchedCarId, setlastTouchedCarId
         {mode === 'engineer' && isEngineerSet && (
           <div className={`absolute -top-1 -left-1 z-10 h-2.5 w-2.5 rounded-full bg-blue-500`} title="エンジニア設定済み" />
         )}
-        <div className={`text-[9px] leading-none text-gray-400`}>{car.bpNumber}</div>
+        <div className={`flex items-center justify-between`}>
+          <span className={`text-[9px] leading-none text-gray-400`}>{car.bpNumber}</span>
+          {mode === 'cr' && car.engineerScheduledAt && (
+            <span className={`text-[8px] leading-none text-blue-400`} title="エンジニア予定">
+              {formatDate(car.engineerScheduledAt, 'MM-DD')}
+            </span>
+          )}
+          {mode === 'engineer' && car.crScheduledAt && (
+            <span className={`text-[8px] leading-none text-orange-400`} title="CR予定">
+              {formatDate(car.crScheduledAt, 'MM-DD')}
+            </span>
+          )}
+        </div>
         <div className={`mt-0.5 text-[11px] font-medium leading-tight text-gray-800 truncate`}>{customerName}</div>
       </div>
     </Draggable>

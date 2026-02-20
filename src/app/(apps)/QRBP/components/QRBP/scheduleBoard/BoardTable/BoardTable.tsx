@@ -2,7 +2,7 @@
 import { CSSProperties } from 'react'
 import { Days } from '@cm/class/Days/Days'
 import { formatDate } from '@cm/class/Days/date-utils/formatters'
-import { isToday } from 'date-fns'
+import { isBefore, isToday, startOfToday } from 'date-fns'
 
 import DateColumn from '@app/(apps)/QRBP/components/QRBP/scheduleBoard/BoardTable/DateColumn'
 
@@ -16,9 +16,12 @@ const BoardTable = (props: any) => {
   const theadStickyStyle: CSSProperties = { position: 'sticky', zIndex: Z_INDEX.thead }
 
   const headerWidth = 160
+  const today = startOfToday()
+  const isPastDay = (day: Date) => isBefore(day, today)
 
   const getDateHeaderClass = (day: Date) => {
     if (isToday(day)) return 'bg-blue-50 text-blue-700 font-bold'
+    if (isPastDay(day)) return 'bg-red-100! text-red-400!'
     const holiday = Days.day.isHoliday(day)
     if (holiday) return 'bg-red-50/40 text-red-400'
     return 'bg-gray-100 text-gray-500'
@@ -37,7 +40,7 @@ const BoardTable = (props: any) => {
             </th>
             {targetDays.map((day, d) => {
               const dateId = `date-${formatDate(day)}`
-              const today = isToday(day)
+              const isTodayHeader = isToday(day)
               return (
                 <th
                   id={dateId}
@@ -48,7 +51,7 @@ const BoardTable = (props: any) => {
                     border-r border-r-gray-200
                     ${getDateHeaderClass(day)}
 
-                    ${today ? 'border-b-blue-500!' : ''}
+                    ${isTodayHeader ? 'border-b-blue-500!' : ''}
                   `}
                   style={{
                     ...theadStickyStyle, zIndex: 10, minWidth: 110,
@@ -135,13 +138,16 @@ const BoardTable = (props: any) => {
 
                 {targetDays.map((day, di) => {
                   const cars = carsOnDamage?.[formatDate(day)]
-                  const today = isToday(day)
+                  const isTodayCell = isToday(day)
+                  const isPast = isPastDay(day)
                   const dayIso = formatDate(day, 'iso')
+
+                  const cellBg = isTodayCell ? 'bg-blue-100' : isPast ? 'bg-red-100' : rowBg
 
                   return (
                     <td
                       key={di}
-                      className={`p-0 align-top border-r border-r-gray-200 ${rowBg} ${today ? 'bg-blue-50/30' : ''}`}
+                      className={`p-0 align-top border-r border-r-gray-200 ${cellBg}`}
                     >
                       <Droppable
                         {...{
