@@ -104,6 +104,9 @@ model NewCar {
 
   transferType String @default("可能")
 
+  furiate_chien_riyu  String?
+  nouki_mishitei_riyu String?
+
   CrInspectionHistory      CrInspectionHistory[]
   DesiredTorokuDate        DesiredTorokuDate[]
   OrderSwitchingHisotory   OrderSwitchingHisotory? @relation(fields: [orderSwitchingHisotoryId], references: [id])

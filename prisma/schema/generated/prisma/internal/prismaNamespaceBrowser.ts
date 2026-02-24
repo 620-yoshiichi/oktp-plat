@@ -897,6 +897,8 @@ export const NewCarScalarFieldEnum = {
   shitadoriAlertCount: 'shitadoriAlertCount',
   ossSpreadsheetUrl: 'ossSpreadsheetUrl',
   transferType: 'transferType',
+  furiate_chien_riyu: 'furiate_chien_riyu',
+  nouki_mishitei_riyu: 'nouki_mishitei_riyu',
   orderSwitchingHisotoryId: 'orderSwitchingHisotoryId'
 } as const
 

@@ -164,6 +164,8 @@ export type NewCarMinAggregateOutputType = {
   shitadoriAlertCount: number | null
   ossSpreadsheetUrl: string | null
   transferType: string | null
+  furiate_chien_riyu: string | null
+  nouki_mishitei_riyu: string | null
   orderSwitchingHisotoryId: number | null
 }
 
@@ -269,6 +271,8 @@ export type NewCarMaxAggregateOutputType = {
   shitadoriAlertCount: number | null
   ossSpreadsheetUrl: string | null
   transferType: string | null
+  furiate_chien_riyu: string | null
+  nouki_mishitei_riyu: string | null
   orderSwitchingHisotoryId: number | null
 }
 
@@ -374,6 +378,8 @@ export type NewCarCountAggregateOutputType = {
   shitadoriAlertCount: number
   ossSpreadsheetUrl: number
   transferType: number
+  furiate_chien_riyu: number
+  nouki_mishitei_riyu: number
   orderSwitchingHisotoryId: number
   _all: number
 }
@@ -517,6 +523,8 @@ export type NewCarMinAggregateInputType = {
   shitadoriAlertCount?: true
   ossSpreadsheetUrl?: true
   transferType?: true
+  furiate_chien_riyu?: true
+  nouki_mishitei_riyu?: true
   orderSwitchingHisotoryId?: true
 }
 
@@ -622,6 +630,8 @@ export type NewCarMaxAggregateInputType = {
   shitadoriAlertCount?: true
   ossSpreadsheetUrl?: true
   transferType?: true
+  furiate_chien_riyu?: true
+  nouki_mishitei_riyu?: true
   orderSwitchingHisotoryId?: true
 }
 
@@ -727,6 +737,8 @@ export type NewCarCountAggregateInputType = {
   shitadoriAlertCount?: true
   ossSpreadsheetUrl?: true
   transferType?: true
+  furiate_chien_riyu?: true
+  nouki_mishitei_riyu?: true
   orderSwitchingHisotoryId?: true
   _all?: true
 }
@@ -919,6 +931,8 @@ export type NewCarGroupByOutputType = {
   shitadoriAlertCount: number | null
   ossSpreadsheetUrl: string | null
   transferType: string
+  furiate_chien_riyu: string | null
+  nouki_mishitei_riyu: string | null
   orderSwitchingHisotoryId: number | null
   _count: NewCarCountAggregateOutputType | null
   _avg: NewCarAvgAggregateOutputType | null
@@ -1047,6 +1061,8 @@ export type NewCarWhereInput = {
   shitadoriAlertCount?: Prisma.IntNullableFilter<"NewCar"> | number | null
   ossSpreadsheetUrl?: Prisma.StringNullableFilter<"NewCar"> | string | null
   transferType?: Prisma.StringFilter<"NewCar"> | string
+  furiate_chien_riyu?: Prisma.StringNullableFilter<"NewCar"> | string | null
+  nouki_mishitei_riyu?: Prisma.StringNullableFilter<"NewCar"> | string | null
   orderSwitchingHisotoryId?: Prisma.IntNullableFilter<"NewCar"> | number | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryListRelationFilter
   DesiredTorokuDate?: Prisma.DesiredTorokuDateListRelationFilter
@@ -1166,6 +1182,8 @@ export type NewCarOrderByWithRelationInput = {
   shitadoriAlertCount?: Prisma.SortOrderInput | Prisma.SortOrder
   ossSpreadsheetUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   transferType?: Prisma.SortOrder
+  furiate_chien_riyu?: Prisma.SortOrderInput | Prisma.SortOrder
+  nouki_mishitei_riyu?: Prisma.SortOrderInput | Prisma.SortOrder
   orderSwitchingHisotoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   CrInspectionHistory?: Prisma.CrInspectionHistoryOrderByRelationAggregateInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateOrderByRelationAggregateInput
@@ -1289,6 +1307,8 @@ export type NewCarWhereUniqueInput = Prisma.AtLeast<{
   shitadoriAlertCount?: Prisma.IntNullableFilter<"NewCar"> | number | null
   ossSpreadsheetUrl?: Prisma.StringNullableFilter<"NewCar"> | string | null
   transferType?: Prisma.StringFilter<"NewCar"> | string
+  furiate_chien_riyu?: Prisma.StringNullableFilter<"NewCar"> | string | null
+  nouki_mishitei_riyu?: Prisma.StringNullableFilter<"NewCar"> | string | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryListRelationFilter
   DesiredTorokuDate?: Prisma.DesiredTorokuDateListRelationFilter
   OrderSwitchingHisotory?: Prisma.XOR<Prisma.OrderSwitchingHisotoryNullableScalarRelationFilter, Prisma.OrderSwitchingHisotoryWhereInput> | null
@@ -1407,6 +1427,8 @@ export type NewCarOrderByWithAggregationInput = {
   shitadoriAlertCount?: Prisma.SortOrderInput | Prisma.SortOrder
   ossSpreadsheetUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   transferType?: Prisma.SortOrder
+  furiate_chien_riyu?: Prisma.SortOrderInput | Prisma.SortOrder
+  nouki_mishitei_riyu?: Prisma.SortOrderInput | Prisma.SortOrder
   orderSwitchingHisotoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.NewCarCountOrderByAggregateInput
   _avg?: Prisma.NewCarAvgOrderByAggregateInput
@@ -1520,6 +1542,8 @@ export type NewCarScalarWhereWithAggregatesInput = {
   shitadoriAlertCount?: Prisma.IntNullableWithAggregatesFilter<"NewCar"> | number | null
   ossSpreadsheetUrl?: Prisma.StringNullableWithAggregatesFilter<"NewCar"> | string | null
   transferType?: Prisma.StringWithAggregatesFilter<"NewCar"> | string
+  furiate_chien_riyu?: Prisma.StringNullableWithAggregatesFilter<"NewCar"> | string | null
+  nouki_mishitei_riyu?: Prisma.StringNullableWithAggregatesFilter<"NewCar"> | string | null
   orderSwitchingHisotoryId?: Prisma.IntNullableWithAggregatesFilter<"NewCar"> | number | null
 }
 
@@ -1622,6 +1646,8 @@ export type NewCarCreateInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryCreateNestedManyWithoutNewCarInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateCreateNestedManyWithoutNewCarInput
   OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryCreateNestedOneWithoutNewCarInput
@@ -1740,6 +1766,8 @@ export type NewCarUncheckedCreateInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   orderSwitchingHisotoryId?: number | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedCreateNestedManyWithoutNewCarInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUncheckedCreateNestedManyWithoutNewCarInput
@@ -1853,6 +1881,8 @@ export type NewCarUpdateInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUpdateManyWithoutNewCarNestedInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUpdateManyWithoutNewCarNestedInput
   OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryUpdateOneWithoutNewCarNestedInput
@@ -1971,6 +2001,8 @@ export type NewCarUncheckedUpdateInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderSwitchingHisotoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedUpdateManyWithoutNewCarNestedInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUncheckedUpdateManyWithoutNewCarNestedInput
@@ -2087,6 +2119,8 @@ export type NewCarCreateManyInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   orderSwitchingHisotoryId?: number | null
 }
 
@@ -2189,6 +2223,8 @@ export type NewCarUpdateManyMutationInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type NewCarUncheckedUpdateManyInput = {
@@ -2293,6 +2329,8 @@ export type NewCarUncheckedUpdateManyInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderSwitchingHisotoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
@@ -2403,6 +2441,8 @@ export type NewCarCountOrderByAggregateInput = {
   shitadoriAlertCount?: Prisma.SortOrder
   ossSpreadsheetUrl?: Prisma.SortOrder
   transferType?: Prisma.SortOrder
+  furiate_chien_riyu?: Prisma.SortOrder
+  nouki_mishitei_riyu?: Prisma.SortOrder
   orderSwitchingHisotoryId?: Prisma.SortOrder
 }
 
@@ -2526,6 +2566,8 @@ export type NewCarMaxOrderByAggregateInput = {
   shitadoriAlertCount?: Prisma.SortOrder
   ossSpreadsheetUrl?: Prisma.SortOrder
   transferType?: Prisma.SortOrder
+  furiate_chien_riyu?: Prisma.SortOrder
+  nouki_mishitei_riyu?: Prisma.SortOrder
   orderSwitchingHisotoryId?: Prisma.SortOrder
 }
 
@@ -2631,6 +2673,8 @@ export type NewCarMinOrderByAggregateInput = {
   shitadoriAlertCount?: Prisma.SortOrder
   ossSpreadsheetUrl?: Prisma.SortOrder
   transferType?: Prisma.SortOrder
+  furiate_chien_riyu?: Prisma.SortOrder
+  nouki_mishitei_riyu?: Prisma.SortOrder
   orderSwitchingHisotoryId?: Prisma.SortOrder
 }
 
@@ -3044,6 +3088,8 @@ export type NewCarCreateWithoutJuchuShitadoriDbInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryCreateNestedManyWithoutNewCarInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateCreateNestedManyWithoutNewCarInput
   OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryCreateNestedOneWithoutNewCarInput
@@ -3161,6 +3207,8 @@ export type NewCarUncheckedCreateWithoutJuchuShitadoriDbInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   orderSwitchingHisotoryId?: number | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedCreateNestedManyWithoutNewCarInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUncheckedCreateNestedManyWithoutNewCarInput
@@ -3289,6 +3337,8 @@ export type NewCarUpdateWithoutJuchuShitadoriDbInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUpdateManyWithoutNewCarNestedInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUpdateManyWithoutNewCarNestedInput
   OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryUpdateOneWithoutNewCarNestedInput
@@ -3406,6 +3456,8 @@ export type NewCarUncheckedUpdateWithoutJuchuShitadoriDbInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderSwitchingHisotoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedUpdateManyWithoutNewCarNestedInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUncheckedUpdateManyWithoutNewCarNestedInput
@@ -3518,6 +3570,8 @@ export type NewCarCreateWithoutSlotInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryCreateNestedManyWithoutNewCarInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateCreateNestedManyWithoutNewCarInput
   OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryCreateNestedOneWithoutNewCarInput
@@ -3635,6 +3689,8 @@ export type NewCarUncheckedCreateWithoutSlotInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   orderSwitchingHisotoryId?: number | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedCreateNestedManyWithoutNewCarInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUncheckedCreateNestedManyWithoutNewCarInput
@@ -3763,6 +3819,8 @@ export type NewCarUpdateWithoutSlotInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUpdateManyWithoutNewCarNestedInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUpdateManyWithoutNewCarNestedInput
   OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryUpdateOneWithoutNewCarNestedInput
@@ -3880,6 +3938,8 @@ export type NewCarUncheckedUpdateWithoutSlotInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderSwitchingHisotoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedUpdateManyWithoutNewCarNestedInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUncheckedUpdateManyWithoutNewCarNestedInput
@@ -3992,6 +4052,8 @@ export type NewCarCreateWithoutOrderSwitchingHisotoryInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryCreateNestedManyWithoutNewCarInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateCreateNestedManyWithoutNewCarInput
   Store: Prisma.StoreCreateNestedOneWithoutNewCarInput
@@ -4109,6 +4171,8 @@ export type NewCarUncheckedCreateWithoutOrderSwitchingHisotoryInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedCreateNestedManyWithoutNewCarInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUncheckedCreateNestedManyWithoutNewCarInput
   NewCarLeadTime?: Prisma.NewCarLeadTimeUncheckedCreateNestedManyWithoutNewCarInput
@@ -4237,6 +4301,8 @@ export type NewCarUpdateWithoutOrderSwitchingHisotoryInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUpdateManyWithoutNewCarNestedInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUpdateManyWithoutNewCarNestedInput
   Store?: Prisma.StoreUpdateOneRequiredWithoutNewCarNestedInput
@@ -4354,6 +4420,8 @@ export type NewCarUncheckedUpdateWithoutOrderSwitchingHisotoryInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedUpdateManyWithoutNewCarNestedInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUncheckedUpdateManyWithoutNewCarNestedInput
   NewCarLeadTime?: Prisma.NewCarLeadTimeUncheckedUpdateManyWithoutNewCarNestedInput
@@ -4466,6 +4534,8 @@ export type NewCarCreateWithoutDesiredTorokuDateInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryCreateNestedManyWithoutNewCarInput
   OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryCreateNestedOneWithoutNewCarInput
   Store: Prisma.StoreCreateNestedOneWithoutNewCarInput
@@ -4583,6 +4653,8 @@ export type NewCarUncheckedCreateWithoutDesiredTorokuDateInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   orderSwitchingHisotoryId?: number | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedCreateNestedManyWithoutNewCarInput
   NewCarLeadTime?: Prisma.NewCarLeadTimeUncheckedCreateNestedManyWithoutNewCarInput
@@ -4711,6 +4783,8 @@ export type NewCarUpdateWithoutDesiredTorokuDateInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUpdateManyWithoutNewCarNestedInput
   OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryUpdateOneWithoutNewCarNestedInput
   Store?: Prisma.StoreUpdateOneRequiredWithoutNewCarNestedInput
@@ -4828,6 +4902,8 @@ export type NewCarUncheckedUpdateWithoutDesiredTorokuDateInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderSwitchingHisotoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedUpdateManyWithoutNewCarNestedInput
   NewCarLeadTime?: Prisma.NewCarLeadTimeUncheckedUpdateManyWithoutNewCarNestedInput
@@ -4940,6 +5016,8 @@ export type NewCarCreateWithoutNewCarLeadTimeInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryCreateNestedManyWithoutNewCarInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateCreateNestedManyWithoutNewCarInput
   OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryCreateNestedOneWithoutNewCarInput
@@ -5057,6 +5135,8 @@ export type NewCarUncheckedCreateWithoutNewCarLeadTimeInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   orderSwitchingHisotoryId?: number | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedCreateNestedManyWithoutNewCarInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUncheckedCreateNestedManyWithoutNewCarInput
@@ -5185,6 +5265,8 @@ export type NewCarUpdateWithoutNewCarLeadTimeInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUpdateManyWithoutNewCarNestedInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUpdateManyWithoutNewCarNestedInput
   OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryUpdateOneWithoutNewCarNestedInput
@@ -5302,6 +5384,8 @@ export type NewCarUncheckedUpdateWithoutNewCarLeadTimeInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderSwitchingHisotoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedUpdateManyWithoutNewCarNestedInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUncheckedUpdateManyWithoutNewCarNestedInput
@@ -5414,6 +5498,8 @@ export type NewCarCreateWithoutCrInspectionHistoryInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   DesiredTorokuDate?: Prisma.DesiredTorokuDateCreateNestedManyWithoutNewCarInput
   OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryCreateNestedOneWithoutNewCarInput
   Store: Prisma.StoreCreateNestedOneWithoutNewCarInput
@@ -5531,6 +5617,8 @@ export type NewCarUncheckedCreateWithoutCrInspectionHistoryInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   orderSwitchingHisotoryId?: number | null
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUncheckedCreateNestedManyWithoutNewCarInput
   NewCarLeadTime?: Prisma.NewCarLeadTimeUncheckedCreateNestedManyWithoutNewCarInput
@@ -5659,6 +5747,8 @@ export type NewCarUpdateWithoutCrInspectionHistoryInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUpdateManyWithoutNewCarNestedInput
   OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryUpdateOneWithoutNewCarNestedInput
   Store?: Prisma.StoreUpdateOneRequiredWithoutNewCarNestedInput
@@ -5776,6 +5866,8 @@ export type NewCarUncheckedUpdateWithoutCrInspectionHistoryInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderSwitchingHisotoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUncheckedUpdateManyWithoutNewCarNestedInput
   NewCarLeadTime?: Prisma.NewCarLeadTimeUncheckedUpdateManyWithoutNewCarNestedInput
@@ -5888,6 +5980,8 @@ export type NewCarCreateWithoutSeisanYoteiHistoryInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryCreateNestedManyWithoutNewCarInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateCreateNestedManyWithoutNewCarInput
   OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryCreateNestedOneWithoutNewCarInput
@@ -6005,6 +6099,8 @@ export type NewCarUncheckedCreateWithoutSeisanYoteiHistoryInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   orderSwitchingHisotoryId?: number | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedCreateNestedManyWithoutNewCarInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUncheckedCreateNestedManyWithoutNewCarInput
@@ -6133,6 +6229,8 @@ export type NewCarUpdateWithoutSeisanYoteiHistoryInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUpdateManyWithoutNewCarNestedInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUpdateManyWithoutNewCarNestedInput
   OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryUpdateOneWithoutNewCarNestedInput
@@ -6250,6 +6348,8 @@ export type NewCarUncheckedUpdateWithoutSeisanYoteiHistoryInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderSwitchingHisotoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedUpdateManyWithoutNewCarNestedInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUncheckedUpdateManyWithoutNewCarNestedInput
@@ -6362,6 +6462,8 @@ export type NewCarCreateWithoutFuriateStatusOnApprovementInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryCreateNestedManyWithoutNewCarInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateCreateNestedManyWithoutNewCarInput
   OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryCreateNestedOneWithoutNewCarInput
@@ -6479,6 +6581,8 @@ export type NewCarUncheckedCreateWithoutFuriateStatusOnApprovementInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   orderSwitchingHisotoryId?: number | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedCreateNestedManyWithoutNewCarInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUncheckedCreateNestedManyWithoutNewCarInput
@@ -6607,6 +6711,8 @@ export type NewCarUpdateWithoutFuriateStatusOnApprovementInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUpdateManyWithoutNewCarNestedInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUpdateManyWithoutNewCarNestedInput
   OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryUpdateOneWithoutNewCarNestedInput
@@ -6724,6 +6830,8 @@ export type NewCarUncheckedUpdateWithoutFuriateStatusOnApprovementInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderSwitchingHisotoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedUpdateManyWithoutNewCarNestedInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUncheckedUpdateManyWithoutNewCarNestedInput
@@ -6836,6 +6944,8 @@ export type NewCarCreateWithoutCarTransferHistoryInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryCreateNestedManyWithoutNewCarInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateCreateNestedManyWithoutNewCarInput
   OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryCreateNestedOneWithoutNewCarInput
@@ -6953,6 +7063,8 @@ export type NewCarUncheckedCreateWithoutCarTransferHistoryInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   orderSwitchingHisotoryId?: number | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedCreateNestedManyWithoutNewCarInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUncheckedCreateNestedManyWithoutNewCarInput
@@ -7081,6 +7193,8 @@ export type NewCarUpdateWithoutCarTransferHistoryInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUpdateManyWithoutNewCarNestedInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUpdateManyWithoutNewCarNestedInput
   OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryUpdateOneWithoutNewCarNestedInput
@@ -7198,6 +7312,8 @@ export type NewCarUncheckedUpdateWithoutCarTransferHistoryInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderSwitchingHisotoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedUpdateManyWithoutNewCarNestedInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUncheckedUpdateManyWithoutNewCarNestedInput
@@ -7310,6 +7426,8 @@ export type NewCarCreateWithoutTenpoTsuikoShinseiHeaderInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryCreateNestedManyWithoutNewCarInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateCreateNestedManyWithoutNewCarInput
   OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryCreateNestedOneWithoutNewCarInput
@@ -7427,6 +7545,8 @@ export type NewCarUncheckedCreateWithoutTenpoTsuikoShinseiHeaderInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   orderSwitchingHisotoryId?: number | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedCreateNestedManyWithoutNewCarInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUncheckedCreateNestedManyWithoutNewCarInput
@@ -7555,6 +7675,8 @@ export type NewCarUpdateWithoutTenpoTsuikoShinseiHeaderInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUpdateManyWithoutNewCarNestedInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUpdateManyWithoutNewCarNestedInput
   OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryUpdateOneWithoutNewCarNestedInput
@@ -7672,6 +7794,8 @@ export type NewCarUncheckedUpdateWithoutTenpoTsuikoShinseiHeaderInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderSwitchingHisotoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedUpdateManyWithoutNewCarNestedInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUncheckedUpdateManyWithoutNewCarNestedInput
@@ -7784,6 +7908,8 @@ export type NewCarCreateWithoutTenpoTsuikoDataInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryCreateNestedManyWithoutNewCarInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateCreateNestedManyWithoutNewCarInput
   OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryCreateNestedOneWithoutNewCarInput
@@ -7901,6 +8027,8 @@ export type NewCarUncheckedCreateWithoutTenpoTsuikoDataInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   orderSwitchingHisotoryId?: number | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedCreateNestedManyWithoutNewCarInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUncheckedCreateNestedManyWithoutNewCarInput
@@ -8029,6 +8157,8 @@ export type NewCarUpdateWithoutTenpoTsuikoDataInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUpdateManyWithoutNewCarNestedInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUpdateManyWithoutNewCarNestedInput
   OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryUpdateOneWithoutNewCarNestedInput
@@ -8146,6 +8276,8 @@ export type NewCarUncheckedUpdateWithoutTenpoTsuikoDataInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderSwitchingHisotoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedUpdateManyWithoutNewCarNestedInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUncheckedUpdateManyWithoutNewCarNestedInput
@@ -8258,6 +8390,8 @@ export type NewCarCreateWithoutStoreInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryCreateNestedManyWithoutNewCarInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateCreateNestedManyWithoutNewCarInput
   OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryCreateNestedOneWithoutNewCarInput
@@ -8374,6 +8508,8 @@ export type NewCarUncheckedCreateWithoutStoreInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   orderSwitchingHisotoryId?: number | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedCreateNestedManyWithoutNewCarInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUncheckedCreateNestedManyWithoutNewCarInput
@@ -8519,6 +8655,8 @@ export type NewCarScalarWhereInput = {
   shitadoriAlertCount?: Prisma.IntNullableFilter<"NewCar"> | number | null
   ossSpreadsheetUrl?: Prisma.StringNullableFilter<"NewCar"> | string | null
   transferType?: Prisma.StringFilter<"NewCar"> | string
+  furiate_chien_riyu?: Prisma.StringNullableFilter<"NewCar"> | string | null
+  nouki_mishitei_riyu?: Prisma.StringNullableFilter<"NewCar"> | string | null
   orderSwitchingHisotoryId?: Prisma.IntNullableFilter<"NewCar"> | number | null
 }
 
@@ -8621,6 +8759,8 @@ export type NewCarCreateWithoutUserInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryCreateNestedManyWithoutNewCarInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateCreateNestedManyWithoutNewCarInput
   OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryCreateNestedOneWithoutNewCarInput
@@ -8737,6 +8877,8 @@ export type NewCarUncheckedCreateWithoutUserInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   orderSwitchingHisotoryId?: number | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedCreateNestedManyWithoutNewCarInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUncheckedCreateNestedManyWithoutNewCarInput
@@ -8876,6 +9018,8 @@ export type NewCarCreateWithoutUcarInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryCreateNestedManyWithoutNewCarInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateCreateNestedManyWithoutNewCarInput
   OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryCreateNestedOneWithoutNewCarInput
@@ -8993,6 +9137,8 @@ export type NewCarUncheckedCreateWithoutUcarInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   orderSwitchingHisotoryId?: number | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedCreateNestedManyWithoutNewCarInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUncheckedCreateNestedManyWithoutNewCarInput
@@ -9121,6 +9267,8 @@ export type NewCarUpdateWithoutUcarInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUpdateManyWithoutNewCarNestedInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUpdateManyWithoutNewCarNestedInput
   OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryUpdateOneWithoutNewCarNestedInput
@@ -9238,6 +9386,8 @@ export type NewCarUncheckedUpdateWithoutUcarInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderSwitchingHisotoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedUpdateManyWithoutNewCarNestedInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUncheckedUpdateManyWithoutNewCarNestedInput
@@ -9352,6 +9502,8 @@ export type NewCarCreateManyStoreInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   orderSwitchingHisotoryId?: number | null
 }
 
@@ -9454,6 +9606,8 @@ export type NewCarUpdateWithoutStoreInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUpdateManyWithoutNewCarNestedInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUpdateManyWithoutNewCarNestedInput
   OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryUpdateOneWithoutNewCarNestedInput
@@ -9570,6 +9724,8 @@ export type NewCarUncheckedUpdateWithoutStoreInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderSwitchingHisotoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedUpdateManyWithoutNewCarNestedInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUncheckedUpdateManyWithoutNewCarNestedInput
@@ -9685,6 +9841,8 @@ export type NewCarUncheckedUpdateManyWithoutStoreInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderSwitchingHisotoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
@@ -9789,6 +9947,8 @@ export type NewCarCreateManyUserInput = {
   shitadoriAlertCount?: number | null
   ossSpreadsheetUrl?: string | null
   transferType?: string
+  furiate_chien_riyu?: string | null
+  nouki_mishitei_riyu?: string | null
   orderSwitchingHisotoryId?: number | null
 }
 
@@ -9891,6 +10051,8 @@ export type NewCarUpdateWithoutUserInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUpdateManyWithoutNewCarNestedInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUpdateManyWithoutNewCarNestedInput
   OrderSwitchingHisotory?: Prisma.OrderSwitchingHisotoryUpdateOneWithoutNewCarNestedInput
@@ -10007,6 +10169,8 @@ export type NewCarUncheckedUpdateWithoutUserInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderSwitchingHisotoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   CrInspectionHistory?: Prisma.CrInspectionHistoryUncheckedUpdateManyWithoutNewCarNestedInput
   DesiredTorokuDate?: Prisma.DesiredTorokuDateUncheckedUpdateManyWithoutNewCarNestedInput
@@ -10122,6 +10286,8 @@ export type NewCarUncheckedUpdateManyWithoutUserInput = {
   shitadoriAlertCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ossSpreadsheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferType?: Prisma.StringFieldUpdateOperationsInput | string
+  furiate_chien_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nouki_mishitei_riyu?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderSwitchingHisotoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
@@ -10339,6 +10505,8 @@ export type NewCarSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   shitadoriAlertCount?: boolean
   ossSpreadsheetUrl?: boolean
   transferType?: boolean
+  furiate_chien_riyu?: boolean
+  nouki_mishitei_riyu?: boolean
   orderSwitchingHisotoryId?: boolean
   CrInspectionHistory?: boolean | Prisma.NewCar$CrInspectionHistoryArgs<ExtArgs>
   DesiredTorokuDate?: boolean | Prisma.NewCar$DesiredTorokuDateArgs<ExtArgs>
@@ -10459,6 +10627,8 @@ export type NewCarSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   shitadoriAlertCount?: boolean
   ossSpreadsheetUrl?: boolean
   transferType?: boolean
+  furiate_chien_riyu?: boolean
+  nouki_mishitei_riyu?: boolean
   orderSwitchingHisotoryId?: boolean
   OrderSwitchingHisotory?: boolean | Prisma.NewCar$OrderSwitchingHisotoryArgs<ExtArgs>
   Store?: boolean | Prisma.StoreDefaultArgs<ExtArgs>
@@ -10567,6 +10737,8 @@ export type NewCarSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   shitadoriAlertCount?: boolean
   ossSpreadsheetUrl?: boolean
   transferType?: boolean
+  furiate_chien_riyu?: boolean
+  nouki_mishitei_riyu?: boolean
   orderSwitchingHisotoryId?: boolean
   OrderSwitchingHisotory?: boolean | Prisma.NewCar$OrderSwitchingHisotoryArgs<ExtArgs>
   Store?: boolean | Prisma.StoreDefaultArgs<ExtArgs>
@@ -10675,10 +10847,12 @@ export type NewCarSelectScalar = {
   shitadoriAlertCount?: boolean
   ossSpreadsheetUrl?: boolean
   transferType?: boolean
+  furiate_chien_riyu?: boolean
+  nouki_mishitei_riyu?: boolean
   orderSwitchingHisotoryId?: boolean
 }
 
-export type NewCarOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "sortOrder" | "storeId" | "updatedAt" | "APPINDEX" | "CD_HANSTAFF" | "CD_NCSYAMEI" | "CD_TENPO" | "DD_CENTTYAB" | "DD_CENTYOB" | "DD_FR" | "DD_HAISKIBO" | "DD_HAISOU" | "DD_HAISOYOT" | "DD_HONBSYOK" | "DD_JUCYU" | "DD_JUCYUKE" | "DD_KIBONOKI" | "DD_MAKERSYU" | "DD_NOSYA" | "DD_SYOUNIN1" | "DD_SYOUNIN2" | "DD_SYOUNIN3" | "DD_TENPSYOK" | "DD_TOROKIBO" | "DD_TOTYAKUY" | "DD_TOUROKU" | "DD_URIKZUMI" | "KJ_KAINMEI1" | "KJ_KURUMAME" | "KJ_MEIGIME1" | "MJ_HANTENKT" | "NO_CYUMON" | "NO_FRAME" | "m0Status" | "m0_deadline_nousya" | "m0_remarks" | "m1Status" | "m1_deadline_money" | "m1_deadline_paper" | "m1_remarks" | "m2Status" | "m2_date" | "m2_remarks" | "userId" | "m1Alert" | "m2Alert" | "lastApprovedDesiredTorokuDate" | "lastApprovedDesiredTorokuDate__pending" | "m2_check1" | "m2_check2" | "m1_toroku_prediction" | "initial_m0_deadline_nousya" | "initial_m1_deadline_money" | "initial_m1_deadline_paper" | "initial_m1_toroku_prediction" | "DD_KARINOKI" | "DD_SAGTYYO" | "KB_OSSSIN" | "MJ_OSSTSNST" | "KI_BETSIHAK" | "KI_MAEUNYUK" | "KI_NYURUIKE" | "KI_SHRIGK" | "KI_SITANYKG" | "crOperationRemarks" | "haisou_tooEarly" | "torokuApplicationRequired" | "DD_CENTSYUB" | "DD_GENSYNYK" | "KI_SITADORI" | "KI_SITZAN" | "DD_TORIKESI" | "DD_MAX_UPDATE" | "earliestHaisouDate" | "DD_LATEST_HAISOU" | "DD_HAISYYO" | "DD_KANSEI" | "DD_KRHURI" | "KB_DAIHYNAI" | "TM_TOTUTMKE" | "CUSTOM_DD_SEISANYOTEI" | "CUSTOM_FR_DATE" | "CUSTOM_FR_KARI_NOTATION" | "CUSTOM_FR_NOTATION_TYPE" | "CUSTOM_FR_PREFIX" | "CUSTOM_FR_SUFFIX" | "CUSTOM_KB_GYOCYOK" | "CUSTOM_KB_SEIBETU" | "CUSTOM_SEISANYOTEI" | "CUSTOM_ZAIKO_KB_NOTATION" | "CUSTOM_paymentCheck" | "CUSTOM_paymentCheckCustomerType" | "CUSTOM_NET_SHITADORI_PRICE" | "KB_ZAIKOJYO" | "isDaikoNosya" | "sateiNyukobiAlert" | "shitadoriAlertCount" | "ossSpreadsheetUrl" | "transferType" | "orderSwitchingHisotoryId", ExtArgs["result"]["newCar"]>
+export type NewCarOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "sortOrder" | "storeId" | "updatedAt" | "APPINDEX" | "CD_HANSTAFF" | "CD_NCSYAMEI" | "CD_TENPO" | "DD_CENTTYAB" | "DD_CENTYOB" | "DD_FR" | "DD_HAISKIBO" | "DD_HAISOU" | "DD_HAISOYOT" | "DD_HONBSYOK" | "DD_JUCYU" | "DD_JUCYUKE" | "DD_KIBONOKI" | "DD_MAKERSYU" | "DD_NOSYA" | "DD_SYOUNIN1" | "DD_SYOUNIN2" | "DD_SYOUNIN3" | "DD_TENPSYOK" | "DD_TOROKIBO" | "DD_TOTYAKUY" | "DD_TOUROKU" | "DD_URIKZUMI" | "KJ_KAINMEI1" | "KJ_KURUMAME" | "KJ_MEIGIME1" | "MJ_HANTENKT" | "NO_CYUMON" | "NO_FRAME" | "m0Status" | "m0_deadline_nousya" | "m0_remarks" | "m1Status" | "m1_deadline_money" | "m1_deadline_paper" | "m1_remarks" | "m2Status" | "m2_date" | "m2_remarks" | "userId" | "m1Alert" | "m2Alert" | "lastApprovedDesiredTorokuDate" | "lastApprovedDesiredTorokuDate__pending" | "m2_check1" | "m2_check2" | "m1_toroku_prediction" | "initial_m0_deadline_nousya" | "initial_m1_deadline_money" | "initial_m1_deadline_paper" | "initial_m1_toroku_prediction" | "DD_KARINOKI" | "DD_SAGTYYO" | "KB_OSSSIN" | "MJ_OSSTSNST" | "KI_BETSIHAK" | "KI_MAEUNYUK" | "KI_NYURUIKE" | "KI_SHRIGK" | "KI_SITANYKG" | "crOperationRemarks" | "haisou_tooEarly" | "torokuApplicationRequired" | "DD_CENTSYUB" | "DD_GENSYNYK" | "KI_SITADORI" | "KI_SITZAN" | "DD_TORIKESI" | "DD_MAX_UPDATE" | "earliestHaisouDate" | "DD_LATEST_HAISOU" | "DD_HAISYYO" | "DD_KANSEI" | "DD_KRHURI" | "KB_DAIHYNAI" | "TM_TOTUTMKE" | "CUSTOM_DD_SEISANYOTEI" | "CUSTOM_FR_DATE" | "CUSTOM_FR_KARI_NOTATION" | "CUSTOM_FR_NOTATION_TYPE" | "CUSTOM_FR_PREFIX" | "CUSTOM_FR_SUFFIX" | "CUSTOM_KB_GYOCYOK" | "CUSTOM_KB_SEIBETU" | "CUSTOM_SEISANYOTEI" | "CUSTOM_ZAIKO_KB_NOTATION" | "CUSTOM_paymentCheck" | "CUSTOM_paymentCheckCustomerType" | "CUSTOM_NET_SHITADORI_PRICE" | "KB_ZAIKOJYO" | "isDaikoNosya" | "sateiNyukobiAlert" | "shitadoriAlertCount" | "ossSpreadsheetUrl" | "transferType" | "furiate_chien_riyu" | "nouki_mishitei_riyu" | "orderSwitchingHisotoryId", ExtArgs["result"]["newCar"]>
 export type NewCarInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   CrInspectionHistory?: boolean | Prisma.NewCar$CrInspectionHistoryArgs<ExtArgs>
   DesiredTorokuDate?: boolean | Prisma.NewCar$DesiredTorokuDateArgs<ExtArgs>
@@ -10827,6 +11001,8 @@ export type $NewCarPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     shitadoriAlertCount: number | null
     ossSpreadsheetUrl: string | null
     transferType: string
+    furiate_chien_riyu: string | null
+    nouki_mishitei_riyu: string | null
     orderSwitchingHisotoryId: number | null
   }, ExtArgs["result"]["newCar"]>
   composites: {}
@@ -11366,6 +11542,8 @@ export interface NewCarFieldRefs {
   readonly shitadoriAlertCount: Prisma.FieldRef<"NewCar", 'Int'>
   readonly ossSpreadsheetUrl: Prisma.FieldRef<"NewCar", 'String'>
   readonly transferType: Prisma.FieldRef<"NewCar", 'String'>
+  readonly furiate_chien_riyu: Prisma.FieldRef<"NewCar", 'String'>
+  readonly nouki_mishitei_riyu: Prisma.FieldRef<"NewCar", 'String'>
   readonly orderSwitchingHisotoryId: Prisma.FieldRef<"NewCar", 'Int'>
 }
     
