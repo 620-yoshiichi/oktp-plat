@@ -57,17 +57,7 @@ export const getNewCarPages = (props: PageGetterType) => {
 
 
         { tabId: 'prediction', label: '集計', ...commons },
-        {
-          tabId: 'furiate-mitouroku',
-          label: '振当後未登録リスト',
-          ...commons,
-          link: {
-            // query: {
-            //   orderBy: 'DD_FR',
-            //   orderDirection: 'desc',
-            // },
-          },
-        },
+        // { tabId: 'furiate-mitouroku', label: '振当後未登録リスト', ...commons, },
 
       ],
       exclusiveTo: isNewCarMember,

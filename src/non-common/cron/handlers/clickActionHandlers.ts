@@ -61,4 +61,9 @@ export const executeBankMaster = async () => {
   return res
 }
 
+export const executeFuriateTairyuuRiyuSeed = async () => {
+  const res = await fetchAlt(`${basePath}/newCar/api/seed/furiateTairyuuRiyu`, {}, {method: 'POST'})
+  return res
+}
+
 export {executeUcarProcessUpsert} from './ucarProcessUpsert'

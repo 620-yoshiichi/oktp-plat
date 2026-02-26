@@ -3,6 +3,7 @@ import {executeTenpoTsuikoUpsert} from './handlers/tenpoTsuikoUpsert'
 import {executeFetchSeisanYoteiDiff} from './handlers/fetchSeisanYoteiDiff'
 import {executeNotifySeisanYoteiDiff} from './handlers/notifySeisanYoteiDiff'
 import {executeAggregateProgress} from './handlers/aggregateProgress'
+import {executeNotifyFuriateTairyuu} from './handlers/notifyFuriateTairyuu'
 import {executeOldCarsDeleteAndCreate} from './handlers/oldCarsDeleteAndCreate'
 import {executeZaikoDeleteAndCreate} from './handlers/zaikoDeleteAndCreate'
 import {executeAisateiDeleteAndCreate} from './handlers/aisateiDeleteAndCreate'
@@ -21,6 +22,7 @@ import {
   executeActivateBpSpread,
   executeBankMaster,
   executeUcarProcessUpsert,
+  executeFuriateTairyuuRiyuSeed,
 } from './handlers/clickActionHandlers'
 
 import {executeDisactivateUnnecessaryUcar} from 'src/non-common/cron/handlers/executeDisactivateUnnecessaryUcar'
@@ -321,6 +323,25 @@ export const BATCH_MASTER: Record<string, BatchConfig> = {
     app: 'newCar',
     effectOn: 'batch',
     handler: executeAggregateProgress,
+  },
+  notifyFuriateTairyuu: {
+    id: 'notifyFuriateTairyuu',
+    name: '滞留通知',
+    schedule: '0 1 * * *',
+    description: '/api/cron/execute/notifyFuriateTairyuu',
+    purpose: '振当32日経過・遅延理由未入力の受注を店長/副店長にメール通知',
+    app: 'newCar',
+    effectOn: 'batch',
+    handler: executeNotifyFuriateTairyuu,
+  },
+  furiateTairyuuRiyuSeed: {
+    id: 'furiateTairyuuRiyuSeed',
+    name: '滞留理由スプシ取り込み',
+    description: '/newCar/api/seed/furiateTairyuuRiyu',
+    purpose: 'Google Spreadsheetの「理由」シートから滞留理由・納期未指定理由を取り込む',
+    app: 'newCar',
+    effectOn: 'click',
+    handler: executeFuriateTairyuuRiyuSeed,
   },
 
   // ============ qrbp アプリ ============

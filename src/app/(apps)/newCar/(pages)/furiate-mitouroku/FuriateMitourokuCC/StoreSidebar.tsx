@@ -29,8 +29,11 @@ export const StoreSidebar = ({ stores, allCars, query, addQuery, maxHeighClass }
             onClick={() => addQuery({ storeId: undefined })}
           >
             <span className={`p-1.5`}>All</span>
-            <span className={`p-1.5 text-xs`}>
+            <span className={`flex items-center gap-1.5 p-1.5 text-xs`}>
               {allComplete}/{allTotal}
+              {allTotal - allComplete > 0 && (
+                <span className={`rounded bg-red-500 px-1 py-0.5 text-[10px] font-bold leading-none`}>{allTotal - allComplete}</span>
+              )}
             </span>
           </button>
 
@@ -53,11 +56,14 @@ export const StoreSidebar = ({ stores, allCars, query, addQuery, maxHeighClass }
                     <span className={`max-w-[110px] truncate p-1.5`}>{store.name}</span>
                     <span
                       className={cl(
-                        `min-w-[50px] rounded-r-lg p-1.5 text-center text-xs`,
+                        `flex items-center gap-1.5 rounded-r-lg p-1.5 text-center text-xs`,
                         total > 0 ? `bg-primary-main text-white` : `bg-sub-main text-white opacity-30`
                       )}
                     >
                       {complete}/{total}
+                      {total - complete > 0 && (
+                        <span className={`rounded bg-red-500 px-1 py-0.5 text-[10px] font-bold leading-none`}>{total - complete}</span>
+                      )}
                     </span>
                   </button>
                 </Fragment>

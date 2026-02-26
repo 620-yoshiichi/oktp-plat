@@ -8,15 +8,15 @@ import React, { Fragment } from 'react'
 
 const getElapsedDaysColor = (days: number) => {
   if (days >= 100) return `bg-red-100 text-red-700 font-bold`
-  if (days >= 50) return `bg-orange-100 text-orange-700 font-bold`
-  if (days >= 30) return `bg-yellow-100 text-yellow-700`
+  if (days >= 90) return `bg-orange-100 text-orange-700 font-bold`
+  if (days >= 60) return `bg-yellow-100 text-yellow-700`
   return ``
 }
 
 const getElapsedDaysBorderColor = (days: number) => {
   if (days >= 100) return `border-l-4 border-l-red-500`
-  if (days >= 50) return `border-l-4 border-l-orange-400`
-  if (days >= 30) return `border-l-4 border-l-yellow-400`
+  if (days >= 90) return `border-l-4 border-l-orange-400`
+  if (days >= 60) return `border-l-4 border-l-yellow-400`
   return ``
 }
 
@@ -71,9 +71,9 @@ export default function Table({ cars, onRowClick, selectedCarId, maxHeighClass }
   return (
     <div>
       <div className={`mb-2 text-sm`}>
-        <span className={`mr-3 text-xs text-gray-500`}>経過日数（30日、50日、100日）で警告色を表示</span>
-        <span className={`mr-2 inline-block rounded bg-yellow-100 px-2 py-0.5 text-xs`}>30日~</span>
-        <span className={`mr-2 inline-block rounded bg-orange-100 px-2 py-0.5 text-xs`}>50日~</span>
+        <span className={`mr-3 text-xs text-gray-500`}>経過日数（60日、90日、100日）で警告色を表示</span>
+        <span className={`mr-2 inline-block rounded bg-yellow-100 px-2 py-0.5 text-xs`}>60日~</span>
+        <span className={`mr-2 inline-block rounded bg-orange-100 px-2 py-0.5 text-xs`}>90日~</span>
         <span className={`inline-block rounded bg-red-100 px-2 py-0.5 text-xs`}>100日~</span>
       </div>
 
@@ -115,7 +115,7 @@ export default function Table({ cars, onRowClick, selectedCarId, maxHeighClass }
                       className={cl(
                         `cursor-pointer border-b border-gray-100 transition-colors hover:bg-blue-50`,
                         isSelected ? `bg-blue-100!` : ``,
-                        complete ? `opacity-60` : ``,
+                        complete ? `opacity-60` : `font-bold`,
                         getElapsedDaysBorderColor(elapsedDays)
                       )}
                       onClick={() => onRowClick(car)}

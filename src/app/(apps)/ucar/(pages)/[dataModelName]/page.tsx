@@ -96,6 +96,8 @@ const parameters = async ({ params, query, session, scopes }) => {
             ].filter(Boolean)
           }
 
+          console.log(whereAND)  //logs
+
 
 
 
