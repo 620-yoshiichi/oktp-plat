@@ -142,6 +142,7 @@ model NewCar {
   @@index([m2Alert])
   @@index([lastApprovedDesiredTorokuDate])
   @@index([m1_toroku_prediction])
+  @@index([CUSTOM_DD_SEISANYOTEI])
 }
 
 model OrderSwitchingHisotory {

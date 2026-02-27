@@ -23111,6 +23111,16 @@
       ]
     },
     {
+      "model": "NewCar",
+      "type": "normal",
+      "isDefinedOnField": false,
+      "fields": [
+        {
+          "name": "CUSTOM_DD_SEISANYOTEI"
+        }
+      ]
+    },
+    {
       "model": "OrderSwitchingHisotory",
       "type": "id",
       "isDefinedOnField": true,
