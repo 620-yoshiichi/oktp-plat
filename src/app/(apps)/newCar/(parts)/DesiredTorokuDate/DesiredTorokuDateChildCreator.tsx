@@ -1,5 +1,6 @@
 import { ColBuilder } from '@app/(apps)/newCar/class/Colbuilder/ColBuilder'
 import { NewCarClass } from '@app/(apps)/newCar/class/NewCarClass/NewCarClass'
+import CancelButton from './CancelButton'
 
 import ChildCreator from '@cm/components/DataLogic/RTs/ChildCreator/ChildCreator'
 import { Alert } from '@cm/components/styles/common-components/Alert'
@@ -58,6 +59,11 @@ export default function DesiredTorokuDateChildCreator({ newCar, additionalWhere,
           myTable: {
             update: isHQ ? true : false,
             delete: isHQ ? {} : false,
+            AdditionalActionButtonObject: {
+              cancelBtn: props => {
+                return <CancelButton {...{record: props.record, useGlobalProps}} />
+              },
+            },
           },
           ParentData: newCar,
           models: { parent: `newCar`, children: `desiredTorokuDate` },

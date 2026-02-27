@@ -96,9 +96,6 @@ const parameters = async ({ params, query, session, scopes }) => {
             ].filter(Boolean)
           }
 
-          console.log(whereAND)  //logs
-
-
 
 
           // 並び順の設定（クエリパラメータで切り替え可能）
