@@ -18864,10 +18864,9 @@
           "isUnique": false,
           "isId": false,
           "isReadOnly": true,
-          "hasDefaultValue": true,
+          "hasDefaultValue": false,
           "type": "String",
           "nativeType": null,
-          "default": "",
           "isGenerated": false,
           "isUpdatedAt": false
         },

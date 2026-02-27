@@ -14,7 +14,7 @@ import { differenceInDays } from 'date-fns'
 import React from 'react'
 
 const ReadOnlyField = ({ label, value }: { label: string; value: any }) => (
-  <R_Stack className={`items-start gap-2 border-b border-gray-100 py-1.5`}>
+  <R_Stack className={`items-start gap-2 border-b border-gray-100 py-0.5`}>
     <span className={`w-[120px] shrink-0 text-xs text-gray-500`}>{label}</span>
     <span className={`text-sm font-medium`}>{value ?? '-'}</span>
   </R_Stack>
@@ -65,9 +65,7 @@ export const EditPanel = ({ car, onClose }: { car: any; onClose: () => void }) =
       </R_Stack>
 
       <C_Stack className={`gap-0`}>
-        <div className={`mb-2 border-b border-gray-300 pb-1 text-xs font-bold text-gray-600`}>DB情報</div>
-
-        <ReadOnlyField label="ID" value={car.APPINDEX} />
+        {/* <ReadOnlyField label="ID" value={car.APPINDEX} /> */}
         <ReadOnlyField label="注文番号" value={car.NO_CYUMON} />
         <ReadOnlyField label="振り当て日" value={car.DD_FR ? formatDate(car.DD_FR) : null} />
         <ReadOnlyField label="受注日" value={car.DD_JUCYU ? formatDate(car.DD_JUCYU) : null} />

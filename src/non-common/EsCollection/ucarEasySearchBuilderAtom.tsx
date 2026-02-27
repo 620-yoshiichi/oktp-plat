@@ -154,6 +154,15 @@ export const ucarEasySearchBuilderAtom = async (props: easySearchType) => {
     },
   }
 
+
+  const number98AssignedWhere: Prisma.UcarWhereInput = {
+    AND: [{ number98: { not: null } }, { number98: { not: '' } }]
+  }
+
+  const oldCarsAssigenedWhere: Prisma.UcarWhereInput = {
+    OldCars_Base: { NO_SYARYOU: { not: null } }
+  }
+
   // =========98番号==========
   const number98__exist: EsObj = {
     label: '98完',
@@ -162,8 +171,8 @@ export const ucarEasySearchBuilderAtom = async (props: easySearchType) => {
       AND: [
         //
 
-        { number98: { not: '' } },
-        { OldCars_Base: { DD_SIIRE: { not: null } } },
+        number98AssignedWhere,
+        oldCarsAssigenedWhere
       ],
     },
   }
@@ -173,10 +182,10 @@ export const ucarEasySearchBuilderAtom = async (props: easySearchType) => {
     notify: true,
     CONDITION: {
       AND: [
-        //
+        number98AssignedWhere,
+        { NOT: oldCarsAssigenedWhere }
 
-        { number98: { not: '' } },
-        { NOT: { OldCars_Base: { DD_SIIRE: { not: null } } } },
+
       ],
     },
   }
@@ -185,8 +194,8 @@ export const ucarEasySearchBuilderAtom = async (props: easySearchType) => {
     description: '98番号がまだ付与されていない',
     CONDITION: {
       AND: [
-        //
-        { number98: '' },
+        { NOT: number98AssignedWhere }
+
       ],
     },
   }

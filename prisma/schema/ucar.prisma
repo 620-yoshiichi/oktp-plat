@@ -13,7 +13,7 @@ model Ucar {
   sateiID String @unique
 
   number98    String?   @default("") //古物との称号
-  NO_SIRETYUM String?   @default("") //古物との称号
+  NO_SIRETYUM String? //古物との称号
   DD_SIIRE    DateTime? //古物との称号
 
   // 書類管理項目

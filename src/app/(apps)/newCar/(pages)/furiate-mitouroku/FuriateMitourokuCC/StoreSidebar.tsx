@@ -57,13 +57,12 @@ export const StoreSidebar = ({ stores, allCars, query, addQuery, maxHeighClass }
                     <span
                       className={cl(
                         `flex items-center gap-1.5 rounded-r-lg p-1.5 text-center text-xs`,
-                        total > 0 ? `bg-primary-main text-white` : `bg-sub-main text-white opacity-30`
+                        // total > 0 ? `bg-primary-main text-white` : `bg-sub-main text-white opacity-30`
                       )}
                     >
-                      {complete}/{total}
-                      {total - complete > 0 && (
-                        <span className={`rounded bg-red-500 px-1 py-0.5 text-[10px] font-bold leading-none`}>{total - complete}</span>
-                      )}
+                      <div className={`w-[40px]`}>{complete}/{total}</div>
+                      <div className={`w-[24px]`}><span className={`rounded bg-red-500 px-1 py-0.5 text-[10px] text-white font-bold leading-none`}>{total - complete}</span></div>
+
                     </span>
                   </button>
                 </Fragment>
@@ -71,11 +70,7 @@ export const StoreSidebar = ({ stores, allCars, query, addQuery, maxHeighClass }
             })}
           </C_Stack>
 
-          {activeStoreId && (
-            <Button color={`red`} onClick={() => addQuery({ storeId: undefined })}>
-              <span className={`cursor-pointer text-xs`}>フィルタ解除</span>
-            </Button>
-          )}
+
         </C_Stack>
       </div>
     </div>
