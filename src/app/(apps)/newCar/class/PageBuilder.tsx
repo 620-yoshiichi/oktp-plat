@@ -144,13 +144,13 @@ export class PageBuilder {
                 絞り込み解除
               </Button>
               書類回収進捗
-              <IconBtn>{formatDate(month, 'YYYY年MM月')}</IconBtn>月
+              <IconBtn color='gray'>{formatDate(month, 'YYYY年MM月')}</IconBtn>月
               {timing && (
                 <>
-                  <IconBtn>{timing}</IconBtn>の
+                  <IconBtn color='gray'>{timing}</IconBtn>の
                 </>
               )}
-              {type && <IconBtn>{type}</IconBtn>}
+              {type && <IconBtn color='gray'>{type}</IconBtn>}
               データを表示しています
             </R_Stack>
           )
@@ -179,9 +179,9 @@ export class PageBuilder {
                 絞り込み解除
               </Button>
               書類回収進捗
-              {storeName && <IconBtn>{storeName}</IconBtn>}
-              {monthLabel && <IconBtn>{monthLabel}</IconBtn>}
-              {jpLabel && <IconBtn>{jpLabel}</IconBtn>}
+              {storeName && <IconBtn color='gray'>{storeName}</IconBtn>}
+              {monthLabel && <IconBtn color='gray'>{monthLabel}</IconBtn>}
+              {jpLabel && <IconBtn color='gray'>{jpLabel}</IconBtn>}
               データを表示しています
             </R_Stack>
           )

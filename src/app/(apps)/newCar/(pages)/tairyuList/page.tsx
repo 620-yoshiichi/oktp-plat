@@ -153,6 +153,7 @@ export default function TairyuList() {
                   登録予定日: formatDate(item.lastApprovedDesiredTorokuDate),
                   登録: formatDate(item.DD_TOUROKU),
                   配送希望: formatDate(item.DD_HAISKIBO),
+                  希望納期: item.DD_KIBONOKI ? formatDate(item.DD_KIBONOKI) : 'なるはや',
                   納車日: formatDate(item.DD_NOSYA),
                   振当からの経過日: differenceInDays(new Date(), item.DD_FR),
                 }
@@ -219,6 +220,11 @@ export default function TairyuList() {
                   {
                     label: `配送希望`,
                     cellValue: formatDate(item.DD_HAISKIBO, 'short'),
+                    style: {width: 110},
+                  },
+                  {
+                    label: `希望納期`,
+                    cellValue: item.DD_KIBONOKI ? formatDate(item.DD_KIBONOKI, 'short') : 'なるはや',
                     style: {width: 110},
                   },
                   {

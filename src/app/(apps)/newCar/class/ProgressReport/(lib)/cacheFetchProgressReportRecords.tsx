@@ -1,9 +1,22 @@
 'use server'
 
-import {ProgressReportRecord} from '@app/(apps)/newCar/class/ProgressReport/(lib)/getWheres'
+import {ProgressReportRecord, Month} from '@app/(apps)/newCar/class/ProgressReport/(lib)/getWheres'
+import {getQueryByMonth} from '@app/(apps)/newCar/class/ProgressReport/(lib)/getQueryByMonth'
 import prisma from 'src/lib/prisma'
 
-export const cacheFetchProgressReportRecords = async ({queryByMonthList}) => {
+export const cacheFetchProgressReportRecords = async ({
+  months,
+  newCarWhere,
+  userId,
+  storeId,
+}: {
+  months: Month[]
+  newCarWhere: any
+  userId: any
+  storeId: any
+}) => {
+  const queryByMonthList = getQueryByMonth({months, newCarWhere, userId, storeId})
+
   const ProgressReportRecords: ProgressReportRecord[] = await (
     await Promise.all(
       queryByMonthList

@@ -395,20 +395,21 @@ export const ucarEasySearchBuilderAtom = async (props: easySearchType) => {
   const tax__unScheduled = {
     label: `入金未定`,
     notify: true,
-    description: '返金予定日が未設定の状態',
+    description: '98付与済みで、返金予定日が未設定の状態',
     CONDITION: {
       AND: [
         //
         commonWhere,
         taxTargetCommonCondition,
         { paybackScheduledAt: null },
+        { number98: { not: null } },
       ],
     },
   }
   const tax__scheduled_pending = {
     label: `入金待ち`,
     notify: true,
-    description: '返金予定日は設定されているが、入金が未確認',
+    description: '98付与済みで、返金予定日は設定されているが、入金が未確認',
     CONDITION: {
       AND: [
         //
@@ -416,30 +417,33 @@ export const ucarEasySearchBuilderAtom = async (props: easySearchType) => {
         taxTargetCommonCondition,
         { paybackScheduledAt: { not: null } },
         { accountingRecievedAt: null },
+        { number98: { not: null } },
       ],
     },
   }
 
   const tax__scheduled_done = {
     label: `入金済み`,
-    description: '返金の入金が確認済み',
+    description: '98付与済みで、返金の入金が確認済み',
     CONDITION: {
       AND: [
         //
         commonWhere,
         taxTargetCommonCondition,
         { accountingRecievedAt: { not: null } },
+        { number98: { not: null } },
       ],
     },
   }
   const tax__has_exception = {
     label: `例外`,
-    description: '例外処理が設定されているもの',
+    description: '98付与済みで、例外処理が設定されているもの',
     CONDITION: {
       AND: [
         //
         commonWhere,
         hasException,
+        { number98: { not: null } },
       ],
     },
   }
