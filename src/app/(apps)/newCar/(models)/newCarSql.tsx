@@ -49,7 +49,6 @@ export const newCarSql = {
           ${BQ_parser.castStrToDate(`Cars.DD_TOUROKU`)} AS DD_TOUROKU,
           ${BQ_parser.castStrToDate(`Cars.DD_NOSYA`)} AS DD_NOSYA,
           ${BQ_parser.castStrToDate(`DD_KARINOKI`)} AS  DD_KARINOKI,
-          ${BQ_parser.castStrToDate(`DD_KANKEN`)} AS  DD_KANKEN,
           ${BQ_parser.castStrToDate(`DD_KANSEI`)} AS  DD_KANSEI,
           ${BQ_parser.castStrToDate(`DD_HAISYYO`)} AS  DD_HAISYYO,
           ${BQ_parser.castStrToDate(`DD_SAGTYYO`)} AS  DD_SAGTYYO,

@@ -78,7 +78,6 @@ model NewCar {
   earliestHaisouDate              DateTime?
   DD_LATEST_HAISOU                DateTime?
   DD_HAISYYO                      DateTime?
-  DD_KANKEN                       DateTime?
   DD_KANSEI                       DateTime?
   DD_KRHURI                       DateTime?
   KB_DAIHYNAI                     String?

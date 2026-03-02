@@ -874,7 +874,6 @@ export const NewCarScalarFieldEnum = {
   earliestHaisouDate: 'earliestHaisouDate',
   DD_LATEST_HAISOU: 'DD_LATEST_HAISOU',
   DD_HAISYYO: 'DD_HAISYYO',
-  DD_KANKEN: 'DD_KANKEN',
   DD_KANSEI: 'DD_KANSEI',
   DD_KRHURI: 'DD_KRHURI',
   KB_DAIHYNAI: 'KB_DAIHYNAI',
