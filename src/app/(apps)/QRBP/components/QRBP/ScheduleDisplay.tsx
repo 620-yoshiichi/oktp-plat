@@ -1,7 +1,7 @@
 import { formatDate } from '@cm/class/Days/date-utils/formatters'
 import { BP_Car } from '@app/(apps)/QRBP/class/BP_Car'
 import { R_Stack } from '@cm/components/styles/common-components/common-components'
-import { addDays } from 'date-fns'
+import { Days } from '@cm/class/Days/Days'
 
 const ScheduleDisplay = ({ car, type = 'cr' }) => {
   const { crScheduledAt, scheduledAt } = car ?? {}
@@ -14,7 +14,7 @@ const ScheduleDisplay = ({ car, type = 'cr' }) => {
   // 逆に、同じ月内で収まる場合は、scheduledAtから3日間の区間をそのまま表示する。
 
   const { displayValue } = (() => {
-    const toOrigin = addDays(new Date(scheduledAt), 3) // 予定開始日から3日後を算出
+    const toOrigin = Days.day.add(new Date(scheduledAt), 3) // 予定開始日から3日後を算出
 
     // 月を跨ぐかどうか判定
     const beyondMonth = formatDate(scheduledAt, 'YYYY-MM') !== formatDate(toOrigin, 'YYYY-MM')

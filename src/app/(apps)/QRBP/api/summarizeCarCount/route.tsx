@@ -5,13 +5,13 @@ import {EasySearchObject} from '@cm/class/builders/QueryBuilderVariables'
 import prisma from 'src/lib/prisma'
 import {Prisma} from '@prisma/generated/prisma/client'
 
-import {addDays} from 'date-fns'
+import {Days} from '@cm/class/Days/Days'
 import {NextResponse} from 'next/server'
 import {doTransaction, transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
 import {QrbpEasySearchBuilder} from 'src/non-common/EsCollection/QRBP_EasySearchBuilder'
 
 export const POST = async req => {
-  const date = getMidnight(addDays(new Date(), 0))
+  const date = getMidnight(Days.day.add(new Date(), 0))
 
   // 0~20の数字をランダムに
 

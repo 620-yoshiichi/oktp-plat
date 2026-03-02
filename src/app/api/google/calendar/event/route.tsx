@@ -4,7 +4,7 @@ import {getClientConfig} from '@app/api/google/lib/server-actions'
 import {requestResultType} from '@cm/types/types'
 
 import {getValidToken} from '@app/api/google/lib/middleware'
-import {addDays} from 'date-fns'
+import {Days} from '@cm/class/Days/Days'
 
 const defaultEvent = {
   calendarId: 'primary',
@@ -12,7 +12,7 @@ const defaultEvent = {
     summary: 'Sample Event',
     description: 'This is a sample event created using Google Calendar API.',
     start: {dateTime: new Date().toISOString()},
-    end: {dateTime: addDays(new Date(), 2).toISOString()},
+    end: {dateTime: Days.day.add(new Date(), 2).toISOString()},
   },
 }
 

@@ -13,7 +13,6 @@ import Redirector from '@cm/components/utils/Redirector'
 
 import {getWhereQuery} from '@cm/lib/methods/redirect-method'
 import {initServerComopnent} from 'src/non-common/serverSideFunction'
-import {addDays} from 'date-fns'
 import {Days} from '@cm/class/Days/Days'
 
 const CalendarPage = async props => {
@@ -33,7 +32,7 @@ const CalendarPage = async props => {
       const {gte} = whereQuery ?? {}
       const monthDatum = Days.month.getMonthDatum(gte || new Date())
       const {firstDayOfMonth, lastDayOfMonth} = monthDatum
-      const result = {gte: gte ? firstDayOfMonth : undefined, lt: gte ? addDays(lastDayOfMonth, 360) : undefined}
+      const result = {gte: gte ? firstDayOfMonth : undefined, lt: gte ? Days.day.add(lastDayOfMonth, 360) : undefined}
 
       return result
     },

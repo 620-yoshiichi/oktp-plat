@@ -2,7 +2,7 @@
 
 import { formatDate } from '@cm/class/Days/date-utils/formatters'
 import { cl } from '@cm/lib/methods/common'
-import { differenceInDays } from 'date-fns'
+import { Days } from '@cm/class/Days/Days'
 
 import React, { Fragment } from 'react'
 
@@ -105,7 +105,7 @@ export default function Table({ cars, onRowClick, selectedCarId, maxHeighClass }
                 </tr>
 
                 {group.cars.map(car => {
-                  const elapsedDays = car.DD_FR ? differenceInDays(today, new Date(car.DD_FR)) : 0
+                  const elapsedDays = car.DD_FR ? Days.day.difference(today, new Date(car.DD_FR)) : 0
                   const isSelected = selectedCarId === car.id
                   const complete = isInputComplete(car)
 

@@ -11,7 +11,6 @@ import { NEW_CAR_CONST } from '@app/(apps)/newCar/(constants)/newCar-constants'
 import { getScopes } from 'src/non-common/scope-lib/getScopes'
 import { findPredicate, getMonthBoundaries } from '@app/(apps)/newCar/(lib)/statistics/conditionRegistry'
 
-import { addHours } from 'date-fns'
 import { setCustomParams } from '@cm/components/DataLogic/helpers/SetCustomParams'
 import { getMasterPageCommonConfig } from '@cm/components/DataLogic/helpers/getMasterPageCommonConfig'
 import { Days } from '@cm/class/Days/Days'
@@ -92,7 +91,7 @@ const parameters = async (props: { params; query; session; scopes: ReturnType<ty
             if (predicate) {
               const { firstDay, nextFirstDay } = getMonthBoundaries(new Date(query.month))
 
-              const baseMonth = addHours(Days.month.getMonthDatum(new Date(query.month)).firstDayOfMonth, 9)
+              const baseMonth = Days.hour.add(Days.month.getMonthDatum(new Date(query.month)).firstDayOfMonth, 9)
 
               const pargs = {
                 baseMonth: baseMonth,

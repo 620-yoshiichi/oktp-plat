@@ -3,12 +3,12 @@
 import {knockEmailApi} from '@cm/lib/methods/knockEmailApi'
 import {basePath} from '@cm/lib/methods/common'
 import prisma from 'src/lib/prisma'
-import {subDays} from 'date-fns'
+import {Days} from '@cm/class/Days/Days'
 
 export const executeNotifyFuriateTairyuu = async () => {
   const cars = await prisma.newCar.findMany({
     where: {
-      DD_FR: {lte: subDays(new Date(), 32)},
+      DD_FR: {lte: Days.day.subtract(new Date(), 32)},
       DD_TOUROKU: null,
       DD_TORIKESI: null,
       furiate_chien_riyu: null,

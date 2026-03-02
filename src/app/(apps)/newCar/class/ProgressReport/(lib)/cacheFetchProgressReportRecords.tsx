@@ -3,7 +3,7 @@
 import {ProgressReportRecord, Month} from '@app/(apps)/newCar/class/ProgressReport/(lib)/getWheres'
 import {sql} from '@cm/class/SqlBuilder/SqlBuilder'
 import {useRawSql} from '@cm/class/SqlBuilder/useRawSql'
-import {addMonths} from 'date-fns'
+import {Days} from '@cm/class/Days/Days'
 
 const INCOMPLETE_STATUSES = [`対象`, `遅れ`]
 const INCOMPLETE_IN = INCOMPLETE_STATUSES.map(s => `'${s}'`).join(', ')
@@ -78,7 +78,7 @@ export const cacheFetchProgressReportRecords = async ({
     if (month === '過去') continue
 
     const monthDate = new Date(month)
-    const nextMonthDate = addMonths(monthDate, 1)
+    const nextMonthDate = Days.month.add(monthDate, 1)
     const monthStart = monthDate.toISOString()
     const monthEnd = nextMonthDate.toISOString()
 

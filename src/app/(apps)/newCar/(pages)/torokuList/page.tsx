@@ -5,7 +5,7 @@ import {toUtc} from '@cm/class/Days/date-utils/calculations'
 import {Padding} from '@cm/components/styles/common-components/common-components'
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 import {Prisma} from '@prisma/generated/prisma/client'
-import {addDays} from 'date-fns'
+import {Days} from '@cm/class/Days/Days'
 import React from 'react'
 
 export default async function page(props) {
@@ -30,7 +30,7 @@ export default async function page(props) {
         some: {
           updatedAt: {
             gte: toUtc(searchBy_DD_HONBSYOK),
-            lt: addDays(toUtc(searchBy_DD_HONBSYOK), 1),
+            lt: Days.day.add(toUtc(searchBy_DD_HONBSYOK), 1),
           },
         },
       },

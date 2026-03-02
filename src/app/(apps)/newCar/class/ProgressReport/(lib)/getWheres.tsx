@@ -1,11 +1,11 @@
-import {isImcompleted} from '@app/(apps)/newCar/(constants)/checkpoints/checkpoints'
+import { isImcompleted } from '@app/(apps)/newCar/(constants)/checkpoints/checkpoints'
 
-import {Prisma} from '@prisma/generated/prisma/client'
-import {addMonths} from 'date-fns'
-import {NEW_CAR_CONST} from '@app/(apps)/newCar/(constants)/newCar-constants'
+import { Prisma } from '@prisma/generated/prisma/client'
+import { Days } from '@cm/class/Days/Days'
+import { NEW_CAR_CONST } from '@app/(apps)/newCar/(constants)/newCar-constants'
 
 export type Month = Date | '過去'
-export type getQueryByMonthType = {month: Month; wheres: {key: string; condition: Prisma.NewCarWhereInput}[]}
+export type getQueryByMonthType = { month: Month; wheres: { key: string; condition: Prisma.NewCarWhereInput }[] }
 
 export type ProgressReportRecord = {
   key: string
@@ -13,23 +13,23 @@ export type ProgressReportRecord = {
   month: Month
 }
 
-export const getWheres = ({userId, storeId, month, firstMonth, newCarWhere}) => {
-  const {COMMON_WHERE} = NEW_CAR_CONST.NEW_CAR.WHERE
+export const getWheres = ({ userId, storeId, month, firstMonth, newCarWhere }) => {
+  const { COMMON_WHERE } = NEW_CAR_CONST.NEW_CAR.WHERE
 
-  const onThisMonth = month === `過去` ? {} : {gte: month, lt: addMonths(month, 1)}
+  const onThisMonth = month === `過去` ? {} : { gte: month, lt: Days.month.add(month, 1) }
 
   type condition = Prisma.NewCarWhereInput
 
-  const FR_THIS_MONTH = {DD_FR: onThisMonth}
+  const FR_THIS_MONTH = { DD_FR: onThisMonth }
   const CUSTOM_DD_SEISANYOTEI = {
-    OR: [{DD_FR: onThisMonth}, {CUSTOM_DD_SEISANYOTEI: onThisMonth}],
+    OR: [{ DD_FR: onThisMonth }, { CUSTOM_DD_SEISANYOTEI: onThisMonth }],
   }
 
   //2ヶ月前
-  const m2_target = {m2Alert: onThisMonth}
+  const m2_target = { m2Alert: onThisMonth }
   const m2_Set = {
     m2Alert: onThisMonth,
-    NOT: {...isImcompleted(`m2Status`)},
+    NOT: { ...isImcompleted(`m2Status`) },
   }
   const m2_remaining = {
     m2Alert: onThisMonth,
@@ -37,10 +37,10 @@ export const getWheres = ({userId, storeId, month, firstMonth, newCarWhere}) => 
   }
 
   // 1ヶ月前
-  const m1_target = {m1Alert: onThisMonth}
+  const m1_target = { m1Alert: onThisMonth }
   const m1_Set = {
     m1Alert: onThisMonth,
-    NOT: {...isImcompleted(`m1Status`)},
+    NOT: { ...isImcompleted(`m1Status`) },
   }
   const m1_remaining = {
     m1Alert: onThisMonth,
@@ -88,16 +88,16 @@ export const getWheres = ({userId, storeId, month, firstMonth, newCarWhere}) => 
   }
   const nousha_Set = {
     DD_FR: onThisMonth,
-    NOT: {...isImcompleted(`m0Status`)},
+    NOT: { ...isImcompleted(`m0Status`) },
   }
   const nousha_remaining = {
     DD_FR: onThisMonth,
     ...isImcompleted(`m0Status`),
   }
 
-  const nousha_Avhieved = {DD_NOSYA: onThisMonth}
+  const nousha_Avhieved = { DD_NOSYA: onThisMonth }
 
-  const result: {[key: string]: condition} = {
+  const result: { [key: string]: condition } = {
     FR_THIS_MONTH,
     CUSTOM_DD_SEISANYOTEI,
     m2_target,

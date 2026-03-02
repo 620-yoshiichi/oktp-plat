@@ -1,6 +1,6 @@
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 
-import {addDays} from 'date-fns'
+import {Days} from '@cm/class/Days/Days'
 import {obj__initializeProperty} from '@cm/class/ObjHandler/transformers'
 
 import NewDateSwitcher from '@cm/components/utils/dates/DateSwitcher/NewDateSwitcher'
@@ -19,7 +19,7 @@ export default async function Page(props) {
     query,
     whereQueryConverter: whereQuery => ({
       gte: whereQuery?.gte,
-      lt: addDays(whereQuery?.gte ?? new Date(), 1),
+      lt: Days.day.add(whereQuery?.gte ?? new Date(), 1),
     }),
   })
 

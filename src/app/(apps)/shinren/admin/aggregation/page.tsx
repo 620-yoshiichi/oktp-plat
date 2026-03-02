@@ -5,7 +5,6 @@ import {getWhereQuery} from '@cm/lib/methods/redirect-method'
 import {initServerComopnent} from 'src/non-common/serverSideFunction'
 import prisma from 'src/lib/prisma'
 
-import {addDays, startOfMonth} from 'date-fns'
 import dynamic from 'next/dynamic'
 import Redirector from '@cm/components/utils/Redirector'
 import PlaceHolder from '@cm/components/utils/loader/PlaceHolder'
@@ -36,7 +35,7 @@ const CalendarPage = async props => {
   const from = Days.month.getMonthDatum(refDate).firstDayOfMonth
   const monthData = Days.month.getMonthDatum(from)
 
-  const defaultQuery = {from: startOfMonth(new Date())}
+  const defaultQuery = {from: Days.month.getMonthDatum(new Date()).firstDayOfMonth}
   const userIdWhere = getUserIdWhere({query, scopes})
 
   const {redirectPath, whereQuery} = await getWhereQuery({
@@ -47,7 +46,7 @@ const CalendarPage = async props => {
 
       const lt = gte ? Days.month.getMonthDatum(new Date(gte)).lastDayOfMonth : undefined
 
-      return {gte: from, lt: lt ? addDays(lt, 1) : undefined}
+      return {gte: from, lt: lt ? Days.day.add(lt, 1) : undefined}
     },
   })
 

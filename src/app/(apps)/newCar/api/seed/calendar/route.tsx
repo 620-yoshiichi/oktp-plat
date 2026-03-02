@@ -6,14 +6,13 @@ import {doTransaction} from '@cm/lib/server-actions/common-server-actions/doTran
 
 import {transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
 import {Prisma} from '@prisma/generated/prisma/client'
-import {addMonths, addYears} from 'date-fns'
 
 import {NextRequest, NextResponse} from 'next/server'
 
 export const POST = async (req: NextRequest) => {
   const {firstDateOfYear} = Days.year.getYearDatum(getMidnight().getFullYear())
-  const nextYearFirstDate = addYears(firstDateOfYear, 1)
-  const nextApril = addMonths(nextYearFirstDate, 3)
+  const nextYearFirstDate = Days.year.add(firstDateOfYear, 1)
+  const nextApril = Days.month.add(nextYearFirstDate, 3)
   const months = Days.month.getMonthsBetweenDates(firstDateOfYear, nextApril)
   const allDaysInYear = months
     .map(d => {

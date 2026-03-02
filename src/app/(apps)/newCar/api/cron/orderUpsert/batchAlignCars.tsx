@@ -10,7 +10,6 @@ import { toUtc } from '@cm/class/Days/date-utils/calculations'
 import { processBatchWithRetry } from '@cm/lib/server-actions/common-server-actions/processBatchWithRetry'
 
 import { Prisma } from '@prisma/generated/prisma/client'
-import { addDays, addMonths } from 'date-fns'
 import prisma from 'src/lib/prisma'
 
 export const batchAlignCars = async () => {
@@ -48,8 +47,8 @@ const createOneYearCalendar = async () => {
   const calendars = await prisma.calendar.findMany({
     where: {
       date: {
-        gte: addDays(firstDateOfYear, -1),
-        lte: addMonths(lastDateOfYear, 1),
+        gte: Days.day.add(firstDateOfYear, -1),
+        lte: Days.month.add(lastDateOfYear, 1),
       },
     },
   })

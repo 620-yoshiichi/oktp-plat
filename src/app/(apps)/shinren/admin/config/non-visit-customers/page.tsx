@@ -5,7 +5,7 @@ import {formatDate} from '@cm/class/Days/date-utils/formatters'
 import {Center, C_Stack, Padding, R_Stack} from '@cm/components/styles/common-components/common-components'
 import {initServerComopnent} from 'src/non-common/serverSideFunction'
 import prisma from 'src/lib/prisma'
-import {addDays} from 'date-fns'
+import {Days} from '@cm/class/Days/Days'
 
 const NonVisitCustomerPage = async props => {
   const query = await props.searchParams
@@ -17,7 +17,7 @@ const NonVisitCustomerPage = async props => {
   const where = {
     userId: {...userIdWhere},
     type: {contains: '管理'},
-    RentaDailyReport: {none: {date: {gt: addDays(new Date(), -period)}}},
+    RentaDailyReport: {none: {date: {gt: Days.day.add(new Date(), -period)}}},
   }
   const customers = await prisma.rentaCustomer.findMany({
     where,
@@ -45,7 +45,7 @@ const NonVisitCustomerPage = async props => {
           <PeriodForm />
           <section>
             <R_Stack>
-              <p>{formatDate(addDays(new Date(), -period), `YYYY-MM-DD`)}以降に訪問がない顧客一覧</p>
+              <p>{formatDate(Days.day.add(new Date(), -period), `YYYY-MM-DD`)}以降に訪問がない顧客一覧</p>
               <p>
                 <strong>{customers.length}</strong>件
               </p>

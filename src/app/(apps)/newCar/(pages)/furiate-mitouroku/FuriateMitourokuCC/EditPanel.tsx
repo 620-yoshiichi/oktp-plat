@@ -9,7 +9,7 @@ import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
 import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 import { toastByResult } from '@cm/lib/ui/notifications'
-import { differenceInDays } from 'date-fns'
+import { Days } from '@cm/class/Days/Days'
 
 import React from 'react'
 
@@ -23,7 +23,7 @@ const ReadOnlyField = ({ label, value }: { label: string; value: any }) => (
 export const EditPanel = ({ car, onClose }: { car: any; onClose: () => void }) => {
   const { toggleLoad } = useGlobal()
 
-  const elapsedDays = car.DD_FR ? differenceInDays(new Date(), new Date(car.DD_FR)) : 0
+  const elapsedDays = car.DD_FR ? Days.day.difference(new Date(), new Date(car.DD_FR)) : 0
 
   const torokuYotei = car.m1_toroku_prediction ? new Date(car.m1_toroku_prediction) : null
   const isOverdue = torokuYotei ? torokuYotei < new Date() : false

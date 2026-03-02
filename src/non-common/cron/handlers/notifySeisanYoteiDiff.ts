@@ -4,7 +4,7 @@ import {getMidnight} from '@cm/class/Days/date-utils/calculations'
 
 import {knockEmailApi} from '@cm/lib/methods/knockEmailApi'
 import prisma from 'src/lib/prisma'
-import {addDays} from 'date-fns'
+import {Days} from '@cm/class/Days/Days'
 
 /**
  * 生産予定通知バッチ
@@ -34,7 +34,7 @@ export const executeNotifySeisanYoteiDiff = async () => {
     const isWithin60Days = (date: Date) => {
       if (!date) return false
       const today = getMidnight()
-      const futureLimit = addDays(today, 60)
+      const futureLimit = Days.day.add(today, 60)
       return date <= futureLimit
     }
     const wasInRange = previousHistory?.toDate && isWithin60Days(previousHistory.toDate)

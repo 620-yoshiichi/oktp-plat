@@ -15,7 +15,7 @@ import SimpleTable from '@cm/components/utils/SimpleTable'
 
 import {cl, shorten} from '@cm/lib/methods/common'
 
-import {differenceInDays} from 'date-fns'
+import {Days} from '@cm/class/Days/Days'
 import {useContext} from 'react'
 import {getColorStyles} from '@cm/lib/methods/colors'
 type CarCardProps = {
@@ -31,7 +31,7 @@ const CarCard = (props: CarCardProps) => {
     CAR_BAISC_INFO
 
   const {useGlobalProps, unDistributeCar} = useContext(DeliveryContext)
-  const DaysUntilDelivery = differenceInDays(new Date(deliverScheduledAt), new Date())
+  const DaysUntilDelivery = Days.day.difference(new Date(deliverScheduledAt), new Date())
 
   const {COLOR_TYPES} = Delivery.constants
   // const bgColor =

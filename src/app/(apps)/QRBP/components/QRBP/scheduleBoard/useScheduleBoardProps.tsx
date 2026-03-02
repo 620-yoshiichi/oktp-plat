@@ -5,7 +5,7 @@ import { formatDate } from '@cm/class/Days/date-utils/formatters'
 
 import { anyObject } from '@cm/types/utility-types'
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
-import { eachDayOfInterval } from 'date-fns'
+import { Days } from '@cm/class/Days/Days'
 import { toast } from 'react-toastify'
 
 import { obj__initializeProperty } from '@cm/class/ObjHandler/transformers'
@@ -27,10 +27,7 @@ const useScheduleBoardProps = (props: any, mode: ScheduleBoardMode) => {
   const [pendingMoves, setPendingMoves] = useState<Map<number, PendingMove>>(new Map())
   const [isPending, startTransition] = useTransition()
 
-  const days = eachDayOfInterval({
-    start: toUtc(query.from),
-    end: toUtc(query.to),
-  })
+  const days = Days.day.getDaysBetweenDates(toUtc(query.from), toUtc(query.to))
 
   const Damages = damageNameMaster?.map(damage => ({
     id: damage?.id,

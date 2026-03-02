@@ -7,7 +7,6 @@ import { formatDate } from '@cm/class/Days/date-utils/formatters'
 import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 
 import { CrInspectionHistory, DesiredTorokuDate, NewCar } from '@prisma/generated/prisma/client'
-import { differenceInDays } from 'date-fns'
 
 export class NewCarClass {
   car: NewCar & {
@@ -190,7 +189,7 @@ export class NewCarClass {
     const from = this.car[c.fromKey]
     const to = this.car[c.toKey]
 
-    const LT = [from, to].every(d => d) ? differenceInDays(new Date(to), new Date(from)) : undefined
+    const LT = [from, to].every(d => d) ? Days.day.difference(new Date(to), new Date(from)) : undefined
 
     const clear = LT && LT <= c.max
     const over = LT && LT > c.max

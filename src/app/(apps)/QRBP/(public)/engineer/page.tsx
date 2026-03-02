@@ -4,7 +4,7 @@ import { initServerComopnent } from 'src/non-common/serverSideFunction'
 
 import { QueryBuilder } from '@app/(apps)/QRBP/class/QueryBuilder'
 
-import { addDays } from 'date-fns'
+import { Days } from '@cm/class/Days/Days'
 import { getWhereQuery } from '@cm/lib/methods/redirect-method'
 
 import { HREF } from '@cm/lib/methods/urls'
@@ -30,7 +30,7 @@ export default async function Page(props) {
     query,
     whereQueryConverter: whereQuery => ({
       gte: whereQuery?.gte,
-      lt: addDays(whereQuery?.gte ?? new Date(), 1),
+      lt: Days.day.add(whereQuery?.gte ?? new Date(), 1),
     }),
   })
 

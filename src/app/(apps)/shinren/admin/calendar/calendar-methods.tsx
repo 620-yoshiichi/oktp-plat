@@ -4,7 +4,7 @@ import {obj__initializeProperty} from '@cm/class/ObjHandler/transformers'
 import {optionType} from '@cm/class/Fields/col-operator-types'
 import prisma from 'src/lib/prisma'
 import {Prisma} from '@prisma/generated/prisma/client'
-import {addDays} from 'date-fns'
+import {Days} from '@cm/class/Days/Days'
 
 const commonSelect = {
   id: true,
@@ -112,11 +112,11 @@ const CalendarInfoPush = (props: {CalendarInfo: CalendarInfoType; payload: any})
   CalendarInfo[dateKey].push({...payload})
 
   if (payload.calendarDataType.value === 'ExtraInfo') return
-  const dateKeyBefore90Days = formatDate(addDays(payload.date, -90))
+  const dateKeyBefore90Days = formatDate(Days.day.add(payload.date, -90))
   obj__initializeProperty(CalendarInfo, dateKeyBefore90Days, [])
   CalendarInfo[dateKeyBefore90Days].push({
     ...payload,
-    date: addDays(payload.date, -90),
+    date: Days.day.add(payload.date, -90),
     before90Days: true,
   })
 }

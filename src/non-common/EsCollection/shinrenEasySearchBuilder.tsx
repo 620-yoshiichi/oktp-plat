@@ -11,7 +11,7 @@ import {
 } from '@cm/class/builders/QueryBuilderVariables'
 import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
 
-import {addMonths} from 'date-fns'
+import {Days} from '@cm/class/Days/Days'
 import prisma from 'src/lib/prisma'
 
 export const shinrenEasySearchBuilder = async () => {
@@ -63,7 +63,7 @@ export const shinrenEasySearchBuilder = async () => {
           type: {contains: '管理'},
           RentaDailyReport: {
             none: {
-              date: {gt: addMonths(new Date(), -3)},
+              date: {gt: Days.month.add(new Date(), -3)},
             },
           },
         },
@@ -109,7 +109,7 @@ export const shinrenEasySearchBuilder = async () => {
         CONDITION: {
           RentaDailyReport: {
             some: {
-              date: {gt: addMonths(new Date(), -1)},
+              date: {gt: Days.month.add(new Date(), -1)},
             },
           },
         },

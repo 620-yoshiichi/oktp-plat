@@ -6,7 +6,7 @@ import {formatDate} from '@cm/class/Days/date-utils/formatters'
 import prisma from 'src/lib/prisma'
 import {doTransaction, transactionQuery} from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
 import {processBatchWithRetry} from '@cm/lib/server-actions/common-server-actions/processBatchWithRetry'
-import {subDays} from 'date-fns'
+import {Days} from '@cm/class/Days/Days'
 import {NextRequest, NextResponse} from 'next/server'
 
 export async function GET(req: NextRequest) {
@@ -59,7 +59,7 @@ export async function GET(req: NextRequest) {
     await processBatchWithRetry({
       soruceList: data.filter((row: any) => {
         const orderDate = toUtc(row[1])
-        return orderDate.getTime() >= subDays(new Date(), 365).getTime()
+        return orderDate.getTime() >= Days.day.subtract(new Date(), 365).getTime()
       }),
       mainProcess: async batch => {
         const transactionQueryList: transactionQuery[] = []

@@ -17,7 +17,7 @@ import {toastByResult} from '@cm/lib/ui/notifications'
 import {cl} from '@cm/lib/methods/common'
 
 import {CarTransferHistory, NewCar} from '@prisma/generated/prisma/client'
-import {differenceInDays} from 'date-fns'
+import {Days} from '@cm/class/Days/Days'
 import React, {useState} from 'react'
 import ShadModal from '@cm/shadcn/ui/Organisms/ShadModal'
 
@@ -49,7 +49,7 @@ const Table = ({cars, formData, setFormData}) => {
         const {transferType, CarTransferHistory, DD_LATEST_HAISOU} = d
         const lastHistory = CarTransferHistory[0] as CarTransferHistory
 
-        const within14Days = DD_LATEST_HAISOU && differenceInDays(DD_LATEST_HAISOU, getMidnight()) <= 14
+        const within14Days = DD_LATEST_HAISOU && Days.day.difference(DD_LATEST_HAISOU, getMidnight()) <= 14
 
         const beingTransferred = lastHistory?.transferredAt !== null && lastHistory?.recoveredAt === null
 

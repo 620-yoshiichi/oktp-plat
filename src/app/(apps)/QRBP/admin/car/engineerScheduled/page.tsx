@@ -8,7 +8,7 @@ import {getWhereQuery} from '@cm/lib/methods/redirect-method'
 import {initServerComopnent} from 'src/non-common/serverSideFunction'
 import prisma from 'src/lib/prisma'
 
-import {addDays} from 'date-fns'
+import {Days} from '@cm/class/Days/Days'
 
 const EngineerScheduledBoardPage = async props => {
   const query = await props.searchParams
@@ -16,8 +16,8 @@ const EngineerScheduledBoardPage = async props => {
   const today = new Date()
 
   const defaultQuery = {
-    from: addDays(today, -10),
-    to: addDays(today, 30),
+    from: Days.day.subtract(today, 10),
+    to: Days.day.add(today, 30),
   }
 
   const {whereQuery, redirectPath} = await getWhereQuery({query, defaultQuery})

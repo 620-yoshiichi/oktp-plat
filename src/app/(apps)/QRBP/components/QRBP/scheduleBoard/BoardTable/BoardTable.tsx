@@ -2,7 +2,7 @@
 import { CSSProperties } from 'react'
 import { Days } from '@cm/class/Days/Days'
 import { formatDate } from '@cm/class/Days/date-utils/formatters'
-import { isBefore, isToday, startOfToday } from 'date-fns'
+import { getMidnight } from '@cm/class/Days/date-utils/calculations'
 
 import DateColumn from '@app/(apps)/QRBP/components/QRBP/scheduleBoard/BoardTable/DateColumn'
 
@@ -16,11 +16,11 @@ const BoardTable = (props: any) => {
   const theadStickyStyle: CSSProperties = { position: 'sticky', zIndex: Z_INDEX.thead }
 
   const headerWidth = 160
-  const today = startOfToday()
-  const isPastDay = (day: Date) => isBefore(day, today)
+  const today = getMidnight()
+  const isPastDay = (day: Date) => day < today
 
   const getDateHeaderClass = (day: Date) => {
-    if (isToday(day)) return 'bg-blue-50 text-blue-700 font-bold'
+    if (Days.validate.isSameDate(day, new Date())) return 'bg-blue-50 text-blue-700 font-bold'
     if (isPastDay(day)) return 'bg-red-100! text-red-400!'
     const holiday = Days.day.isHoliday(day)
     if (holiday) return 'bg-red-50/40 text-red-400'
@@ -40,7 +40,7 @@ const BoardTable = (props: any) => {
             </th>
             {targetDays.map((day, d) => {
               const dateId = `date-${formatDate(day)}`
-              const isTodayHeader = isToday(day)
+              const isTodayHeader = Days.validate.isSameDate(day, new Date())
               return (
                 <th
                   id={dateId}
@@ -138,7 +138,7 @@ const BoardTable = (props: any) => {
 
                 {targetDays.map((day, di) => {
                   const cars = carsOnDamage?.[formatDate(day)]
-                  const isTodayCell = isToday(day)
+                  const isTodayCell = Days.validate.isSameDate(day, new Date())
                   const isPast = isPastDay(day)
                   const dayIso = formatDate(day, 'iso')
 

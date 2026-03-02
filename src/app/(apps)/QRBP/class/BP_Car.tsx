@@ -3,7 +3,7 @@ import { basePath, handleDB } from '@cm/lib/methods/common'
 import { knockEmailApi } from '@cm/lib/methods/knockEmailApi'
 import { fetchUserRole } from 'src/non-common/serverSideFunction'
 
-import { addDays, differenceInDays, isBefore, isAfter } from 'date-fns'
+import { Days } from '@cm/class/Days/Days'
 
 import { anyObject } from '@cm/types/utility-types'
 import { NumHandler } from '@cm/class/NumHandler'
@@ -88,7 +88,7 @@ export class BP_Car {
   calcScheduledDiff = () => {
     const car = this.car
     const diff: number =
-      car.crScheduledAt ? differenceInDays(getMidnight(), (car.crScheduledAt)) :
+      car.crScheduledAt ? Days.day.difference(getMidnight(), (car.crScheduledAt)) :
         0
 
 
@@ -331,9 +331,9 @@ export class BP_Car {
 
     const ProcessWillFinishLastDate = toUtc(formatDate(ProcessWillFinishLast?.date))
 
-    const deliverlyFrom = addDays(new Date(ProcessWillFinishLastDate), 1)
+    const deliverlyFrom = Days.day.add(new Date(ProcessWillFinishLastDate), 1)
 
-    const deliverlyTo = addDays(new Date(deliverlyFrom), 2)
+    const deliverlyTo = Days.day.add(new Date(deliverlyFrom), 2)
     const accepted = Process.find(p => {
       return p?.ProcessNameMaster?.type === '拠点受取'
     })

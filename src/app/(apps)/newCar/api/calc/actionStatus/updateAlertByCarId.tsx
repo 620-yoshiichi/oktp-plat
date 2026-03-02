@@ -1,7 +1,7 @@
 import {actionStatusLabels, newCarModel} from '@app/(apps)/newCar/(constants)/checkpoints/checkpoints'
 
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
-import {differenceInDays} from 'date-fns'
+import {Days} from '@cm/class/Days/Days'
 import {formatDate} from '@cm/class/Days/date-utils/formatters'
 import {getMidnight, getMinimumDate} from '@cm/class/Days/date-utils/calculations'
 
@@ -10,7 +10,7 @@ type calculatedResult = {label: actionStatusLabels}
 type calcStatusType = (props: {newCar: newCarModel}) => calculatedResult
 
 const SEISANYOTEI_WITHIN = ({newCar, within}) => {
-  return newCar[`CUSTOM_DD_SEISANYOTEI`] && differenceInDays(new Date(newCar[`CUSTOM_DD_SEISANYOTEI`]), new Date()) <= within
+  return newCar[`CUSTOM_DD_SEISANYOTEI`] && Days.day.difference(new Date(newCar[`CUSTOM_DD_SEISANYOTEI`]), new Date()) <= within
 }
 
 const CalcStatus_Common: (props: any) => calculatedResult = ({activated, done, finishedByAi21, delay, isInNextPhase}) => {

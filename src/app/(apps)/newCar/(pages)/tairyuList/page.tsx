@@ -9,7 +9,7 @@ import PlaceHolder from '@cm/components/utils/loader/PlaceHolder'
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
-import {differenceInDays} from 'date-fns'
+import {Days} from '@cm/class/Days/Days'
 import React, {useState} from 'react'
 import useSWR from 'swr'
 
@@ -155,7 +155,7 @@ export default function TairyuList() {
                   配送希望: formatDate(item.DD_HAISKIBO),
                   希望納期: item.DD_KIBONOKI ? formatDate(item.DD_KIBONOKI) : 'なるはや',
                   納車日: formatDate(item.DD_NOSYA),
-                  振当からの経過日: differenceInDays(new Date(), item.DD_FR),
+                  振当からの経過日: Days.day.difference(new Date(), item.DD_FR),
                 }
               })
               return records
@@ -234,7 +234,7 @@ export default function TairyuList() {
                   },
                   {
                     label: `振当からの経過日`,
-                    cellValue: differenceInDays(new Date(), item.DD_FR),
+                    cellValue: Days.day.difference(new Date(), item.DD_FR),
                     style: {width: 80},
                   },
                 ],

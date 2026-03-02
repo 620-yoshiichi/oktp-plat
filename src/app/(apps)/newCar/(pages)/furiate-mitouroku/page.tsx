@@ -4,7 +4,7 @@ import FuriateMitourokuCC from '@app/(apps)/newCar/(pages)/furiate-mitouroku/Fur
 import { Padding } from '@cm/components/styles/common-components/common-components'
 import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 import { Prisma } from '@prisma/generated/prisma/client'
-import { subDays } from 'date-fns'
+import { Days } from '@cm/class/Days/Days'
 import React from 'react'
 
 export default async function Page(props) {
@@ -12,7 +12,7 @@ export default async function Page(props) {
   const storeId = query.storeId ? Number(query.storeId) : undefined
 
   const baseWhere: Prisma.NewCarWhereInput = {
-    DD_FR: { lte: subDays(new Date(), 32) },
+    DD_FR: { lte: Days.day.subtract(new Date(), 32) },
     DD_TOUROKU: null,
     DD_TORIKESI: null,
   }

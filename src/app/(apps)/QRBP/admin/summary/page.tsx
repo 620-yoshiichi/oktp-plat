@@ -4,7 +4,7 @@ import {RELEVANT_KEYS} from '@app/(apps)/QRBP/admin/summary/constants'
 import {EasySearchObject} from '@cm/class/builders/QueryBuilderVariables'
 import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 import prisma from 'src/lib/prisma'
-import {addDays, eachDayOfInterval} from 'date-fns'
+import {Days} from '@cm/class/Days/Days'
 import {QrbpEasySearchBuilder} from 'src/non-common/EsCollection/QRBP_EasySearchBuilder'
 
 const SymmaryPage = async props => {
@@ -39,9 +39,9 @@ const SymmaryPage = async props => {
   })
 
   const today = new Date()
-  const from = addDays(today, -50)
-  const to = addDays(today, 0)
-  const days = eachDayOfInterval({start: from, end: to})
+  const from = Days.day.subtract(today, 50)
+  const to = Days.day.add(today, 0)
+  const days = Days.day.getDaysBetweenDates(from, to)
 
   const stores = await prisma.store.findMany({
     orderBy: [{sortOrder: 'asc'}],

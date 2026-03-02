@@ -3,7 +3,7 @@ import {m2} from '@app/(apps)/newCar/(constants)/checkpoints/m2'
 
 import {furiate} from '@app/(apps)/newCar/(constants)/checkpoints/m0'
 
-import {differenceInDays} from 'date-fns'
+import {Days} from '@cm/class/Days/Days'
 
 import {colorVariants} from '@cm/lib/methods/colorVariants'
 import {colType} from '@cm/types/col-types'
@@ -24,7 +24,7 @@ export type checkPoint = {
 
 export const commonAlert = ({newCar, CriteriaDD, withinDays}) => {
   const CriteriaDate = newCar[CriteriaDD]
-  const near = CriteriaDate && differenceInDays(new Date(CriteriaDate), new Date()) <= withinDays
+  const near = CriteriaDate && Days.day.difference(new Date(CriteriaDate), new Date()) <= withinDays
   return near ? '入力' : ''
 }
 

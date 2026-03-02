@@ -1,7 +1,6 @@
 import {getMidnight} from '@cm/class/Days/date-utils/calculations'
 import {formatDate} from '@cm/class/Days/date-utils/formatters'
 import {Days} from '@cm/class/Days/Days'
-import {addDays} from 'date-fns'
 
 export type RegistryParams = {
   baseMonth?: Date
@@ -21,13 +20,13 @@ export type Predicate = {
 export const getMonthBoundaries = (baseMonth?: Date) => {
   const base = baseMonth ?? getMidnight()
   const {firstDayOfMonth, lastDayOfMonth} = Days.month.getMonthDatum(base)
-  const nextMonthFirst = addDays(lastDayOfMonth, 1)
+  const nextMonthFirst = Days.day.add(lastDayOfMonth, 1)
 
   return {
     firstDay: formatDate(firstDayOfMonth),
     nextFirstDay: formatDate(nextMonthFirst),
     firstDayDate: firstDayOfMonth,
-    nextFirstDayDate: addDays(lastDayOfMonth, 1),
+    nextFirstDayDate: Days.day.add(lastDayOfMonth, 1),
   }
 }
 

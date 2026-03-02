@@ -8,7 +8,7 @@ import {
 } from '@cm/class/builders/QueryBuilderVariables'
 
 import { Prisma } from '@prisma/generated/prisma/client'
-import { addDays } from 'date-fns'
+import { Days } from '@cm/class/Days/Days'
 
 import { shorten } from '@cm/lib/methods/common'
 import { sold, unsold } from '@app/(apps)/ucar/(constants)/ucar-constants'
@@ -136,7 +136,7 @@ export const ucarEasySearchBuilderAtom = async (props: easySearchType) => {
         commonWhere,
         { AND: [notFinalizedWhere, { secondMeihenbi: null }] },
 
-        { inkanCertificateExpiredAt: { lte: addDays(new Date(), 30) } },
+        { inkanCertificateExpiredAt: { lte: Days.day.add(new Date(), 30) } },
       ],
     },
   }
