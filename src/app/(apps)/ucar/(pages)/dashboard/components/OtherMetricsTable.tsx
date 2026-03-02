@@ -183,9 +183,9 @@ export function OtherMetricsTable({ data, year }: Props) {
                 <div className="text-center leading-tight">
                   98番号
                   <br />
-                  集計対象
+                  {/* 集計対象
                   <br />
-                  <span className="text-[10px] text-gray-500">→ CR到着済</span>
+                  <span className="text-[10px] text-gray-500">→ CR到着済</span> */}
                 </div>
               </td>
             </tr>
