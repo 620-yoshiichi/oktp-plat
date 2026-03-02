@@ -7,14 +7,6 @@
  "regions": [
   "sin1"
  ],
- "functions": {
-  "src/app/api/**": {
-   "memory": 3009
-  },
-  "src/app/(apps)/*/api/**": {
-   "memory": 3009
-  }
- },
  "trailingSlash": false,
  "crons": [
   {

@@ -1,5 +1,5 @@
 'use server'
-import {Pool} from 'pg'
+import { Pool } from 'pg'
 const databaseUrl = process.env.DATABASE_URL
 if (!databaseUrl) {
   throw new Error('DATABASE_URL is not defined in environment variables')
@@ -9,7 +9,7 @@ const pool = new Pool({
   ssl: false, // 必要なら設定を調整
 })
 
-export const useRawSql = async ({sql}) => {
+export const useRawSql = async ({ sql }) => {
   const client = await pool.connect()
 
   try {
