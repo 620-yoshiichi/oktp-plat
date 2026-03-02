@@ -5,7 +5,7 @@ const tseslint = require('typescript-eslint')
 const nextPlugin = require('@next/eslint-plugin-next')
 const unusedImports = require('eslint-plugin-unused-imports')
 const reactPlugin = require('eslint-plugin-react')
-const reactHooksPlugin = require('eslint-plugin-react-hooks')
+
 const simpleImportSort = require('eslint-plugin-simple-import-sort')
 
 module.exports = [
@@ -47,7 +47,6 @@ module.exports = [
       '@next/next': nextPlugin,
       'unused-imports': unusedImports,
       react: reactPlugin,
-      'react-hooks': reactHooksPlugin,
       'simple-import-sort': simpleImportSort,
     },
     rules: {
@@ -91,7 +90,6 @@ module.exports = [
     },
     plugins: {
       react: reactPlugin,
-      'react-hooks': reactHooksPlugin,
       'simple-import-sort': simpleImportSort,
     },
     rules: {

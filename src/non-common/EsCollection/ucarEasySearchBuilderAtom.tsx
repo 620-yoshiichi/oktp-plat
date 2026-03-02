@@ -392,6 +392,8 @@ export const ucarEasySearchBuilderAtom = async (props: easySearchType) => {
     ],
   }
 
+
+
   const tax__unScheduled = {
     label: `入金未定`,
     notify: true,
@@ -402,7 +404,7 @@ export const ucarEasySearchBuilderAtom = async (props: easySearchType) => {
         commonWhere,
         taxTargetCommonCondition,
         { paybackScheduledAt: null },
-        { number98: { not: null } },
+        number98AssignedWhere
       ],
     },
   }
@@ -417,7 +419,7 @@ export const ucarEasySearchBuilderAtom = async (props: easySearchType) => {
         taxTargetCommonCondition,
         { paybackScheduledAt: { not: null } },
         { accountingRecievedAt: null },
-        { number98: { not: null } },
+        number98AssignedWhere
       ],
     },
   }
@@ -431,7 +433,7 @@ export const ucarEasySearchBuilderAtom = async (props: easySearchType) => {
         commonWhere,
         taxTargetCommonCondition,
         { accountingRecievedAt: { not: null } },
-        { number98: { not: null } },
+        number98AssignedWhere
       ],
     },
   }
@@ -443,7 +445,7 @@ export const ucarEasySearchBuilderAtom = async (props: easySearchType) => {
         //
         commonWhere,
         hasException,
-        { number98: { not: null } },
+        number98AssignedWhere
       ],
     },
   }
