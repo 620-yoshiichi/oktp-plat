@@ -1,10 +1,9 @@
 model JuchuShitadoriDb {
-  id        Int     @unique @default(autoincrement())
-  sortOrder Float   @default(0)
-  APPINDEX  String  @id
-  NewCar    NewCar? @relation(fields: [APPINDEX_FKEY], references: [APPINDEX])
-  UPASS     UPASS?  @relation(fields: [NO_SATEISYO], references: [shitadoriRelationAssessmentNumber])
-
+  id            Int     @unique @default(autoincrement())
+  sortOrder     Float   @default(0)
+  APPINDEX      String  @id
+  NewCar        NewCar? @relation(fields: [APPINDEX_FKEY], references: [APPINDEX])
+  UPASS         UPASS?  @relation(fields: [NO_SATEISYO], references: [shitadoriRelationAssessmentNumber])
   APPINDEX_FKEY String?
   CD_KAISYA     String?
   KB_SINCYU     String?
