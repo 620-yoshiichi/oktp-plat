@@ -5,7 +5,6 @@ const tseslint = require('typescript-eslint')
 const nextPlugin = require('@next/eslint-plugin-next')
 const unusedImports = require('eslint-plugin-unused-imports')
 const reactPlugin = require('eslint-plugin-react')
-
 const simpleImportSort = require('eslint-plugin-simple-import-sort')
 
 module.exports = [
