@@ -1,33 +1,35 @@
 'use client'
 
-import {NEW_CAR_CONST} from '@app/(apps)/newCar/(constants)/newCar-constants'
-import {NewCarClass} from '@app/(apps)/newCar/class/NewCarClass/NewCarClass'
-import {useCrScheduleSwitcherModal} from '@app/(apps)/newCar/templateHooks/useCrScheduleSwitcherModal'
-import {formatDate} from '@cm/class/Days/date-utils/formatters'
-import {Fields} from '@cm/class/Fields/Fields'
-import {Button} from '@cm/components/styles/common-components/Button'
-import {C_Stack, R_Stack} from '@cm/components/styles/common-components/common-components'
+import { NEW_CAR_CONST } from '@app/(apps)/newCar/(constants)/newCar-constants'
+import { NewCarClass } from '@app/(apps)/newCar/class/NewCarClass/NewCarClass'
+import { useCrScheduleSwitcherModal } from '@app/(apps)/newCar/templateHooks/useCrScheduleSwitcherModal'
+import { formatDate } from '@cm/class/Days/date-utils/formatters'
+import { Fields } from '@cm/class/Fields/Fields'
+import { Button } from '@cm/components/styles/common-components/Button'
+import { C_Stack, R_Stack } from '@cm/components/styles/common-components/common-components'
 
-import {Paper} from '@cm/components/styles/common-components/paper'
-import {LabelValue} from '@cm/components/styles/common-components/ParameterCard'
+import { Paper } from '@cm/components/styles/common-components/paper'
+import { LabelValue } from '@cm/components/styles/common-components/ParameterCard'
 
 import useModal from '@cm/components/utils/modal/useModal'
 import MyPopover from '@cm/components/utils/popover/MyPopover'
 
-import {DocumentIcon, InformationCircleIcon} from '@heroicons/react/20/solid'
+import { DocumentIcon, InformationCircleIcon } from '@heroicons/react/20/solid'
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
 
-import {cl, isDev, shorten} from '@cm/lib/methods/common'
-import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
-import {toastByResult} from '@cm/lib/ui/notifications'
+import { Days } from '@cm/class/Days/Days'
+import { getMidnight } from '@cm/class/Days/date-utils/calculations'
+import { cl, isDev, shorten } from '@cm/lib/methods/common'
+import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+import { toastByResult } from '@cm/lib/ui/notifications'
 
 export default function CarCardPopover(props: {
   CrScheduleSwitcherModal_HK: ReturnType<typeof useCrScheduleSwitcherModal>
   theCar
   cellProps
 }) {
-  const {CrScheduleSwitcherModal_HK, theCar, cellProps} = props
+  const { CrScheduleSwitcherModal_HK, theCar, cellProps } = props
   const {
     NO_CYUMON,
     lastApprovedDesiredTorokuDate,
@@ -154,15 +156,15 @@ export default function CarCardPopover(props: {
     )
   }
 
-  const ModalButton = ({children}) => {
-    const {query} = useGlobal()
+  const ModalButton = ({ children }) => {
+    const { query } = useGlobal()
     return (
       <div
         {...{
           className: `onHover`,
 
           onClick: e => {
-            CrScheduleSwitcherModal_HK.setGMF_OPEN({theCar, lastHistory})
+            CrScheduleSwitcherModal_HK.setGMF_OPEN({ theCar, lastHistory })
           },
         }}
       >
@@ -181,14 +183,14 @@ export default function CarCardPopover(props: {
   }
 
   const MemoButton = () => {
-    const {Modal, handleOpen, handleClose} = useModal()
+    const { Modal, handleOpen, handleClose } = useModal()
     const MemoForm = () => {
-      const {toggleLoad} = useGlobal()
-      const {BasicForm, latestFormData} = useBasicFormProps({
-        formData: {crOperationRemarks: theCar.crOperationRemarks},
+      const { toggleLoad } = useGlobal()
+      const { BasicForm, latestFormData } = useBasicFormProps({
+        formData: { crOperationRemarks: theCar.crOperationRemarks },
         columns: new Fields([
           //
-          {id: `crOperationRemarks`, label: `備考`, type: `textarea`, form: {}},
+          { id: `crOperationRemarks`, label: `備考`, type: `textarea`, form: {} },
         ]).transposeColumns(),
       })
 
@@ -200,7 +202,7 @@ export default function CarCardPopover(props: {
             onSubmit={async data => {
               toggleLoad(async () => {
                 const res = await doStandardPrisma(`newCar`, `update`, {
-                  where: {id: theCar.id},
+                  where: { id: theCar.id },
                   data: {
                     crOperationRemarks: data.crOperationRemarks,
                   },
@@ -218,7 +220,7 @@ export default function CarCardPopover(props: {
 
     return (
       <div>
-        <div {...{onClick: handleOpen}} className={`text-sm text-gray-500`}>
+        <div {...{ onClick: handleOpen }} className={`text-sm text-gray-500`}>
           <DocumentIcon
             className={`
             w-4
@@ -240,9 +242,9 @@ export default function CarCardPopover(props: {
     const notInTime = lastApprovedDesiredTorokuDate === null || (workDay && lastApprovedDesiredTorokuDate >= workDay)
 
     return (
-      <div {...{className: `relative `}}>
-        <C_Stack {...{className: ` gap-0 items-start`}}>
-          <div {...{className: `absolute !bottom-0 !right-1`}}>
+      <div {...{ className: `relative ` }}>
+        <C_Stack {...{ className: ` gap-0 items-start` }}>
+          <div {...{ className: `absolute !bottom-0 !right-1` }}>
             {isDev && theCar.haisou_tooEarly && <Button color={`red`}>NG</Button>}
           </div>
 
@@ -279,13 +281,46 @@ export default function CarCardPopover(props: {
             <span>買主:</span>
             <span className={largeTextClass + ' w-[80px] truncate text-start text-sm'}>{theCar.KJ_KAINMEI1}</span>
           </div>
+
+          {((theCar.DD_KANKEN && new Date(theCar.DD_KANKEN) < getMidnight()) ||
+            (theCar.DD_MAKERSYU && new Date(theCar.DD_MAKERSYU) <= Days.month.subtract(new Date(), 6))) && (
+              <R_Stack className={`gap-1 mt-0.5`}>
+                {theCar.DD_KANKEN && new Date(theCar.DD_KANKEN) < getMidnight() && (
+                  <MyPopover
+                    button={
+                      <span className={`text-[8px] px-1 py-0.5 rounded font-bold bg-yellow-400 text-black leading-none cursor-pointer`}>
+                        完切れ
+                      </span>
+                    }
+                  >
+                    <Paper>
+                      <div className={`text-xs whitespace-nowrap`}>完成検査切日：{formatDate(theCar.DD_KANKEN)}</div>
+                    </Paper>
+                  </MyPopover>
+                )}
+
+                {theCar.DD_MAKERSYU && new Date(theCar.DD_MAKERSYU) <= Days.month.subtract(new Date(), 6) && (
+                  <MyPopover
+                    button={
+                      <span className={`text-[8px] px-1 py-0.5 rounded font-bold bg-green-500 text-white leading-none cursor-pointer`}>
+                        長期在庫
+                      </span>
+                    }
+                  >
+                    <Paper>
+                      <div className={`text-xs whitespace-nowrap`}>メーカー出荷日：{formatDate(theCar.DD_MAKERSYU)}</div>
+                    </Paper>
+                  </MyPopover>
+                )}
+              </R_Stack>
+            )}
         </C_Stack>
       </div>
     )
   }
 
   return (
-    <div {...{...cellProps, style}}>
+    <div {...{ ...cellProps, style }}>
       <div>
         <C_Stack className={` items-start gap-0 leading-4`}>
           <R_Stack className={`w-full justify-between gap-0.5 text-sm`}>

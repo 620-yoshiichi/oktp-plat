@@ -101,6 +101,7 @@ export default function ProgressReportClient(props: {
               showNosya: 'true',
             }
             const href = HREF(`/newCar/newCar`, newQuery, query)
+            // window.open(href, '_blank')
             router.push(href)
           }
           result[`onClick`] = onClick
@@ -172,7 +173,7 @@ export default function ProgressReportClient(props: {
             <R_Stack className={` justify-between`}>
               <R_Stack>
                 <h1>月別集計</h1>
-                <TableHint />
+                {/* <TableHint /> */}
               </R_Stack>
               <R_Stack>
                 <div>色分け</div>
@@ -182,7 +183,7 @@ export default function ProgressReportClient(props: {
               </R_Stack>
             </R_Stack>
 
-            {TABLE.WithWrapper({size: `lg`})}
+            {TABLE.WithWrapper({ size: `lg` })}
           </C_Stack>
         </section>
       </C_Stack>

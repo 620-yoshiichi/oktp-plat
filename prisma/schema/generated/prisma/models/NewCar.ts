@@ -141,6 +141,7 @@ export type NewCarMinAggregateOutputType = {
   earliestHaisouDate: Date | null
   DD_LATEST_HAISOU: Date | null
   DD_HAISYYO: Date | null
+  DD_KANKEN: Date | null
   DD_KANSEI: Date | null
   DD_KRHURI: Date | null
   KB_DAIHYNAI: string | null
@@ -248,6 +249,7 @@ export type NewCarMaxAggregateOutputType = {
   earliestHaisouDate: Date | null
   DD_LATEST_HAISOU: Date | null
   DD_HAISYYO: Date | null
+  DD_KANKEN: Date | null
   DD_KANSEI: Date | null
   DD_KRHURI: Date | null
   KB_DAIHYNAI: string | null
@@ -355,6 +357,7 @@ export type NewCarCountAggregateOutputType = {
   earliestHaisouDate: number
   DD_LATEST_HAISOU: number
   DD_HAISYYO: number
+  DD_KANKEN: number
   DD_KANSEI: number
   DD_KRHURI: number
   KB_DAIHYNAI: number
@@ -500,6 +503,7 @@ export type NewCarMinAggregateInputType = {
   earliestHaisouDate?: true
   DD_LATEST_HAISOU?: true
   DD_HAISYYO?: true
+  DD_KANKEN?: true
   DD_KANSEI?: true
   DD_KRHURI?: true
   KB_DAIHYNAI?: true
@@ -607,6 +611,7 @@ export type NewCarMaxAggregateInputType = {
   earliestHaisouDate?: true
   DD_LATEST_HAISOU?: true
   DD_HAISYYO?: true
+  DD_KANKEN?: true
   DD_KANSEI?: true
   DD_KRHURI?: true
   KB_DAIHYNAI?: true
@@ -714,6 +719,7 @@ export type NewCarCountAggregateInputType = {
   earliestHaisouDate?: true
   DD_LATEST_HAISOU?: true
   DD_HAISYYO?: true
+  DD_KANKEN?: true
   DD_KANSEI?: true
   DD_KRHURI?: true
   KB_DAIHYNAI?: true
@@ -908,6 +914,7 @@ export type NewCarGroupByOutputType = {
   earliestHaisouDate: Date | null
   DD_LATEST_HAISOU: Date | null
   DD_HAISYYO: Date | null
+  DD_KANKEN: Date | null
   DD_KANSEI: Date | null
   DD_KRHURI: Date | null
   KB_DAIHYNAI: string | null
@@ -1038,6 +1045,7 @@ export type NewCarWhereInput = {
   earliestHaisouDate?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
   DD_LATEST_HAISOU?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
   DD_HAISYYO?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
+  DD_KANKEN?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
   DD_KANSEI?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
   DD_KRHURI?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
   KB_DAIHYNAI?: Prisma.StringNullableFilter<"NewCar"> | string | null
@@ -1159,6 +1167,7 @@ export type NewCarOrderByWithRelationInput = {
   earliestHaisouDate?: Prisma.SortOrderInput | Prisma.SortOrder
   DD_LATEST_HAISOU?: Prisma.SortOrderInput | Prisma.SortOrder
   DD_HAISYYO?: Prisma.SortOrderInput | Prisma.SortOrder
+  DD_KANKEN?: Prisma.SortOrderInput | Prisma.SortOrder
   DD_KANSEI?: Prisma.SortOrderInput | Prisma.SortOrder
   DD_KRHURI?: Prisma.SortOrderInput | Prisma.SortOrder
   KB_DAIHYNAI?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -1284,6 +1293,7 @@ export type NewCarWhereUniqueInput = Prisma.AtLeast<{
   earliestHaisouDate?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
   DD_LATEST_HAISOU?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
   DD_HAISYYO?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
+  DD_KANKEN?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
   DD_KANSEI?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
   DD_KRHURI?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
   KB_DAIHYNAI?: Prisma.StringNullableFilter<"NewCar"> | string | null
@@ -1404,6 +1414,7 @@ export type NewCarOrderByWithAggregationInput = {
   earliestHaisouDate?: Prisma.SortOrderInput | Prisma.SortOrder
   DD_LATEST_HAISOU?: Prisma.SortOrderInput | Prisma.SortOrder
   DD_HAISYYO?: Prisma.SortOrderInput | Prisma.SortOrder
+  DD_KANKEN?: Prisma.SortOrderInput | Prisma.SortOrder
   DD_KANSEI?: Prisma.SortOrderInput | Prisma.SortOrder
   DD_KRHURI?: Prisma.SortOrderInput | Prisma.SortOrder
   KB_DAIHYNAI?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -1519,6 +1530,7 @@ export type NewCarScalarWhereWithAggregatesInput = {
   earliestHaisouDate?: Prisma.DateTimeNullableWithAggregatesFilter<"NewCar"> | Date | string | null
   DD_LATEST_HAISOU?: Prisma.DateTimeNullableWithAggregatesFilter<"NewCar"> | Date | string | null
   DD_HAISYYO?: Prisma.DateTimeNullableWithAggregatesFilter<"NewCar"> | Date | string | null
+  DD_KANKEN?: Prisma.DateTimeNullableWithAggregatesFilter<"NewCar"> | Date | string | null
   DD_KANSEI?: Prisma.DateTimeNullableWithAggregatesFilter<"NewCar"> | Date | string | null
   DD_KRHURI?: Prisma.DateTimeNullableWithAggregatesFilter<"NewCar"> | Date | string | null
   KB_DAIHYNAI?: Prisma.StringNullableWithAggregatesFilter<"NewCar"> | string | null
@@ -1623,6 +1635,7 @@ export type NewCarCreateInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -1743,6 +1756,7 @@ export type NewCarUncheckedCreateInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -1858,6 +1872,7 @@ export type NewCarUpdateInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1978,6 +1993,7 @@ export type NewCarUncheckedUpdateInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2096,6 +2112,7 @@ export type NewCarCreateManyInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -2200,6 +2217,7 @@ export type NewCarUpdateManyMutationInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2306,6 +2324,7 @@ export type NewCarUncheckedUpdateManyInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2418,6 +2437,7 @@ export type NewCarCountOrderByAggregateInput = {
   earliestHaisouDate?: Prisma.SortOrder
   DD_LATEST_HAISOU?: Prisma.SortOrder
   DD_HAISYYO?: Prisma.SortOrder
+  DD_KANKEN?: Prisma.SortOrder
   DD_KANSEI?: Prisma.SortOrder
   DD_KRHURI?: Prisma.SortOrder
   KB_DAIHYNAI?: Prisma.SortOrder
@@ -2543,6 +2563,7 @@ export type NewCarMaxOrderByAggregateInput = {
   earliestHaisouDate?: Prisma.SortOrder
   DD_LATEST_HAISOU?: Prisma.SortOrder
   DD_HAISYYO?: Prisma.SortOrder
+  DD_KANKEN?: Prisma.SortOrder
   DD_KANSEI?: Prisma.SortOrder
   DD_KRHURI?: Prisma.SortOrder
   KB_DAIHYNAI?: Prisma.SortOrder
@@ -2650,6 +2671,7 @@ export type NewCarMinOrderByAggregateInput = {
   earliestHaisouDate?: Prisma.SortOrder
   DD_LATEST_HAISOU?: Prisma.SortOrder
   DD_HAISYYO?: Prisma.SortOrder
+  DD_KANKEN?: Prisma.SortOrder
   DD_KANSEI?: Prisma.SortOrder
   DD_KRHURI?: Prisma.SortOrder
   KB_DAIHYNAI?: Prisma.SortOrder
@@ -3065,6 +3087,7 @@ export type NewCarCreateWithoutJuchuShitadoriDbInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -3184,6 +3207,7 @@ export type NewCarUncheckedCreateWithoutJuchuShitadoriDbInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -3314,6 +3338,7 @@ export type NewCarUpdateWithoutJuchuShitadoriDbInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3433,6 +3458,7 @@ export type NewCarUncheckedUpdateWithoutJuchuShitadoriDbInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3547,6 +3573,7 @@ export type NewCarCreateWithoutSlotInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -3666,6 +3693,7 @@ export type NewCarUncheckedCreateWithoutSlotInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -3796,6 +3824,7 @@ export type NewCarUpdateWithoutSlotInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3915,6 +3944,7 @@ export type NewCarUncheckedUpdateWithoutSlotInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4029,6 +4059,7 @@ export type NewCarCreateWithoutOrderSwitchingHisotoryInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -4148,6 +4179,7 @@ export type NewCarUncheckedCreateWithoutOrderSwitchingHisotoryInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -4278,6 +4310,7 @@ export type NewCarUpdateWithoutOrderSwitchingHisotoryInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4397,6 +4430,7 @@ export type NewCarUncheckedUpdateWithoutOrderSwitchingHisotoryInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4511,6 +4545,7 @@ export type NewCarCreateWithoutDesiredTorokuDateInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -4630,6 +4665,7 @@ export type NewCarUncheckedCreateWithoutDesiredTorokuDateInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -4760,6 +4796,7 @@ export type NewCarUpdateWithoutDesiredTorokuDateInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4879,6 +4916,7 @@ export type NewCarUncheckedUpdateWithoutDesiredTorokuDateInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4993,6 +5031,7 @@ export type NewCarCreateWithoutNewCarLeadTimeInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -5112,6 +5151,7 @@ export type NewCarUncheckedCreateWithoutNewCarLeadTimeInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -5242,6 +5282,7 @@ export type NewCarUpdateWithoutNewCarLeadTimeInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5361,6 +5402,7 @@ export type NewCarUncheckedUpdateWithoutNewCarLeadTimeInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5475,6 +5517,7 @@ export type NewCarCreateWithoutCrInspectionHistoryInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -5594,6 +5637,7 @@ export type NewCarUncheckedCreateWithoutCrInspectionHistoryInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -5724,6 +5768,7 @@ export type NewCarUpdateWithoutCrInspectionHistoryInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5843,6 +5888,7 @@ export type NewCarUncheckedUpdateWithoutCrInspectionHistoryInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5957,6 +6003,7 @@ export type NewCarCreateWithoutSeisanYoteiHistoryInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -6076,6 +6123,7 @@ export type NewCarUncheckedCreateWithoutSeisanYoteiHistoryInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -6206,6 +6254,7 @@ export type NewCarUpdateWithoutSeisanYoteiHistoryInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6325,6 +6374,7 @@ export type NewCarUncheckedUpdateWithoutSeisanYoteiHistoryInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6439,6 +6489,7 @@ export type NewCarCreateWithoutFuriateStatusOnApprovementInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -6558,6 +6609,7 @@ export type NewCarUncheckedCreateWithoutFuriateStatusOnApprovementInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -6688,6 +6740,7 @@ export type NewCarUpdateWithoutFuriateStatusOnApprovementInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6807,6 +6860,7 @@ export type NewCarUncheckedUpdateWithoutFuriateStatusOnApprovementInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6921,6 +6975,7 @@ export type NewCarCreateWithoutCarTransferHistoryInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -7040,6 +7095,7 @@ export type NewCarUncheckedCreateWithoutCarTransferHistoryInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -7170,6 +7226,7 @@ export type NewCarUpdateWithoutCarTransferHistoryInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7289,6 +7346,7 @@ export type NewCarUncheckedUpdateWithoutCarTransferHistoryInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7403,6 +7461,7 @@ export type NewCarCreateWithoutTenpoTsuikoShinseiHeaderInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -7522,6 +7581,7 @@ export type NewCarUncheckedCreateWithoutTenpoTsuikoShinseiHeaderInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -7652,6 +7712,7 @@ export type NewCarUpdateWithoutTenpoTsuikoShinseiHeaderInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7771,6 +7832,7 @@ export type NewCarUncheckedUpdateWithoutTenpoTsuikoShinseiHeaderInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7885,6 +7947,7 @@ export type NewCarCreateWithoutTenpoTsuikoDataInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -8004,6 +8067,7 @@ export type NewCarUncheckedCreateWithoutTenpoTsuikoDataInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -8134,6 +8198,7 @@ export type NewCarUpdateWithoutTenpoTsuikoDataInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8253,6 +8318,7 @@ export type NewCarUncheckedUpdateWithoutTenpoTsuikoDataInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8367,6 +8433,7 @@ export type NewCarCreateWithoutStoreInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -8485,6 +8552,7 @@ export type NewCarUncheckedCreateWithoutStoreInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -8632,6 +8700,7 @@ export type NewCarScalarWhereInput = {
   earliestHaisouDate?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
   DD_LATEST_HAISOU?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
   DD_HAISYYO?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
+  DD_KANKEN?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
   DD_KANSEI?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
   DD_KRHURI?: Prisma.DateTimeNullableFilter<"NewCar"> | Date | string | null
   KB_DAIHYNAI?: Prisma.StringNullableFilter<"NewCar"> | string | null
@@ -8736,6 +8805,7 @@ export type NewCarCreateWithoutUserInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -8854,6 +8924,7 @@ export type NewCarUncheckedCreateWithoutUserInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -8995,6 +9066,7 @@ export type NewCarCreateWithoutUcarInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -9114,6 +9186,7 @@ export type NewCarUncheckedCreateWithoutUcarInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -9244,6 +9317,7 @@ export type NewCarUpdateWithoutUcarInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9363,6 +9437,7 @@ export type NewCarUncheckedUpdateWithoutUcarInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9479,6 +9554,7 @@ export type NewCarCreateManyStoreInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -9583,6 +9659,7 @@ export type NewCarUpdateWithoutStoreInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9701,6 +9778,7 @@ export type NewCarUncheckedUpdateWithoutStoreInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9818,6 +9896,7 @@ export type NewCarUncheckedUpdateManyWithoutStoreInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9924,6 +10003,7 @@ export type NewCarCreateManyUserInput = {
   earliestHaisouDate?: Date | string | null
   DD_LATEST_HAISOU?: Date | string | null
   DD_HAISYYO?: Date | string | null
+  DD_KANKEN?: Date | string | null
   DD_KANSEI?: Date | string | null
   DD_KRHURI?: Date | string | null
   KB_DAIHYNAI?: string | null
@@ -10028,6 +10108,7 @@ export type NewCarUpdateWithoutUserInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -10146,6 +10227,7 @@ export type NewCarUncheckedUpdateWithoutUserInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -10263,6 +10345,7 @@ export type NewCarUncheckedUpdateManyWithoutUserInput = {
   earliestHaisouDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_LATEST_HAISOU?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_HAISYYO?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DD_KANKEN?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KANSEI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DD_KRHURI?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   KB_DAIHYNAI?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -10482,6 +10565,7 @@ export type NewCarSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   earliestHaisouDate?: boolean
   DD_LATEST_HAISOU?: boolean
   DD_HAISYYO?: boolean
+  DD_KANKEN?: boolean
   DD_KANSEI?: boolean
   DD_KRHURI?: boolean
   KB_DAIHYNAI?: boolean
@@ -10604,6 +10688,7 @@ export type NewCarSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   earliestHaisouDate?: boolean
   DD_LATEST_HAISOU?: boolean
   DD_HAISYYO?: boolean
+  DD_KANKEN?: boolean
   DD_KANSEI?: boolean
   DD_KRHURI?: boolean
   KB_DAIHYNAI?: boolean
@@ -10714,6 +10799,7 @@ export type NewCarSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   earliestHaisouDate?: boolean
   DD_LATEST_HAISOU?: boolean
   DD_HAISYYO?: boolean
+  DD_KANKEN?: boolean
   DD_KANSEI?: boolean
   DD_KRHURI?: boolean
   KB_DAIHYNAI?: boolean
@@ -10824,6 +10910,7 @@ export type NewCarSelectScalar = {
   earliestHaisouDate?: boolean
   DD_LATEST_HAISOU?: boolean
   DD_HAISYYO?: boolean
+  DD_KANKEN?: boolean
   DD_KANSEI?: boolean
   DD_KRHURI?: boolean
   KB_DAIHYNAI?: boolean
@@ -10852,7 +10939,7 @@ export type NewCarSelectScalar = {
   orderSwitchingHisotoryId?: boolean
 }
 
-export type NewCarOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "sortOrder" | "storeId" | "updatedAt" | "APPINDEX" | "CD_HANSTAFF" | "CD_NCSYAMEI" | "CD_TENPO" | "DD_CENTTYAB" | "DD_CENTYOB" | "DD_FR" | "DD_HAISKIBO" | "DD_HAISOU" | "DD_HAISOYOT" | "DD_HONBSYOK" | "DD_JUCYU" | "DD_JUCYUKE" | "DD_KIBONOKI" | "DD_MAKERSYU" | "DD_NOSYA" | "DD_SYOUNIN1" | "DD_SYOUNIN2" | "DD_SYOUNIN3" | "DD_TENPSYOK" | "DD_TOROKIBO" | "DD_TOTYAKUY" | "DD_TOUROKU" | "DD_URIKZUMI" | "KJ_KAINMEI1" | "KJ_KURUMAME" | "KJ_MEIGIME1" | "MJ_HANTENKT" | "NO_CYUMON" | "NO_FRAME" | "m0Status" | "m0_deadline_nousya" | "m0_remarks" | "m1Status" | "m1_deadline_money" | "m1_deadline_paper" | "m1_remarks" | "m2Status" | "m2_date" | "m2_remarks" | "userId" | "m1Alert" | "m2Alert" | "lastApprovedDesiredTorokuDate" | "lastApprovedDesiredTorokuDate__pending" | "m2_check1" | "m2_check2" | "m1_toroku_prediction" | "initial_m0_deadline_nousya" | "initial_m1_deadline_money" | "initial_m1_deadline_paper" | "initial_m1_toroku_prediction" | "DD_KARINOKI" | "DD_SAGTYYO" | "KB_OSSSIN" | "MJ_OSSTSNST" | "KI_BETSIHAK" | "KI_MAEUNYUK" | "KI_NYURUIKE" | "KI_SHRIGK" | "KI_SITANYKG" | "crOperationRemarks" | "haisou_tooEarly" | "torokuApplicationRequired" | "DD_CENTSYUB" | "DD_GENSYNYK" | "KI_SITADORI" | "KI_SITZAN" | "DD_TORIKESI" | "DD_MAX_UPDATE" | "earliestHaisouDate" | "DD_LATEST_HAISOU" | "DD_HAISYYO" | "DD_KANSEI" | "DD_KRHURI" | "KB_DAIHYNAI" | "TM_TOTUTMKE" | "CUSTOM_DD_SEISANYOTEI" | "CUSTOM_FR_DATE" | "CUSTOM_FR_KARI_NOTATION" | "CUSTOM_FR_NOTATION_TYPE" | "CUSTOM_FR_PREFIX" | "CUSTOM_FR_SUFFIX" | "CUSTOM_KB_GYOCYOK" | "CUSTOM_KB_SEIBETU" | "CUSTOM_SEISANYOTEI" | "CUSTOM_ZAIKO_KB_NOTATION" | "CUSTOM_paymentCheck" | "CUSTOM_paymentCheckCustomerType" | "CUSTOM_NET_SHITADORI_PRICE" | "KB_ZAIKOJYO" | "isDaikoNosya" | "sateiNyukobiAlert" | "shitadoriAlertCount" | "ossSpreadsheetUrl" | "transferType" | "furiate_chien_riyu" | "nouki_mishitei_riyu" | "orderSwitchingHisotoryId", ExtArgs["result"]["newCar"]>
+export type NewCarOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "sortOrder" | "storeId" | "updatedAt" | "APPINDEX" | "CD_HANSTAFF" | "CD_NCSYAMEI" | "CD_TENPO" | "DD_CENTTYAB" | "DD_CENTYOB" | "DD_FR" | "DD_HAISKIBO" | "DD_HAISOU" | "DD_HAISOYOT" | "DD_HONBSYOK" | "DD_JUCYU" | "DD_JUCYUKE" | "DD_KIBONOKI" | "DD_MAKERSYU" | "DD_NOSYA" | "DD_SYOUNIN1" | "DD_SYOUNIN2" | "DD_SYOUNIN3" | "DD_TENPSYOK" | "DD_TOROKIBO" | "DD_TOTYAKUY" | "DD_TOUROKU" | "DD_URIKZUMI" | "KJ_KAINMEI1" | "KJ_KURUMAME" | "KJ_MEIGIME1" | "MJ_HANTENKT" | "NO_CYUMON" | "NO_FRAME" | "m0Status" | "m0_deadline_nousya" | "m0_remarks" | "m1Status" | "m1_deadline_money" | "m1_deadline_paper" | "m1_remarks" | "m2Status" | "m2_date" | "m2_remarks" | "userId" | "m1Alert" | "m2Alert" | "lastApprovedDesiredTorokuDate" | "lastApprovedDesiredTorokuDate__pending" | "m2_check1" | "m2_check2" | "m1_toroku_prediction" | "initial_m0_deadline_nousya" | "initial_m1_deadline_money" | "initial_m1_deadline_paper" | "initial_m1_toroku_prediction" | "DD_KARINOKI" | "DD_SAGTYYO" | "KB_OSSSIN" | "MJ_OSSTSNST" | "KI_BETSIHAK" | "KI_MAEUNYUK" | "KI_NYURUIKE" | "KI_SHRIGK" | "KI_SITANYKG" | "crOperationRemarks" | "haisou_tooEarly" | "torokuApplicationRequired" | "DD_CENTSYUB" | "DD_GENSYNYK" | "KI_SITADORI" | "KI_SITZAN" | "DD_TORIKESI" | "DD_MAX_UPDATE" | "earliestHaisouDate" | "DD_LATEST_HAISOU" | "DD_HAISYYO" | "DD_KANKEN" | "DD_KANSEI" | "DD_KRHURI" | "KB_DAIHYNAI" | "TM_TOTUTMKE" | "CUSTOM_DD_SEISANYOTEI" | "CUSTOM_FR_DATE" | "CUSTOM_FR_KARI_NOTATION" | "CUSTOM_FR_NOTATION_TYPE" | "CUSTOM_FR_PREFIX" | "CUSTOM_FR_SUFFIX" | "CUSTOM_KB_GYOCYOK" | "CUSTOM_KB_SEIBETU" | "CUSTOM_SEISANYOTEI" | "CUSTOM_ZAIKO_KB_NOTATION" | "CUSTOM_paymentCheck" | "CUSTOM_paymentCheckCustomerType" | "CUSTOM_NET_SHITADORI_PRICE" | "KB_ZAIKOJYO" | "isDaikoNosya" | "sateiNyukobiAlert" | "shitadoriAlertCount" | "ossSpreadsheetUrl" | "transferType" | "furiate_chien_riyu" | "nouki_mishitei_riyu" | "orderSwitchingHisotoryId", ExtArgs["result"]["newCar"]>
 export type NewCarInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   CrInspectionHistory?: boolean | Prisma.NewCar$CrInspectionHistoryArgs<ExtArgs>
   DesiredTorokuDate?: boolean | Prisma.NewCar$DesiredTorokuDateArgs<ExtArgs>
@@ -10978,6 +11065,7 @@ export type $NewCarPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     earliestHaisouDate: Date | null
     DD_LATEST_HAISOU: Date | null
     DD_HAISYYO: Date | null
+    DD_KANKEN: Date | null
     DD_KANSEI: Date | null
     DD_KRHURI: Date | null
     KB_DAIHYNAI: string | null
@@ -11519,6 +11607,7 @@ export interface NewCarFieldRefs {
   readonly earliestHaisouDate: Prisma.FieldRef<"NewCar", 'DateTime'>
   readonly DD_LATEST_HAISOU: Prisma.FieldRef<"NewCar", 'DateTime'>
   readonly DD_HAISYYO: Prisma.FieldRef<"NewCar", 'DateTime'>
+  readonly DD_KANKEN: Prisma.FieldRef<"NewCar", 'DateTime'>
   readonly DD_KANSEI: Prisma.FieldRef<"NewCar", 'DateTime'>
   readonly DD_KRHURI: Prisma.FieldRef<"NewCar", 'DateTime'>
   readonly KB_DAIHYNAI: Prisma.FieldRef<"NewCar", 'String'>

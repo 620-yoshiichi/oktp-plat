@@ -114,6 +114,7 @@ const parameters = async ({ params, query, session, scopes }) => {
 
 
           return {
+
             editType: { type: `modal` },
             additional: {
               select: ucarQuery.select as any,

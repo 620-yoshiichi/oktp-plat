@@ -80,12 +80,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 7.3.0
- * Query Engine version: 9d6ad21cbbceab97458517b147a6a09ff43aa735
+ * Prisma Client JS version: 7.4.2
+ * Query Engine version: 94a226be1cf2967af2541cca5529f0f7ba866919
  */
 export const prismaVersion: PrismaVersion = {
-  client: "7.3.0",
-  engine: "9d6ad21cbbceab97458517b147a6a09ff43aa735"
+  client: "7.4.2",
+  engine: "94a226be1cf2967af2541cca5529f0f7ba866919"
 }
 
 /**
@@ -6205,6 +6205,7 @@ export const NewCarScalarFieldEnum = {
   earliestHaisouDate: 'earliestHaisouDate',
   DD_LATEST_HAISOU: 'DD_LATEST_HAISOU',
   DD_HAISYYO: 'DD_HAISYYO',
+  DD_KANKEN: 'DD_KANKEN',
   DD_KANSEI: 'DD_KANSEI',
   DD_KRHURI: 'DD_KRHURI',
   KB_DAIHYNAI: 'KB_DAIHYNAI',

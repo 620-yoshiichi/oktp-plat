@@ -10067,6 +10067,20 @@
           "isUpdatedAt": false
         },
         {
+          "name": "DD_KANKEN",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "DateTime",
+          "nativeType": null,
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
           "name": "DD_KANSEI",
           "kind": "scalar",
           "isList": false,

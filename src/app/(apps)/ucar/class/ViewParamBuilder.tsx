@@ -1,11 +1,11 @@
 'use client'
 
-import {ViewParamBuilderProps} from '@cm/components/DataLogic/TFs/PropAdjustor/types/propAdjustor-types'
-import {UcarTop} from '@app/(apps)/ucar/class/DetailPage/ucar/UcarTop'
+import { ViewParamBuilderProps } from '@cm/components/DataLogic/TFs/PropAdjustor/types/propAdjustor-types'
+import { UcarTop } from '@app/(apps)/ucar/class/DetailPage/ucar/UcarTop'
 
 export class ViewParamBuilder {
   static ucar: ViewParamBuilderProps = props => {
-    const {isHQ, isStoreManager, isSales, carWhere, isChukoshaGroup} = props.useGlobalProps.accessScopes().getUcarProps()
+    const { isHQ, isStoreManager, isSales, carWhere, isChukoshaGroup } = props.useGlobalProps.accessScopes().getUcarProps()
 
     return {
       // myForm: {create: {finalizeUpdate: () => router.refresh()}},
@@ -14,7 +14,7 @@ export class ViewParamBuilder {
         create: false,
         update: false,
         delete: false,
-        pagination: {countPerPage: 10},
+        pagination: { countPerPage: 10 },
         customActions: () => {
           return (
             <UcarTop
@@ -26,7 +26,7 @@ export class ViewParamBuilder {
           )
         },
         header: false,
-        style: {margin: `auto`, maxWidth: `95vw`, maxHeight: `70vh`},
+        style: { margin: `auto`, maxWidth: `95vw`, maxHeight: `70vh` },
       },
     }
   }

@@ -7,6 +7,8 @@ import { TableSkelton } from '@cm/components/utils/loader/TableSkelton'
 import PlaceHolder from '@cm/components/utils/loader/PlaceHolder'
 import { MyTableProps, UseMyTableLogicReturn } from '@cm/components/DataLogic/TFs/MyTable/MyTable'
 import { cn } from '@cm/shadcn/lib/utils'
+import { formatDate } from '@cm/class/Days/date-utils/formatters'
+import { arr__uniqArray } from '@cm/class/ArrHandler/array-utils/basic-operations'
 
 // MainTable用のprops型（useMyTableLogicReturnを含む）
 export interface MainTableProps extends MyTableProps {
@@ -35,7 +37,9 @@ export const MainTable = React.memo<MainTableProps>(props => {
     Components,
   } = useMyTableLogicReturn
 
-  const { records, emptyDataStyle } = tableData
+  const { records = [], emptyDataStyle } = tableData
+
+
 
   const combinedTableStyle = {
     ...tableStyle,

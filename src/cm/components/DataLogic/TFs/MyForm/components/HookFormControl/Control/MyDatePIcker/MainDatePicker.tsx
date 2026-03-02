@@ -1,28 +1,29 @@
-import React, {useState} from 'react'
-import DatePicker, {registerLocale} from 'react-datepicker'
+import React, { useState } from 'react'
+import DatePicker, { registerLocale } from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
-import {Days} from '@cm/class/Days/Days'
+import { Days } from '@cm/class/Days/Days'
 
-import {anyObject} from '@cm/types/utility-types'
-import {cl} from 'src/cm/lib/methods/common'
-import {Button} from '@cm/components/styles/common-components/Button'
-import {C_Stack} from '@cm/components/styles/common-components/common-components'
+import { anyObject } from '@cm/types/utility-types'
+import { cl } from 'src/cm/lib/methods/common'
+import { Button } from '@cm/components/styles/common-components/Button'
+import { C_Stack } from '@cm/components/styles/common-components/common-components'
 
-import {ja} from 'date-fns/locale' // import the Japanese locale
-import {formatDate} from '@cm/class/Days/date-utils/formatters'
-import {getMidnight} from '@cm/class/Days/date-utils/calculations'
-registerLocale('ja', ja)
+import { ja } from 'date-fns/locale' // import the Japanese locale
+import { formatDate } from '@cm/class/Days/date-utils/formatters'
+import { getMidnight } from '@cm/class/Days/date-utils/calculations'
+// registerLocale('ja', ja)
+console.log(ja)  //logs
 
 const MainDatePicker = (props: anyObject) => {
-  const {col, formProps, setIsOpen, field, useResetValue, selectedDate, handleDateChange} = props
+  const { col, formProps, setIsOpen, field, useResetValue, selectedDate, handleDateChange } = props
 
   let varingProps: anyObject = {
     placeholderText: '日付を入力',
     showTimeSelect: false,
   }
 
-  const {timeIntervals = 5} = col?.datePicker ?? {}
+  const { timeIntervals = 5 } = col?.datePicker ?? {}
 
   const [isValid, setisValid] = useState(true)
   const [directInput, setDirectInput] = useState('')
@@ -91,17 +92,17 @@ const MainDatePicker = (props: anyObject) => {
   }
 
   // 8桁数値入力のバリデーション関数
-  const validateDirectInput = (input: string): {isValid: boolean; date?: Date; error?: string} => {
+  const validateDirectInput = (input: string): { isValid: boolean; date?: Date; error?: string } => {
     // 数字以外を除去
     const numericInput = input.replace(/[^0-9]/g, '')
 
     if (numericInput === '') {
-      return {isValid: true}
+      return { isValid: true }
     }
 
     // 8桁でない場合
     if (numericInput.length !== 8) {
-      return {isValid: false, error: '8桁の数字で入力してください (例: 20231025)'}
+      return { isValid: false, error: '8桁の数字で入力してください (例: 20231025)' }
     }
 
     // YYYYMMDD形式として解析
@@ -111,15 +112,15 @@ const MainDatePicker = (props: anyObject) => {
 
     // 基本的な範囲チェック
     if (year < 1900 || year > 2200) {
-      return {isValid: false, error: '年は1900年から2200年の間で入力してください'}
+      return { isValid: false, error: '年は1900年から2200年の間で入力してください' }
     }
 
     if (month < 1 || month > 12) {
-      return {isValid: false, error: '月は01から12の間で入力してください'}
+      return { isValid: false, error: '月は01から12の間で入力してください' }
     }
 
     if (day < 1 || day > 31) {
-      return {isValid: false, error: '日は01から31の間で入力してください'}
+      return { isValid: false, error: '日は01から31の間で入力してください' }
     }
 
     // Daysクラスを使用して日付を生成
@@ -129,18 +130,18 @@ const MainDatePicker = (props: anyObject) => {
 
       // 日付が有効かチェック
       if (!Days.validate.isDate(date)) {
-        return {isValid: false, error: '有効な日付ではありません'}
+        return { isValid: false, error: '有効な日付ではありません' }
       }
 
       // 入力した数値と実際の日付が一致するかチェック（例：2月30日のような無効日付を除外）
       const actualYmd = Days.parser.getDate(date).ymd
       if (actualYmd !== numericInput) {
-        return {isValid: false, error: '存在しない日付です'}
+        return { isValid: false, error: '存在しない日付です' }
       }
 
-      return {isValid: true, date}
+      return { isValid: true, date }
     } catch (error) {
-      return {isValid: false, error: '日付の解析に失敗しました'}
+      return { isValid: false, error: '日付の解析に失敗しました' }
     }
   }
 
@@ -184,7 +185,7 @@ const MainDatePicker = (props: anyObject) => {
             size="sm"
             color={`red`}
             onClick={() => {
-              useResetValue({col, field})
+              useResetValue({ col, field })
               setIsOpen(false)
             }}
           >
@@ -212,7 +213,7 @@ const MainDatePicker = (props: anyObject) => {
         {/* 8桁数値入力フィールド - 最前面に配置 */}
         <div
           className="relative z-[1001] p-1 "
-          style={{position: 'relative', zIndex: 1001}} // インラインスタイルでも確実に設定
+          style={{ position: 'relative', zIndex: 1001 }} // インラインスタイルでも確実に設定
         >
           <label className="block text-sm font-medium text-gray-700 mb-2">8桁数値で直接入力 (例: 20231025)</label>
           <input
