@@ -83,6 +83,8 @@ export type UcarWithProcess = {
   DD_URIAGE?: Date
   /** OldCars_Baseとの紐づき有無 */
   hasOldCarsLink?: boolean
+  /** 店舗名（その他指標の店舗フィルタ用） */
+  storeName?: string
 }
 
 // ============================================================

@@ -12,6 +12,7 @@ import {
   PeriodLTSummary,
   NUM98_ATTACH_MODE,
   NUM98_REQUIRE_CR_ARRIVED,
+  OTHER_METRICS_EXCLUDE_STORE_NAME,
 } from './lib/calcDashboardData'
 import {UcarProcessCl} from '@app/(apps)/ucar/class/UcarProcessCl'
 import {UCAR_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-constants'
@@ -48,6 +49,9 @@ const UCAR_SELECT = {
   },
   OldCars_Base: {
     select: {DD_URIAGE: true},
+  },
+  Store: {
+    select: {name: true},
   },
 } satisfies Prisma.UcarSelect
 
@@ -87,6 +91,7 @@ type PrismaCarResult = {
   tmpRentalStoreId: number | null
   UcarProcess: {processCode: string; date: Date | null}[]
   OldCars_Base: {DD_URIAGE: Date | null} | null
+  Store: {name: string} | null
 }
 
 function toUcarWithProcess(car: PrismaCarResult): UcarWithProcess {
@@ -103,6 +108,7 @@ function toUcarWithProcess(car: PrismaCarResult): UcarWithProcess {
     isRental: car.tmpRentalStoreId != null,
     DD_URIAGE: car.OldCars_Base?.DD_URIAGE ?? undefined,
     hasOldCarsLink: car.OldCars_Base != null,
+    storeName: car.Store?.name ?? undefined,
   }
 }
 
@@ -504,9 +510,14 @@ export async function fetchOtherMetricsCars(params: FetchOtherMetricsCarsParams)
         break
     }
 
+    // 店舗除外条件
+    const storeExcludeCondition: Prisma.UcarWhereInput = OTHER_METRICS_EXCLUDE_STORE_NAME
+      ? {Store: {name: {not: OTHER_METRICS_EXCLUDE_STORE_NAME}}}
+      : {}
+
     const cars: ucarData[] = await UcarCL.fetcher.getUcarDataList({
       where: {
-        AND: [...baseWhere(), {tmpRentalStoreId: null}, qrDateFilter, ...typeConditions].filter(Boolean),
+        AND: [...baseWhere(), {tmpRentalStoreId: null}, qrDateFilter, storeExcludeCondition, ...typeConditions].filter(Boolean),
       },
       // include: QueryBuilder.getInclude({}).ucar.include,
       orderBy: {qrIssuedAt: 'desc'},

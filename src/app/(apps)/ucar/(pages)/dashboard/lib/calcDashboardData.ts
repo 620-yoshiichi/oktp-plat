@@ -11,6 +11,9 @@ export const NUM98_REQUIRE_CR_ARRIVED = false
 /** 98番号付帯の判定方法: 'number98' = number98フィールドに値がある / 'oldCarsLink' = OldCars_Baseと紐づいている */
 export const NUM98_ATTACH_MODE: 'number98' | 'oldCarsLink' = 'oldCarsLink'
 
+/** その他指標の集計対象から特定店舗を除外するか。null なら除外なし */
+export const OTHER_METRICS_EXCLUDE_STORE_NAME: string | null = '中古車グループ'
+
 // ============================================================
 // 型定義
 // ============================================================
@@ -243,6 +246,8 @@ export function calcDashboardData(cars: UcarWithProcess[], allCars: UcarWithProc
 
   for (const car of allCars) {
     if (car.isRental) continue
+    // 店舗除外フィルタ
+    if (OTHER_METRICS_EXCLUDE_STORE_NAME && car.storeName === OTHER_METRICS_EXCLUDE_STORE_NAME) continue
 
     const qrMonth = car.qrIssuedAt ? toMonthKey(car.qrIssuedAt) : null
     if (qrMonth) monthSet.add(qrMonth)
