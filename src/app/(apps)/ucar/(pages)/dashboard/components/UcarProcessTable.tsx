@@ -10,6 +10,7 @@ import { Days } from '@cm/class/Days/Days'
 import { HREF } from '@cm/lib/methods/urls'
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 import Link from 'next/link'
+import { UcarCL } from '@app/(apps)/ucar/class/UcarCL'
 
 // ============================================================
 // 型定義
@@ -116,6 +117,7 @@ export function UcarProcessTable({ cars, isLoading, options = {} }: UcarProcessT
 
 
 
+      const ucarInst = new UcarCL(car as any)
 
       return {
         csvTableRow: [
@@ -139,13 +141,18 @@ export function UcarProcessTable({ cars, isLoading, options = {} }: UcarProcessT
             style: { minWidth: 100, zIndex: 100 },
           },
 
+
+
           // --- 車種・グレード ---
           {
             label: '車種・グレード',
             cellValue: (
               <div>
-                <div>{[car.tmpBrandName, car.tmpModelName].filter(Boolean).join(' ') || '-'}</div>
-                {car.tmpGrade && <div className="text-gray-500">{car.tmpGrade}</div>}
+                {car.UPASS ? <div>{ucarInst.notation.brandName} {ucarInst.notation.modelName} {ucarInst.notation.grade}</div> :
+                  <div>
+                    {car.tmpBrandName} {car.tmpModelName} {car.tmpGrade}
+                  </div>}
+
               </div>
             ),
             style: { minWidth: 140 },
@@ -167,6 +174,30 @@ export function UcarProcessTable({ cars, isLoading, options = {} }: UcarProcessT
           {
             label: 'QR発行日',
             cellValue: formatDate(new Date(car.qrIssuedAt), 'YY/MM/DD'),
+            style: { minWidth: 80 },
+            className: 'text-center',
+          },
+
+          // --- 古物連携 ---
+          {
+            label: '古物連携',
+            cellValue:
+              <div>
+
+                {car.number98 && <div className={
+                  cn("text-[10px]", car.hasOldCarsLink ? "" : "text-red-500")
+                }
+                >{car.number98}</div>}
+                {car.hasOldCarsLink ? (
+                  <div>
+                    {/* <span className="inline-block px-1.5 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-700">連携済</span> */}
+
+                  </div>
+                ) : (
+                  <span className="inline-block px-1.5 py-0.5 rounded text-[10px] font-bold bg-red-100 text-red-700">未連携</span>
+                )}
+              </div>
+            ,
             style: { minWidth: 80 },
             className: 'text-center',
           },

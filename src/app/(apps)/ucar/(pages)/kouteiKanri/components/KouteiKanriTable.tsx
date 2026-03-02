@@ -19,16 +19,11 @@ function toRetentionCarDetail(car: ucarData): RetentionCarDetail {
   }
 
   return {
-    sateiID: car.sateiID,
-    tmpBrandName: ucarInst.notation.brandName ?? null,
-    tmpModelName: ucarInst.notation.modelName ?? null,
-    tmpGrade: ucarInst.notation.grade ?? null,
-    tmpColor: ucarInst.notation.exteriorColor ?? null,
-    tmpPlate: ucarInst.notation.plate ?? null,
-    createdAt: car.createdAt,
-    qrIssuedAt: car.qrIssuedAt,
+    ...car,
     storeName: car.Store?.name ?? null,
     userName: car.User?.name ?? null,
+    number98: car.number98 ?? null,
+    hasOldCarsLink: car.OldCars_Base != null,
     ai21: {
       DD_URIAGE: ucarInst.ai21Data.DD_URIAGE ?? null,
       CD_ZAIKOTEN: ucarInst.ai21Data.CD_ZAIKOTEN ?? null,

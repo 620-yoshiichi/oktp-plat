@@ -2,6 +2,16 @@ import {UcarProcessCl, UcarWithProcess, buildProcessDateMap} from '@app/(apps)/u
 import {formatDate} from '@cm/class/Days/date-utils/formatters'
 
 // ============================================================
+// 98番号集計の条件切り替え設定
+// ============================================================
+
+/** 分母にCR到着（CR02通過）を条件とするか。false にすると全車両が分母になる */
+export const NUM98_REQUIRE_CR_ARRIVED = false
+
+/** 98番号付帯の判定方法: 'number98' = number98フィールドに値がある / 'oldCarsLink' = OldCars_Baseと紐づいている */
+export const NUM98_ATTACH_MODE: 'number98' | 'oldCarsLink' = 'oldCarsLink'
+
+// ============================================================
 // 型定義
 // ============================================================
 
@@ -36,6 +46,8 @@ export type Number98Stats = {
   qrSheetMonthly: Record<string, number>
   num98AttachedTotal: number
   num98AttachedMonthly: Record<string, number>
+  num98NotAttachedTotal: number
+  num98NotAttachedMonthly: Record<string, number>
   num98RatioTotal: number | null
   num98RatioMonthly: Record<string, number | null>
 }
@@ -235,11 +247,7 @@ export function calcDashboardData(cars: UcarWithProcess[], allCars: UcarWithProc
     const qrMonth = car.qrIssuedAt ? toMonthKey(car.qrIssuedAt) : null
     if (qrMonth) monthSet.add(qrMonth)
 
-    qrSheetTotal++
-    if (qrMonth) {
-      qrSheetMonthly[qrMonth] = (qrSheetMonthly[qrMonth] ?? 0) + 1
-    }
-
+    // 仕分け集計（全非レンタル対象）
     if (car.destination) {
       const def = SHIWAKE_DEFS.find(d => d.code === car.destination)
       if (def) {
@@ -250,8 +258,21 @@ export function calcDashboardData(cars: UcarWithProcess[], allCars: UcarWithProc
       }
     }
 
+    // 98番号セクション: qrSheetTotal の分母と付帯判定を同じ粒度にする
     const dateMap = buildProcessDateMap(car)
-    if (dateMap.has('CR02') && car.number98) {
+    const passesCrCondition = NUM98_REQUIRE_CR_ARRIVED ? dateMap.has('CR02') : true
+
+    // CR条件を通過しない車両は発行台数にも含めない
+    if (!passesCrCondition) continue
+
+    qrSheetTotal++
+    if (qrMonth) {
+      qrSheetMonthly[qrMonth] = (qrSheetMonthly[qrMonth] ?? 0) + 1
+    }
+
+    const isNum98Attached = NUM98_ATTACH_MODE === 'number98' ? !!car.number98 : !!car.hasOldCarsLink
+
+    if (isNum98Attached) {
       num98CrTotal++
       if (qrMonth) {
         num98CrMonthly[qrMonth] = (num98CrMonthly[qrMonth] ?? 0) + 1
@@ -283,26 +304,22 @@ export function calcDashboardData(cars: UcarWithProcess[], allCars: UcarWithProc
   }
   const retailRatioTotal = shiwakeGrandTotal > 0 ? Math.round((shiwakeCount['KOURI'].total / shiwakeGrandTotal) * 100) : null
 
-  let qrCrArrived = 0
-  const qrCrArrivedMonthly: Record<string, number> = {}
-  for (const car of allCars) {
-    if (car.isRental) continue
-    const dateMap = buildProcessDateMap(car)
-    if (dateMap.has('CR02')) {
-      qrCrArrived++
-      const qrMonth = car.qrIssuedAt ? toMonthKey(car.qrIssuedAt) : null
-      if (qrMonth) {
-        qrCrArrivedMonthly[qrMonth] = (qrCrArrivedMonthly[qrMonth] ?? 0) + 1
-      }
-    }
-  }
-
-  const num98RatioTotal = qrCrArrived > 0 ? Math.round((num98CrTotal / qrCrArrived) * 1000) / 10 : null
+  // 付帯率: qrSheetTotal が既にCR条件付きなので、そのまま分母として使用
+  const num98RatioTotal = qrSheetTotal > 0 ? Math.round((num98CrTotal / qrSheetTotal) * 1000) / 10 : null
   const num98RatioMonthly: Record<string, number | null> = {}
   for (const m of finalMonths) {
-    const arrived = qrCrArrivedMonthly[m] ?? 0
+    const denominator = qrSheetMonthly[m] ?? 0
     const attached = num98CrMonthly[m] ?? 0
-    num98RatioMonthly[m] = arrived > 0 ? Math.round((attached / arrived) * 1000) / 10 : null
+    num98RatioMonthly[m] = denominator > 0 ? Math.round((attached / denominator) * 1000) / 10 : null
+  }
+
+  // 未付帯 = 発行台数 - 付帯済
+  const num98NotAttachedTotal = qrSheetTotal - num98CrTotal
+  const num98NotAttachedMonthly: Record<string, number> = {}
+  for (const m of finalMonths) {
+    const denominator = qrSheetMonthly[m] ?? 0
+    const attached = num98CrMonthly[m] ?? 0
+    num98NotAttachedMonthly[m] = denominator - attached
   }
 
   const number98Stats: Number98Stats = {
@@ -310,6 +327,8 @@ export function calcDashboardData(cars: UcarWithProcess[], allCars: UcarWithProc
     qrSheetMonthly,
     num98AttachedTotal: num98CrTotal,
     num98AttachedMonthly: num98CrMonthly,
+    num98NotAttachedTotal,
+    num98NotAttachedMonthly,
     num98RatioTotal,
     num98RatioMonthly,
   }

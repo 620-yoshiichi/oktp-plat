@@ -1,10 +1,18 @@
 'use server'
+import {UcarCL, ucarData} from '@app/(apps)/ucar/class/UcarCL'
 
 import prisma from 'src/lib/prisma'
 import {Prisma} from '@prisma/generated/prisma/client'
 import {initServerComopnent} from 'src/non-common/serverSideFunction'
 import {UcarWithProcess} from '@app/(apps)/ucar/class/UcarProcessCl'
-import {calcDashboardData, calcPeriodLT, DashboardResult, PeriodLTSummary} from './lib/calcDashboardData'
+import {
+  calcDashboardData,
+  calcPeriodLT,
+  DashboardResult,
+  PeriodLTSummary,
+  NUM98_ATTACH_MODE,
+  NUM98_REQUIRE_CR_ARRIVED,
+} from './lib/calcDashboardData'
 import {UcarProcessCl} from '@app/(apps)/ucar/class/UcarProcessCl'
 import {UCAR_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-constants'
 import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
@@ -94,6 +102,7 @@ function toUcarWithProcess(car: PrismaCarResult): UcarWithProcess {
     createdAt: car.createdAt,
     isRental: car.tmpRentalStoreId != null,
     DD_URIAGE: car.OldCars_Base?.DD_URIAGE ?? undefined,
+    hasOldCarsLink: car.OldCars_Base != null,
   }
 }
 
@@ -203,17 +212,20 @@ export async function fetchPeriodLT(params: FetchPeriodLTParams): Promise<FetchP
 // Server Action: 工程別滞留車両一覧取得（モーダル用）
 // ============================================================
 
-export type RetentionCarDetail = {
-  sateiID: string
-  tmpBrandName: string | null
-  tmpModelName: string | null
-  tmpGrade: string | null
-  tmpColor: string | null
-  tmpPlate: string | null
-  createdAt: Date
-  qrIssuedAt: Date
+export type RetentionCarDetail = ucarData & {
+  // sateiID: string
+  // tmpBrandName: string | null
+  // tmpModelName: string | null
+  // tmpGrade: string | null
+  // tmpColor: string | null
+  // tmpPlate: string | null
+  // createdAt: Date
+  // qrIssuedAt: Date
+
   storeName: string | null
   userName: string | null
+  number98: string | null
+  hasOldCarsLink: boolean
   ai21: {
     DD_URIAGE: Date | null
     CD_ZAIKOTEN: string | null
@@ -244,7 +256,7 @@ export async function fetchProcessRetentionCars(processKey: string): Promise<Fet
       .map(k => UcarProcessCl.CODE.raw[k]?.code)
       .filter(Boolean) as string[]
 
-    const cars = await prisma.ucar.findMany({
+    const cars: ucarData[] = await UcarCL.fetcher.getUcarDataList({
       where: {
         AND: [
           ...baseWhere(),
@@ -257,7 +269,7 @@ export async function fetchProcessRetentionCars(processKey: string): Promise<Fet
           })),
         ].filter(Boolean),
       },
-      include: QueryBuilder.getInclude({}).ucar.include,
+      // include: QueryBuilder.getInclude({}).ucar.include,
       orderBy: {qrIssuedAt: 'desc'},
       take: 200,
     })
@@ -268,16 +280,19 @@ export async function fetchProcessRetentionCars(processKey: string): Promise<Fet
         processMap[p.processCode] = p.date?.toISOString() ?? null
       }
       return {
-        sateiID: car.sateiID,
-        tmpBrandName: (car as any).tmpBrandName,
-        tmpModelName: (car as any).tmpModelName,
-        tmpGrade: (car as any).tmpGrade,
-        tmpColor: (car as any).tmpColor,
-        tmpPlate: (car as any).tmpPlate,
+        ...car,
+        // sateiID: car.sateiID,
+        // tmpBrandName: (car as any).tmpBrandName,
+        // tmpModelName: (car as any).tmpModelName,
+        // tmpGrade: (car as any).tmpGrade,
+        // tmpColor: (car as any).tmpColor,
+        // tmpPlate: (car as any).tmpPlate,
         createdAt: car.createdAt,
         qrIssuedAt: car.qrIssuedAt,
         storeName: (car as any).Store?.name ?? null,
         userName: (car as any).User?.name ?? null,
+        number98: car.number98 ?? null,
+        hasOldCarsLink: (car as any).OldCars_Base != null,
         ai21: {
           DD_URIAGE: (car as any).OldCars_Base?.DD_URIAGE ?? null,
           CD_ZAIKOTEN: (car as any).OldCars_Base?.ZAIKO_Base?.CD_ZAIKOTEN ?? null,
@@ -327,7 +342,7 @@ export async function fetchLTProcessCars(params: FetchLTProcessCarsParams): Prom
       .map(k => UcarProcessCl.CODE.raw[k]?.code)
       .filter(Boolean) as string[]
 
-    const cars = await prisma.ucar.findMany({
+    const cars = await UcarCL.fetcher.getUcarDataList({
       where: {
         AND: [
           ...baseWhere(),
@@ -358,7 +373,7 @@ export async function fetchLTProcessCars(params: FetchLTProcessCarsParams): Prom
             : []),
         ].filter(Boolean),
       },
-      include: QueryBuilder.getInclude({}).ucar.include,
+      // include: QueryBuilder.getInclude({}).ucar.include,
       // select: {
       //   sateiID: true,
       //   tmpBrandName: true,
@@ -382,16 +397,19 @@ export async function fetchLTProcessCars(params: FetchLTProcessCarsParams): Prom
         processMap[p.processCode] = p.date?.toISOString() ?? null
       }
       return {
-        sateiID: car.sateiID,
-        tmpBrandName: (car as any).tmpBrandName,
-        tmpModelName: (car as any).tmpModelName,
-        tmpGrade: (car as any).tmpGrade,
-        tmpColor: (car as any).tmpColor,
-        tmpPlate: (car as any).tmpPlate,
-        createdAt: car.createdAt,
-        qrIssuedAt: car.qrIssuedAt,
+        ...car,
+        // sateiID: car.sateiID,
+        // tmpBrandName: (car as any).tmpBrandName,
+        // tmpModelName: (car as any).tmpModelName,
+        // tmpGrade: (car as any).tmpGrade,
+        // tmpColor: (car as any).tmpColor,
+        // tmpPlate: (car as any).tmpPlate,
+        // createdAt: car.createdAt,
+        // qrIssuedAt: car.qrIssuedAt,
         storeName: (car as any).Store?.name ?? null,
         userName: (car as any).User?.name ?? null,
+        number98: car.number98 ?? null,
+        hasOldCarsLink: (car as any).OldCars_Base != null,
         ai21: {
           DD_URIAGE: (car as any).OldCars_Base?.DD_URIAGE ?? null,
           CD_ZAIKOTEN: (car as any).OldCars_Base?.ZAIKO_Base?.CD_ZAIKOTEN ?? null,
@@ -407,6 +425,128 @@ export async function fetchLTProcessCars(params: FetchLTProcessCarsParams): Prom
     return {
       success: false,
       message: 'LT車両データの取得中にエラーが発生しました',
+      result: null,
+    }
+  }
+}
+
+// ============================================================
+// Server Action: OtherMetricsTable 車両一覧取得（モーダル用）
+// ============================================================
+
+export type FetchOtherMetricsCarsParams = {
+  type: 'shiwake' | 'num98_qr' | 'num98_attached' | 'num98_not_attached'
+  /** YY-MM（省略時は全期間） */
+  month?: string
+  /** shiwake時の仕分けコード */
+  destinationCode?: string
+}
+
+/**
+ * OtherMetricsTable の各数値セルに対応する車両一覧を返す。
+ * - shiwake: 指定仕分け & 指定月（レンタ除外）
+ * - num98_qr: 全非レンタ & 指定月 — QRシート発行台数（calcDashboardData の qrSheetTotal に対応）
+ * - num98_attached: CR02到着済 & number98あり & 指定月（レンタ除外）
+ * - num98_not_attached: CR02到着済 & number98なし & 指定月（レンタ除外）
+ */
+export async function fetchOtherMetricsCars(params: FetchOtherMetricsCarsParams): Promise<FetchRetentionCarsResponse> {
+  try {
+    await initServerComopnent({query: {}})
+
+    // 月条件の組み立て（YY-MM → YYYY-MM-01 〜 末日）
+    let qrDateFilter: Prisma.UcarWhereInput = {}
+    if (params.month) {
+      const [yy, mm] = params.month.split('-').map(Number)
+      const yyyy = yy < 50 ? 2000 + yy : 1900 + yy
+      const lastDay = new Date(yyyy, mm, 0).getDate()
+      const start = jstDateStrToUtc(`${yyyy}-${String(mm).padStart(2, '0')}-01`)
+      const end = jstDateStrToUtc(`${yyyy}-${String(mm).padStart(2, '0')}-${String(lastDay).padStart(2, '0')}`, true)
+      qrDateFilter = {qrIssuedAt: {gte: start, lte: end}}
+    }
+
+    // タイプ別の追加条件
+    const typeConditions: Prisma.UcarWhereInput[] = []
+
+    // 98番号系の共通: CR到着条件（NUM98_REQUIRE_CR_ARRIVED に依存）
+    const crCondition: Prisma.UcarWhereInput = NUM98_REQUIRE_CR_ARRIVED ? {UcarProcess: {some: {processCode: 'CR02'}}} : {}
+
+    // 98番号付帯の判定条件（NUM98_ATTACH_MODE に依存）
+    const attachedCondition: Prisma.UcarWhereInput =
+      NUM98_ATTACH_MODE === 'number98'
+        ? {AND: [{number98: {not: null}}, {number98: {not: ''}}]}
+        : {OldCars_Base: {NO_SYARYOU: {not: null}}}
+
+    const notAttachedCondition: Prisma.UcarWhereInput =
+      NUM98_ATTACH_MODE === 'number98'
+        ? {OR: [{number98: null}, {number98: ''}]}
+        : {
+            NOT: {OldCars_Base: {NO_SYARYOU: {not: null}}},
+          }
+    switch (params.type) {
+      case 'shiwake':
+        if (params.destinationCode) {
+          typeConditions.push({destination: params.destinationCode})
+        }
+        break
+      case 'num98_qr':
+        // 発行台数 = calcDashboardData の qrSheetTotal と同じ粒度
+        if (NUM98_REQUIRE_CR_ARRIVED) {
+          typeConditions.push({UcarProcess: {some: {processCode: 'CR02'}}})
+        }
+        break
+      case 'num98_attached':
+        typeConditions.push(crCondition)
+        typeConditions.push(attachedCondition)
+        break
+      case 'num98_not_attached':
+        typeConditions.push(crCondition)
+        typeConditions.push(notAttachedCondition)
+        break
+    }
+
+    const cars: ucarData[] = await UcarCL.fetcher.getUcarDataList({
+      where: {
+        AND: [...baseWhere(), {tmpRentalStoreId: null}, qrDateFilter, ...typeConditions].filter(Boolean),
+      },
+      // include: QueryBuilder.getInclude({}).ucar.include,
+      orderBy: {qrIssuedAt: 'desc'},
+      take: 500,
+    })
+
+    const result: RetentionCarDetail[] = cars.map(car => {
+      const processMap: Record<string, string | null> = {}
+      for (const p of (car as any).UcarProcess as any[]) {
+        processMap[p.processCode] = p.date?.toISOString() ?? null
+      }
+      return {
+        ...car,
+        //  sateiID: car.sateiID,
+        tmpBrandName: (car as any).tmpBrandName,
+        // tmpModelName: (car as any).tmpModelName,
+        // tmpGrade: (car as any).tmpGrade,
+        // tmpColor: (car as any).tmpColor,
+        // tmpPlate: (car as any).tmpPlate,
+        // createdAt: car.createdAt,
+        // qrIssuedAt: car.qrIssuedAt,
+        storeName: (car as any).Store?.name ?? null,
+        userName: (car as any).User?.name ?? null,
+        number98: car.number98 ?? null,
+        hasOldCarsLink: (car as any).OldCars_Base != null,
+        ai21: {
+          DD_URIAGE: (car as any).OldCars_Base?.DD_URIAGE ?? null,
+          CD_ZAIKOTEN: (car as any).OldCars_Base?.ZAIKO_Base?.CD_ZAIKOTEN ?? null,
+          KI_HANKAKA: (car as any).OldCars_Base?.KI_HANKAKA ?? null,
+        },
+        processMap,
+      }
+    })
+
+    return {success: true, result}
+  } catch (error) {
+    console.error('fetchOtherMetricsCars error:', error)
+    return {
+      success: false,
+      message: 'その他指標の車両データ取得中にエラーが発生しました',
       result: null,
     }
   }

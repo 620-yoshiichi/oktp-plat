@@ -1,7 +1,10 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { DashboardResult } from '../lib/calcDashboardData'
+import { OtherMetricsDetailModal } from './OtherMetricsDetailModal'
+import useModal from '@cm/components/utils/modal/useModal'
+import type { FetchOtherMetricsCarsParams } from '../server-actions'
 
 type Props = {
   data: DashboardResult
@@ -34,8 +37,15 @@ function fmtPercent(n: number | null | undefined): string {
   return `${n}%`
 }
 
+type ModalData = {
+  label: string
+  params: FetchOtherMetricsCarsParams
+}
+
 export function OtherMetricsTable({ data, year }: Props) {
   const { retailRatio, retailRatioTotal, shiwakeBreakdown, shiwakeGrandTotal, shiwakeGrandMonthly, number98Stats } = data
+
+  const modal = useModal<ModalData>()
 
   // 指定年の1〜12月を全て表示（データがない月も含む）
   const yyPrefix = String(year).slice(-2)
@@ -47,156 +57,255 @@ export function OtherMetricsTable({ data, year }: Props) {
     return all
   }, [yyPrefix])
 
+  /** クリック可能な数値セルを生成するヘルパー */
+  const ClickableCell = useCallback(
+    ({ value, label, params, className }: { value: number | undefined; label: string; params: FetchOtherMetricsCarsParams; className?: string }) => {
+      const hasData = value !== undefined && value > 0
+      return (
+        <td
+          className={`border px-2 py-1.5 text-center ${className ?? ''} ${hasData ? 'cursor-pointer hover:opacity-70' : ''}`}
+          onClick={() => hasData && modal.handleOpen({ label, params })}
+        >
+          {fmtCount(value)}
+        </td>
+      )
+    },
+    [modal]
+  )
+
   return (
-    <div className="border rounded-lg bg-white shadow-sm overflow-x-auto">
-      <table className="w-full text-xs border-collapse">
-        {/* ============================================================ */}
-        {/* ヘッダー */}
-        {/* ============================================================ */}
-        <thead>
-          <tr className="bg-gray-200">
-            <th className="border px-2 py-1.5 text-left font-bold w-[80px]" rowSpan={2}>
-              その他指標
-            </th>
-            <th className="border px-2 py-1.5 text-left w-[130px]" rowSpan={2} />
-            <th className="border px-2 py-1.5 text-center w-[55px] bg-yellow-200 font-bold" rowSpan={2}>
-              全期
-            </th>
-            {months.map(m => (
-              <th key={m} className="border px-2 py-1.5 text-center w-[50px] bg-yellow-100">
-                {m.split('-')[0]}年<br />
-                {Number(m.split('-')[1])}月
+    <>
+      <div className="border rounded-lg bg-white shadow-sm overflow-x-auto">
+        <table className="w-full text-xs border-collapse">
+          {/* ============================================================ */}
+          {/* ヘッダー */}
+          {/* ============================================================ */}
+          <thead>
+            <tr className="bg-gray-200">
+              <th className="border px-2 py-1.5 text-left font-bold w-[80px]" rowSpan={2}>
+                その他指標
               </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {/* ============================================================ */}
-          {/* 小売割合 */}
-          {/* ============================================================ */}
-          <tr className="bg-yellow-50">
-            <td className="border px-2 py-1.5 font-medium bg-yellow-200" colSpan={2}>
-              小売割合
-            </td>
-            <td
-              className={`border px-2 py-1.5 text-center font-bold ${retailRatioTotal !== null ? getRatioBgColor(retailRatioTotal) : ''}`}
-            >
-              {fmtPercent(retailRatioTotal)}
-            </td>
-            {months.map(m => {
-              const v = retailRatio[m]
-              return (
-                <td
-                  key={m}
-                  className={`border px-2 py-1.5 text-center font-medium ${v !== undefined ? getRatioBgColor(v) : ''}`}
-                >
-                  {fmtPercent(v)}
-                </td>
-              )
-            })}
-          </tr>
-
-          {/* ============================================================ */}
-          {/* QRシート総数（レンタ除く） */}
-          {/* ============================================================ */}
-          <tr className="bg-gray-50">
-            <td className="border px-2 py-1.5 font-medium bg-gray-200" rowSpan={shiwakeBreakdown.length + 2}>
-              <div className="text-center leading-tight">
-                QR総数
-              </div>
-            </td>
-          </tr>
-
-          {/* 仕分け別行 */}
-          {shiwakeBreakdown.map(sw => (
-            <tr key={sw.key}>
-              <td className="border px-2 py-1.5 font-medium" style={{ borderLeft: `3px solid ${sw.color}` }}>
-                <div className={`w-8 truncate`}>{sw.label}</div>
-              </td>
-              <td className="border px-2 py-1.5 text-center font-bold">{fmtCount(sw.total)}</td>
+              <th className="border px-2 py-1.5 text-left w-[130px]" rowSpan={2} />
+              <th className="border px-2 py-1.5 text-center w-[55px] bg-yellow-200 font-bold" rowSpan={2}>
+                全期
+              </th>
               {months.map(m => (
-                <td key={m} className="border px-2 py-1.5 text-center">
-                  {fmtCount(sw.monthly[m])}
-                </td>
+                <th key={m} className="border px-2 py-1.5 text-center w-[50px] bg-yellow-100">
+                  {m.split('-')[0]}年<br />
+                  {Number(m.split('-')[1])}月
+                </th>
               ))}
             </tr>
-          ))}
-
-          {/* 総計行 */}
-          <tr className="bg-gray-100 font-bold">
-            <td className="border px-2 py-1.5 font-bold">総計</td>
-            <td className="border px-2 py-1.5 text-center">{fmtCount(shiwakeGrandTotal)}</td>
-            {months.map(m => (
-              <td key={m} className="border px-2 py-1.5 text-center">
-                {fmtCount(shiwakeGrandMonthly[m])}
+          </thead>
+          <tbody>
+            {/* ============================================================ */}
+            {/* 小売割合（%値 → クリック対象外） */}
+            {/* ============================================================ */}
+            <tr className="bg-yellow-50">
+              <td className="border px-2 py-1.5 font-medium bg-yellow-200" colSpan={2}>
+                小売割合
               </td>
-            ))}
-          </tr>
-
-          {/* ============================================================ */}
-          {/* 98番号集計対象 → CR到着済 */}
-          {/* ============================================================ */}
-          <tr className="bg-gray-50">
-            <td className="border px-2 py-1.5 font-medium bg-gray-200" rowSpan={4}>
-              <div className="text-center leading-tight">
-                98番号
-                <br />
-                集計対象
-                <br />
-                <span className="text-[10px] text-gray-500">→ CR到着済</span>
-              </div>
-            </td>
-          </tr>
-
-          {/* QRシート発行台数 */}
-          <tr>
-            <td className="border px-2 py-1.5 font-medium">QRシート発行台数</td>
-            <td className="border px-2 py-1.5 text-center font-bold">{fmtCount(number98Stats.qrSheetTotal)}</td>
-            {months.map(m => (
-              <td key={m} className="border px-2 py-1.5 text-center">
-                {fmtCount(number98Stats.qrSheetMonthly[m])}
+              <td
+                className={`border px-2 py-1.5 text-center font-bold ${retailRatioTotal !== null ? getRatioBgColor(retailRatioTotal) : ''}`}
+              >
+                {fmtPercent(retailRatioTotal)}
               </td>
-            ))}
-          </tr>
+              {months.map(m => {
+                const v = retailRatio[m]
+                return (
+                  <td
+                    key={m}
+                    className={`border px-2 py-1.5 text-center font-medium ${v !== undefined ? getRatioBgColor(v) : ''}`}
+                  >
+                    {fmtPercent(v)}
+                  </td>
+                )
+              })}
+            </tr>
 
-          {/* 98番号付帯済台数 */}
-          <tr>
-            <td className="border px-2 py-1.5 font-medium">
-              98番号付帯済台数
-              <br />
-              <span className="text-[10px] text-gray-500">(対象:CR到着済)</span>
-            </td>
-            <td className="border px-2 py-1.5 text-center font-bold">{fmtCount(number98Stats.num98AttachedTotal)}</td>
-            {months.map(m => (
-              <td key={m} className="border px-2 py-1.5 text-center">
-                {fmtCount(number98Stats.num98AttachedMonthly[m])}
+            {/* ============================================================ */}
+            {/* QRシート総数（レンタ除く） */}
+            {/* ============================================================ */}
+            <tr className="bg-gray-50">
+              <td className="border px-2 py-1.5 font-medium bg-gray-200" rowSpan={shiwakeBreakdown.length + 2}>
+                <div className="text-center leading-tight">
+                  QR総数
+                </div>
               </td>
-            ))}
-          </tr>
+            </tr>
 
-          {/* 98番号付帯率 */}
-          <tr className="bg-yellow-50">
-            <td className="border px-2 py-1.5 font-medium bg-yellow-200">98番号付帯率</td>
-            <td
-              className={`border px-2 py-1.5 text-center font-bold ${number98Stats.num98RatioTotal !== null ? getNum98RatioBgColor(number98Stats.num98RatioTotal) : ''
-                }`}
-            >
-              {fmtPercent(number98Stats.num98RatioTotal)}
-            </td>
-            {months.map(m => {
-              const v = number98Stats.num98RatioMonthly[m]
-              return (
-                <td
-                  key={m}
-                  className={`border px-2 py-1.5 text-center font-medium ${v !== null && v !== undefined ? getNum98RatioBgColor(v) : ''}`}
-                >
-                  {fmtPercent(v)}
+            {/* 仕分け別行 */}
+            {shiwakeBreakdown.map(sw => (
+              <tr key={sw.key}>
+                <td className="border px-2 py-1.5 font-medium" style={{ borderLeft: `3px solid ${sw.color}` }}>
+                  <div className={`w-8 truncate`}>{sw.label}</div>
                 </td>
-              )
-            })}
-          </tr>
-        </tbody>
-      </table>
-    </div>
+                <ClickableCell
+                  value={sw.total}
+                  label={`${sw.label} - 全期間`}
+                  params={{ type: 'shiwake', destinationCode: shiwakeBreakdown.find(b => b.key === sw.key)?.key === sw.key ? getShiwakeCode(sw.key) : undefined }}
+                  className="font-bold"
+                />
+                {months.map(m => (
+                  <ClickableCell
+                    key={m}
+                    value={sw.monthly[m]}
+                    label={`${sw.label} - ${m}`}
+                    params={{ type: 'shiwake', month: m, destinationCode: getShiwakeCode(sw.key) }}
+                  />
+                ))}
+              </tr>
+            ))}
+
+            {/* 総計行 */}
+            <tr className="bg-gray-100 font-bold">
+              <td className="border px-2 py-1.5 font-bold">総計</td>
+              <ClickableCell
+                value={shiwakeGrandTotal}
+                label="QR総数 - 全期間"
+                params={{ type: 'shiwake' }}
+              />
+              {months.map(m => (
+                <ClickableCell
+                  key={m}
+                  value={shiwakeGrandMonthly[m]}
+                  label={`QR総数 - ${m}`}
+                  params={{ type: 'shiwake', month: m }}
+                />
+              ))}
+            </tr>
+
+            {/* ============================================================ */}
+            {/* 98番号集計対象 → CR到着済 */}
+            {/* ============================================================ */}
+            <tr className="bg-gray-50">
+              <td className="border px-2 py-1.5 font-medium bg-gray-200" rowSpan={5}>
+                <div className="text-center leading-tight">
+                  98番号
+                  <br />
+                  集計対象
+                  <br />
+                  <span className="text-[10px] text-gray-500">→ CR到着済</span>
+                </div>
+              </td>
+            </tr>
+
+            {/* QRシート発行台数 */}
+            <tr>
+              <td className="border px-2 py-1.5 font-medium">発行台数</td>
+              <ClickableCell
+                value={number98Stats.qrSheetTotal}
+                label="QRシート発行台数 - 全期間"
+                params={{ type: 'num98_qr' }}
+                className="font-bold"
+              />
+              {months.map(m => (
+                <ClickableCell
+                  key={m}
+                  value={number98Stats.qrSheetMonthly[m]}
+                  label={`QRシート発行台数 - ${m}`}
+                  params={{ type: 'num98_qr', month: m }}
+                />
+              ))}
+            </tr>
+
+            {/* 98番号付帯済台数 */}
+            <tr>
+              <td className="border px-2 py-1.5 font-medium">付帯済</td>
+              <ClickableCell
+                value={number98Stats.num98AttachedTotal}
+                label="98番号付帯済台数 - 全期間"
+                params={{ type: 'num98_attached' }}
+                className="font-bold"
+              />
+              {months.map(m => (
+                <ClickableCell
+                  key={m}
+                  value={number98Stats.num98AttachedMonthly[m]}
+                  label={`98番号付帯済台数 - ${m}`}
+                  params={{ type: 'num98_attached', month: m }}
+                />
+              ))}
+            </tr>
+
+            {/* 98番号未付帯台数 */}
+            <tr>
+              <td className="border px-2 py-1.5 font-medium text-red-600">未付帯</td>
+              <ClickableCell
+                value={number98Stats.num98NotAttachedTotal > 0 ? number98Stats.num98NotAttachedTotal : undefined}
+                label="98番号未付帯台数 - 全期間"
+                params={{ type: 'num98_not_attached' }}
+                className="font-bold text-red-600"
+              />
+              {months.map(m => {
+                const v = number98Stats.num98NotAttachedMonthly[m]
+                return (
+                  <ClickableCell
+                    key={m}
+                    value={v > 0 ? v : undefined}
+                    label={`98番号未付帯台数 - ${m}`}
+                    params={{ type: 'num98_not_attached', month: m }}
+                    className="text-red-600"
+                  />
+                )
+              })}
+            </tr>
+
+            {/* 98番号付帯率（%値 → クリック対象外） */}
+            <tr className="bg-yellow-50">
+              <td className="border px-2 py-1.5 font-medium bg-yellow-200">98番号付帯率</td>
+              <td
+                className={`border px-2 py-1.5 text-center font-bold ${number98Stats.num98RatioTotal !== null ? getNum98RatioBgColor(number98Stats.num98RatioTotal) : ''
+                  }`}
+              >
+                {fmtPercent(number98Stats.num98RatioTotal)}
+              </td>
+              {months.map(m => {
+                const v = number98Stats.num98RatioMonthly[m]
+                return (
+                  <td
+                    key={m}
+                    className={`border px-2 py-1.5 text-center font-medium ${v !== null && v !== undefined ? getNum98RatioBgColor(v) : ''}`}
+                  >
+                    {fmtPercent(v)}
+                  </td>
+                )
+              })}
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      {/* モーダル */}
+      <modal.Modal
+        style={{
+          maxWidth: '98vw',
+          maxHeight: '90vh',
+          width: '1600px',
+          overflow: 'hidden',
+        }}
+      >
+        {modal.open && (
+          <OtherMetricsDetailModal
+            label={modal.open.label}
+            params={modal.open.params}
+            onClose={modal.handleClose}
+          />
+        )}
+      </modal.Modal>
+    </>
   )
+}
+
+/** 仕分けキーからコードへの変換 */
+const SHIWAKE_CODE_MAP: Record<string, string> = {
+  KOURI: '02',
+  OROSI: '01',
+  SCRAP: '03',
+  CPO: '04',
+  ONLINE: '05',
+}
+
+function getShiwakeCode(key: string): string | undefined {
+  return SHIWAKE_CODE_MAP[key]
 }

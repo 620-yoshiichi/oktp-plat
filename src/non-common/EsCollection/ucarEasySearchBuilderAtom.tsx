@@ -177,7 +177,7 @@ export const ucarEasySearchBuilderAtom = async (props: easySearchType) => {
     },
   }
   const number98__pending: EsObj = {
-    label: '98途中',
+    label: '98不完全',
     description: '98番号は付与されているが、仕入処理が未完了',
     notify: true,
     CONDITION: {

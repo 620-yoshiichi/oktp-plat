@@ -169,9 +169,17 @@ export function TairyuDaisuTable({ data, year }: Props) {
                 ))}
                 <tr className="bg-gray-100 font-bold">
                   <td className="border px-2 py-1.5" style={{ borderLeft: '4px solid #333' }}>
-                    全体
+                    平均
                   </td>
-                  <td className="border px-2 py-1.5 text-center ">{totalCount}</td>
+                  <td className="border px-2 py-1.5 text-center">
+                    {processes.length > 0 ? fmtNum(totalCount / processes.length) : '-'}
+                  </td>
+                </tr>
+                <tr className="bg-gray-100 font-bold">
+                  <td className="border px-2 py-1.5" style={{ borderLeft: '4px solid #333' }}>
+                    合計
+                  </td>
+                  <td className="border px-2 py-1.5 text-center">{totalCount}</td>
                 </tr>
               </tbody>
             </table>
@@ -249,6 +257,7 @@ export function TairyuDaisuTable({ data, year }: Props) {
                     </tr>
                   )
                 })}
+                {/* 全体平均行 */}
                 <tr className="bg-gray-100 font-bold">
                   {/* <td className="border px-2 py-1.5" style={{ borderLeft: '4px solid #333' }}>
                     全体
@@ -265,6 +274,36 @@ export function TairyuDaisuTable({ data, year }: Props) {
                     </td>
                   ))}
                 </tr>
+                {/* 各工程の平均LTの合計行 */}
+                {(() => {
+                  const sumAllPeriod = processes.reduce((s, p) => s + (p.avgLT ?? 0), 0)
+                  const hasAllPeriod = processes.some(p => p.avgLT != null)
+                  const sumYear = processes.reduce((s, p) => {
+                    const y = calcYearAvgLT(p.monthlyLT, visibleMonths)
+                    return s + (y ?? 0)
+                  }, 0)
+                  const hasYear = processes.some(p => calcYearAvgLT(p.monthlyLT, visibleMonths) != null)
+                  return (
+                    <tr className="bg-gray-100 font-bold">
+                      <td className={`border px-2 py-1.5 text-center ${hasAllPeriod ? getLTBgColor(sumAllPeriod) : ''}`}>
+                        {hasAllPeriod ? fmtNum(sumAllPeriod) : '-'}
+                      </td>
+                      <td className={`border px-2 py-1.5 text-center ${hasYear ? getLTBgColor(sumYear) : ''}`}>
+                        {hasYear ? fmtNum(sumYear) : '-'}
+                      </td>
+                      {visibleMonths.map(m => {
+                        const sum = processes.reduce((s, p) => s + (p.monthlyLT[m] ?? 0), 0)
+                        const has = processes.some(p => p.monthlyLT[m] != null)
+                        return (
+                          <td key={m} className={`border px-2 py-1.5 text-center ${has ? getLTBgColor(sum) : ''}`}>
+                            {has ? fmtNum(sum) : '-'}
+                          </td>
+                        )
+                      })}
+                    </tr>
+                  )
+                })()}
+
               </tbody>
             </table>
           </div>

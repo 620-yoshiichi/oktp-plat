@@ -81,6 +81,8 @@ export type UcarWithProcess = {
   isRental?: boolean
   /** OldCars_Base売上日（拠点配送の滞留判定用） */
   DD_URIAGE?: Date
+  /** OldCars_Baseとの紐づき有無 */
+  hasOldCarsLink?: boolean
 }
 
 // ============================================================

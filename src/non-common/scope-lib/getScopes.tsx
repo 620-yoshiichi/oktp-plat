@@ -137,7 +137,16 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
             ],
           }
         }
-      } else {
+      }
+      else if (
+        !query?.[globalIds.globalUserId] &&
+        admin) {
+        newCarWhere = {
+          userId: undefined
+          // storeId: session?.storeId ?? 0,
+        }
+      }
+      else {
         newCarWhere = {
           userId: session?.id ?? 0,
           // storeId: session?.storeId ?? 0,

@@ -172,7 +172,7 @@ export default function DashboardPage() {
 
             <R_Stack className={` items-stretch`}>
               <Card className={`w-[900px]`}>
-                工程別平均LT
+                その他指標
                 <div><OtherMetricsTable data={dashboardData} year={year} /></div>
               </Card>
 
