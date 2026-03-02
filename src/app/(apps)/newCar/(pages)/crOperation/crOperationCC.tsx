@@ -1,18 +1,18 @@
 'use client'
 
-import {NEW_CAR_CONST} from '@app/(apps)/newCar/(constants)/newCar-constants'
+import { NEW_CAR_CONST } from '@app/(apps)/newCar/(constants)/newCar-constants'
 import PenadingCarTableList from '@app/(apps)/newCar/(pages)/crOperation/PenadingCarTableList'
 
 import ScheduledCarTable from '@app/(apps)/newCar/(pages)/crOperation/ScheduledCarTable'
-import {NewCarClass} from '@app/(apps)/newCar/class/NewCarClass/NewCarClass'
-import {useCrScheduleSwitcherModal} from '@app/(apps)/newCar/templateHooks/useCrScheduleSwitcherModal'
-import {formatDate} from '@cm/class/Days/date-utils/formatters'
-import {Fields} from '@cm/class/Fields/Fields'
+import { NewCarClass } from '@app/(apps)/newCar/class/NewCarClass/NewCarClass'
+import { useCrScheduleSwitcherModal } from '@app/(apps)/newCar/templateHooks/useCrScheduleSwitcherModal'
+import { formatDate } from '@cm/class/Days/date-utils/formatters'
+import { Fields } from '@cm/class/Fields/Fields'
 import ShadModal from '@cm/shadcn/ui/Organisms/ShadModal'
-import {Button} from '@cm/components/styles/common-components/Button'
-import {C_Stack, R_Stack} from '@cm/components/styles/common-components/common-components'
-import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
-import {LabelValue} from '@cm/components/styles/common-components/ParameterCard'
+import { Button } from '@cm/components/styles/common-components/Button'
+import { C_Stack, R_Stack } from '@cm/components/styles/common-components/common-components'
+import { IconBtn } from '@cm/components/styles/common-components/IconBtn'
+import { LabelValue } from '@cm/components/styles/common-components/ParameterCard'
 
 import Accordion from '@cm/components/utils/Accordions/Accordion'
 import NewDateSwitcher from '@cm/components/utils/dates/DateSwitcher/NewDateSwitcher'
@@ -20,13 +20,13 @@ import NewDateSwitcher from '@cm/components/utils/dates/DateSwitcher/NewDateSwit
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 import useLocalLoading from '@cm/hooks/globalHooks/useLocalLoading'
 import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
-import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 
-import {NewCar} from '@prisma/generated/prisma/client'
-import React, {useState} from 'react'
+import { NewCar } from '@prisma/generated/prisma/client'
+import React, { useState } from 'react'
 
-export default function CrOperationCC({crHolidays, from, to, newCars, pendingCars}) {
-  const {asPath} = useGlobal()
+export default function CrOperationCC({ crHolidays, from, to, newCars, pendingCars }) {
+  const { asPath } = useGlobal()
   const CrScheduleSwitcherModal_HK = useCrScheduleSwitcherModal()
 
   return (
@@ -42,30 +42,18 @@ export default function CrOperationCC({crHolidays, from, to, newCars, pendingCar
       </R_Stack>
 
       <R_Stack className={`flex-nowrap items-start  justify-start  `}>
-        <Accordion
-          {...{
-            label: `作業着工予定リスト`,
-            closable: false,
-            defaultOpen: true,
-          }}
-        >
-          <div>
-            <ScheduledCarTable {...{from, to, crHolidays, newCars, CrScheduleSwitcherModal_HK}} />
-          </div>
-        </Accordion>
-        <C_Stack>
-          <Accordion
-            {...{
-              label: `保留リスト`,
-              closable: false,
-              defaultOpen: true,
-            }}
-          >
-            <div className={``}>
-              <PenadingCarTableList {...{pendingCars, crHolidays, CrScheduleSwitcherModal_HK}} />
-            </div>
-          </Accordion>
+
+        <C_Stack className={`w-[960px] overflow-auto items-start t-paper `}>
+          <h2 className={`text-center`}>作業着工予定リスト</h2>
+          <ScheduledCarTable {...{ from, to, crHolidays, newCars, CrScheduleSwitcherModal_HK }} />
         </C_Stack>
+
+
+        <C_Stack className={`max-w-[calc(100vw-(950px+50px))] overflow-auto items-start t-paper`}>
+          <h2 className={`text-center`}>保留リスト</h2>
+          <PenadingCarTableList {...{ pendingCars, crHolidays, CrScheduleSwitcherModal_HK }} />
+        </C_Stack>
+
       </R_Stack>
     </C_Stack>
   )
@@ -73,7 +61,7 @@ export default function CrOperationCC({crHolidays, from, to, newCars, pendingCar
 
 const Marker = () => {
   const {
-    CR_OPERATION: {ALERT_COLORS, STATUS_COLORS},
+    CR_OPERATION: { ALERT_COLORS, STATUS_COLORS },
   } = NEW_CAR_CONST
 
   return (
@@ -81,7 +69,7 @@ const Marker = () => {
       <R_Stack>
         {ALERT_COLORS.map((d, i) => (
           <div key={i}>
-            <IconBtn {...{vivid: true, color: d.color}}>{d.value}</IconBtn>
+            <IconBtn {...{ vivid: true, color: d.color }}>{d.value}</IconBtn>
           </div>
         ))}
       </R_Stack>
@@ -108,12 +96,12 @@ const Marker = () => {
 }
 
 const SerachForm = () => {
-  const {toggleLocalLoading, LocalLoader} = useLocalLoading()
+  const { toggleLocalLoading, LocalLoader } = useLocalLoading()
   const [selectedCar, setselectedCar] = useState<NewCar[] | null>(null)
-  const {BasicForm, latestFormData} = useBasicFormProps({
+  const { BasicForm, latestFormData } = useBasicFormProps({
     columns: new Fields([
       //
-      {id: `NO_CYUMON`, label: `注文番号`, form: {}},
+      { id: `NO_CYUMON`, label: `注文番号`, form: {} },
     ]).transposeColumns(),
   })
 
@@ -134,10 +122,10 @@ const SerachForm = () => {
 
               return (
                 <div key={car.id} className={`  border-b  not-last:border-b  py-2 `}>
-                  <LabelValue {...{label: `注文番号`}}>{car.NO_CYUMON}</LabelValue>
-                  <LabelValue {...{label: `車名`}}>{car.KJ_KURUMAME}</LabelValue>
-                  <LabelValue {...{label: `着工予定`}}>{formatDate(pendingDate)}</LabelValue>
-                  <LabelValue {...{label: `登録予定`}}>{formatDate(newCarCl.car.lastApprovedDesiredTorokuDate)}</LabelValue>
+                  <LabelValue {...{ label: `注文番号` }}>{car.NO_CYUMON}</LabelValue>
+                  <LabelValue {...{ label: `車名` }}>{car.KJ_KURUMAME}</LabelValue>
+                  <LabelValue {...{ label: `着工予定` }}>{formatDate(pendingDate)}</LabelValue>
+                  <LabelValue {...{ label: `登録予定` }}>{formatDate(newCarCl.car.lastApprovedDesiredTorokuDate)}</LabelValue>
                 </div>
               )
             })}
@@ -151,8 +139,8 @@ const SerachForm = () => {
             alignMode: `row`,
             onSubmit: async data => {
               toggleLocalLoading(async () => {
-                const {result: cars} = await doStandardPrisma(`newCar`, `findMany`, {
-                  where: {NO_CYUMON: {contains: data.NO_CYUMON}},
+                const { result: cars } = await doStandardPrisma(`newCar`, `findMany`, {
+                  where: { NO_CYUMON: { contains: data.NO_CYUMON } },
                   include: {
                     ...NEW_CAR_CONST.CR_OPERATION.INCLUDE,
                     CrInspectionHistory: {},

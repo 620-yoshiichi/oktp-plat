@@ -1,25 +1,25 @@
 'use client'
 import ProcessDetailOnUser from '@app/(apps)/QRBP/(public)/process/history/Table/ProcessDetailOnUser'
-import {R_Stack} from '@cm/components/styles/common-components/common-components'
-import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
+import { R_Stack } from '@cm/components/styles/common-components/common-components'
+import { IconBtn } from '@cm/components/styles/common-components/IconBtn'
 IconBtn
 
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 
-import {Alert} from '@cm/components/styles/common-components/Alert'
-import {createUpdate} from '@cm/lib/methods/createUpdate'
-import {doStandardPrisma} from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
-import {Paper} from '@cm/components/styles/common-components/paper'
+import { Alert } from '@cm/components/styles/common-components/Alert'
+import { createUpdate } from '@cm/lib/methods/createUpdate'
+import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
+import { Paper } from '@cm/components/styles/common-components/paper'
 import ShadPopover from '@cm/shadcn/ui/Organisms/ShadPopover'
 
-import {toUtc} from '@cm/class/Days/date-utils/calculations'
-import {Days} from '@cm/class/Days/Days'
-import {formatDate} from '@cm/class/Days/date-utils/formatters'
+import { toUtc } from '@cm/class/Days/date-utils/calculations'
+import { Days } from '@cm/class/Days/Days'
+import { formatDate } from '@cm/class/Days/date-utils/formatters'
+import Coloring from '@cm/lib/methods/Coloring'
+const UserInfo = ({ User, processArrayForUser, editModalOpen, seteditModalOpen }) => {
+  const { query, session, toggleLoad } = useGlobal()
 
-const UserInfo = ({User, processArrayForUser, editModalOpen, seteditModalOpen}) => {
-  const {query, session, toggleLoad} = useGlobal()
-
-  const Btn = <Paper className={`w-[120px] text-center p-1`}>{User.name}</Paper>
+  const Btn = <div className={`w-[110px] text-center text-sm p-0.5`}>{User.name}</div>
 
   const ProcessConfirmBtn = () => {
     const date = query.from ? toUtc(query.from) : new Date()
@@ -32,21 +32,22 @@ const UserInfo = ({User, processArrayForUser, editModalOpen, seteditModalOpen}) 
     const checked = ProcessConfirmationOnDate?.checked
 
     return (
-      <Alert
+      <Coloring
+        mode='bg'
         className={`onHover p-0.5 text-[12px] `}
         onClick={async () => {
           toggleLoad(
             async () => {
-              ConfirmProcess({date, User, ProcessConfirmationOnDate, checked})
+              ConfirmProcess({ date, User, ProcessConfirmationOnDate, checked })
             },
-            {refresh: true}
+            { refresh: true }
           )
         }}
         color={checked ? 'green' : 'red'}
         disabled={query.selectPeriod}
       >
         {checked ? '取消' : '確定'}
-      </Alert>
+      </Coloring>
     )
   }
 
@@ -62,7 +63,7 @@ const UserInfo = ({User, processArrayForUser, editModalOpen, seteditModalOpen}) 
       >
         <div className={`wrap-break-word text-center max-w-[80vw] mx-auto`}>
           <h3>{User?.name}の作業内容</h3>
-          <ProcessDetailOnUser {...{processArrayForUser, editModalOpen, seteditModalOpen}} />
+          <ProcessDetailOnUser {...{ processArrayForUser, editModalOpen, seteditModalOpen }} />
         </div>
       </ShadPopover>
       <ProcessConfirmBtn />
@@ -72,11 +73,11 @@ const UserInfo = ({User, processArrayForUser, editModalOpen, seteditModalOpen}) 
 
 export default UserInfo
 
-const ConfirmProcess = async ({date, User, ProcessConfirmationOnDate, checked}) => {
+const ConfirmProcess = async ({ date, User, ProcessConfirmationOnDate, checked }) => {
   const id = ProcessConfirmationOnDate?.id ?? 0
 
   await doStandardPrisma('userProcessConfirmation', 'upsert', {
-    where: {id},
-    ...createUpdate({date: formatDate(date, 'iso'), userId: User.id, checked: checked ? false : true}),
+    where: { id },
+    ...createUpdate({ date: formatDate(date, 'iso'), userId: User.id, checked: checked ? false : true }),
   })
 }

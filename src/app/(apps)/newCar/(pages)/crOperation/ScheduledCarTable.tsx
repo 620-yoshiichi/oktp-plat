@@ -1,19 +1,19 @@
 'use client'
 
 import CarCardPopover from '@app/(apps)/newCar/(pages)/crOperation/CarCardPopover'
-import {checkAlert, NDayMsterList} from '@app/(apps)/newCar/(pages)/crOperation/const'
-import {NewCarClass} from '@app/(apps)/newCar/class/NewCarClass/NewCarClass'
+import { checkAlert, NDayMsterList } from '@app/(apps)/newCar/(pages)/crOperation/const'
+import { NewCarClass } from '@app/(apps)/newCar/class/NewCarClass/NewCarClass'
 
-import {Days} from '@cm/class/Days/Days'
-import {formatDate} from '@cm/class/Days/date-utils/formatters'
+import { Days } from '@cm/class/Days/Days'
+import { formatDate } from '@cm/class/Days/date-utils/formatters'
 
-import {CsvTable} from '@cm/components/styles/common-components/CsvTable/CsvTable'
+import { CsvTable } from '@cm/components/styles/common-components/CsvTable/CsvTable'
 import React from 'react'
-import {obj__initializeProperty} from '@cm/class/ObjHandler/transformers'
-import {IconBtn} from '@cm/components/styles/common-components/IconBtn'
-import {R_Stack} from '@cm/components/styles/common-components/common-components'
+import { obj__initializeProperty } from '@cm/class/ObjHandler/transformers'
+import { IconBtn } from '@cm/components/styles/common-components/IconBtn'
+import { R_Stack } from '@cm/components/styles/common-components/common-components'
 
-export default function ScheduledCarTable({from, to, crHolidays, newCars, CrScheduleSwitcherModal_HK}) {
+export default function ScheduledCarTable({ from, to, crHolidays, newCars, CrScheduleSwitcherModal_HK }) {
   let minusNumber = -7
   let days: any[] = Days.day.getDaysBetweenDates(from, to)
 
@@ -32,7 +32,7 @@ export default function ScheduledCarTable({from, to, crHolidays, newCars, CrSche
 
     const nDayMsterProps = NDayMsterList.find(n => n.nDayStr === nDateStr)
 
-    return {date: d, nDateStr, isHoliday, nDayMsterProps}
+    return { date: d, nDateStr, isHoliday, nDayMsterProps }
   })
 
   const CarsOnDate = {}
@@ -48,11 +48,11 @@ export default function ScheduledCarTable({from, to, crHolidays, newCars, CrSche
 
   const stylesInColumns = Object.fromEntries([
     ...days.map((d, idx) => {
-      const {isHoliday} = d
+      const { isHoliday } = d
       const style = {
-        ...(isHoliday ? {backgroundColor: `#848484`} : {}),
+        ...(isHoliday ? { backgroundColor: `#848484` } : {}),
       }
-      return [idx + 1, {style}]
+      return [idx + 1, { style }]
     }),
   ])
 
@@ -66,7 +66,7 @@ export default function ScheduledCarTable({from, to, crHolidays, newCars, CrSche
           {
             label: `連番`,
             cellValue: rowIdx + 1,
-            style: {textAlign: `center`},
+            style: { textAlign: `center` },
           },
           ...days.map((day, dayIdx) => {
             const dateStr = formatDate(day.date)
@@ -75,7 +75,7 @@ export default function ScheduledCarTable({from, to, crHolidays, newCars, CrSche
 
             const label = (
               <R_Stack className={` justify-between min-w-[140px] gap-0.5`}>
-                <div>{dateStr}</div>
+                <div>{formatDate(day.date, "MM/DD(ddd)")}</div>
                 <IconBtn color={count > 0 ? 'blue' : 'gray'} size="sm">
                   {count}件
                 </IconBtn>
@@ -83,7 +83,7 @@ export default function ScheduledCarTable({from, to, crHolidays, newCars, CrSche
             )
 
             if (!theCar) {
-              return {label, cellValue: ''}
+              return { label, cellValue: '' }
             }
 
             const cellProps = checkAlert({
@@ -93,12 +93,12 @@ export default function ScheduledCarTable({from, to, crHolidays, newCars, CrSche
             })
             return {
               label,
-              cellValue: <CarCardPopover {...{CrScheduleSwitcherModal_HK, theCar, day, cellProps}} />,
+              cellValue: <CarCardPopover {...{ CrScheduleSwitcherModal_HK, theCar, day, cellProps }} />,
             }
           }),
         ],
       }
     }),
   })
-  return <div>{TB.WithWrapper({size: 'sm', className: `max-h-[70vh] text-center [&_td]:!p-0`})}</div>
+  return <div>{TB.WithWrapper({ size: 'sm', className: `max-h-[70vh] text-center [&_td]:!p-0` })}</div>
 }

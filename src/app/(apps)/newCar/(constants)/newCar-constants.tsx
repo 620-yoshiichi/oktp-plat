@@ -12,9 +12,9 @@ const ALERT_COLORS = [
 const STATUS_COLORS = [
   { value: `着工`, color: `#258516` },
   { value: `保留`, color: `#515151` },
-  { value: `保留(タクシー)`, color: `#515151` },
+  // { value: `保留(タクシー)`, color: `#515151` },
   { value: `保留（HAC）`, color: `#515151` },
-  { value: `保留（架装)`, color: `#515151` },
+  // { value: `保留（架装)`, color: `#515151` },
 ]
 
 const CAR_TRANSFER_HISTORY_LOCATIONS = [
