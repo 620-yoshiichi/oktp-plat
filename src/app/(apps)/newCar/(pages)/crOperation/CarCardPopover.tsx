@@ -18,6 +18,8 @@ import { DocumentIcon, InformationCircleIcon } from '@heroicons/react/20/solid'
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 import useBasicFormProps from '@cm/hooks/useBasicForm/useBasicFormProps'
 
+import { Days } from '@cm/class/Days/Days'
+import { getMidnight } from '@cm/class/Days/date-utils/calculations'
 import { cl, isDev, shorten } from '@cm/lib/methods/common'
 import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 import { toastByResult } from '@cm/lib/ui/notifications'
@@ -237,6 +239,7 @@ export default function CarCardPopover(props: {
   const Info = () => {
     const workDay = new NewCarClass(theCar)?.chakko.getPendingDateOrDD_SAGTYYO()
 
+
     const notInTime = lastApprovedDesiredTorokuDate === null || (workDay && lastApprovedDesiredTorokuDate >= workDay)
 
     return (
@@ -279,6 +282,41 @@ export default function CarCardPopover(props: {
             <span>買主:</span>
             <span className={largeTextClass + ' w-[80px] truncate text-start text-sm'}>{theCar.KJ_KAINMEI1}</span>
           </div>
+
+
+
+          {((theCar.DD_KANKEN && new Date(theCar.DD_KANKEN) < getMidnight()) ||
+            (theCar.DD_MAKERSYU && new Date(theCar.DD_MAKERSYU) <= Days.month.subtract(new Date(), 6))) && (
+              <R_Stack className={`gap-1 mt-0.5`}>
+                {theCar.DD_KANKEN && new Date(theCar.DD_KANKEN) < getMidnight() && (
+                  <MyPopover
+                    button={
+                      <span className={`text-[8px] px-1 py-0.5 rounded font-bold bg-yellow-400 text-black leading-none cursor-pointer`}>
+                        完切れ
+                      </span>
+                    }
+                  >
+                    <Paper>
+                      <div className={`text-xs whitespace-nowrap`}>完成検査切日：{formatDate(theCar.DD_KANKEN)}</div>
+                    </Paper>
+                  </MyPopover>
+                )}
+
+                {theCar.DD_MAKERSYU && new Date(theCar.DD_MAKERSYU) <= Days.month.subtract(new Date(), 6) && (
+                  <MyPopover
+                    button={
+                      <span className={`text-[8px] px-1 py-0.5 rounded font-bold bg-green-500 text-white leading-none cursor-pointer`}>
+                        長期在庫
+                      </span>
+                    }
+                  >
+                    <Paper>
+                      <div className={`text-xs whitespace-nowrap`}>メーカー出荷日：{formatDate(theCar.DD_MAKERSYU)}</div>
+                    </Paper>
+                  </MyPopover>
+                )}
+              </R_Stack>
+            )}
         </C_Stack>
       </div>
     )

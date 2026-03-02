@@ -13,7 +13,7 @@ import { Days } from '@cm/class/Days/Days'
 import { doTransaction } from '@cm/lib/server-actions/common-server-actions/doTransaction/doTransaction'
 import { NewCarUpsertArgs } from '@prisma/generated/prisma/models'
 
-export const maxUpdateGte = Days.day.add(getMidnight(), -60)
+export const maxUpdateGte = Days.day.add(getMidnight(), -5)
 
 // バッチサイズの設定（環境に応じて調整）
 const BATCH_SIZE = Number(process.env.BATCH_SIZE) || 1000 // デフォルト500件に削減
