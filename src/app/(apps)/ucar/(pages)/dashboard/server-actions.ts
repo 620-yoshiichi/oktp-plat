@@ -476,6 +476,10 @@ export async function fetchOtherMetricsCars(params: FetchOtherMetricsCarsParams)
     const crCondition: Prisma.UcarWhereInput = NUM98_REQUIRE_CR_ARRIVED ? {UcarProcess: {some: {processCode: 'CR02'}}} : {}
 
     // 98番号付帯の判定条件（NUM98_ATTACH_MODE に依存）
+    // calcDashboardData と同じ粒度にする:
+    //   'number98' → number98フィールドに値がある
+    //   'oldCarsLink' → OldCars_Base リレーションが存在する（= hasOldCarsLink）
+
     const attachedCondition: Prisma.UcarWhereInput =
       NUM98_ATTACH_MODE === 'number98'
         ? {AND: [{number98: {not: null}}, {number98: {not: ''}}]}
@@ -484,9 +488,7 @@ export async function fetchOtherMetricsCars(params: FetchOtherMetricsCarsParams)
     const notAttachedCondition: Prisma.UcarWhereInput =
       NUM98_ATTACH_MODE === 'number98'
         ? {OR: [{number98: null}, {number98: ''}]}
-        : {
-            NOT: {OldCars_Base: {NO_SYARYOU: {not: null}}},
-          }
+        : {NOT: {OldCars_Base: {NO_SYARYOU: {not: null}}}}
     switch (params.type) {
       case 'shiwake':
         if (params.destinationCode) {
@@ -509,9 +511,9 @@ export async function fetchOtherMetricsCars(params: FetchOtherMetricsCarsParams)
         break
     }
 
-    // 店舗除外条件
+    // 店舗除外条件（Store未設定の車両も含めるため OR で分岐）
     const storeExcludeCondition: Prisma.UcarWhereInput = OTHER_METRICS_EXCLUDE_STORE_NAME
-      ? {Store: {name: {not: OTHER_METRICS_EXCLUDE_STORE_NAME}}}
+      ? {OR: [{Store: {is: null}}, {Store: {name: {not: OTHER_METRICS_EXCLUDE_STORE_NAME}}}]}
       : {}
 
     const cars: ucarData[] = await UcarCL.fetcher.getUcarDataList({
