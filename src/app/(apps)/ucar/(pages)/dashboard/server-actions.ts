@@ -17,7 +17,6 @@ import {
 import {UcarProcessCl} from '@app/(apps)/ucar/class/UcarProcessCl'
 import {UCAR_CONSTANTS} from '@app/(apps)/ucar/(constants)/ucar-constants'
 import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
-import {QueryBuilder} from '@app/(apps)/ucar/class/QueryBuilder'
 
 // ============================================================
 // 共通定義

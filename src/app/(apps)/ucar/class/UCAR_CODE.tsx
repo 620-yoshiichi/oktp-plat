@@ -73,7 +73,7 @@ export class UCAR_CODE {
     SCRAP: {
       code: '03',
       label: 'スクラップ',
-      color: '#dcdcdc',
+      color: '#4C4C4C',
     },
     CPO: {
       code: '04',

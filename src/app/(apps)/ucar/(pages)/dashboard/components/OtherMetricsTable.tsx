@@ -5,6 +5,8 @@ import { DashboardResult } from '../lib/calcDashboardData'
 import { OtherMetricsDetailModal } from './OtherMetricsDetailModal'
 import useModal from '@cm/components/utils/modal/useModal'
 import type { FetchOtherMetricsCarsParams } from '../server-actions'
+import { getColorStyles } from '@cm/lib/methods/colors'
+import Coloring from '@cm/lib/methods/Coloring'
 
 type Props = {
   data: DashboardResult
@@ -81,16 +83,16 @@ export function OtherMetricsTable({ data, year }: Props) {
           {/* ヘッダー */}
           {/* ============================================================ */}
           <thead>
-            <tr className="bg-gray-200">
+            <tr className="bg-gray-800 text-white">
               <th className="border px-2 py-1.5 text-left font-bold w-[80px]" rowSpan={2}>
                 その他指標
               </th>
               <th className="border px-2 py-1.5 text-left w-[130px]" rowSpan={2} />
-              <th className="border px-2 py-1.5 text-center w-[55px] bg-yellow-200 font-bold" rowSpan={2}>
+              <th className="border px-2 py-1.5 text-center w-[55px]  font-bold" rowSpan={2}>
                 全期
               </th>
               {months.map(m => (
-                <th key={m} className="border px-2 py-1.5 text-center w-[50px] bg-yellow-100">
+                <th key={m} className="border px-2 py-1.5 text-center w-[50px] ">
                   {m.split('-')[0]}年<br />
                   {Number(m.split('-')[1])}月
                 </th>
@@ -102,9 +104,12 @@ export function OtherMetricsTable({ data, year }: Props) {
             {/* 小売割合（%値 → クリック対象外） */}
             {/* ============================================================ */}
             <tr className="bg-yellow-50">
-              <td className="border px-2 py-1.5 font-medium bg-yellow-200" colSpan={2}>
-                小売割合
+              <td className="border p-1 font-medium bg-gray-800 text-white"
+                rowSpan={shiwakeBreakdown.length + 2}>
+                仕分け別
+
               </td>
+              <td className="border px-2 py-1.5 font-medium bg-yellow-50">小売割合</td>
               <td
                 className={`border px-2 py-1.5 text-center font-bold ${retailRatioTotal !== null ? getRatioBgColor(retailRatioTotal) : ''}`}
               >
@@ -126,19 +131,18 @@ export function OtherMetricsTable({ data, year }: Props) {
             {/* ============================================================ */}
             {/* QRシート総数（レンタ除く） */}
             {/* ============================================================ */}
-            <tr className="bg-gray-50">
-              <td className="border px-2 py-1.5 font-medium bg-gray-200" rowSpan={shiwakeBreakdown.length + 2}>
-                <div className="text-center leading-tight">
-                  QR総数
-                </div>
-              </td>
-            </tr>
+
 
             {/* 仕分け別行 */}
             {shiwakeBreakdown.map(sw => (
               <tr key={sw.key}>
-                <td className="border px-2 py-1.5 font-medium" style={{ borderLeft: `3px solid ${sw.color}` }}>
-                  <div className={`w-8 truncate`}>{sw.label}</div>
+                <td className="border px-2 py-1.5 font-medium"
+
+                >
+                  <div className={` truncate`} >
+
+                    <Coloring mode="text" color={sw.color}>{sw.label}</Coloring>
+                  </div>
                 </td>
                 <ClickableCell
                   value={sw.total}
@@ -180,13 +184,12 @@ export function OtherMetricsTable({ data, year }: Props) {
             {/* 98番号集計対象 → CR到着済 */}
             {/* ============================================================ */}
             <tr className="bg-gray-50">
-              <td className="border px-2 py-1.5 font-medium bg-gray-200" rowSpan={5}>
+              <td className="border p-1 font-medium bg-gray-800 text-white" rowSpan={5}>
                 <div className="text-center leading-tight">
-                  98番号
+                  98番号付帯
+
                   <br />
-                  {/* 集計対象
-                  <br />
-                  <span className="text-[10px] text-gray-500">→ CR到着済</span> */}
+                  <span className="text-[10px] text-gray-300">*中古車GでQR発行したものを除く</span>
                 </div>
               </td>
             </tr>

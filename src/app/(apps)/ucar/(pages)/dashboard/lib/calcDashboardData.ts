@@ -1,3 +1,4 @@
+import {UCAR_CODE} from '@app/(apps)/ucar/class/UCAR_CODE'
 import {UcarProcessCl, UcarWithProcess, buildProcessDateMap} from '@app/(apps)/ucar/class/UcarProcessCl'
 import {formatDate} from '@cm/class/Days/date-utils/formatters'
 
@@ -225,13 +226,14 @@ export function calcDashboardData(cars: UcarWithProcess[], allCars: UcarWithProc
   // ============================================================
   // 仕分け別台数集計（UCAR_CODE.SHIWAKE 準拠）
   // ============================================================
-  const SHIWAKE_DEFS: {key: string; code: string; label: string; color: string}[] = [
-    {key: 'KOURI', code: '02', label: '小売', color: '#00802f'},
-    {key: 'OROSI', code: '01', label: '卸', color: '#005c80'},
-    {key: 'SCRAP', code: '03', label: 'スクラップ', color: '#dcdcdc'},
-    {key: 'CPO', code: '04', label: 'CPO', color: '#60b330'},
-    {key: 'ONLINE', code: '05', label: 'オンライン', color: '#ff1d1d'},
-  ]
+  const SHIWAKE_DEFS: {key: string; code: string; label: string; color: string}[] = Object.keys(UCAR_CODE.SHIWAKE.raw).map(
+    key => ({
+      key: key,
+      code: UCAR_CODE.SHIWAKE.raw[key].code,
+      label: UCAR_CODE.SHIWAKE.raw[key].label,
+      color: UCAR_CODE.SHIWAKE.raw[key].color,
+    })
+  )
 
   const shiwakeCount: Record<string, {total: number; monthly: Record<string, number>}> = {}
   for (const def of SHIWAKE_DEFS) {
