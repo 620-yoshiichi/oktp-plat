@@ -59,6 +59,45 @@ export function OtherMetricsTable({ data, year }: Props) {
     return all
   }, [yyPrefix])
 
+  /** 選択中の年間合計を算出するヘルパー */
+  const sumYear = useCallback((monthly: Record<string, number>) => {
+    return months.reduce((sum, m) => sum + (monthly[m] ?? 0), 0)
+  }, [months])
+
+  // 選択年の年間集計
+  const yearlyStats = useMemo(() => {
+    // 仕分け別の年間合計
+    const shiwakeYearly = shiwakeBreakdown.map(sw => ({
+      key: sw.key,
+      yearTotal: sumYear(sw.monthly),
+    }))
+    const shiwakeGrandYearly = sumYear(shiwakeGrandMonthly)
+
+    // 小売割合（年間）
+    const kouriYearly = shiwakeYearly.find(s => s.key === 'KOURI')?.yearTotal ?? 0
+    const retailRatioYearly = shiwakeGrandYearly > 0
+      ? Math.round((kouriYearly / shiwakeGrandYearly) * 100)
+      : null
+
+    // 98番号（年間）
+    const qrSheetYearly = sumYear(number98Stats.qrSheetMonthly)
+    const num98AttachedYearly = sumYear(number98Stats.num98AttachedMonthly)
+    const num98NotAttachedYearly = sumYear(number98Stats.num98NotAttachedMonthly)
+    const num98RatioYearly = qrSheetYearly > 0
+      ? Math.round((num98AttachedYearly / qrSheetYearly) * 1000) / 10
+      : null
+
+    return {
+      shiwakeYearly,
+      shiwakeGrandYearly,
+      retailRatioYearly,
+      qrSheetYearly,
+      num98AttachedYearly,
+      num98NotAttachedYearly,
+      num98RatioYearly,
+    }
+  }, [shiwakeBreakdown, shiwakeGrandMonthly, number98Stats, sumYear, months])
+
   /** クリック可能な数値セルを生成するヘルパー */
   const ClickableCell = useCallback(
     ({ value, label, params, className }: { value: number | undefined; label: string; params: FetchOtherMetricsCarsParams; className?: string }) => {
@@ -91,6 +130,9 @@ export function OtherMetricsTable({ data, year }: Props) {
               <th className="border px-2 py-1.5 text-center w-[55px]  font-bold" rowSpan={2}>
                 全期
               </th>
+              <th className="border px-2 py-1.5 text-center w-[55px] font-bold bg-blue-900" rowSpan={2}>
+                {year}年
+              </th>
               {months.map(m => (
                 <th key={m} className="border px-2 py-1.5 text-center w-[50px] ">
                   {m.split('-')[0]}年<br />
@@ -114,6 +156,11 @@ export function OtherMetricsTable({ data, year }: Props) {
                 className={`border px-2 py-1.5 text-center font-bold ${retailRatioTotal !== null ? getRatioBgColor(retailRatioTotal) : ''}`}
               >
                 {fmtPercent(retailRatioTotal)}
+              </td>
+              <td
+                className={`border px-2 py-1.5 text-center font-bold ${yearlyStats.retailRatioYearly !== null ? getRatioBgColor(yearlyStats.retailRatioYearly) : ''}`}
+              >
+                {fmtPercent(yearlyStats.retailRatioYearly)}
               </td>
               {months.map(m => {
                 const v = retailRatio[m]
@@ -150,6 +197,9 @@ export function OtherMetricsTable({ data, year }: Props) {
                   params={{ type: 'shiwake', destinationCode: shiwakeBreakdown.find(b => b.key === sw.key)?.key === sw.key ? getShiwakeCode(sw.key) : undefined }}
                   className="font-bold"
                 />
+                <td className="border px-2 py-1.5 text-center font-bold">
+                  {fmtCount(yearlyStats.shiwakeYearly.find(s => s.key === sw.key)?.yearTotal)}
+                </td>
                 {months.map(m => (
                   <ClickableCell
                     key={m}
@@ -169,6 +219,9 @@ export function OtherMetricsTable({ data, year }: Props) {
                 label="QR総数 - 全期間"
                 params={{ type: 'shiwake' }}
               />
+              <td className="border px-2 py-1.5 text-center font-bold">
+                {fmtCount(yearlyStats.shiwakeGrandYearly || undefined)}
+              </td>
               {months.map(m => (
                 <ClickableCell
                   key={m}
@@ -203,6 +256,9 @@ export function OtherMetricsTable({ data, year }: Props) {
                 params={{ type: 'num98_qr' }}
                 className="font-bold"
               />
+              <td className="border px-2 py-1.5 text-center font-bold">
+                {fmtCount(yearlyStats.qrSheetYearly || undefined)}
+              </td>
               {months.map(m => (
                 <ClickableCell
                   key={m}
@@ -222,6 +278,9 @@ export function OtherMetricsTable({ data, year }: Props) {
                 params={{ type: 'num98_attached' }}
                 className="font-bold"
               />
+              <td className="border px-2 py-1.5 text-center font-bold">
+                {fmtCount(yearlyStats.num98AttachedYearly || undefined)}
+              </td>
               {months.map(m => (
                 <ClickableCell
                   key={m}
@@ -241,6 +300,9 @@ export function OtherMetricsTable({ data, year }: Props) {
                 params={{ type: 'num98_not_attached' }}
                 className="font-bold text-red-600"
               />
+              <td className="border px-2 py-1.5 text-center font-bold text-red-600">
+                {fmtCount(yearlyStats.num98NotAttachedYearly > 0 ? yearlyStats.num98NotAttachedYearly : undefined)}
+              </td>
               {months.map(m => {
                 const v = number98Stats.num98NotAttachedMonthly[m]
                 return (
@@ -255,6 +317,8 @@ export function OtherMetricsTable({ data, year }: Props) {
               })}
             </tr>
 
+
+
             {/* 98番号付帯率（%値 → クリック対象外） */}
             <tr className="bg-yellow-50">
               <td className="border px-2 py-1.5 font-medium bg-yellow-200">98番号付帯率</td>
@@ -263,6 +327,11 @@ export function OtherMetricsTable({ data, year }: Props) {
                   }`}
               >
                 {fmtPercent(number98Stats.num98RatioTotal)}
+              </td>
+              <td
+                className={`border px-2 py-1.5 text-center font-bold ${yearlyStats.num98RatioYearly !== null ? getNum98RatioBgColor(yearlyStats.num98RatioYearly) : ''}`}
+              >
+                {fmtPercent(yearlyStats.num98RatioYearly)}
               </td>
               {months.map(m => {
                 const v = number98Stats.num98RatioMonthly[m]
