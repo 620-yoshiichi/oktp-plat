@@ -67,7 +67,10 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
   const login = session?.id ? true : false
   const id = session?.id
 
-  const { admin, getGlobalUserId } = judgeIsAdmin(session, query)
+  const { admin, adminSelf, getGlobalUserId } = judgeIsAdmin(session, query)
+
+
+
 
 
 
@@ -178,7 +181,7 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
       isNewCarMember: Object.keys(newCarMember).some(key => newCarMember[key as keyof typeof newCarMember]),
     }
 
-    // addAdminToRoles(result, session)
+    addAdminToRoles(result, session, adminSelf,)
     return { ...result }
   }
   const getUcarProps = () => {
@@ -241,7 +244,7 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
     }
 
     result['isQrbpMember'] = Object.keys(result).some(key => result[key as keyof QRBPScopeType])
-    addAdminToRoles(result, session)
+    addAdminToRoles(result, session, adminSelf,)
 
     return result as QRBPScopeType
   }
@@ -261,7 +264,7 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
     }
 
     return result
-    return addAdminToRoles(result, session)
+    return addAdminToRoles(result, session, adminSelf,)
     // return result as ShinrenScopeType
   }
 
@@ -281,16 +284,20 @@ export const getScopes = (session: session, options?: getScopeOptionsProps) => {
   return result
 }
 
-const addAdminToRoles: (targetObject: any, session: anyObject) => anyObject = (targetObject, session) => {
-  // const result: anyObject = {...targetObject}
-  Object.keys(targetObject).forEach(key => {
-    const value = targetObject[key]
-    targetObject[key] = value
+const addAdminToRoles: (targetObject: any, session: anyObject, adminSelf: boolean) => anyObject = (targetObject, session, adminSelf) => {
 
-    if (typeof targetObject[key] !== 'object' && roleIs(['管理者'], session) && targetObject[key] === false) {
-      targetObject[key] = true
-    }
-  })
+  // const result: anyObject = {...targetObject}
+  if (adminSelf) {
+    Object.keys(targetObject).forEach(key => {
+      const value = targetObject[key]
+      targetObject[key] = value
+
+      if (typeof targetObject[key] !== 'object' && roleIs(['管理者'], session) && targetObject[key] === false) {
+        targetObject[key] = true
+      }
+    })
+
+  }
 
   return targetObject
 }

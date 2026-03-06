@@ -55,6 +55,11 @@ export const NEW_CAR_CONST = {
   CR_OPERATION: {
     STATUS_COLORS,
     ALERT_COLORS,
+    USE_ANNAI_COLOR: true as boolean, // falseにすると旧ALERT_COLORSに戻る
+    ANNAI_COLORS: [
+      { value: `完切れ`, color: `#facc15` }, // 黄色
+      { value: `長期在庫`, color: `#22c55e` }, // 緑
+    ],
     INCLUDE: {
       DesiredTorokuDate: {
         orderBy: [{ createdAt: `asc` }],

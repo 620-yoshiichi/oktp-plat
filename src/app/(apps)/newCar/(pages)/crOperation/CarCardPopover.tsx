@@ -174,12 +174,13 @@ export default function CarCardPopover(props: {
   }
 
   const master: any = NEW_CAR_CONST.CR_OPERATION.STATUS_COLORS.find(s => s.value === lastHistory?.status) ?? {}
+  const bgColor = cellProps?.style?.background
   const style = {
-    background: cellProps?.style.background + '40',
-    border: `1px solid ${cellProps?.style.background}`,
+    background: bgColor ? bgColor + '40' : undefined,
+    border: bgColor ? `1px solid ${bgColor}` : `1px solid #e0e0e0`,
     padding: 4,
-    height: 120,
-    width: 120,
+    height: 150,
+    width: 150,
   }
 
   const MemoButton = () => {

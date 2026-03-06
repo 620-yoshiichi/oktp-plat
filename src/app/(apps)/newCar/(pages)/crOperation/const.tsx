@@ -3,8 +3,23 @@ import {NewCarClass} from '@app/(apps)/newCar/class/NewCarClass/NewCarClass'
 import {getMidnight} from '@cm/class/Days/date-utils/calculations'
 import {Days} from '@cm/class/Days/Days'
 
-export const checkAlert = ({date, newCar, crHolidays}) => {
-  const {DD_TOUROKU, DD_SAGTYYO, lastApprovedDesiredTorokuDate} = newCar
+// 案内色モード: 完切れ・長期在庫の色分け
+const checkAnnaiColor = ({newCar}) => {
+  const colorMaster = Object.fromEntries(
+    NEW_CAR_CONST.CR_OPERATION.ANNAI_COLORS.map(d => [d.value, d.color])
+  )
+  const {DD_KANKEN, DD_MAKERSYU} = newCar
+  const isKankire = DD_KANKEN && new Date(DD_KANKEN) < getMidnight()
+  const isChoukiZaiko = DD_MAKERSYU && new Date(DD_MAKERSYU) <= Days.month.subtract(new Date(), 6)
+
+  if (isKankire) return {style: {background: colorMaster[`完切れ`]}}
+  if (isChoukiZaiko) return {style: {background: colorMaster[`長期在庫`]}}
+  return undefined
+}
+
+// 旧モード: イエロー・オレンジ・レッド・青の色分け
+const checkAlertLegacy = ({newCar, crHolidays}) => {
+  const {DD_TOUROKU} = newCar
 
   const newCarCl = new NewCarClass(newCar)
   const pendingDate = newCarCl.chakko.getPendingDateOrDD_SAGTYYO()
@@ -41,6 +56,13 @@ export const checkAlert = ({date, newCar, crHolidays}) => {
       }
     }
   }
+}
+
+export const checkAlert = ({date, newCar, crHolidays}) => {
+  if (NEW_CAR_CONST.CR_OPERATION.USE_ANNAI_COLOR) {
+    return checkAnnaiColor({newCar})
+  }
+  return checkAlertLegacy({newCar, crHolidays})
 }
 
 export const NDayMsterList = [

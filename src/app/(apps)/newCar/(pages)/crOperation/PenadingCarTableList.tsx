@@ -11,9 +11,7 @@ import { CsvTable } from '@cm/components/styles/common-components/CsvTable/CsvTa
 import React from 'react'
 
 export default function ({ pendingCars, crHolidays, CrScheduleSwitcherModal_HK }) {
-  const registered = pendingCars.filter(car => car.DD_TOUROKU)
   const unRegisterd = pendingCars.filter(car => !car.DD_TOUROKU)
-  const find = registered?.find(d => d.NO_CYUMON.includes('13 47627'))
 
   const carTypes: { label: string; cars: any[] }[] = [
     ...NEW_CAR_CONST.CR_OPERATION.STATUS_COLORS.filter(d => d.value.includes(`保留`)).map(status => {
@@ -26,13 +24,6 @@ export default function ({ pendingCars, crHolidays, CrScheduleSwitcherModal_HK }
         }),
       }
     }),
-    // {
-    //   label: `登録済み`,
-    //   cars: registered.filter(car => {
-    //     const theStatus = new NewCarClass(car)?.chakko?.getLatestCrInspectionHistory()?.status
-    //     return true
-    //   }),
-    // },
   ]
 
   return (

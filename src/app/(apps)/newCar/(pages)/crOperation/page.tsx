@@ -25,8 +25,7 @@ export default async function Page(props) {
   const from = today
   const to = Days.day.addBusinessDays(from, 5, crHolidays)
 
-  const newCars = await getNewCarsScheduledInPeriods({from, to})
-  const pendingCars = await getPendingCars({from, to})
+  const {newCars, pendingCars} = await getAllCarsForCrOperation({from, to})
 
   return (
     <div className={` p-2 max-w-[100vw] overflow-auto`}>
@@ -35,21 +34,15 @@ export default async function Page(props) {
   )
 }
 
-const getNewCarsScheduledInPeriods = async ({from, to}) => {
-  const ChakkoInPeriod = {DD_SAGTYYO: {gte: from, lt: to}}
-  const SchedulePendingOnPeriod = {
-    CrInspectionHistory: {
-      some: {date: {gte: from, lt: to}},
-    },
-  }
-
-  let newCars = await prisma.newCar.findMany({
+// 着工予定 + 保留を1クエリで取得
+const getAllCarsForCrOperation = async ({from, to}) => {
+  const allCars = await prisma.newCar.findMany({
     where: {
       DD_TORIKESI: null,
       OR: [
-        //
-        ChakkoInPeriod,
-        SchedulePendingOnPeriod,
+        {DD_SAGTYYO: {gte: from, lt: to}},
+        {CrInspectionHistory: {some: {date: {gte: from, lt: to}}}},
+        {CrInspectionHistory: {some: {id: {gt: 0}}}},
       ],
     },
     include: {
@@ -59,32 +52,21 @@ const getNewCarsScheduledInPeriods = async ({from, to}) => {
     },
     orderBy: [{NO_CYUMON: `asc`}],
   })
-  newCars = newCars.filter(d => {
-    return !new NewCarClass(d).chakko.getLatestCrInspectionHistory()?.status?.includes('保留')
+
+  const newCars: typeof allCars = []
+  const pendingCars: typeof allCars = []
+
+  allCars.forEach(car => {
+    const isPending = new NewCarClass(car).chakko.getLatestCrInspectionHistory()?.status?.includes('保留')
+    if (isPending) {
+      pendingCars.push(car)
+    } else {
+      const inPeriod =
+        (car.DD_SAGTYYO && car.DD_SAGTYYO >= from && car.DD_SAGTYYO < to) ||
+        car.CrInspectionHistory?.some(h => h.date && h.date >= from && h.date < to)
+      if (inPeriod) newCars.push(car)
+    }
   })
 
-  return newCars
-}
-
-const getPendingCars = async ({from, to}) => {
-  const newCars = await prisma.newCar.findMany({
-    where: {
-      DD_TORIKESI: null,
-      CrInspectionHistory: {some: {id: {gt: 0}}},
-    },
-    include: {
-      CrInspectionHistory: {include: {User: {}}, orderBy: {createdAt: 'desc'}, take: 1},
-      User: {},
-      Store: {},
-    },
-    orderBy: [{NO_CYUMON: `asc`}],
-  })
-
-  const pendingCars = newCars.filter(car => {
-    const hit = new NewCarClass(car).chakko.getLatestCrInspectionHistory()?.status?.includes('保留')
-
-    return hit
-  })
-
-  return pendingCars
+  return {newCars, pendingCars}
 }

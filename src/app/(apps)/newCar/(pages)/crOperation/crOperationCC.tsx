@@ -43,7 +43,7 @@ export default function CrOperationCC({ crHolidays, from, to, newCars, pendingCa
 
       <R_Stack className={`flex-nowrap items-start  justify-start  `}>
 
-        <C_Stack className={`w-[960px] overflow-auto items-start t-paper `}>
+        <C_Stack className={`w-[1100px] overflow-auto items-start t-paper `}>
           <h2 className={`text-center`}>作業着工予定リスト</h2>
           <ScheduledCarTable {...{ from, to, crHolidays, newCars, CrScheduleSwitcherModal_HK }} />
         </C_Stack>
@@ -61,13 +61,15 @@ export default function CrOperationCC({ crHolidays, from, to, newCars, pendingCa
 
 const Marker = () => {
   const {
-    CR_OPERATION: { ALERT_COLORS, STATUS_COLORS },
+    CR_OPERATION: { ALERT_COLORS, ANNAI_COLORS, USE_ANNAI_COLOR, STATUS_COLORS },
   } = NEW_CAR_CONST
+
+  const colorList = USE_ANNAI_COLOR ? ANNAI_COLORS : ALERT_COLORS
 
   return (
     <R_Stack className={`gap-10`}>
       <R_Stack>
-        {ALERT_COLORS.map((d, i) => (
+        {colorList.map((d, i) => (
           <div key={i}>
             <IconBtn {...{ vivid: true, color: d.color }}>{d.value}</IconBtn>
           </div>
