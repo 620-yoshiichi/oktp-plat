@@ -65,11 +65,11 @@ export default function DesiredTorokuDateChildCreator({ newCar, additionalWhere,
             },
             update: isHQ ? true : false,
             delete: isHQ ? {} : false,
-            AdditionalActionButtonObject: {
-              cancelBtn: props => {
-                return <CancelButton {...{ record: props.record, useGlobalProps }} />
-              },
-            },
+            // AdditionalActionButtonObject: {
+            //   cancelBtn: props => {
+            //     return <CancelButton {...{ record: props.record, useGlobalProps }} />
+            //   },
+            // },
           },
           ParentData: newCar,
           models: { parent: `newCar`, children: `desiredTorokuDate` },
