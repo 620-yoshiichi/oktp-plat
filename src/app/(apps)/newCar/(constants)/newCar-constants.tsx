@@ -78,7 +78,7 @@ export const NEW_CAR_CONST = {
   },
 
   TOROKU_STATUS_LIST: [
-    { value: `承認`, color: `#006800`, sendMail: true },
+    { value: `承認`, color: `green`, sendMail: true },
     { value: `却下`, color: `red`, sendMail: true },
     { value: `キャンセル`, color: `#303030`, sendMail: false },
   ],
