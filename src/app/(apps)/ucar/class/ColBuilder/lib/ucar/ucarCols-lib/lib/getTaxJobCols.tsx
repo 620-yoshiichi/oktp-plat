@@ -12,7 +12,7 @@ import { Button } from '@cm/components/styles/common-components/Button'
 
 export const getTaxJobCols = ({ isChukoshaGroup }: { isChukoshaGroup?: boolean }) => {
   const cols1: colType[] = new Fields([
-    { id: `taxCustomerName`, label: `お客様`, form: {} },
+
     { id: `annualTax`, label: `年間支払額`, type: `number`, form: {} },
 
     //form

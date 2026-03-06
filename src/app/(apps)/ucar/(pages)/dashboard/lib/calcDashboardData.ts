@@ -295,7 +295,10 @@ export function calcDashboardData(cars: UcarWithProcess[], allCars: UcarWithProc
     color: def.color,
     total: shiwakeCount[def.key].total,
     monthly: shiwakeCount[def.key].monthly,
-  }))
+  })).sort((a: ShiwakeBreakdown, b: ShiwakeBreakdown) => {
+    const isKouri = a.key === 'KOURI' ? -1 : 1
+    return isKouri
+  })
 
   const shiwakeGrandTotal = SHIWAKE_DEFS.reduce((sum, def) => sum + shiwakeCount[def.key].total, 0)
   const shiwakeGrandMonthly: Record<string, number> = {}

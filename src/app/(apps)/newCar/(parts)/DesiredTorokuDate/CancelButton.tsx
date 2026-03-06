@@ -23,8 +23,9 @@ const CancelButton = ({ record, useGlobalProps }: { record: any; useGlobalProps:
   }
 
   return (
-    <button className={` ml-4 bg-red-500 cursor-pointer rounded-full aspect-square text-white  text-xs`} onClick={handleCancel}>
-      <XCircle className={`w-5 h-5`} />
+    <button className={` ml-4 bg-gray-700 cursor-pointer rounded-full  text-white  text-xs w-20 p-1 onHover `} onClick={handleCancel}>
+      申請取消
+      {/* <XCircle className={`w-5 h-5`} /> */}
     </button>
   )
 }

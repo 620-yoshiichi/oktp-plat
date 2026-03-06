@@ -311,6 +311,7 @@ export const ucarColBuilder = (props: columnGetterType) => {
       form: { hidden: true }
 
     },
+    { id: `taxCustomerName`, label: `お客様`, form: {} },
   ])
 
   // 基本情報

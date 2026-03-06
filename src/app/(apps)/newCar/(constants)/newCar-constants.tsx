@@ -22,6 +22,7 @@ const CAR_TRANSFER_HISTORY_LOCATIONS = [
   // { value: `本店`, color: '#9e1515' },
   { value: `水島`, color: '#258516' },
   { value: `今保`, color: '#9e1515' },
+  { value: `熊山`, color: '#ea6e1b' },
   { value: `販売店舗`, color: '' },
 ]
 
@@ -72,7 +73,7 @@ export const NEW_CAR_CONST = {
   },
 
   TOROKU_STATUS_LIST: [
-    { value: `承認`, color: `green`, sendMail: true },
+    { value: `承認`, color: `#006800`, sendMail: true },
     { value: `却下`, color: `red`, sendMail: true },
     { value: `キャンセル`, color: `#303030`, sendMail: false },
   ],

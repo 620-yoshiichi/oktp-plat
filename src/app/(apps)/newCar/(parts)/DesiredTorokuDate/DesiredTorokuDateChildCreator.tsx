@@ -9,6 +9,7 @@ import PlaceHolder from '@cm/components/utils/loader/PlaceHolder'
 import useGlobal from '@cm/hooks/globalHooks/useGlobal'
 import { doStandardPrisma } from '@cm/lib/server-actions/common-server-actions/doStandardPrisma/doStandardPrisma'
 import React from 'react'
+import { Button } from '@cm/components/styles/common-components/Button'
 
 export default function DesiredTorokuDateChildCreator({ newCar, additionalWhere, settorokuDateApplicationFormOpen }) {
   const useGlobalProps = useGlobal()
@@ -26,6 +27,7 @@ export default function DesiredTorokuDateChildCreator({ newCar, additionalWhere,
       </Alert>
       <ChildCreator
         {...{
+
           myForm: {
             alignMode: 'console',
             create: {
@@ -57,11 +59,15 @@ export default function DesiredTorokuDateChildCreator({ newCar, additionalWhere,
             },
           },
           myTable: {
+
+            create: {
+              label: <Button color='blue' size='sm'>新規申請 / 再申請</Button>,
+            },
             update: isHQ ? true : false,
             delete: isHQ ? {} : false,
             AdditionalActionButtonObject: {
               cancelBtn: props => {
-                return <CancelButton {...{record: props.record, useGlobalProps}} />
+                return <CancelButton {...{ record: props.record, useGlobalProps }} />
               },
             },
           },

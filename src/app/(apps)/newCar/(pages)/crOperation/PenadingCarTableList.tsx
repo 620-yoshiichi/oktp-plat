@@ -26,13 +26,13 @@ export default function ({ pendingCars, crHolidays, CrScheduleSwitcherModal_HK }
         }),
       }
     }),
-    {
-      label: `登録済み`,
-      cars: registered.filter(car => {
-        const theStatus = new NewCarClass(car)?.chakko?.getLatestCrInspectionHistory()?.status
-        return true
-      }),
-    },
+    // {
+    //   label: `登録済み`,
+    //   cars: registered.filter(car => {
+    //     const theStatus = new NewCarClass(car)?.chakko?.getLatestCrInspectionHistory()?.status
+    //     return true
+    //   }),
+    // },
   ]
 
   return (
